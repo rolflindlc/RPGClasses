@@ -94,7 +94,9 @@ public final class ClassCommands {
         Component className = s.classId == null ? none : Component.translatable(Ids.langKey("class", s.classId, "name"));
         Component subName = s.subclassId == null ? none : Component.translatable(Ids.langKey("subclass", s.subclassId, "name"));
         int cap = ProgressionRules.subclassCap(s.basePoints());
-        int next = ProgressionRules.nextCost(s, ServerConfig.XP_COST_MULTIPLIER.get());
+        Component next = ProgressionRules.isMaxed(s)
+                ? Component.translatable("msg.rpgclasses.max_level")
+                : Component.translatable("msg.rpgclasses.next_cost", ProgressionRules.nextCost(s, ServerConfig.XP_COST_MULTIPLIER.get()));
         source.sendSuccess(() -> Component.translatable("msg.rpgclasses.info",
                 className, s.basePoints(), subName, s.subclassLevel, cap, next), false);
         if (s.classId != null && DefinitionStore.SERVER.classDef(s.classId) == null) {

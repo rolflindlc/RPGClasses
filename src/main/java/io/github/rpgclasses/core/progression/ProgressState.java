@@ -15,9 +15,10 @@ public final class ProgressState {
     /** null = sin subclase elegida. */
     public String subclassId;
     public int subclassLevel;
-    /** XP realmente pagada; es lo que devuelve el primer respec. */
+    /** XP realmente pagada; base de lo que devuelve un reinicio de clase. */
     public long xpPaidBase;
     public long xpPaidSubclass;
+    /** Sin uso desde que los reinicios son ilimitados; se conserva por compatibilidad del guardado. */
     public boolean firstRespecUsed;
     public boolean kitGranted;
 

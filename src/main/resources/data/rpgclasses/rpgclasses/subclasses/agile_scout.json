@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "class": "rpgclasses:ranger",
+  "display": {
+    "icon": "minecraft:feather"
+  },
+  "effects": [
+    {
+      "type": "rpgclasses:attribute",
+      "modifiers": [
+        {
+          "attribute": "minecraft:generic.movement_speed",
+          "to": 0.15,
+          "operation": "multiply_base"
+        },
+        {
+          "attribute": "minecraft:generic.luck",
+          "from": 3,
+          "to": 5,
+          "operation": "add"
+        }
+      ]
+    }
+  ],
+  "milestones": [
+    {
+      "subclass_level": 1,
+      "grants": "rpgclasses:triple_jump",
+      "upgrades": "rpgclasses:double_jump"
+    },
+    {
+      "subclass_level": 1,
+      "grants": "rpgclasses:wall_climb"
+    }
+  ]
+}

@@ -1,0 +1,89 @@
+{
+  "schema_version": 1,
+  "display": {
+    "icon": "minecraft:shield",
+    "roles": [
+      "tanque",
+      "apoyo"
+    ]
+  },
+  "starting_kit": "rpgclasses:paladin",
+  "crit_chance_bonus": 0.0,
+  "walls": {
+    "rpgclasses:magic": 0.75,
+    "rpgclasses:bow": 0.75
+  },
+  "branches": [
+    {
+      "id": "cuirass",
+      "max_points": 10,
+      "effects": [
+        {
+          "type": "rpgclasses:equipped_armor_multiplier",
+          "armor": {
+            "to": 0.25
+          },
+          "toughness": {
+            "to": 0.4
+          }
+        }
+      ]
+    },
+    {
+      "id": "will",
+      "max_points": 10,
+      "effects": [
+        {
+          "type": "rpgclasses:attribute",
+          "modifiers": [
+            {
+              "attribute": "rpgclasses:debuff_resistance",
+              "to": 0.5,
+              "operation": "add"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "push",
+      "max_points": 10,
+      "effects": [
+        {
+          "type": "rpgclasses:attribute",
+          "modifiers": [
+            {
+              "attribute": "minecraft:generic.knockback_resistance",
+              "to": 0.5,
+              "operation": "add"
+            },
+            {
+              "attribute": "rpgclasses:knockback_dealt",
+              "to": 0.25,
+              "operation": "add"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "milestones": [
+    {
+      "total_level": 10,
+      "grants": "rpgclasses:taunt"
+    },
+    {
+      "total_level": 10,
+      "grants": "rpgclasses:steady_guard"
+    },
+    {
+      "total_level": 30,
+      "grants": "rpgclasses:bulwark"
+    }
+  ],
+  "subclasses": [
+    "rpgclasses:blessed_guardian",
+    "rpgclasses:unyielding_bastion",
+    "rpgclasses:charging_juggernaut"
+  ]
+}

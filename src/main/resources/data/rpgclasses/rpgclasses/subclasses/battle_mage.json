@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "class": "rpgclasses:mage",
+  "display": {
+    "icon": "minecraft:iron_chestplate"
+  },
+  "effects": [
+    {
+      "type": "rpgclasses:mechanic",
+      "id": "rpgclasses:unbreakable_concentration"
+    },
+    {
+      "type": "rpgclasses:mechanic",
+      "id": "rpgclasses:wall_mitigation",
+      "disciplines": [
+        "rpgclasses:heavy",
+        "rpgclasses:light"
+      ],
+      "mitigation": {
+        "to": 1.0
+      }
+    },
+    {
+      "type": "rpgclasses:mechanic",
+      "id": "rpgclasses:arcane_shield",
+      "mana_fraction": {
+        "from": 0.03,
+        "to": 0.07
+      },
+      "cap_health_fraction": 0.5,
+      "decay_delay_seconds": 6,
+      "decay_per_second": 0.1
+    }
+  ],
+  "milestones": []
+}

@@ -1,0 +1,90 @@
+{
+  "schema_version": 1,
+  "display": {
+    "icon": "minecraft:iron_sword",
+    "roles": [
+      "melee",
+      "sigilo"
+    ]
+  },
+  "starting_kit": "rpgclasses:rogue",
+  "crit_chance_bonus": -0.05,
+  "walls": {
+    "rpgclasses:magic": 0.45,
+    "rpgclasses:bow": 0.35,
+    "rpgclasses:heavy": 0.55,
+    "rpgclasses:armor": 0.4,
+    "rpgclasses:shield": 0.7
+  },
+  "branches": [
+    {
+      "id": "shadow",
+      "max_points": 10,
+      "effects": [
+        {
+          "type": "rpgclasses:attribute",
+          "modifiers": [
+            {
+              "attribute": "rpgclasses:mob_detection",
+              "to": -0.5,
+              "operation": "add"
+            },
+            {
+              "attribute": "rpgclasses:backstab_crit_damage",
+              "to": 1.0,
+              "operation": "add"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "edge",
+      "max_points": 10,
+      "effects": [
+        {
+          "type": "rpgclasses:attribute",
+          "modifiers": [
+            {
+              "attribute": "minecraft:generic.attack_speed",
+              "to": 0.6,
+              "operation": "multiply_base"
+            },
+            {
+              "attribute": "rpgclasses:crit_damage",
+              "to": 0.75,
+              "operation": "add"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wind",
+      "max_points": 10,
+      "effects": [
+        {
+          "type": "rpgclasses:attribute",
+          "modifiers": [
+            {
+              "attribute": "minecraft:generic.movement_speed",
+              "to": 0.35,
+              "operation": "multiply_base"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "milestones": [
+    {
+      "total_level": 5,
+      "grants": "rpgclasses:stealth"
+    }
+  ],
+  "subclasses": [
+    "rpgclasses:shadow_walker",
+    "rpgclasses:shadow_illusionist",
+    "rpgclasses:arcane_blade"
+  ]
+}

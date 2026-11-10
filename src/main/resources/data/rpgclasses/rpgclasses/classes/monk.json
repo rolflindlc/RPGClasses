@@ -1,0 +1,100 @@
+{
+  "schema_version": 1,
+  "display": {
+    "icon": "minecraft:leather",
+    "roles": [
+      "melee",
+      "movilidad"
+    ]
+  },
+  "crit_chance_bonus": 0.0,
+  "walls": {
+    "rpgclasses:magic": 0.7,
+    "rpgclasses:bow": 0.3,
+    "rpgclasses:heavy": 0.35,
+    "rpgclasses:light": 0.4,
+    "rpgclasses:shield": 1.0
+  },
+  "armor_rule": "disables_unarmored_passives",
+  "branches": [
+    {
+      "id": "fist",
+      "max_points": 10,
+      "effects": [
+        {
+          "type": "rpgclasses:attribute",
+          "modifiers": [
+            {
+              "attribute": "rpgclasses:unarmed_damage",
+              "to": 6.0,
+              "operation": "add"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wind",
+      "max_points": 10,
+      "effects": [
+        {
+          "type": "rpgclasses:attribute",
+          "condition": "rpgclasses:no_armor",
+          "modifiers": [
+            {
+              "attribute": "minecraft:generic.movement_speed",
+              "to": 0.4,
+              "operation": "multiply_base"
+            },
+            {
+              "attribute": "rpgclasses:jump_bonus",
+              "to": 0.4,
+              "operation": "add"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "skin",
+      "max_points": 10,
+      "effects": [
+        {
+          "type": "rpgclasses:attribute",
+          "condition": "rpgclasses:no_armor",
+          "modifiers": [
+            {
+              "attribute": "minecraft:generic.armor",
+              "to": 16,
+              "operation": "add"
+            },
+            {
+              "attribute": "minecraft:generic.armor_toughness",
+              "to": 6,
+              "operation": "add"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "milestones": [
+    {
+      "total_level": 5,
+      "grants": "rpgclasses:stances"
+    },
+    {
+      "total_level": 15,
+      "grants": "rpgclasses:deflect"
+    },
+    {
+      "total_level": 30,
+      "grants": "rpgclasses:light_step"
+    }
+  ],
+  "subclasses": [
+    "rpgclasses:breeze_master",
+    "rpgclasses:heavy_palm",
+    "rpgclasses:triworld_guardian"
+  ]
+}

@@ -99,6 +99,24 @@ public class StatCalculatorTest {
     }
 
     @Test
+    public void stanceFactorsScaleTheBonusBeforeCaps() {
+        ProgressState monk = player("monk", 10, "breeze_master", 10);
+        ClassDef c = STORE.classDef(monk.classId);
+        // Piedra: armadura x1,25 (20 / 7,5) y velocidad x0,25.
+        Map<Key, Double> stone = StatCalculator.attributeTotals(monk, c, STORE.subclassDef(monk.subclassId),
+                new Context(false, Map.of("minecraft:generic.armor", 1.25, "minecraft:generic.armor_toughness", 1.25,
+                        "minecraft:generic.movement_speed", 0.25)));
+        assertEquals(20.0, stone.get(new Key("minecraft:generic.armor", "add")), EPS);
+        assertEquals(7.5, stone.get(new Key("minecraft:generic.armor_toughness", "add")), EPS);
+        assertEquals(0.20, stone.get(new Key("minecraft:generic.movement_speed", "multiply_base")), EPS);
+        // Agua: +80% x2 superaría el tope global de +100%.
+        Map<Key, Double> water = StatCalculator.attributeTotals(monk, c, STORE.subclassDef(monk.subclassId),
+                new Context(false, Map.of("minecraft:generic.movement_speed", 2.0, "rpgclasses:jump_bonus", 2.0)));
+        assertEquals(1.0, water.get(new Key("minecraft:generic.movement_speed", "multiply_base")), EPS);
+        assertEquals(1.5, water.get(new Key("rpgclasses:jump_bonus", "add")), EPS);
+    }
+
+    @Test
     public void wallsAndMitigation() {
         assertEquals(0.45, wall(player("rogue", 10, null, 0), "magic"), EPS);
         assertEquals(0.225, wall(player("rogue", 5, null, 0), "magic"), EPS);

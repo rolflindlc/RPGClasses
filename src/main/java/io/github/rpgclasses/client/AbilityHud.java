@@ -1,5 +1,6 @@
 package io.github.rpgclasses.client;
 
+import io.github.rpgclasses.content.MonkAbilities;
 import io.github.rpgclasses.core.Ids;
 import io.github.rpgclasses.core.ability.UnlockResolver;
 import io.github.rpgclasses.core.definition.DefinitionStore;
@@ -41,7 +42,14 @@ public final class AbilityHud {
             KeyMapping key = ClientSetup.ABILITY_KEYS[i];
             long remaining = ClientHandlers.LOCAL_DATA.cooldowns.getOrDefault(id, 0L) - now;
             Component name = Component.translatable(Ids.langKey("ability", id, "name"));
-            String text = "[" + key.getTranslatedKeyMessage().getString() + "] " + name.getString()
+            String extra = "";
+            if (id.equals(MonkAbilities.STANCES)) {
+                int stance = ClientHandlers.LOCAL_DATA.counters.getOrDefault(MonkAbilities.STANCE_COUNTER, 0);
+                if (stance >= 0 && stance < MonkAbilities.STANCE_NAMES.length) {
+                    extra = ": " + Component.translatable("stance.rpgclasses." + MonkAbilities.STANCE_NAMES[stance]).getString();
+                }
+            }
+            String text = "[" + key.getTranslatedKeyMessage().getString() + "] " + name.getString() + extra
                     + (remaining > 0 ? String.format(Locale.ROOT, "  %.0f s", Math.ceil(remaining / 20.0)) : "");
             int width = mc.font.width(text);
             int x = screenWidth - width - 6;

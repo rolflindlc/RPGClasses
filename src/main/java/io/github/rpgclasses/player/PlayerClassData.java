@@ -16,6 +16,8 @@ public final class PlayerClassData {
     public float savedHealth = -1f;
     /** Cooldowns de habilidades: id -> tiempo de juego (ticks) en que terminan. */
     public final Map<String, Long> cooldowns = new java.util.HashMap<>();
+    /** Estado de mecánicas (postura del Monje...), por clave. */
+    public final Map<String, Integer> counters = new java.util.HashMap<>();
 
     public CompoundTag save() {
         CompoundTag tag = new CompoundTag();
@@ -33,6 +35,9 @@ public final class PlayerClassData {
         CompoundTag cds = new CompoundTag();
         for (Map.Entry<String, Long> e : cooldowns.entrySet()) cds.putLong(e.getKey(), e.getValue());
         tag.put("cooldowns", cds);
+        CompoundTag cnt = new CompoundTag();
+        for (Map.Entry<String, Integer> e : counters.entrySet()) cnt.putInt(e.getKey(), e.getValue());
+        tag.put("counters", cnt);
         return tag;
     }
 
@@ -51,5 +56,8 @@ public final class PlayerClassData {
         cooldowns.clear();
         CompoundTag cds = tag.getCompound("cooldowns");
         for (String key : cds.getAllKeys()) cooldowns.put(key, cds.getLong(key));
+        counters.clear();
+        CompoundTag cnt = tag.getCompound("counters");
+        for (String key : cnt.getAllKeys()) counters.put(key, cnt.getInt(key));
     }
 }

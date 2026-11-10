@@ -1,6 +1,7 @@
 package io.github.rpgclasses.network;
 
 import io.github.rpgclasses.client.ClientHandlers;
+import io.github.rpgclasses.content.RangerAbilities;
 import io.github.rpgclasses.server.AbilityService;
 import io.github.rpgclasses.server.ProgressionService;
 import net.minecraft.nbt.CompoundTag;
@@ -102,6 +103,20 @@ public final class Packets {
         public void handle(Supplier<NetworkEvent.Context> ctx) {
             ServerPlayer sender = ctx.get().getSender();
             if (sender != null) AbilityService.use(sender, slot);
+        }
+    }
+
+    /** Cliente -> servidor: el jugador ha hecho un salto aéreo (ya ejecutado en su cliente). */
+    public record AirJump() {
+        public void encode(FriendlyByteBuf buf) {}
+
+        public static AirJump decode(FriendlyByteBuf buf) {
+            return new AirJump();
+        }
+
+        public void handle(Supplier<NetworkEvent.Context> ctx) {
+            ServerPlayer sender = ctx.get().getSender();
+            if (sender != null) RangerAbilities.onAirJump(sender);
         }
     }
 

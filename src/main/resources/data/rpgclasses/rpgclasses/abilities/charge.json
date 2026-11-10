@@ -1,5 +1,7 @@
 {
   "schema_version": 1,
   "distance": 6,
-  "cooldown_seconds": 20
+  "cooldown_seconds": 20,
+  "hit_damage": 2,
+  "knockback_strength": 1.0
 }

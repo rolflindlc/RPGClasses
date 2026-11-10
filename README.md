@@ -30,10 +30,13 @@ Hecho:
     teclas Z / X / C (configurables) y lista con cooldown en la esquina inferior derecha.
   - Equipo inicial irrompible al elegir clase; se retira del inventario al reiniciarla.
   - Paladín: Provocación, Guardia Firme y Baluarte. Bárbaro: Sed de Sangre, Embestida y Furia Berserker.
+  - Ranger: Conservación de Munición, Doble Salto, Disparo Pesado, zoom, velocidad de carga y de proyectil.
+  - Monje: Posturas Elementales, Desvío de Proyectiles y Paso Ligero (sin daño por caída).
 
-Aún sin efecto en el juego: habilidades de Mago, Pícaro, Ranger y Monje, mecánicas de subclase,
-integración con Iron's Spells y Epic Fight, zoom, velocidad de carga y de proyectil y resistencia
-a debuffs. Gastar puntos sigue haciéndose con comandos hasta que exista la pantalla de progreso.
+Aún sin efecto en el juego: habilidades de Mago y Pícaro, mecánicas de subclase, caminar sobre
+agua y lava del Monje, ballestas en Conservación de Munición, integración con Iron's Spells y
+Epic Fight y resistencia a debuffs. Gastar puntos sigue haciéndose con comandos hasta que exista
+la pantalla de progreso.
 
 Problema conocido: el muro de Escudos aumenta el desgaste, pero el cooldown alargado no se aplica.
 

@@ -8,10 +8,13 @@ import io.github.rpgclasses.player.PlayerClassDataProvider;
 import io.github.rpgclasses.registry.ModEffects;
 import io.github.rpgclasses.server.AbilityService;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
@@ -25,7 +28,9 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 
 /**
@@ -43,8 +48,13 @@ public final class CombatAbilities {
     public static final TagKey<EntityType<?>> TAUNT_IMMUNE = TagKey.create(Registries.ENTITY_TYPE, RpgClasses.id("taunt_immune"));
     public static final TagKey<EntityType<?>> STUN_IMMUNE = TagKey.create(Registries.ENTITY_TYPE, RpgClasses.id("stun_immune"));
 
-    /** Jugadores en plena Embestida -> tick de servidor en que termina. */
-    private static final Map<UUID, Integer> CHARGING_UNTIL = new HashMap<>();
+    /** Daño propio de Embestida: está en el tag no_proc, así que no recibe críticos ni otros bonus. */
+    public static final ResourceKey<DamageType> CHARGE_DAMAGE = ResourceKey.create(Registries.DAMAGE_TYPE, RpgClasses.id("charge"));
+
+    /** Estado de una Embestida en curso. */
+    private record Charging(int untilTick, Vec3 direction, Set<Integer> alreadyHit) {}
+
+    private static final Map<UUID, Charging> CHARGING = new HashMap<>();
     private static final int CHARGE_WINDOW_TICKS = 12;
     private static final int STUN_TICKS = 40;
 
@@ -95,7 +105,7 @@ public final class CombatAbilities {
         double speed = AbilityService.number(p, "distance", 6) * 0.25;
         player.setDeltaMovement(flat.normalize().scale(speed).add(0, 0.15, 0));
         player.hurtMarked = true; // envía la velocidad al cliente
-        CHARGING_UNTIL.put(player.getUUID(), player.server.getTickCount() + CHARGE_WINDOW_TICKS);
+        CHARGING.put(player.getUUID(), new Charging(player.server.getTickCount() + CHARGE_WINDOW_TICKS, flat.normalize(), new HashSet<>()));
         sound(player, SoundEvents.PLAYER_ATTACK_SWEEP);
         return true;
     }
@@ -106,23 +116,30 @@ public final class CombatAbilities {
         return true;
     }
 
-    /** Embestida: el primer enemigo alcanzado durante la carga queda aturdido. */
+    /** Embestida: cada enemigo alcanzado durante la carga recibe daño, empuje y aturdimiento (una vez). */
     @SubscribeEvent
     public void onPlayerTick(TickEvent.PlayerTickEvent event) {
         if (event.phase != TickEvent.Phase.END || !(event.player instanceof ServerPlayer player)) return;
-        Integer until = CHARGING_UNTIL.get(player.getUUID());
-        if (until == null) return;
-        if (player.server.getTickCount() > until || !player.isAlive()) {
-            CHARGING_UNTIL.remove(player.getUUID());
+        Charging charging = CHARGING.get(player.getUUID());
+        if (charging == null) return;
+        if (player.server.getTickCount() > charging.untilTick() || !player.isAlive()) {
+            CHARGING.remove(player.getUUID());
             return;
         }
-        for (LivingEntity target : player.level().getEntitiesOfClass(LivingEntity.class, player.getBoundingBox().inflate(0.6),
+        JsonObject p = AbilityService.params(CHARGE);
+        float damage = (float) AbilityService.number(p, "hit_damage", 2);
+        double knockback = AbilityService.number(p, "knockback_strength", 1.0);
+        Vec3 dir = charging.direction();
+        for (LivingEntity target : player.level().getEntitiesOfClass(LivingEntity.class, player.getBoundingBox().inflate(0.8),
                 e -> e != player && e.isAlive() && !e.isAlliedTo(player))) {
+            if (!charging.alreadyHit().add(target.getId())) continue;
+            if (damage > 0) {
+                target.hurt(new DamageSource(player.level().registryAccess().registryOrThrow(Registries.DAMAGE_TYPE)
+                        .getHolderOrThrow(CHARGE_DAMAGE), player), damage);
+            }
+            // knockback() empuja en sentido contrario al vector dado: se pasa la dirección de la carga invertida.
+            if (knockback > 0) target.knockback(knockback, -dir.x, -dir.z);
             stun(target, STUN_TICKS);
-            player.setDeltaMovement(Vec3.ZERO);
-            player.hurtMarked = true;
-            CHARGING_UNTIL.remove(player.getUUID());
-            break;
         }
     }
 
@@ -139,7 +156,7 @@ public final class CombatAbilities {
 
     @SubscribeEvent
     public void onLogout(PlayerEvent.PlayerLoggedOutEvent event) {
-        CHARGING_UNTIL.remove(event.getEntity().getUUID());
+        CHARGING.remove(event.getEntity().getUUID());
     }
 
     // --- Utilidades ---

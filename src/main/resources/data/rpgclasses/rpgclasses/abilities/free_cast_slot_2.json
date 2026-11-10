@@ -1,5 +1,6 @@
 {
   "schema_version": 1,
+  "passive": true,
   "charges": 2,
   "max_mana_cost": 125,
   "recharge_seconds": 120,

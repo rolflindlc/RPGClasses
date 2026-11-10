@@ -12,6 +12,9 @@ import io.github.rpgclasses.core.definition.Definitions.BranchDef;
 import io.github.rpgclasses.core.definition.Definitions.ClassDef;
 import io.github.rpgclasses.core.progression.ProgressState;
 import io.github.rpgclasses.core.progression.ProgressionRules;
+import io.github.rpgclasses.core.stat.StatCalculator;
+import io.github.rpgclasses.core.stat.StatMath;
+import io.github.rpgclasses.registry.ModAttributes;
 import io.github.rpgclasses.network.Packets.ClassAction.Action;
 import io.github.rpgclasses.player.PlayerClassData;
 import io.github.rpgclasses.player.PlayerClassDataProvider;
@@ -78,7 +81,10 @@ public final class ClassCommands {
                             c.getSource().sendSuccess(() -> Component.translatable("msg.rpgclasses.reset_done", target.getDisplayName()), true);
                             return 1;
                         })))
-                .then(Commands.literal("validar").executes(c -> validate(c.getSource()))));
+                .then(Commands.literal("validar").executes(c -> validate(c.getSource())))
+                .then(Commands.literal("debug")
+                        .then(Commands.literal("item").executes(c -> debugItem(c.getSource())))
+                        .then(Commands.literal("stats").executes(c -> debugStats(c.getSource())))));
     }
 
     private static int act(CommandContext<CommandSourceStack> ctx, Action action, String arg) throws CommandSyntaxException {
@@ -118,6 +124,40 @@ public final class ClassCommands {
             }
         }
         return 0;
+    }
+
+    /** Disciplina del objeto en la mano principal y la regla que la decide. */
+    private static int debugItem(CommandSourceStack source) throws CommandSyntaxException {
+        ServerPlayer player = source.getPlayerOrException();
+        WeaponClassifier.Classification c = WeaponClassifier.classify(player.getMainHandItem());
+        String discipline = c.discipline() == null ? "desarmado" : c.discipline();
+        source.sendSuccess(() -> Component.literal(discipline + " (" + c.rule() + ")"), false);
+        return 1;
+    }
+
+    /** Modificadores activos del mod, muros, crítico y desglose del último golpe. */
+    private static int debugStats(CommandSourceStack source) throws CommandSyntaxException {
+        ServerPlayer player = source.getPlayerOrException();
+        PlayerClassData data = PlayerClassDataProvider.get(player);
+        ClassDef def = data == null ? null : DefinitionStore.SERVER.classDef(data.state.classId);
+        if (def == null) {
+            source.sendFailure(ProgressionService.resultMessage(ProgressionRules.Result.NO_CLASS));
+            return 0;
+        }
+        StatEngine.recompute(player);
+        List<String> lines = new ArrayList<>(StatEngine.describe(player));
+        for (String discipline : new java.util.TreeSet<>(Ids.DISCIPLINES)) {
+            double wall = StatCalculator.wall(data.state, def, DefinitionStore.SERVER.subclassDef(data.state.subclassId), discipline);
+            if (wall > 0) lines.add(String.format(java.util.Locale.ROOT, "muro %s: -%.1f%%", discipline, wall * 100));
+        }
+        lines.add(String.format(java.util.Locale.ROOT, "crítico: %.0f%% x%.2f | sin armadura: %s",
+                StatMath.critChance(ServerConfig.BASE_CRIT_CHANCE.get(), def.critChanceBonus(), false) * 100,
+                StatMath.critMultiplier(ModAttributes.value(player, ModAttributes.CRIT_DAMAGE)),
+                StatEngine.isWearingArmor(player) ? "no" : "sí"));
+        String last = DamagePipeline.lastBreakdown(player);
+        if (last != null) lines.add("último golpe: " + last);
+        for (String line : lines) source.sendSuccess(() -> Component.literal(line), false);
+        return 1;
     }
 
     private ClassCommands() {}

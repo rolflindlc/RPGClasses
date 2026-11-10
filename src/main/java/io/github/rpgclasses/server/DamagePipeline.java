@@ -1,0 +1,180 @@
+package io.github.rpgclasses.server;
+
+import io.github.rpgclasses.RpgClasses;
+import io.github.rpgclasses.config.ServerConfig;
+import io.github.rpgclasses.core.Ids;
+import io.github.rpgclasses.core.definition.DefinitionStore;
+import io.github.rpgclasses.core.definition.Definitions.ClassDef;
+import io.github.rpgclasses.core.definition.Definitions.SubclassDef;
+import io.github.rpgclasses.core.progression.ProgressState;
+import io.github.rpgclasses.core.stat.StatCalculator;
+import io.github.rpgclasses.core.stat.StatMath;
+import io.github.rpgclasses.player.PlayerClassData;
+import io.github.rpgclasses.player.PlayerClassDataProvider;
+import io.github.rpgclasses.registry.ModAttributes;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.tags.DamageTypeTags;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageType;
+import net.minecraft.world.damagesource.DamageTypes;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraftforge.common.util.FakePlayer;
+import net.minecraftforge.event.entity.EntityJoinLevelEvent;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.event.entity.player.CriticalHitEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.eventbus.api.Event;
+import net.minecraftforge.eventbus.api.EventPriority;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.registries.ForgeRegistries;
+
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
+import java.util.UUID;
+
+/**
+ * Único punto donde el mod modifica el daño que inflige un jugador. Orden fijo:
+ * daño plano desarmado, bonus aditivos, bonus multiplicativos (Furia de Heridas), crítico, muro de disciplina.
+ * Las reducciones del defensor y las habilidades se añadirán aquí en la fase 4.
+ */
+public final class DamagePipeline {
+    /** Daño generado por el propio mod (Plaga, reflejo, réplicas...): no vuelve a pasar por el pipeline. */
+    public static final TagKey<DamageType> NO_PROC = TagKey.create(Registries.DAMAGE_TYPE, RpgClasses.id("no_proc"));
+
+    private static final String TAG_FACTOR = "rpgclasses.factor";
+    private static final String TAG_CAN_CRIT = "rpgclasses.can_crit";
+    private static final Map<UUID, String> LAST_BREAKDOWN = new HashMap<>();
+
+    /** Desglose del último golpe del jugador, para /clases debug stats. */
+    public static String lastBreakdown(ServerPlayer player) {
+        return LAST_BREAKDOWN.get(player.getUUID());
+    }
+
+    /** Con clase, el crítico es el del mod: se anula el crítico vanilla por salto para que no se acumulen. */
+    @SubscribeEvent
+    public void onVanillaCrit(CriticalHitEvent event) {
+        if (event.getEntity() instanceof ServerPlayer player && classOf(player) != null) {
+            event.setResult(Event.Result.DENY);
+        }
+    }
+
+    /**
+     * Al disparar se graba en el proyectil el bonus de arco y el muro del tirador:
+     * cambiar de arma con la flecha en vuelo no altera nada.
+     */
+    @SubscribeEvent
+    public void onProjectileSpawn(EntityJoinLevelEvent event) {
+        if (event.getLevel().isClientSide() || !(event.getEntity() instanceof Projectile projectile)) return;
+        if (!(projectile.getOwner() instanceof ServerPlayer shooter) || shooter instanceof FakePlayer) return;
+        CompoundTag tag = projectile.getPersistentData();
+        if (tag.contains(TAG_FACTOR)) return; // ya procesado (recarga de chunk)
+        ResourceLocation type = ForgeRegistries.ENTITY_TYPES.getKey(projectile.getType());
+        if (type != null && "irons_spellbooks".equals(type.getNamespace())) return; // los hechizos van por el muro de Magia
+
+        PlayerClassData data = PlayerClassDataProvider.get(shooter);
+        ClassDef classDef = data == null ? null : DefinitionStore.SERVER.classDef(data.state.classId);
+        if (classDef == null) return;
+        SubclassDef subDef = DefinitionStore.SERVER.subclassDef(data.state.subclassId);
+
+        double factor = StatMath.additiveFactor(ModAttributes.value(shooter, ModAttributes.BOW_DAMAGE))
+                * StatMath.wallDamageFactor(StatCalculator.wall(data.state, classDef, subDef, Ids.BOW));
+        tag.putDouble(TAG_FACTOR, factor);
+        if (projectile instanceof AbstractArrow arrow) {
+            // Solo las flechas con el arco tensado al máximo pueden ser críticas; el crítico vanilla se desactiva.
+            tag.putBoolean(TAG_CAN_CRIT, arrow.isCritArrow());
+            arrow.setCritArrow(false);
+        }
+    }
+
+    @SubscribeEvent(priority = EventPriority.HIGH)
+    public void onHurt(LivingHurtEvent event) {
+        DamageSource source = event.getSource();
+        if (source.is(NO_PROC) || event.getAmount() <= 0) return;
+        if (!(source.getEntity() instanceof ServerPlayer attacker) || attacker instanceof FakePlayer) return;
+        if (isSpell(source) || source.is(DamageTypes.THORNS) || source.is(DamageTypes.MAGIC)
+                || source.is(DamageTypes.INDIRECT_MAGIC) || source.is(DamageTypeTags.IS_EXPLOSION)
+                || source.is(DamageTypeTags.IS_FIRE)) return;
+
+        PlayerClassData data = PlayerClassDataProvider.get(attacker);
+        ClassDef classDef = data == null ? null : DefinitionStore.SERVER.classDef(data.state.classId);
+        if (classDef == null) return;
+        ProgressState s = data.state;
+        SubclassDef subDef = DefinitionStore.SERVER.subclassDef(s.subclassId);
+        LivingEntity target = event.getEntity();
+        Entity direct = source.getDirectEntity();
+
+        double damage = event.getAmount();
+        StringBuilder log = new StringBuilder(String.format(Locale.ROOT, "base %.2f", damage));
+        boolean canCrit;
+
+        if (direct instanceof Projectile projectile) {
+            CompoundTag tag = projectile.getPersistentData();
+            if (!tag.contains(TAG_FACTOR)) return;
+            damage *= tag.getDouble(TAG_FACTOR);
+            log.append(String.format(Locale.ROOT, " | proyectil (arco + muro) x%.2f", tag.getDouble(TAG_FACTOR)));
+            canCrit = tag.getBoolean(TAG_CAN_CRIT);
+        } else if (direct == attacker) {
+            WeaponClassifier.Classification weapon = WeaponClassifier.classify(attacker.getMainHandItem());
+            if (weapon.discipline() == null) {
+                double flat = ModAttributes.value(attacker, ModAttributes.UNARMED_DAMAGE);
+                damage += flat;
+                log.append(String.format(Locale.ROOT, " | desarmado +%.2f", flat));
+            } else {
+                double wall = StatCalculator.wall(s, classDef, subDef, weapon.discipline());
+                damage *= StatMath.wallDamageFactor(wall);
+                log.append(String.format(Locale.ROOT, " | muro %s x%.2f", weapon.discipline(), StatMath.wallDamageFactor(wall)));
+            }
+            canCrit = true;
+        } else {
+            return; // daño indirecto que no es ni golpe ni proyectil (explosiones, mascotas...)
+        }
+
+        double fury = StatCalculator.woundFuryBonus(s, classDef, attacker.getHealth() / attacker.getMaxHealth());
+        if (fury > 0) {
+            damage *= 1 + fury;
+            log.append(String.format(Locale.ROOT, " | furia x%.2f", 1 + fury));
+        }
+
+        if (canCrit) {
+            double chance = StatMath.critChance(ServerConfig.BASE_CRIT_CHANCE.get(), classDef.critChanceBonus(), false);
+            if (attacker.getRandom().nextDouble() < chance) {
+                double multiplier = StatMath.critMultiplier(ModAttributes.value(attacker, ModAttributes.CRIT_DAMAGE));
+                damage *= multiplier;
+                attacker.crit(target);
+                log.append(String.format(Locale.ROOT, " | CRÍTICO (%.0f%%) x%.2f", chance * 100, multiplier));
+            } else {
+                log.append(String.format(Locale.ROOT, " | sin crítico (%.0f%%)", chance * 100));
+            }
+        }
+
+        float result = StatMath.sanitizeDamage(damage);
+        log.append(String.format(Locale.ROOT, " = %.2f (antes de armadura)", result));
+        LAST_BREAKDOWN.put(attacker.getUUID(), log.toString());
+        event.setAmount(result);
+    }
+
+    @SubscribeEvent
+    public void onLogout(PlayerEvent.PlayerLoggedOutEvent event) {
+        LAST_BREAKDOWN.remove(event.getEntity().getUUID());
+    }
+
+    /** Los hechizos de Iron's usan tipos de daño de su namespace; su muro va por atributo, no por aquí. */
+    private static boolean isSpell(DamageSource source) {
+        return source.typeHolder().unwrapKey()
+                .map(key -> "irons_spellbooks".equals(key.location().getNamespace()))
+                .orElse(false);
+    }
+
+    private static ClassDef classOf(ServerPlayer player) {
+        PlayerClassData data = PlayerClassDataProvider.get(player);
+        return data == null ? null : DefinitionStore.SERVER.classDef(data.state.classId);
+    }
+}

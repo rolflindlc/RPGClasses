@@ -24,7 +24,7 @@ public final class ServerEvents {
     @SubscribeEvent
     public void onAttachCapabilities(AttachCapabilitiesEvent<Entity> event) {
         if (event.getObject() instanceof Player && !(event.getObject() instanceof FakePlayer)) {
-            event.addCapability(RpgClasses.id("class_data"), new PlayerClassDataProvider());
+            event.addCapability(RpgClasses.id("class_data"), new PlayerClassDataProvider((Player) event.getObject()));
         }
     }
 
@@ -37,6 +37,11 @@ public final class ServerEvents {
             PlayerClassData from = PlayerClassDataProvider.get(original);
             PlayerClassData to = PlayerClassDataProvider.get(event.getEntity());
             if (from != null && to != null) to.state.copyFrom(from.state);
+            if (event.getEntity() instanceof ServerPlayer player) {
+                StatEngine.recompute(player);
+                // Regreso del End: la vida se copió antes de tener los bonus de vida máxima.
+                if (!event.isWasDeath()) player.setHealth(Math.min(original.getHealth(), player.getMaxHealth()));
+            }
         } finally {
             original.invalidateCaps();
         }
@@ -55,7 +60,7 @@ public final class ServerEvents {
         } else {
             for (ServerPlayer player : event.getPlayerList().getPlayers()) {
                 Net.syncDefinitions(player);
-                Net.syncPlayer(player);
+                StatEngine.refresh(player);
             }
         }
     }
@@ -63,11 +68,17 @@ public final class ServerEvents {
     @SubscribeEvent
     public void onLogin(PlayerEvent.PlayerLoggedInEvent event) {
         sync(event.getEntity());
+        PlayerClassData data = PlayerClassDataProvider.get(event.getEntity());
+        if (data != null && data.savedHealth > event.getEntity().getHealth()) {
+            event.getEntity().setHealth(Math.min(data.savedHealth, event.getEntity().getMaxHealth()));
+        }
     }
 
     @SubscribeEvent
     public void onRespawn(PlayerEvent.PlayerRespawnEvent event) {
         sync(event.getEntity());
+        // Tras morir se reaparece con la vida máxima real (incluidos los bonus de clase).
+        if (!event.isEndConquered()) event.getEntity().setHealth(event.getEntity().getMaxHealth());
     }
 
     @SubscribeEvent
@@ -76,7 +87,7 @@ public final class ServerEvents {
     }
 
     private static void sync(Player player) {
-        if (player instanceof ServerPlayer sp && !(player instanceof FakePlayer)) Net.syncPlayer(sp);
+        if (player instanceof ServerPlayer sp && !(player instanceof FakePlayer)) StatEngine.refresh(sp);
     }
 
     /** Mientras no elige clase, el jugador no recibe daño (configurable). */

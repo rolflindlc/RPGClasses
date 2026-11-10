@@ -169,5 +169,7 @@ lang.update({
  f"msg.{NS}.validate_ok": "Todas las definiciones son válidas (%s clases).",
  f"msg.{NS}.reset_done": "Clase de %s reiniciada.",
 })
+attr_names = {"crit_damage":"Daño crítico","backstab_crit_damage":"Daño crítico desde invisibilidad","jump_bonus":"Altura de salto","unarmed_damage":"Daño desarmado","unarmed_knockback":"Empuje desarmado","bow_damage":"Daño con arco","draw_speed":"Velocidad de carga del arco","projectile_velocity":"Velocidad de proyectiles","zoom":"Zoom","mob_detection":"Detección por mobs","debuff_resistance":"Resistencia a efectos negativos","knockback_dealt":"Empuje infligido","healing_received":"Curación recibida","sneak_speed":"Velocidad agachado","spell_size":"Tamaño de conjuros"}
+for k, v in attr_names.items(): lang[f"attribute.{NS}.{k}"] = v
 for locale in ("es_es", "en_us"):  # en_us: copia provisional hasta traducir
     dump(os.path.join(out, "assets", NS, "lang", locale + ".json"), dict(sorted(lang.items())))

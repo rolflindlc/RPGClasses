@@ -12,6 +12,8 @@ public final class PlayerClassData {
     public static final int DATA_VERSION = 1;
 
     public final ProgressState state = new ProgressState();
+    /** Vida con la que se guardó el jugador; -1 si no se conoce. Solo se usa al iniciar sesión. */
+    public float savedHealth = -1f;
 
     public CompoundTag save() {
         CompoundTag tag = new CompoundTag();

@@ -17,6 +17,11 @@ public final class PlayerClassDataProvider implements ICapabilitySerializable<Co
     public static final Capability<PlayerClassData> CAPABILITY = CapabilityManager.get(new CapabilityToken<>() {});
 
     private final PlayerClassData data = new PlayerClassData();
+    private final Player player;
+
+    public PlayerClassDataProvider(Player player) {
+        this.player = player;
+    }
     private final LazyOptional<PlayerClassData> optional = LazyOptional.of(() -> data);
 
     public static void registerCapability(RegisterCapabilitiesEvent event) {
@@ -36,11 +41,16 @@ public final class PlayerClassDataProvider implements ICapabilitySerializable<Co
 
     @Override
     public CompoundTag serializeNBT() {
-        return data.save();
+        CompoundTag tag = data.save();
+        // Los bonus de vida máxima son transitorios: al cargar, vanilla recorta la vida a 20.
+        // Se guarda aquí la vida real para restaurarla tras recalcular las estadísticas al entrar.
+        tag.putFloat("health", player.getHealth());
+        return tag;
     }
 
     @Override
     public void deserializeNBT(CompoundTag tag) {
         data.load(tag);
+        data.savedHealth = tag.contains("health") ? tag.getFloat("health") : -1f;
     }
 }

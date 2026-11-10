@@ -4,20 +4,21 @@ Mod de clases, ramas y subclases definido por datapack. Diseño funcional en
 `documento_de_diseno_de_clases_v2.md` (rev. 2.6) y arquitectura en el documento
 "Arquitectura técnica del mod de clases".
 
-## Estado: fase 1 (núcleo)
+## Estado: fase 2 (estadísticas y daño)
 
 Hecho:
 
-- `core/`: lógica pura sin dependencias de Minecraft (costes de XP, reglas de progresión,
-  tope de subclase, respec, muros, críticos, topes, `LevelValue`, lectura y validación de JSON).
-- Datos: las 6 clases y las 18 subclases en `src/main/resources/data/rpgclasses/rpgclasses/`.
-- Forge: capability del jugador con copia al morir, carga del datapack con `/reload`,
-  sincronización al cliente, configuración de servidor y comandos.
-- Pruebas unitarias de `core/` y de los JSON reales (`src/test`).
+- **Fase 1, núcleo:** progresión con XP, ramas, subclase, respec ilimitado (pierde el 33% de la XP),
+  datos del jugador que sobreviven a la muerte, carga del datapack con `/reload`, red y comandos.
+- **Fase 2, estadísticas y daño:**
+  - Pasivas de atributo de ramas y subclases aplicadas en el juego (armadura, velocidad, vida, salto...).
+  - Pasivas "sin armadura" de Bárbaro y Monje; Coraza del Paladín; topes globales de velocidad y salto.
+  - Muros de Armadura, armas pesadas, ligeras y arco; muro de Magia si Iron's Spells está instalado.
+  - Críticos propios (30% base, Bárbaro 35%, Pícaro 25%) y Furia de Heridas.
+  - `/clases debug item` y `/clases debug stats`.
 
-Pendiente (siguientes fases): StatEngine y muros en juego, DamagePipeline, pantalla de selección
-y ficha de datos exactos, HUD, habilidades, kits iniciales e integración con Iron's Spells y Epic Fight.
-Hasta entonces las pasivas están definidas en los JSON pero **no tienen efecto en el juego**.
+Aún sin efecto en el juego: habilidades activas, mecánicas de subclase, muro de Escudos, zoom,
+velocidad de carga y de proyectil, resistencia a debuffs, kits iniciales y la pantalla de selección.
 
 ## Compilar y probar
 
@@ -43,6 +44,8 @@ Al entrar sin clase aparece en el chat la lista de clases (provisional hasta la 
 | `/clase reiniciar clase` / `subclase` | Respec ilimitado; cada uno pierde el 33% de la XP (configurable) |
 | `/clase info` | Estado actual y coste del siguiente nivel |
 | `/clases info <jugador>`, `/clases reset <jugador>`, `/clases validar` | Administración (nivel 2) |
+| `/clases debug item` | Disciplina del objeto en la mano y por qué |
+| `/clases debug stats` | Modificadores activos, muros, crítico y desglose del último golpe |
 
 Para tener XP de prueba: `/xp add @s 9000 points`.
 

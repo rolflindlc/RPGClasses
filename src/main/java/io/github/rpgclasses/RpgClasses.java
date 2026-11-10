@@ -4,7 +4,10 @@ import com.mojang.logging.LogUtils;
 import io.github.rpgclasses.config.ServerConfig;
 import io.github.rpgclasses.network.Net;
 import io.github.rpgclasses.player.PlayerClassDataProvider;
+import io.github.rpgclasses.registry.ModAttributes;
+import io.github.rpgclasses.server.AttributeHandlers;
 import io.github.rpgclasses.server.CombatTracker;
+import io.github.rpgclasses.server.DamagePipeline;
 import io.github.rpgclasses.server.ServerEvents;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
@@ -26,9 +29,13 @@ public class RpgClasses {
         ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, ServerConfig.SPEC);
         modBus.addListener(this::commonSetup);
         modBus.addListener(PlayerClassDataProvider::registerCapability);
+        ModAttributes.ATTRIBUTES.register(modBus);
+        modBus.addListener(ModAttributes::onAttributeModification);
 
         MinecraftForge.EVENT_BUS.register(new ServerEvents());
         MinecraftForge.EVENT_BUS.register(new CombatTracker());
+        MinecraftForge.EVENT_BUS.register(new DamagePipeline());
+        MinecraftForge.EVENT_BUS.register(new AttributeHandlers());
     }
 
     private void commonSetup(FMLCommonSetupEvent event) {

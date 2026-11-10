@@ -8,7 +8,6 @@ import io.github.rpgclasses.core.progression.ProgressState;
 import io.github.rpgclasses.core.progression.ProgressionRules;
 import io.github.rpgclasses.core.progression.ProgressionRules.Result;
 import io.github.rpgclasses.core.progression.XpMath;
-import io.github.rpgclasses.network.Net;
 import io.github.rpgclasses.network.Packets.ClassAction.Action;
 import io.github.rpgclasses.player.PlayerClassData;
 import io.github.rpgclasses.player.PlayerClassDataProvider;
@@ -48,7 +47,7 @@ public final class ProgressionService {
         } else {
             player.sendSystemMessage(resultMessage(result).withStyle(ChatFormatting.GREEN));
         }
-        Net.syncPlayer(player);
+        StatEngine.refresh(player);
         return result;
     }
 
@@ -102,7 +101,7 @@ public final class ProgressionService {
         PlayerClassData data = PlayerClassDataProvider.get(player);
         if (data == null) return;
         ProgressionRules.respecClass(data.state, 1.0);
-        Net.syncPlayer(player);
+        StatEngine.refresh(player);
     }
 
     public static long currentXp(ServerPlayer player) {

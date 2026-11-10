@@ -10,7 +10,6 @@ import io.github.rpgclasses.server.CombatTracker;
 import io.github.rpgclasses.server.DamagePipeline;
 import io.github.rpgclasses.server.ServerEvents;
 import io.github.rpgclasses.server.ShieldWall;
-import io.github.rpgclasses.server.ShieldHandler;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -39,7 +38,6 @@ public class RpgClasses {
         MinecraftForge.EVENT_BUS.register(new DamagePipeline());
         MinecraftForge.EVENT_BUS.register(new AttributeHandlers());
         MinecraftForge.EVENT_BUS.register(new ShieldWall());
-        MinecraftForge.EVENT_BUS.register(new ShieldHandler());
     }
 
     private void commonSetup(FMLCommonSetupEvent event) {

@@ -29,7 +29,15 @@ public final class StatCalculator {
     public record Key(String attribute, String operation) {}
 
     /** Estado del jugador que activa o desactiva condiciones. */
-    public record Context(boolean wearingArmor) {}
+    /**
+     * @param factors multiplicadores sobre el bonus total de un atributo (id -> factor), p. ej. las posturas del Monje.
+     *                Se aplican antes de los topes globales.
+     */
+    public record Context(boolean wearingArmor, Map<String, Double> factors) {
+        public Context(boolean wearingArmor) {
+            this(wearingArmor, Map.of());
+        }
+    }
 
     /** Suma de todos los modificadores de atributo de la clase y la subclase, con los topes globales aplicados. */
     public static Map<Key, Double> attributeTotals(ProgressState s, ClassDef c, SubclassDef sub, Context ctx) {
@@ -44,6 +52,9 @@ public final class StatCalculator {
             for (EffectDef e : sub.effects()) {
                 addAttributeEffect(totals, e, s.subclassLevel, ProgressionRules.SUBCLASS_MAX, ctx);
             }
+        }
+        if (!ctx.factors().isEmpty()) {
+            totals.replaceAll((key, value) -> value * ctx.factors().getOrDefault(key.attribute(), 1.0));
         }
         // Topes globales (regla 7): solo cuentan los bonus del mod.
         totals.computeIfPresent(new Key(MOVEMENT_SPEED, "multiply_base"), (k, v) -> StatMath.capSpeedBonus(v));

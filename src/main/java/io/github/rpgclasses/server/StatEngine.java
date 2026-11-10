@@ -1,6 +1,7 @@
 package io.github.rpgclasses.server;
 
 import io.github.rpgclasses.RpgClasses;
+import io.github.rpgclasses.content.MonkAbilities;
 import io.github.rpgclasses.core.Ids;
 import io.github.rpgclasses.core.definition.DefinitionStore;
 import io.github.rpgclasses.core.definition.Definitions.ClassDef;
@@ -61,7 +62,7 @@ public final class StatEngine {
         }
 
         // 1. Pasivas de atributo de ramas y subclase (con topes globales ya aplicados).
-        StatCalculator.Context ctx = new StatCalculator.Context(isWearingArmor(player));
+        StatCalculator.Context ctx = new StatCalculator.Context(isWearingArmor(player), MonkAbilities.stanceFactors(player));
         for (Map.Entry<StatCalculator.Key, Double> e : StatCalculator.attributeTotals(s, classDef, subDef, ctx).entrySet()) {
             apply(player, new ResourceLocation(e.getKey().attribute()), "stat", operation(e.getKey().operation()), e.getValue());
         }

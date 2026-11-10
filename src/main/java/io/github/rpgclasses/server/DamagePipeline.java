@@ -3,6 +3,7 @@ package io.github.rpgclasses.server;
 import io.github.rpgclasses.RpgClasses;
 import io.github.rpgclasses.config.ServerConfig;
 import io.github.rpgclasses.content.CombatAbilities;
+import io.github.rpgclasses.content.RangerAbilities;
 import io.github.rpgclasses.core.Ids;
 import io.github.rpgclasses.core.definition.DefinitionStore;
 import io.github.rpgclasses.core.definition.Definitions.ClassDef;
@@ -87,10 +88,20 @@ public final class DamagePipeline {
         if (classDef == null) return;
         SubclassDef subDef = DefinitionStore.SERVER.subclassDef(data.state.subclassId);
 
-        double factor = StatMath.additiveFactor(ModAttributes.value(shooter, ModAttributes.BOW_DAMAGE))
+        // Disparo Pesado/Letal suma de forma aditiva con el bonus de arco de la clase.
+        double[] shot = projectile instanceof AbstractArrow ? RangerAbilities.takeShot(shooter) : new double[] {0, 0};
+        double factor = StatMath.additiveFactor(ModAttributes.value(shooter, ModAttributes.BOW_DAMAGE), shot[0])
                 * StatMath.wallDamageFactor(StatCalculator.wall(data.state, classDef, subDef, Ids.BOW));
         tag.putDouble(TAG_FACTOR, factor);
         if (projectile instanceof AbstractArrow arrow) {
+            // Alcance: más velocidad sin más daño (el daño de una flecha vanilla depende de su velocidad).
+            double velocity = ModAttributes.value(shooter, ModAttributes.PROJECTILE_VELOCITY);
+            if (velocity > 0) {
+                arrow.setDeltaMovement(arrow.getDeltaMovement().scale(1 + velocity));
+                arrow.setBaseDamage(arrow.getBaseDamage() / (1 + velocity));
+            }
+            // Una flecha que no gastó munición no se puede recoger (evita duplicarlas).
+            if (shot[1] > 0) arrow.pickup = AbstractArrow.Pickup.CREATIVE_ONLY;
             // Solo las flechas con el arco tensado al máximo pueden ser críticas; el crítico vanilla se desactiva.
             tag.putBoolean(TAG_CAN_CRIT, arrow.isCritArrow());
             arrow.setCritArrow(false);

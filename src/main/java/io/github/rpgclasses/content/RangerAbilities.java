@@ -1,0 +1,146 @@
+package io.github.rpgclasses.content;
+
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import io.github.rpgclasses.core.Ids;
+import io.github.rpgclasses.registry.ModAttributes;
+import io.github.rpgclasses.server.AbilityService;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.BowItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.common.util.FakePlayer;
+import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
+import net.minecraftforge.event.entity.player.ArrowLooseEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+import java.util.UUID;
+
+/** Habilidades de la clase base de Ranger (y las mejoras de salto y disparo de sus subclases). */
+public final class RangerAbilities {
+    public static final String AMMO_CONSERVATION = Ids.NS + ":ammo_conservation";
+    public static final String DOUBLE_JUMP = Ids.NS + ":double_jump";
+    public static final String TRIPLE_JUMP = Ids.NS + ":triple_jump";
+    public static final String HEAVY_SHOT = Ids.NS + ":heavy_shot";
+    public static final String LETHAL_SHOT = Ids.NS + ":lethal_shot";
+
+    /** Ticks de uso con los que un arco vanilla queda tensado al máximo. */
+    private static final int FULL_DRAW_TICKS = 20;
+
+    private record PendingShot(int tick, double damageBonus, boolean ammoConserved) {}
+
+    /** Datos del disparo en curso: se escriben al soltar el arco y los recoge la flecha al aparecer, en el mismo tick. */
+    private static final Map<UUID, PendingShot> PENDING = new HashMap<>();
+    private static final Map<UUID, Integer> AIR_JUMPS_USED = new HashMap<>();
+
+    // --- Disparo ---
+
+    @SubscribeEvent
+    public void onArrowLoose(ArrowLooseEvent event) {
+        if (!(event.getEntity() instanceof ServerPlayer player) || player instanceof FakePlayer) return;
+        Set<String> unlocked = AbilityService.unlocked(player);
+
+        // Disparo Pesado / Letal: el contador empieza con el arco tensado al máximo.
+        double bonus = 0;
+        String shot = unlocked.contains(LETHAL_SHOT) ? LETHAL_SHOT : unlocked.contains(HEAVY_SHOT) ? HEAVY_SHOT : null;
+        if (shot != null) {
+            bonus = stageBonus(AbilityService.params(shot), (event.getCharge() - FULL_DRAW_TICKS) / 20.0);
+        }
+
+        // Conservación de Munición: se devuelve la flecha antes de que el arco la consuma.
+        boolean conserved = false;
+        if (unlocked.contains(AMMO_CONSERVATION) && !player.getAbilities().instabuild) {
+            double chance = AbilityService.number(AbilityService.params(AMMO_CONSERVATION), "chance", 0.33);
+            ItemStack ammo = player.getProjectile(event.getBow());
+            if (!ammo.isEmpty() && player.getRandom().nextDouble() < chance) {
+                ammo.grow(1);
+                conserved = true;
+            }
+        }
+        PENDING.put(player.getUUID(), new PendingShot(player.server.getTickCount(), bonus, conserved));
+    }
+
+    /** Bonus del último tramo alcanzado tras {@code heldSeconds} con el arco al máximo. */
+    static double stageBonus(JsonObject params, double heldSeconds) {
+        if (!params.has("thresholds_seconds") || !params.has("damage_bonuses")) return 0;
+        JsonArray thresholds = params.getAsJsonArray("thresholds_seconds");
+        JsonArray bonuses = params.getAsJsonArray("damage_bonuses");
+        double bonus = 0;
+        for (int i = 0; i < Math.min(thresholds.size(), bonuses.size()); i++) {
+            if (heldSeconds >= thresholds.get(i).getAsDouble()) bonus = bonuses.get(i).getAsDouble();
+        }
+        return bonus;
+    }
+
+    private static PendingShot takePending(ServerPlayer shooter) {
+        PendingShot p = PENDING.remove(shooter.getUUID());
+        return p != null && p.tick() == shooter.server.getTickCount() ? p : null;
+    }
+
+    /** Lo llama DamagePipeline al aparecer una flecha: {bonus aditivo de daño, 1 si la munición se conservó}. */
+    public static double[] takeShot(ServerPlayer shooter) {
+        PendingShot p = takePending(shooter);
+        return p == null ? new double[] {0, 0} : new double[] {p.damageBonus(), p.ammoConserved() ? 1 : 0};
+    }
+
+    /** Aviso sonoro al alcanzar cada tramo de Disparo Pesado, y reinicio de los saltos aéreos al tocar suelo. */
+    @SubscribeEvent
+    public void onPlayerTick(TickEvent.PlayerTickEvent event) {
+        if (event.phase != TickEvent.Phase.END || !(event.player instanceof ServerPlayer player)) return;
+        if (player.onGround() || player.isInWater() || player.onClimbable()) AIR_JUMPS_USED.remove(player.getUUID());
+
+        if (!player.isUsingItem() || !(player.getUseItem().getItem() instanceof BowItem)) return;
+        int held = player.getTicksUsingItem() - FULL_DRAW_TICKS;
+        if (held <= 0 || held % 10 != 0) return; // los tramos son múltiplos de medio segundo
+        Set<String> unlocked = AbilityService.unlocked(player);
+        String shot = unlocked.contains(LETHAL_SHOT) ? LETHAL_SHOT : unlocked.contains(HEAVY_SHOT) ? HEAVY_SHOT : null;
+        if (shot == null) return;
+        JsonObject params = AbilityService.params(shot);
+        if (!params.has("thresholds_seconds")) return;
+        JsonArray thresholds = params.getAsJsonArray("thresholds_seconds");
+        for (int i = 0; i < thresholds.size(); i++) {
+            if (Math.round(thresholds.get(i).getAsDouble() * 20) == held) {
+                player.playNotifySound(SoundEvents.NOTE_BLOCK_PLING.value(), SoundSource.PLAYERS, 0.6f, 1.0f + 0.25f * i);
+            }
+        }
+    }
+
+    /**
+     * Velocidad de carga: cada tick de uso del arco descuenta ticks extra. Sin estado: los ticks extra
+     * de este tick son la diferencia de la parte entera acumulada. Corre en cliente y servidor (atributo sincronizado).
+     */
+    @SubscribeEvent
+    public void onUseTick(LivingEntityUseItemEvent.Tick event) {
+        if (!(event.getEntity() instanceof Player player) || !(event.getItem().getItem() instanceof BowItem)) return;
+        double bonus = ModAttributes.value(player, ModAttributes.DRAW_SPEED);
+        if (bonus <= 0) return;
+        int used = event.getItem().getUseDuration() - event.getDuration();
+        int extra = (int) (Math.floor((used + 1) * bonus) - Math.floor(used * bonus));
+        if (extra > 0) event.setDuration(event.getDuration() - extra);
+    }
+
+    // --- Saltos aéreos ---
+
+    /** El cliente ya ha saltado; aquí se valida y se reinicia la distancia de caída. */
+    public static void onAirJump(ServerPlayer player) {
+        Set<String> unlocked = AbilityService.unlocked(player);
+        int allowed = (unlocked.contains(DOUBLE_JUMP) ? 1 : 0) + (unlocked.contains(TRIPLE_JUMP) ? 1 : 0);
+        int used = AIR_JUMPS_USED.getOrDefault(player.getUUID(), 0);
+        if (used >= allowed || player.onGround()) return; // sin validar: la caída se cuenta desde el salto original
+        AIR_JUMPS_USED.put(player.getUUID(), used + 1);
+        player.resetFallDistance();
+    }
+
+    @SubscribeEvent
+    public void onLogout(PlayerEvent.PlayerLoggedOutEvent event) {
+        PENDING.remove(event.getEntity().getUUID());
+        AIR_JUMPS_USED.remove(event.getEntity().getUUID());
+    }
+}

@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "passive": true,
+  "thresholds_seconds": [
+    2,
+    4,
+    6
+  ],
+  "damage_bonuses": [
+    0.25,
+    0.5,
+    1.0
+  ]
+}

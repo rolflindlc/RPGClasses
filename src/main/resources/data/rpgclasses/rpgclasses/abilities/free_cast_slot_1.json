@@ -1,0 +1,7 @@
+{
+  "schema_version": 1,
+  "charges": 1,
+  "max_mana_cost": 75,
+  "recharge_seconds": 120,
+  "icd_seconds": 3
+}

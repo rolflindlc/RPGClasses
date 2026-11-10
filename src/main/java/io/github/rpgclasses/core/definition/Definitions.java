@@ -46,5 +46,8 @@ public final class Definitions {
             List<EffectDef> effects,
             List<MilestoneDef> milestones) {}
 
+    /** Habilidad: sus números (cooldown, duración, porcentajes). El comportamiento lo pone el código (fase 4). */
+    public record AbilityDef(String id, JsonObject params) {}
+
     private Definitions() {}
 }

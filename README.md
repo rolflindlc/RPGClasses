@@ -18,8 +18,19 @@ Hecho:
   - Críticos propios (30% base, Bárbaro 35%, Pícaro 25%) y Furia de Heridas.
   - `/clases debug item` y `/clases debug stats`.
 
+- **Fase 3 (en curso), interfaz:**
+  - Pantalla de selección al entrar sin clase, con cuatro pestañas por clase: resumen, ramas y
+    habilidades, subclases y datos exactos. No se cierra hasta elegir (Esc abre el menú de pausa).
+  - La tecla K abre la misma pantalla en modo consulta.
+  - Los "datos exactos" se generan de los JSON del datapack, incluidas las habilidades
+    (`abilities/*.json`), así que siguen cualquier cambio de balance tras `/reload`.
+
 Aún sin efecto en el juego: habilidades activas, mecánicas de subclase, guardia de Epic Fight, zoom,
-velocidad de carga y de proyectil, resistencia a debuffs, kits iniciales y la pantalla de selección.
+velocidad de carga y de proyectil, resistencia a debuffs y kits iniciales. Gastar puntos sigue
+haciéndose con comandos hasta que exista la pantalla de progreso.
+
+Los textos y los JSON se generan con `python3 tools/gen_data.py src/main/resources`
+(números de habilidades y textos en `tools/texts.py`).
 
 ## Compilar y probar
 
@@ -34,7 +45,7 @@ Requiere JDK 17 y conexión a internet la primera vez.
 
 ## Probar la fase 1 en el juego
 
-Al entrar sin clase aparece en el chat la lista de clases (provisional hasta la fase 3); haz clic en una.
+Al entrar sin clase se abre la pantalla de selección.
 
 | Comando | Efecto |
 | --- | --- |

@@ -43,7 +43,7 @@ public class StatCalculatorTest {
 
     @BeforeClass
     public static void load() throws IOException {
-        STORE.load(read("classes"), read("subclasses"));
+        STORE.load(read("classes"), read("subclasses"), read("abilities"));
     }
 
     /** Jugador con todas las ramas a {@code branchPoints} y, opcionalmente, una subclase a {@code subLevel}. */

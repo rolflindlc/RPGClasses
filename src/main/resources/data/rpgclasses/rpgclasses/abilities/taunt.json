@@ -1,0 +1,8 @@
+{
+  "schema_version": 1,
+  "radius": 20,
+  "cooldown_seconds": 30,
+  "slow_seconds": 3,
+  "damage_reduction": 0.2,
+  "reduction_seconds": 4
+}

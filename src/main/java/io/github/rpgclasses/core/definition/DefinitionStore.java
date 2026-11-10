@@ -1,5 +1,6 @@
 package io.github.rpgclasses.core.definition;
 
+import io.github.rpgclasses.core.definition.Definitions.AbilityDef;
 import io.github.rpgclasses.core.definition.Definitions.ClassDef;
 import io.github.rpgclasses.core.definition.Definitions.SubclassDef;
 
@@ -21,15 +22,32 @@ public final class DefinitionStore {
     private record Snapshot(
             Map<String, ClassDef> classes,
             Map<String, SubclassDef> subclasses,
+            Map<String, AbilityDef> abilities,
             Map<String, List<String>> errors,
             Map<String, String> rawClasses,
-            Map<String, String> rawSubclasses) {}
+            Map<String, String> rawSubclasses,
+            Map<String, String> rawAbilities) {}
 
-    private volatile Snapshot snapshot = new Snapshot(Map.of(), Map.of(), Map.of(), Map.of(), Map.of());
+    private volatile Snapshot snapshot = new Snapshot(Map.of(), Map.of(), Map.of(), Map.of(), Map.of(), Map.of(), Map.of());
 
     /** Sustituye todo el contenido de una vez. Las clases inválidas quedan fuera y sus errores registrados. */
     public void load(Map<String, String> rawClasses, Map<String, String> rawSubclasses) {
+        load(rawClasses, rawSubclasses, null);
+    }
+
+    /** @param rawAbilities JSON de habilidades; null = sin habilidades y sin comprobar los hitos (solo pruebas). */
+    public void load(Map<String, String> rawClasses, Map<String, String> rawSubclasses, Map<String, String> rawAbilities) {
         Map<String, List<String>> errors = new TreeMap<>();
+        Map<String, AbilityDef> abilities = new LinkedHashMap<>();
+        if (rawAbilities != null) {
+            for (Map.Entry<String, String> e : new TreeMap<>(rawAbilities).entrySet()) {
+                try {
+                    abilities.put(e.getKey(), DefinitionParser.parseAbility(e.getKey(), e.getValue()));
+                } catch (RuntimeException ex) {
+                    errors.computeIfAbsent(e.getKey(), k -> new ArrayList<>()).add(String.valueOf(ex.getMessage()));
+                }
+            }
+        }
         Map<String, SubclassDef> subs = new LinkedHashMap<>();
         for (Map.Entry<String, String> e : new TreeMap<>(rawSubclasses).entrySet()) {
             try {
@@ -43,7 +61,7 @@ public final class DefinitionStore {
             List<String> errs = new ArrayList<>();
             try {
                 ClassDef def = DefinitionParser.parseClass(e.getKey(), e.getValue());
-                errs.addAll(DefinitionValidator.validateClass(def, subs));
+                errs.addAll(DefinitionValidator.validateClass(def, subs, rawAbilities == null ? null : abilities.keySet()));
                 if (errs.isEmpty()) classes.put(e.getKey(), def);
             } catch (RuntimeException ex) {
                 errs.add(String.valueOf(ex.getMessage()));
@@ -55,8 +73,8 @@ public final class DefinitionStore {
         for (ClassDef c : classes.values()) {
             for (String id : c.subclasses()) usable.put(id, subs.get(id));
         }
-        snapshot = new Snapshot(Map.copyOf(classes), Map.copyOf(usable), Map.copyOf(errors),
-                Map.copyOf(rawClasses), Map.copyOf(rawSubclasses));
+        snapshot = new Snapshot(Map.copyOf(classes), Map.copyOf(usable), Map.copyOf(abilities), Map.copyOf(errors),
+                Map.copyOf(rawClasses), Map.copyOf(rawSubclasses), rawAbilities == null ? Map.of() : Map.copyOf(rawAbilities));
     }
 
     public ClassDef classDef(String id) {
@@ -65,6 +83,14 @@ public final class DefinitionStore {
 
     public SubclassDef subclassDef(String id) {
         return id == null ? null : snapshot.subclasses().get(id);
+    }
+
+    public AbilityDef abilityDef(String id) {
+        return id == null ? null : snapshot.abilities().get(id);
+    }
+
+    public Map<String, String> rawAbilities() {
+        return snapshot.rawAbilities();
     }
 
     public Collection<String> classIds() {

@@ -9,6 +9,7 @@ import io.github.rpgclasses.server.AttributeHandlers;
 import io.github.rpgclasses.server.CombatTracker;
 import io.github.rpgclasses.server.DamagePipeline;
 import io.github.rpgclasses.server.ServerEvents;
+import io.github.rpgclasses.server.ShieldWall;
 import io.github.rpgclasses.server.ShieldHandler;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
@@ -37,6 +38,7 @@ public class RpgClasses {
         MinecraftForge.EVENT_BUS.register(new CombatTracker());
         MinecraftForge.EVENT_BUS.register(new DamagePipeline());
         MinecraftForge.EVENT_BUS.register(new AttributeHandlers());
+        MinecraftForge.EVENT_BUS.register(new ShieldWall());
         MinecraftForge.EVENT_BUS.register(new ShieldHandler());
     }
 

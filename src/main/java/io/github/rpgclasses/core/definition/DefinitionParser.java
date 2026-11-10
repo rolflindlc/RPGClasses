@@ -63,6 +63,10 @@ public final class DefinitionParser {
                 milestones(o));
     }
 
+    public static Definitions.AbilityDef parseAbility(String id, String json) {
+        return new Definitions.AbilityDef(id, root(json));
+    }
+
     private static JsonObject root(String json) {
         JsonElement el;
         try {

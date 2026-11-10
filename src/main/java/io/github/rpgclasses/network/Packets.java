@@ -21,14 +21,16 @@ public final class Packets {
     private static final int MAX_ID = 256;
 
     /** Servidor -> cliente: JSON en bruto de clases y subclases (el cliente lo interpreta igual que el servidor). */
-    public record SyncDefinitions(Map<String, String> classes, Map<String, String> subclasses) {
+    public record SyncDefinitions(Map<String, String> classes, Map<String, String> subclasses, Map<String, String> abilities) {
         public void encode(FriendlyByteBuf buf) {
             buf.writeMap(classes, (b, k) -> b.writeUtf(k, MAX_ID), (b, v) -> b.writeUtf(v, MAX_JSON));
             buf.writeMap(subclasses, (b, k) -> b.writeUtf(k, MAX_ID), (b, v) -> b.writeUtf(v, MAX_JSON));
+            buf.writeMap(abilities, (b, k) -> b.writeUtf(k, MAX_ID), (b, v) -> b.writeUtf(v, MAX_JSON));
         }
 
         public static SyncDefinitions decode(FriendlyByteBuf buf) {
             return new SyncDefinitions(
+                    buf.readMap(b -> b.readUtf(MAX_ID), b -> b.readUtf(MAX_JSON)),
                     buf.readMap(b -> b.readUtf(MAX_ID), b -> b.readUtf(MAX_JSON)),
                     buf.readMap(b -> b.readUtf(MAX_ID), b -> b.readUtf(MAX_JSON)));
         }

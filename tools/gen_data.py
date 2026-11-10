@@ -1,4 +1,6 @@
 import json, os, sys
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import texts
 out = sys.argv[1]
 NS = "rpgclasses"
 def R(x): return f"{NS}:{x}"
@@ -169,6 +171,22 @@ lang.update({
  f"msg.{NS}.validate_ok": "Todas las definiciones son válidas (%s clases).",
  f"msg.{NS}.reset_done": "Clase de %s reiniciada.",
 })
+for aid, params in texts.ABILITIES.items():
+    dump(os.path.join(base, "abilities", aid + ".json"), {"schema_version": 1, **params})
+for aid, (name, desc) in texts.ABILITY_TEXT.items():
+    lang[f"ability.{NS}.{aid}.name"] = name
+    lang[f"ability.{NS}.{aid}.desc"] = desc
+assert set(texts.ABILITY_TEXT) == set(texts.ABILITIES)
+for cid, desc in texts.CLASS_DESC.items(): lang[f"class.{NS}.{cid}.desc"] = desc
+for (cid, bid), desc in texts.BRANCH_DESC.items(): lang[f"branch.{NS}.{cid}.{bid}.desc"] = desc
+for sid, desc in texts.SUBCLASS_DESC.items(): lang[f"subclass.{NS}.{sid}.desc"] = desc
+for mid, name in texts.MECHANIC_NAMES.items(): lang[f"mechanic.{NS}.{mid}.name"] = name
+for did, name in texts.DISCIPLINE_NAMES.items(): lang[f"discipline.{NS}.{did}.name"] = name
+for key, label in texts.PARAMS.items(): lang[f"param.{NS}.{key}"] = label.split("|")[0]
+lang.update(texts.UI)
+# Unidades de los parámetros, para que el cliente sepa formatearlos: "%" porcentaje, "s" segundos.
+dump(os.path.join(out, "assets", NS, "rpgclasses_param_units.json"),
+     {k: v.split("|")[1] for k, v in sorted(texts.PARAMS.items()) if "|" in v})
 attr_names = {"crit_damage":"Daño crítico","backstab_crit_damage":"Daño crítico desde invisibilidad","jump_bonus":"Altura de salto","unarmed_damage":"Daño desarmado","unarmed_knockback":"Empuje desarmado","bow_damage":"Daño con arco","draw_speed":"Velocidad de carga del arco","projectile_velocity":"Velocidad de proyectiles","zoom":"Zoom","mob_detection":"Detección por mobs","debuff_resistance":"Resistencia a efectos negativos","knockback_dealt":"Empuje infligido","healing_received":"Curación recibida","sneak_speed":"Velocidad agachado","spell_size":"Tamaño de conjuros"}
 for k, v in attr_names.items(): lang[f"attribute.{NS}.{k}"] = v
 for locale in ("es_es", "en_us"):  # en_us: copia provisional hasta traducir

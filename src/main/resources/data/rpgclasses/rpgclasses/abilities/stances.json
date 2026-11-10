@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "switch_cooldown_seconds": 4,
+  "water_speed_factor": 2.0,
+  "water_damage_factor": 0.5,
+  "stone_armor_factor": 1.25,
+  "stone_speed_factor": 0.25,
+  "fire_damage_factor": 1.5,
+  "fire_armor_factor": 0.67
+}

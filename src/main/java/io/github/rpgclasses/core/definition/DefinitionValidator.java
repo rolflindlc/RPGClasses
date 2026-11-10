@@ -19,6 +19,11 @@ public final class DefinitionValidator {
 
     /** @return lista de errores de la clase y de sus subclases (vacía = válida). */
     public static List<String> validateClass(ClassDef c, Map<String, SubclassDef> subclasses) {
+        return validateClass(c, subclasses, null);
+    }
+
+    /** @param abilityIds habilidades existentes; null = no comprobar que los hitos apunten a habilidades reales. */
+    public static List<String> validateClass(ClassDef c, Map<String, SubclassDef> subclasses, Set<String> abilityIds) {
         List<String> errors = new ArrayList<>();
 
         if (c.branches().size() != ProgressionRules.BRANCHES) {
@@ -49,6 +54,7 @@ public final class DefinitionValidator {
         for (MilestoneDef m : c.milestones()) {
             if (m.subclassLevel()) errors.add("una clase base no puede tener hitos de nivel de subclase");
             validateMilestone(m, "", errors);
+            if (abilityIds != null && !abilityIds.contains(m.grants())) errors.add("hito que otorga una habilidad inexistente: " + m.grants());
             granted.add(m.grants());
         }
 
@@ -66,6 +72,7 @@ public final class DefinitionValidator {
             for (EffectDef e : s.effects()) validateEffect(e, ProgressionRules.SUBCLASS_MAX, where, errors);
             for (MilestoneDef m : s.milestones()) {
                 validateMilestone(m, where, errors);
+                if (abilityIds != null && !abilityIds.contains(m.grants())) errors.add(where + "hito que otorga una habilidad inexistente: " + m.grants());
                 if (m.upgrades() != null && !granted.contains(m.upgrades())) {
                     errors.add(where + "mejora '" + m.upgrades() + "', que ningún hito de la clase otorga");
                 }

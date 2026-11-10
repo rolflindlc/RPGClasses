@@ -2,6 +2,7 @@ package io.github.rpgclasses.server;
 
 import io.github.rpgclasses.core.Ids;
 import io.github.rpgclasses.core.stat.StatMath;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.ItemStack;
@@ -47,6 +48,9 @@ public final class ShieldWall {
             if (wall > 0) {
                 int ticks = (int) Math.round(VANILLA_DISABLE_TICKS * StatMath.shieldCooldownFactor(wall));
                 player.getCooldowns().addCooldown(shield.getItem(), ticks);
+                // Aviso sobre la barra de objetos: deja ver la penalización (y comprobar que se aplica).
+                player.displayClientMessage(Component.translatable("msg.rpgclasses.shield_disabled",
+                        String.format(java.util.Locale.ROOT, "%.1f", ticks / 20.0)), true);
             }
         }
     }

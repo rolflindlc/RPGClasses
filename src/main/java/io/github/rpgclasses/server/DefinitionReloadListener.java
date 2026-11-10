@@ -28,15 +28,18 @@ public final class DefinitionReloadListener extends SimpleJsonResourceReloadList
     protected void apply(Map<ResourceLocation, JsonElement> files, ResourceManager manager, ProfilerFiller profiler) {
         Map<String, String> classes = new HashMap<>();
         Map<String, String> subclasses = new HashMap<>();
+        Map<String, String> abilities = new HashMap<>();
         for (Map.Entry<ResourceLocation, JsonElement> e : files.entrySet()) {
             String path = e.getKey().getPath();
             if (path.startsWith("classes/")) {
                 classes.put(e.getKey().getNamespace() + ":" + path.substring("classes/".length()), e.getValue().toString());
             } else if (path.startsWith("subclasses/")) {
                 subclasses.put(e.getKey().getNamespace() + ":" + path.substring("subclasses/".length()), e.getValue().toString());
+            } else if (path.startsWith("abilities/")) {
+                abilities.put(e.getKey().getNamespace() + ":" + path.substring("abilities/".length()), e.getValue().toString());
             }
         }
-        DefinitionStore.SERVER.load(classes, subclasses);
+        DefinitionStore.SERVER.load(classes, subclasses, abilities);
 
         for (Map.Entry<String, List<String>> err : DefinitionStore.SERVER.errors().entrySet()) {
             for (String message : err.getValue()) {

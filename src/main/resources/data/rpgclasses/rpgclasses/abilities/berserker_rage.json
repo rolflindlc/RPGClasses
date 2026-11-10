@@ -1,0 +1,8 @@
+{
+  "schema_version": 1,
+  "duration_seconds": 10,
+  "attack_speed": 0.3,
+  "damage_bonus": 0.25,
+  "damage_taken": 0.2,
+  "cooldown_seconds": 60
+}

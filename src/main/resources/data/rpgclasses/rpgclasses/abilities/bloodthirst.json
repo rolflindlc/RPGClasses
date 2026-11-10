@@ -1,0 +1,6 @@
+{
+  "schema_version": 1,
+  "passive": true,
+  "heal_fraction": 0.1,
+  "icd_seconds": 1
+}

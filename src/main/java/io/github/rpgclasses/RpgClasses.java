@@ -1,6 +1,7 @@
 package io.github.rpgclasses;
 
 import com.mojang.logging.LogUtils;
+import io.github.rpgclasses.client.ClientSetup;
 import io.github.rpgclasses.config.ServerConfig;
 import io.github.rpgclasses.network.Net;
 import io.github.rpgclasses.player.PlayerClassDataProvider;
@@ -11,7 +12,9 @@ import io.github.rpgclasses.server.DamagePipeline;
 import io.github.rpgclasses.server.ServerEvents;
 import io.github.rpgclasses.server.ShieldWall;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
@@ -32,6 +35,9 @@ public class RpgClasses {
         modBus.addListener(PlayerClassDataProvider::registerCapability);
         ModAttributes.ATTRIBUTES.register(modBus);
         modBus.addListener(ModAttributes::onAttributeModification);
+
+        // Todo lo de cliente se registra aparte: el servidor dedicado nunca carga esas clases.
+        DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> ClientSetup.init(modBus));
 
         MinecraftForge.EVENT_BUS.register(new ServerEvents());
         MinecraftForge.EVENT_BUS.register(new CombatTracker());

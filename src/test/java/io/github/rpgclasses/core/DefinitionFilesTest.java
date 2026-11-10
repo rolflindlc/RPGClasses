@@ -46,7 +46,7 @@ public class DefinitionFilesTest {
 
     @BeforeClass
     public static void load() throws IOException {
-        STORE.load(read("classes"), read("subclasses"));
+        STORE.load(read("classes"), read("subclasses"), read("abilities"));
     }
 
     @Test

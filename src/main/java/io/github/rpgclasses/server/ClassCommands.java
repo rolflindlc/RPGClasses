@@ -130,7 +130,7 @@ public final class ClassCommands {
     private static int debugItem(CommandSourceStack source) throws CommandSyntaxException {
         ServerPlayer player = source.getPlayerOrException();
         WeaponClassifier.Classification c = WeaponClassifier.classify(player.getMainHandItem());
-        String discipline = c.discipline() == null ? "desarmado" : c.discipline();
+        String discipline = c.unarmed() ? "desarmado" : c.discipline() == null ? "ninguna" : c.discipline();
         source.sendSuccess(() -> Component.literal(discipline + " (" + c.rule() + ")"), false);
         return 1;
     }

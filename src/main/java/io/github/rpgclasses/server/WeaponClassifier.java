@@ -4,6 +4,8 @@ import io.github.rpgclasses.RpgClasses;
 import io.github.rpgclasses.core.Ids;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -17,7 +19,8 @@ import net.minecraftforge.common.ToolActions;
  * 1) tag de objeto rpgclasses:discipline/&lt;nombre&gt; (decisión del creador del pack),
  * 2) categoría de Epic Fight (fase 4, a través de su puente),
  * 3) tipo vanilla,
- * 4) sin clasificar: cuenta como arma ligera.
+ * 4) sin clasificar: si aporta daño de ataque cuenta como arma ligera; si no (una bola de nieve,
+ *    una armadura de caballo), no es un arma: ni muro ni bonus de desarmado.
  */
 public final class WeaponClassifier {
     public static final TagKey<Item> TAG_HEAVY = ItemTags.create(RpgClasses.id("discipline/heavy"));
@@ -25,11 +28,18 @@ public final class WeaponClassifier {
     public static final TagKey<Item> TAG_BOW = ItemTags.create(RpgClasses.id("discipline/bow"));
     public static final TagKey<Item> TAG_SHIELD = ItemTags.create(RpgClasses.id("discipline/shield"));
 
-    /** @param discipline id de disciplina, o null si es la mano vacía (desarmado). */
-    public record Classification(String discipline, String rule) {}
+    /**
+     * @param discipline id de disciplina, o null si no es un arma.
+     * @param unarmed true solo con la mano vacía: es lo único que recibe los bonus de desarmado.
+     */
+    public record Classification(String discipline, String rule, boolean unarmed) {
+        Classification(String discipline, String rule) {
+            this(discipline, rule, false);
+        }
+    }
 
     public static Classification classify(ItemStack stack) {
-        if (stack.isEmpty()) return new Classification(null, "mano vacía (desarmado)");
+        if (stack.isEmpty()) return new Classification(null, "mano vacía (desarmado)", true);
         if (stack.is(TAG_HEAVY)) return new Classification(Ids.HEAVY, "tag discipline/heavy");
         if (stack.is(TAG_LIGHT)) return new Classification(Ids.LIGHT, "tag discipline/light");
         if (stack.is(TAG_BOW)) return new Classification(Ids.BOW, "tag discipline/bow");
@@ -41,7 +51,10 @@ public final class WeaponClassifier {
         if (item instanceof TridentItem) return new Classification(Ids.LIGHT, "tipo vanilla: tridente (cuerpo a cuerpo)");
         if (item instanceof ProjectileWeaponItem) return new Classification(Ids.BOW, "tipo vanilla: arco o ballesta");
         if (stack.canPerformAction(ToolActions.SHIELD_BLOCK)) return new Classification(Ids.SHIELD, "bloquea como escudo");
-        return new Classification(Ids.LIGHT, "sin clasificar: cuenta como ligera");
+        if (stack.getAttributeModifiers(EquipmentSlot.MAINHAND).containsKey(Attributes.ATTACK_DAMAGE)) {
+            return new Classification(Ids.LIGHT, "sin clasificar con daño de ataque: cuenta como ligera");
+        }
+        return new Classification(null, "no es un arma: sin muro y sin bonus de desarmado");
     }
 
     private WeaponClassifier() {}

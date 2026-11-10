@@ -123,11 +123,11 @@ public final class DamagePipeline {
             canCrit = tag.getBoolean(TAG_CAN_CRIT);
         } else if (direct == attacker) {
             WeaponClassifier.Classification weapon = WeaponClassifier.classify(attacker.getMainHandItem());
-            if (weapon.discipline() == null) {
+            if (weapon.unarmed()) {
                 double flat = ModAttributes.value(attacker, ModAttributes.UNARMED_DAMAGE);
                 damage += flat;
                 log.append(String.format(Locale.ROOT, " | desarmado +%.2f", flat));
-            } else {
+            } else if (weapon.discipline() != null) {
                 double wall = StatCalculator.wall(s, classDef, subDef, weapon.discipline());
                 damage *= StatMath.wallDamageFactor(wall);
                 log.append(String.format(Locale.ROOT, " | muro %s x%.2f", weapon.discipline(), StatMath.wallDamageFactor(wall)));

@@ -48,7 +48,7 @@ Los valores marcados con **[MEDIR]** son objetivos de diseño que deben calibrar
    * **Armas ligeras:** espadas, dagas, katanas ligeras, lanzas.
    * **Arco:** arcos, ballestas y armas arrojadizas.
    * **Escudos:** escudos vanilla y de otros mods, usados en la mano secundaria.
-   * **Sin clasificar:** cualquier objeto sin categoría usado para golpear cuerpo a cuerpo cuenta como **arma ligera**. La mano vacía sigue siendo "desarmado".
+   * **Sin clasificar:** un objeto sin categoría que aporte daño de ataque (herramientas, armas de otros mods) cuenta como **arma ligera**. Los objetos que no son armas (una bola de nieve, comida) no reciben muro, pero tampoco los bonus de "desarmado", que exigen la mano vacía.
 
 9. **Críticos.** El mod usa una probabilidad de crítico propia y desactiva el crítico vanilla por salto (no existe en el modo batalla de Epic Fight). Valores **[MEDIR]**:
    * Probabilidad base: **30%** para todas las clases. Daño crítico base: **×1,5**; los bonus de daño crítico de las ramas se suman a ese multiplicador.

@@ -13,11 +13,12 @@ Hecho:
 - **Fase 2, estadísticas y daño:**
   - Pasivas de atributo de ramas y subclases aplicadas en el juego (armadura, velocidad, vida, salto...).
   - Pasivas "sin armadura" de Bárbaro y Monje; Coraza del Paladín; topes globales de velocidad y salto.
-  - Muros de Armadura, armas pesadas, ligeras y arco; muro de Magia si Iron's Spells está instalado.
+  - Muros de Armadura, armas pesadas, ligeras, arco y Escudos (desgaste y cooldown al ser desactivado
+    por un hacha); muro de Magia si Iron's Spells está instalado.
   - Críticos propios (30% base, Bárbaro 35%, Pícaro 25%) y Furia de Heridas.
   - `/clases debug item` y `/clases debug stats`.
 
-Aún sin efecto en el juego: habilidades activas, mecánicas de subclase, muro de Escudos, zoom,
+Aún sin efecto en el juego: habilidades activas, mecánicas de subclase, guardia de Epic Fight, zoom,
 velocidad de carga y de proyectil, resistencia a debuffs, kits iniciales y la pantalla de selección.
 
 ## Compilar y probar

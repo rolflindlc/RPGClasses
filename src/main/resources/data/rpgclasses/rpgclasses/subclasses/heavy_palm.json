@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "class": "rpgclasses:monk",
+  "display": {
+    "icon": "minecraft:piston"
+  },
+  "effects": [
+    {
+      "type": "rpgclasses:attribute",
+      "modifiers": [
+        {
+          "attribute": "rpgclasses:unarmed_knockback",
+          "to": 1.0,
+          "operation": "add"
+        },
+        {
+          "attribute": "forge:entity_reach",
+          "to": 0.5,
+          "operation": "multiply_base"
+        }
+      ]
+    },
+    {
+      "type": "rpgclasses:mechanic",
+      "id": "rpgclasses:disabling_fist",
+      "chance": 0.1,
+      "icd_seconds": 6,
+      "duration_seconds": 1.5
+    }
+  ],
+  "milestones": []
+}

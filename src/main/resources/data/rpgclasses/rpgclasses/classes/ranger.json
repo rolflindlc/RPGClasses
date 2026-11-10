@@ -1,0 +1,92 @@
+{
+  "schema_version": 1,
+  "display": {
+    "icon": "minecraft:bow",
+    "roles": [
+      "distancia",
+      "daño"
+    ]
+  },
+  "starting_kit": "rpgclasses:ranger",
+  "crit_chance_bonus": 0.0,
+  "walls": {
+    "rpgclasses:magic": 0.4,
+    "rpgclasses:heavy": 0.45,
+    "rpgclasses:light": 0.35,
+    "rpgclasses:shield": 0.3
+  },
+  "branches": [
+    {
+      "id": "aim",
+      "max_points": 10,
+      "effects": [
+        {
+          "type": "rpgclasses:attribute",
+          "modifiers": [
+            {
+              "attribute": "rpgclasses:bow_damage",
+              "to": 0.3,
+              "operation": "add"
+            },
+            {
+              "attribute": "rpgclasses:zoom",
+              "to": 0.35,
+              "operation": "add"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cadence",
+      "max_points": 10,
+      "effects": [
+        {
+          "type": "rpgclasses:attribute",
+          "modifiers": [
+            {
+              "attribute": "rpgclasses:draw_speed",
+              "to": 0.3,
+              "operation": "add"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "range",
+      "max_points": 10,
+      "effects": [
+        {
+          "type": "rpgclasses:attribute",
+          "modifiers": [
+            {
+              "attribute": "rpgclasses:projectile_velocity",
+              "to": 1.0,
+              "operation": "add"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "milestones": [
+    {
+      "total_level": 5,
+      "grants": "rpgclasses:ammo_conservation"
+    },
+    {
+      "total_level": 15,
+      "grants": "rpgclasses:double_jump"
+    },
+    {
+      "total_level": 30,
+      "grants": "rpgclasses:heavy_shot"
+    }
+  ],
+  "subclasses": [
+    "rpgclasses:beast_master",
+    "rpgclasses:agile_scout",
+    "rpgclasses:sniper"
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "class": "rpgclasses:mage",
+  "display": {
+    "icon": "minecraft:fire_charge"
+  },
+  "effects": [
+    {
+      "type": "rpgclasses:attribute",
+      "modifiers": [
+        {
+          "attribute": "rpgclasses:spell_size",
+          "to": 0.3,
+          "operation": "add"
+        }
+      ]
+    },
+    {
+      "type": "rpgclasses:mechanic",
+      "id": "rpgclasses:wild_magic",
+      "chance_per_mana": 0.0033,
+      "chance_cap": 0.5,
+      "replica_damage": 0.33,
+      "directions": 8,
+      "icd_ticks": 30
+    }
+  ],
+  "milestones": []
+}

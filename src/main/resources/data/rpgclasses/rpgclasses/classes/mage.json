@@ -1,0 +1,93 @@
+{
+  "schema_version": 1,
+  "display": {
+    "icon": "minecraft:enchanted_book",
+    "roles": [
+      "magia",
+      "daño"
+    ]
+  },
+  "starting_kit": "rpgclasses:mage",
+  "crit_chance_bonus": 0.0,
+  "walls": {
+    "rpgclasses:bow": 0.25,
+    "rpgclasses:heavy": 0.5,
+    "rpgclasses:light": 0.5,
+    "rpgclasses:armor": 0.25,
+    "rpgclasses:shield": 0.5
+  },
+  "branches": [
+    {
+      "id": "power",
+      "max_points": 10,
+      "effects": [
+        {
+          "type": "rpgclasses:attribute",
+          "modifiers": [
+            {
+              "attribute": "irons_spellbooks:spell_power",
+              "to": 0.5,
+              "operation": "multiply_base"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "reserve",
+      "max_points": 10,
+      "effects": [
+        {
+          "type": "rpgclasses:attribute",
+          "modifiers": [
+            {
+              "attribute": "irons_spellbooks:max_mana",
+              "to": 300,
+              "operation": "add"
+            },
+            {
+              "attribute": "irons_spellbooks:mana_regen",
+              "to": 0.4,
+              "operation": "multiply_base"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cadence",
+      "max_points": 10,
+      "effects": [
+        {
+          "type": "rpgclasses:attribute",
+          "modifiers": [
+            {
+              "attribute": "irons_spellbooks:cooldown_reduction",
+              "to": 0.25,
+              "operation": "multiply_base"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "milestones": [
+    {
+      "total_level": 5,
+      "grants": "rpgclasses:free_cast_slot_1"
+    },
+    {
+      "total_level": 15,
+      "grants": "rpgclasses:free_cast_slot_2"
+    },
+    {
+      "total_level": 30,
+      "grants": "rpgclasses:free_cast_slot_3"
+    }
+  ],
+  "subclasses": [
+    "rpgclasses:chaotic_evoker",
+    "rpgclasses:elementalist",
+    "rpgclasses:battle_mage"
+  ]
+}

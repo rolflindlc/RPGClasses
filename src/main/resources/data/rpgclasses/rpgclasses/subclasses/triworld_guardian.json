@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "class": "rpgclasses:monk",
+  "display": {
+    "icon": "minecraft:heart_of_the_sea"
+  },
+  "effects": [
+    {
+      "type": "rpgclasses:mechanic",
+      "id": "rpgclasses:stance_affinity",
+      "fire_damage_reduction": {
+        "to": 0.75
+      },
+      "projectile_reduction": 0.33,
+      "melee_reduction": 0.2
+    },
+    {
+      "type": "rpgclasses:mechanic",
+      "id": "rpgclasses:elemental_manifest",
+      "ignite_seconds": 6,
+      "swim_bonus": 1.0,
+      "reflect_fraction": 0.15
+    }
+  ],
+  "milestones": []
+}

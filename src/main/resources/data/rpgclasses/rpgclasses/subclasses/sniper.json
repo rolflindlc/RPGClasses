@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "class": "rpgclasses:ranger",
+  "display": {
+    "icon": "minecraft:spyglass"
+  },
+  "effects": [
+    {
+      "type": "rpgclasses:attribute",
+      "modifiers": [
+        {
+          "attribute": "rpgclasses:projectile_velocity",
+          "to": 2.0,
+          "operation": "add"
+        },
+        {
+          "attribute": "rpgclasses:bow_damage",
+          "to": 0.45,
+          "operation": "add"
+        }
+      ]
+    },
+    {
+      "type": "rpgclasses:mechanic",
+      "id": "rpgclasses:draw_speed_cut",
+      "fraction_removed": {
+        "to": 1.0
+      }
+    }
+  ],
+  "milestones": [
+    {
+      "subclass_level": 1,
+      "grants": "rpgclasses:lethal_shot",
+      "upgrades": "rpgclasses:heavy_shot"
+    }
+  ]
+}

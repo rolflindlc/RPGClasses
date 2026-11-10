@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "class": "rpgclasses:paladin",
+  "display": {
+    "icon": "minecraft:obsidian"
+  },
+  "effects": [
+    {
+      "type": "rpgclasses:attribute",
+      "modifiers": [
+        {
+          "attribute": "minecraft:generic.knockback_resistance",
+          "to": 1.0,
+          "operation": "add"
+        }
+      ]
+    },
+    {
+      "type": "rpgclasses:mechanic",
+      "id": "rpgclasses:tenacity",
+      "window_ticks": 20,
+      "reduction": 0.5
+    }
+  ],
+  "milestones": [
+    {
+      "subclass_level": 5,
+      "grants": "rpgclasses:incorruptible_bulwark",
+      "upgrades": "rpgclasses:bulwark"
+    }
+  ]
+}

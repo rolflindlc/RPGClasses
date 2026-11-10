@@ -1,0 +1,96 @@
+{
+  "schema_version": 1,
+  "display": {
+    "icon": "minecraft:iron_axe",
+    "roles": [
+      "melee",
+      "daño"
+    ]
+  },
+  "starting_kit": "rpgclasses:barbarian",
+  "crit_chance_bonus": 0.05,
+  "walls": {
+    "rpgclasses:magic": 0.6,
+    "rpgclasses:bow": 0.45,
+    "rpgclasses:light": 0.45
+  },
+  "armor_rule": "disables_unarmored_passives",
+  "branches": [
+    {
+      "id": "fury",
+      "max_points": 10,
+      "effects": [
+        {
+          "type": "rpgclasses:wound_fury",
+          "per_missing_health_pct": {
+            "from": 0.001,
+            "to": 0.01
+          },
+          "cap": 0.75
+        }
+      ]
+    },
+    {
+      "id": "brutality",
+      "max_points": 10,
+      "effects": [
+        {
+          "type": "rpgclasses:attribute",
+          "modifiers": [
+            {
+              "attribute": "rpgclasses:crit_damage",
+              "to": 1.0,
+              "operation": "add"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "iron_skin",
+      "max_points": 10,
+      "effects": [
+        {
+          "type": "rpgclasses:attribute",
+          "condition": "rpgclasses:no_armor",
+          "modifiers": [
+            {
+              "attribute": "minecraft:generic.armor",
+              "to": 16,
+              "operation": "add"
+            },
+            {
+              "attribute": "minecraft:generic.armor_toughness",
+              "to": 6,
+              "operation": "add"
+            },
+            {
+              "attribute": "minecraft:generic.movement_speed",
+              "to": 0.25,
+              "operation": "multiply_base"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "milestones": [
+    {
+      "total_level": 5,
+      "grants": "rpgclasses:bloodthirst"
+    },
+    {
+      "total_level": 15,
+      "grants": "rpgclasses:charge"
+    },
+    {
+      "total_level": 30,
+      "grants": "rpgclasses:berserker_rage"
+    }
+  ],
+  "subclasses": [
+    "rpgclasses:indestructible",
+    "rpgclasses:suicidal_berserker",
+    "rpgclasses:plague_corruptor"
+  ]
+}

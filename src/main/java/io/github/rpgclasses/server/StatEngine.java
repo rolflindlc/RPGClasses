@@ -85,6 +85,15 @@ public final class StatEngine {
         clampHealth(player);
     }
 
+    /** Muro efectivo (0..1) del jugador en una disciplina; 0 si no tiene clase. */
+    public static double wall(ServerPlayer player, String discipline) {
+        PlayerClassData data = PlayerClassDataProvider.get(player);
+        if (data == null) return 0;
+        ClassDef classDef = DefinitionStore.SERVER.classDef(data.state.classId);
+        if (classDef == null) return 0;
+        return StatCalculator.wall(data.state, classDef, DefinitionStore.SERVER.subclassDef(data.state.subclassId), discipline);
+    }
+
     /** "Sin armadura" = ninguna pieza en las ranuras de armadura que aporte armadura (élitros o calabazas no cuentan). */
     public static boolean isWearingArmor(ServerPlayer player) {
         for (EquipmentSlot slot : ARMOR_SLOTS) {

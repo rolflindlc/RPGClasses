@@ -62,7 +62,11 @@ public final class ProgressionService {
                 if (ServerConfig.DISABLED_CLASSES.get().contains(arg)) return Result.CLASS_DISABLED;
                 ClassDef chosen = defs.classDef(arg);
                 Result r = ProgressionRules.checkChooseClass(s, chosen);
-                if (r.ok()) ProgressionRules.chooseClass(s, chosen);
+                if (r.ok()) {
+                    ProgressionRules.chooseClass(s, chosen);
+                    KitService.grant(player, chosen);
+                    s.kitGranted = true;
+                }
                 return r;
             }
             case SPEND_BRANCH -> {
@@ -89,7 +93,10 @@ public final class ProgressionService {
             }
             case RESPEC_CLASS -> {
                 Result r = ProgressionRules.checkRespecClass(s, CombatTracker.inCombat(player));
-                if (r.ok()) setXp(player, xp + ProgressionRules.respecClass(s, ServerConfig.RESPEC_XP_LOSS.get()));
+                if (r.ok()) {
+                    setXp(player, xp + ProgressionRules.respecClass(s, ServerConfig.RESPEC_XP_LOSS.get()));
+                    KitService.removeAll(player);
+                }
                 return r;
             }
         }
@@ -101,6 +108,7 @@ public final class ProgressionService {
         PlayerClassData data = PlayerClassDataProvider.get(player);
         if (data == null) return;
         ProgressionRules.respecClass(data.state, 1.0);
+        KitService.removeAll(player);
         StatEngine.refresh(player);
     }
 

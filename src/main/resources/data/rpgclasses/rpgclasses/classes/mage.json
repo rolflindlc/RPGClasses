@@ -7,7 +7,24 @@
       "daño"
     ]
   },
-  "starting_kit": "rpgclasses:mage",
+  "starting_kit": [
+    {
+      "item": "minecraft:leather_helmet",
+      "slot": "head"
+    },
+    {
+      "item": "minecraft:leather_chestplate",
+      "slot": "chest"
+    },
+    {
+      "item": "minecraft:leather_leggings",
+      "slot": "legs"
+    },
+    {
+      "item": "minecraft:leather_boots",
+      "slot": "feet"
+    }
+  ],
   "crit_chance_bonus": 0.0,
   "walls": {
     "rpgclasses:bow": 0.25,

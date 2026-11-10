@@ -66,7 +66,7 @@ public final class ClassPages {
         if (!c.roles().isEmpty()) {
             out.add(Component.translatable("ui.rpgclasses.roles", String.join(", ", c.roles())).withStyle(ChatFormatting.GRAY));
         }
-        out.add(Component.translatable(c.startingKit() == null ? "ui.rpgclasses.no_kit" : "ui.rpgclasses.kit").withStyle(ChatFormatting.GRAY));
+        out.add(Component.translatable(c.startingKit().isEmpty() ? "ui.rpgclasses.no_kit" : "ui.rpgclasses.kit").withStyle(ChatFormatting.GRAY));
         List<String> affine = new ArrayList<>();
         for (String d : new TreeSet<>(Ids.DISCIPLINES)) {
             if (!c.walls().containsKey(d) && !(Ids.ARMOR.equals(d) && c.armorDisablesPassives())) affine.add(discipline(d).getString());

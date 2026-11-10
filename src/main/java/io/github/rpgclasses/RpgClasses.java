@@ -3,9 +3,11 @@ package io.github.rpgclasses;
 import com.mojang.logging.LogUtils;
 import io.github.rpgclasses.client.ClientSetup;
 import io.github.rpgclasses.config.ServerConfig;
+import io.github.rpgclasses.content.CombatAbilities;
 import io.github.rpgclasses.network.Net;
 import io.github.rpgclasses.player.PlayerClassDataProvider;
 import io.github.rpgclasses.registry.ModAttributes;
+import io.github.rpgclasses.registry.ModEffects;
 import io.github.rpgclasses.server.AttributeHandlers;
 import io.github.rpgclasses.server.CombatTracker;
 import io.github.rpgclasses.server.DamagePipeline;
@@ -34,6 +36,8 @@ public class RpgClasses {
         modBus.addListener(this::commonSetup);
         modBus.addListener(PlayerClassDataProvider::registerCapability);
         ModAttributes.ATTRIBUTES.register(modBus);
+        ModEffects.EFFECTS.register(modBus);
+        CombatAbilities.register();
         modBus.addListener(ModAttributes::onAttributeModification);
 
         // Todo lo de cliente se registra aparte: el servidor dedicado nunca carga esas clases.
@@ -43,6 +47,7 @@ public class RpgClasses {
         MinecraftForge.EVENT_BUS.register(new CombatTracker());
         MinecraftForge.EVENT_BUS.register(new DamagePipeline());
         MinecraftForge.EVENT_BUS.register(new AttributeHandlers());
+        MinecraftForge.EVENT_BUS.register(new CombatAbilities());
         MinecraftForge.EVENT_BUS.register(new ShieldWall());
     }
 

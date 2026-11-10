@@ -7,7 +7,28 @@
       "sigilo"
     ]
   },
-  "starting_kit": "rpgclasses:rogue",
+  "starting_kit": [
+    {
+      "item": "minecraft:iron_sword",
+      "slot": "mainhand"
+    },
+    {
+      "item": "minecraft:leather_helmet",
+      "slot": "head"
+    },
+    {
+      "item": "minecraft:leather_chestplate",
+      "slot": "chest"
+    },
+    {
+      "item": "minecraft:leather_leggings",
+      "slot": "legs"
+    },
+    {
+      "item": "minecraft:leather_boots",
+      "slot": "feet"
+    }
+  ],
   "crit_chance_bonus": -0.05,
   "walls": {
     "rpgclasses:magic": 0.45,

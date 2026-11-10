@@ -43,7 +43,7 @@ public final class DefinitionParser {
                 id,
                 optString(display, "icon", "minecraft:barrier"),
                 strings(display, "roles"),
-                optString(o, "starting_kit", null),
+                kit(o),
                 o.has("crit_chance_bonus") ? o.get("crit_chance_bonus").getAsDouble() : 0.0,
                 Map.copyOf(walls),
                 "disables_unarmored_passives".equals(optString(o, "armor_rule", "")),
@@ -79,6 +79,17 @@ public final class DefinitionParser {
         int v = o.has("schema_version") ? o.get("schema_version").getAsInt() : SCHEMA_VERSION;
         if (v != SCHEMA_VERSION) throw new IllegalArgumentException("schema_version " + v + " no soportada");
         return o;
+    }
+
+    private static List<Definitions.KitItem> kit(JsonObject o) {
+        List<Definitions.KitItem> out = new ArrayList<>();
+        if (!o.has("starting_kit")) return List.of();
+        for (JsonElement ke : array(o, "starting_kit")) {
+            JsonObject k = ke.getAsJsonObject();
+            out.add(new Definitions.KitItem(string(k, "item"),
+                    k.has("count") ? k.get("count").getAsInt() : 1, optString(k, "slot", "inventory")));
+        }
+        return List.copyOf(out);
     }
 
     private static List<EffectDef> effects(JsonObject holder) {

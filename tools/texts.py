@@ -208,4 +208,13 @@ UI = {
     "key.rpgclasses.open": "Abrir el libro de clases",
     "key.categories.rpgclasses": "RPG Classes",
     "msg.rpgclasses.shield_disabled": "Escudo desactivado %s s",
+    "msg.rpgclasses.ability_not_ready": "%s todavía no está disponible en esta versión del mod.",
+    "msg.rpgclasses.ability_cooldown": "%s: %s s",
+    "msg.rpgclasses.ability_used": "%s",
+    "key.rpgclasses.ability_1": "Habilidad 1",
+    "key.rpgclasses.ability_2": "Habilidad 2",
+    "key.rpgclasses.ability_3": "Habilidad 3",
+    "effect.rpgclasses.bulwark": "Baluarte",
+    "effect.rpgclasses.taunt_guard": "Provocación",
+    "effect.rpgclasses.berserker_rage": "Furia Berserker",
 }

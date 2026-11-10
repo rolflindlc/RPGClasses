@@ -36,7 +36,10 @@ public final class ServerEvents {
         try {
             PlayerClassData from = PlayerClassDataProvider.get(original);
             PlayerClassData to = PlayerClassDataProvider.get(event.getEntity());
-            if (from != null && to != null) to.state.copyFrom(from.state);
+            if (from != null && to != null) {
+                to.state.copyFrom(from.state);
+                to.cooldowns.putAll(from.cooldowns);
+            }
             if (event.getEntity() instanceof ServerPlayer player) {
                 StatEngine.recompute(player);
                 // Regreso del End: la vida se copió antes de tener los bonus de vida máxima.

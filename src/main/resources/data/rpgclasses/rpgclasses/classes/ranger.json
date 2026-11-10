@@ -7,7 +7,33 @@
       "daño"
     ]
   },
-  "starting_kit": "rpgclasses:ranger",
+  "starting_kit": [
+    {
+      "item": "minecraft:bow",
+      "slot": "mainhand"
+    },
+    {
+      "item": "minecraft:arrow",
+      "count": 64,
+      "slot": "inventory"
+    },
+    {
+      "item": "minecraft:leather_helmet",
+      "slot": "head"
+    },
+    {
+      "item": "minecraft:leather_chestplate",
+      "slot": "chest"
+    },
+    {
+      "item": "minecraft:leather_leggings",
+      "slot": "legs"
+    },
+    {
+      "item": "minecraft:leather_boots",
+      "slot": "feet"
+    }
+  ],
   "crit_chance_bonus": 0.0,
   "walls": {
     "rpgclasses:magic": 0.4,

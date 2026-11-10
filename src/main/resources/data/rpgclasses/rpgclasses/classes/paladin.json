@@ -7,7 +7,28 @@
       "apoyo"
     ]
   },
-  "starting_kit": "rpgclasses:paladin",
+  "starting_kit": [
+    {
+      "item": "minecraft:stone_sword",
+      "slot": "mainhand"
+    },
+    {
+      "item": "minecraft:chainmail_helmet",
+      "slot": "head"
+    },
+    {
+      "item": "minecraft:chainmail_chestplate",
+      "slot": "chest"
+    },
+    {
+      "item": "minecraft:chainmail_leggings",
+      "slot": "legs"
+    },
+    {
+      "item": "minecraft:chainmail_boots",
+      "slot": "feet"
+    }
+  ],
   "crit_chance_bonus": 0.0,
   "walls": {
     "rpgclasses:magic": 0.75,

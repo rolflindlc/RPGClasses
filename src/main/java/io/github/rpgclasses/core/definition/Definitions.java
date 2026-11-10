@@ -21,11 +21,14 @@ public final class Definitions {
      */
     public record MilestoneDef(int level, boolean subclassLevel, String grants, String upgrades) {}
 
+    /** Objeto del equipo inicial. slot: mainhand, offhand, head, chest, legs, feet o inventory. */
+    public record KitItem(String item, int count, String slot) {}
+
     public record ClassDef(
             String id,
             String icon,
             List<String> roles,
-            String startingKit,
+            List<KitItem> startingKit,
             double critChanceBonus,
             Map<String, Double> walls,
             boolean armorDisablesPassives,

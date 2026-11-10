@@ -39,8 +39,10 @@ public final class ProgressionService {
         }
         long delta = currentXp(player) - xpBefore;
         if (delta < 0) {
-            player.sendSystemMessage(Component.translatable("msg.rpgclasses.xp_charged", -delta,
-                    ProgressionRules.nextCost(s, ServerConfig.XP_COST_MULTIPLIER.get())));
+            player.sendSystemMessage(ProgressionRules.isMaxed(s)
+                    ? Component.translatable("msg.rpgclasses.xp_charged_max", -delta)
+                    : Component.translatable("msg.rpgclasses.xp_charged", -delta,
+                            ProgressionRules.nextCost(s, ServerConfig.XP_COST_MULTIPLIER.get())));
         } else if (delta > 0) {
             player.sendSystemMessage(Component.translatable("msg.rpgclasses.xp_refunded", delta));
         } else {
@@ -83,25 +85,23 @@ public final class ProgressionService {
             }
             case RESPEC_SUBCLASS -> {
                 Result r = ProgressionRules.checkRespecSubclass(s, CombatTracker.inCombat(player));
-                if (r.ok()) setXp(player, xp + ProgressionRules.respecSubclass(s));
+                if (r.ok()) setXp(player, xp + ProgressionRules.respecSubclass(s, mult, ServerConfig.RESPEC_XP_LOSS.get()));
                 return r;
             }
             case RESPEC_CLASS -> {
                 Result r = ProgressionRules.checkRespecClass(s, CombatTracker.inCombat(player));
-                if (r.ok()) setXp(player, xp + ProgressionRules.respecClass(s));
+                if (r.ok()) setXp(player, xp + ProgressionRules.respecClass(s, ServerConfig.RESPEC_XP_LOSS.get()));
                 return r;
             }
         }
         return Result.OK;
     }
 
-    /** Reinicio administrativo: sin comprobación de combate, sin devolver XP y sin gastar el primer respec. */
+    /** Reinicio administrativo: sin comprobación de combate y sin devolver XP. */
     public static void adminReset(ServerPlayer player) {
         PlayerClassData data = PlayerClassDataProvider.get(player);
         if (data == null) return;
-        boolean firstRespecUsed = data.state.firstRespecUsed;
-        ProgressionRules.respecClass(data.state);
-        data.state.firstRespecUsed = firstRespecUsed;
+        ProgressionRules.respecClass(data.state, 1.0);
         Net.syncPlayer(player);
     }
 

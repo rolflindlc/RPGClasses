@@ -13,6 +13,7 @@ import io.github.rpgclasses.core.value.LevelValue;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
@@ -120,34 +121,44 @@ public class CoreLogicTest {
     }
 
     @Test
-    public void onlyFirstRespecRefunds() {
+    public void respecIsUnlimitedAndLosesAFraction() {
         ClassDef def = testClass();
         ProgressState s = new ProgressState();
         ProgressionRules.chooseClass(s, def);
         fill(s, def, "a", 10);
         fill(s, def, "b", 5);
         ProgressionRules.chooseSubclass(s, testSub("t:s1"));
+        ProgressionRules.spendSubclass(s, 1.0); // comprado barato, como nivel 16
         ProgressionRules.spendSubclass(s, 1.0);
-        long paidSub = s.xpPaidSubclass;
-        assertTrue(paidSub > 0);
+        fill(s, def, "b", 5);
+        fill(s, def, "c", 10);
+        while (ProgressionRules.checkSpendSubclass(s, RICH, 1.0).ok()) ProgressionRules.spendSubclass(s, 1.0);
+        assertTrue(ProgressionRules.isMaxed(s));
 
         assertEquals(Result.IN_COMBAT, ProgressionRules.checkRespecSubclass(s, true));
         assertEquals(Result.OK, ProgressionRules.checkRespecSubclass(s, false));
-        assertEquals(paidSub, ProgressionRules.respecSubclass(s));
+        // Se devuelve el coste actual de los niveles 31-40 (2930) menos el 33%, sin importar el orden de compra.
+        assertEquals((long) Math.floor(2930 * 0.67), ProgressionRules.respecSubclass(s, 1.0, 0.33));
         assertNull(s.subclassId);
-        assertEquals(15, s.totalLevel());
-        // Se puede elegir otra subclase.
-        assertEquals(Result.OK, ProgressionRules.checkChooseSubclass(s, def, testSub("t:s2")));
+        assertEquals(30, s.totalLevel());
+        assertEquals(5190, s.xpPaidBase + s.xpPaidSubclass);
+        assertFalse(ProgressionRules.isMaxed(s));
 
-        // El segundo respec (de clase) ya no devuelve nada y permite elegir otra clase.
-        assertEquals(0, ProgressionRules.respecClass(s));
+        // Se puede elegir otra subclase y reiniciar de nuevo, sin límite.
+        assertEquals(Result.OK, ProgressionRules.checkChooseSubclass(s, def, testSub("t:s2")));
+        ProgressionRules.chooseSubclass(s, testSub("t:s2"));
+        ProgressionRules.spendSubclass(s, 1.0);
+        assertEquals((long) Math.floor(XpMath.costOfLevel(31, 1.0) * 0.67), ProgressionRules.respecSubclass(s, 1.0, 0.33));
+
+        // Reinicio de clase: 67% de todo lo pagado, y permite elegir otra clase.
+        assertEquals((long) Math.floor(5190 * 0.67), ProgressionRules.respecClass(s, 0.33));
         assertNull(s.classId);
         assertEquals(0, s.totalLevel());
         assertEquals(Result.OK, ProgressionRules.checkChooseClass(s, def));
     }
 
     @Test
-    public void firstClassRespecRefundsEverything() {
+    public void respecWithoutLossAllowsExactRebuy() {
         ClassDef def = testClass();
         ProgressState s = new ProgressState();
         ProgressionRules.chooseClass(s, def);
@@ -155,7 +166,11 @@ public class CoreLogicTest {
         fill(s, def, "b", 5);
         ProgressionRules.chooseSubclass(s, testSub("t:s1"));
         ProgressionRules.spendSubclass(s, 1.0);
-        assertEquals(XpMath.totalCost(0, 16, 1.0), ProgressionRules.respecClass(s));
+        ProgressionRules.spendSubclass(s, 1.0);
+        fill(s, def, "b", 5); // la base sube después: los 2 niveles de subclase ahora "valen" como 21 y 22
+        long refund = ProgressionRules.respecSubclass(s, 1.0, 0.0);
+        assertEquals(XpMath.totalCost(20, 22, 1.0), refund);
+        assertEquals(XpMath.totalCost(0, 20, 1.0), s.xpPaidBase);
     }
 
     @Test

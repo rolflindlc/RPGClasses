@@ -119,14 +119,21 @@ public final class ProgressionRules {
         return Result.OK;
     }
 
-    /** Quita la subclase (se podrá elegir otra). @return XP a devolver (solo el primer respec devuelve). */
-    public static long respecSubclass(ProgressState s) {
-        long refund = s.firstRespecUsed ? 0 : s.xpPaidSubclass;
-        s.firstRespecUsed = true;
+    /**
+     * Quita la subclase (se podrá elegir otra). Sin límite de usos.
+     * Devuelve el coste actual de los niveles que se pierden (los más altos del Nivel Total)
+     * menos la fracción {@code lossFraction}. Así, con pérdida 0, lo devuelto alcanza exactamente
+     * para volver a comprarlos, se hayan comprado en el orden que sea.
+     * @return XP a devolver.
+     */
+    public static long respecSubclass(ProgressState s, double multiplier, double lossFraction) {
+        int total = s.totalLevel();
+        long removedCost = Math.min(XpMath.totalCost(total - s.subclassLevel, total, multiplier), s.xpPaidBase + s.xpPaidSubclass);
+        s.xpPaidBase = s.xpPaidBase + s.xpPaidSubclass - removedCost;
+        s.xpPaidSubclass = 0;
         s.subclassId = null;
         s.subclassLevel = 0;
-        s.xpPaidSubclass = 0;
-        return refund;
+        return refund(removedCost, lossFraction);
     }
 
     public static Result checkRespecClass(ProgressState s, boolean inCombat) {
@@ -135,10 +142,9 @@ public final class ProgressionRules {
         return Result.OK;
     }
 
-    /** Quita clase y subclase (se podrá elegir otra clase). @return XP a devolver. */
-    public static long respecClass(ProgressState s) {
-        long refund = s.firstRespecUsed ? 0 : s.xpPaidBase + s.xpPaidSubclass;
-        s.firstRespecUsed = true;
+    /** Quita clase y subclase (se podrá elegir otra clase). Sin límite de usos. @return XP a devolver. */
+    public static long respecClass(ProgressState s, double lossFraction) {
+        long paid = s.xpPaidBase + s.xpPaidSubclass;
         s.classId = null;
         s.branchPoints.clear();
         s.subclassId = null;
@@ -146,7 +152,17 @@ public final class ProgressionRules {
         s.xpPaidBase = 0;
         s.xpPaidSubclass = 0;
         s.kitGranted = false;
-        return refund;
+        return refund(paid, lossFraction);
+    }
+
+    private static long refund(long paid, double lossFraction) {
+        double loss = Double.isFinite(lossFraction) ? Math.max(0, Math.min(1, lossFraction)) : 0;
+        return (long) Math.floor(paid * (1 - loss));
+    }
+
+    /** true si ya no queda ningún punto por comprar (30 de base y 10 de subclase). */
+    public static boolean isMaxed(ProgressState s) {
+        return s.basePoints() >= BASE_MAX && s.subclassLevel >= SUBCLASS_MAX;
     }
 
     private ProgressionRules() {}

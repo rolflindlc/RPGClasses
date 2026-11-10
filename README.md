@@ -40,7 +40,7 @@ Al entrar sin clase aparece en el chat la lista de clases (provisional hasta la 
 | `/clase punto <rama>` | Gasta un punto en una rama (cobra XP) |
 | `/clase subclase <id>` | Elige subclase (desde 15 puntos de base) |
 | `/clase subpunto` | Sube un nivel de subclase |
-| `/clase reiniciar clase` / `subclase` | Respec (el primero devuelve la XP) |
+| `/clase reiniciar clase` / `subclase` | Respec ilimitado; cada uno pierde el 33% de la XP (configurable) |
 | `/clase info` | Estado actual y coste del siguiente nivel |
 | `/clases info <jugador>`, `/clases reset <jugador>`, `/clases validar` | Administración (nivel 2) |
 

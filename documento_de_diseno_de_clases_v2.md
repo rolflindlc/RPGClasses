@@ -4,6 +4,8 @@ Versión 2 del diseño (revisión 2.6, en desarrollo). Plataforma prevista: Forg
 
 Los valores marcados con **[MEDIR]** son objetivos de diseño que deben calibrarse en el juego real antes de darlos por cerrados.
 
+**Cambio posterior de la 2.6 (tras la primera prueba en juego):** los reinicios pasan a ser ilimitados y cada uno pierde el 33% de la XP (regla 6); desaparece el "primer respec gratuito".
+
 **Cambios de la revisión 2.6 (decisiones tomadas al pasar a desarrollo):** en las ramas con dos pasivas, cada punto sube ambas y las dos llegan al máximo con 10 puntos (antes, máximo con 5); sistema de **críticos propio** (regla 9); las armas sin clasificar cuentan como ligeras; reiniciar permite elegir otra clase u otra subclase y retira el kit inicial; los topes globales solo cuentan los bonus del mod; las habilidades de supervivencia se gastan antes que el Tótem (regla 10); *Baluarte Sanador* cura la cantidad entera a cada aliado (máximo 6); el Nivel Total incluye los puntos de subclase. La sección 10 no se ha recalculado.
 
 **Cambios de la revisión 2.5:** la subclase se puede elegir antes del nivel 30 (desde 15 puntos de clase base), con niveles de subclase limitados por el avance de la base (regla 2). Los muros escalan solo con puntos de la clase base, los hitos de subclase que modifican una activa base quedan latentes hasta tenerla, y el recorte del Francotirador pasa a ser proporcional. El estado final (nivel 40) y el coste de XP no cambian, por lo que la sección 10 sigue vigente.
@@ -22,7 +24,7 @@ Los valores marcados con **[MEDIR]** son objetivos de diseño que deben calibrar
      * **Tope ligado a la base:** los niveles de subclase no pueden superar ⌊(puntos de clase base − 10) / 2⌋. Con 15 puntos base se permiten 2, con 20 se permiten 5, con 25 se permiten 7 y con 30 se permiten 10.
      * El jugador reparte libremente sus puntos entre base y subclase dentro de ese tope. El estado final sigue siendo 30 base + 10 subclase = 40.
      * **Muros:** escalan **solo con los puntos de la clase base** (tope en 30); los puntos de subclase nunca los aumentan.
-     * El respec de subclase es independiente y libre (el primer respec del jugador devuelve el XP, según la regla 6).
+     * El respec de subclase es independiente (devuelve el 67% de la XP, según la regla 6).
 
 3. **Habilidades activas.** No pertenecen a una rama. Se desbloquean por hitos del **Nivel Total de Clase** (suma de puntos gastados). Los hitos marcados "de subclase" dependen del nivel de subclase. **Si un hito de subclase modifica una activa de la clase base que el jugador aún no tiene, queda latente hasta desbloquearla.** Afecta a Baluarte Sanador, Baluarte Incorruptible y Baluarte de Embestida (requieren *Baluarte*), a Disparo Letal de Francotirador (*Disparo Pesado*) y al Triple Salto del Explorador (*Doble Salto*).
 
@@ -36,8 +38,8 @@ Los valores marcados con **[MEDIR]** son objetivos de diseño que deben calibrar
 6. **Respec.** Sin precio en XP. Se puede reiniciar la clase o solo la subclase, fuera de combate.
    * Reiniciar la clase reinicia también la subclase y permite **elegir otra clase**; reiniciar la subclase permite **elegir otra subclase**.
    * Al reiniciar la clase se retiran los objetos del kit inicial que estén en el inventario (los que no estén, se dejan).
-   * El **primer respec** de cada jugador devuelve el XP gastado en lo que se reinicia.
-   * Los respecs posteriores **no devuelven XP**: hay que volver a pagar los niveles.
+   * **Reinicios ilimitados.** Cada reinicio devuelve el **67%** de la XP de lo que se reinicia: se pierde un **33%** (configurable).
+   * La XP de un reinicio de subclase se calcula sobre el coste actual de los niveles que se pierden (los más altos del Nivel Total), no sobre lo que costaron en su momento.
 
 7. **Topes globales.** Bonus de velocidad de movimiento total ≤ **+100%** y de salto ≤ **+150%**, para cualquier combinación de clase, subclase y postura. Los topes cuentan **solo los bonus del mod** (no pociones ni equipo).
 

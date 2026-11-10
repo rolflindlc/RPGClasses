@@ -2,6 +2,7 @@ package io.github.rpgclasses.server;
 
 import io.github.rpgclasses.RpgClasses;
 import io.github.rpgclasses.config.ServerConfig;
+import io.github.rpgclasses.content.CombatAbilities;
 import io.github.rpgclasses.core.Ids;
 import io.github.rpgclasses.core.definition.DefinitionStore;
 import io.github.rpgclasses.core.definition.Definitions.ClassDef;
@@ -12,6 +13,7 @@ import io.github.rpgclasses.core.stat.StatMath;
 import io.github.rpgclasses.player.PlayerClassData;
 import io.github.rpgclasses.player.PlayerClassDataProvider;
 import io.github.rpgclasses.registry.ModAttributes;
+import io.github.rpgclasses.registry.ModEffects;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
@@ -23,6 +25,7 @@ import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraftforge.common.util.FakePlayer;
@@ -143,6 +146,17 @@ public final class DamagePipeline {
             log.append(String.format(Locale.ROOT, " | furia x%.2f", 1 + fury));
         }
 
+        if (attacker.hasEffect(ModEffects.BERSERKER_RAGE.get())) {
+            double bonus = AbilityService.number(AbilityService.params(CombatAbilities.BERSERKER_RAGE), "damage_bonus", 0.25);
+            damage *= 1 + bonus;
+            log.append(String.format(Locale.ROOT, " | berserker x%.2f", 1 + bonus));
+        }
+        if (target instanceof Mob mob && mob.getTarget() == attacker && AbilityService.has(attacker, CombatAbilities.STEADY_GUARD)) {
+            double bonus = AbilityService.number(AbilityService.params(CombatAbilities.STEADY_GUARD), "damage_bonus", 0.15);
+            damage *= 1 + bonus;
+            log.append(String.format(Locale.ROOT, " | guardia firme x%.2f", 1 + bonus));
+        }
+
         if (canCrit) {
             double chance = StatMath.critChance(ServerConfig.BASE_CRIT_CHANCE.get(), classDef.critChanceBonus(), false);
             if (attacker.getRandom().nextDouble() < chance) {
@@ -159,6 +173,22 @@ public final class DamagePipeline {
         log.append(String.format(Locale.ROOT, " = %.2f (antes de armadura)", result));
         LAST_BREAKDOWN.put(attacker.getUUID(), log.toString());
         event.setAmount(result);
+    }
+
+    /** Daño que RECIBE un jugador: reducciones y penalizaciones de sus habilidades activas. */
+    @SubscribeEvent(priority = EventPriority.LOW)
+    public void onDefend(LivingHurtEvent event) {
+        if (!(event.getEntity() instanceof ServerPlayer victim) || victim instanceof FakePlayer || event.getAmount() <= 0) return;
+        if (event.getSource().is(DamageTypeTags.BYPASSES_INVULNERABILITY)) return;
+        double factor = 1;
+        if (victim.hasEffect(ModEffects.BULWARK.get())) factor *= 1 - CombatAbilities.bulwarkReduction(victim);
+        if (victim.hasEffect(ModEffects.TAUNT_GUARD.get())) {
+            factor *= 1 - AbilityService.number(AbilityService.params(CombatAbilities.TAUNT), "damage_reduction", 0.2);
+        }
+        if (victim.hasEffect(ModEffects.BERSERKER_RAGE.get())) {
+            factor *= 1 + AbilityService.number(AbilityService.params(CombatAbilities.BERSERKER_RAGE), "damage_taken", 0.2);
+        }
+        if (factor != 1) event.setAmount(StatMath.sanitizeDamage(event.getAmount() * factor));
     }
 
     @SubscribeEvent

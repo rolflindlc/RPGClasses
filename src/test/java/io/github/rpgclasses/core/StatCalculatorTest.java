@@ -129,6 +129,27 @@ public class StatCalculatorTest {
     }
 
     @Test
+    public void abilitiesUnlockByMilestoneAndUpgradesStayLatent() {
+        ClassDef paladin = STORE.classDef("rpgclasses:paladin");
+        // 25 de base + 5 de subclase = Nivel Total 30: ya tiene Baluarte y, con subclase 5, su mejora.
+        ProgressState s = player("paladin", 0, "blessed_guardian", 5);
+        s.branchPoints.put("cuirass", 10);
+        s.branchPoints.put("will", 10);
+        s.branchPoints.put("push", 5);
+        java.util.Set<String> unlocked = io.github.rpgclasses.core.ability.UnlockResolver.unlocked(s, paladin, STORE.subclassDef(s.subclassId));
+        assertEquals(java.util.List.of("rpgclasses:taunt", "rpgclasses:steady_guard", "rpgclasses:bulwark", "rpgclasses:healing_bulwark"),
+                java.util.List.copyOf(unlocked));
+        assertEquals(java.util.List.of("rpgclasses:taunt", "rpgclasses:bulwark"),
+                io.github.rpgclasses.core.ability.UnlockResolver.actives(unlocked, STORE::abilityDef));
+
+        // Con Nivel Total 29 aún no hay Baluarte: la mejora de subclase queda latente aunque su nivel se cumpla.
+        s.branchPoints.put("push", 4);
+        unlocked = io.github.rpgclasses.core.ability.UnlockResolver.unlocked(s, paladin, STORE.subclassDef(s.subclassId));
+        assertFalse(unlocked.contains("rpgclasses:bulwark"));
+        assertFalse(unlocked.contains("rpgclasses:healing_bulwark"));
+    }
+
+    @Test
     public void suspendedOrEmptyPlayerGetsNothing() {
         ProgressState s = new ProgressState();
         s.classId = "rpgclasses:removed";

@@ -14,6 +14,8 @@ public final class PlayerClassData {
     public final ProgressState state = new ProgressState();
     /** Vida con la que se guardó el jugador; -1 si no se conoce. Solo se usa al iniciar sesión. */
     public float savedHealth = -1f;
+    /** Cooldowns de habilidades: id -> tiempo de juego (ticks) en que terminan. */
+    public final Map<String, Long> cooldowns = new java.util.HashMap<>();
 
     public CompoundTag save() {
         CompoundTag tag = new CompoundTag();
@@ -28,6 +30,9 @@ public final class PlayerClassData {
         tag.putLong("xpSub", state.xpPaidSubclass);
         tag.putBoolean("firstRespec", state.firstRespecUsed);
         tag.putBoolean("kit", state.kitGranted);
+        CompoundTag cds = new CompoundTag();
+        for (Map.Entry<String, Long> e : cooldowns.entrySet()) cds.putLong(e.getKey(), e.getValue());
+        tag.put("cooldowns", cds);
         return tag;
     }
 
@@ -43,5 +48,8 @@ public final class PlayerClassData {
         state.xpPaidSubclass = Math.max(0, tag.getLong("xpSub"));
         state.firstRespecUsed = tag.getBoolean("firstRespec");
         state.kitGranted = tag.getBoolean("kit");
+        cooldowns.clear();
+        CompoundTag cds = tag.getCompound("cooldowns");
+        for (String key : cds.getAllKeys()) cooldowns.put(key, cds.getLong(key));
     }
 }

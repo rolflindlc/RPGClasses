@@ -4,7 +4,7 @@ Mod de clases, ramas y subclases definido por datapack. Diseño funcional en
 `documento_de_diseno_de_clases_v2.md` (rev. 2.6) y arquitectura en el documento
 "Arquitectura técnica del mod de clases".
 
-## Estado: fase 2 (estadísticas y daño)
+## Estado: fase 4 en curso
 
 Hecho:
 
@@ -25,9 +25,17 @@ Hecho:
   - Los "datos exactos" se generan de los JSON del datapack, incluidas las habilidades
     (`abilities/*.json`), así que siguen cualquier cambio de balance tras `/reload`.
 
-Aún sin efecto en el juego: habilidades activas, mecánicas de subclase, guardia de Epic Fight, zoom,
-velocidad de carga y de proyectil, resistencia a debuffs y kits iniciales. Gastar puntos sigue
-haciéndose con comandos hasta que exista la pantalla de progreso.
+- **Fase 4 (en curso), habilidades:**
+  - Framework: habilidades desbloqueadas calculadas del progreso, cooldowns guardados con el jugador,
+    teclas Z / X / C (configurables) y lista con cooldown en la esquina inferior derecha.
+  - Equipo inicial irrompible al elegir clase; se retira del inventario al reiniciarla.
+  - Paladín: Provocación, Guardia Firme y Baluarte. Bárbaro: Sed de Sangre, Embestida y Furia Berserker.
+
+Aún sin efecto en el juego: habilidades de Mago, Pícaro, Ranger y Monje, mecánicas de subclase,
+integración con Iron's Spells y Epic Fight, zoom, velocidad de carga y de proyectil y resistencia
+a debuffs. Gastar puntos sigue haciéndose con comandos hasta que exista la pantalla de progreso.
+
+Problema conocido: el muro de Escudos aumenta el desgaste, pero el cooldown alargado no se aplica.
 
 Los textos y los JSON se generan con `python3 tools/gen_data.py src/main/resources`
 (números de habilidades y textos en `tools/texts.py`).

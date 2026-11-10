@@ -6,6 +6,7 @@ import io.github.rpgclasses.network.Packets.ClassAction;
 import io.github.rpgclasses.network.Packets.OpenClassSelection;
 import io.github.rpgclasses.network.Packets.SyncDefinitions;
 import io.github.rpgclasses.network.Packets.SyncPlayerData;
+import io.github.rpgclasses.network.Packets.UseAbility;
 import io.github.rpgclasses.player.PlayerClassData;
 import io.github.rpgclasses.player.PlayerClassDataProvider;
 import net.minecraft.server.level.ServerPlayer;
@@ -16,7 +17,7 @@ import net.minecraftforge.network.simple.SimpleChannel;
 
 public final class Net {
     /** Cliente y servidor con versiones de protocolo distintas no se conectan. Subir al cambiar cualquier paquete. */
-    private static final String PROTOCOL = "2";
+    private static final String PROTOCOL = "3";
 
     public static final SimpleChannel CHANNEL = NetworkRegistry.newSimpleChannel(
             RpgClasses.id("main"), () -> PROTOCOL, PROTOCOL::equals, PROTOCOL::equals);
@@ -35,6 +36,9 @@ public final class Net {
         CHANNEL.messageBuilder(ClassAction.class, id++, NetworkDirection.PLAY_TO_SERVER)
                 .encoder(ClassAction::encode).decoder(ClassAction::decode)
                 .consumerMainThread(ClassAction::handle).add();
+        CHANNEL.messageBuilder(UseAbility.class, id++, NetworkDirection.PLAY_TO_SERVER)
+                .encoder(UseAbility::encode).decoder(UseAbility::decode)
+                .consumerMainThread(UseAbility::handle).add();
     }
 
     public static void toPlayer(ServerPlayer player, Object message) {

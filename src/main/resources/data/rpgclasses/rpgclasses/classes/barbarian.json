@@ -7,7 +7,12 @@
       "daño"
     ]
   },
-  "starting_kit": "rpgclasses:barbarian",
+  "starting_kit": [
+    {
+      "item": "minecraft:iron_axe",
+      "slot": "mainhand"
+    }
+  ],
   "crit_chance_bonus": 0.05,
   "walls": {
     "rpgclasses:magic": 0.6,

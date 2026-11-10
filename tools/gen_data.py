@@ -111,6 +111,16 @@ subs = {
      mech("elemental_manifest", ignite_seconds=6, swim_bonus=1.0, reflect_fraction=.15)], []),
 }
 
+def armor(material): return [{"item": f"minecraft:{material}_{piece}", "slot": slot} for piece, slot in
+                         (("helmet","head"),("chestplate","chest"),("leggings","legs"),("boots","feet"))]
+KITS = {
+ "mage": armor("leather"),
+ "paladin": [{"item": "minecraft:stone_sword", "slot": "mainhand"}] + armor("chainmail"),
+ "barbarian": [{"item": "minecraft:iron_axe", "slot": "mainhand"}],
+ "rogue": [{"item": "minecraft:iron_sword", "slot": "mainhand"}] + armor("leather"),
+ "ranger": [{"item": "minecraft:bow", "slot": "mainhand"}, {"item": "minecraft:arrow", "count": 64, "slot": "inventory"}] + armor("leather"),
+}
+
 def dump(path, obj):
     os.makedirs(os.path.dirname(path), exist_ok=True)
     with open(path, "w", encoding="utf-8") as f:
@@ -119,7 +129,7 @@ def dump(path, obj):
 base = os.path.join(out, "data", NS, NS)
 for cid, c in classes.items():
     o = {"schema_version": 1, "display": {"icon": c["icon"], "roles": c["roles"]}}
-    if c["kit"]: o["starting_kit"] = R(c["kit"])
+    if KITS.get(cid): o["starting_kit"] = KITS[cid]
     o["crit_chance_bonus"] = c["crit"]
     o["walls"] = {R(k): v for k, v in c["walls"].items()}
     if c.get("armor_rule"): o["armor_rule"] = "disables_unarmored_passives"

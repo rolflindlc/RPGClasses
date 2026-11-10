@@ -16,6 +16,7 @@ import java.util.Set;
 
 /** Comprueba las reglas estructurales del diseño. Una clase con errores se desactiva; nunca tumba el servidor. */
 public final class DefinitionValidator {
+    private static final Set<String> KIT_SLOTS = Set.of("mainhand", "offhand", "head", "chest", "legs", "feet", "inventory");
 
     /** @return lista de errores de la clase y de sus subclases (vacía = válida). */
     public static List<String> validateClass(ClassDef c, Map<String, SubclassDef> subclasses) {
@@ -44,6 +45,11 @@ public final class DefinitionValidator {
             if (!Ids.DISCIPLINES.contains(w.getKey())) errors.add("muro sobre disciplina desconocida: " + w.getKey());
             double v = w.getValue();
             if (!(v > 0 && v <= 1)) errors.add("muro de " + w.getKey() + " fuera de (0, 1]: " + v);
+        }
+
+        for (Definitions.KitItem k : c.startingKit()) {
+            if (!KIT_SLOTS.contains(k.slot())) errors.add("equipo inicial: ranura desconocida '" + k.slot() + "'");
+            if (k.item().indexOf(':') <= 0 || k.count() < 1) errors.add("equipo inicial: objeto o cantidad inválidos: " + k.item());
         }
 
         if (!(c.critChanceBonus() >= -0.3 && c.critChanceBonus() <= 0.7)) {

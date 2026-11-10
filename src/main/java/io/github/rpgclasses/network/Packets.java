@@ -1,6 +1,7 @@
 package io.github.rpgclasses.network;
 
 import io.github.rpgclasses.client.ClientHandlers;
+import io.github.rpgclasses.server.AbilityService;
 import io.github.rpgclasses.server.ProgressionService;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
@@ -85,6 +86,22 @@ public final class Packets {
         public void handle(Supplier<NetworkEvent.Context> ctx) {
             ServerPlayer sender = ctx.get().getSender();
             if (sender != null) ProgressionService.performAndReport(sender, action, arg);
+        }
+    }
+
+    /** Cliente -> servidor: tecla de habilidad pulsada (ranura 0, 1, 2). */
+    public record UseAbility(int slot) {
+        public void encode(FriendlyByteBuf buf) {
+            buf.writeByte(slot);
+        }
+
+        public static UseAbility decode(FriendlyByteBuf buf) {
+            return new UseAbility(buf.readByte());
+        }
+
+        public void handle(Supplier<NetworkEvent.Context> ctx) {
+            ServerPlayer sender = ctx.get().getSender();
+            if (sender != null) AbilityService.use(sender, slot);
         }
     }
 

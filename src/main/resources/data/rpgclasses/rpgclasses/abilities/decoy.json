@@ -1,5 +1,5 @@
 {
   "schema_version": 1,
   "passive": true,
-  "cooldown_seconds": 25
+  "cooldown_seconds": 10
 }

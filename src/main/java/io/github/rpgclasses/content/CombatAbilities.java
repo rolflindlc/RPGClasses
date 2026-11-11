@@ -181,6 +181,15 @@ public final class CombatAbilities {
             // knockback() empuja en sentido contrario al vector dado: se pasa la dirección de la carga invertida.
             if (knockback > 0 && unstoppable == null) target.knockback(knockback, -dir.x, -dir.z);
             if (stunTicks > 0) stun(target, stunTicks);
+            if (unstoppable == null) {
+                // Rev. 2.7f: la Embestida base se frena contra el primer enemigo y rebota un poco hacia atrás.
+                double bounce = AbilityService.number(p, "bounce_strength", 0.4);
+                player.setDeltaMovement(-dir.x * bounce, 0.2, -dir.z * bounce);
+                player.hurtMarked = true;
+                CHARGING.put(player.getUUID(), new Charging(player.server.getTickCount(), dir, charging.speed(), charging.alreadyHit()));
+                sound(player, SoundEvents.SHIELD_BLOCK);
+                break;
+            }
         }
     }
 

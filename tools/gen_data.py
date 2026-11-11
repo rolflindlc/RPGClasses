@@ -118,7 +118,7 @@ PERKS = {
                              ("light_skin",[attr([(MC+"armor", to(-2)), (MC+"armor_toughness", to(-1)), (MC+"movement_speed", mb(.15))], NOARM)])],
  ("barbarian","stampede"): [("unstoppable_charge",[mech("unstoppable_charge", damage_fraction=.6)]),
                             ("crushing_charge",[mech("crushing_charge", stun_factor=2, cooldown_change=.3, wave_radius=3)])],
- ("barbarian","hardened"): [("carnivore",[mech("carnivore", meat_saturation=1.0, other_food=-.3)]),
+ ("barbarian","hardened"): [("carnivore",[mech("carnivore", meat_saturation=1.0)]),
                             ("endurance",[mech("endurance", health_threshold=.3, damage_reduction=.2, duration_seconds=5, icd_seconds=30), attr([(R("healing_received"), to(-.1))])])],
  ("rogue","shadow"): [("treacherous_strike",[mech("treacherous_strike", damage_bonus=.25, pvp_window_seconds=5, stealth_duration=-.2)]),
                       ("deep_stealth",[mech("deep_stealth", stealth_duration=.4), attr([(R("mob_detection"), to(.2))])])],

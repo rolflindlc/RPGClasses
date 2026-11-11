@@ -57,6 +57,11 @@ public final class ModEffects {
             EFFECTS.register("retreat", () -> new StateEffect(MobEffectCategory.BENEFICIAL, 0x7CC8A0)
                     .addAttributeModifier(Attributes.MOVEMENT_SPEED, "3c9b2f4e-81d7-4a5b-9f0e-2d6c1a7b8e43", 0.25,
                             AttributeModifier.Operation.MULTIPLY_TOTAL));
+    /** Paso Arcano (Mago, Fluidez): +30 % de velocidad tras lanzar un conjuro. */
+    public static final RegistryObject<MobEffect> ARCANE_STEP =
+            EFFECTS.register("arcane_step", () -> new StateEffect(MobEffectCategory.BENEFICIAL, 0x9F7FE0)
+                    .addAttributeModifier(Attributes.MOVEMENT_SPEED, "b51e7d2a-4c3f-4e8a-9a61-0f2d7c9e5a18", 0.30,
+                            AttributeModifier.Operation.MULTIPLY_TOTAL));
 
     /** Efecto normal (curable con leche) sin lógica propia. */
     public static class CurableEffect extends MobEffect {

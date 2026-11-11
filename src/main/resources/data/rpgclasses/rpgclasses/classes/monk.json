@@ -15,6 +15,9 @@
     "rpgclasses:light": 0.4,
     "rpgclasses:shield": 1.0
   },
+  "school_walls": {
+    "irons_spellbooks:holy": 1.0
+  },
   "armor_rule": "disables_unarmored_passives",
   "branches": [
     {

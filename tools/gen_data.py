@@ -220,6 +220,9 @@ for cid, c in classes.items():
     if KITS.get(cid): o["starting_kit"] = KITS[cid]
     o["crit_chance_bonus"] = c["crit"]
     o["walls"] = {R(k): v for k, v in c["walls"].items()}
+    # Regla 14: la escuela sagrada de Iron's solo es del Paladín; su muro de Magia no la toca.
+    if cid == "paladin": o["magic_wall_exempt_schools"] = [IR + "holy"]
+    else: o["school_walls"] = {IR + "holy": 1.0}
     if TRAITS.get(cid): o["traits"] = TRAITS[cid]
     if c.get("armor_rule"): o["armor_rule"] = "disables_unarmored_passives"
     o["branches"] = [{"id": b, "max_points": 10, "effects": e,

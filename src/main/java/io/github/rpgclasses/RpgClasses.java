@@ -72,6 +72,10 @@ public class RpgClasses {
         MinecraftForge.EVENT_BUS.register(new ShieldWall());
         MinecraftForge.EVENT_BUS.register(MechanicService.listener());
         MinecraftForge.EVENT_BUS.register(new EffectRules());
+        // Puente con Iron's: la clase solo se carga si el mod está instalado.
+        if (net.minecraftforge.fml.ModList.get().isLoaded("irons_spellbooks")) {
+            io.github.rpgclasses.compat.irons.IronsCompat.init();
+        }
         MinecraftForge.EVENT_BUS.register(new Toxins());
         MinecraftForge.EVENT_BUS.register(new BarbarianPerks());
         MinecraftForge.EVENT_BUS.register(new PaladinPerks());

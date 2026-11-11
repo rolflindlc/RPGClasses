@@ -33,6 +33,9 @@
     "rpgclasses:armor": 0.25,
     "rpgclasses:shield": 0.5
   },
+  "school_walls": {
+    "irons_spellbooks:holy": 1.0
+  },
   "traits": [
     {
       "type": "rpgclasses:attribute",

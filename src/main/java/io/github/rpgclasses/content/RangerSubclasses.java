@@ -5,6 +5,8 @@ import io.github.rpgclasses.core.stat.StatCalculator.ActiveMechanic;
 import io.github.rpgclasses.server.AbilityService;
 import io.github.rpgclasses.server.MechanicService;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
@@ -67,6 +69,11 @@ public final class RangerSubclasses {
     private static final String TAG_SAFEGUARD_UNTIL = "rpgclasses.safeguard_until";
     private static final String TAG_IDLE_UNTIL = "rpgclasses.safeguard_idle";
     private static final int PERIOD_TICKS = 20;
+    private static final String TAG_BONDED = "rpgclasses.bonded";
+    /** Preguntas de vínculo pendientes: Ranger → (id de entidad, tick límite). */
+    private static final Map<UUID, long[]> PROMPTS = new HashMap<>();
+    /** Animales recién domesticados: se pregunta en el tick siguiente, cuando ya tienen dueño. */
+    private static final List<Object[]> TAMED = new ArrayList<>();
 
     /** Mascotas con bonus, por Ranger (para quitarlo cuando dejan de estar entre las 8 o el Ranger lo pierde). */
     private static final Map<UUID, Set<UUID>> BOOSTED = new HashMap<>();
@@ -80,6 +87,13 @@ public final class RangerSubclasses {
     public void onServerTick(TickEvent.ServerTickEvent event) {
         if (event.phase != TickEvent.Phase.END) return;
         MinecraftServer server = event.getServer();
+        if (!TAMED.isEmpty()) {
+            List<Object[]> todo = new ArrayList<>(TAMED);
+            TAMED.clear();
+            for (Object[] t : todo) {
+                if (t[0] instanceof ServerPlayer ranger && t[1] instanceof LivingEntity pet && ownedBy(pet, ranger)) prompt(ranger, pet);
+            }
+        }
         if (!RESCUES.isEmpty()) {
             List<Rescue> todo = new ArrayList<>(RESCUES);
             RESCUES.clear();
@@ -113,6 +127,14 @@ public final class RangerSubclasses {
 
     /** Mascota domesticada del Ranger (lobos, gatos, loros, caballos...). Las invocaciones de Iron's no cuentan. */
     private static boolean isPetOf(Entity e, ServerPlayer ranger) {
+        if (!ownedBy(e, ranger)) return false;
+        // Rev. 2.7f: solo las mascotas con las que el Ranger se ha vinculado.
+        CompoundTag data = e.getPersistentData();
+        return data.hasUUID(TAG_BONDED) && data.getUUID(TAG_BONDED).equals(ranger.getUUID());
+    }
+
+    /** Mascota domesticada del jugador, vinculable (sin contar invocaciones de Iron's). */
+    private static boolean ownedBy(Entity e, ServerPlayer ranger) {
         if (!(e instanceof OwnableEntity own) || !e.isAlive() || !ranger.getUUID().equals(own.getOwnerUUID())) return false;
         if (e instanceof AbstractHorse horse && !horse.isTamed()) return false;
         if (e.getPersistentData().contains("rpgclasses:summon_done")) return false;
@@ -141,6 +163,55 @@ public final class RangerSubclasses {
         if (old != null && Math.abs(old.getAmount() - value) < 1.0E-6) return;
         if (old != null) inst.removeModifier(id);
         if (value != 0) inst.addTransientModifier(new AttributeModifier(id, NAME, value, AttributeModifier.Operation.MULTIPLY_TOTAL));
+    }
+
+    // --- Vínculo (rev. 2.7f) ---
+
+    private static boolean isBeastMaster(ServerPlayer player) {
+        return MechanicService.has(player, WILD_BOND) || MechanicService.has(player, SAFEGUARD);
+    }
+
+    @SubscribeEvent
+    public void onTame(net.minecraftforge.event.entity.living.AnimalTameEvent event) {
+        if (event.getTamer() instanceof ServerPlayer ranger && !(ranger instanceof FakePlayer) && isBeastMaster(ranger)) {
+            TAMED.add(new Object[]{ranger, event.getAnimal()});
+        }
+    }
+
+    private static void prompt(ServerPlayer ranger, LivingEntity pet) {
+        PROMPTS.put(ranger.getUUID(), new long[]{pet.getId(), ranger.serverLevel().getGameTime() + 20 * 60});
+        io.github.rpgclasses.network.Net.toPlayer(ranger, new io.github.rpgclasses.network.Packets.BondPrompt(pet.getId(), pet.getName().getString()));
+    }
+
+    /** Respuesta del cliente a la pregunta de vínculo. */
+    public static void answerBond(ServerPlayer ranger, int entityId, boolean accept) {
+        long[] pending = PROMPTS.remove(ranger.getUUID());
+        if (pending == null || pending[0] != entityId || ranger.serverLevel().getGameTime() > pending[1] || !accept) return;
+        Entity pet = ranger.serverLevel().getEntity(entityId);
+        if (pet == null || !ownedBy(pet, ranger) || !isBeastMaster(ranger)) return;
+        pet.getPersistentData().putUUID(TAG_BONDED, ranger.getUUID());
+        ranger.displayClientMessage(Component.translatable("message.rpgclasses.bond_made", pet.getName()), true);
+        if (ranger.level() instanceof ServerLevel level) {
+            level.sendParticles(net.minecraft.core.particles.ParticleTypes.HEART, pet.getX(), pet.getY() + pet.getBbHeight(), pet.getZ(), 6, 0.3, 0.2, 0.3, 0.02);
+        }
+    }
+
+    /** Agachado y con la mano vacía sobre una mascota propia: vincularse (pregunta) o romper el vínculo. */
+    @SubscribeEvent(priority = EventPriority.HIGH)
+    public void onBondInteract(PlayerInteractEvent.EntityInteract event) {
+        if (event.getLevel().isClientSide() || !(event.getEntity() instanceof ServerPlayer ranger) || !ranger.isShiftKeyDown()) return;
+        if (!ranger.getItemInHand(event.getHand()).isEmpty() || event.getHand() != net.minecraft.world.InteractionHand.MAIN_HAND) return;
+        Entity pet = event.getTarget();
+        if (!ownedBy(pet, ranger) || !isBeastMaster(ranger)) return;
+        event.setCanceled(true);
+        event.setCancellationResult(net.minecraft.world.InteractionResult.SUCCESS);
+        if (isPetOf(pet, ranger)) {
+            pet.getPersistentData().remove(TAG_BONDED);
+            if (pet instanceof LivingEntity living) unboost(living);
+            ranger.displayClientMessage(Component.translatable("message.rpgclasses.bond_broken", pet.getName()), true);
+        } else if (pet instanceof LivingEntity living) {
+            prompt(ranger, living);
+        }
     }
 
     // --- Salvaguarda de Bestias ---
@@ -173,17 +244,27 @@ public final class RangerSubclasses {
             dest = server.overworld();
             pos = dest.getSharedSpawnPos();
         }
-        Vec3 at = Vec3.atBottomCenterOf(pos).add(0, 1, 0);
+        Vec3 at = safeSpot(dest, pet, Vec3.atBottomCenterOf(pos).add(0, 1, 0));
+        if (at == null && dest != server.overworld()) {
+            dest = server.overworld();
+            at = safeSpot(dest, pet, Vec3.atBottomCenterOf(dest.getSharedSpawnPos()));
+        }
+        if (at == null) {
+            // Ningún sitio donde quepa: se queda donde está, a 1 HP y sentada.
+            if (pet instanceof TamableAnimal tame) tame.setOrderedToSit(true);
+            return;
+        }
+        final Vec3 target = at;
         pet.stopRiding();
         pet.ejectPassengers();
         Entity moved = pet;
         if (pet.level() == dest) {
-            pet.teleportTo(at.x, at.y, at.z);
+            pet.teleportTo(target.x, target.y, target.z);
         } else {
             moved = pet.changeDimension(dest, new ITeleporter() {
                 @Override
                 public PortalInfo getPortalInfo(Entity entity, ServerLevel level, Function<ServerLevel, PortalInfo> defaultPortalInfo) {
-                    return new PortalInfo(at, Vec3.ZERO, entity.getYRot(), entity.getXRot());
+                    return new PortalInfo(target, Vec3.ZERO, entity.getYRot(), entity.getXRot());
                 }
 
                 @Override
@@ -199,6 +280,32 @@ public final class RangerSubclasses {
             tame.setTarget(null);
         }
         if (moved instanceof net.minecraft.world.entity.Mob mob) mob.getNavigation().stop();
+    }
+
+    /**
+     * Busca, cerca del punto de reaparición, un sitio donde quepa la hitbox de la mascota (un caballo no cabe por
+     * una puerta), con suelo debajo y sin líquidos. Primero los más cercanos.
+     */
+    private static Vec3 safeSpot(ServerLevel level, Entity pet, Vec3 center) {
+        double w = pet.getBbWidth(), h = pet.getBbHeight();
+        Vec3 best = null;
+        double bestDist = Double.MAX_VALUE;
+        for (int dy = -1; dy <= 3; dy++) {
+            for (int dx = -6; dx <= 6; dx++) {
+                for (int dz = -6; dz <= 6; dz++) {
+                    double d = dx * dx + dz * dz + dy * dy * 2;
+                    if (d >= bestDist) continue;
+                    BlockPos feet = BlockPos.containing(center.x + dx, center.y + dy, center.z + dz);
+                    Vec3 p = Vec3.atBottomCenterOf(feet);
+                    net.minecraft.world.phys.AABB box = new net.minecraft.world.phys.AABB(p.x - w / 2, p.y, p.z - w / 2, p.x + w / 2, p.y + h, p.z + w / 2);
+                    if (!level.noCollision(box) || level.containsAnyLiquid(box)) continue;
+                    if (!level.getBlockState(feet.below()).isFaceSturdy(level, feet.below(), net.minecraft.core.Direction.UP)) continue;
+                    best = p;
+                    bestDist = d;
+                }
+            }
+        }
+        return best;
     }
 
     /** Sin órdenes durante unos segundos tras salvarse: no se le puede levantar ni montar. */

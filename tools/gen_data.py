@@ -136,7 +136,7 @@ PERKS = {
                         ("quick_counter",[mech("quick_counter", window_seconds=3, damage_fraction=.7, icd_seconds=8)])],
  ("ranger","range"): [("piercing",[mech("piercing", extra_targets=1, second_damage=.6, first_damage=-.1)]),
                       ("hunters_mark",[mech("hunters_mark", duration_seconds=6, icd_seconds=10, damage_bonus=.12)])],
- ("ranger","special_arrows"): [("explosive_arrow",[mech("explosive_arrow", radius=2, damage_fraction=.3, direct_damage=-.1)]),
+ ("ranger","special_arrows"): [("explosive_arrow",[mech("explosive_arrow", radius=2, damage_fraction=.3, knockback_strength=.8, direct_damage=-.1)]),
                                ("sticky_arrow",[mech("sticky_arrow", slowness_seconds=2), attr([(R("projectile_velocity"), to(-.1))])])],
  ("ranger","retreat"): [("evasive_leap",[mech("evasive_leap", leap_blocks=4, icd_seconds=12)]),
                         ("hunter_trap",[mech("hunter_trap", duration_seconds=3, slowness_level=2, icd_seconds=12)])],
@@ -148,8 +148,8 @@ PERKS = {
                    ("inner_calm",[mech("inner_calm", absorb_per_second=.5, absorb_max=5)])],
  ("monk","stance_mastery"): [("dominant_stance",[mech("dominant_stance", favorite_bonus=.5, others_bonus=-.25)]),
                              ("hybrid_stance",[mech("hybrid_stance", stance_factor=.5, switch_cooldown_change=2)])],
- ("monk","meditation"): [("deep_trance",[mech("meditation_variant", heal_per_second_fixed=1, delay_seconds=4)]),
-                         ("clear_mind",[mech("meditation_variant", purge_interval_seconds=5, heal_factor=.5)])],
+ ("monk","meditation"): [("deep_trance",[mech("meditation_variant", heal_per_second_fixed=1, delay_seconds=4, health_limit=.8)]),
+                         ("clear_mind",[mech("meditation_variant", purge_interval_seconds=5)])],
 }
 for cid, extra in EXTRA_BRANCHES.items(): classes[cid]["branches"] = classes[cid]["branches"] + extra
 for cid, c in classes.items():

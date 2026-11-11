@@ -85,6 +85,22 @@ public final class DamagePipeline {
      * Al disparar se graba en el proyectil el bonus de arco y el muro del tirador:
      * cambiar de arma con la flecha en vuelo no altera nada.
      */
+    /** Flechas más rápidas que lo que vanilla puede sincronizar: se manda su velocidad real cada tick mientras vuelan. */
+    private static final java.util.Set<AbstractArrow> FAST_ARROWS = java.util.Collections.newSetFromMap(new java.util.WeakHashMap<>());
+
+    @SubscribeEvent
+    public void onServerTickArrows(net.minecraftforge.event.TickEvent.ServerTickEvent event) {
+        if (event.phase != net.minecraftforge.event.TickEvent.Phase.END || FAST_ARROWS.isEmpty()) return;
+        FAST_ARROWS.removeIf(arrow -> {
+            if (arrow.isRemoved() || arrow.tickCount > 200 || arrow.getDeltaMovement().lengthSqr() < 3.9 * 3.9) return true;
+            if (arrow.tickCount == 0) return false; // aún no lo conoce ningún cliente
+            net.minecraft.world.phys.Vec3 v = arrow.getDeltaMovement();
+            io.github.rpgclasses.network.Net.CHANNEL.send(net.minecraftforge.network.PacketDistributor.TRACKING_ENTITY.with(() -> arrow),
+                    new io.github.rpgclasses.network.Packets.ArrowVelocity(arrow.getId(), v.x, v.y, v.z));
+            return false;
+        });
+    }
+
     @SubscribeEvent
     public void onProjectileSpawn(EntityJoinLevelEvent event) {
         if (event.getLevel().isClientSide() || !(event.getEntity() instanceof Projectile projectile)) return;
@@ -111,6 +127,8 @@ public final class DamagePipeline {
             if (velocity != 0 && velocity > -0.9) {
                 arrow.setDeltaMovement(arrow.getDeltaMovement().scale(1 + velocity));
                 arrow.setBaseDamage(arrow.getBaseDamage() / (1 + velocity));
+                // Vanilla recorta la velocidad que manda al cliente a 3,9 por eje y la flecha se ve desviada.
+                if (velocity > 0) FAST_ARROWS.add(arrow);
             }
             // Una flecha que no gastó munición no se puede recoger (evita duplicarlas).
             if (shot[1] > 0) arrow.pickup = AbstractArrow.Pickup.CREATIVE_ONLY;

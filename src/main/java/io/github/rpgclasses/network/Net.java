@@ -17,7 +17,7 @@ import net.minecraftforge.network.simple.SimpleChannel;
 
 public final class Net {
     /** Cliente y servidor con versiones de protocolo distintas no se conectan. Subir al cambiar cualquier paquete. */
-    private static final String PROTOCOL = "5";
+    private static final String PROTOCOL = "6";
 
     public static final SimpleChannel CHANNEL = NetworkRegistry.newSimpleChannel(
             RpgClasses.id("main"), () -> PROTOCOL, PROTOCOL::equals, PROTOCOL::equals);
@@ -42,6 +42,15 @@ public final class Net {
         CHANNEL.messageBuilder(Packets.AirJump.class, id++, NetworkDirection.PLAY_TO_SERVER)
                 .encoder(Packets.AirJump::encode).decoder(Packets.AirJump::decode)
                 .consumerMainThread(Packets.AirJump::handle).add();
+        CHANNEL.messageBuilder(Packets.ArrowVelocity.class, id++, NetworkDirection.PLAY_TO_CLIENT)
+                .encoder(Packets.ArrowVelocity::encode).decoder(Packets.ArrowVelocity::decode)
+                .consumerMainThread(Packets.ArrowVelocity::handle).add();
+        CHANNEL.messageBuilder(Packets.BondPrompt.class, id++, NetworkDirection.PLAY_TO_CLIENT)
+                .encoder(Packets.BondPrompt::encode).decoder(Packets.BondPrompt::decode)
+                .consumerMainThread(Packets.BondPrompt::handle).add();
+        CHANNEL.messageBuilder(Packets.BondAnswer.class, id++, NetworkDirection.PLAY_TO_SERVER)
+                .encoder(Packets.BondAnswer::encode).decoder(Packets.BondAnswer::decode)
+                .consumerMainThread(Packets.BondAnswer::handle).add();
     }
 
     public static void toPlayer(ServerPlayer player, Object message) {

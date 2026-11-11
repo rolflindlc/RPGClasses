@@ -137,7 +137,8 @@
               "id": "rpgclasses:effect_immunity",
               "effects": [
                 "minecraft:poison",
-                "minecraft:wither"
+                "minecraft:wither",
+                "rpgclasses:toxin"
               ],
               "fire": 1,
               "other_duration": 0.5

@@ -30,10 +30,16 @@ public final class AbilityService {
     }
 
     private static final Map<String, Active> ACTIVES = new HashMap<>();
+    private static final Map<String, java.util.function.ToDoubleFunction<ServerPlayer>> COOLDOWN_MODIFIERS = new HashMap<>();
     private static final JsonObject NO_PARAMS = new JsonObject();
 
     public static void register(String id, Active active) {
         ACTIVES.put(id, active);
+    }
+
+    /** Factor sobre el cooldown de una habilidad (perks y ramas que lo cambian). */
+    public static void registerCooldownModifier(String id, java.util.function.ToDoubleFunction<ServerPlayer> factor) {
+        COOLDOWN_MODIFIERS.put(id, factor);
     }
 
     public static Set<String> unlocked(ServerPlayer player) {
@@ -97,7 +103,8 @@ public final class AbilityService {
         }
         JsonObject params = params(id);
         if (active.activate(player, params)) {
-            setCooldown(player, id, ticks(params, "cooldown_seconds", 0));
+            double factor = COOLDOWN_MODIFIERS.containsKey(id) ? Math.max(0, COOLDOWN_MODIFIERS.get(id).applyAsDouble(player)) : 1;
+            setCooldown(player, id, (int) Math.round(ticks(params, "cooldown_seconds", 0) * factor));
             player.displayClientMessage(Component.translatable("msg.rpgclasses.ability_used", name), true);
             Net.syncPlayer(player);
         }

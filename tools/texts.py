@@ -303,6 +303,7 @@ PARAMS = {
     "favorite_bonus": "Bonus de la postura favorita|%", "others_bonus": "Bonus de las otras posturas|%", "stance_factor": "Efecto de cada postura|%",
     "switch_cooldown_change": "Cooldown de cambio extra|s", "heal_per_second_fixed": "Curación por segundo",
     "purge_interval_seconds": "Purga un efecto cada|s", "heal_factor": "Curación x",
+    "wave_radius": "Radio de la onda (bloques)",
 }
 
 UI = {
@@ -383,4 +384,11 @@ UI = {
     "effect.rpgclasses.bulwark": "Baluarte",
     "effect.rpgclasses.taunt_guard": "Provocación",
     "effect.rpgclasses.berserker_rage": "Furia Berserker",
+    "effect.rpgclasses.toxin": "Toxina",
+    "effect.rpgclasses.endurance": "Aguante",
+    "effect.rpgclasses.condemned": "Condenado",
+    "death.attack.rpgclasses.toxin": "%1$s murió envenenado por una toxina",
+    "death.attack.rpgclasses.toxin.player": "%1$s murió envenenado por una toxina mientras huía de %2$s",
+    "death.attack.rpgclasses.holy": "%1$s fue juzgado por %2$s",
+    "death.attack.rpgclasses.holy.player": "%1$s fue juzgado por %2$s",
 }

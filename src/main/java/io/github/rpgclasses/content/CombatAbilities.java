@@ -6,7 +6,9 @@ import io.github.rpgclasses.core.Ids;
 import io.github.rpgclasses.player.PlayerClassData;
 import io.github.rpgclasses.player.PlayerClassDataProvider;
 import io.github.rpgclasses.registry.ModEffects;
+import io.github.rpgclasses.core.stat.StatCalculator.ActiveMechanic;
 import io.github.rpgclasses.server.AbilityService;
+import io.github.rpgclasses.server.MechanicService;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerPlayer;
@@ -52,7 +54,7 @@ public final class CombatAbilities {
     public static final ResourceKey<DamageType> CHARGE_DAMAGE = ResourceKey.create(Registries.DAMAGE_TYPE, RpgClasses.id("charge"));
 
     /** Estado de una Embestida en curso. */
-    private record Charging(int untilTick, Vec3 direction, Set<Integer> alreadyHit) {}
+    private record Charging(int untilTick, Vec3 direction, double speed, Set<Integer> alreadyHit) {}
 
     private static final Map<UUID, Charging> CHARGING = new HashMap<>();
     private static final int CHARGE_WINDOW_TICKS = 12;
@@ -63,6 +65,10 @@ public final class CombatAbilities {
         AbilityService.register(BULWARK, CombatAbilities::bulwark);
         AbilityService.register(CHARGE, CombatAbilities::charge);
         AbilityService.register(BERSERKER_RAGE, CombatAbilities::berserkerRage);
+        // Estampida (−25 %) y Carga Demoledora (+30 %) se multiplican: 20 s -> 15 s -> 19,5 s.
+        AbilityService.registerCooldownModifier(CHARGE, player ->
+                (1 + MechanicService.number(player, BarbarianPerks.CHARGE_UPGRADE, "cooldown_change", 0))
+                        * (1 + MechanicService.number(player, BarbarianPerks.CRUSHING_CHARGE, "cooldown_change", 0)));
     }
 
     // --- Paladín ---
@@ -102,10 +108,12 @@ public final class CombatAbilities {
         Vec3 flat = new Vec3(look.x, 0, look.z);
         if (flat.lengthSqr() < 1.0E-4) return false; // mirando recto arriba o abajo
         // Velocidad inicial aproximada para recorrer la distancia configurada [MEDIR].
-        double speed = AbilityService.number(p, "distance", 6) * 0.25;
+        double distance = AbilityService.number(p, "distance", 6)
+                * (1 + MechanicService.number(player, BarbarianPerks.CHARGE_UPGRADE, "distance_bonus", 0));
+        double speed = distance * 0.25;
         player.setDeltaMovement(flat.normalize().scale(speed).add(0, 0.15, 0));
         player.hurtMarked = true; // envía la velocidad al cliente
-        CHARGING.put(player.getUUID(), new Charging(player.server.getTickCount() + CHARGE_WINDOW_TICKS, flat.normalize(), new HashSet<>()));
+        CHARGING.put(player.getUUID(), new Charging(player.server.getTickCount() + CHARGE_WINDOW_TICKS, flat.normalize(), speed, new HashSet<>()));
         sound(player, SoundEvents.PLAYER_ATTACK_SWEEP);
         return true;
     }
@@ -132,25 +140,56 @@ public final class CombatAbilities {
         if (event.phase != TickEvent.Phase.END || !(event.player instanceof ServerPlayer player)) return;
         Charging charging = CHARGING.get(player.getUUID());
         if (charging == null) return;
-        if (player.server.getTickCount() > charging.untilTick() || !player.isAlive()) {
-            CHARGING.remove(player.getUUID());
-            return;
-        }
         JsonObject p = AbilityService.params(CHARGE);
         float damage = (float) AbilityService.number(p, "hit_damage", 2);
         double knockback = AbilityService.number(p, "knockback_strength", 1.0);
-        Vec3 dir = charging.direction();
-        for (LivingEntity target : player.level().getEntitiesOfClass(LivingEntity.class, player.getBoundingBox().inflate(0.8),
-                e -> e != player && e.isAlive() && !e.isAlliedTo(player))) {
-            if (!charging.alreadyHit().add(target.getId())) continue;
-            if (damage > 0) {
-                target.hurt(new DamageSource(player.level().registryAccess().registryOrThrow(Registries.DAMAGE_TYPE)
-                        .getHolderOrThrow(CHARGE_DAMAGE), player), damage);
+        ActiveMechanic unstoppable = MechanicService.find(player, BarbarianPerks.UNSTOPPABLE_CHARGE);
+        ActiveMechanic crushing = MechanicService.find(player, BarbarianPerks.CRUSHING_CHARGE);
+        if (player.server.getTickCount() > charging.untilTick() || !player.isAlive()) {
+            CHARGING.remove(player.getUUID());
+            // Carga Demoledora: la carga termina con una onda de daño alrededor del Bárbaro.
+            if (crushing != null && player.isAlive()) {
+                double radius = crushing.number("wave_radius", 3);
+                for (LivingEntity target : player.level().getEntitiesOfClass(LivingEntity.class, player.getBoundingBox().inflate(radius),
+                        e -> canHit(player, e) && e.distanceToSqr(player) <= radius * radius)) {
+                    if (damage > 0) target.hurt(chargeDamage(player), damage);
+                    Vec3 away = target.position().subtract(player.position());
+                    if (knockback > 0 && away.horizontalDistanceSqr() > 1.0E-4) target.knockback(knockback * 0.5, -away.x, -away.z);
+                }
+                sound(player, SoundEvents.GENERIC_EXPLODE);
             }
-            // knockback() empuja en sentido contrario al vector dado: se pasa la dirección de la carga invertida.
-            if (knockback > 0) target.knockback(knockback, -dir.x, -dir.z);
-            stun(target, STUN_TICKS);
+            return;
         }
+        Vec3 dir = charging.direction();
+        // Carga Imparable: atraviesa (mantiene el impulso), 60 % del daño y sin aturdir.
+        if (unstoppable != null) {
+            Vec3 v = player.getDeltaMovement();
+            double horizontal = Math.sqrt(v.x * v.x + v.z * v.z);
+            if (horizontal < charging.speed()) {
+                player.setDeltaMovement(dir.x * charging.speed(), v.y, dir.z * charging.speed());
+                player.hurtMarked = true;
+            }
+        }
+        float hitDamage = unstoppable == null ? damage : (float) (damage * unstoppable.number("damage_fraction", 0.6));
+        int stunTicks = unstoppable != null ? 0 : (int) Math.round(STUN_TICKS * (crushing == null ? 1 : crushing.number("stun_factor", 2)));
+        for (LivingEntity target : player.level().getEntitiesOfClass(LivingEntity.class, player.getBoundingBox().inflate(0.8),
+                e -> canHit(player, e))) {
+            if (!charging.alreadyHit().add(target.getId())) continue;
+            if (hitDamage > 0) target.hurt(chargeDamage(player), hitDamage);
+            // knockback() empuja en sentido contrario al vector dado: se pasa la dirección de la carga invertida.
+            if (knockback > 0 && unstoppable == null) target.knockback(knockback, -dir.x, -dir.z);
+            if (stunTicks > 0) stun(target, stunTicks);
+        }
+    }
+
+    private static boolean canHit(ServerPlayer player, LivingEntity e) {
+        if (e == player || !e.isAlive() || e.isAlliedTo(player)) return false;
+        return !(e instanceof ServerPlayer other) || player.canHarmPlayer(other);
+    }
+
+    private static DamageSource chargeDamage(ServerPlayer player) {
+        return new DamageSource(player.level().registryAccess().registryOrThrow(Registries.DAMAGE_TYPE)
+                .getHolderOrThrow(CHARGE_DAMAGE), player);
     }
 
     /** Sed de Sangre: curación al matar. */

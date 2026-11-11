@@ -1,6 +1,8 @@
 {
   "replace": false,
   "values": [
-    "rpgclasses:charge"
+    "rpgclasses:charge",
+    "rpgclasses:holy",
+    "rpgclasses:toxin"
   ]
 }

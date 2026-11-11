@@ -102,31 +102,42 @@ public final class ClientSetup {
         jumpWasDown = down;
     }
 
-    private static float zoomProgress;
-    private static float zoomProgressPrev;
+    private static float sneakProgress, sneakPrev, drawProgress, drawPrev;
+    /** Parte del zoom que aporta cada situación; se suman (agachado + tensando = ambas). */
+    private static final double SNEAK_SHARE = 0.6, DRAW_SHARE = 0.6, MIN_FACTOR = 0.2;
 
-    /** Avanza la animación del zoom: activo al agacharse con un arco o ballesta en la mano, o al tensarlo. */
+    /** Avanza las animaciones del zoom: agacharse con arco/ballesta en la mano, y tensarlo. Son independientes. */
     private static void tickZoom(LocalPlayer p) {
         boolean holding = p.getMainHandItem().getItem() instanceof ProjectileWeaponItem
                 || p.getOffhandItem().getItem() instanceof ProjectileWeaponItem;
         boolean drawing = p.isUsingItem() && p.getUseItem().getItem() instanceof ProjectileWeaponItem;
-        boolean active = ModAttributes.value(p, ModAttributes.ZOOM) > 0 && (drawing || (holding && p.isShiftKeyDown()));
-        zoomProgressPrev = zoomProgress;
-        zoomProgress += ((active ? 1f : 0f) - zoomProgress) * 0.4f;
-        if (Math.abs(zoomProgress) < 0.001f) zoomProgress = 0f;
+        boolean has = ModAttributes.value(p, ModAttributes.ZOOM) > 0;
+        sneakPrev = sneakProgress;
+        drawPrev = drawProgress;
+        sneakProgress = ease(sneakProgress, has && holding && p.isShiftKeyDown());
+        drawProgress = ease(drawProgress, has && drawing);
+    }
+
+    private static float ease(float v, boolean on) {
+        v += ((on ? 1f : 0f) - v) * 0.4f;
+        return Math.abs(v) < 0.001f ? 0f : v;
     }
 
     /**
      * Visión de Halcón. Se cambia el campo de visión real (no el "efecto de FOV"), así que funciona
-     * aunque el jugador tenga los efectos de FOV al mínimo en sus opciones.
+     * aunque el jugador tenga los efectos de FOV al mínimo. El zoom de agacharse y el de tensar se suman
+     * y además se acumulan con el zoom propio del arco de vanilla.
      */
     private static void onFov(ViewportEvent.ComputeFov event) {
         Minecraft mc = Minecraft.getInstance();
         if (mc.player == null || !event.usedConfiguredFov()) return;
-        float progress = (float) (zoomProgressPrev + (zoomProgress - zoomProgressPrev) * event.getPartialTick());
-        if (progress <= 0f) return;
+        float pt = (float) event.getPartialTick();
+        double sneak = sneakPrev + (sneakProgress - sneakPrev) * pt;
+        double draw = drawPrev + (drawProgress - drawPrev) * pt;
+        if (sneak <= 0 && draw <= 0) return;
         double zoom = ModAttributes.value(mc.player, ModAttributes.ZOOM);
-        event.setFOV(event.getFOV() * (1 - zoom * progress));
+        double factor = Math.max(MIN_FACTOR, 1 - zoom * (sneak * SNEAK_SHARE + draw * DRAW_SHARE));
+        event.setFOV(event.getFOV() * factor);
     }
 
     private ClientSetup() {}

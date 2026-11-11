@@ -276,6 +276,7 @@
   "msg.rpgclasses.shadow_step_blocked": "No hay sitio para teletransportarte hacia ahí.",
   "msg.rpgclasses.shield_disabled": "Escudo desactivado %s s",
   "msg.rpgclasses.stance": "Postura: %s",
+  "msg.rpgclasses.stance_favorite": "Postura favorita: %s",
   "msg.rpgclasses.suspended": "Tu clase ya no existe en este servidor. Usa /clase reiniciar clase.",
   "msg.rpgclasses.validate_ok": "Todas las definiciones son válidas (%s clases).",
   "msg.rpgclasses.xp_charged": "Has gastado %s de XP. Siguiente nivel: %s de XP.",

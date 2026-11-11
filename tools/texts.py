@@ -371,6 +371,7 @@ UI = {
     "key.rpgclasses.ability_2": "Habilidad 2",
     "key.rpgclasses.ability_3": "Habilidad 3",
     "msg.rpgclasses.stance": "Postura: %s",
+    "msg.rpgclasses.stance_favorite": "Postura favorita: %s",
     "msg.rpgclasses.shadow_step_blocked": "No hay sitio para teletransportarte hacia ahí.",
     "hud.rpgclasses.stealth": "Sigilo",
     "entity.rpgclasses.decoy": "Señuelo",

@@ -1,6 +1,7 @@
 package io.github.rpgclasses.client;
 
 import com.mojang.blaze3d.platform.InputConstants;
+import io.github.rpgclasses.content.MovementPerks;
 import io.github.rpgclasses.content.RangerAbilities;
 import io.github.rpgclasses.core.ability.UnlockResolver;
 import io.github.rpgclasses.core.definition.DefinitionStore;
@@ -62,6 +63,8 @@ public final class ClientSetup {
         }
         airJump(mc);
         tickZoom(mc.player);
+        MovementPerks.lightFeetTick(mc.player, hasLocalMechanic("rpgclasses:light_feet"));
+        if (hasLocalMechanic("rpgclasses:feather_fall")) MovementPerks.featherFallTick(mc.player, mc.options.keyJump.isDown());
         for (int i = 0; i < ABILITY_KEYS.length; i++) {
             while (ABILITY_KEYS[i].consumeClick()) {
                 if (mc.screen == null) Net.CHANNEL.sendToServer(new Packets.UseAbility(i));
@@ -152,9 +155,11 @@ public final class ClientSetup {
     /** Agilidad de las Sombras: sube la velocidad agachado hasta igualar la de caminar (atributo = 1). */
     private static void onMovementInput(MovementInputUpdateEvent event) {
         var player = event.getEntity();
-        // Tirador Ágil: tensar el arco no ralentiza (vanilla multiplica el movimiento por 0,2 después de este evento).
-        if (player.isUsingItem() && !player.isPassenger() && player.getUseItem().getItem() instanceof net.minecraft.world.item.BowItem
-                && hasLocalMechanic("rpgclasses:draw_no_slow")) {
+        // Tirador Ágil (arco) y Pies Ligeros (cualquier objeto): usar no ralentiza
+        // (vanilla multiplica el movimiento por 0,2 después de este evento).
+        if (player.isUsingItem() && !player.isPassenger()
+                && ((player.getUseItem().getItem() instanceof net.minecraft.world.item.BowItem && hasLocalMechanic("rpgclasses:draw_no_slow"))
+                    || hasLocalMechanic("rpgclasses:light_feet"))) {
             event.getInput().leftImpulse *= 5f;
             event.getInput().forwardImpulse *= 5f;
         }

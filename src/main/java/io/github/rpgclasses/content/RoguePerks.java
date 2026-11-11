@@ -123,7 +123,7 @@ public final class RoguePerks {
     }
 
     /** Registro de golpes entre jugadores (para Golpe a Traición en PvP). */
-    @SubscribeEvent(priority = EventPriority.MONITOR)
+    @SubscribeEvent(priority = EventPriority.LOWEST)
     public void onHurt(LivingHurtEvent event) {
         if (!(event.getEntity() instanceof ServerPlayer victim) || !(event.getSource().getEntity() instanceof ServerPlayer attacker)) return;
         if (victim == attacker || event.getAmount() <= 0) return;

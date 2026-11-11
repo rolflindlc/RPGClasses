@@ -6,7 +6,9 @@ import io.github.rpgclasses.core.stat.StatCalculator;
 import io.github.rpgclasses.core.stat.StatMath;
 import io.github.rpgclasses.player.PlayerClassData;
 import io.github.rpgclasses.player.PlayerClassDataProvider;
+import io.github.rpgclasses.core.stat.StatCalculator.ActiveMechanic;
 import io.github.rpgclasses.server.AbilityService;
+import io.github.rpgclasses.server.MechanicService;
 import io.github.rpgclasses.server.StatEngine;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
@@ -49,13 +51,42 @@ public final class MonkAbilities {
 
     // --- Posturas ---
 
+    /** Contadores guardados con el jugador: postura anterior, la de antes y la favorita (Postura Dominante). */
+    public static final String PREV_COUNTER = "stance_prev";
+    public static final String PREV2_COUNTER = "stance_prev2";
+    public static final String FAVORITE_COUNTER = "stance_favorite";
+    /** Flujo: hasta qué tick de servidor sigue la postura anterior (no se guarda: dura segundos). */
+    private static final Map<java.util.UUID, Long> LINGER_UNTIL = new HashMap<>();
+
     private static boolean cycleStance(ServerPlayer player, JsonObject p) {
         PlayerClassData data = PlayerClassDataProvider.get(player);
         if (data == null) return false;
-        int next = (data.counters.getOrDefault(STANCE_COUNTER, 0) + 1) % STANCE_NAMES.length;
+        int current = data.counters.getOrDefault(STANCE_COUNTER, 0);
+        // Postura Dominante: agachado + tecla fija la postura actual como favorita (sin cambiar ni gastar cooldown).
+        if (player.isShiftKeyDown() && MechanicService.has(player, MonkPerks.DOMINANT) && current > 0) {
+            data.counters.put(FAVORITE_COUNTER, current);
+            StatEngine.recompute(player);
+            player.displayClientMessage(Component.translatable("msg.rpgclasses.stance_favorite",
+                    Component.translatable("stance.rpgclasses." + STANCE_NAMES[current])), false);
+            return false;
+        }
+        int next = (current + 1) % STANCE_NAMES.length;
+        data.counters.put(PREV2_COUNTER, data.counters.getOrDefault(PREV_COUNTER, 0));
+        data.counters.put(PREV_COUNTER, current);
         data.counters.put(STANCE_COUNTER, next);
-        AbilityService.setCooldown(player, STANCES, AbilityService.ticks(p, "switch_cooldown_seconds", 4));
+        ActiveMechanic flow = MechanicService.find(player, MonkPerks.FLOW);
+        ActiveMechanic wave = MechanicService.find(player, MonkPerks.ELEMENTAL_WAVE);
+        if (flow != null) {
+            LINGER_UNTIL.put(player.getUUID(), player.server.getTickCount() + Math.round(flow.number("linger_seconds", 3) * 20));
+        }
+        // Cooldown de cambio: 4 s; Flujo 3 s y Onda Elemental 7 s (sustituyen la base); Híbrida +2 s.
+        double seconds = AbilityService.number(p, "switch_cooldown_seconds", 4);
+        if (flow != null) seconds = flow.number("switch_cooldown_seconds", 3);
+        if (wave != null) seconds = wave.number("switch_cooldown_seconds", 7);
+        seconds += MechanicService.number(player, MonkPerks.HYBRID, "switch_cooldown_change", 0);
+        AbilityService.setCooldown(player, STANCES, (int) Math.round(seconds * 20));
         StatEngine.recompute(player);
+        if (wave != null) MonkPerks.elementalWave(player, STANCE_NAMES[next], wave);
         player.displayClientMessage(Component.translatable("msg.rpgclasses.stance",
                 Component.translatable("stance.rpgclasses." + STANCE_NAMES[next])), false);
         player.level().playSound(null, player.getX(), player.getY(), player.getZ(),
@@ -63,18 +94,77 @@ public final class MonkAbilities {
         return true;
     }
 
+    /** Flujo: al acabar el efecto de la postura anterior hay que recalcular las estadísticas. */
+    static void tickLinger(ServerPlayer player) {
+        Long until = LINGER_UNTIL.get(player.getUUID());
+        if (until != null && player.server.getTickCount() >= until) {
+            LINGER_UNTIL.remove(player.getUUID());
+            StatEngine.recompute(player);
+        }
+    }
+
+    static void forget(java.util.UUID id) {
+        LINGER_UNTIL.remove(id);
+    }
+
     /**
-     * Multiplicadores que la postura actual aplica a los bonus de las pasivas (atributo -> factor).
-     * Vacío si el jugador no tiene posturas o está en la neutral.
+     * Multiplicadores que las posturas aplican a los bonus de las pasivas (atributo -> factor).
+     * Normalmente solo la actual; con Postura Híbrida la actual y la anterior al 50 %; con Flujo la que se deja
+     * sigue unos segundos a una fracción de su peso. Maestría de Postura y Postura Dominante agrandan los bonus
+     * de cada postura (no sus penalizaciones). Vacío si el jugador no tiene posturas o todo es neutral.
      */
     public static Map<String, Double> stanceFactors(ServerPlayer player) {
         PlayerClassData data = PlayerClassDataProvider.get(player);
-        if (data == null) return Map.of();
-        int stance = data.counters.getOrDefault(STANCE_COUNTER, 0);
-        if (stance <= 0 || stance >= STANCE_NAMES.length || !AbilityService.has(player, STANCES)) return Map.of();
+        if (data == null || !AbilityService.has(player, STANCES)) return Map.of();
         JsonObject p = AbilityService.params(STANCES);
+        int current = data.counters.getOrDefault(STANCE_COUNTER, 0);
+        int prev = data.counters.getOrDefault(PREV_COUNTER, 0);
+        int prev2 = data.counters.getOrDefault(PREV2_COUNTER, 0);
+        ActiveMechanic flow = MechanicService.find(player, MonkPerks.FLOW);
+        Long until = LINGER_UNTIL.get(player.getUUID());
+        boolean lingering = flow != null && until != null && player.server.getTickCount() < until;
+        double linger = flow == null ? 0 : flow.number("linger_factor", 0.5);
+
+        Map<Integer, Double> weights = new HashMap<>();
+        ActiveMechanic hybrid = MechanicService.find(player, MonkPerks.HYBRID);
+        if (hybrid != null) {
+            double w = hybrid.number("stance_factor", 0.5);
+            weights.merge(current, w, Double::sum);
+            weights.merge(prev, w, Double::sum);
+            if (lingering) weights.merge(prev2, w * linger, Double::sum);
+        } else {
+            weights.merge(current, 1.0, Double::sum);
+            if (lingering) weights.merge(prev, linger, Double::sum);
+        }
+
+        double mastery = MechanicService.number(player, MonkPerks.MASTERY, "stance_bonus", 0);
+        ActiveMechanic dominant = MechanicService.find(player, MonkPerks.DOMINANT);
+        int favorite = data.counters.getOrDefault(FAVORITE_COUNTER, 0);
+        Map<String, Double> sum = new HashMap<>();
+        for (Map.Entry<Integer, Double> w : weights.entrySet()) {
+            int stance = w.getKey();
+            if (stance <= 0 || stance >= STANCE_NAMES.length) continue;
+            double bonusScale = 1 + mastery;
+            if (dominant != null && favorite > 0) {
+                bonusScale += stance == favorite ? dominant.number("favorite_bonus", 0.5) : dominant.number("others_bonus", -0.25);
+            }
+            for (Map.Entry<String, Double> f : rawFactors(STANCE_NAMES[stance], p).entrySet()) {
+                double delta = f.getValue() - 1;
+                if (delta > 0) delta *= Math.max(0, bonusScale); // las penalizaciones no cambian
+                sum.merge(f.getKey(), w.getValue() * delta, Double::sum);
+            }
+        }
+        Map<String, Double> out = new HashMap<>();
+        for (Map.Entry<String, Double> e : sum.entrySet()) {
+            if (Math.abs(e.getValue()) > 1.0E-9) out.put(e.getKey(), Math.max(0, 1 + e.getValue()));
+        }
+        return out;
+    }
+
+    /** Factores de una postura sola, sin perks. */
+    private static Map<String, Double> rawFactors(String stance, JsonObject p) {
         Map<String, Double> f = new HashMap<>();
-        switch (STANCE_NAMES[stance]) {
+        switch (stance) {
             case "water" -> {
                 double speed = AbilityService.number(p, "water_speed_factor", 2.0);
                 f.put(SPEED, speed);

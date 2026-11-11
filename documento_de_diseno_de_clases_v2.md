@@ -1,6 +1,6 @@
 # Documento de Diseño v2: Mod de Clases y Árboles de Habilidades para Minecraft Java
 
-Versión 2 del diseño (revisión 2.7e, en desarrollo). Plataforma prevista: Forge 1.20.1 con Iron's Spells and Spellbooks, Epic Fight, Mowzie's Mobs y Cataclysm. Servidor principalmente PvE con algo de PvP. Objetivo del mod: sistema de clases balanceadas y programado de forma estructurada y orientada a la expansibilidad (clases futuras previstas: Alquimista, Nigromante, Druida).
+Versión 2 del diseño (revisión 2.7f, en desarrollo). Plataforma prevista: Forge 1.20.1 con Iron's Spells and Spellbooks, Epic Fight, Mowzie's Mobs y Cataclysm. Servidor principalmente PvE con algo de PvP. Objetivo del mod: sistema de clases balanceadas y programado de forma estructurada y orientada a la expansibilidad (clases futuras previstas: Alquimista, Nigromante, Druida).
 
 Los valores marcados con **[MEDIR]** son objetivos de diseño que deben calibrarse en el juego real antes de darlos por cerrados.
 
@@ -15,6 +15,14 @@ Los valores marcados con **[MEDIR]** son objetivos de diseño que deben calibrar
 * **Regla 14 (escuela sagrada, rev. 2.7c):** muro de −100% en la escuela sagrada para todas las clases salvo el Paladín, aparte del muro de Magia general; el muro de Magia del Paladín no la afecta. El Mago pierde así la sagrada (y con ella la curación de Iron's). Sección 10 ajustada a mano.
 * **Regla 13 (ramas extra):** 5 ramas por clase, máximo 3 usables; las otras dos se bloquean al invertir en tres. Todas las clases tienen ya sus ramas 4.ª y 5.ª: Mago (*Convocación*, *Fluidez*), Paladín (*Estandarte*, *Castigo*), Bárbaro (*Estampida*, *Curtido*), Pícaro (*Toxinas*, *Acrobacia*), Ranger (*Flechas Especiales*, *Retirada*) y Monje (*Maestría de Postura*, *Meditación*).
 * **Pícaro, invisibilidad en PvP:** el radio de revelado baja de 2,5 a **1 bloque** de un jugador.
+
+**Cambios de la revisión 2.7f (tras la primera ronda de pruebas):**
+* **Mago:** *Reserva* compensa que Iron's regenera un % del maná máximo (la regeneración real sube +40 % con 10 puntos; Ráfaga +60 %, Pozo −40 %, en maná por segundo). *Elementalista*: cada carga nueva reinicia el tiempo en todos los niveles y avisa de las cargas; la detonación de **Hielo** encierra al objetivo en una **Tumba de Hielo** de Iron's (los jefes solo se congelan). *Magia Salvaje*: probabilidad mínima del 10 %; si no hay otro conjuro ofensivo equipado, replica el mismo. *Magia de Sangre* también paga con vida los conjuros continuos.
+* **Paladín:** *Baluarte Incorruptible* trata como negativos los efectos dañinos y los del tag `rpgclasses:negative` (efectos de otros mods registrados como neutrales) y purga cada 0,5 s. *Baluarte de Embestida*: +0,5 de altura de paso mientras corre.
+* **Bárbaro:** *Embestida* base se frena contra el primer enemigo y rebota (solo *Carga Imparable* atraviesa y golpea a varios). *Carnívoro*: solo se puede comer carne (la carne sacia el doble).
+* **Pícaro:** *Señuelo* lleva el equipo del Pícaro (manos y armadura) y su cooldown baja a **10 s**. El sigilo no deja partículas ni muestra equipo; cualquier ataque cuerpo a cuerpo desde el sigilo gasta barra.
+* **Ranger:** *Flecha Explosiva* mide los 2 bloques hasta el cuerpo del enemigo y empuja. *Maestro de Bestias*: al domesticar un animal se pregunta si vincularse; solo las mascotas **vinculadas** reciben Vínculo Salvaje y Salvaguarda (agachado + mano vacía para vincular o romper). La Salvaguarda busca un hueco donde quepa la mascota.
+* **Monje:** *Trance Profundo* cura hasta el **80 %**; *Mente Clara* ya no reduce la curación.
 
 ## 🛠️ 1. Reglas Generales
 

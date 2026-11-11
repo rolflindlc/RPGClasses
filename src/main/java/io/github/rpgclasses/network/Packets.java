@@ -126,4 +126,55 @@ public final class Packets {
     }
 
     private Packets() {}
+
+    /** Servidor -> cliente: velocidad real de una flecha rápida (el paquete vanilla la recorta a 3,9 por eje). */
+    public record ArrowVelocity(int entityId, double x, double y, double z) {
+        public void encode(FriendlyByteBuf buf) {
+            buf.writeVarInt(entityId);
+            buf.writeDouble(x);
+            buf.writeDouble(y);
+            buf.writeDouble(z);
+        }
+
+        public static ArrowVelocity decode(FriendlyByteBuf buf) {
+            return new ArrowVelocity(buf.readVarInt(), buf.readDouble(), buf.readDouble(), buf.readDouble());
+        }
+
+        public void handle(Supplier<NetworkEvent.Context> ctx) {
+            DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> ClientHandlers.onArrowVelocity(this));
+        }
+    }
+
+    /** Servidor -> cliente: Maestro de Bestias acaba de domesticar un animal; ¿vincularse con él? */
+    public record BondPrompt(int entityId, String name) {
+        public void encode(FriendlyByteBuf buf) {
+            buf.writeVarInt(entityId);
+            buf.writeUtf(name, 256);
+        }
+
+        public static BondPrompt decode(FriendlyByteBuf buf) {
+            return new BondPrompt(buf.readVarInt(), buf.readUtf(256));
+        }
+
+        public void handle(Supplier<NetworkEvent.Context> ctx) {
+            DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> ClientHandlers.onBondPrompt(this));
+        }
+    }
+
+    /** Cliente -> servidor: respuesta al vínculo. */
+    public record BondAnswer(int entityId, boolean accept) {
+        public void encode(FriendlyByteBuf buf) {
+            buf.writeVarInt(entityId);
+            buf.writeBoolean(accept);
+        }
+
+        public static BondAnswer decode(FriendlyByteBuf buf) {
+            return new BondAnswer(buf.readVarInt(), buf.readBoolean());
+        }
+
+        public void handle(Supplier<NetworkEvent.Context> ctx) {
+            ServerPlayer player = ctx.get().getSender();
+            if (player != null) io.github.rpgclasses.content.RangerSubclasses.answerBond(player, entityId, accept);
+        }
+    }
 }

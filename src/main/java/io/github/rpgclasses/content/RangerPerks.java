@@ -169,15 +169,27 @@ public final class RangerPerks {
         float damage = (float) (arrowDamage * m.number("damage_fraction", 0.3));
         DamageSource source = new DamageSource(level.registryAccess().registryOrThrow(Registries.DAMAGE_TYPE)
                 .getHolderOrThrow(ARROW_BLAST), shooter);
-        if (damage > 0) {
-            for (LivingEntity e : level.getEntitiesOfClass(LivingEntity.class, new AABB(at, at).inflate(radius),
-                    e -> e != exclude && e != shooter && e.isAlive() && !e.isAlliedTo(shooter) && e.distanceToSqr(at) <= radius * radius)) {
-                if (e instanceof ServerPlayer other && !shooter.canHarmPlayer(other)) continue;
-                e.hurt(source, damage);
+        double knockback = m.number("knockback_strength", 0.8);
+        // Rev. 2.7f: el radio se mide hasta el cuerpo del enemigo (no hasta sus pies) y empuja, también al alcanzado.
+        for (LivingEntity e : level.getEntitiesOfClass(LivingEntity.class, new AABB(at, at).inflate(radius + 2),
+                e -> e != shooter && e.isAlive() && !e.isAlliedTo(shooter)
+                        && closest(e.getBoundingBox(), at).distanceToSqr(at) <= radius * radius)) {
+            if (e instanceof ServerPlayer other && !shooter.canHarmPlayer(other)) continue;
+            if (damage > 0 && e != exclude) e.hurt(source, damage);
+            Vec3 away = e.position().subtract(at);
+            if (knockback > 0 && away.horizontalDistanceSqr() > 1.0E-4) {
+                e.knockback(knockback, -away.x, -away.z);
+                e.setDeltaMovement(e.getDeltaMovement().add(0, 0.25, 0));
+                e.hurtMarked = true;
             }
         }
         level.sendParticles(ParticleTypes.EXPLOSION, at.x, at.y, at.z, 1, 0, 0, 0, 0);
         level.playSound(null, at.x, at.y, at.z, SoundEvents.GENERIC_EXPLODE, SoundSource.PLAYERS, 0.6f, 1.3f);
+    }
+
+    private static Vec3 closest(AABB box, Vec3 p) {
+        return new Vec3(Math.max(box.minX, Math.min(p.x, box.maxX)), Math.max(box.minY, Math.min(p.y, box.maxY)),
+                Math.max(box.minZ, Math.min(p.z, box.maxZ)));
     }
 
     /** Flecha Explosiva que impacta contra un bloque: el daño de referencia es el de la flecha en ese momento. */

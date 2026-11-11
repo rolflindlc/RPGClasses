@@ -181,7 +181,8 @@ public final class MonkPerks {
         if (variant != null) perSecond *= variant.number("heal_factor", 1);
         if (now - st.lastHealTick >= 20) {
             st.lastHealTick = now;
-            float limit = (float) (player.getMaxHealth() * m.number("health_limit", 0.6));
+            double limitFraction = variant != null && variant.params().has("health_limit") ? variant.number("health_limit", 0.8) : m.number("health_limit", 0.6);
+            float limit = (float) (player.getMaxHealth() * limitFraction);
             if (player.getHealth() < limit && perSecond > 0) {
                 player.heal((float) Math.min(perSecond, limit - player.getHealth()));
             }

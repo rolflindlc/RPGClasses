@@ -203,6 +203,7 @@
               "id": "rpgclasses:explosive_arrow",
               "radius": 2,
               "damage_fraction": 0.3,
+              "knockback_strength": 0.8,
               "direct_damage": -0.1
             }
           ]

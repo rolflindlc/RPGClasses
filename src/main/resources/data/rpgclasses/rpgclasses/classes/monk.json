@@ -239,7 +239,8 @@
               "type": "rpgclasses:mechanic",
               "id": "rpgclasses:meditation_variant",
               "heal_per_second_fixed": 1,
-              "delay_seconds": 4
+              "delay_seconds": 4,
+              "health_limit": 0.8
             }
           ]
         },
@@ -249,8 +250,7 @@
             {
               "type": "rpgclasses:mechanic",
               "id": "rpgclasses:meditation_variant",
-              "purge_interval_seconds": 5,
-              "heal_factor": 0.5
+              "purge_interval_seconds": 5
             }
           ]
         }

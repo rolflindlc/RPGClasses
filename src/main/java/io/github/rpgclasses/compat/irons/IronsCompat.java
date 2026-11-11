@@ -306,7 +306,7 @@ public final class IronsCompat {
         int index = 0;
         for (KitSpell k : kit.spells()) {
             AbstractSpell spell = SpellRegistry.getSpell(k.id());
-            if (spell == null || spell == SpellRegistry.none()) {
+            if (spell == null || "irons_spellbooks:none".equals(spell.getSpellId())) {
                 RpgClasses.LOGGER.warn("[rpgclasses] Conjuro de kit desconocido: {}", k.id());
                 continue;
             }

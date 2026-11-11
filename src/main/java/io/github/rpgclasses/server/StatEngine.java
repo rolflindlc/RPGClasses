@@ -50,6 +50,7 @@ public final class StatEngine {
 
     public static void recompute(ServerPlayer player) {
         PlayerClassData data = PlayerClassDataProvider.get(player);
+        MechanicService.invalidate(player);
         if (data == null) return;
         ProgressState s = data.state;
         ClassDef classDef = DefinitionStore.SERVER.classDef(s.classId);

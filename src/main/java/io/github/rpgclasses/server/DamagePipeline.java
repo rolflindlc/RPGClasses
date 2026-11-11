@@ -2,7 +2,10 @@ package io.github.rpgclasses.server;
 
 import io.github.rpgclasses.RpgClasses;
 import io.github.rpgclasses.config.ServerConfig;
+import io.github.rpgclasses.content.BarbarianPerks;
 import io.github.rpgclasses.content.CombatAbilities;
+import io.github.rpgclasses.content.PaladinPerks;
+import io.github.rpgclasses.content.Toxins;
 import io.github.rpgclasses.content.RangerAbilities;
 import io.github.rpgclasses.content.RogueAbilities;
 import io.github.rpgclasses.core.Ids;
@@ -152,10 +155,29 @@ public final class DamagePipeline {
             return; // daño indirecto que no es ni golpe ni proyectil (explosiones, mascotas...)
         }
 
-        double fury = StatCalculator.woundFuryBonus(s, classDef, attacker.getHealth() / attacker.getMaxHealth());
-        if (fury > 0) {
-            damage *= 1 + fury;
-            log.append(String.format(Locale.ROOT, " | furia x%.2f", 1 + fury));
+        // Furia de Heridas + perk de Furia (Desatada suma, Templada resta).
+        double fury = StatCalculator.woundFuryBonus(s, classDef, attacker.getHealth() / attacker.getMaxHealth())
+                + BarbarianPerks.furyPerkBonus(attacker);
+        if (fury != 0) {
+            damage *= Math.max(0.1, 1 + fury);
+            log.append(String.format(Locale.ROOT, " | furia x%.2f", Math.max(0.1, 1 + fury)));
+        }
+        double smite = PaladinPerks.smiteBonus(attacker, target);
+        if (smite != 0) {
+            damage *= 1 + smite;
+            log.append(String.format(Locale.ROOT, " | castigo x%.2f", 1 + smite));
+        }
+        double condemn = PaladinPerks.condemnBonus(attacker, target);
+        if (condemn != 0) {
+            damage *= 1 + condemn;
+            log.append(String.format(Locale.ROOT, " | condena x%.2f", 1 + condemn));
+        }
+        boolean melee = direct == attacker;
+        double judgement = melee ? PaladinPerks.judgementBonus(attacker) : 0;
+        double holyDamage = damage * judgement;
+        if (judgement > 0) {
+            damage += holyDamage;
+            log.append(String.format(Locale.ROOT, " | juicio +%.2f sagrado", holyDamage));
         }
 
         if (attacker.hasEffect(ModEffects.BERSERKER_RAGE.get())) {
@@ -191,6 +213,9 @@ public final class DamagePipeline {
         log.append(String.format(Locale.ROOT, " = %.2f (antes de armadura)", result));
         LAST_BREAKDOWN.put(attacker.getUUID(), log.toString());
         event.setAmount(result);
+
+        if (judgement > 0) PaladinPerks.judgementArea(attacker, target, (float) holyDamage);
+        if (melee) Toxins.onMeleeHit(attacker, target);
     }
 
     /** Daño que RECIBE un jugador: reducciones y penalizaciones de sus habilidades activas. */
@@ -198,7 +223,7 @@ public final class DamagePipeline {
     public void onDefend(LivingHurtEvent event) {
         if (!(event.getEntity() instanceof ServerPlayer victim) || victim instanceof FakePlayer || event.getAmount() <= 0) return;
         if (event.getSource().is(DamageTypeTags.BYPASSES_INVULNERABILITY)) return;
-        double factor = 1;
+        double factor = BarbarianPerks.hazardFactor(victim, event.getSource()) * BarbarianPerks.enduranceFactor(victim);
         if (victim.hasEffect(ModEffects.BULWARK.get())) factor *= 1 - CombatAbilities.bulwarkReduction(victim);
         if (victim.hasEffect(ModEffects.TAUNT_GUARD.get())) {
             factor *= 1 - AbilityService.number(AbilityService.params(CombatAbilities.TAUNT), "damage_reduction", 0.2);

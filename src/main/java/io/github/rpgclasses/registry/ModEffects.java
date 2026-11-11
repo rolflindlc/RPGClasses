@@ -35,6 +35,23 @@ public final class ModEffects {
     public static final RegistryObject<MobEffect> BERSERKER_RAGE =
             EFFECTS.register("berserker_rage", BerserkerEffect::new);
 
+    /** Toxina del Pícaro: el daño periódico lo hace {@code content.Toxins}; la leche la cura. */
+    public static final RegistryObject<MobEffect> TOXIN =
+            EFFECTS.register("toxin", () -> new CurableEffect(MobEffectCategory.HARMFUL, 0x5AA02D));
+    /** Aguante (perk de Curtido): reducción del daño recibido. */
+    public static final RegistryObject<MobEffect> ENDURANCE =
+            EFFECTS.register("endurance", () -> new StateEffect(MobEffectCategory.BENEFICIAL, 0x8C6E50));
+    /** Condena (perk de Castigo): el objetivo recibe más daño del Paladín que lo marcó. */
+    public static final RegistryObject<MobEffect> CONDEMNED =
+            EFFECTS.register("condemned", () -> new StateEffect(MobEffectCategory.HARMFUL, 0xFFF0A0));
+
+    /** Efecto normal (curable con leche) sin lógica propia. */
+    public static class CurableEffect extends MobEffect {
+        public CurableEffect(MobEffectCategory category, int color) {
+            super(category, color);
+        }
+    }
+
     public static class StateEffect extends MobEffect {
         public StateEffect(MobEffectCategory category, int color) {
             super(category, color);

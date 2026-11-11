@@ -240,7 +240,8 @@
               "type": "rpgclasses:mechanic",
               "id": "rpgclasses:crushing_charge",
               "stun_factor": 2,
-              "cooldown_change": 0.3
+              "cooldown_change": 0.3,
+              "wave_radius": 3
             }
           ]
         }

@@ -190,7 +190,7 @@ subs = {
      [ms(1,"triple_jump",True,"double_jump"), ms(1,"wall_climb",True)]),
  "sniper": ("ranger","minecraft:spyglass",[
      attr([(R("projectile_velocity"), to(2.0)), (R("bow_damage"), to(.45))]),
-     mech("draw_speed_cut", fraction_removed={"to":1.0})], [ms(1,"lethal_shot",True,"heavy_shot")]),
+     attr([(R("draw_speed"), to(-1.0,"multiply_total"))])], [ms(1,"lethal_shot",True,"heavy_shot")]),
  "breeze_master": ("monk","minecraft:phantom_membrane",[
      attr([(MC+"movement_speed", to(.4,"multiply_base")), (R("jump_bonus"), to(.8))], NOARM)], [ms(1,"wind_dash",True)]),
  "heavy_palm": ("monk","minecraft:piston",[

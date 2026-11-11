@@ -40,6 +40,7 @@ public final class ServerEvents {
                 to.state.copyFrom(from.state);
                 to.cooldowns.putAll(from.cooldowns);
                 to.counters.putAll(from.counters);
+                to.texts.putAll(from.texts);
             }
             if (event.getEntity() instanceof ServerPlayer player) {
                 StatEngine.recompute(player);

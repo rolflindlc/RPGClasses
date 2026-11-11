@@ -36,7 +36,10 @@ public final class Definitions {
     public record MilestoneDef(int level, boolean subclassLevel, String grants, String upgrades) {}
 
     /** Objeto del equipo inicial. slot: mainhand, offhand, head, chest, legs, feet o inventory. */
-    public record KitItem(String item, int count, String slot) {}
+    /** Objeto del kit; {@code spells} son conjuros de Iron's que se inscriben en él (libros). */
+    public record KitItem(String item, int count, String slot, List<KitSpell> spells) {}
+
+    public record KitSpell(String id, int level) {}
 
     public record ClassDef(
             String id,

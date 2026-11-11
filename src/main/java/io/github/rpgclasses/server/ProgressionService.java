@@ -105,6 +105,8 @@ public final class ProgressionService {
                 if (r.ok()) {
                     setXp(player, xp + ProgressionRules.respecClass(s, ServerConfig.RESPEC_XP_LOSS.get()));
                     KitService.removeAll(player);
+                    PlayerClassData d = PlayerClassDataProvider.get(player);
+                    if (d != null) d.clearClassBindings();
                 }
                 return r;
             }
@@ -118,6 +120,7 @@ public final class ProgressionService {
         if (data == null) return;
         ProgressionRules.respecClass(data.state, 1.0);
         KitService.removeAll(player);
+        data.clearClassBindings();
         StatEngine.refresh(player);
     }
 

@@ -38,7 +38,7 @@ ABILITIES = {
 }
 
 ABILITY_TEXT = {
-    "free_cast_slot_1": ("Conjuro Gratuito I", "Eliges un conjuro que queda fijado para siempre en esta ranura. Mientras tengas cargas, lanzarlo gasta una carga en lugar de maná."),
+    "free_cast_slot_1": ("Conjuro Gratuito I", "Eliges un conjuro (selecciónalo en la rueda y usa /clase conjuro 1) que queda fijado para siempre en esta ranura. Mientras tengas cargas, lanzarlo gasta una carga en lugar de maná."),
     "free_cast_slot_2": ("Conjuro Gratuito II", "Segunda ranura de conjuro gratuito, con más cargas y un límite de coste mayor."),
     "free_cast_slot_3": ("Conjuro Gratuito III", "Tercera ranura de conjuro gratuito, la de mayor coste permitido."),
     "taunt": ("Provocación", "Obliga a los mobs cercanos a atacarte, los ralentiza y reduce durante unos segundos el daño que recibes."),
@@ -393,6 +393,12 @@ UI = {
     "effect.rpgclasses.retreat": "Retirada",
     "effect.rpgclasses.arcane_step": "Paso Arcano",
     "message.rpgclasses.school_locked": "Tu clase no puede usar la escuela %s",
+    "message.rpgclasses.free_cast_used": "Conjuro gratuito (ranura %s): quedan %s/%s cargas",
+    "message.rpgclasses.free_cast_locked": "Aún no tienes la ranura de Conjuro Gratuito %s",
+    "message.rpgclasses.free_cast_already": "La ranura %s ya tiene fijado %s (se cambia al reiniciar la clase)",
+    "message.rpgclasses.free_cast_none": "Selecciona antes un conjuro en la rueda de Iron's",
+    "message.rpgclasses.free_cast_duplicate": "Ese conjuro ya está fijado en otra ranura",
+    "message.rpgclasses.free_cast_bound": "%s fijado en la ranura %s (gratis si su coste es como mucho %s de maná)",
     "death.attack.rpgclasses.arrow_blast": "%1$s voló por los aires por una flecha de %2$s",
     "death.attack.rpgclasses.arrow_blast.player": "%1$s voló por los aires por una flecha de %2$s",
     "death.attack.rpgclasses.shockwave": "%1$s fue derribado por la onda de choque de %2$s",

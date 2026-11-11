@@ -28,6 +28,9 @@ public final class ModEffects {
     /** Baluarte: reducción de todo el daño recibido (el porcentaje lo aplica DamagePipeline). */
     public static final RegistryObject<MobEffect> BULWARK =
             EFFECTS.register("bulwark", () -> new StateEffect(MobEffectCategory.BENEFICIAL, 0xF0D25A));
+    /** Baluarte de Embestida: carrera forzada (cliente) y daño de contacto (content.PaladinSubclasses). */
+    public static final RegistryObject<MobEffect> CHARGING_BULWARK =
+            EFFECTS.register("charging_bulwark", () -> new StateEffect(MobEffectCategory.BENEFICIAL, 0xB4643C));
     /** Reducción de daño de Provocación. */
     public static final RegistryObject<MobEffect> TAUNT_GUARD =
             EFFECTS.register("taunt_guard", () -> new StateEffect(MobEffectCategory.BENEFICIAL, 0x78AAF0));

@@ -7,6 +7,7 @@ import io.github.rpgclasses.content.BarbarianPerks;
 import io.github.rpgclasses.content.CombatAbilities;
 import io.github.rpgclasses.content.MonkPerks;
 import io.github.rpgclasses.content.PaladinPerks;
+import io.github.rpgclasses.content.PaladinSubclasses;
 import io.github.rpgclasses.content.Toxins;
 import io.github.rpgclasses.content.RangerAbilities;
 import io.github.rpgclasses.content.RangerPerks;
@@ -257,7 +258,13 @@ public final class DamagePipeline {
         if (event.getSource().is(DamageTypeTags.BYPASSES_INVULNERABILITY)) return;
         double factor = BarbarianPerks.hazardFactor(victim, event.getSource()) * BarbarianPerks.enduranceFactor(victim);
         factor = MonkPerks.spiritSkinFactor(victim, event.getSource(), factor);
-        if (victim.hasEffect(ModEffects.BULWARK.get())) factor *= 1 - CombatAbilities.bulwarkReduction(victim);
+        factor *= PaladinSubclasses.tenacityFactor(victim);
+        if (victim.hasEffect(ModEffects.BULWARK.get())) {
+            double reduction = CombatAbilities.bulwarkReduction(victim);
+            // Baluarte Sanador: cura con lo que Baluarte ha quitado de este golpe.
+            PaladinSubclasses.healingBulwark(victim, event.getAmount() * factor * reduction);
+            factor *= 1 - reduction;
+        }
         if (victim.hasEffect(ModEffects.TAUNT_GUARD.get())) {
             factor *= 1 - AbilityService.number(AbilityService.params(CombatAbilities.TAUNT), "damage_reduction", 0.2);
         }

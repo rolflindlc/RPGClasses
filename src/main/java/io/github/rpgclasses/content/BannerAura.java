@@ -108,7 +108,7 @@ public final class BannerAura {
         }
     }
 
-    private static boolean isAlly(ServerPlayer paladin, ServerPlayer other) {
+    public static boolean isAlly(ServerPlayer paladin, ServerPlayer other) {
         Team a = paladin.getTeam();
         Team b = other.getTeam();
         return a == null || b == null || a.isAlliedTo(b);

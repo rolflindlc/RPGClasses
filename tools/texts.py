@@ -19,7 +19,7 @@ ABILITIES = {
     "charge": dict(distance=6, cooldown_seconds=20, hit_damage=2, knockback_strength=1.0),
     "berserker_rage": dict(duration_seconds=10, attack_speed=0.3, damage_bonus=0.25, damage_taken=0.2, cooldown_seconds=60, weakness_radius=6, weakness_seconds=6),
     # Pícaro
-    "stealth": dict(passive=True, drain_per_second=0.04, regen_per_second=0.08, action_cost=0.4, lockout_until=0.5, pvp_reveal_distance=1),
+    "stealth": dict(passive=True, drain_per_second=0.10, regen_per_second=0.08, action_cost=0.4, lockout_until=0.5, pvp_reveal_distance=1),
     "shadow_step": dict(distance=8, cooldown_seconds=20),
     "decoy": dict(passive=True, cooldown_seconds=25),
     # Ranger

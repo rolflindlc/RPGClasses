@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "passive": true,
-  "drain_per_second": 0.04,
+  "drain_per_second": 0.1,
   "regen_per_second": 0.08,
   "action_cost": 0.4,
   "lockout_until": 0.5,

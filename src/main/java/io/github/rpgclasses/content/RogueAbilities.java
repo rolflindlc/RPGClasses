@@ -50,6 +50,8 @@ public final class RogueAbilities {
         boolean active;
         boolean locked;
         boolean ownsInvisibility;
+        /** Ataque cuerpo a cuerpo hecho desde el sigilo: se cobra al final del tick (tras calcular el crítico). */
+        boolean pendingAttack;
         int lastSyncedBar = 1000;
         int lastSyncedState = STATE_OFF;
     }
@@ -90,6 +92,10 @@ public final class RogueAbilities {
         }
         State st = state(player);
         JsonObject p = AbilityService.params(STEALTH);
+        if (st.pendingAttack) {
+            st.pendingAttack = false;
+            if (st.active) spend(player, st, AbilityService.number(p, "action_cost", 0.4));
+        }
         double drain = AbilityService.number(p, "drain_per_second", 0.10) / 20.0 * RoguePerks.stealthDrainFactor(player);
         double regen = AbilityService.number(p, "regen_per_second", 0.08) / 20.0;
         double lockoutUntil = AbilityService.number(p, "lockout_until", 0.5);
@@ -108,6 +114,7 @@ public final class RogueAbilities {
                 // Invisible de verdad, sin partículas ni icono.
                 player.addEffect(new MobEffectInstance(MobEffects.INVISIBILITY, 12, 0, true, false, false));
                 st.ownsInvisibility = true;
+                hideEffectParticles(player);
             }
         } else {
             if (st.active) endStealth(player, st);
@@ -146,6 +153,32 @@ public final class RogueAbilities {
         publish(player, st, true);
     }
 
+    /** Accesor sincronizado del color de partículas de efectos (LivingEntity, id 10); se busca por id para no depender de nombres. */
+    private static net.minecraft.network.syncher.EntityDataAccessor<Integer> effectColor;
+    private static boolean effectColorSearched;
+
+    /** Sin partículas de efectos mientras dura el sigilo (al salir, quitar la invisibilidad las recalcula). */
+    @SuppressWarnings("unchecked")
+    private static void hideEffectParticles(ServerPlayer player) {
+        if (!effectColorSearched) {
+            effectColorSearched = true;
+            for (java.lang.reflect.Field f : net.minecraft.world.entity.LivingEntity.class.getDeclaredFields()) {
+                if (!java.lang.reflect.Modifier.isStatic(f.getModifiers())
+                        || f.getType() != net.minecraft.network.syncher.EntityDataAccessor.class) continue;
+                try {
+                    f.setAccessible(true);
+                    var accessor = (net.minecraft.network.syncher.EntityDataAccessor<?>) f.get(null);
+                    if (accessor.getId() == 10 && accessor.getSerializer() == net.minecraft.network.syncher.EntityDataSerializers.INT) {
+                        effectColor = (net.minecraft.network.syncher.EntityDataAccessor<Integer>) accessor;
+                        break;
+                    }
+                } catch (ReflectiveOperationException | RuntimeException ignored) {
+                }
+            }
+        }
+        if (effectColor != null && player.getEntityData().get(effectColor) != 0) player.getEntityData().set(effectColor, 0);
+    }
+
     /** Guarda barra y estado con el jugador y avisa al cliente solo cuando el cambio se nota. */
     private static void publish(ServerPlayer player, State st, boolean force) {
         PlayerClassData data = PlayerClassDataProvider.get(player);
@@ -161,13 +194,21 @@ public final class RogueAbilities {
         }
     }
 
-    /** Atacar (cuerpo a cuerpo o a distancia) desde el sigilo gasta barra; si se agota, bloqueo. */
+    /** Cualquier ataque cuerpo a cuerpo a una entidad desde el sigilo gasta barra, haga daño o no (rev. 2.7f). */
+    @SubscribeEvent
+    public void onMeleeAttack(net.minecraftforge.event.entity.player.AttackEntityEvent event) {
+        if (!(event.getEntity() instanceof ServerPlayer attacker) || attacker instanceof FakePlayer) return;
+        State st = STATES.get(attacker.getUUID());
+        if (st != null && st.active) st.pendingAttack = true;
+    }
+
+    /** Disparar desde el sigilo gasta barra al impactar; si se agota, bloqueo. */
     @SubscribeEvent(priority = EventPriority.LOW)
     public void onAttack(LivingHurtEvent event) {
         DamageSource source = event.getSource();
         if (!(source.getEntity() instanceof ServerPlayer attacker) || attacker instanceof FakePlayer) return;
         Entity direct = source.getDirectEntity();
-        if (direct != attacker && !(direct instanceof Projectile)) return;
+        if (!(direct instanceof Projectile)) return;
         State st = STATES.get(attacker.getUUID());
         if (st == null || !st.active || event.getAmount() <= 0) return;
         spend(attacker, st, AbilityService.number(AbilityService.params(STEALTH), "action_cost", 0.4));
@@ -236,6 +277,11 @@ public final class RogueAbilities {
         decoy.moveTo(pos.x, pos.y, pos.z, player.getYRot(), 0);
         decoy.setOwner(player.getUUID());
         decoy.setCustomName(player.getName());
+        // El clon lleva lo mismo que el jugador (armas en ambas manos y armadura); no suelta nada al morir.
+        for (net.minecraft.world.entity.EquipmentSlot slot : net.minecraft.world.entity.EquipmentSlot.values()) {
+            decoy.setItemSlot(slot, player.getItemBySlot(slot).copy());
+            decoy.setDropChance(slot, 0f);
+        }
         level.addFreshEntity(decoy);
         // Los enemigos que iban a por el jugador pasan a ir a por el clon.
         AABB area = player.getBoundingBox().inflate(24);

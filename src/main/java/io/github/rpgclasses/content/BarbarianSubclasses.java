@@ -216,7 +216,12 @@ public final class BarbarianSubclasses {
     }
 
     private static void applyPlague(ServerPlayer owner, LivingEntity target, int ticks, CompoundTag base) {
-        if (!target.addEffect(new MobEffectInstance(ModEffects.PLAGUE.get(), ticks, 0), owner)) return;
+        if (!target.addEffect(new MobEffectInstance(ModEffects.PLAGUE.get(), ticks, 0), owner)) {
+            io.github.rpgclasses.RpgClasses.LOGGER.info("[rpgclasses] Plaga: {} no acepta el efecto", target);
+            return;
+        }
+        io.github.rpgclasses.RpgClasses.LOGGER.info("[rpgclasses] Plaga: {} infecta a {} ({} ticks, {} por tic)",
+                owner.getGameProfile().getName(), target, ticks, base.getFloat("damage"));
         CompoundTag dose = base.copy();
         dose.putUUID("owner", owner.getUUID());
         dose.putLong("next", target.level().getGameTime() + 10);
@@ -242,6 +247,10 @@ public final class BarbarianSubclasses {
         if (owner instanceof ServerPlayer p) entity.setLastHurtByPlayer(p);
         int invulnerable = entity.invulnerableTime;
         entity.invulnerableTime = 0;
+        if (entity.level() instanceof ServerLevel sl) {
+            sl.sendParticles(net.minecraft.core.particles.ParticleTypes.SNEEZE, entity.getX(), entity.getY() + entity.getBbHeight() * 0.7,
+                    entity.getZ(), 4, 0.3, 0.3, 0.3, 0.01);
+        }
         entity.hurt(new DamageSource(entity.level().registryAccess().registryOrThrow(Registries.DAMAGE_TYPE)
                 .getHolderOrThrow(PLAGUE_DAMAGE)), dose.getFloat("damage"));
         entity.invulnerableTime = invulnerable;

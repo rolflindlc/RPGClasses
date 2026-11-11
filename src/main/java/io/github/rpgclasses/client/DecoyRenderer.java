@@ -16,6 +16,12 @@ import java.util.UUID;
 public class DecoyRenderer extends MobRenderer<DecoyEntity, PlayerModel<DecoyEntity>> {
     public DecoyRenderer(EntityRendererProvider.Context context) {
         super(context, new PlayerModel<>(context.bakeLayer(ModelLayers.PLAYER), false), 0.5f);
+        // El clon lleva la armadura y los objetos de las dos manos del Pícaro (rev. 2.7f).
+        addLayer(new net.minecraft.client.renderer.entity.layers.HumanoidArmorLayer<>(this,
+                new net.minecraft.client.model.HumanoidModel<>(context.bakeLayer(ModelLayers.PLAYER_INNER_ARMOR)),
+                new net.minecraft.client.model.HumanoidModel<>(context.bakeLayer(ModelLayers.PLAYER_OUTER_ARMOR)),
+                context.getModelManager()));
+        addLayer(new net.minecraft.client.renderer.entity.layers.ItemInHandLayer<>(this, context.getItemInHandRenderer()));
     }
 
     @Override

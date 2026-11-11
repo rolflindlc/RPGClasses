@@ -272,8 +272,7 @@
             {
               "type": "rpgclasses:mechanic",
               "id": "rpgclasses:carnivore",
-              "meat_saturation": 1.0,
-              "other_food": -0.3
+              "meat_saturation": 1.0
             }
           ]
         },

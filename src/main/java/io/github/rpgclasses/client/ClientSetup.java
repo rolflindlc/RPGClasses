@@ -46,9 +46,19 @@ public final class ClientSetup {
         MinecraftForge.EVENT_BUS.addListener(ClientSetup::onClientTick);
         MinecraftForge.EVENT_BUS.addListener(ClientSetup::onFov);
         MinecraftForge.EVENT_BUS.addListener(ClientSetup::onMovementInput);
+        MinecraftForge.EVENT_BUS.addListener(ClientSetup::onRenderPlayer);
         modBus.addListener((EntityRenderersEvent.RegisterRenderers event) ->
                 event.registerEntityRenderer(ModEntities.DECOY.get(), DecoyRenderer::new));
         MinecraftForge.EVENT_BUS.addListener((ClientPlayerNetworkEvent.LoggingOut event) -> ClientHandlers.reset());
+    }
+
+    /**
+     * Sigilo del Pícaro: invisible de verdad, sin armadura ni objetos a la vista. Vanilla sí dibuja el equipo de los
+     * jugadores invisibles, así que no se dibuja nada. Se reconoce por invisibilidad + agachado (el sigilo exige agacharse).
+     */
+    private static void onRenderPlayer(net.minecraftforge.client.event.RenderPlayerEvent.Pre event) {
+        var player = event.getEntity();
+        if (player.isInvisible() && player.isCrouching() && !player.isSpectator()) event.setCanceled(true);
     }
 
     private static void onClientTick(TickEvent.ClientTickEvent event) {

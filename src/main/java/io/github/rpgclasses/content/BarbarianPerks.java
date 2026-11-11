@@ -87,7 +87,18 @@ public final class BarbarianPerks {
         AbilityService.setCooldown(player, ENDURANCE_COOLDOWN, (int) Math.round(m.number("icd_seconds", 30) * 20));
     }
 
-    /** Carnívoro: la carne da más saturación y el resto de alimentos dan menos. */
+    /** Carnívoro (rev. 2.7f): solo se puede comer carne. */
+    @SubscribeEvent
+    public void onStartEating(LivingEntityUseItemEvent.Start event) {
+        if (!(event.getEntity() instanceof ServerPlayer player) || player instanceof FakePlayer) return;
+        FoodProperties food = event.getItem().getFoodProperties(player);
+        if (food == null || food.isMeat() || !MechanicService.has(player, CARNIVORE)) return;
+        event.setCanceled(true);
+        player.stopUsingItem();
+        player.displayClientMessage(net.minecraft.network.chat.Component.translatable("message.rpgclasses.carnivore"), true);
+    }
+
+    /** Carnívoro: la carne da más saturación. */
     @SubscribeEvent
     public void onEat(LivingEntityUseItemEvent.Finish event) {
         if (!(event.getEntity() instanceof ServerPlayer player) || player instanceof FakePlayer) return;

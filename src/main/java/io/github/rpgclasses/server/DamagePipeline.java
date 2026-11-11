@@ -4,6 +4,7 @@ import io.github.rpgclasses.RpgClasses;
 import io.github.rpgclasses.config.ServerConfig;
 import io.github.rpgclasses.content.BannerAura;
 import io.github.rpgclasses.content.BarbarianPerks;
+import io.github.rpgclasses.content.BarbarianSubclasses;
 import io.github.rpgclasses.content.CombatAbilities;
 import io.github.rpgclasses.content.MonkPerks;
 import io.github.rpgclasses.content.PaladinPerks;
@@ -247,6 +248,7 @@ public final class DamagePipeline {
         if (direct instanceof Projectile projectile) RangerPerks.onArrowHit(attacker, projectile, target, result);
         if (melee) {
             Toxins.onMeleeHit(attacker, target);
+            BarbarianSubclasses.onMeleeHit(attacker, target);
             PaladinPerks.shockwave(attacker, target, result);
         }
     }

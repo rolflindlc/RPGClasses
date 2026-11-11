@@ -21,6 +21,7 @@ import io.github.rpgclasses.server.MechanicService;
 import io.github.rpgclasses.server.EffectRules;
 import io.github.rpgclasses.content.Toxins;
 import io.github.rpgclasses.content.BarbarianPerks;
+import io.github.rpgclasses.content.BarbarianSubclasses;
 import io.github.rpgclasses.content.PaladinPerks;
 import io.github.rpgclasses.content.PaladinSubclasses;
 import io.github.rpgclasses.content.BannerAura;
@@ -79,6 +80,7 @@ public class RpgClasses {
         }
         MinecraftForge.EVENT_BUS.register(new Toxins());
         MinecraftForge.EVENT_BUS.register(new BarbarianPerks());
+        MinecraftForge.EVENT_BUS.register(new BarbarianSubclasses());
         MinecraftForge.EVENT_BUS.register(new PaladinPerks());
         MinecraftForge.EVENT_BUS.register(new PaladinSubclasses());
         MinecraftForge.EVENT_BUS.register(new BannerAura());

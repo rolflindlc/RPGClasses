@@ -101,7 +101,7 @@ public final class FreeCasts {
             return 0;
         }
         SpellData selected = new SpellSelectionManager(player).getSelectedSpellData();
-        if (selected == null || selected == SpellData.EMPTY || selected.getSpell() == SpellRegistry.none()) {
+        if (selected == null || selected == SpellData.EMPTY || "irons_spellbooks:none".equals(selected.getSpell().getSpellId())) {
             player.sendSystemMessage(Component.translatable("message.rpgclasses.free_cast_none"));
             return 0;
         }

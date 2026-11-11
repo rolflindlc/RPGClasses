@@ -1,6 +1,6 @@
 # Documento de Diseño v2: Mod de Clases y Árboles de Habilidades para Minecraft Java
 
-Versión 2 del diseño (revisión 2.7c, en desarrollo). Plataforma prevista: Forge 1.20.1 con Iron's Spells and Spellbooks, Epic Fight, Mowzie's Mobs y Cataclysm. Servidor principalmente PvE con algo de PvP. Objetivo del mod: sistema de clases balanceadas y programado de forma estructurada y orientada a la expansibilidad (clases futuras previstas: Alquimista, Nigromante, Druida).
+Versión 2 del diseño (revisión 2.7e, en desarrollo). Plataforma prevista: Forge 1.20.1 con Iron's Spells and Spellbooks, Epic Fight, Mowzie's Mobs y Cataclysm. Servidor principalmente PvE con algo de PvP. Objetivo del mod: sistema de clases balanceadas y programado de forma estructurada y orientada a la expansibilidad (clases futuras previstas: Alquimista, Nigromante, Druida).
 
 Los valores marcados con **[MEDIR]** son objetivos de diseño que deben calibrarse en el juego real antes de darlos por cerrados.
 
@@ -172,6 +172,7 @@ Notas de los perks:
 * **Debuffs Elementales:** los conjuros que dañan aplican cargas con probabilidad del 40–75%.
   * Niveles 1–3: máx. 3 cargas, 4 s. Niveles 4–7: máx. 4 cargas, 6 s. Niveles 8–10: máx. 5 cargas, 8 s y refresco del temporizador.
   * Cada elemento va ligado a una escuela de Iron's: Fuego (explosión de área), Hielo (congelación), Rayo (arcos eléctricos), Sangre (robo de vida). Funciona con jefes.
+  * Detonaciones (rev. 2.7e): **Fuego** explosión de 3 bloques al 60% del golpe + fuego 4 s. **Hielo** Lentitud VII + Fatiga 3 s (jefes 1,5 s). **Rayo** arcos a 3 enemigos en 6 bloques al 50%. **Sangre** +40% de daño que cura al lanzador. El daño secundario no encadena cargas.
 
 **3. Mago de Batalla**
 * **Concentración Inquebrantable:** los conjuros con tiempo de lanzamiento no se interrumpen ni sufren knockback al recibir daño.
@@ -220,16 +221,17 @@ Notas de los perks:
 **1. Guardián Bendito**
 * **Bendición de Vida:** +5% de curación recibida por nivel de subclase (+50%).
 * **Baluarte Sanador (hito de subclase 5):** mientras *Baluarte* está activo, **cuando el Paladín recibe daño**, un 30–50% del daño mitigado **cura a los aliados en 12 bloques y también al propio Paladín**. **No devuelve daño.**
-* Cada aliado recibe la cantidad entera (no se reparte), con un máximo de 6 aliados curados.
+* Cada aliado recibe la cantidad entera (no se reparte), con un máximo de 6 aliados curados (los más cercanos que no estén a vida completa).
 
 **2. Bastión Inflexible**
 * **Firmeza Inquebrantable:** resistencia al empuje al **100%** (inmunidad).
-* **Tenacidad:** tras recibir un golpe, los golpes recibidos en el siguiente segundo hacen **−50% de daño** (en lugar de modificar los ticks de invulnerabilidad).
+* **Tenacidad:** tras recibir un golpe, los golpes recibidos en el siguiente segundo hacen **−50% de daño** (en lugar de modificar los ticks de invulnerabilidad). Los golpes reducidos no alargan la ventana (rev. 2.7e), para que un daño continuo no quede reducido siempre.
 * **Baluarte Incorruptible (hito de subclase 5):** *Baluarte* purga todos los debuffs e inmuniza contra nuevos efectos nocivos mientras dura.
 
 **3. Juggernaut de Carga**
 * **Vigor Colosal:** +6% de vida máxima por nivel de subclase (**+60% al nivel 10**). Sumado al +20% de vida de la clase, el total es **+80% (36 HP)**. Con el perk *Cuerpo Colosal* llegaría a +100% (40 HP), que es el tope global.
 * **Baluarte de Embestida (hito de subclase 5):** *Velocidad III*, sprint forzado y daño de contacto con knockback de área.
+  * Rev. 2.7e: el Paladín corre hacia delante sin parar (gira con la cámara). Al tocar a un enemigo, **3 de daño** y empuje a todos los enemigos en **2,5 bloques**; cada enemigo, como mucho una vez cada 0,5 s. **[MEDIR]**
 
 ## 🪓 5. Bárbaro
 
@@ -283,10 +285,12 @@ Notas de los perks:
 * **Última Furia Inmortal:** al recibir daño mortal, inmortalidad aleatoria de **7–17 s** con *Fuerza III* y *Velocidad III*. **Cooldown 5 min.**
   * Solo se activa si existe un agresor eliminable. Si no (entorno, creeper ya explotado, jefe inmune), no funciona y el Bárbaro muere.
   * Si elimina al agresor en ese tiempo, sobrevive con 1 HP y *Debilidad III* 10 s. Si no, muere al terminar.
+  * Rev. 2.7e: el agresor que hay que matar queda **brillando**. La muerte cuenta si el golpe final es del Bárbaro. Desconectarse durante la Furia hace que muera al volver.
 
 **3. Corruptor de Plagas**
 * **Sangre Resistente:** −100% de duración de *Hambre*, *Veneno* y *Wither* (nivel 10).
 * **Golpe Aflictivo:** si el enemigo no tiene el efecto **Plaga**, el golpe se lo aplica. *Plaga* es un efecto propio: 2 HP/s durante 6 s, no se apila, **afecta también a no-muertos** y hace la mitad contra jefes. **Contagio:** si el portador muere con Plaga, se transmite al enemigo más cercano en 5 bloques con la duración restante.
+  * Rev. 2.7e: solo cuerpo a cuerpo; la leche cura la Plaga. **Sangre Resistente** escala −10% por nivel (inmune al nivel 10).
 
 ## 🗡️ 6. Pícaro
 
@@ -382,10 +386,12 @@ Notas de los perks:
 **1. Maestro de Bestias**
 * **Vínculo Salvaje:** +35% de vida máxima, +35% de daño y +25% de velocidad para mascotas domesticadas (lobos, gatos, loros, etc.). Las invocaciones no cuentan. El bonus aplica a un **máximo de 8 mascotas**.
 * **Salvaguarda de Bestias:** si una mascota va a recibir daño letal, queda a 1 HP, se teletransporta al punto de reaparición del Ranger y se sienta. **Cooldown de 5 min por mascota**; permanece sin órdenes 60 s.
+  * Rev. 2.7e: **Vínculo Salvaje** cuenta las 8 mascotas más cercanas (64 bloques); el bonus se quita al alejarse o perder la subclase. Sin cama/ancla, la mascota va al spawn del mundo. "Sin órdenes" = no se puede levantar ni montar durante 60 s. Si el Ranger está desconectado, la Salvaguarda no actúa.
 
 **2. Explorador Ágil**
 * **Caminante de la Naturaleza:** **+10%** de velocidad adicional (sujeta al tope global). *(Antes +15% y bonus de Suerte; la Suerte se ha retirado.)*
 * **Triple Salto y Escalada de Paredes:** tercer salto y escalada al agacharse junto a una pared. Si tensa un arco o ballesta estando adherido a la pared, se suelta.
+  * Rev. 2.7e: adherido no cae; subes con **saltar** o **avanzar**. Agacharse en el suelo frente a la pared y avanzar también trepa.
 
 **3. Francotirador**
 * **Balística Extrema:** velocidad de proyectil hasta +300% (solo alcance) y daño **+75% en total** (incluye el +30% de la base). La velocidad de carga de la clase base se reduce **un 10% de su valor total por nivel de subclase** (a 0 en el nivel 10).
@@ -428,20 +434,24 @@ Notas de los perks:
   * **Fuego:** bonus de daño desarmado +50%; bonus de armadura y dureza −33%.
 * **Desvío y Reflejo de Proyectiles (Nivel Total 15):** cooldown 5 s. Reduce el daño de un proyectil en un valor igual al Nivel Total de Clase. Si lo reduce a 0, lo devuelve a su origen.
 * **Paso Ligero y Marcha Elemental (Nivel Total 30):** inmunidad al daño por caída y caminar sobre el **agua** sin hundirse. Caminar sobre la **lava** sin daño solo es posible en **Postura del Fuego**.
+  * Rev. 2.7e: agacharse permite hundirse en el agua; sobre la lava (en Postura del Fuego) se anulan el daño de lava y la quemadura.
 
 ### Subclases
 
 **1. Maestro de la Brisa**
 * **Cefiro Marcial:** bonus de velocidad hasta +80% y de salto hasta +120% (sujetos a los topes globales).
 * **Impulso de Viento** (sustituye al doble salto): dash aéreo horizontal con **1 carga y 10 s de recarga**.
+  * Rev. 2.7e: es una **activa** (tecla de habilidad); solo funciona en el aire. Impulso ≈ 6 bloques **[MEDIR]**.
 
 **2. Palma Pesada**
 * **Fuerza de Choque:** empuje de los golpes desarmados hasta +100% y alcance de ataque hasta **+50%** al nivel 10.
 * **Puño de Inhabilitación:** 10% por golpe, **ICD de 6 s por objetivo**. Aplica *Lentitud II* y *Ceguera* durante 1,5 s, más aturdimiento de Epic Fight.
+  * Rev. 2.7e: sin Epic Fight, el aturdimiento es el del mod (lentitud y debilidad fuertes). La rama **Fuerza de Choque** ya multiplica el empuje de los golpes desarmados.
 
 **3. Guardián Trimundial**
 * **Afinidad Corporal de Postura:** Fuego: hasta 75% de reducción de daño por fuego y lava. Agua: 33% de reducción de daño de proyectiles. Piedra: 20% de reducción de daño cuerpo a cuerpo.
 * **Manifiesto de los Elementos:** Fuego: los golpes desarmados incendian al objetivo 6 s. Agua: nado +100% y *Respiración Acuática*. Piedra: inmunidad a *Veneno*, *Wither* y *Hambre*, y refleja el 15% del daño físico recibido.
+  * Rev. 2.7e: todo depende de la **postura actual** (no de la anterior con Híbrida). El reflejo es daño de espinas y solo se aplica a golpes cuerpo a cuerpo y proyectiles.
 
 ## 📋 9. Pendiente de medición o decisión
 

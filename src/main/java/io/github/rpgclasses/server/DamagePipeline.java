@@ -8,6 +8,7 @@ import io.github.rpgclasses.content.CombatAbilities;
 import io.github.rpgclasses.content.PaladinPerks;
 import io.github.rpgclasses.content.Toxins;
 import io.github.rpgclasses.content.RangerAbilities;
+import io.github.rpgclasses.content.RangerPerks;
 import io.github.rpgclasses.content.RogueAbilities;
 import io.github.rpgclasses.core.Ids;
 import io.github.rpgclasses.core.definition.DefinitionStore;
@@ -97,6 +98,7 @@ public final class DamagePipeline {
         double[] shot = projectile instanceof AbstractArrow ? RangerAbilities.takeShot(shooter) : new double[] {0, 0};
         double factor = StatMath.additiveFactor(ModAttributes.value(shooter, ModAttributes.BOW_DAMAGE), shot[0])
                 * StatMath.wallDamageFactor(StatCalculator.wall(data.state, classDef, subDef, Ids.BOW));
+        if (projectile instanceof AbstractArrow arrow) factor *= RangerPerks.spawnFactor(shooter, arrow);
         tag.putDouble(TAG_FACTOR, factor);
         if (projectile instanceof AbstractArrow arrow) {
             // Alcance: más velocidad sin más daño (el daño de una flecha vanilla depende de su velocidad).
@@ -137,8 +139,9 @@ public final class DamagePipeline {
         if (direct instanceof Projectile projectile) {
             CompoundTag tag = projectile.getPersistentData();
             if (!tag.contains(TAG_FACTOR)) return;
-            damage *= tag.getDouble(TAG_FACTOR);
-            log.append(String.format(Locale.ROOT, " | proyectil (arco + muro) x%.2f", tag.getDouble(TAG_FACTOR)));
+            double hit = RangerPerks.hitFactor(attacker, projectile);
+            damage *= tag.getDouble(TAG_FACTOR) * hit;
+            log.append(String.format(Locale.ROOT, " | proyectil (arco + muro + perks) x%.2f", tag.getDouble(TAG_FACTOR) * hit));
             canCrit = tag.getBoolean(TAG_CAN_CRIT);
         } else if (direct == attacker) {
             WeaponClassifier.Classification weapon = WeaponClassifier.classify(attacker.getMainHandItem());
@@ -221,6 +224,7 @@ public final class DamagePipeline {
         event.setAmount(result);
 
         if (judgement > 0) PaladinPerks.judgementArea(attacker, target, (float) holyDamage);
+        if (direct instanceof Projectile projectile) RangerPerks.onArrowHit(attacker, projectile, target, result);
         if (melee) {
             Toxins.onMeleeHit(attacker, target);
             PaladinPerks.shockwave(attacker, target, result);

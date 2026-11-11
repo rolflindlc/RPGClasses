@@ -49,6 +49,15 @@ public final class ModEffects {
     public static final RegistryObject<MobEffect> BANNER =
             EFFECTS.register("banner", () -> new StateEffect(MobEffectCategory.BENEFICIAL, 0xE6C35A));
 
+    /** Marca de Cazador (perk de Alcance): el marcado recibe más daño de todas las fuentes. */
+    public static final RegistryObject<MobEffect> HUNTERS_MARK =
+            EFFECTS.register("hunters_mark", () -> new StateEffect(MobEffectCategory.HARMFUL, 0xC83C28));
+    /** Retirada (rama extra del Ranger): +25 % de velocidad de movimiento. */
+    public static final RegistryObject<MobEffect> RETREAT =
+            EFFECTS.register("retreat", () -> new StateEffect(MobEffectCategory.BENEFICIAL, 0x7CC8A0)
+                    .addAttributeModifier(Attributes.MOVEMENT_SPEED, "3c9b2f4e-81d7-4a5b-9f0e-2d6c1a7b8e43", 0.25,
+                            AttributeModifier.Operation.MULTIPLY_TOTAL));
+
     /** Efecto normal (curable con leche) sin lógica propia. */
     public static class CurableEffect extends MobEffect {
         public CurableEffect(MobEffectCategory category, int color) {

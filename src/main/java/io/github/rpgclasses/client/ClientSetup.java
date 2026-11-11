@@ -152,12 +152,30 @@ public final class ClientSetup {
     /** Agilidad de las Sombras: sube la velocidad agachado hasta igualar la de caminar (atributo = 1). */
     private static void onMovementInput(MovementInputUpdateEvent event) {
         var player = event.getEntity();
+        // Tirador Ágil: tensar el arco no ralentiza (vanilla multiplica el movimiento por 0,2 después de este evento).
+        if (player.isUsingItem() && !player.isPassenger() && player.getUseItem().getItem() instanceof net.minecraft.world.item.BowItem
+                && hasLocalMechanic("rpgclasses:draw_no_slow")) {
+            event.getInput().leftImpulse *= 5f;
+            event.getInput().forwardImpulse *= 5f;
+        }
         if (!player.isShiftKeyDown() || player.isPassenger() || player.getAbilities().flying) return;
         double bonus = Math.min(1.0, ModAttributes.value(player, ModAttributes.SNEAK_SPEED));
         if (bonus <= 0) return;
         float factor = (float) (VANILLA_SNEAK_FACTOR + (1 - VANILLA_SNEAK_FACTOR) * bonus) / VANILLA_SNEAK_FACTOR;
         event.getInput().leftImpulse *= factor;
         event.getInput().forwardImpulse *= factor;
+    }
+
+    /** Si el jugador local tiene una mecánica (rama, perk o subclase), según los datos sincronizados. */
+    static boolean hasLocalMechanic(String id) {
+        var s = ClientHandlers.LOCAL_DATA.state;
+        var classDef = io.github.rpgclasses.core.definition.DefinitionStore.CLIENT.classDef(s.classId);
+        if (classDef == null) return false;
+        for (var m : io.github.rpgclasses.core.stat.StatCalculator.mechanics(s, classDef,
+                io.github.rpgclasses.core.definition.DefinitionStore.CLIENT.subclassDef(s.subclassId))) {
+            if (m.id().equals(id)) return true;
+        }
+        return false;
     }
 
     private ClientSetup() {}

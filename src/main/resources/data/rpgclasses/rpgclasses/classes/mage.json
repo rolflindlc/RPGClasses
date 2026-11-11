@@ -9,6 +9,16 @@
   },
   "starting_kit": [
     {
+      "item": "irons_spellbooks:copper_spell_book",
+      "slot": "inventory",
+      "spells": [
+        {
+          "id": "irons_spellbooks:magic_missile",
+          "level": 1
+        }
+      ]
+    },
+    {
       "item": "minecraft:leather_helmet",
       "slot": "head"
     },

@@ -13,7 +13,21 @@ import io.redspace.ironsspellbooks.api.events.SpellOnCastEvent;
 import io.redspace.ironsspellbooks.api.events.SpellPreCastEvent;
 import io.redspace.ironsspellbooks.api.magic.MagicData;
 import io.redspace.ironsspellbooks.api.spells.AbstractSpell;
+import com.mojang.brigadier.arguments.IntegerArgumentType;
+import io.github.rpgclasses.core.definition.Definitions.KitItem;
+import io.github.rpgclasses.core.definition.Definitions.KitSpell;
+import io.github.rpgclasses.server.KitService;
+import io.redspace.ironsspellbooks.api.registry.SpellRegistry;
+import io.redspace.ironsspellbooks.api.spells.CastType;
+import io.redspace.ironsspellbooks.api.spells.IPresetSpellContainer;
+import io.redspace.ironsspellbooks.api.spells.ISpellContainer;
+import io.redspace.ironsspellbooks.api.spells.ISpellContainerMutable;
+import net.minecraft.commands.Commands;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.event.RegisterCommandsEvent;
+import net.minecraftforge.event.entity.living.LivingAttackEvent;
+import net.minecraftforge.event.entity.living.LivingKnockBackEvent;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -49,6 +63,8 @@ import java.util.UUID;
  *   <li>Mago: Convocación (summon_bonus), Legión/Élite (summon_count), Paso Arcano (cast_speed_burst),
  *       Poder a Distancia/Quemarropa (distance_power) y Magia de Sangre (blood_magic).</li>
  *   <li>Pícaro: lanzar desde Sigilo gasta barra; Hoja Arcana: Emboscada Arcana (arcane_ambush).</li>
+ *   <li>Mago: Conjuros Gratuitos por Cargas ({@link FreeCasts}), kit con libro, Escudo Arcano y
+ *       Concentración Inquebrantable (Mago de Batalla).</li>
  * </ul>
  * Fluidez (cast_no_slow) no necesita eventos: es un modificador de casting_movespeed en {@link StatEngine}.
  */
@@ -75,17 +91,27 @@ public final class IronsCompat {
     private static final Map<UUID, Long> SUMMON_CASTS = new HashMap<>();
     /** Invocaciones que acaban de recibir dueño, pendientes de procesar al final del tick (tras initSummon). */
     private static final List<Entity[]> NEW_SUMMONS = new ArrayList<>();
+    /** Conjuro Gratuito aceptado por Iron's, pendiente de lanzarse (se cobra la carga al lanzar). */
+    private static final Map<UUID, FreeCast> FREE_PENDING = new HashMap<>();
+    /** Maná de Magia de Sangre del conjuro en curso: no cuenta como gastado (Escudo Arcano, Magia Salvaje). */
+    private static final Map<UUID, Float> BLOOD_MANA = new HashMap<>();
+    /** Escudo Arcano: absorción propia de cada jugador (aparte de la de manzanas, etc.). */
+    private static final Map<UUID, Shield> SHIELDS = new HashMap<>();
     /** Emboscada Arcana preparada: conjuro y tick de caducidad. */
     private static final Map<UUID, Ambush> AMBUSHES = new HashMap<>();
     /** Invocaciones extra de Legión → su original (desaparecen con ella). */
     private static final Map<UUID, Clone> CLONES = new HashMap<>();
 
-    private record Loan(long tick, String spellId, float mana, float health) {}
+    /** Maná adelantado para pasar la comprobación de Iron's: con vida (Magia de Sangre) o por una carga gratuita (slot > 0). */
+    private record Loan(long tick, String spellId, float mana, float health, int slot) {}
+    private record FreeCast(String spellId, int slot, long expires) {}
+    private static final class Shield { float own; long lastSpend; }
     private record Ambush(String spellId, long expires) {}
     private record Clone(ServerLevel level, UUID original) {}
 
     public static void init() {
         MinecraftForge.EVENT_BUS.register(new IronsCompat());
+        KitService.spellInscriber = IronsCompat::inscribe;
         RpgClasses.LOGGER.info("[rpgclasses] Iron's Spells detectado: puente activado");
     }
 
@@ -108,7 +134,16 @@ public final class IronsCompat {
         if (!(event.getEntity() instanceof ServerPlayer player)) return;
         Loan loan = LOANS.remove(player.getUUID());
         if (loan == null) return;
-        if (event.isCanceled() || !event.getCastSource().consumesMana()) refund(player, loan);
+        boolean starts = !event.isCanceled() && event.getCastSource().consumesMana();
+        if (loan.slot() > 0) {
+            // La carga solo necesitaba pasar la comprobación: el maná se retira ya y el lanzamiento costará 0.
+            refund(player, loan);
+            if (starts) FREE_PENDING.put(player.getUUID(), new FreeCast(loan.spellId(), loan.slot(), tick + 20 * 30));
+        } else if (!starts) {
+            refund(player, loan);
+        } else {
+            BLOOD_MANA.put(player.getUUID(), loan.mana());
+        }
     }
 
     // ---------------------------------------------------------------- Magia de Sangre
@@ -123,7 +158,7 @@ public final class IronsCompat {
     public void onSpellLevel(ModifySpellLevelEvent event) {
         if (!(event.getEntity() instanceof ServerPlayer player) || player.isCreative()) return;
         ActiveMechanic blood = MechanicService.find(player, "blood_magic");
-        if (blood == null) return;
+        if (blood == null && !hasFreeSlots(player)) return;
         String spellId = event.getSpell().getSpellId();
         Loan previous = LOANS.get(player.getUUID());
         if (previous != null) {
@@ -135,13 +170,20 @@ public final class IronsCompat {
         if (magic == null || magic.isCasting()) return;
         float cost = event.getSpell().getManaCost(event.getLevel());
         float missing = cost - magic.getMana();
-        if (missing <= 0) return;
+        int slot = FreeCasts.usableSlot(player, spellId, cost);
+        if (slot > 0) {
+            float lent = Math.max(0, missing);
+            magic.setMana(magic.getMana() + lent);
+            LOANS.put(player.getUUID(), new Loan(tick, spellId, lent, 0, slot));
+            return;
+        }
+        if (blood == null || missing <= 0) return;
         float health = (float) (missing / blood.number("mana_per_health", 15));
         float floor = (float) (player.getMaxHealth() * blood.number("min_health_fraction", 0.25));
         if (player.getHealth() - health < floor) return;
         player.setHealth(player.getHealth() - health);
         magic.setMana(magic.getMana() + missing);
-        LOANS.put(player.getUUID(), new Loan(tick, spellId, missing, health));
+        LOANS.put(player.getUUID(), new Loan(tick, spellId, missing, health, 0));
     }
 
     private static void refund(ServerPlayer player, Loan loan) {
@@ -189,6 +231,100 @@ public final class IronsCompat {
                 RogueAbilities.spend(player, AbilityService.number(AbilityService.params(RogueAbilities.STEALTH), "action_cost", 0.4));
             }
         }
+    }
+
+    /** Al final: Conjuro Gratuito (coste 0 y gasta carga) y maná realmente gastado para el Escudo Arcano. */
+    @SubscribeEvent(priority = EventPriority.LOWEST)
+    public void onCastResolved(SpellOnCastEvent event) {
+        if (!(event.getEntity() instanceof ServerPlayer player)) return;
+        FreeCast free = FREE_PENDING.remove(player.getUUID());
+        if (free != null && free.spellId().equals(event.getSpellId()) && event.getCastSource().consumesMana()) {
+            event.setManaCost(0);
+            FreeCasts.consume(player, free.slot());
+        }
+        float blood = BLOOD_MANA.getOrDefault(player.getUUID(), 0f);
+        BLOOD_MANA.remove(player.getUUID());
+        if (!event.getCastSource().consumesMana() || player.isCreative()) return;
+        float spent = Math.max(0, event.getManaCost() - blood);
+        ActiveMechanic shield = MechanicService.find(player, "arcane_shield");
+        if (shield != null && spent > 0) {
+            float cap = (float) (player.getMaxHealth() * shield.number("cap_health_fraction", 0.5));
+            Shield st = SHIELDS.computeIfAbsent(player.getUUID(), id -> new Shield());
+            float own = Math.min(st.own, player.getAbsorptionAmount());
+            float next = Math.min(cap, own + (float) (spent * shield.number("mana_fraction", 0.03)));
+            player.setAbsorptionAmount(player.getAbsorptionAmount() - own + next);
+            st.own = next;
+            st.lastSpend = tick;
+        }
+    }
+
+    private static void decayShields(net.minecraft.server.MinecraftServer server) {
+        SHIELDS.entrySet().removeIf(e -> {
+            ServerPlayer p = server.getPlayerList().getPlayer(e.getKey());
+            ActiveMechanic shield = p == null ? null : MechanicService.find(p, "arcane_shield");
+            if (shield == null) return true;
+            Shield st = e.getValue();
+            st.own = Math.min(st.own, p.getAbsorptionAmount());
+            if (tick - st.lastSpend > shield.number("decay_delay_seconds", 6) * 20) {
+                float cap = (float) (p.getMaxHealth() * shield.number("cap_health_fraction", 0.5));
+                float next = Math.max(0, st.own - cap * (float) shield.number("decay_per_second", 0.1));
+                p.setAbsorptionAmount(p.getAbsorptionAmount() - st.own + next);
+                st.own = next;
+            }
+            return st.own <= 0;
+        });
+    }
+
+    // ---------------------------------------------------------------- Concentración Inquebrantable
+
+    /** Iron's no interrumpe el conjuro si el golpe está "marcado como veneno": se marca antes de que lo mire. */
+    @SubscribeEvent(priority = EventPriority.HIGHEST)
+    public void onAttacked(LivingAttackEvent event) {
+        if (event.getEntity() instanceof ServerPlayer player && concentrating(player)) {
+            MagicData.getPlayerMagicData(player).markPoisoned();
+        }
+    }
+
+    @SubscribeEvent
+    public void onKnockback(LivingKnockBackEvent event) {
+        if (event.getEntity() instanceof ServerPlayer player && concentrating(player)) event.setCanceled(true);
+    }
+
+    private static boolean concentrating(ServerPlayer player) {
+        if (!MechanicService.has(player, "unbreakable_concentration")) return false;
+        MagicData magic = MagicData.getPlayerMagicData(player);
+        return magic != null && magic.isCasting() && magic.getCastType() == CastType.LONG;
+    }
+
+    // ---------------------------------------------------------------- kit y comandos
+
+    private static void inscribe(ItemStack stack, KitItem kit) {
+        if (stack.getItem() instanceof IPresetSpellContainer preset) preset.initializeSpellContainer(stack);
+        ISpellContainer container = ISpellContainer.get(stack);
+        if (container == null) container = ISpellContainer.create(Math.max(1, kit.spells().size()), true, true);
+        ISpellContainerMutable mutable = container.mutableCopy();
+        int index = 0;
+        for (KitSpell k : kit.spells()) {
+            AbstractSpell spell = SpellRegistry.getSpell(k.id());
+            if (spell == null || spell == SpellRegistry.none()) {
+                RpgClasses.LOGGER.warn("[rpgclasses] Conjuro de kit desconocido: {}", k.id());
+                continue;
+            }
+            mutable.addSpellAtIndex(spell, k.level(), index++, false);
+        }
+        ISpellContainer.set(stack, mutable.toImmutable());
+    }
+
+    @SubscribeEvent
+    public void onCommands(RegisterCommandsEvent event) {
+        // Se fusiona con el /clase de ClassCommands.
+        event.getDispatcher().register(Commands.literal("clase")
+                .then(Commands.literal("conjuro").then(Commands.argument("ranura", IntegerArgumentType.integer(1, FreeCasts.SLOTS))
+                        .executes(c -> FreeCasts.bind(c.getSource().getPlayerOrException(), IntegerArgumentType.getInteger(c, "ranura"))))));
+    }
+
+    private static boolean hasFreeSlots(ServerPlayer player) {
+        return AbilityService.has(player, FreeCasts.abilityId(1));
     }
 
     private static boolean isSummonSpell(String spellId) {
@@ -286,6 +422,11 @@ public final class IronsCompat {
         }
         if (!NEW_SUMMONS.isEmpty()) processNewSummons();
         if (tick % 20 == 0) {
+            decayShields(event.getServer());
+            FREE_PENDING.values().removeIf(f -> tick > f.expires());
+            for (ServerPlayer p : event.getServer().getPlayerList().getPlayers()) {
+                if (hasFreeSlots(p)) FreeCasts.recharge(p);
+            }
             CLONES.entrySet().removeIf(e -> {
                 Entity clone = e.getValue().level().getEntity(e.getKey());
                 if (clone == null) return !e.getValue().level().getServer().isRunning();

@@ -202,7 +202,7 @@ subs = {
 def armor(material): return [{"item": f"minecraft:{material}_{piece}", "slot": slot} for piece, slot in
                          (("helmet","head"),("chestplate","chest"),("leggings","legs"),("boots","feet"))]
 KITS = {
- "mage": armor("leather"),
+ "mage": [{"item": IR+"copper_spell_book", "slot": "inventory", "spells": [{"id": IR+"magic_missile", "level": 1}]}] + armor("leather"),
  "paladin": [{"item": "minecraft:stone_sword", "slot": "mainhand"}] + armor("chainmail"),
  "barbarian": [{"item": "minecraft:iron_axe", "slot": "mainhand"}],
  "rogue": [{"item": "minecraft:iron_sword", "slot": "mainhand"}] + armor("leather"),

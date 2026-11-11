@@ -15,6 +15,8 @@ import net.minecraftforge.registries.ForgeRegistries;
 public final class KitService {
     /** Marca NBT de los objetos del kit; su valor es la clase que los entregó. */
     public static final String KIT_TAG = "rpgclasses_kit";
+    /** Inscribe conjuros en un objeto del kit (lo pone el puente con Iron's; null si no está instalado). */
+    public static java.util.function.BiConsumer<ItemStack, KitItem> spellInscriber;
 
     public static void grant(ServerPlayer player, ClassDef classDef) {
         for (KitItem k : classDef.startingKit()) {
@@ -27,6 +29,7 @@ public final class KitService {
             ItemStack stack = new ItemStack(item, k.count());
             stack.getOrCreateTag().putString(KIT_TAG, classDef.id());
             if (stack.isDamageableItem()) stack.getOrCreateTag().putBoolean("Unbreakable", true);
+            if (!k.spells().isEmpty() && spellInscriber != null) spellInscriber.accept(stack, k);
 
             EquipmentSlot slot = slot(k.slot());
             if (slot != null && player.getItemBySlot(slot).isEmpty()) {

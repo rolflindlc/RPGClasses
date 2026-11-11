@@ -106,8 +106,15 @@ public final class DefinitionParser {
         if (!o.has("starting_kit")) return List.of();
         for (JsonElement ke : array(o, "starting_kit")) {
             JsonObject k = ke.getAsJsonObject();
+            List<Definitions.KitSpell> spells = new ArrayList<>();
+            if (k.has("spells")) {
+                for (JsonElement se : array(k, "spells")) {
+                    JsonObject sp = se.getAsJsonObject();
+                    spells.add(new Definitions.KitSpell(string(sp, "id"), sp.has("level") ? sp.get("level").getAsInt() : 1));
+                }
+            }
             out.add(new Definitions.KitItem(string(k, "item"),
-                    k.has("count") ? k.get("count").getAsInt() : 1, optString(k, "slot", "inventory")));
+                    k.has("count") ? k.get("count").getAsInt() : 1, optString(k, "slot", "inventory"), List.copyOf(spells)));
         }
         return List.copyOf(out);
     }

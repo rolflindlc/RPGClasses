@@ -18,6 +18,8 @@ public final class PlayerClassData {
     public final Map<String, Long> cooldowns = new java.util.HashMap<>();
     /** Estado de mecánicas (postura del Monje...), por clave. */
     public final Map<String, Integer> counters = new java.util.HashMap<>();
+    /** Valores de texto de la clase (p. ej. conjuro fijado en cada ranura de Conjuro Gratuito). */
+    public final Map<String, String> texts = new java.util.HashMap<>();
 
     public CompoundTag save() {
         CompoundTag tag = new CompoundTag();
@@ -41,6 +43,9 @@ public final class PlayerClassData {
         CompoundTag cnt = new CompoundTag();
         for (Map.Entry<String, Integer> e : counters.entrySet()) cnt.putInt(e.getKey(), e.getValue());
         tag.put("counters", cnt);
+        CompoundTag txt = new CompoundTag();
+        for (Map.Entry<String, String> e : texts.entrySet()) txt.putString(e.getKey(), e.getValue());
+        tag.put("texts", txt);
         return tag;
     }
 
@@ -65,5 +70,14 @@ public final class PlayerClassData {
         counters.clear();
         CompoundTag cnt = tag.getCompound("counters");
         for (String key : cnt.getAllKeys()) counters.put(key, cnt.getInt(key));
+        texts.clear();
+        CompoundTag txt = tag.getCompound("texts");
+        for (String key : txt.getAllKeys()) texts.put(key, txt.getString(key));
+    }
+
+    /** Al reiniciar la clase se borra lo que era propio de ella (conjuros fijados, cargas). */
+    public void clearClassBindings() {
+        texts.clear();
+        counters.keySet().removeIf(k -> k.startsWith("free_cast"));
     }
 }

@@ -155,6 +155,15 @@ public final class ClientSetup {
     /** Agilidad de las Sombras: sube la velocidad agachado hasta igualar la de caminar (atributo = 1). */
     private static void onMovementInput(MovementInputUpdateEvent event) {
         var player = event.getEntity();
+        // Baluarte de Embestida: el Paladín corre hacia delante sin parar (gira con la cámara).
+        if (player.hasEffect(io.github.rpgclasses.registry.ModEffects.CHARGING_BULWARK.get()) && !player.isPassenger()
+                && !player.getAbilities().flying) {
+            event.getInput().forwardImpulse = 1.0f;
+            event.getInput().up = true;
+            event.getInput().down = false;
+            event.getInput().shiftKeyDown = false;
+            player.setSprinting(true);
+        }
         // Tirador Ágil (arco) y Pies Ligeros (cualquier objeto): usar no ralentiza
         // (vanilla multiplica el movimiento por 0,2 después de este evento).
         if (player.isUsingItem() && !player.isPassenger()

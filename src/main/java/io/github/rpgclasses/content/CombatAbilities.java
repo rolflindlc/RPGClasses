@@ -89,7 +89,9 @@ public final class CombatAbilities {
     private static boolean bulwark(ServerPlayer player, JsonObject p) {
         double t = subclassProgress(player);
         double seconds = lerp(AbilityService.number(p, "duration_min_seconds", 6), AbilityService.number(p, "duration_max_seconds", 8), t);
-        player.addEffect(new MobEffectInstance(ModEffects.BULWARK.get(), (int) Math.round(seconds * 20), 0));
+        int ticks = (int) Math.round(seconds * 20);
+        player.addEffect(new MobEffectInstance(ModEffects.BULWARK.get(), ticks, 0));
+        PaladinSubclasses.onBulwark(player, ticks);
         sound(player, SoundEvents.SHIELD_BLOCK);
         return true;
     }
@@ -182,12 +184,12 @@ public final class CombatAbilities {
         }
     }
 
-    private static boolean canHit(ServerPlayer player, LivingEntity e) {
+    public static boolean canHit(ServerPlayer player, LivingEntity e) {
         if (e == player || !e.isAlive() || e.isAlliedTo(player)) return false;
         return !(e instanceof ServerPlayer other) || player.canHarmPlayer(other);
     }
 
-    private static DamageSource chargeDamage(ServerPlayer player) {
+    public static DamageSource chargeDamage(ServerPlayer player) {
         return new DamageSource(player.level().registryAccess().registryOrThrow(Registries.DAMAGE_TYPE)
                 .getHolderOrThrow(CHARGE_DAMAGE), player);
     }

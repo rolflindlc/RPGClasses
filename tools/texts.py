@@ -13,7 +13,7 @@ ABILITIES = {
     "bulwark": dict(damage_reduction_min=0.4, damage_reduction_max=0.5, duration_min_seconds=6, duration_max_seconds=8, cooldown_seconds=60),
     "healing_bulwark": dict(passive=True, heal_fraction_min=0.3, heal_fraction_max=0.5, radius=12, max_allies=6),
     "incorruptible_bulwark": dict(passive=True),
-    "charging_bulwark": dict(passive=True, speed_level=3),
+    "charging_bulwark": dict(passive=True, speed_level=3, contact_damage=3, knockback_radius=2.5, knockback_strength=1.0, hit_icd_ticks=10),
     # Bárbaro
     "bloodthirst": dict(passive=True, heal_fraction=0.1, icd_seconds=1),
     "charge": dict(distance=6, cooldown_seconds=20, hit_damage=2, knockback_strength=1.0),
@@ -383,6 +383,7 @@ UI = {
     "death.attack.rpgclasses.charge": "%1$s fue arrollado por %2$s",
     "death.attack.rpgclasses.charge.player": "%1$s fue arrollado por %2$s",
     "effect.rpgclasses.bulwark": "Baluarte",
+    "effect.rpgclasses.charging_bulwark": "Baluarte de Embestida",
     "effect.rpgclasses.taunt_guard": "Provocación",
     "effect.rpgclasses.berserker_rage": "Furia Berserker",
     "effect.rpgclasses.toxin": "Toxina",

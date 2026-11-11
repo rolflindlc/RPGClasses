@@ -2,6 +2,7 @@ package io.github.rpgclasses.server;
 
 import com.google.gson.JsonElement;
 import io.github.rpgclasses.content.BannerAura;
+import io.github.rpgclasses.content.PaladinSubclasses;
 import io.github.rpgclasses.core.stat.StatCalculator.ActiveMechanic;
 import io.github.rpgclasses.registry.ModAttributes;
 import io.github.rpgclasses.registry.ModEffects;
@@ -39,6 +40,11 @@ public final class EffectRules {
         // Las marcas del propio mod (Condena...) no son debuffs normales: su duración la controla quien las pone.
         if (effect.getCategory() != MobEffectCategory.HARMFUL || effect instanceof ModEffects.StateEffect) return;
 
+        // Baluarte Incorruptible: inmune a cualquier efecto negativo nuevo mientras dura.
+        if (PaladinSubclasses.incorruptible(player)) {
+            event.setResult(Event.Result.DENY);
+            return;
+        }
         ActiveMechanic immunity = MechanicService.find(player, IMMUNITY);
         if (immunity != null && isListed(immunity, effect)) {
             event.setResult(Event.Result.DENY);

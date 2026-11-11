@@ -188,7 +188,7 @@ PERK_TEXT = {
 
 SUBCLASS_DESC = {
     "chaotic_evoker": "Conjuros más grandes y Magia Salvaje: al gastar maná puedes desatar una réplica gratuita de otro conjuro en todas direcciones.",
-    "elementalist": "Tus conjuros acumulan cargas elementales en los enemigos: explosiones de fuego, congelación, arcos eléctricos o robo de vida según la escuela.",
+    "elementalist": "Tus conjuros de Fuego, Hielo, Rayo y Sangre acumulan cargas en los enemigos; al llenarse detonan: explosión de fuego, congelación, arcos eléctricos o robo de vida.",
     "battle_mage": "Mago de primera línea. No te interrumpen al lanzar, pierdes los muros de armas cuerpo a cuerpo y el maná que gastas te da un escudo.",
     "blessed_guardian": "Protector sanador. Recibes más curación y tu Baluarte cura al grupo con el daño que mitigas.",
     "unyielding_bastion": "Inamovible. Inmune al empuje, resistes las ráfagas de golpes y tu Baluarte te limpia de efectos negativos.",
@@ -393,6 +393,7 @@ UI = {
     "effect.rpgclasses.retreat": "Retirada",
     "effect.rpgclasses.arcane_step": "Paso Arcano",
     "message.rpgclasses.school_locked": "Tu clase no puede usar la escuela %s",
+    "message.rpgclasses.wild_magic": "¡Magia Salvaje! %s",
     "message.rpgclasses.free_cast_used": "Conjuro gratuito (ranura %s): quedan %s/%s cargas",
     "message.rpgclasses.free_cast_locked": "Aún no tienes la ranura de Conjuro Gratuito %s",
     "message.rpgclasses.free_cast_already": "La ranura %s ya tiene fijado %s (se cambia al reiniciar la clase)",

@@ -22,6 +22,12 @@ import io.redspace.ironsspellbooks.api.spells.CastType;
 import io.redspace.ironsspellbooks.api.spells.IPresetSpellContainer;
 import io.redspace.ironsspellbooks.api.spells.ISpellContainer;
 import io.redspace.ironsspellbooks.api.spells.ISpellContainerMutable;
+import io.redspace.ironsspellbooks.api.spells.CastSource;
+import io.redspace.ironsspellbooks.api.spells.SpellData;
+import io.redspace.ironsspellbooks.api.spells.SpellRarity;
+import io.redspace.ironsspellbooks.api.magic.SpellSelectionManager;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.contents.TranslatableContents;
 import net.minecraft.commands.Commands;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
@@ -51,6 +57,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 
 /**
@@ -65,6 +72,7 @@ import java.util.UUID;
  *   <li>Pícaro: lanzar desde Sigilo gasta barra; Hoja Arcana: Emboscada Arcana (arcane_ambush).</li>
  *   <li>Mago: Conjuros Gratuitos por Cargas ({@link FreeCasts}), kit con libro, Escudo Arcano y
  *       Concentración Inquebrantable (Mago de Batalla).</li>
+ *   <li>Evocador Caótico: Magia Salvaje (wild_magic). Elementalista: {@link ElementalDebuffs}.</li>
  * </ul>
  * Fluidez (cast_no_slow) no necesita eventos: es un modificador de casting_movespeed en {@link StatEngine}.
  */
@@ -73,6 +81,20 @@ public final class IronsCompat {
 
     private static final String CD_ARCANE_STEP = "rpgclasses:arcane_step";
     private static final String CD_AMBUSH = "rpgclasses:arcane_ambush";
+    private static final String CD_WILD = "rpgclasses:wild_magic";
+    /** Entidades creadas por una réplica de Magia Salvaje: guardan el multiplicador de daño. */
+    private static final String TAG_REPLICA = "rpgclasses:replica";
+    /**
+     * Conjuros ofensivos que no muestran "Daño" en su descripción (control, área, zonas). El resto se detecta
+     * por la línea de daño de {@link AbstractSpell#getUniqueInfo}.
+     */
+    private static final Set<String> EXTRA_OFFENSIVE = Set.of(
+            "irons_spellbooks:wall_of_fire", "irons_spellbooks:heat_surge", "irons_spellbooks:ice_tomb",
+            "irons_spellbooks:frostwave", "irons_spellbooks:frostbite", "irons_spellbooks:snowball",
+            "irons_spellbooks:blizzard", "irons_spellbooks:earthquake", "irons_spellbooks:acid_orb",
+            "irons_spellbooks:blight", "irons_spellbooks:root", "irons_spellbooks:heartstop",
+            "irons_spellbooks:black_hole", "irons_spellbooks:gravity_fissure", "irons_spellbooks:slow",
+            "irons_spellbooks:arcane_shackle");
     private static final String TAG_SUMMON_DONE = "rpgclasses:summon_done";
     private static final String TAG_SUMMON_DAMAGE = "rpgclasses:summon_damage";
     private static final String TAG_CLONE_OF = "rpgclasses:clone_of";
@@ -101,6 +123,11 @@ public final class IronsCompat {
     private static final Map<UUID, Ambush> AMBUSHES = new HashMap<>();
     /** Invocaciones extra de Legión → su original (desaparecen con ella). */
     private static final Map<UUID, Clone> CLONES = new HashMap<>();
+    /** Magia Salvaje que ha saltado este tick: se lanza al final del tick, después del conjuro original. */
+    private static final List<WildProc> WILD_PENDING = new ArrayList<>();
+    /** Réplica en curso (jugador y multiplicador de daño); null fuera de ella. Las réplicas no encadenan. */
+    private static UUID replicating;
+    private static double replicaFactor = 1;
 
     /** Maná adelantado para pasar la comprobación de Iron's: con vida (Magia de Sangre) o por una carga gratuita (slot > 0). */
     private record Loan(long tick, String spellId, float mana, float health, int slot) {}
@@ -108,6 +135,7 @@ public final class IronsCompat {
     private static final class Shield { float own; long lastSpend; }
     private record Ambush(String spellId, long expires) {}
     private record Clone(ServerLevel level, UUID original) {}
+    private record WildProc(UUID player, String castSpellId) {}
 
     public static void init() {
         MinecraftForge.EVENT_BUS.register(new IronsCompat());
@@ -256,6 +284,92 @@ public final class IronsCompat {
             st.own = next;
             st.lastSpend = tick;
         }
+
+        // Magia Salvaje: probabilidad según el maná gastado de verdad (las cargas y la sangre no cuentan).
+        ActiveMechanic wild = MechanicService.find(player, "wild_magic");
+        if (wild != null && spent > 0 && replicating == null && AbilityService.remainingTicks(player, CD_WILD) <= 0) {
+            double chance = Math.min(wild.number("chance_cap", 0.5), spent * wild.number("chance_per_mana", 0.0033));
+            if (player.getRandom().nextDouble() < chance) {
+                AbilityService.setCooldown(player, CD_WILD, (int) Math.round(wild.number("icd_ticks", 30)));
+                WILD_PENDING.add(new WildProc(player.getUUID(), event.getSpellId()));
+            }
+        }
+    }
+
+    // ---------------------------------------------------------------- Magia Salvaje
+
+    /**
+     * Lanza otro conjuro ofensivo equipado (al azar, no legendario, no canalizado continuo ni con relanzamientos)
+     * en {@code directions} direcciones horizontales, sin maná ni cooldown, con un tercio del daño.
+     * Se usa un MagicData temporal para no pisar el estado de lanzamiento real del jugador.
+     */
+    private static void wildMagic(ServerPlayer player, String castSpellId) {
+        ActiveMechanic wild = MechanicService.find(player, "wild_magic");
+        if (wild == null || !player.isAlive() || !(player.level() instanceof ServerLevel level)) return;
+        List<SpellData> options = new ArrayList<>();
+        try {
+            for (SpellSelectionManager.SelectionOption o : new SpellSelectionManager(player).getAllSpells()) {
+                SpellData d = o.spellData;
+                AbstractSpell s = d == null ? null : d.getSpell();
+                if (s == null || s.getSpellId().equals(castSpellId) || "irons_spellbooks:none".equals(s.getSpellId())) continue;
+                if (options.stream().anyMatch(x -> x.getSpell() == s)) continue;
+                if (s.getRarity(d.getLevel()) == SpellRarity.LEGENDARY || s.getCastType() == CastType.CONTINUOUS
+                        || s.getRecastCount(d.getLevel(), player) > 0 || isSummonSpell(s.getSpellId())) continue;
+                if (StatEngine.schoolWall(player, s.getSchoolType().getId().toString()) >= 1.0) continue;
+                if (isOffensive(s, d.getLevel(), player)) options.add(d);
+            }
+        } catch (RuntimeException e) {
+            RpgClasses.LOGGER.warn("[rpgclasses] Magia Salvaje: no se pudieron leer los conjuros equipados", e);
+            return;
+        }
+        if (options.isEmpty()) return;
+        SpellData pick = options.get(player.getRandom().nextInt(options.size()));
+        AbstractSpell spell = pick.getSpell();
+        int directions = Math.max(1, (int) Math.round(wild.number("directions", 8)));
+        float yaw = player.getYRot(), pitch = player.getXRot(), head = player.getYHeadRot(), body = player.yBodyRot;
+        replicating = player.getUUID();
+        replicaFactor = wild.number("replica_damage", 0.33);
+        int cast = 0;
+        try {
+            for (int i = 0; i < directions; i++) {
+                float dir = yaw + i * 360f / directions;
+                player.setYRot(dir);
+                player.setYHeadRot(dir);
+                player.yBodyRot = dir;
+                player.setXRot(0);
+                MagicData temp = new MagicData(player);
+                if (spell.checkPreCastConditions(level, pick.getLevel(), player, temp)) {
+                    spell.onCast(level, pick.getLevel(), player, CastSource.COMMAND, temp);
+                    cast++;
+                }
+            }
+        } catch (RuntimeException e) {
+            RpgClasses.LOGGER.warn("[rpgclasses] Magia Salvaje: fallo al replicar {}", spell.getSpellId(), e);
+        } finally {
+            player.setYRot(yaw);
+            player.setYHeadRot(head);
+            player.yBodyRot = body;
+            player.setXRot(pitch);
+            replicating = null;
+        }
+        if (cast > 0) {
+            level.sendParticles(net.minecraft.core.particles.ParticleTypes.WITCH,
+                    player.getX(), player.getY() + 1, player.getZ(), 30, 0.8, 0.5, 0.8, 0.05);
+            player.displayClientMessage(Component.translatable("message.rpgclasses.wild_magic", spell.getDisplayName(player)), true);
+        }
+    }
+
+    private static boolean isOffensive(AbstractSpell spell, int spellLevel, ServerPlayer player) {
+        if (EXTRA_OFFENSIVE.contains(spell.getSpellId())) return true;
+        try {
+            for (MutableComponent line : spell.getUniqueInfo(spellLevel, player)) {
+                for (Component part : line.toFlatList()) {
+                    if (part.getContents() instanceof TranslatableContents t && t.getKey().contains("damage")) return true;
+                }
+            }
+        } catch (RuntimeException ignored) {
+        }
+        return false;
     }
 
     private static void decayShields(net.minecraft.server.MinecraftServer server) {
@@ -351,6 +465,16 @@ public final class IronsCompat {
             if (e != null && e.getPersistentData().getBoolean(TAG_SUMMON_DONE)) return;
         }
 
+        // Réplicas de Magia Salvaje: daño reducido (daño directo durante la réplica o de lo que creó).
+        if (direct != null && direct.getPersistentData().contains(TAG_REPLICA)) {
+            event.setAmount((float) (event.getAmount() * direct.getPersistentData().getDouble(TAG_REPLICA)));
+            return;
+        }
+        if (replicating != null && attacker.getUUID().equals(replicating)) {
+            event.setAmount((float) (event.getAmount() * replicaFactor));
+            return;
+        }
+
         if (!(attacker instanceof ServerPlayer player) || !isSpellDamage(source)) return;
         double factor = 1;
 
@@ -371,6 +495,7 @@ public final class IronsCompat {
         }
 
         if (factor != 1) event.setAmount((float) Math.max(0, event.getAmount() * factor));
+        ElementalDebuffs.onSpellHit(player, event.getEntity(), source, event.getAmount(), tick);
     }
 
     private static boolean isSpellDamage(DamageSource source) {
@@ -399,6 +524,9 @@ public final class IronsCompat {
 
     @SubscribeEvent
     public void onJoin(EntityJoinLevelEvent event) {
+        if (replicating != null && !(event.getEntity() instanceof net.minecraft.world.entity.player.Player)) {
+            event.getEntity().getPersistentData().putDouble(TAG_REPLICA, replicaFactor);
+        }
         if (event.getLevel() instanceof ServerLevel level && event.getEntity().getPersistentData().hasUUID(TAG_CLONE_OF)) {
             CLONES.put(event.getEntity().getUUID(), new Clone(level, event.getEntity().getPersistentData().getUUID(TAG_CLONE_OF)));
         }
@@ -421,6 +549,14 @@ public final class IronsCompat {
             }
         }
         if (!NEW_SUMMONS.isEmpty()) processNewSummons();
+        if (!WILD_PENDING.isEmpty()) {
+            List<WildProc> procs = new ArrayList<>(WILD_PENDING);
+            WILD_PENDING.clear();
+            for (WildProc w : procs) {
+                ServerPlayer p = event.getServer().getPlayerList().getPlayer(w.player());
+                if (p != null) wildMagic(p, w.castSpellId());
+            }
+        }
         if (tick % 20 == 0) {
             decayShields(event.getServer());
             FREE_PENDING.values().removeIf(f -> tick > f.expires());
@@ -437,6 +573,7 @@ public final class IronsCompat {
                 return true;
             });
             AMBUSHES.values().removeIf(a -> tick > a.expires());
+            ElementalDebuffs.cleanup(tick);
             SUMMON_CASTS.values().removeIf(t -> t < tick - 1);
         }
     }

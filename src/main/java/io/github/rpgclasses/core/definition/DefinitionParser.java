@@ -31,10 +31,18 @@ public final class DefinitionParser {
         List<BranchDef> branches = new ArrayList<>();
         for (JsonElement be : array(o, "branches")) {
             JsonObject b = be.getAsJsonObject();
+            List<Definitions.PerkDef> perks = new ArrayList<>();
+            if (b.has("perks")) {
+                for (JsonElement pe : array(b, "perks")) {
+                    JsonObject p = pe.getAsJsonObject();
+                    perks.add(new Definitions.PerkDef(string(p, "id"), effects(p)));
+                }
+            }
             branches.add(new BranchDef(
                     string(b, "id"),
                     b.has("max_points") ? b.get("max_points").getAsInt() : 10,
-                    effects(b)));
+                    effects(b),
+                    List.copyOf(perks)));
         }
         List<String> subclasses = new ArrayList<>();
         for (JsonElement se : array(o, "subclasses")) subclasses.add(se.getAsString());
@@ -46,6 +54,7 @@ public final class DefinitionParser {
                 kit(o),
                 o.has("crit_chance_bonus") ? o.get("crit_chance_bonus").getAsDouble() : 0.0,
                 Map.copyOf(walls),
+                effects(o, "traits"),
                 "disables_unarmored_passives".equals(optString(o, "armor_rule", "")),
                 List.copyOf(branches),
                 milestones(o),
@@ -93,9 +102,13 @@ public final class DefinitionParser {
     }
 
     private static List<EffectDef> effects(JsonObject holder) {
+        return effects(holder, "effects");
+    }
+
+    private static List<EffectDef> effects(JsonObject holder, String key) {
         List<EffectDef> out = new ArrayList<>();
-        if (!holder.has("effects")) return List.of();
-        for (JsonElement ee : holder.getAsJsonArray("effects")) {
+        if (!holder.has(key)) return List.of();
+        for (JsonElement ee : array(holder, key)) {
             JsonObject e = ee.getAsJsonObject();
             out.add(new EffectDef(string(e, "type"), e));
         }

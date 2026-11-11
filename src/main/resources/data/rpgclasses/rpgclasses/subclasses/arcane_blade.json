@@ -43,7 +43,7 @@
     {
       "type": "rpgclasses:mechanic",
       "id": "rpgclasses:arcane_ambush",
-      "damage_bonus": 0.4,
+      "damage_bonus": 0.6,
       "icd_seconds": 8,
       "stealth_cost": 0.4
     }

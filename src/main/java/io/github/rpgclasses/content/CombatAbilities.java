@@ -112,6 +112,16 @@ public final class CombatAbilities {
 
     private static boolean berserkerRage(ServerPlayer player, JsonObject p) {
         player.addEffect(new MobEffectInstance(ModEffects.BERSERKER_RAGE.get(), AbilityService.ticks(p, "duration_seconds", 10), 0));
+        // Rev. 2.7b: Debilidad I a los enemigos cercanos (hostiles, o mobs y jugadores que no sean aliados).
+        double radius = AbilityService.number(p, "weakness_radius", 6);
+        int weaknessTicks = AbilityService.ticks(p, "weakness_seconds", 6);
+        for (LivingEntity e : player.level().getEntitiesOfClass(LivingEntity.class, player.getBoundingBox().inflate(radius),
+                t -> t != player && t.isAlive() && !t.isAlliedTo(player) && t.distanceToSqr(player) <= radius * radius
+                        && (t instanceof net.minecraft.world.entity.monster.Enemy || t instanceof net.minecraft.world.entity.player.Player
+                            || (t instanceof Mob m && m.getTarget() == player)))) {
+            if (e instanceof ServerPlayer other && !player.canHarmPlayer(other)) continue;
+            e.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, weaknessTicks, 0), player);
+        }
         sound(player, SoundEvents.WOLF_GROWL);
         return true;
     }

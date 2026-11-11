@@ -10,14 +10,8 @@
       "modifiers": [
         {
           "attribute": "minecraft:generic.movement_speed",
-          "to": 0.15,
+          "to": 0.1,
           "operation": "multiply_base"
-        },
-        {
-          "attribute": "minecraft:generic.luck",
-          "from": 3,
-          "to": 5,
-          "operation": "add"
         }
       ]
     }

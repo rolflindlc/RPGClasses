@@ -31,6 +31,33 @@
             }
           ]
         }
+      ],
+      "perks": [
+        {
+          "id": "flow",
+          "effects": [
+            {
+              "type": "rpgclasses:mechanic",
+              "id": "rpgclasses:flow",
+              "switch_cooldown_seconds": 3,
+              "linger_seconds": 3,
+              "linger_factor": 0.5,
+              "unarmed_damage_change": -0.05
+            }
+          ]
+        },
+        {
+          "id": "elemental_wave",
+          "effects": [
+            {
+              "type": "rpgclasses:mechanic",
+              "id": "rpgclasses:elemental_wave",
+              "radius": 3,
+              "damage_fraction": 0.75,
+              "switch_cooldown_seconds": 7
+            }
+          ]
+        }
       ]
     },
     {
@@ -43,13 +70,46 @@
           "modifiers": [
             {
               "attribute": "minecraft:generic.movement_speed",
-              "to": 0.4,
+              "to": 0.35,
               "operation": "multiply_base"
             },
             {
               "attribute": "rpgclasses:jump_bonus",
-              "to": 0.4,
+              "to": 0.35,
               "operation": "add"
+            }
+          ]
+        }
+      ],
+      "perks": [
+        {
+          "id": "running_momentum",
+          "effects": [
+            {
+              "type": "rpgclasses:mechanic",
+              "id": "rpgclasses:running_momentum",
+              "sprint_seconds": 2,
+              "damage_bonus": 0.3,
+              "knockback_bonus": 0.5
+            }
+          ]
+        },
+        {
+          "id": "light_feet",
+          "effects": [
+            {
+              "type": "rpgclasses:mechanic",
+              "id": "rpgclasses:light_feet"
+            },
+            {
+              "type": "rpgclasses:attribute",
+              "modifiers": [
+                {
+                  "attribute": "minecraft:generic.movement_speed",
+                  "to": -0.1,
+                  "operation": "multiply_base"
+                }
+              ]
             }
           ]
         }
@@ -72,6 +132,122 @@
               "attribute": "minecraft:generic.armor_toughness",
               "to": 6,
               "operation": "add"
+            }
+          ]
+        }
+      ],
+      "perks": [
+        {
+          "id": "spirit_skin",
+          "effects": [
+            {
+              "type": "rpgclasses:attribute",
+              "condition": "rpgclasses:no_armor",
+              "modifiers": [
+                {
+                  "attribute": "minecraft:generic.armor",
+                  "to": -2,
+                  "operation": "add"
+                },
+                {
+                  "attribute": "minecraft:generic.armor_toughness",
+                  "to": -1,
+                  "operation": "add"
+                }
+              ]
+            },
+            {
+              "type": "rpgclasses:mechanic",
+              "id": "rpgclasses:spirit_skin",
+              "magic_reduction": 0.3,
+              "combined_cap": 0.85
+            }
+          ]
+        },
+        {
+          "id": "inner_calm",
+          "effects": [
+            {
+              "type": "rpgclasses:mechanic",
+              "id": "rpgclasses:inner_calm",
+              "absorb_per_second": 0.5,
+              "absorb_max": 5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "stance_mastery",
+      "max_points": 10,
+      "effects": [
+        {
+          "type": "rpgclasses:mechanic",
+          "id": "rpgclasses:stance_mastery",
+          "stance_bonus": {
+            "to": 0.2
+          }
+        }
+      ],
+      "perks": [
+        {
+          "id": "dominant_stance",
+          "effects": [
+            {
+              "type": "rpgclasses:mechanic",
+              "id": "rpgclasses:dominant_stance",
+              "favorite_bonus": 0.5,
+              "others_bonus": -0.25
+            }
+          ]
+        },
+        {
+          "id": "hybrid_stance",
+          "effects": [
+            {
+              "type": "rpgclasses:mechanic",
+              "id": "rpgclasses:hybrid_stance",
+              "stance_factor": 0.5,
+              "switch_cooldown_change": 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "meditation",
+      "max_points": 10,
+      "effects": [
+        {
+          "type": "rpgclasses:mechanic",
+          "id": "rpgclasses:meditation",
+          "delay_seconds": 2,
+          "heal_per_second": {
+            "to": 0.5
+          },
+          "health_limit": 0.6
+        }
+      ],
+      "perks": [
+        {
+          "id": "deep_trance",
+          "effects": [
+            {
+              "type": "rpgclasses:mechanic",
+              "id": "rpgclasses:meditation_variant",
+              "heal_per_second_fixed": 1,
+              "delay_seconds": 4
+            }
+          ]
+        },
+        {
+          "id": "clear_mind",
+          "effects": [
+            {
+              "type": "rpgclasses:mechanic",
+              "id": "rpgclasses:meditation_variant",
+              "purge_interval_seconds": 5,
+              "heal_factor": 0.5
             }
           ]
         }

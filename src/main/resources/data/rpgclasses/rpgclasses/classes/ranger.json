@@ -61,6 +61,31 @@
             }
           ]
         }
+      ],
+      "perks": [
+        {
+          "id": "steady_shooter",
+          "effects": [
+            {
+              "type": "rpgclasses:mechanic",
+              "id": "rpgclasses:steady_shooter",
+              "still_seconds": 1,
+              "still_bonus": 0.25,
+              "moving_penalty": -0.15
+            }
+          ]
+        },
+        {
+          "id": "mobile_shooter",
+          "effects": [
+            {
+              "type": "rpgclasses:mechanic",
+              "id": "rpgclasses:mobile_shooter",
+              "moving_bonus": 0.2,
+              "still_penalty": -0.15
+            }
+          ]
+        }
       ]
     },
     {
@@ -77,6 +102,39 @@
             }
           ]
         }
+      ],
+      "perks": [
+        {
+          "id": "agile_shooter",
+          "effects": [
+            {
+              "type": "rpgclasses:mechanic",
+              "id": "rpgclasses:draw_no_slow"
+            },
+            {
+              "type": "rpgclasses:attribute",
+              "modifiers": [
+                {
+                  "attribute": "rpgclasses:draw_speed",
+                  "to": -0.15,
+                  "operation": "add"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "quick_counter",
+          "effects": [
+            {
+              "type": "rpgclasses:mechanic",
+              "id": "rpgclasses:quick_counter",
+              "window_seconds": 3,
+              "damage_fraction": 0.7,
+              "icd_seconds": 8
+            }
+          ]
+        }
       ]
     },
     {
@@ -90,6 +148,118 @@
               "attribute": "rpgclasses:projectile_velocity",
               "to": 1.0,
               "operation": "add"
+            }
+          ]
+        }
+      ],
+      "perks": [
+        {
+          "id": "piercing",
+          "effects": [
+            {
+              "type": "rpgclasses:mechanic",
+              "id": "rpgclasses:piercing",
+              "extra_targets": 1,
+              "second_damage": 0.6,
+              "first_damage": -0.1
+            }
+          ]
+        },
+        {
+          "id": "hunters_mark",
+          "effects": [
+            {
+              "type": "rpgclasses:mechanic",
+              "id": "rpgclasses:hunters_mark",
+              "duration_seconds": 6,
+              "icd_seconds": 10,
+              "damage_bonus": 0.12
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "special_arrows",
+      "max_points": 10,
+      "effects": [
+        {
+          "type": "rpgclasses:mechanic",
+          "id": "rpgclasses:potion_arrows",
+          "potion_bonus": {
+            "to": 0.25
+          }
+        }
+      ],
+      "perks": [
+        {
+          "id": "explosive_arrow",
+          "effects": [
+            {
+              "type": "rpgclasses:mechanic",
+              "id": "rpgclasses:explosive_arrow",
+              "radius": 2,
+              "damage_fraction": 0.3,
+              "direct_damage": -0.1
+            }
+          ]
+        },
+        {
+          "id": "sticky_arrow",
+          "effects": [
+            {
+              "type": "rpgclasses:mechanic",
+              "id": "rpgclasses:sticky_arrow",
+              "slowness_seconds": 2
+            },
+            {
+              "type": "rpgclasses:attribute",
+              "modifiers": [
+                {
+                  "attribute": "rpgclasses:projectile_velocity",
+                  "to": -0.1,
+                  "operation": "add"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "retreat",
+      "max_points": 10,
+      "effects": [
+        {
+          "type": "rpgclasses:mechanic",
+          "id": "rpgclasses:retreat",
+          "speed_bonus": 0.25,
+          "duration_seconds": 2,
+          "icd_seconds": 5,
+          "min_points": 10
+        }
+      ],
+      "perks": [
+        {
+          "id": "evasive_leap",
+          "effects": [
+            {
+              "type": "rpgclasses:mechanic",
+              "id": "rpgclasses:evasive_leap",
+              "leap_blocks": 4,
+              "icd_seconds": 12
+            }
+          ]
+        },
+        {
+          "id": "hunter_trap",
+          "effects": [
+            {
+              "type": "rpgclasses:mechanic",
+              "id": "rpgclasses:hunter_trap",
+              "duration_seconds": 3,
+              "slowness_level": 2,
+              "icd_seconds": 12
             }
           ]
         }

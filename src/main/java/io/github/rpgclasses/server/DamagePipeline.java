@@ -97,7 +97,7 @@ public final class DamagePipeline {
         if (projectile instanceof AbstractArrow arrow) {
             // Alcance: más velocidad sin más daño (el daño de una flecha vanilla depende de su velocidad).
             double velocity = ModAttributes.value(shooter, ModAttributes.PROJECTILE_VELOCITY);
-            if (velocity > 0) {
+            if (velocity != 0 && velocity > -0.9) {
                 arrow.setDeltaMovement(arrow.getDeltaMovement().scale(1 + velocity));
                 arrow.setBaseDamage(arrow.getBaseDamage() / (1 + velocity));
             }
@@ -170,7 +170,8 @@ public final class DamagePipeline {
         }
 
         if (canCrit) {
-            double chance = StatMath.critChance(ServerConfig.BASE_CRIT_CHANCE.get(), classDef.critChanceBonus(), false);
+            double chance = StatMath.critChance(ServerConfig.BASE_CRIT_CHANCE.get(),
+                    classDef.critChanceBonus() + ModAttributes.value(attacker, ModAttributes.CRIT_CHANCE), false);
             // Pícaro: todo golpe desde invisibilidad es crítico seguro y suma su bonus de Backstab.
             boolean backstab = RogueAbilities.isStealthed(attacker);
             if (backstab || attacker.getRandom().nextDouble() < chance) {

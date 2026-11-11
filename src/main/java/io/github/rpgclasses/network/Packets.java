@@ -73,7 +73,12 @@ public final class Packets {
 
     /** Cliente -> servidor: una intención de progresión. El servidor la valida entera. */
     public record ClassAction(Action action, String arg) {
-        public enum Action { CHOOSE_CLASS, SPEND_BRANCH, CHOOSE_SUBCLASS, SPEND_SUBCLASS, RESPEC_CLASS, RESPEC_SUBCLASS }
+        public enum Action { CHOOSE_CLASS, SPEND_BRANCH, CHOOSE_SUBCLASS, SPEND_SUBCLASS, RESPEC_CLASS, RESPEC_SUBCLASS, CHOOSE_PERK }
+
+        /** Argumento de CHOOSE_PERK: "rama/perk". */
+        public static String perkArg(String branchId, String perkId) {
+            return branchId + "/" + perkId;
+        }
 
         public void encode(FriendlyByteBuf buf) {
             buf.writeEnum(action);

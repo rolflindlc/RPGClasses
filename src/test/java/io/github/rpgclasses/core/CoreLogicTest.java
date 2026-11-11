@@ -26,7 +26,10 @@ public class CoreLogicTest {
             {"branches":[
               {"id":"a","effects":[{"type":"rpgclasses:mechanic","id":"t:x"}]},
               {"id":"b","effects":[{"type":"rpgclasses:mechanic","id":"t:x"}]},
-              {"id":"c","effects":[{"type":"rpgclasses:mechanic","id":"t:x"}]}],
+              {"id":"c","effects":[{"type":"rpgclasses:mechanic","id":"t:x"}],
+               "perks":[{"id":"p1","effects":[{"type":"rpgclasses:mechanic","id":"t:p"}]},{"id":"p2","effects":[{"type":"rpgclasses:mechanic","id":"t:q"}]}]},
+              {"id":"d","effects":[{"type":"rpgclasses:mechanic","id":"t:x"}]},
+              {"id":"e","effects":[{"type":"rpgclasses:mechanic","id":"t:x"}]}],
              "subclasses":["t:s1","t:s2","t:s3"]}""";
 
     private static ClassDef testClass() {
@@ -42,6 +45,53 @@ public class CoreLogicTest {
             assertEquals(Result.OK, ProgressionRules.checkSpendBranch(s, def, branch, RICH, 1.0));
             ProgressionRules.spendBranch(s, branch, 1.0);
         }
+    }
+
+    // --- Ramas extra y perks (reglas 11 y 13) ---
+
+    @Test
+    public void thirdBranchLocksTheOtherTwo() {
+        ClassDef def = testClass();
+        ProgressState s = new ProgressState();
+        ProgressionRules.chooseClass(s, def);
+        fill(s, def, "a", 1);
+        fill(s, def, "b", 1);
+        assertFalse(ProgressionRules.isBranchLocked(s, "e"));
+        fill(s, def, "c", 1);
+        assertTrue(ProgressionRules.isBranchLocked(s, "d"));
+        assertTrue(ProgressionRules.isBranchLocked(s, "e"));
+        assertFalse(ProgressionRules.isBranchLocked(s, "a"));
+        assertEquals(Result.BRANCH_LOCKED, ProgressionRules.checkSpendBranch(s, def, "d", RICH, 1.0));
+        fill(s, def, "a", 9);
+        // Reiniciar la clase desbloquea todo.
+        ProgressionRules.respecClass(s, 0.33);
+        ProgressionRules.chooseClass(s, def);
+        assertEquals(Result.OK, ProgressionRules.checkSpendBranch(s, def, "e", RICH, 1.0));
+    }
+
+    @Test
+    public void perkNeedsAFullBranchAndIsLostOnClassRespec() {
+        ClassDef def = testClass();
+        ProgressState s = new ProgressState();
+        ProgressionRules.chooseClass(s, def);
+        fill(s, def, "c", 9);
+        assertEquals(Result.PERK_UNAVAILABLE, ProgressionRules.checkChoosePerk(s, def, "c", "p1"));
+        fill(s, def, "c", 1);
+        assertTrue(ProgressionRules.perkPending(s, def.branch("c")));
+        assertEquals(Result.UNKNOWN_PERK, ProgressionRules.checkChoosePerk(s, def, "c", "zz"));
+        assertEquals(Result.UNKNOWN_BRANCH, ProgressionRules.checkChoosePerk(s, def, "zz", "p1"));
+        assertEquals(Result.OK, ProgressionRules.checkChoosePerk(s, def, "c", "p2"));
+        ProgressionRules.choosePerk(s, "c", "p2");
+        assertFalse(ProgressionRules.perkPending(s, def.branch("c")));
+        assertEquals(Result.PERK_ALREADY_CHOSEN, ProgressionRules.checkChoosePerk(s, def, "c", "p1"));
+        // El perk no cuenta para el Nivel Total.
+        assertEquals(10, s.totalLevel());
+        // Reiniciar la subclase no lo toca; reiniciar la clase sí.
+        s.subclassId = "t:s1";
+        ProgressionRules.respecSubclass(s, 1.0, 0.33);
+        assertEquals("p2", s.perkIn("c"));
+        ProgressionRules.respecClass(s, 0.33);
+        assertTrue(s.perks.isEmpty());
     }
 
     // --- XP ---

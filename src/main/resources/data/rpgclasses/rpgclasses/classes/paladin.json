@@ -34,6 +34,23 @@
     "rpgclasses:magic": 0.75,
     "rpgclasses:bow": 0.75
   },
+  "traits": [
+    {
+      "type": "rpgclasses:attribute",
+      "modifiers": [
+        {
+          "attribute": "minecraft:generic.max_health",
+          "to": 0.2,
+          "operation": "multiply_base"
+        },
+        {
+          "attribute": "minecraft:generic.movement_speed",
+          "to": -0.1,
+          "operation": "multiply_base"
+        }
+      ]
+    }
+  ],
   "branches": [
     {
       "id": "cuirass",
@@ -48,6 +65,52 @@
             "to": 0.4
           }
         }
+      ],
+      "perks": [
+        {
+          "id": "heavy_cuirass",
+          "effects": [
+            {
+              "type": "rpgclasses:equipped_armor_multiplier",
+              "armor": {
+                "to": 0.2
+              },
+              "toughness": {
+                "to": 0.2
+              }
+            },
+            {
+              "type": "rpgclasses:attribute",
+              "modifiers": [
+                {
+                  "attribute": "minecraft:generic.movement_speed",
+                  "to": -0.05,
+                  "operation": "multiply_base"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "colossal_body",
+          "effects": [
+            {
+              "type": "rpgclasses:attribute",
+              "modifiers": [
+                {
+                  "attribute": "minecraft:generic.max_health",
+                  "to": 0.2,
+                  "operation": "multiply_base"
+                },
+                {
+                  "attribute": "minecraft:generic.movement_speed",
+                  "to": -0.05,
+                  "operation": "multiply_base"
+                }
+              ]
+            }
+          ]
+        }
       ]
     },
     {
@@ -61,6 +124,41 @@
               "attribute": "rpgclasses:debuff_resistance",
               "to": 0.5,
               "operation": "add"
+            }
+          ]
+        }
+      ],
+      "perks": [
+        {
+          "id": "will_vs_damage",
+          "effects": [
+            {
+              "type": "rpgclasses:mechanic",
+              "id": "rpgclasses:effect_immunity",
+              "effects": [
+                "minecraft:poison",
+                "minecraft:wither"
+              ],
+              "fire": 1,
+              "other_duration": 0.5
+            }
+          ]
+        },
+        {
+          "id": "will_vs_control",
+          "effects": [
+            {
+              "type": "rpgclasses:mechanic",
+              "id": "rpgclasses:effect_immunity",
+              "effects": [
+                "minecraft:slowness",
+                "minecraft:weakness",
+                "minecraft:blindness",
+                "minecraft:mining_fatigue",
+                "minecraft:nausea",
+                "minecraft:darkness"
+              ],
+              "other_duration": 0.5
             }
           ]
         }
@@ -82,6 +180,131 @@
               "attribute": "rpgclasses:knockback_dealt",
               "to": 0.25,
               "operation": "add"
+            }
+          ]
+        }
+      ],
+      "perks": [
+        {
+          "id": "shield_counter",
+          "effects": [
+            {
+              "type": "rpgclasses:mechanic",
+              "id": "rpgclasses:shield_counter",
+              "knockback_blocks": 3,
+              "icd_seconds": 3
+            }
+          ]
+        },
+        {
+          "id": "shockwave",
+          "effects": [
+            {
+              "type": "rpgclasses:mechanic",
+              "id": "rpgclasses:shockwave",
+              "every_hits": 5,
+              "radius": 3,
+              "damage_fraction": 0.3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "banner",
+      "max_points": 10,
+      "effects": [
+        {
+          "type": "rpgclasses:mechanic",
+          "id": "rpgclasses:banner_aura",
+          "radius": 8,
+          "aura_armor": {
+            "to": 0.1
+          },
+          "aura_debuff_duration": {
+            "to": -0.1
+          }
+        }
+      ],
+      "perks": [
+        {
+          "id": "war_banner",
+          "effects": [
+            {
+              "type": "rpgclasses:mechanic",
+              "id": "rpgclasses:war_banner",
+              "ally_damage": 0.08
+            },
+            {
+              "type": "rpgclasses:attribute",
+              "modifiers": [
+                {
+                  "attribute": "minecraft:generic.armor",
+                  "to": -0.15,
+                  "operation": "multiply_total"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "life_banner",
+          "effects": [
+            {
+              "type": "rpgclasses:mechanic",
+              "id": "rpgclasses:life_banner",
+              "ally_heal_per_second": 0.5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "smite",
+      "max_points": 10,
+      "effects": [
+        {
+          "type": "rpgclasses:mechanic",
+          "id": "rpgclasses:smite",
+          "undead_nether_damage": {
+            "to": 0.25
+          },
+          "no_shield_damage": {
+            "to": 0.1
+          }
+        }
+      ],
+      "perks": [
+        {
+          "id": "judgement",
+          "effects": [
+            {
+              "type": "rpgclasses:mechanic",
+              "id": "rpgclasses:judgement",
+              "every_hits": 6,
+              "damage_bonus": 0.4,
+              "radius": 2
+            },
+            {
+              "type": "rpgclasses:attribute",
+              "modifiers": [
+                {
+                  "attribute": "minecraft:generic.attack_damage",
+                  "to": -0.1,
+                  "operation": "multiply_base"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "condemn",
+          "effects": [
+            {
+              "type": "rpgclasses:mechanic",
+              "id": "rpgclasses:condemn",
+              "duration_seconds": 6,
+              "damage_bonus": 0.15
             }
           ]
         }

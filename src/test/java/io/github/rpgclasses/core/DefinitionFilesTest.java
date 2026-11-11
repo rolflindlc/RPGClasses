@@ -61,6 +61,17 @@ public class DefinitionFilesTest {
     }
 
     @Test
+    public void everyClassHasFiveBranchesWithTwoPerks() {
+        int perks = 0;
+        for (String id : STORE.classIds()) {
+            ClassDef c = STORE.classDef(id);
+            assertEquals(id, 5, c.branches().size());
+            for (var b : c.branches()) perks += b.perks().size();
+        }
+        assertEquals(60, perks);
+    }
+
+    @Test
     public void wallTotalsMatchDesignTable() {
         Map<String, Integer> expected = Map.of("mage", 200, "paladin", 150, "barbarian", 150,
                 "rogue", 245, "ranger", 150, "monk", 275);

@@ -11,15 +11,20 @@ import io.github.rpgclasses.core.definition.Definitions.SubclassDef;
  */
 public final class ProgressionRules {
     public static final int BRANCH_MAX = 10;
-    public static final int BRANCHES = 3;
-    public static final int BASE_MAX = BRANCH_MAX * BRANCHES;
+    /** Ramas que tiene cada clase (regla 13). */
+    public static final int BRANCHES_PER_CLASS = 5;
+    /** Ramas que puede usar un jugador: al poner puntos en tantas, las demás se bloquean (regla 13). */
+    public static final int BRANCHES_USABLE = 3;
+    public static final int BASE_MAX = BRANCH_MAX * BRANCHES_USABLE;
+    /** Perks por rama (regla 11). */
+    public static final int PERKS_PER_BRANCH = 2;
     public static final int SUBCLASS_MAX = 10;
     public static final int SUBCLASS_UNLOCK = 15;
 
     public enum Result {
         OK, NO_CLASS, ALREADY_HAS_CLASS, UNKNOWN_CLASS, UNKNOWN_BRANCH, BRANCH_FULL,
         SUBCLASS_LOCKED, UNKNOWN_SUBCLASS, ALREADY_HAS_SUBCLASS, NO_SUBCLASS, SUBCLASS_CAP,
-        NOT_ENOUGH_XP, IN_COMBAT, CLASS_DISABLED;
+        NOT_ENOUGH_XP, IN_COMBAT, CLASS_DISABLED, BRANCH_LOCKED, UNKNOWN_PERK, PERK_UNAVAILABLE, PERK_ALREADY_CHOSEN;
 
         public boolean ok() {
             return this == OK;
@@ -49,6 +54,7 @@ public final class ProgressionRules {
         s.classId = def.id();
         s.branchPoints.clear();
         for (BranchDef b : def.branches()) s.branchPoints.put(b.id(), 0);
+        s.perks.clear();
         s.subclassId = null;
         s.subclassLevel = 0;
         s.xpPaidBase = 0;
@@ -65,6 +71,7 @@ public final class ProgressionRules {
         BranchDef branch = def.branch(branchId);
         if (branch == null) return Result.UNKNOWN_BRANCH;
         if (s.pointsIn(branchId) >= branch.maxPoints()) return Result.BRANCH_FULL;
+        if (isBranchLocked(s, branchId)) return Result.BRANCH_LOCKED;
         if (availableXp < nextCost(s, multiplier)) return Result.NOT_ENOUGH_XP;
         return Result.OK;
     }
@@ -75,6 +82,34 @@ public final class ProgressionRules {
         s.branchPoints.merge(branchId, 1, Integer::sum);
         s.xpPaidBase += cost;
         return cost;
+    }
+
+    /** Regla 13: una rama sin puntos queda bloqueada en cuanto hay puntos en 3 ramas distintas. */
+    public static boolean isBranchLocked(ProgressState s, String branchId) {
+        return s.pointsIn(branchId) == 0 && s.usedBranches() >= BRANCHES_USABLE;
+    }
+
+    // --- Perks (regla 11) ---
+
+    /** true si la rama está llena y aún no se ha elegido su perk. */
+    public static boolean perkPending(ProgressState s, BranchDef b) {
+        return !b.perks().isEmpty() && s.pointsIn(b.id()) >= b.maxPoints() && s.perkIn(b.id()) == null;
+    }
+
+    public static Result checkChoosePerk(ProgressState s, ClassDef def, String branchId, String perkId) {
+        if (s.classId == null) return Result.NO_CLASS;
+        if (def == null || !def.id().equals(s.classId)) return Result.UNKNOWN_CLASS;
+        BranchDef branch = def.branch(branchId);
+        if (branch == null) return Result.UNKNOWN_BRANCH;
+        if (branch.perk(perkId) == null) return Result.UNKNOWN_PERK;
+        if (s.pointsIn(branchId) < branch.maxPoints()) return Result.PERK_UNAVAILABLE;
+        if (s.perkIn(branchId) != null) return Result.PERK_ALREADY_CHOSEN;
+        return Result.OK;
+    }
+
+    /** El perk es gratis y fijo hasta reiniciar la clase. */
+    public static void choosePerk(ProgressState s, String branchId, String perkId) {
+        s.perks.put(branchId, perkId);
     }
 
     // --- Subclase ---
@@ -147,6 +182,7 @@ public final class ProgressionRules {
         long paid = s.xpPaidBase + s.xpPaidSubclass;
         s.classId = null;
         s.branchPoints.clear();
+        s.perks.clear();
         s.subclassId = null;
         s.subclassLevel = 0;
         s.xpPaidBase = 0;

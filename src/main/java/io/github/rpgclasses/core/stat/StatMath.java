@@ -4,6 +4,8 @@ package io.github.rpgclasses.core.stat;
 public final class StatMath {
     public static final double SPEED_BONUS_CAP = 1.0;
     public static final double JUMP_BONUS_CAP = 1.5;
+    /** Regla 7: suma de bonos porcentuales de vida máxima (los penalizadores restan). */
+    public static final double MAX_HEALTH_PCT_CAP = 1.0;
     public static final double BASE_CRIT_MULTIPLIER = 1.5;
     private static final int WALL_FULL_AT = 30;
 
@@ -40,6 +42,10 @@ public final class StatMath {
 
     public static double capJumpBonus(double modBonusSum) {
         return Math.min(modBonusSum, JUMP_BONUS_CAP);
+    }
+
+    public static double capHealthPctBonus(double modBonusSum) {
+        return Math.min(modBonusSum, MAX_HEALTH_PCT_CAP);
     }
 
     public static double critChance(double base, double classBonus, boolean guaranteed) {

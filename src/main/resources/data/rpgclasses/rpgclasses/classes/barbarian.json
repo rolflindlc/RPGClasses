@@ -33,6 +33,39 @@
           },
           "cap": 0.75
         }
+      ],
+      "perks": [
+        {
+          "id": "unleashed_fury",
+          "effects": [
+            {
+              "type": "rpgclasses:mechanic",
+              "id": "rpgclasses:fury_perk",
+              "damage_per_missing_pct": 0.005
+            },
+            {
+              "type": "rpgclasses:attribute",
+              "modifiers": [
+                {
+                  "attribute": "rpgclasses:healing_received",
+                  "to": -0.5,
+                  "operation": "add"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "tempered_fury",
+          "effects": [
+            {
+              "type": "rpgclasses:mechanic",
+              "id": "rpgclasses:fury_perk",
+              "damage_per_missing_pct": -0.0015,
+              "healing_per_missing_pct": 0.005
+            }
+          ]
+        }
       ]
     },
     {
@@ -44,8 +77,50 @@
           "modifiers": [
             {
               "attribute": "rpgclasses:crit_damage",
-              "to": 1.0,
+              "to": 0.5,
               "operation": "add"
+            }
+          ]
+        }
+      ],
+      "perks": [
+        {
+          "id": "crushing_blow",
+          "effects": [
+            {
+              "type": "rpgclasses:attribute",
+              "modifiers": [
+                {
+                  "attribute": "rpgclasses:crit_damage",
+                  "to": 0.75,
+                  "operation": "add"
+                },
+                {
+                  "attribute": "rpgclasses:crit_chance",
+                  "to": -0.15,
+                  "operation": "add"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "steady_blow",
+          "effects": [
+            {
+              "type": "rpgclasses:attribute",
+              "modifiers": [
+                {
+                  "attribute": "rpgclasses:crit_damage",
+                  "to": -0.35,
+                  "operation": "add"
+                },
+                {
+                  "attribute": "rpgclasses:crit_chance",
+                  "to": 0.2,
+                  "operation": "add"
+                }
+              ]
             }
           ]
         }
@@ -73,6 +148,151 @@
               "attribute": "minecraft:generic.movement_speed",
               "to": 0.25,
               "operation": "multiply_base"
+            }
+          ]
+        }
+      ],
+      "perks": [
+        {
+          "id": "reinforced_skin",
+          "effects": [
+            {
+              "type": "rpgclasses:attribute",
+              "condition": "rpgclasses:no_armor",
+              "modifiers": [
+                {
+                  "attribute": "minecraft:generic.armor",
+                  "to": 2,
+                  "operation": "add"
+                },
+                {
+                  "attribute": "minecraft:generic.armor_toughness",
+                  "to": 1,
+                  "operation": "add"
+                },
+                {
+                  "attribute": "minecraft:generic.movement_speed",
+                  "to": -0.15,
+                  "operation": "multiply_base"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "light_skin",
+          "effects": [
+            {
+              "type": "rpgclasses:attribute",
+              "condition": "rpgclasses:no_armor",
+              "modifiers": [
+                {
+                  "attribute": "minecraft:generic.armor",
+                  "to": -2,
+                  "operation": "add"
+                },
+                {
+                  "attribute": "minecraft:generic.armor_toughness",
+                  "to": -1,
+                  "operation": "add"
+                },
+                {
+                  "attribute": "minecraft:generic.movement_speed",
+                  "to": 0.15,
+                  "operation": "multiply_base"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "stampede",
+      "max_points": 10,
+      "effects": [
+        {
+          "type": "rpgclasses:mechanic",
+          "id": "rpgclasses:charge_upgrade",
+          "distance_bonus": {
+            "to": 0.5
+          },
+          "cooldown_change": {
+            "to": -0.25
+          }
+        }
+      ],
+      "perks": [
+        {
+          "id": "unstoppable_charge",
+          "effects": [
+            {
+              "type": "rpgclasses:mechanic",
+              "id": "rpgclasses:unstoppable_charge",
+              "damage_fraction": 0.6
+            }
+          ]
+        },
+        {
+          "id": "crushing_charge",
+          "effects": [
+            {
+              "type": "rpgclasses:mechanic",
+              "id": "rpgclasses:crushing_charge",
+              "stun_factor": 2,
+              "cooldown_change": 0.3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hardened",
+      "max_points": 10,
+      "effects": [
+        {
+          "type": "rpgclasses:mechanic",
+          "id": "rpgclasses:hardened",
+          "hazard_reduction": {
+            "to": 0.4
+          },
+          "hunger_reduction": {
+            "to": 0.4
+          }
+        }
+      ],
+      "perks": [
+        {
+          "id": "carnivore",
+          "effects": [
+            {
+              "type": "rpgclasses:mechanic",
+              "id": "rpgclasses:carnivore",
+              "meat_saturation": 1.0,
+              "other_food": -0.3
+            }
+          ]
+        },
+        {
+          "id": "endurance",
+          "effects": [
+            {
+              "type": "rpgclasses:mechanic",
+              "id": "rpgclasses:endurance",
+              "health_threshold": 0.3,
+              "damage_reduction": 0.2,
+              "duration_seconds": 5,
+              "icd_seconds": 30
+            },
+            {
+              "type": "rpgclasses:attribute",
+              "modifiers": [
+                {
+                  "attribute": "rpgclasses:healing_received",
+                  "to": -0.1,
+                  "operation": "add"
+                }
+              ]
             }
           ]
         }

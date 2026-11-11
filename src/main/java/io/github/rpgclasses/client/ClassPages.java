@@ -14,6 +14,7 @@ import io.github.rpgclasses.core.definition.Definitions.BranchDef;
 import io.github.rpgclasses.core.definition.Definitions.ClassDef;
 import io.github.rpgclasses.core.definition.Definitions.EffectDef;
 import io.github.rpgclasses.core.definition.Definitions.MilestoneDef;
+import io.github.rpgclasses.core.definition.Definitions.PerkDef;
 import io.github.rpgclasses.core.definition.Definitions.SubclassDef;
 import io.github.rpgclasses.core.progression.ProgressionRules;
 import io.github.rpgclasses.core.progression.XpMath;
@@ -77,6 +78,11 @@ public final class ClassPages {
         if (c.armorDisablesPassives()) {
             out.add(Component.translatable("ui.rpgclasses.armor_rule").withStyle(ChatFormatting.YELLOW));
         }
+        if (!c.traits().isEmpty()) {
+            out.add(Component.empty());
+            out.add(Component.translatable(Ids.langKey("class", c.id(), "trait")).withStyle(ChatFormatting.YELLOW));
+            for (EffectDef e : c.traits()) effect(e, 1, out);
+        }
         walls(c, out);
     }
 
@@ -86,6 +92,13 @@ public final class ClassPages {
             out.add(Component.empty());
             out.add(branchName(c, b).withStyle(ChatFormatting.GOLD));
             out.add(Component.translatable(branchKey(c, b, "desc")));
+            if (!b.perks().isEmpty()) {
+                out.add(Component.translatable("ui.rpgclasses.perks_line").withStyle(ChatFormatting.GRAY));
+                for (PerkDef p : b.perks()) {
+                    out.add(indent(Component.translatable("ui.rpgclasses.perk_option",
+                            perkName(c, b, p).withStyle(ChatFormatting.LIGHT_PURPLE), Component.translatable(perkKey(c, b, p, "desc")))));
+                }
+            }
         }
         out.add(Component.empty());
         out.add(header("ui.rpgclasses.abilities_header"));
@@ -109,12 +122,22 @@ public final class ClassPages {
         out.add(Component.translatable("ui.rpgclasses.data.crit",
                 percent(StatMath.critChance(base, c.critChanceBonus(), false)), number(StatMath.BASE_CRIT_MULTIPLIER)));
         walls(c, out);
+        if (!c.traits().isEmpty()) {
+            out.add(Component.empty());
+            out.add(header("ui.rpgclasses.traits_header"));
+            for (EffectDef e : c.traits()) effect(e, 1, out);
+        }
 
         out.add(Component.empty());
         out.add(header("ui.rpgclasses.branches_header"));
         for (BranchDef b : c.branches()) {
             out.add(branchName(c, b).withStyle(ChatFormatting.GOLD));
             for (EffectDef e : b.effects()) effect(e, b.maxPoints(), out);
+            for (PerkDef p : b.perks()) {
+                out.add(indent(perkName(c, b, p).withStyle(ChatFormatting.LIGHT_PURPLE)
+                        .append(" ").append(Component.translatable("ui.rpgclasses.data.perk_fixed").withStyle(ChatFormatting.GRAY))));
+                for (EffectDef e : p.effects()) effect(e, 1, out);
+            }
         }
 
         out.add(Component.empty());
@@ -239,6 +262,7 @@ public final class ClassPages {
         double first = value.at(1);
         double max = value.max();
         int n = value.maxLevel();
+        if (n == 1) return Component.translatable("ui.rpgclasses.data.fixed", label, format(max, unit, signed));
         boolean fromZero = Math.abs(first * n - max) < 1e-9;
         boolean linear = true;
         double step = n > 1 ? (max - first) / (n - 1) : 0;
@@ -303,6 +327,28 @@ public final class ClassPages {
 
     private static MutableComponent discipline(String id) {
         return Component.translatable(Ids.langKey("discipline", id, "name"));
+    }
+
+    /** Texto de ayuda de un perk: nombre, descripción y sus números exactos, separados por saltos de línea. */
+    public static Component perkTooltip(ClassDef c, BranchDef b, PerkDef p) {
+        List<Component> lines = new ArrayList<>();
+        lines.add(perkName(c, b, p).withStyle(ChatFormatting.LIGHT_PURPLE));
+        lines.add(Component.translatable(perkKey(c, b, p, "desc")));
+        for (EffectDef e : p.effects()) effect(e, 1, lines);
+        MutableComponent out = Component.empty();
+        for (int i = 0; i < lines.size(); i++) {
+            if (i > 0) out.append("\n");
+            out.append(lines.get(i));
+        }
+        return out;
+    }
+
+    public static MutableComponent perkName(ClassDef c, BranchDef b, PerkDef p) {
+        return Component.translatable(perkKey(c, b, p, "name"));
+    }
+
+    private static String perkKey(ClassDef c, BranchDef b, PerkDef p, String suffix) {
+        return Ids.langKey("perk", c.id() + "." + b.id() + "." + p.id(), suffix);
     }
 
     private static MutableComponent branchName(ClassDef c, BranchDef b) {

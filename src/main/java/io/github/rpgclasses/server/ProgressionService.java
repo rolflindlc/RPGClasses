@@ -86,6 +86,15 @@ public final class ProgressionService {
                 if (r.ok()) setXp(player, xp - ProgressionRules.spendSubclass(s, mult));
                 return r;
             }
+            case CHOOSE_PERK -> {
+                int slash = arg.indexOf('/');
+                if (slash <= 0) return Result.UNKNOWN_PERK;
+                String branchId = arg.substring(0, slash);
+                String perkId = arg.substring(slash + 1);
+                Result r = ProgressionRules.checkChoosePerk(s, classDef, branchId, perkId);
+                if (r.ok()) ProgressionRules.choosePerk(s, branchId, perkId);
+                return r;
+            }
             case RESPEC_SUBCLASS -> {
                 Result r = ProgressionRules.checkRespecSubclass(s, CombatTracker.inCombat(player));
                 if (r.ok()) setXp(player, xp + ProgressionRules.respecSubclass(s, mult, ServerConfig.RESPEC_XP_LOSS.get()));

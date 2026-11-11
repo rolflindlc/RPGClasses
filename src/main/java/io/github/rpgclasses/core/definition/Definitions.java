@@ -11,8 +11,22 @@ public final class Definitions {
     /** Efecto pasivo: un tipo registrado más sus parámetros en bruto (los interpreta el tipo). */
     public record EffectDef(String type, JsonObject params) {}
 
-    /** Rama: cada punto sube a la vez todos sus efectos; todos llegan al máximo con maxPoints. */
-    public record BranchDef(String id, int maxPoints, List<EffectDef> effects) {}
+    /**
+     * Perk de rama (regla 11): al llenar la rama se elige uno de sus perks. Sus efectos se aplican
+     * enteros (sin escalar), como los rasgos de clase.
+     */
+    public record PerkDef(String id, List<EffectDef> effects) {}
+
+    /**
+     * Rama: cada punto sube a la vez todos sus efectos; todos llegan al máximo con maxPoints.
+     * {@code perks}: las opciones que se eligen al llenarla (2 en el diseño).
+     */
+    public record BranchDef(String id, int maxPoints, List<EffectDef> effects, List<PerkDef> perks) {
+        public PerkDef perk(String perkId) {
+            for (PerkDef p : perks) if (p.id().equals(perkId)) return p;
+            return null;
+        }
+    }
 
     /**
      * Hito. Si {@code subclassLevel} es true, {@code level} se compara con el nivel de subclase;
@@ -31,6 +45,8 @@ public final class Definitions {
             List<KitItem> startingKit,
             double critChanceBonus,
             Map<String, Double> walls,
+            /** Rasgos base (regla 12): efectos fijos, completos desde que se elige la clase. */
+            List<EffectDef> traits,
             boolean armorDisablesPassives,
             List<BranchDef> branches,
             List<MilestoneDef> milestones,

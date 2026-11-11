@@ -33,6 +33,18 @@
     "rpgclasses:armor": 0.25,
     "rpgclasses:shield": 0.5
   },
+  "traits": [
+    {
+      "type": "rpgclasses:attribute",
+      "modifiers": [
+        {
+          "attribute": "minecraft:generic.max_health",
+          "to": -0.2,
+          "operation": "multiply_base"
+        }
+      ]
+    }
+  ],
   "branches": [
     {
       "id": "power",
@@ -45,6 +57,34 @@
               "attribute": "irons_spellbooks:spell_power",
               "to": 0.5,
               "operation": "multiply_base"
+            }
+          ]
+        }
+      ],
+      "perks": [
+        {
+          "id": "ranged_power",
+          "effects": [
+            {
+              "type": "rpgclasses:mechanic",
+              "id": "rpgclasses:distance_power",
+              "near_blocks": 6,
+              "far_blocks": 15,
+              "near_bonus": -0.2,
+              "far_bonus": 0.35
+            }
+          ]
+        },
+        {
+          "id": "point_blank_power",
+          "effects": [
+            {
+              "type": "rpgclasses:mechanic",
+              "id": "rpgclasses:distance_power",
+              "near_blocks": 6,
+              "far_blocks": 15,
+              "near_bonus": 0.4,
+              "far_bonus": -0.2
             }
           ]
         }
@@ -69,6 +109,48 @@
             }
           ]
         }
+      ],
+      "perks": [
+        {
+          "id": "mana_burst",
+          "effects": [
+            {
+              "type": "rpgclasses:attribute",
+              "modifiers": [
+                {
+                  "attribute": "irons_spellbooks:max_mana",
+                  "to": -150,
+                  "operation": "add"
+                },
+                {
+                  "attribute": "irons_spellbooks:mana_regen",
+                  "to": 0.6,
+                  "operation": "multiply_base"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "mana_well",
+          "effects": [
+            {
+              "type": "rpgclasses:attribute",
+              "modifiers": [
+                {
+                  "attribute": "irons_spellbooks:max_mana",
+                  "to": 200,
+                  "operation": "add"
+                },
+                {
+                  "attribute": "irons_spellbooks:mana_regen",
+                  "to": -0.4,
+                  "operation": "multiply_base"
+                }
+              ]
+            }
+          ]
+        }
       ]
     },
     {
@@ -82,6 +164,135 @@
               "attribute": "irons_spellbooks:cooldown_reduction",
               "to": 0.25,
               "operation": "multiply_base"
+            }
+          ]
+        }
+      ],
+      "perks": [
+        {
+          "id": "arcane_cadence",
+          "effects": [
+            {
+              "type": "rpgclasses:attribute",
+              "modifiers": [
+                {
+                  "attribute": "irons_spellbooks:cooldown_reduction",
+                  "to": 0.25,
+                  "operation": "multiply_base"
+                },
+                {
+                  "attribute": "irons_spellbooks:spell_power",
+                  "to": -0.1,
+                  "operation": "multiply_base"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "blood_magic",
+          "effects": [
+            {
+              "type": "rpgclasses:mechanic",
+              "id": "rpgclasses:blood_magic",
+              "mana_per_health": 15,
+              "min_health_fraction": 0.25
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "summoning",
+      "max_points": 10,
+      "effects": [
+        {
+          "type": "rpgclasses:mechanic",
+          "id": "rpgclasses:summon_bonus",
+          "summon_health": {
+            "to": 0.4
+          },
+          "summon_damage": {
+            "to": 0.4
+          }
+        }
+      ],
+      "perks": [
+        {
+          "id": "legion",
+          "effects": [
+            {
+              "type": "rpgclasses:mechanic",
+              "id": "rpgclasses:summon_count",
+              "count_change": 1,
+              "summon_stats": -0.25
+            }
+          ]
+        },
+        {
+          "id": "elite",
+          "effects": [
+            {
+              "type": "rpgclasses:mechanic",
+              "id": "rpgclasses:summon_count",
+              "count_change": -1,
+              "min_count": 1,
+              "summon_stats": 0.3,
+              "summon_mana_cost": 0.15
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fluidity",
+      "max_points": 10,
+      "effects": [
+        {
+          "type": "rpgclasses:attribute",
+          "modifiers": [
+            {
+              "attribute": "minecraft:generic.movement_speed",
+              "to": 0.15,
+              "operation": "multiply_base"
+            }
+          ]
+        },
+        {
+          "type": "rpgclasses:mechanic",
+          "id": "rpgclasses:cast_no_slow",
+          "min_points": 10
+        }
+      ],
+      "perks": [
+        {
+          "id": "arcane_step",
+          "effects": [
+            {
+              "type": "rpgclasses:mechanic",
+              "id": "rpgclasses:cast_speed_burst",
+              "speed_bonus": 0.3,
+              "duration_seconds": 2,
+              "icd_seconds": 4
+            }
+          ]
+        },
+        {
+          "id": "feather_fall",
+          "effects": [
+            {
+              "type": "rpgclasses:mechanic",
+              "id": "rpgclasses:feather_fall"
+            },
+            {
+              "type": "rpgclasses:attribute",
+              "modifiers": [
+                {
+                  "attribute": "minecraft:generic.movement_speed",
+                  "to": -0.1,
+                  "operation": "multiply_base"
+                }
+              ]
             }
           ]
         }

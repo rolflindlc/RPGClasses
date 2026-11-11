@@ -7,6 +7,7 @@ import io.github.rpgclasses.player.PlayerClassData;
 import io.github.rpgclasses.player.PlayerClassDataProvider;
 import io.github.rpgclasses.registry.ModEffects;
 import io.github.rpgclasses.server.AbilityService;
+import io.github.rpgclasses.server.EffectRules;
 import io.github.rpgclasses.server.MechanicService;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerPlayer;
@@ -17,6 +18,9 @@ import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraftforge.common.ForgeMod;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.TickEvent;
@@ -44,6 +48,7 @@ public final class PaladinSubclasses {
     public static final String INCORRUPTIBLE_BULWARK = Ids.NS + ":incorruptible_bulwark";
     public static final String CHARGING_BULWARK = Ids.NS + ":charging_bulwark";
     public static final String TENACITY = "tenacity";
+    private static final UUID CHARGE_STEP_ID = UUID.fromString("3c1f6e2a-8b47-4d5e-9a02-7f4b1c8d6e93");
 
     /** Tenacidad: tick en que se abrió la ventana de reducción. */
     private static final Map<UUID, Long> TENACITY_OPENED = new HashMap<>();
@@ -52,21 +57,23 @@ public final class PaladinSubclasses {
 
     /** Llamado al activar Baluarte (ya aplicado su efecto). */
     public static void onBulwark(ServerPlayer player, int ticks) {
-        if (AbilityService.has(player, INCORRUPTIBLE_BULWARK)) {
-            List<MobEffect> harmful = new ArrayList<>();
-            for (MobEffectInstance i : player.getActiveEffects()) {
-                MobEffect e = i.getEffect();
-                if (e.getCategory() == MobEffectCategory.HARMFUL && !(e instanceof ModEffects.StateEffect)) harmful.add(e);
-            }
-            harmful.forEach(player::removeEffect);
-            player.clearFire();
-        }
+        if (AbilityService.has(player, INCORRUPTIBLE_BULWARK)) purge(player);
         if (AbilityService.has(player, CHARGING_BULWARK)) {
             int level = (int) AbilityService.number(AbilityService.params(CHARGING_BULWARK), "speed_level", 3);
             player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, ticks, Math.max(0, level - 1)));
             player.addEffect(new MobEffectInstance(ModEffects.CHARGING_BULWARK.get(), ticks, 0));
             TRAMPLED.remove(player.getUUID());
         }
+    }
+
+    /** Quita todos los efectos negativos (incluidos los de otros mods del tag) y el fuego. */
+    private static void purge(ServerPlayer player) {
+        List<MobEffect> harmful = new ArrayList<>();
+        for (MobEffectInstance i : player.getActiveEffects()) {
+            if (EffectRules.isNegative(i.getEffect())) harmful.add(i.getEffect());
+        }
+        harmful.forEach(player::removeEffect);
+        player.clearFire();
     }
 
     /** Baluarte Incorruptible activo: inmune a efectos negativos nuevos. */
@@ -122,7 +129,11 @@ public final class PaladinSubclasses {
     @SubscribeEvent
     public void onPlayerTick(TickEvent.PlayerTickEvent event) {
         if (event.phase != TickEvent.Phase.END || !(event.player instanceof ServerPlayer player) || player instanceof FakePlayer) return;
-        if (!player.hasEffect(ModEffects.CHARGING_BULWARK.get())) {
+        // Incorruptible: algunos mods ponen efectos sin pasar por Applicable; se purgan cada medio segundo.
+        if (player.tickCount % 10 == 0 && incorruptible(player)) purge(player);
+        boolean charging = player.hasEffect(ModEffects.CHARGING_BULWARK.get());
+        chargeStep(player, charging);
+        if (!charging) {
             TRAMPLED.remove(player.getUUID());
             return;
         }
@@ -154,6 +165,19 @@ public final class PaladinSubclasses {
             player.level().playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.PLAYER_ATTACK_KNOCKBACK,
                     SoundSource.PLAYERS, 1.0f, 0.8f);
             hits.values().removeIf(t -> now - t > 200);
+        }
+    }
+
+    /** Durante la Embestida sube bloques de 1 de altura sin saltar (+0,5 de altura de paso). */
+    private static void chargeStep(ServerPlayer player, boolean on) {
+        AttributeInstance step = player.getAttribute(ForgeMod.STEP_HEIGHT_ADDITION.get());
+        if (step == null) return;
+        boolean has = step.getModifier(CHARGE_STEP_ID) != null;
+        if (on && !has) {
+            step.addTransientModifier(new AttributeModifier(CHARGE_STEP_ID, "rpgclasses:charge_step",
+                    AbilityService.number(AbilityService.params(CHARGING_BULWARK), "step_height", 0.5), AttributeModifier.Operation.ADDITION));
+        } else if (!on && has) {
+            step.removeModifier(CHARGE_STEP_ID);
         }
     }
 

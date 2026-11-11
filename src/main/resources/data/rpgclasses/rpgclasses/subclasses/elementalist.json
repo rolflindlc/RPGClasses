@@ -50,7 +50,6 @@
           8
         ]
       },
-      "refresh_from_level": 8,
       "fire_radius": 3,
       "fire_fraction": 0.6,
       "fire_seconds": 4,

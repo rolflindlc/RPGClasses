@@ -193,7 +193,7 @@ public final class MonkPerks {
         if (variant != null && variant.params().has("purge_interval_seconds")
                 && now - st.lastPurgeTick >= variant.number("purge_interval_seconds", 5) * 20) {
             for (MobEffectInstance e : player.getActiveEffects()) {
-                if (e.getEffect().getCategory() == MobEffectCategory.HARMFUL) {
+                if (io.github.rpgclasses.server.EffectRules.isNegative(e.getEffect())) {
                     player.removeEffect(e.getEffect());
                     st.lastPurgeTick = now;
                     break;

@@ -5,6 +5,7 @@ import io.github.rpgclasses.client.ClientSetup;
 import io.github.rpgclasses.config.ServerConfig;
 import io.github.rpgclasses.content.CombatAbilities;
 import io.github.rpgclasses.content.MonkAbilities;
+import io.github.rpgclasses.content.MonkSubclasses;
 import io.github.rpgclasses.content.RangerAbilities;
 import io.github.rpgclasses.content.RogueAbilities;
 import io.github.rpgclasses.registry.ModEntities;
@@ -56,6 +57,7 @@ public class RpgClasses {
         ModEffects.EFFECTS.register(modBus);
         CombatAbilities.register();
         MonkAbilities.register();
+        MonkSubclasses.register();
         RogueAbilities.register();
         ModEntities.ENTITIES.register(modBus);
         modBus.addListener(ModEntities::onAttributes);
@@ -89,6 +91,7 @@ public class RpgClasses {
         MinecraftForge.EVENT_BUS.register(new RangerSubclasses());
         MinecraftForge.EVENT_BUS.register(new RoguePerks());
         MinecraftForge.EVENT_BUS.register(new MonkPerks());
+        MinecraftForge.EVENT_BUS.register(new MonkSubclasses());
         MinecraftForge.EVENT_BUS.register(new MovementPerks());
     }
 

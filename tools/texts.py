@@ -34,7 +34,7 @@ ABILITIES = {
                     stone_armor_factor=1.25, stone_speed_factor=0.25, fire_damage_factor=1.5, fire_armor_factor=0.67),
     "deflect": dict(passive=True, cooldown_seconds=5),
     "light_step": dict(passive=True),
-    "wind_dash": dict(charges=1, recharge_seconds=10),
+    "wind_dash": dict(charges=1, recharge_seconds=10, dash_speed=1.3),
 }
 
 ABILITY_TEXT = {

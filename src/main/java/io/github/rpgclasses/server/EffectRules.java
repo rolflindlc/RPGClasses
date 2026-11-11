@@ -2,6 +2,7 @@ package io.github.rpgclasses.server;
 
 import com.google.gson.JsonElement;
 import io.github.rpgclasses.content.BannerAura;
+import io.github.rpgclasses.content.MonkSubclasses;
 import io.github.rpgclasses.content.BarbarianSubclasses;
 import io.github.rpgclasses.content.PaladinSubclasses;
 import io.github.rpgclasses.core.stat.StatCalculator.ActiveMechanic;
@@ -48,6 +49,11 @@ public final class EffectRules {
         }
         ActiveMechanic immunity = MechanicService.find(player, IMMUNITY);
         if (immunity != null && isListed(immunity, effect)) {
+            event.setResult(Event.Result.DENY);
+            return;
+        }
+        // Manifiesto de Piedra (Guardián Trimundial): inmune a Veneno, Wither y Hambre.
+        if (MonkSubclasses.stoneImmune(player, effect)) {
             event.setResult(Event.Result.DENY);
             return;
         }

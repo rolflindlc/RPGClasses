@@ -56,7 +56,7 @@ dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
 
     // Dependencias opcionales: el mod funciona sin ellas, solo se compila contra ellas.
-    compileOnly fg.deobf("io.redspace.ironsspellbooks:irons_spellbooks:${irons_spells_version}:api")
+    compileOnly fg.deobf("io.redspace:irons_spellbooks:${irons_spells_version}:api")
     compileOnly fg.deobf("maven.modrinth:epic-fight:${epicfight_version}")
 
     // Las pruebas unitarias solo usan core/ (lógica pura) y Gson.

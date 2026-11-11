@@ -150,7 +150,8 @@ public final class RangerSubclasses {
         LivingEntity pet = event.getEntity();
         if (pet.level().isClientSide() || !(pet instanceof OwnableEntity own) || own.getOwnerUUID() == null) return;
         if (event.getSource().is(DamageTypeTags.BYPASSES_INVULNERABILITY) || event.getAmount() < pet.getHealth()) return;
-        if (!(pet.level().getServer().getPlayerList().getPlayer(own.getOwnerUUID()) instanceof ServerPlayer ranger)) return;
+        ServerPlayer ranger = pet.level().getServer().getPlayerList().getPlayer(own.getOwnerUUID());
+        if (ranger == null) return;
         ActiveMechanic m = MechanicService.find(ranger, SAFEGUARD);
         if (m == null || !isPetOf(pet, ranger)) return;
         long now = pet.level().getGameTime();

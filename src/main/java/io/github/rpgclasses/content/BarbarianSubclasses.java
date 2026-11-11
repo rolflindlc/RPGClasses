@@ -190,7 +190,8 @@ public final class BarbarianSubclasses {
         MobEffectInstance plague = dead.getEffect(ModEffects.PLAGUE.get());
         CompoundTag dose = dead.getPersistentData().getCompound(PLAGUE_TAG);
         if (plague == null || !dose.hasUUID("owner") || !(dead.level() instanceof ServerLevel level)) return;
-        if (!(level.getServer().getPlayerList().getPlayer(dose.getUUID("owner")) instanceof ServerPlayer owner)) return;
+        ServerPlayer owner = level.getServer().getPlayerList().getPlayer(dose.getUUID("owner"));
+        if (owner == null) return;
         double radius = dose.getDouble("radius");
         int remaining = plague.getDuration();
         if (remaining <= 1 || radius <= 0) return;

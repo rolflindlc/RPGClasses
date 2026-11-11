@@ -1,5 +1,6 @@
 package io.github.rpgclasses.server;
 
+import io.github.rpgclasses.core.Ids;
 import com.google.gson.JsonElement;
 import io.github.rpgclasses.content.BannerAura;
 import io.github.rpgclasses.content.MonkSubclasses;
@@ -12,6 +13,9 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.effect.MobEffect;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraftforge.common.util.FakePlayer;
@@ -34,13 +38,23 @@ public final class EffectRules {
     public static final String IMMUNITY = "effect_immunity";
     private static boolean reapplying;
 
+    /** Efectos que otros mods registran como neutrales pero son negativos (data/rpgclasses/tags/mob_effect/negative.json). */
+    public static final TagKey<MobEffect> NEGATIVE_TAG = TagKey.create(Registries.MOB_EFFECT, new ResourceLocation(Ids.NS, "negative"));
+
+    /** Efecto negativo: dañino o en el tag {@code rpgclasses:negative}; nunca las marcas de estado del propio mod. */
+    public static boolean isNegative(MobEffect effect) {
+        if (effect instanceof ModEffects.StateEffect) return false;
+        return effect.getCategory() == MobEffectCategory.HARMFUL
+                || BuiltInRegistries.MOB_EFFECT.wrapAsHolder(effect).is(NEGATIVE_TAG);
+    }
+
     @SubscribeEvent
     public void onApplicable(MobEffectEvent.Applicable event) {
         if (reapplying || !(event.getEntity() instanceof ServerPlayer player) || player instanceof FakePlayer) return;
         MobEffectInstance instance = event.getEffectInstance();
         MobEffect effect = instance.getEffect();
         // Las marcas del propio mod (Condena...) no son debuffs normales: su duración la controla quien las pone.
-        if (effect.getCategory() != MobEffectCategory.HARMFUL || effect instanceof ModEffects.StateEffect) return;
+        if (!isNegative(effect)) return;
 
         // Baluarte Incorruptible: inmune a cualquier efecto negativo nuevo mientras dura.
         if (PaladinSubclasses.incorruptible(player)) {

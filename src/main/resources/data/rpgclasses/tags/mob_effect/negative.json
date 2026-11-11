@@ -1,0 +1,125 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "irons_spellbooks:antigravity",
+      "required": false
+    },
+    {
+      "id": "irons_spellbooks:sacrificial_mark",
+      "required": false
+    },
+    {
+      "id": "cataclysm:abyssal_curse",
+      "required": false
+    },
+    {
+      "id": "cataclysm:abyssal_fear",
+      "required": false
+    },
+    {
+      "id": "cataclysm:abyssal_burn",
+      "required": false
+    },
+    {
+      "id": "cataclysm:stun",
+      "required": false
+    },
+    {
+      "id": "cataclysm:bone_fracture",
+      "required": false
+    },
+    {
+      "id": "cataclysm:blazing_brand",
+      "required": false
+    },
+    {
+      "id": "cataclysm:curse_of_desert",
+      "required": false
+    },
+    {
+      "id": "cataclysm:monstrous",
+      "required": false
+    },
+    {
+      "id": "cataclysm:ghost_form",
+      "required": false
+    },
+    {
+      "id": "cataclysm:wetness",
+      "required": false
+    },
+    {
+      "id": "mowziesmobs:frozen",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:exsanguination",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:debilitating_sting",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:ender_flu",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:fear",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:enthralled",
+      "required": false
+    },
+    {
+      "id": "ars_nouveau:hex",
+      "required": false
+    },
+    {
+      "id": "ars_nouveau:snare",
+      "required": false
+    },
+    {
+      "id": "ars_nouveau:frozen",
+      "required": false
+    },
+    {
+      "id": "twilightforest:frosted",
+      "required": false
+    },
+    {
+      "id": "undergarden:brittleness",
+      "required": false
+    },
+    {
+      "id": "born_in_chaos_v1:stun",
+      "required": false
+    },
+    {
+      "id": "born_in_chaos_v1:obsession",
+      "required": false
+    },
+    {
+      "id": "born_in_chaos_v1:magic_depletion",
+      "required": false
+    },
+    {
+      "id": "born_in_chaos_v1:rotten_smell",
+      "required": false
+    },
+    {
+      "id": "iceandfire:frozen",
+      "required": false
+    },
+    {
+      "id": "bosses_of_mass_destruction:doom",
+      "required": false
+    },
+    {
+      "id": "supplementaries:flammable",
+      "required": false
+    }
+  ]
+}

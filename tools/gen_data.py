@@ -18,11 +18,15 @@ def ms(level, grants, sub=False, upgrades=None):
 MC = "minecraft:generic."; IR = "irons_spellbooks:"
 NOARM = "no_armor"
 
+# Iron's regenera un % del maná máximo: el bono de maná máximo ya acelera la regeneración. Este modificador
+# compensa para que la regeneración real (maná/s) suba solo un 4 % por punto (+40 % con 10) sobre 100 de maná base.
+RESERVE_REGEN = {"values": [round((1 + .04 * l) * 100 / (100 + 30 * l) - 1, 3) for l in range(1, 11)], "operation": "multiply_base"}
+
 classes = {
  "mage": dict(icon="minecraft:enchanted_book", roles=["magia","daño"], kit="mage", crit=0.0,
    walls=dict(bow=.25, heavy=.5, light=.5, armor=.25, shield=.5),
    branches=[("power",[attr([(IR+"spell_power", to(.5,"multiply_base"))])]),
-             ("reserve",[attr([(IR+"max_mana", to(300)), (IR+"mana_regen", to(.4,"multiply_base"))])]),
+             ("reserve",[attr([(IR+"max_mana", to(300)), (IR+"mana_regen", RESERVE_REGEN)])]),
              ("cadence",[attr([(IR+"cooldown_reduction", to(.25,"multiply_base"))])])],
    milestones=[ms(5,"free_cast_slot_1"), ms(15,"free_cast_slot_2"), ms(30,"free_cast_slot_3")],
    subs=["chaotic_evoker","elementalist","battle_mage"]),
@@ -88,8 +92,8 @@ SLOWS = ["minecraft:slowness","minecraft:weakness","minecraft:blindness","minecr
 PERKS = {
  ("mage","power"): [("ranged_power",[mech("distance_power", near_blocks=6, far_blocks=15, near_bonus=-.2, far_bonus=.35)]),
                     ("point_blank_power",[mech("distance_power", near_blocks=6, far_blocks=15, near_bonus=.4, far_bonus=-.2)])],
- ("mage","reserve"): [("mana_burst",[attr([(IR+"max_mana", to(-150)), (IR+"mana_regen", mb(.6))])]),
-                      ("mana_well",[attr([(IR+"max_mana", to(200)), (IR+"mana_regen", mb(-.4))])])],
+ ("mage","reserve"): [("mana_burst",[attr([(IR+"max_mana", to(-150)), (IR+"mana_regen", mb(.55))])]),
+                      ("mana_well",[attr([(IR+"max_mana", to(200)), (IR+"mana_regen", mb(-.21))])])],
  ("mage","cadence"): [("arcane_cadence",[attr([(IR+"cooldown_reduction", mb(.25)), (IR+"spell_power", mb(-.1))])]),
                       ("blood_magic",[mech("blood_magic", mana_per_health=15, min_health_fraction=.25)])],
  ("mage","summoning"): [("legion",[mech("summon_count", count_change=1, summon_stats=-.25)]),
@@ -153,10 +157,10 @@ for cid, c in classes.items():
 
 subs = {
  "chaotic_evoker": ("mage","minecraft:fire_charge",[attr([(R("spell_size"), to(.3))]),
-     mech("wild_magic", chance_per_mana=.0033, chance_cap=.5, replica_damage=.33, directions=8, icd_ticks=30)], []),
+     mech("wild_magic", chance_per_mana=.0033, min_chance=.1, chance_cap=.5, replica_damage=.33, directions=8, icd_ticks=30)], []),
  "elementalist": ("mage","minecraft:blue_ice",[attr([(IR+"cooldown_reduction", to(.10,"multiply_base"))]),
      mech("elemental_debuffs", chance={"from":.4,"to":.75}, max_stacks={"values":[3,3,3,4,4,4,4,5,5,5]},
-          duration_seconds={"values":[4,4,4,6,6,6,6,8,8,8]}, refresh_from_level=8,
+          duration_seconds={"values":[4,4,4,6,6,6,6,8,8,8]},
           fire_radius=3, fire_fraction=.6, fire_seconds=4, freeze_seconds=3, boss_freeze_seconds=1.5,
           arc_targets=3, arc_range=6, arc_fraction=.5, leech_fraction=.4)], []),
  "battle_mage": ("mage","minecraft:iron_chestplate",[mech("unbreakable_concentration"),

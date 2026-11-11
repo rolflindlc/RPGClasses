@@ -281,6 +281,11 @@ public final class ClassPages {
     // --- Formato ---
 
     private static String format(double v, String unit, boolean signed) {
+        if ("sí".equals(unit)) return v != 0 ? "sí" : "no";
+        if (unit.startsWith("+")) {
+            signed = true;
+            unit = unit.substring(1);
+        }
         String sign = signed && v > 0 ? "+" : "";
         return switch (unit) {
             case "%" -> sign + number(v * 100) + "%";
@@ -306,10 +311,21 @@ public final class ClassPages {
                 parts.add(format(e.getAsDouble(), unit, false));
             } else {
                 String s = e.getAsString();
-                parts.add(Ids.DISCIPLINES.contains(s) ? discipline(s).getString() : s);
+                parts.add(Ids.DISCIPLINES.contains(s) ? discipline(s).getString() : registryName(s));
             }
         }
         return String.join(" / ", parts);
+    }
+
+    /** Nombre traducido de un efecto (o de un objeto) a partir de su id; si no existe, el id tal cual. */
+    private static String registryName(String id) {
+        ResourceLocation rl = ResourceLocation.tryParse(id);
+        if (rl == null) return id;
+        net.minecraft.world.effect.MobEffect effect = net.minecraftforge.registries.ForgeRegistries.MOB_EFFECTS.getValue(rl);
+        if (effect != null) return effect.getDisplayName().getString();
+        net.minecraft.world.item.Item item = net.minecraftforge.registries.ForgeRegistries.ITEMS.getValue(rl);
+        if (item != null && item != net.minecraft.world.item.Items.AIR) return item.getDescription().getString();
+        return id;
     }
 
     /** Los multiplicadores y las fracciones propias del mod se muestran como porcentaje; el resto, como número. */

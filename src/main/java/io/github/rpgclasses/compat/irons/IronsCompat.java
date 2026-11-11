@@ -214,6 +214,29 @@ public final class IronsCompat {
         LOANS.put(player.getUUID(), new Loan(tick, spellId, missing, health, 0));
     }
 
+    /**
+     * Magia de Sangre con conjuros continuos (Aliento de Dragón...): Iron's cobra cada 10 ticks y corta el conjuro
+     * si el maná no llega al doble del coste. Justo antes de ese cobro se paga con vida lo que falte.
+     */
+    private static void bloodForContinuous(ServerPlayer player) {
+        if (player.isCreative()) return;
+        MagicData magic = MagicData.getPlayerMagicData(player);
+        if (magic == null || !magic.isCasting() || magic.getCastType() != CastType.CONTINUOUS || !magic.getCastSource().consumesMana()) return;
+        int remaining = magic.getCastDurationRemaining();
+        if (remaining <= 0 || remaining % 10 != 0) return;
+        ActiveMechanic blood = MechanicService.find(player, "blood_magic");
+        if (blood == null) return;
+        AbstractSpell spell = SpellRegistry.getSpell(magic.getCastingSpellId());
+        if (spell == null) return;
+        float missing = spell.getManaCost(magic.getCastingSpellLevel()) * 2 - magic.getMana();
+        if (missing <= 0) return;
+        float health = (float) (missing / blood.number("mana_per_health", 15));
+        float floor = (float) (player.getMaxHealth() * blood.number("min_health_fraction", 0.25));
+        if (player.getHealth() - health < floor) return;
+        player.setHealth(player.getHealth() - health);
+        magic.setMana(magic.getMana() + missing);
+    }
+
     private static void refund(ServerPlayer player, Loan loan) {
         MagicData magic = MagicData.getPlayerMagicData(player);
         if (magic != null) magic.setMana(Math.max(0, magic.getMana() - loan.mana()));
@@ -288,7 +311,8 @@ public final class IronsCompat {
         // Magia Salvaje: probabilidad según el maná gastado de verdad (las cargas y la sangre no cuentan).
         ActiveMechanic wild = MechanicService.find(player, "wild_magic");
         if (wild != null && spent > 0 && replicating == null && AbilityService.remainingTicks(player, CD_WILD) <= 0) {
-            double chance = Math.min(wild.number("chance_cap", 0.5), spent * wild.number("chance_per_mana", 0.0033));
+            double chance = Math.min(wild.number("chance_cap", 0.5),
+                    Math.max(wild.number("min_chance", 0), spent * wild.number("chance_per_mana", 0.0033)));
             if (player.getRandom().nextDouble() < chance) {
                 AbilityService.setCooldown(player, CD_WILD, (int) Math.round(wild.number("icd_ticks", 30)));
                 WILD_PENDING.add(new WildProc(player.getUUID(), event.getSpellId()));
@@ -311,7 +335,7 @@ public final class IronsCompat {
             for (SpellSelectionManager.SelectionOption o : new SpellSelectionManager(player).getAllSpells()) {
                 SpellData d = o.spellData;
                 AbstractSpell s = d == null ? null : d.getSpell();
-                if (s == null || s.getSpellId().equals(castSpellId) || "irons_spellbooks:none".equals(s.getSpellId())) continue;
+                if (s == null || "irons_spellbooks:none".equals(s.getSpellId())) continue;
                 if (options.stream().anyMatch(x -> x.getSpell() == s)) continue;
                 if (s.getRarity(d.getLevel()) == SpellRarity.LEGENDARY || s.getCastType() == CastType.CONTINUOUS
                         || s.getRecastCount(d.getLevel(), player) > 0 || isSummonSpell(s.getSpellId())) continue;
@@ -322,8 +346,14 @@ public final class IronsCompat {
             RpgClasses.LOGGER.warn("[rpgclasses] Magia Salvaje: no se pudieron leer los conjuros equipados", e);
             return;
         }
-        if (options.isEmpty()) return;
-        SpellData pick = options.get(player.getRandom().nextInt(options.size()));
+        if (options.isEmpty()) {
+            RpgClasses.LOGGER.info("[rpgclasses] Magia Salvaje: {} no tiene conjuros ofensivos válidos para replicar", player.getGameProfile().getName());
+            return;
+        }
+        // Se prefiere otro conjuro distinto del lanzado; si solo está ese, se replica el mismo (rev. 2.7f).
+        List<SpellData> others = options.stream().filter(d -> !d.getSpell().getSpellId().equals(castSpellId)).toList();
+        List<SpellData> pool = others.isEmpty() ? options : others;
+        SpellData pick = pool.get(player.getRandom().nextInt(pool.size()));
         AbstractSpell spell = pick.getSpell();
         int directions = Math.max(1, (int) Math.round(wild.number("directions", 8)));
         float yaw = player.getYRot(), pitch = player.getXRot(), head = player.getYHeadRot(), body = player.yBodyRot;
@@ -352,6 +382,8 @@ public final class IronsCompat {
             player.setXRot(pitch);
             replicating = null;
         }
+        RpgClasses.LOGGER.info("[rpgclasses] Magia Salvaje: {} replica {} en {} direcciones ({} lanzadas)",
+                player.getGameProfile().getName(), spell.getSpellId(), directions, cast);
         if (cast > 0) {
             level.sendParticles(net.minecraft.core.particles.ParticleTypes.WITCH,
                     player.getX(), player.getY() + 1, player.getZ(), 30, 0.8, 0.5, 0.8, 0.05);
@@ -536,6 +568,7 @@ public final class IronsCompat {
     public void onServerTick(TickEvent.ServerTickEvent event) {
         if (event.phase == TickEvent.Phase.START) {
             tick++;
+            for (ServerPlayer p : event.getServer().getPlayerList().getPlayers()) bloodForContinuous(p);
             return;
         }
         if (!LOANS.isEmpty()) {
@@ -672,10 +705,38 @@ public final class IronsCompat {
             clone.discard();
             return null;
         }
+        joinRecast(owner, original, clone);
         // setOwner vuelve a lanzar SetSummonOwnerEvent: la copia ya se procesa aquí, así que se saca de la cola.
         NEW_SUMMONS.removeIf(pair -> pair[1] == clone);
         CLONES.put(clone.getUUID(), new Clone(level, original.getUUID()));
         return clone;
+    }
+
+    /**
+     * Mete la copia en los datos de relanzamiento del conjuro que creó la original: así el cliente la ve como
+     * invocación propia (contorno verde a través de las paredes) y relanzar el conjuro también la retira.
+     */
+    private static void joinRecast(ServerPlayer owner, LivingEntity original, LivingEntity clone) {
+        try {
+            MagicData magic = MagicData.getPlayerMagicData(owner);
+            Object recasts = magic.getClass().getMethod("getPlayerRecasts").invoke(magic);
+            for (Object instance : (Iterable<?>) recasts.getClass().getMethod("getActiveRecasts").invoke(recasts)) {
+                Object data = instance.getClass().getMethod("getCastData").invoke(instance);
+                if (data == null) continue;
+                Method summons;
+                try {
+                    summons = data.getClass().getMethod("getSummons");
+                } catch (NoSuchMethodException e) {
+                    continue;
+                }
+                if (!(summons.invoke(data) instanceof java.util.Set<?> set) || !set.contains(original.getUUID())) continue;
+                data.getClass().getMethod("add", Entity.class).invoke(data, clone);
+                recasts.getClass().getMethod("syncToPlayer", instance.getClass()).invoke(recasts, instance);
+                return;
+            }
+        } catch (ReflectiveOperationException | RuntimeException | LinkageError e) {
+            RpgClasses.LOGGER.warn("[rpgclasses] Legión: no se pudo marcar la copia como invocación en el cliente", e);
+        }
     }
 
     private static void unsummon(Entity summon) {

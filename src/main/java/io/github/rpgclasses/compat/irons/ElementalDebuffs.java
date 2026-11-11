@@ -3,6 +3,7 @@ package io.github.rpgclasses.compat.irons;
 import io.github.rpgclasses.core.stat.StatCalculator.ActiveMechanic;
 import io.github.rpgclasses.server.MechanicService;
 import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.network.chat.Component;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -68,7 +69,8 @@ final class ElementalDebuffs {
 
         int max = Math.max(1, (int) Math.round(mech.number("max_stacks", 3)));
         long duration = Math.round(mech.number("duration_seconds", 4) * 20);
-        boolean refresh = mech.level() >= mech.number("refresh_from_level", 8);
+        // Rev. 2.7f: cada carga nueva reinicia el tiempo (antes solo desde el nivel 8; en las pruebas no daba tiempo a detonar).
+        boolean refresh = mech.level() >= mech.number("refresh_from_level", 1);
         Stacks s = STACKS.computeIfAbsent(target.getUUID(), id -> new HashMap<>())
                 .computeIfAbsent(player.getUUID(), id -> new EnumMap<>(Element.class))
                 .computeIfAbsent(element, e -> new Stacks());
@@ -82,6 +84,11 @@ final class ElementalDebuffs {
         if (s.count >= max) {
             s.count = 0;
             detonate(player, target, element, amount, mech);
+            player.displayClientMessage(Component.translatable("message.rpgclasses.element_detonate",
+                    Component.translatable("element.rpgclasses." + element.name().toLowerCase(java.util.Locale.ROOT))), true);
+        } else {
+            player.displayClientMessage(Component.translatable("message.rpgclasses.element_stack",
+                    Component.translatable("element.rpgclasses." + element.name().toLowerCase(java.util.Locale.ROOT)), s.count, max), true);
         }
     }
 
@@ -103,6 +110,11 @@ final class ElementalDebuffs {
                 level.playSound(null, target.getX(), target.getY(), target.getZ(), SoundEvents.GENERIC_EXPLODE, SoundSource.PLAYERS, 0.7f, 1.3f);
             }
             case ICE -> {
+                // Rev. 2.7f: el objetivo queda encerrado en una Tumba de Hielo de Iron's (los jefes, solo congelados).
+                if (!boss && iceTomb(player, target, (int) Math.round(mech.number("freeze_seconds", 3) * 20))) {
+                    level.playSound(null, target.getX(), target.getY(), target.getZ(), SoundEvents.GLASS_BREAK, SoundSource.PLAYERS, 0.8f, 0.6f);
+                    return;
+                }
                 int ticks = (int) Math.round(mech.number(boss ? "boss_freeze_seconds" : "freeze_seconds", boss ? 1.5 : 3) * 20);
                 target.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, ticks, 6, false, true), player);
                 target.addEffect(new MobEffectInstance(MobEffects.DIG_SLOWDOWN, ticks, 2, false, true), player);
@@ -133,6 +145,28 @@ final class ElementalDebuffs {
                 level.sendParticles(ParticleTypes.DAMAGE_INDICATOR, target.getX(), target.getY() + 1, target.getZ(), 10, 0.3, 0.4, 0.3, 0.1);
                 level.sendParticles(ParticleTypes.HEART, player.getX(), player.getY() + 2, player.getZ(), 3, 0.3, 0.2, 0.3, 0.02);
             }
+        }
+    }
+
+    /** Tumba de Hielo "maligna" de Iron's (la de los enemigos): congela al pasajero y al romperse le hace el doble de daño. */
+    private static boolean iceTomb(ServerPlayer player, LivingEntity target, int ticks) {
+        if (target.isPassenger() || !target.canChangeDimensions()) return false;
+        try {
+            Class<?> cls = Class.forName("io.redspace.ironsspellbooks.entity.spells.ice_tomb.IceTombEntity", true, ElementalDebuffs.class.getClassLoader());
+            Object tomb = cls.getConstructor(net.minecraft.world.level.Level.class, net.minecraft.world.entity.Entity.class)
+                    .newInstance(target.level(), player);
+            cls.getMethod("setEvil").invoke(tomb);
+            cls.getMethod("setLifetime", int.class).invoke(tomb, ticks);
+            net.minecraft.world.entity.Entity e = (net.minecraft.world.entity.Entity) tomb;
+            e.moveTo(target.position());
+            if (!target.level().addFreshEntity(e)) return false;
+            if (!target.startRiding(e, true)) {
+                e.discard();
+                return false;
+            }
+            return true;
+        } catch (ReflectiveOperationException | RuntimeException | LinkageError ex) {
+            return false;
         }
     }
 

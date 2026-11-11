@@ -245,5 +245,5 @@ public final class RogueAbilities {
         level.sendParticles(ParticleTypes.POOF, pos.x, pos.y + 1, pos.z, 15, 0.3, 0.5, 0.3, 0.02);
     }
 
-    private RogueAbilities() {}
+
 }

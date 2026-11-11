@@ -5,6 +5,7 @@ import io.github.rpgclasses.config.ServerConfig;
 import io.github.rpgclasses.content.BannerAura;
 import io.github.rpgclasses.content.BarbarianPerks;
 import io.github.rpgclasses.content.CombatAbilities;
+import io.github.rpgclasses.content.MonkPerks;
 import io.github.rpgclasses.content.PaladinPerks;
 import io.github.rpgclasses.content.Toxins;
 import io.github.rpgclasses.content.RangerAbilities;
@@ -150,6 +151,11 @@ public final class DamagePipeline {
                 double flat = ModAttributes.value(attacker, ModAttributes.UNARMED_DAMAGE);
                 damage += flat;
                 log.append(String.format(Locale.ROOT, " | desarmado +%.2f", flat));
+                double monk = MonkPerks.unarmedFactor(attacker, target);
+                if (monk != 1) {
+                    damage *= monk;
+                    log.append(String.format(Locale.ROOT, " | flujo/impulso x%.2f", monk));
+                }
             } else if (weapon.discipline() != null) {
                 double wall = StatCalculator.wall(s, classDef, subDef, weapon.discipline());
                 damage *= StatMath.wallDamageFactor(wall);
@@ -250,6 +256,7 @@ public final class DamagePipeline {
         if (!(event.getEntity() instanceof ServerPlayer victim) || victim instanceof FakePlayer || event.getAmount() <= 0) return;
         if (event.getSource().is(DamageTypeTags.BYPASSES_INVULNERABILITY)) return;
         double factor = BarbarianPerks.hazardFactor(victim, event.getSource()) * BarbarianPerks.enduranceFactor(victim);
+        factor = MonkPerks.spiritSkinFactor(victim, event.getSource(), factor);
         if (victim.hasEffect(ModEffects.BULWARK.get())) factor *= 1 - CombatAbilities.bulwarkReduction(victim);
         if (victim.hasEffect(ModEffects.TAUNT_GUARD.get())) {
             factor *= 1 - AbilityService.number(AbilityService.params(CombatAbilities.TAUNT), "damage_reduction", 0.2);

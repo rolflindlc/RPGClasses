@@ -22,6 +22,7 @@ import io.github.rpgclasses.server.EffectRules;
 import io.github.rpgclasses.content.Toxins;
 import io.github.rpgclasses.content.BarbarianPerks;
 import io.github.rpgclasses.content.PaladinPerks;
+import io.github.rpgclasses.content.BannerAura;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
@@ -70,6 +71,7 @@ public class RpgClasses {
         MinecraftForge.EVENT_BUS.register(new Toxins());
         MinecraftForge.EVENT_BUS.register(new BarbarianPerks());
         MinecraftForge.EVENT_BUS.register(new PaladinPerks());
+        MinecraftForge.EVENT_BUS.register(new BannerAura());
     }
 
     private void commonSetup(FMLCommonSetupEvent event) {

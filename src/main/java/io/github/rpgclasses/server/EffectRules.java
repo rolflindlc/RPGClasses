@@ -1,6 +1,7 @@
 package io.github.rpgclasses.server;
 
 import com.google.gson.JsonElement;
+import io.github.rpgclasses.content.BannerAura;
 import io.github.rpgclasses.core.stat.StatCalculator.ActiveMechanic;
 import io.github.rpgclasses.registry.ModAttributes;
 import io.github.rpgclasses.registry.ModEffects;
@@ -45,7 +46,8 @@ public final class EffectRules {
         }
         if (instance.isInfiniteDuration() || instance.getDuration() <= 1) return;
         double factor = 1 - ModAttributes.value(player, ModAttributes.DEBUFF_RESISTANCE)
-                + (immunity == null ? 0 : immunity.number("other_duration", 0));
+                + (immunity == null ? 0 : immunity.number("other_duration", 0))
+                + BannerAura.debuffDurationChange(player);
         if (Math.abs(factor - 1) < 1.0E-6) return;
         int duration = Math.max(1, (int) Math.round(instance.getDuration() * Math.max(0, factor)));
         event.setResult(Event.Result.DENY);

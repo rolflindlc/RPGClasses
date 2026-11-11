@@ -21,7 +21,7 @@ ABILITIES = {
     # Pícaro
     "stealth": dict(passive=True, drain_per_second=0.04, regen_per_second=0.08, action_cost=0.4, lockout_until=0.5, pvp_reveal_distance=2.5),
     "shadow_step": dict(distance=8, cooldown_seconds=20),
-    "decoy": dict(cooldown_seconds=25),
+    "decoy": dict(passive=True, cooldown_seconds=25),
     # Ranger
     "ammo_conservation": dict(passive=True, chance=0.33),
     "double_jump": dict(passive=True),
@@ -225,6 +225,9 @@ UI = {
     "key.rpgclasses.ability_2": "Habilidad 2",
     "key.rpgclasses.ability_3": "Habilidad 3",
     "msg.rpgclasses.stance": "Postura: %s",
+    "msg.rpgclasses.shadow_step_blocked": "No hay sitio para teletransportarte hacia ahí.",
+    "hud.rpgclasses.stealth": "Sigilo",
+    "entity.rpgclasses.decoy": "Señuelo",
     "msg.rpgclasses.heavy_shot_stage": "%s: +%s%% de daño",
     "stance.rpgclasses.none": "Neutral",
     "stance.rpgclasses.water": "Agua",

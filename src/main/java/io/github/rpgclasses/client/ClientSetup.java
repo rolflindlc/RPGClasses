@@ -14,7 +14,10 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.item.ProjectileWeaponItem;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.client.event.ClientPlayerNetworkEvent;
+import net.minecraftforge.client.event.EntityRenderersEvent;
+import net.minecraftforge.client.event.MovementInputUpdateEvent;
 import net.minecraftforge.client.event.ViewportEvent;
+import io.github.rpgclasses.registry.ModEntities;
 import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
 import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
 import net.minecraftforge.common.MinecraftForge;
@@ -41,6 +44,9 @@ public final class ClientSetup {
         modBus.addListener((RegisterGuiOverlaysEvent event) -> event.registerAboveAll("abilities", AbilityHud::render));
         MinecraftForge.EVENT_BUS.addListener(ClientSetup::onClientTick);
         MinecraftForge.EVENT_BUS.addListener(ClientSetup::onFov);
+        MinecraftForge.EVENT_BUS.addListener(ClientSetup::onMovementInput);
+        modBus.addListener((EntityRenderersEvent.RegisterRenderers event) ->
+                event.registerEntityRenderer(ModEntities.DECOY.get(), DecoyRenderer::new));
         MinecraftForge.EVENT_BUS.addListener((ClientPlayerNetworkEvent.LoggingOut event) -> ClientHandlers.reset());
     }
 
@@ -138,6 +144,20 @@ public final class ClientSetup {
         double zoom = ModAttributes.value(mc.player, ModAttributes.ZOOM);
         double factor = Math.max(MIN_FACTOR, 1 - zoom * (sneak * SNEAK_SHARE + draw * DRAW_SHARE));
         event.setFOV(event.getFOV() * factor);
+    }
+
+    /** Velocidad vanilla al agacharse: el movimiento se multiplica por 0,3. */
+    private static final float VANILLA_SNEAK_FACTOR = 0.3f;
+
+    /** Agilidad de las Sombras: sube la velocidad agachado hasta igualar la de caminar (atributo = 1). */
+    private static void onMovementInput(MovementInputUpdateEvent event) {
+        var player = event.getEntity();
+        if (!player.isShiftKeyDown() || player.isPassenger() || player.getAbilities().flying) return;
+        double bonus = Math.min(1.0, ModAttributes.value(player, ModAttributes.SNEAK_SPEED));
+        if (bonus <= 0) return;
+        float factor = (float) (VANILLA_SNEAK_FACTOR + (1 - VANILLA_SNEAK_FACTOR) * bonus) / VANILLA_SNEAK_FACTOR;
+        event.getInput().leftImpulse *= factor;
+        event.getInput().forwardImpulse *= factor;
     }
 
     private ClientSetup() {}

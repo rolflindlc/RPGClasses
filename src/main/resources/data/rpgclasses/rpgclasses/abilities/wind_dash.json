@@ -1,5 +1,6 @@
 {
   "schema_version": 1,
   "charges": 1,
-  "recharge_seconds": 10
+  "recharge_seconds": 10,
+  "dash_speed": 1.3
 }

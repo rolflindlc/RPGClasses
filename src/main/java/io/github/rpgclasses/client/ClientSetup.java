@@ -63,6 +63,7 @@ public final class ClientSetup {
         }
         airJump(mc);
         wallClimb(mc);
+        elementalMarch(mc);
         tickZoom(mc.player);
         MovementPerks.lightFeetTick(mc.player, hasLocalMechanic("rpgclasses:light_feet"));
         if (hasLocalMechanic("rpgclasses:feather_fall")) MovementPerks.featherFallTick(mc.player, mc.options.keyJump.isDown());
@@ -92,6 +93,18 @@ public final class ClientSetup {
         Vec3 v = p.getDeltaMovement();
         p.setDeltaMovement(v.x, up ? 0.2 : 0.0, v.z);
         p.resetFallDistance();
+    }
+
+    /** Marcha Elemental (Paso Ligero): sobre el agua; sobre la lava solo en Postura de Fuego. */
+    private static void elementalMarch(Minecraft mc) {
+        var data = ClientHandlers.LOCAL_DATA;
+        java.util.Set<String> unlocked = UnlockResolver.unlocked(data.state, DefinitionStore.CLIENT.classDef(data.state.classId),
+                DefinitionStore.CLIENT.subclassDef(data.state.subclassId));
+        if (!unlocked.contains(io.github.rpgclasses.content.MonkAbilities.LIGHT_STEP)) return;
+        int stance = data.counters.getOrDefault(io.github.rpgclasses.content.MonkAbilities.STANCE_COUNTER, 0);
+        boolean fire = stance > 0 && stance < io.github.rpgclasses.content.MonkAbilities.STANCE_NAMES.length
+                && "fire".equals(io.github.rpgclasses.content.MonkAbilities.STANCE_NAMES[stance]);
+        io.github.rpgclasses.content.MonkSubclasses.fluidWalk(mc.player, fire);
     }
 
     private static boolean jumpWasDown;

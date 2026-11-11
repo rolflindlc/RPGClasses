@@ -7,6 +7,7 @@ import io.github.rpgclasses.content.BarbarianPerks;
 import io.github.rpgclasses.content.BarbarianSubclasses;
 import io.github.rpgclasses.content.CombatAbilities;
 import io.github.rpgclasses.content.MonkPerks;
+import io.github.rpgclasses.content.MonkSubclasses;
 import io.github.rpgclasses.content.PaladinPerks;
 import io.github.rpgclasses.content.PaladinSubclasses;
 import io.github.rpgclasses.content.Toxins;
@@ -153,6 +154,7 @@ public final class DamagePipeline {
                 double flat = ModAttributes.value(attacker, ModAttributes.UNARMED_DAMAGE);
                 damage += flat;
                 log.append(String.format(Locale.ROOT, " | desarmado +%.2f", flat));
+                MonkSubclasses.onUnarmedHit(attacker, target);
                 double monk = MonkPerks.unarmedFactor(attacker, target);
                 if (monk != 1) {
                     damage *= monk;

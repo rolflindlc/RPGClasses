@@ -310,7 +310,7 @@ Notas de los perks:
 | ----- | ----- | ----- |
 | **Sombra** | **Golpe a Traición:** +25% de daño contra enemigos que no te tengan como objetivo. −20% de duración del sigilo. | **Sigilo Profundo:** +40% de duración del sigilo y +20% de detección (`follow_range` de los mobs). |
 | **Filo** | **Ráfaga:** +25% de velocidad de ataque, −12% de daño. | **Estocada:** ignora el 30% de la armadura del objetivo, −15% de velocidad de ataque. |
-| **Viento** | **Esquiva:** +15% de probabilidad de esquivar un ataque cuerpo a cuerpo o un proyectil (salta 1 bloque hacia atrás y no recibe daño). −10% de vida máxima. | **Ligereza:** +10% de velocidad de movimiento y +10% de velocidad de ataque. El sigilo se drena un 30% más rápido (5,2%/s). |
+| **Viento** | **Esquiva:** +15% de probabilidad de esquivar un ataque cuerpo a cuerpo o un proyectil (salta 1 bloque hacia atrás y no recibe daño). −10% de vida máxima. | **Ligereza:** +10% de velocidad de movimiento y +10% de velocidad de ataque. El sigilo se drena un 30% más rápido (13%/s). |
 | **Toxinas** | **Dosis Concentrada:** la Toxina hace 1 HP cada 1 s durante 2 s (mismo daño total, más rápido). | **Dosis Prolongada:** la Toxina hace 0,5 HP cada 3 s durante 12 s (mismo daño total) y aplica *Lentitud I* mientras dure. |
 | **Acrobacia** | **Contraataque:** tras esquivar con éxito, tu siguiente golpe hace +30% de daño durante 3 s. | **Voltereta Larga:** la esquiva recorre +50% de distancia. −15% de duración de la invulnerabilidad. |
 
@@ -323,7 +323,7 @@ Notas de los perks:
 
 ### Activa (Nivel Total 5): Sigilo por barra
 * El Pícaro tiene una **barra propia de Sigilo**, separada de la estamina de Epic Fight.
-* Agacharse activa la **invisibilidad verdadera**. Drenaje del **4%/s**; recuperación del **8%/s** fuera del sigilo.
+* Agacharse activa la **invisibilidad verdadera**. Drenaje del **10%/s** (10 s de invisibilidad; antes 4%/s, rev. 2.7d); recuperación del **8%/s** fuera del sigilo.
 * **Atacar o lanzar un hechizo cuesta el 40% del máximo de la barra.** Si la barra se agota, hay bloqueo hasta el 50%.
 * **PvP:** la invisibilidad se revela a menos de 1 bloque o al recibir daño.
 

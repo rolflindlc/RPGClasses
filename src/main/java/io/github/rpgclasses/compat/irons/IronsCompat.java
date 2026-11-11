@@ -64,10 +64,9 @@ public final class IronsCompat {
     /** Tope de vida de una invocación extra de Legión si se pierde el vínculo con la original (10 min). */
     private static final int CLONE_MAX_TICKS = 20 * 60 * 10;
 
-    private static final Method SPELL_OF_SOURCE = method("io.redspace.ironsspellbooks.damage.SpellDamageSource", "spell");
-    private static final Method SET_OWNER = method("io.redspace.ironsspellbooks.capabilities.magic.SummonManager", "setOwner", Entity.class, Entity.class);
-    private static final Method SET_DURATION = method("io.redspace.ironsspellbooks.capabilities.magic.SummonManager", "setDuration", Entity.class, int.class);
-    private static final Method REMOVE_SUMMON = method("io.redspace.ironsspellbooks.capabilities.magic.SummonManager", "removeSummon", Entity.class);
+    private static final String SUMMON_MANAGER = "io.redspace.ironsspellbooks.capabilities.magic.SummonManager";
+    /** Métodos fuera de la API de Iron's: se buscan la primera vez que hacen falta (no al arrancar). */
+    private static final Map<String, Method> METHODS = new HashMap<>();
 
     private static long tick;
     /** Magia de Sangre: maná prestado este tick a cambio de vida; se devuelve si el conjuro no llega a empezar. */
@@ -81,7 +80,7 @@ public final class IronsCompat {
     /** Invocaciones extra de Legión → su original (desaparecen con ella). */
     private static final Map<UUID, Clone> CLONES = new HashMap<>();
 
-    private record Loan(long tick, float mana, float health) {}
+    private record Loan(long tick, String spellId, float mana, float health) {}
     private record Ambush(String spellId, long expires) {}
     private record Clone(ServerLevel level, UUID original) {}
 
@@ -117,12 +116,21 @@ public final class IronsCompat {
     /**
      * Iron's comprueba el maná antes de cualquier evento cancelable, pero calcula el nivel del conjuro
      * (ModifySpellLevelEvent) justo antes de intentar lanzarlo: ahí se adelanta el maná que falta pagando vida.
+     * Iron's también calcula niveles de otros conjuros justo antes (p. ej. al montar la selección), así que
+     * manda la última consulta del tick: si cambia de conjuro, el préstamo anterior se devuelve y se rehace.
      */
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public void onSpellLevel(ModifySpellLevelEvent event) {
         if (!(event.getEntity() instanceof ServerPlayer player) || player.isCreative()) return;
         ActiveMechanic blood = MechanicService.find(player, "blood_magic");
-        if (blood == null || LOANS.containsKey(player.getUUID())) return;
+        if (blood == null) return;
+        String spellId = event.getSpell().getSpellId();
+        Loan previous = LOANS.get(player.getUUID());
+        if (previous != null) {
+            if (previous.spellId().equals(spellId)) return;
+            LOANS.remove(player.getUUID());
+            refund(player, previous);
+        }
         MagicData magic = MagicData.getPlayerMagicData(player);
         if (magic == null || magic.isCasting()) return;
         float cost = event.getSpell().getManaCost(event.getLevel());
@@ -133,7 +141,7 @@ public final class IronsCompat {
         if (player.getHealth() - health < floor) return;
         player.setHealth(player.getHealth() - health);
         magic.setMana(magic.getMana() + missing);
-        LOANS.put(player.getUUID(), new Loan(tick, missing, health));
+        LOANS.put(player.getUUID(), new Loan(tick, spellId, missing, health));
     }
 
     private static void refund(ServerPlayer player, Loan loan) {
@@ -153,6 +161,9 @@ public final class IronsCompat {
         ActiveMechanic count = MechanicService.find(player, "summon_count");
         if (count != null) {
             SUMMON_CASTS.put(player.getUUID(), tick);
+            if (isSummonSpell(spellId)) {
+                RpgClasses.LOGGER.info("[rpgclasses] Legión/Élite: {} lanza {} (tick {})", player.getGameProfile().getName(), spellId, tick);
+            }
             double extra = count.number("summon_mana_cost", 0);
             if (extra != 0 && isSummonSpell(spellId)) {
                 event.setManaCost((int) Math.round(event.getManaCost() * (1 + extra)));
@@ -193,11 +204,15 @@ public final class IronsCompat {
         Entity attacker = source.getEntity();
         if (attacker == null) return;
 
-        // Daño de invocaciones (Convocación, Legión/Élite).
-        CompoundTag data = attacker.getPersistentData();
-        if (data.contains(TAG_SUMMON_DAMAGE)) {
-            event.setAmount((float) (event.getAmount() * data.getDouble(TAG_SUMMON_DAMAGE)));
-            return;
+        // Daño de invocaciones (Convocación, Legión/Élite). Iron's pone al dueño como causante y a la
+        // invocación como atacante directo, así que se mira primero el directo.
+        Entity direct = source.getDirectEntity();
+        for (Entity e : new Entity[]{direct, attacker}) {
+            if (e != null && e.getPersistentData().contains(TAG_SUMMON_DAMAGE)) {
+                event.setAmount((float) (event.getAmount() * e.getPersistentData().getDouble(TAG_SUMMON_DAMAGE)));
+                return;
+            }
+            if (e != null && e.getPersistentData().getBoolean(TAG_SUMMON_DONE)) return;
         }
 
         if (!(attacker instanceof ServerPlayer player) || !isSpellDamage(source)) return;
@@ -227,9 +242,10 @@ public final class IronsCompat {
     }
 
     private static String spellId(DamageSource source) {
-        if (SPELL_OF_SOURCE == null || !SPELL_OF_SOURCE.getDeclaringClass().isInstance(source)) return null;
+        Method spellOf = method("io.redspace.ironsspellbooks.damage.SpellDamageSource", "spell");
+        if (spellOf == null || !spellOf.getDeclaringClass().isInstance(source)) return null;
         try {
-            Object spell = SPELL_OF_SOURCE.invoke(source);
+            Object spell = spellOf.invoke(source);
             return spell instanceof AbstractSpell s ? s.getSpellId() : null;
         } catch (ReflectiveOperationException e) {
             return null;
@@ -296,13 +312,14 @@ public final class IronsCompat {
             ServerPlayer owner = e.getKey();
             List<LivingEntity> fresh = new ArrayList<>();
             for (LivingEntity s : e.getValue()) {
-                if (!s.getPersistentData().getBoolean(TAG_SUMMON_DONE)) fresh.add(s);
+                // Iron's asigna dueño dos veces (constructor e initSummon): cada invocación cuenta una vez.
+                if (!s.getPersistentData().getBoolean(TAG_SUMMON_DONE) && !fresh.contains(s)) fresh.add(s);
             }
             if (fresh.isEmpty()) continue;
 
             ActiveMechanic count = MechanicService.find(owner, "summon_count");
             Long castTick = SUMMON_CASTS.get(owner.getUUID());
-            List<LivingEntity> originals = fresh.stream().filter(s -> !s.getPersistentData().hasUUID(TAG_CLONE_OF)).toList();
+            List<LivingEntity> originals = new ArrayList<>(fresh.stream().filter(s -> !s.getPersistentData().hasUUID(TAG_CLONE_OF)).toList());
             if (count != null && castTick != null && castTick >= tick - 1 && !originals.isEmpty()) {
                 SUMMON_CASTS.remove(owner.getUUID());
                 int change = (int) Math.round(count.number("count_change", 0));
@@ -320,6 +337,8 @@ public final class IronsCompat {
                         if (clone != null) fresh.add(clone);
                     }
                 }
+                RpgClasses.LOGGER.info("[rpgclasses] Legión/Élite: {} invocaciones nuevas de {}, cambio {}",
+                        originals.size(), owner.getGameProfile().getName(), change);
             }
             for (LivingEntity s : fresh) applySummonStats(owner, s);
         }
@@ -343,9 +362,16 @@ public final class IronsCompat {
 
     /** Legión: copia de la invocación (mismo tipo y datos), del mismo dueño; desaparece con la original. */
     private static LivingEntity cloneSummon(ServerPlayer owner, LivingEntity original) {
-        if (SET_OWNER == null || !(original.level() instanceof ServerLevel level)) return null;
+        Method setOwner = setOwner();
+        if (setOwner == null || !(original.level() instanceof ServerLevel level)) {
+            RpgClasses.LOGGER.warn("[rpgclasses] Legión: no se puede copiar {} (setOwner={})", original, setOwner);
+            return null;
+        }
         Entity created = original.getType().create(level);
-        if (!(created instanceof LivingEntity clone)) return null;
+        if (!(created instanceof LivingEntity clone)) {
+            RpgClasses.LOGGER.warn("[rpgclasses] Legión: el tipo {} no se puede crear", original.getType());
+            return null;
+        }
         CompoundTag tag = new CompoundTag();
         original.saveWithoutId(tag);
         tag.remove("UUID");
@@ -355,11 +381,16 @@ public final class IronsCompat {
                 original.getZ() + (level.random.nextDouble() - 0.5) * 2, original.getYRot(), original.getXRot());
         clone.getPersistentData().putUUID(TAG_CLONE_OF, original.getUUID());
         clone.getPersistentData().remove(TAG_SUMMON_DONE);
-        if (!level.addFreshEntity(clone)) return null;
+        if (!level.addFreshEntity(clone)) {
+            RpgClasses.LOGGER.warn("[rpgclasses] Legión: el mundo rechazó la copia de {}", original);
+            return null;
+        }
         try {
-            SET_OWNER.invoke(null, clone, owner);
-            if (SET_DURATION != null) SET_DURATION.invoke(null, clone, CLONE_MAX_TICKS);
-        } catch (ReflectiveOperationException e) {
+            setOwner.invoke(null, clone, owner);
+            Method duration = method(SUMMON_MANAGER, "setDuration", Entity.class, int.class);
+            if (duration != null) duration.invoke(null, clone, CLONE_MAX_TICKS);
+        } catch (ReflectiveOperationException | RuntimeException e) {
+            RpgClasses.LOGGER.warn("[rpgclasses] Legión: fallo al asignar dueño a la copia", e);
             clone.discard();
             return null;
         }
@@ -371,8 +402,9 @@ public final class IronsCompat {
 
     private static void unsummon(Entity summon) {
         try {
-            if (REMOVE_SUMMON != null) REMOVE_SUMMON.invoke(null, summon);
-        } catch (ReflectiveOperationException ignored) {
+            Method remove = method(SUMMON_MANAGER, "removeSummon", Entity.class);
+            if (remove != null) remove.invoke(null, summon);
+        } catch (ReflectiveOperationException | RuntimeException ignored) {
         }
         if (summon.level() instanceof ServerLevel level) {
             level.sendParticles(net.minecraft.core.particles.ParticleTypes.POOF,
@@ -381,14 +413,23 @@ public final class IronsCompat {
         summon.discard();
     }
 
+    private static Method setOwner() {
+        return method(SUMMON_MANAGER, "setOwner", Entity.class, Entity.class);
+    }
+
     private static Method method(String className, String name, Class<?>... params) {
-        try {
-            Method m = Class.forName(className).getMethod(name, params);
-            m.setAccessible(true);
-            return m;
-        } catch (ReflectiveOperationException | RuntimeException e) {
-            RpgClasses.LOGGER.warn("[rpgclasses] Iron's: no se encontró {}#{}; esa parte del puente queda desactivada", className, name);
-            return null;
+        String key = className + "#" + name;
+        if (METHODS.containsKey(key)) return METHODS.get(key);
+        Method m = null;
+        for (ClassLoader loader : new ClassLoader[]{IronsCompat.class.getClassLoader(), Thread.currentThread().getContextClassLoader()}) {
+            try {
+                m = Class.forName(className, true, loader).getMethod(name, params);
+                break;
+            } catch (ReflectiveOperationException | RuntimeException | LinkageError ignored) {
+            }
         }
+        if (m == null) RpgClasses.LOGGER.warn("[rpgclasses] Iron's: no se encontró {}; esa parte del puente queda desactivada", key);
+        METHODS.put(key, m);
+        return m;
     }
 }

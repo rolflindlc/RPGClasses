@@ -34,6 +34,9 @@
     "rpgclasses:magic": 0.75,
     "rpgclasses:bow": 0.75
   },
+  "magic_wall_exempt_schools": [
+    "irons_spellbooks:holy"
+  ],
   "traits": [
     {
       "type": "rpgclasses:attribute",

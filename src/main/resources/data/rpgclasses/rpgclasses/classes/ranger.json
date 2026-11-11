@@ -41,6 +41,9 @@
     "rpgclasses:light": 0.35,
     "rpgclasses:shield": 0.3
   },
+  "school_walls": {
+    "irons_spellbooks:holy": 1.0
+  },
   "branches": [
     {
       "id": "aim",

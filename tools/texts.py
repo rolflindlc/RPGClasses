@@ -391,6 +391,8 @@ UI = {
     "effect.rpgclasses.banner": "Estandarte",
     "effect.rpgclasses.hunters_mark": "Marca de Cazador",
     "effect.rpgclasses.retreat": "Retirada",
+    "effect.rpgclasses.arcane_step": "Paso Arcano",
+    "message.rpgclasses.school_locked": "Tu clase no puede usar la escuela %s",
     "death.attack.rpgclasses.arrow_blast": "%1$s voló por los aires por una flecha de %2$s",
     "death.attack.rpgclasses.arrow_blast.player": "%1$s voló por los aires por una flecha de %2$s",
     "death.attack.rpgclasses.shockwave": "%1$s fue derribado por la onda de choque de %2$s",

@@ -54,11 +54,22 @@ public final class DefinitionParser {
                 kit(o),
                 o.has("crit_chance_bonus") ? o.get("crit_chance_bonus").getAsDouble() : 0.0,
                 Map.copyOf(walls),
+                schoolWalls(o),
+                o.has("magic_wall_exempt_schools") ? strings(o, "magic_wall_exempt_schools") : List.of(),
                 effects(o, "traits"),
                 "disables_unarmored_passives".equals(optString(o, "armor_rule", "")),
                 List.copyOf(branches),
                 milestones(o),
                 List.copyOf(subclasses));
+    }
+
+    private static Map<String, Double> schoolWalls(JsonObject o) {
+        if (!o.has("school_walls")) return Map.of();
+        Map<String, Double> out = new java.util.HashMap<>();
+        for (Map.Entry<String, JsonElement> e : o.getAsJsonObject("school_walls").entrySet()) {
+            out.put(e.getKey(), Math.max(0.0, Math.min(1.0, e.getValue().getAsDouble())));
+        }
+        return Map.copyOf(out);
     }
 
     public static SubclassDef parseSubclass(String id, String json) {

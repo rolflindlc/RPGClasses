@@ -50,6 +50,17 @@ public class CoreLogicTest {
     // --- Ramas extra y perks (reglas 11 y 13) ---
 
     @Test
+    public void schoolWallsParsedAndClamped() {
+        ClassDef plain = testClass();
+        assertTrue(plain.schoolWalls().isEmpty());
+        assertTrue(plain.magicWallExemptSchools().isEmpty());
+        ClassDef c = DefinitionParser.parseClass("t:c2", "{\"branches\":[],\"subclasses\":[],\"school_walls\":{\"irons_spellbooks:holy\":1.5},"
+                + "\"magic_wall_exempt_schools\":[\"irons_spellbooks:fire\"]}");
+        assertEquals(1.0, c.schoolWalls().get("irons_spellbooks:holy"), EPS);
+        assertEquals("irons_spellbooks:fire", c.magicWallExemptSchools().get(0));
+    }
+
+    @Test
     public void thirdBranchLocksTheOtherTwo() {
         ClassDef def = testClass();
         ProgressState s = new ProgressState();

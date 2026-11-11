@@ -8,6 +8,7 @@ import io.github.rpgclasses.core.definition.Definitions.ClassDef;
 import io.github.rpgclasses.core.definition.Definitions.SubclassDef;
 import io.github.rpgclasses.core.progression.ProgressState;
 import io.github.rpgclasses.core.stat.StatCalculator;
+import io.github.rpgclasses.core.stat.StatCalculator.ActiveMechanic;
 import io.github.rpgclasses.network.Net;
 import io.github.rpgclasses.player.PlayerClassData;
 import io.github.rpgclasses.player.PlayerClassDataProvider;
@@ -83,6 +84,26 @@ public final class StatEngine {
         if (spellPower != null) {
             applyTo(player, spellPower, "wall", AttributeModifier.Operation.MULTIPLY_TOTAL, -magicWall);
         }
+        // 4. Regla 14: muros fijos por escuela (sagrada −100 % salvo Paladín) y escuelas exentas del muro de
+        //    Magia. Iron's multiplica poder general × poder de escuela, así que la exención compensa el muro
+        //    general con ×1/(1−muro) sobre el poder de la escuela.
+        for (Map.Entry<String, Double> e : classDef.schoolWalls().entrySet()) {
+            apply(player, schoolPowerAttribute(e.getKey()), "school_wall", AttributeModifier.Operation.MULTIPLY_TOTAL, -e.getValue());
+        }
+        if (magicWall > 0 && magicWall < 1) {
+            for (String school : classDef.magicWallExemptSchools()) {
+                apply(player, schoolPowerAttribute(school), "wall_exempt", AttributeModifier.Operation.MULTIPLY_TOTAL,
+                        magicWall / (1 - magicWall));
+            }
+        }
+
+        // 5. Fluidez (Mago): con la rama llena, lanzar conjuros no ralentiza. Iron's mueve al jugador a
+        //    0,2 + casting_movespeed − 1 mientras lanza; +0,8 lo deja a velocidad normal.
+        ActiveMechanic noSlow = MechanicService.find(player, "cast_no_slow");
+        if (noSlow != null && noSlow.level() >= noSlow.number("min_points", 10)) {
+            apply(player, new ResourceLocation("irons_spellbooks", "casting_movespeed"), "cast_no_slow",
+                    AttributeModifier.Operation.ADDITION, 0.8);
+        }
 
         clampHealth(player);
     }
@@ -94,6 +115,20 @@ public final class StatEngine {
         ClassDef classDef = DefinitionStore.SERVER.classDef(data.state.classId);
         if (classDef == null) return 0;
         return StatCalculator.wall(data.state, classDef, DefinitionStore.SERVER.subclassDef(data.state.subclassId), discipline);
+    }
+
+    /** Muro fijo (0..1) del jugador en una escuela de Iron's ("irons_spellbooks:holy"); 0 si no tiene clase. */
+    public static double schoolWall(ServerPlayer player, String schoolId) {
+        PlayerClassData data = PlayerClassDataProvider.get(player);
+        if (data == null) return 0;
+        ClassDef classDef = DefinitionStore.SERVER.classDef(data.state.classId);
+        return classDef == null ? 0 : classDef.schoolWalls().getOrDefault(schoolId, 0.0);
+    }
+
+    /** "irons_spellbooks:holy" → "irons_spellbooks:holy_spell_power" (convención de Iron's para escuelas). */
+    private static ResourceLocation schoolPowerAttribute(String schoolId) {
+        ResourceLocation school = new ResourceLocation(schoolId);
+        return new ResourceLocation(school.getNamespace(), school.getPath() + "_spell_power");
     }
 
     /** "Sin armadura" = ninguna pieza en las ranuras de armadura que aporte armadura (élitros o calabazas no cuentan). */

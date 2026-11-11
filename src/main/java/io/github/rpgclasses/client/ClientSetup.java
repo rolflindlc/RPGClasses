@@ -62,6 +62,7 @@ public final class ClientSetup {
             return;
         }
         airJump(mc);
+        wallClimb(mc);
         tickZoom(mc.player);
         MovementPerks.lightFeetTick(mc.player, hasLocalMechanic("rpgclasses:light_feet"));
         if (hasLocalMechanic("rpgclasses:feather_fall")) MovementPerks.featherFallTick(mc.player, mc.options.keyJump.isDown());
@@ -73,6 +74,24 @@ public final class ClientSetup {
         while (OPEN_BOOK.consumeClick()) {
             if (mc.screen == null) mc.setScreen(new ClassScreen(false));
         }
+    }
+
+    /**
+     * Escalada de Paredes (Explorador Ágil): agachado junto a una pared el jugador se adhiere (no cae);
+     * con saltar o avanzar sube. Tensar un arco o ballesta lo suelta.
+     */
+    private static void wallClimb(Minecraft mc) {
+        LocalPlayer p = mc.player;
+        if (!p.isShiftKeyDown() || p.onGround() && !mc.options.keyJump.isDown() && !mc.options.keyUp.isDown()) return;
+        java.util.Set<String> unlocked = UnlockResolver.unlocked(ClientHandlers.LOCAL_DATA.state,
+                DefinitionStore.CLIENT.classDef(ClientHandlers.LOCAL_DATA.state.classId),
+                DefinitionStore.CLIENT.subclassDef(ClientHandlers.LOCAL_DATA.state.subclassId));
+        if (!unlocked.contains(io.github.rpgclasses.content.RangerSubclasses.WALL_CLIMB)
+                || !io.github.rpgclasses.content.RangerSubclasses.canClimb(p)) return;
+        boolean up = mc.screen == null && (mc.options.keyJump.isDown() || mc.options.keyUp.isDown());
+        Vec3 v = p.getDeltaMovement();
+        p.setDeltaMovement(v.x, up ? 0.2 : 0.0, v.z);
+        p.resetFallDistance();
     }
 
     private static boolean jumpWasDown;

@@ -21,11 +21,14 @@
       ]
     },
     {
-      "type": "rpgclasses:mechanic",
-      "id": "rpgclasses:draw_speed_cut",
-      "fraction_removed": {
-        "to": 1.0
-      }
+      "type": "rpgclasses:attribute",
+      "modifiers": [
+        {
+          "attribute": "rpgclasses:draw_speed",
+          "to": -1.0,
+          "operation": "multiply_total"
+        }
+      ]
     }
   ],
   "milestones": [

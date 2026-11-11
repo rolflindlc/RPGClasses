@@ -26,6 +26,7 @@ import io.github.rpgclasses.content.PaladinPerks;
 import io.github.rpgclasses.content.PaladinSubclasses;
 import io.github.rpgclasses.content.BannerAura;
 import io.github.rpgclasses.content.RangerPerks;
+import io.github.rpgclasses.content.RangerSubclasses;
 import io.github.rpgclasses.content.RoguePerks;
 import io.github.rpgclasses.content.MonkPerks;
 import io.github.rpgclasses.content.MovementPerks;
@@ -85,6 +86,7 @@ public class RpgClasses {
         MinecraftForge.EVENT_BUS.register(new PaladinSubclasses());
         MinecraftForge.EVENT_BUS.register(new BannerAura());
         MinecraftForge.EVENT_BUS.register(new RangerPerks());
+        MinecraftForge.EVENT_BUS.register(new RangerSubclasses());
         MinecraftForge.EVENT_BUS.register(new RoguePerks());
         MinecraftForge.EVENT_BUS.register(new MonkPerks());
         MinecraftForge.EVENT_BUS.register(new MovementPerks());

@@ -10,6 +10,7 @@ import io.github.rpgclasses.content.Toxins;
 import io.github.rpgclasses.content.RangerAbilities;
 import io.github.rpgclasses.content.RangerPerks;
 import io.github.rpgclasses.content.RogueAbilities;
+import io.github.rpgclasses.content.RoguePerks;
 import io.github.rpgclasses.core.Ids;
 import io.github.rpgclasses.core.definition.DefinitionStore;
 import io.github.rpgclasses.core.definition.Definitions.ClassDef;
@@ -176,6 +177,11 @@ public final class DamagePipeline {
             damage *= 1 + war;
             log.append(String.format(Locale.ROOT, " | estandarte x%.2f", 1 + war));
         }
+        double treacherous = RoguePerks.treacherousBonus(attacker, target);
+        if (treacherous != 0) {
+            damage *= 1 + treacherous;
+            log.append(String.format(Locale.ROOT, " | traición x%.2f", 1 + treacherous));
+        }
         double condemn = PaladinPerks.condemnBonus(attacker, target);
         if (condemn != 0) {
             damage *= 1 + condemn;
@@ -218,6 +224,13 @@ public final class DamagePipeline {
             }
         }
 
+        if (melee) {
+            double pierce = RoguePerks.armorPierceFactor(attacker, target, source, damage);
+            if (pierce != 1) {
+                damage *= pierce;
+                log.append(String.format(Locale.ROOT, " | estocada x%.2f", pierce));
+            }
+        }
         float result = StatMath.sanitizeDamage(damage);
         log.append(String.format(Locale.ROOT, " = %.2f (antes de armadura)", result));
         LAST_BREAKDOWN.put(attacker.getUUID(), log.toString());

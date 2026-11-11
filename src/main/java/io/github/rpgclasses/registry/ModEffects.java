@@ -45,6 +45,10 @@ public final class ModEffects {
     public static final RegistryObject<MobEffect> CONDEMNED =
             EFFECTS.register("condemned", () -> new StateEffect(MobEffectCategory.HARMFUL, 0xFFF0A0));
 
+    /** Icono del aura de Estandarte (los valores los aplica content.BannerAura). */
+    public static final RegistryObject<MobEffect> BANNER =
+            EFFECTS.register("banner", () -> new StateEffect(MobEffectCategory.BENEFICIAL, 0xE6C35A));
+
     /** Efecto normal (curable con leche) sin lógica propia. */
     public static class CurableEffect extends MobEffect {
         public CurableEffect(MobEffectCategory category, int color) {

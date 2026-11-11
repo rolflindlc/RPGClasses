@@ -2,6 +2,7 @@ package io.github.rpgclasses.server;
 
 import io.github.rpgclasses.RpgClasses;
 import io.github.rpgclasses.config.ServerConfig;
+import io.github.rpgclasses.content.BannerAura;
 import io.github.rpgclasses.content.BarbarianPerks;
 import io.github.rpgclasses.content.CombatAbilities;
 import io.github.rpgclasses.content.PaladinPerks;
@@ -167,6 +168,11 @@ public final class DamagePipeline {
             damage *= 1 + smite;
             log.append(String.format(Locale.ROOT, " | castigo x%.2f", 1 + smite));
         }
+        double war = BannerAura.damageBonus(attacker);
+        if (war != 0) {
+            damage *= 1 + war;
+            log.append(String.format(Locale.ROOT, " | estandarte x%.2f", 1 + war));
+        }
         double condemn = PaladinPerks.condemnBonus(attacker, target);
         if (condemn != 0) {
             damage *= 1 + condemn;
@@ -215,7 +221,10 @@ public final class DamagePipeline {
         event.setAmount(result);
 
         if (judgement > 0) PaladinPerks.judgementArea(attacker, target, (float) holyDamage);
-        if (melee) Toxins.onMeleeHit(attacker, target);
+        if (melee) {
+            Toxins.onMeleeHit(attacker, target);
+            PaladinPerks.shockwave(attacker, target, result);
+        }
     }
 
     /** Daño que RECIBE un jugador: reducciones y penalizaciones de sus habilidades activas. */

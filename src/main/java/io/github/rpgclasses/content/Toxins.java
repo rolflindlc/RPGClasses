@@ -72,8 +72,8 @@ public final class Toxins {
         dose.putLong("next", now + Math.max(1, dose.getInt("interval")));
         // Sin entidad causante: no hay empuje en cada tic. El crédito de la muerte se da a mano.
         if (dose.hasUUID("owner") && entity.level() instanceof ServerLevel level
-                && level.getServer().getPlayerList().getPlayer(dose.getUUID("owner")) instanceof ServerPlayer owner) {
-            entity.setLastHurtByPlayer(owner);
+                && level.getServer().getPlayerList().getPlayer(dose.getUUID("owner")) != null) {
+            entity.setLastHurtByPlayer(level.getServer().getPlayerList().getPlayer(dose.getUUID("owner")));
         }
         // Ni la bloquea un golpe reciente ni sus tics dan invulnerabilidad frente a los golpes del Pícaro.
         int invulnerable = entity.invulnerableTime;

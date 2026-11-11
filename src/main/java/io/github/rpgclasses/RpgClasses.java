@@ -24,6 +24,7 @@ import io.github.rpgclasses.content.BarbarianPerks;
 import io.github.rpgclasses.content.PaladinPerks;
 import io.github.rpgclasses.content.BannerAura;
 import io.github.rpgclasses.content.RangerPerks;
+import io.github.rpgclasses.content.RoguePerks;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
@@ -74,6 +75,7 @@ public class RpgClasses {
         MinecraftForge.EVENT_BUS.register(new PaladinPerks());
         MinecraftForge.EVENT_BUS.register(new BannerAura());
         MinecraftForge.EVENT_BUS.register(new RangerPerks());
+        MinecraftForge.EVENT_BUS.register(new RoguePerks());
     }
 
     private void commonSetup(FMLCommonSetupEvent event) {

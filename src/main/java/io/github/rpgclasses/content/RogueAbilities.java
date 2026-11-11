@@ -90,7 +90,7 @@ public final class RogueAbilities {
         }
         State st = state(player);
         JsonObject p = AbilityService.params(STEALTH);
-        double drain = AbilityService.number(p, "drain_per_second", 0.04) / 20.0;
+        double drain = AbilityService.number(p, "drain_per_second", 0.04) / 20.0 * RoguePerks.stealthDrainFactor(player);
         double regen = AbilityService.number(p, "regen_per_second", 0.08) / 20.0;
         double lockoutUntil = AbilityService.number(p, "lockout_until", 0.5);
         double revealDistance = AbilityService.number(p, "pvp_reveal_distance", 2.5);

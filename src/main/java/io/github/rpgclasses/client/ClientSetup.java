@@ -11,11 +11,10 @@ import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ProjectileWeaponItem;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.client.event.ClientPlayerNetworkEvent;
-import net.minecraftforge.client.event.ComputeFovModifierEvent;
+import net.minecraftforge.client.event.ViewportEvent;
 import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
 import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
 import net.minecraftforge.common.MinecraftForge;
@@ -56,6 +55,7 @@ public final class ClientSetup {
             return;
         }
         airJump(mc);
+        tickZoom(mc.player);
         for (int i = 0; i < ABILITY_KEYS.length; i++) {
             while (ABILITY_KEYS[i].consumeClick()) {
                 if (mc.screen == null) Net.CHANNEL.sendToServer(new Packets.UseAbility(i));
@@ -102,14 +102,31 @@ public final class ClientSetup {
         jumpWasDown = down;
     }
 
-    /** Visión de Halcón: zoom progresivo al tensar un arco o ballesta. */
-    private static void onFov(ComputeFovModifierEvent event) {
-        Player p = event.getPlayer();
-        if (!p.isUsingItem() || !(p.getUseItem().getItem() instanceof ProjectileWeaponItem)) return;
-        double zoom = ModAttributes.value(p, ModAttributes.ZOOM);
-        if (zoom <= 0) return;
-        double pull = Math.min(1.0, p.getTicksUsingItem() / 20.0);
-        event.setNewFovModifier((float) (event.getNewFovModifier() * (1 - zoom * pull)));
+    private static float zoomProgress;
+    private static float zoomProgressPrev;
+
+    /** Avanza la animación del zoom: activo al agacharse con un arco o ballesta en la mano, o al tensarlo. */
+    private static void tickZoom(LocalPlayer p) {
+        boolean holding = p.getMainHandItem().getItem() instanceof ProjectileWeaponItem
+                || p.getOffhandItem().getItem() instanceof ProjectileWeaponItem;
+        boolean drawing = p.isUsingItem() && p.getUseItem().getItem() instanceof ProjectileWeaponItem;
+        boolean active = ModAttributes.value(p, ModAttributes.ZOOM) > 0 && (drawing || (holding && p.isShiftKeyDown()));
+        zoomProgressPrev = zoomProgress;
+        zoomProgress += ((active ? 1f : 0f) - zoomProgress) * 0.4f;
+        if (Math.abs(zoomProgress) < 0.001f) zoomProgress = 0f;
+    }
+
+    /**
+     * Visión de Halcón. Se cambia el campo de visión real (no el "efecto de FOV"), así que funciona
+     * aunque el jugador tenga los efectos de FOV al mínimo en sus opciones.
+     */
+    private static void onFov(ViewportEvent.ComputeFov event) {
+        Minecraft mc = Minecraft.getInstance();
+        if (mc.player == null || !event.usedConfiguredFov()) return;
+        float progress = (float) (zoomProgressPrev + (zoomProgress - zoomProgressPrev) * event.getPartialTick());
+        if (progress <= 0f) return;
+        double zoom = ModAttributes.value(mc.player, ModAttributes.ZOOM);
+        event.setFOV(event.getFOV() * (1 - zoom * progress));
     }
 
     private ClientSetup() {}

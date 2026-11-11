@@ -5,6 +5,9 @@ import com.google.gson.JsonObject;
 import io.github.rpgclasses.core.Ids;
 import io.github.rpgclasses.registry.ModAttributes;
 import io.github.rpgclasses.server.AbilityService;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -39,6 +42,8 @@ public final class RangerAbilities {
     /** Datos del disparo en curso: se escriben al soltar el arco y los recoge la flecha al aparecer, en el mismo tick. */
     private static final Map<UUID, PendingShot> PENDING = new HashMap<>();
     private static final Map<UUID, Integer> AIR_JUMPS_USED = new HashMap<>();
+    /** Arco tensado al máximo: {tick de servidor en que se alcanzó, tramos ya anunciados}. */
+    private static final Map<UUID, int[]> FULL_DRAW = new HashMap<>();
 
     // --- Disparo ---
 
@@ -51,7 +56,10 @@ public final class RangerAbilities {
         double bonus = 0;
         String shot = unlocked.contains(LETHAL_SHOT) ? LETHAL_SHOT : unlocked.contains(HEAVY_SHOT) ? HEAVY_SHOT : null;
         if (shot != null) {
-            bonus = stageBonus(AbilityService.params(shot), (event.getCharge() - FULL_DRAW_TICKS) / 20.0);
+            // Tiempo REAL con el arco al máximo (la velocidad de carga no lo acelera).
+            int[] draw = FULL_DRAW.get(player.getUUID());
+            double held = draw == null ? 0 : (player.server.getTickCount() - draw[0]) / 20.0;
+            bonus = stageBonus(AbilityService.params(shot), held);
         }
 
         // Conservación de Munición: se devuelve la flecha antes de que el arco la consuma.
@@ -90,26 +98,43 @@ public final class RangerAbilities {
         return p == null ? new double[] {0, 0} : new double[] {p.damageBonus(), p.ammoConserved() ? 1 : 0};
     }
 
-    /** Aviso sonoro al alcanzar cada tramo de Disparo Pesado, y reinicio de los saltos aéreos al tocar suelo. */
+    /** Aviso (sonido, partículas y texto) al alcanzar cada tramo de Disparo Pesado; reinicio de los saltos aéreos. */
     @SubscribeEvent
     public void onPlayerTick(TickEvent.PlayerTickEvent event) {
         if (event.phase != TickEvent.Phase.END || !(event.player instanceof ServerPlayer player)) return;
         if (player.onGround() || player.isInWater() || player.onClimbable()) AIR_JUMPS_USED.remove(player.getUUID());
 
-        if (!player.isUsingItem() || !(player.getUseItem().getItem() instanceof BowItem)) return;
-        int held = player.getTicksUsingItem() - FULL_DRAW_TICKS;
-        if (held <= 0 || held % 10 != 0) return; // los tramos son múltiplos de medio segundo
+        if (!player.isUsingItem() || !(player.getUseItem().getItem() instanceof BowItem)) {
+            FULL_DRAW.remove(player.getUUID());
+            return;
+        }
+        if (player.getTicksUsingItem() < FULL_DRAW_TICKS) return;
+        int now = player.server.getTickCount();
+        int[] draw = FULL_DRAW.computeIfAbsent(player.getUUID(), k -> new int[] {now, 0});
+
         Set<String> unlocked = AbilityService.unlocked(player);
         String shot = unlocked.contains(LETHAL_SHOT) ? LETHAL_SHOT : unlocked.contains(HEAVY_SHOT) ? HEAVY_SHOT : null;
         if (shot == null) return;
         JsonObject params = AbilityService.params(shot);
         if (!params.has("thresholds_seconds")) return;
         JsonArray thresholds = params.getAsJsonArray("thresholds_seconds");
+        double held = (now - draw[0]) / 20.0;
+        int reached = 0;
         for (int i = 0; i < thresholds.size(); i++) {
-            if (Math.round(thresholds.get(i).getAsDouble() * 20) == held) {
-                player.playNotifySound(SoundEvents.NOTE_BLOCK_PLING.value(), SoundSource.PLAYERS, 0.6f, 1.0f + 0.25f * i);
-            }
+            if (held >= thresholds.get(i).getAsDouble()) reached = i + 1;
         }
+        if (reached <= draw[1]) return;
+        draw[1] = reached;
+
+        boolean last = reached == thresholds.size();
+        player.playNotifySound(SoundEvents.EXPERIENCE_ORB_PICKUP, SoundSource.PLAYERS, 0.8f, 0.6f + 0.3f * reached);
+        if (player.level() instanceof ServerLevel level) {
+            level.sendParticles(last ? ParticleTypes.FLAME : ParticleTypes.ENCHANTED_HIT,
+                    player.getX(), player.getY() + 1.2, player.getZ(), 10 + 8 * reached, 0.35, 0.4, 0.35, 0.05);
+        }
+        player.displayClientMessage(Component.translatable("msg.rpgclasses.heavy_shot_stage",
+                Component.translatable(Ids.langKey("ability", shot, "name")),
+                Math.round(stageBonus(params, held) * 100)), true);
     }
 
     /**
@@ -142,5 +167,6 @@ public final class RangerAbilities {
     public void onLogout(PlayerEvent.PlayerLoggedOutEvent event) {
         PENDING.remove(event.getEntity().getUUID());
         AIR_JUMPS_USED.remove(event.getEntity().getUUID());
+        FULL_DRAW.remove(event.getEntity().getUUID());
     }
 }

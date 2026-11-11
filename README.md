@@ -21,7 +21,8 @@ Hecho:
 - **Fase 3 (en curso), interfaz:**
   - Pantalla de selección al entrar sin clase, con cuatro pestañas por clase: resumen, ramas y
     habilidades, subclases y datos exactos. No se cierra hasta elegir (Esc abre el menú de pausa).
-  - La tecla K abre la misma pantalla en modo consulta.
+  - La tecla K abre la misma pantalla; en tu clase, la pestaña Progreso permite gastar puntos,
+    elegir subclase y reiniciar con botones.
   - Los "datos exactos" se generan de los JSON del datapack, incluidas las habilidades
     (`abilities/*.json`), así que siguen cualquier cambio de balance tras `/reload`.
 
@@ -35,8 +36,7 @@ Hecho:
 
 Aún sin efecto en el juego: habilidades de Mago y Pícaro, mecánicas de subclase, caminar sobre
 agua y lava del Monje, ballestas en Conservación de Munición, integración con Iron's Spells y
-Epic Fight y resistencia a debuffs. Gastar puntos sigue haciéndose con comandos hasta que exista
-la pantalla de progreso.
+Epic Fight y resistencia a debuffs.
 
 Problema conocido: el muro de Escudos aumenta el desgaste, pero el cooldown alargado no se aplica.
 

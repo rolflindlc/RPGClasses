@@ -32,6 +32,7 @@ public final class ClientHandlers {
             Minecraft mc = Minecraft.getInstance();
             if (mc.screen instanceof ClassScreen screen && screen.isSelecting()) mc.setScreen(null);
         }
+        if (Minecraft.getInstance().screen instanceof ClassScreen screen) screen.onDataChanged();
     }
 
     /** El servidor avisa de que el jugador no tiene clase; ClientSetup abre la pantalla en el siguiente tick. */

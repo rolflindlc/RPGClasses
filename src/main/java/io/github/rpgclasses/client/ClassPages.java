@@ -41,7 +41,7 @@ import java.util.TreeSet;
  * Los números de "Datos exactos" salen de los mismos JSON que usa el servidor: no pueden desfasarse.
  */
 public final class ClassPages {
-    public enum Tab { SUMMARY, BRANCHES, SUBCLASSES, DATA }
+    public enum Tab { PROGRESS, SUMMARY, BRANCHES, SUBCLASSES, DATA }
 
     private static final Set<String> SKIPPED_PARAMS = Set.of("type", "id", "schema_version", "passive", "condition", "modifiers");
     private static final int LEVELS = 10;
@@ -50,6 +50,7 @@ public final class ClassPages {
     public static List<Component> build(ClassDef c, Tab tab) {
         List<Component> out = new ArrayList<>();
         switch (tab) {
+            case PROGRESS -> { } // la dibuja ClassScreen con botones
             case SUMMARY -> summary(c, out);
             case BRANCHES -> branches(c, out);
             case SUBCLASSES -> subclasses(c, out);

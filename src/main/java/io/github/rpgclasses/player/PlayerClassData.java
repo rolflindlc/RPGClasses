@@ -78,6 +78,6 @@ public final class PlayerClassData {
     /** Al reiniciar la clase se borra lo que era propio de ella (conjuros fijados, cargas). */
     public void clearClassBindings() {
         texts.clear();
-        counters.keySet().removeIf(k -> k.startsWith("free_cast"));
+        counters.keySet().removeIf(k -> k.startsWith("free_cast") || k.startsWith("death_gamble"));
     }
 }

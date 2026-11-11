@@ -2,6 +2,7 @@ package io.github.rpgclasses.server;
 
 import com.google.gson.JsonElement;
 import io.github.rpgclasses.content.BannerAura;
+import io.github.rpgclasses.content.BarbarianSubclasses;
 import io.github.rpgclasses.content.PaladinSubclasses;
 import io.github.rpgclasses.core.stat.StatCalculator.ActiveMechanic;
 import io.github.rpgclasses.registry.ModAttributes;
@@ -50,8 +51,14 @@ public final class EffectRules {
             event.setResult(Event.Result.DENY);
             return;
         }
+        // Sangre Resistente (Corruptor de Plagas): con el 100 % es inmunidad.
+        double blood = BarbarianSubclasses.resistantBlood(player, effect);
+        if (blood >= 1 - 1.0E-6) {
+            event.setResult(Event.Result.DENY);
+            return;
+        }
         if (instance.isInfiniteDuration() || instance.getDuration() <= 1) return;
-        double factor = 1 - ModAttributes.value(player, ModAttributes.DEBUFF_RESISTANCE)
+        double factor = 1 - ModAttributes.value(player, ModAttributes.DEBUFF_RESISTANCE) - blood
                 + (immunity == null ? 0 : immunity.number("other_duration", 0))
                 + BannerAura.debuffDurationChange(player);
         if (Math.abs(factor - 1) < 1.0E-6) return;

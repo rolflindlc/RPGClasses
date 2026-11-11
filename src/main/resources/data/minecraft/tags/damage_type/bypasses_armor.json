@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "rpgclasses:toxin"
+    "rpgclasses:toxin",
+    "rpgclasses:plague"
   ]
 }

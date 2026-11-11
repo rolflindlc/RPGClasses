@@ -31,6 +31,12 @@ public final class ModEffects {
     /** Baluarte de Embestida: carrera forzada (cliente) y daño de contacto (content.PaladinSubclasses). */
     public static final RegistryObject<MobEffect> CHARGING_BULWARK =
             EFFECTS.register("charging_bulwark", () -> new StateEffect(MobEffectCategory.BENEFICIAL, 0xB4643C));
+    /** Última Furia Inmortal (Berserker Suicida): solo icono; la lógica está en content.BarbarianSubclasses. */
+    public static final RegistryObject<MobEffect> IMMORTAL_FURY =
+            EFFECTS.register("immortal_fury", () -> new StateEffect(MobEffectCategory.BENEFICIAL, 0x8C0A0A));
+    /** Plaga (Corruptor de Plagas): el daño periódico lo hace content.BarbarianSubclasses; la leche la cura. */
+    public static final RegistryObject<MobEffect> PLAGUE =
+            EFFECTS.register("plague", () -> new CurableEffect(MobEffectCategory.HARMFUL, 0x6B7A2A));
     /** Reducción de daño de Provocación. */
     public static final RegistryObject<MobEffect> TAUNT_GUARD =
             EFFECTS.register("taunt_guard", () -> new StateEffect(MobEffectCategory.BENEFICIAL, 0x78AAF0));

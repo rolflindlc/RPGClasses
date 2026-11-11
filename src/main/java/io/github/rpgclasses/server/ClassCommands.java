@@ -151,7 +151,8 @@ public final class ClassCommands {
             if (wall > 0) lines.add(String.format(java.util.Locale.ROOT, "muro %s: -%.1f%%", discipline, wall * 100));
         }
         lines.add(String.format(java.util.Locale.ROOT, "crítico: %.0f%% x%.2f | sin armadura: %s",
-                StatMath.critChance(ServerConfig.BASE_CRIT_CHANCE.get(), def.critChanceBonus(), false) * 100,
+                StatMath.critChance(ServerConfig.BASE_CRIT_CHANCE.get(),
+                        def.critChanceBonus() + ModAttributes.value(player, ModAttributes.CRIT_CHANCE), false) * 100,
                 StatMath.critMultiplier(ModAttributes.value(player, ModAttributes.CRIT_DAMAGE)),
                 StatEngine.isWearingArmor(player) ? "no" : "sí"));
         String last = DamagePipeline.lastBreakdown(player);

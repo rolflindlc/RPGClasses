@@ -9,7 +9,7 @@ import java.util.Map;
 /** Progreso de clase de un jugador y su serialización NBT. */
 public final class PlayerClassData {
     /** Subir al cambiar el formato guardado, y añadir la migración en {@link #load}. */
-    public static final int DATA_VERSION = 1;
+    public static final int DATA_VERSION = 2;
 
     public final ProgressState state = new ProgressState();
     /** Vida con la que se guardó el jugador; -1 si no se conoce. Solo se usa al iniciar sesión. */
@@ -26,6 +26,9 @@ public final class PlayerClassData {
         CompoundTag branches = new CompoundTag();
         for (Map.Entry<String, Integer> e : state.branchPoints.entrySet()) branches.putInt(e.getKey(), e.getValue());
         tag.put("branches", branches);
+        CompoundTag perks = new CompoundTag();
+        for (Map.Entry<String, String> e : state.perks.entrySet()) perks.putString(e.getKey(), e.getValue());
+        tag.put("perks", perks);
         if (state.subclassId != null) tag.putString("subclass", state.subclassId);
         tag.putInt("subLevel", state.subclassLevel);
         tag.putLong("xpBase", state.xpPaidBase);
@@ -42,11 +45,14 @@ public final class PlayerClassData {
     }
 
     public void load(CompoundTag tag) {
-        // Aquí irán las migraciones cuando DATA_VERSION pase de 1: leer tag.getInt("v") y convertir.
+        // v1 -> v2: se añaden los perks (ausentes = ninguno elegido). Las ramas nuevas valen 0 si no están.
         state.classId = tag.contains("class", Tag.TAG_STRING) ? tag.getString("class") : null;
         state.branchPoints.clear();
         CompoundTag branches = tag.getCompound("branches");
         for (String key : branches.getAllKeys()) state.branchPoints.put(key, Math.max(0, branches.getInt(key)));
+        state.perks.clear();
+        CompoundTag perks = tag.getCompound("perks");
+        for (String key : perks.getAllKeys()) state.perks.put(key, perks.getString(key));
         state.subclassId = tag.contains("subclass", Tag.TAG_STRING) ? tag.getString("subclass") : null;
         state.subclassLevel = Math.max(0, tag.getInt("subLevel"));
         state.xpPaidBase = Math.max(0, tag.getLong("xpBase"));

@@ -21,6 +21,8 @@ public final class ModAttributes {
 
     /** Bonus al multiplicador de crítico (x1,5 + este valor). */
     public static final RegistryObject<Attribute> CRIT_DAMAGE = register("crit_damage", 0, 0, 100);
+    /** Puntos de probabilidad de crítico sumados a la base de la clase (perks de Brutalidad). */
+    public static final RegistryObject<Attribute> CRIT_CHANCE = register("crit_chance", 0, -1, 1);
     /** Bonus extra al multiplicador de crítico en golpes desde invisibilidad (fase 4). */
     public static final RegistryObject<Attribute> BACKSTAB_CRIT_DAMAGE = register("backstab_crit_damage", 0, 0, 100);
     /** Altura de salto extra, como fracción (0,4 = +40%). */
@@ -31,7 +33,7 @@ public final class ModAttributes {
     /** Bonus aditivo de daño con arcos, ballestas y arrojadizas. */
     public static final RegistryObject<Attribute> BOW_DAMAGE = register("bow_damage", 0, 0, 100);
     public static final RegistryObject<Attribute> DRAW_SPEED = register("draw_speed", 0, -1, 100);
-    public static final RegistryObject<Attribute> PROJECTILE_VELOCITY = register("projectile_velocity", 0, 0, 100);
+    public static final RegistryObject<Attribute> PROJECTILE_VELOCITY = register("projectile_velocity", 0, -0.9, 100);
     public static final RegistryObject<Attribute> ZOOM = register("zoom", 0, 0, 1);
     /** Cambio en la distancia a la que los mobs detectan al jugador (-0,5 = la mitad). */
     public static final RegistryObject<Attribute> MOB_DETECTION = register("mob_detection", 0, -1, 10);

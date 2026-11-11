@@ -5,5 +5,5 @@
   "regen_per_second": 0.08,
   "action_cost": 0.4,
   "lockout_until": 0.5,
-  "pvp_reveal_distance": 2.5
+  "pvp_reveal_distance": 1
 }

@@ -27,8 +27,12 @@ public final class DefinitionValidator {
     public static List<String> validateClass(ClassDef c, Map<String, SubclassDef> subclasses, Set<String> abilityIds) {
         List<String> errors = new ArrayList<>();
 
-        if (c.branches().size() != ProgressionRules.BRANCHES) {
-            errors.add("debe tener " + ProgressionRules.BRANCHES + " ramas y tiene " + c.branches().size());
+        if (c.branches().size() != ProgressionRules.BRANCHES_PER_CLASS) {
+            errors.add("debe tener " + ProgressionRules.BRANCHES_PER_CLASS + " ramas y tiene " + c.branches().size());
+        }
+        for (EffectDef e : c.traits()) {
+            if (!Ids.EFFECT_ATTRIBUTE.equals(e.type())) errors.add("rasgo de clase: solo se admiten efectos " + Ids.EFFECT_ATTRIBUTE);
+            else validateEffect(e, 1, "rasgo de clase: ", errors);
         }
         Set<String> branchIds = new HashSet<>();
         for (BranchDef b : c.branches()) {
@@ -39,6 +43,17 @@ public final class DefinitionValidator {
             }
             if (b.effects().isEmpty()) errors.add(where + "no tiene efectos");
             for (EffectDef e : b.effects()) validateEffect(e, Math.max(1, b.maxPoints()), where, errors);
+            if (b.perks().size() != ProgressionRules.PERKS_PER_BRANCH) {
+                errors.add(where + "debe tener " + ProgressionRules.PERKS_PER_BRANCH + " perks y tiene " + b.perks().size());
+            }
+            Set<String> perkIds = new HashSet<>();
+            for (Definitions.PerkDef p : b.perks()) {
+                String pw = where + "perk '" + p.id() + "': ";
+                if (!perkIds.add(p.id())) errors.add(pw + "id repetido");
+                if (p.id().isEmpty() || p.id().contains("/")) errors.add(pw + "id vacío o con '/'");
+                if (p.effects().isEmpty()) errors.add(pw + "no tiene efectos");
+                for (EffectDef e : p.effects()) validateEffect(e, 1, pw, errors);
+            }
         }
 
         for (Map.Entry<String, Double> w : c.walls().entrySet()) {

@@ -5,6 +5,7 @@ import io.github.rpgclasses.core.Ids;
 import io.github.rpgclasses.core.definition.DefinitionStore;
 import io.github.rpgclasses.core.definition.Definitions.BranchDef;
 import io.github.rpgclasses.core.definition.Definitions.ClassDef;
+import io.github.rpgclasses.core.definition.Definitions.PerkDef;
 import io.github.rpgclasses.core.progression.ProgressState;
 import io.github.rpgclasses.core.progression.ProgressionRules;
 import io.github.rpgclasses.core.progression.XpMath;
@@ -12,10 +13,12 @@ import io.github.rpgclasses.network.Net;
 import io.github.rpgclasses.network.Packets.ClassAction;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.screens.ConfirmScreen;
 import net.minecraft.client.gui.screens.PauseScreen;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.world.item.Item;
@@ -46,6 +49,8 @@ public final class ClassScreen extends Screen {
     private int scroll;
     private int panelLeft, panelTop, panelRight, panelBottom;
     private long lastXp = -1;
+    /** Ayuda de la fila bajo el ratón en la pestaña de progreso (rama bloqueada o perk elegido). */
+    private Component pendingTooltip;
 
     public ClassScreen(boolean selecting) {
         super(Component.translatable(selecting ? "ui.rpgclasses.title_select" : "ui.rpgclasses.title_book"));
@@ -169,12 +174,22 @@ public final class ClassScreen extends Screen {
         }
     }
 
+    private static final int BRANCH_ROW = 20;
+
     private int branchRowY(int index) {
-        return panelTop + 22 + index * ROW;
+        return panelTop + 20 + index * BRANCH_ROW;
     }
 
     private int subclassRowY(int branchCount) {
-        return branchRowY(branchCount) + 16;
+        return branchRowY(branchCount) + 10;
+    }
+
+    private int barLeft() {
+        return panelLeft + 8 + 90;
+    }
+
+    private int barRight() {
+        return panelRight - 78;
     }
 
     private void initProgress() {
@@ -185,16 +200,33 @@ public final class ClassScreen extends Screen {
 
         for (int i = 0; i < def.branches().size(); i++) {
             BranchDef b = def.branches().get(i);
+            int y = branchRowY(i);
+            boolean locked = ProgressionRules.isBranchLocked(s, b.id());
             Button plus = Button.builder(Component.literal("+"), btn -> send(ClassAction.Action.SPEND_BRANCH, b.id()))
-                    .bounds(panelRight - 34, branchRowY(i), 24, 20).build();
-            plus.active = canPay && s.pointsIn(b.id()) < b.maxPoints();
+                    .bounds(panelRight - 34, y, 24, 18).build();
+            plus.active = canPay && !locked && s.pointsIn(b.id()) < b.maxPoints();
+            if (locked) plus.setTooltip(Tooltip.create(Component.translatable("ui.rpgclasses.branch_locked")));
             addRenderableWidget(plus);
+
+            // Rama llena sin perk: los dos perks como botones en el hueco de la barra.
+            if (ProgressionRules.perkPending(s, b) && barRight() > barLeft() + 40) {
+                int n = b.perks().size();
+                int w = (barRight() - barLeft()) / n;
+                for (int k = 0; k < n; k++) {
+                    PerkDef p = b.perks().get(k);
+                    MutableComponent name = ClassPages.perkName(def, b, p);
+                    Button pick = Button.builder(name, btn -> confirmPerk(name, b.id(), p.id()))
+                            .bounds(barLeft() + k * w, y, w - 2, 18).build();
+                    pick.setTooltip(Tooltip.create(ClassPages.perkTooltip(def, b, p)));
+                    addRenderableWidget(pick);
+                }
+            }
         }
 
         int y = subclassRowY(def.branches().size());
         if (s.subclassId != null) {
             Button plus = Button.builder(Component.literal("+"), btn -> send(ClassAction.Action.SPEND_SUBCLASS, ""))
-                    .bounds(panelRight - 34, y, 24, 20).build();
+                    .bounds(panelRight - 34, y, 24, 18).build();
             plus.active = canPay && s.subclassLevel < ProgressionRules.subclassCap(s.basePoints());
             addRenderableWidget(plus);
         } else if (s.basePoints() >= ProgressionRules.SUBCLASS_UNLOCK) {
@@ -210,7 +242,7 @@ public final class ClassScreen extends Screen {
         }
     }
 
-    private void renderProgress(GuiGraphics g) {
+    private void renderProgress(GuiGraphics g, int mouseX, int mouseY) {
         ClassDef def = DefinitionStore.CLIENT.classDef(selectedClass);
         if (def == null) return;
         ProgressState s = state();
@@ -220,32 +252,57 @@ public final class ClassScreen extends Screen {
                 : Component.translatable("msg.rpgclasses.next_cost", ProgressionRules.nextCost(s, costMultiplier()));
         g.drawString(font, Component.translatable("ui.rpgclasses.progress_header", s.totalLevel(), availableXp(), cost), x, panelTop + 7, 0xFFFF55);
 
+        Component hover = null;
         for (int i = 0; i < def.branches().size(); i++) {
             BranchDef b = def.branches().get(i);
             int y = branchRowY(i);
+            boolean locked = ProgressionRules.isBranchLocked(s, b.id());
             Component name = Component.translatable(Ids.langKey("branch", def.id() + "." + b.id(), "name"));
-            g.drawString(font, name, x, y + 6, 0xFFAA00);
+            g.drawString(font, name, x + (locked ? 10 : 0), y + 5, locked ? 0x777777 : 0xFFAA00);
             int points = s.pointsIn(b.id());
-            // Barra de puntos de la rama.
-            int barLeft = x + 90;
-            int barRight = panelRight - 78;
-            if (barRight > barLeft + 20) {
-                g.fill(barLeft, y + 7, barRight, y + 13, 0xFF333333);
-                g.fill(barLeft, y + 7, barLeft + (barRight - barLeft) * points / b.maxPoints(), y + 13, 0xFFFFAA00);
+            boolean rowHovered = mouseY >= y && mouseY < y + 18 && mouseX >= x && mouseX < panelRight - 36;
+            String perkId = s.perkIn(b.id());
+            PerkDef chosen = perkId == null ? null : b.perk(perkId);
+            if (chosen != null) {
+                // Perk elegido: su nombre ocupa el sitio de la barra (que estaría llena).
+                g.drawString(font, Component.literal("\u2605 ").append(ClassPages.perkName(def, b, chosen)), barLeft(), y + 5, 0xFF55FF);
+                if (rowHovered) hover = ClassPages.perkTooltip(def, b, chosen);
+            } else if (!ProgressionRules.perkPending(s, b) && barRight() > barLeft() + 20) {
+                g.fill(barLeft(), y + 6, barRight(), y + 12, 0xFF333333);
+                g.fill(barLeft(), y + 6, barLeft() + (barRight() - barLeft()) * points / b.maxPoints(), y + 12, 0xFFFFAA00);
             }
-            g.drawString(font, points + "/" + b.maxPoints(), panelRight - 72, y + 6, 0xFFFFFF);
+            g.drawString(font, points + "/" + b.maxPoints(), panelRight - 72, y + 5, locked ? 0x777777 : 0xFFFFFF);
+            if (locked) {
+                // Oscurecida y con candado (regla 13).
+                g.fill(x - 2, y, panelRight - 36, y + 18, 0x90000000);
+                drawLock(g, x, y + 4);
+                if (rowHovered) hover = Component.translatable("ui.rpgclasses.branch_locked");
+            } else if (ProgressionRules.perkPending(s, b) && rowHovered && mouseX < barLeft()) {
+                hover = Component.translatable("ui.rpgclasses.perk_choose");
+            }
         }
 
         int y = subclassRowY(def.branches().size());
         if (s.subclassId != null) {
             int cap = ProgressionRules.subclassCap(s.basePoints());
-            g.drawString(font, Component.translatable(Ids.langKey("subclass", s.subclassId, "name")), x, y + 6, 0x55FFFF);
-            g.drawString(font, Component.translatable("ui.rpgclasses.subclass_level", s.subclassLevel, cap), x + 130, y + 6, 0xFFFFFF);
+            g.drawString(font, Component.translatable(Ids.langKey("subclass", s.subclassId, "name")), x, y + 5, 0x55FFFF);
+            g.drawString(font, Component.translatable("ui.rpgclasses.subclass_level", s.subclassLevel, cap), x + 130, y + 5, 0xFFFFFF);
         } else if (s.basePoints() >= ProgressionRules.SUBCLASS_UNLOCK) {
             g.drawString(font, Component.translatable("ui.rpgclasses.subclass_pick"), x, y, 0x55FFFF);
         } else {
-            g.drawString(font, Component.translatable("ui.rpgclasses.subclass_locked", ProgressionRules.SUBCLASS_UNLOCK, s.basePoints()), x, y + 6, 0xAAAAAA);
+            g.drawString(font, Component.translatable("ui.rpgclasses.subclass_locked", ProgressionRules.SUBCLASS_UNLOCK, s.basePoints()), x, y + 5, 0xAAAAAA);
         }
+        pendingTooltip = hover;
+    }
+
+    /** Candado de 7x9 píxeles dibujado con rectángulos. */
+    private static void drawLock(GuiGraphics g, int x, int y) {
+        int c = 0xFFBBBBBB;
+        g.fill(x + 1, y, x + 6, y + 1, c);
+        g.fill(x + 1, y, x + 2, y + 4, c);
+        g.fill(x + 5, y, x + 6, y + 4, c);
+        g.fill(x, y + 4, x + 7, y + 9, c);
+        g.fill(x + 3, y + 5, x + 4, y + 7, 0xFF333333);
     }
 
     // --- Acciones ---
@@ -256,6 +313,11 @@ public final class ClassScreen extends Screen {
 
     private void confirm(String titleKey, ClassAction.Action action, String arg) {
         confirmWith(Component.translatable(titleKey), Component.translatable("ui.rpgclasses.respec_text", lossPercent()), action, arg);
+    }
+
+    private void confirmPerk(Component name, String branchId, String perkId) {
+        confirmWith(Component.translatable("ui.rpgclasses.confirm_perk", name), Component.translatable("ui.rpgclasses.confirm_perk_text"),
+                ClassAction.Action.CHOOSE_PERK, ClassAction.perkArg(branchId, perkId));
     }
 
     private void confirmNamed(String titleKey, Component name, ClassAction.Action action, String arg) {
@@ -337,8 +399,9 @@ public final class ClassScreen extends Screen {
         }
 
         g.fill(panelLeft, panelTop, panelRight, panelBottom, 0x90000000);
+        pendingTooltip = null;
         if (tab == ClassPages.Tab.PROGRESS) {
-            renderProgress(g);
+            renderProgress(g, mouseX, mouseY);
         } else {
             g.enableScissor(panelLeft, panelTop + 4, panelRight, panelBottom - 4);
             int textY = panelTop + 4 - scroll;
@@ -359,6 +422,7 @@ public final class ClassScreen extends Screen {
         }
 
         super.render(g, mouseX, mouseY, partialTick);
+        if (pendingTooltip != null) g.renderTooltip(font, font.split(pendingTooltip, 200), mouseX, mouseY);
     }
 
     @Override

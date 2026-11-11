@@ -22,7 +22,8 @@
       "id": "rpgclasses:afflicting_strike",
       "damage_per_second": 2,
       "duration_seconds": 6,
-      "boss_factor": 0.5
+      "boss_factor": 0.5,
+      "contagion_radius": 5
     }
   ],
   "milestones": []

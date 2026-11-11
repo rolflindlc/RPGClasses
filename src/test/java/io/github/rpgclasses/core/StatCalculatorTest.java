@@ -46,12 +46,12 @@ public class StatCalculatorTest {
         STORE.load(read("classes"), read("subclasses"), read("abilities"));
     }
 
-    /** Jugador con todas las ramas a {@code branchPoints} y, opcionalmente, una subclase a {@code subLevel}. */
+    /** Jugador con sus 3 primeras ramas a {@code branchPoints} y, opcionalmente, una subclase a {@code subLevel}. */
     private static ProgressState player(String classId, int branchPoints, String subclassId, int subLevel) {
         ClassDef c = STORE.classDef("rpgclasses:" + classId);
         ProgressState s = new ProgressState();
         ProgressionRules.chooseClass(s, c);
-        s.branchPoints.replaceAll((k, v) -> branchPoints);
+        for (int i = 0; i < ProgressionRules.BRANCHES_USABLE; i++) s.branchPoints.put(c.branches().get(i).id(), branchPoints);
         if (subclassId != null) {
             s.subclassId = "rpgclasses:" + subclassId;
             s.subclassLevel = subLevel;
@@ -74,7 +74,7 @@ public class StatCalculatorTest {
         assertEquals(16.0, t.get(new Key("minecraft:generic.armor", "add")), EPS);
         assertEquals(6.0, t.get(new Key("minecraft:generic.armor_toughness", "add")), EPS);
         assertEquals(0.25, t.get(new Key("minecraft:generic.movement_speed", "multiply_base")), EPS);
-        assertEquals(1.0, t.get(new Key("rpgclasses:crit_damage", "add")), EPS);
+        assertEquals(0.5, t.get(new Key("rpgclasses:crit_damage", "add")), EPS); // Brutalidad 2.7: +50%
         // Cualquier pieza de armadura desactiva la defensa y la velocidad desarmadas.
         assertFalse(totals(s, ARMORED).containsKey(new Key("minecraft:generic.armor", "add")));
         // A media rama, la mitad: ambas pasivas suben con cada punto.
@@ -94,8 +94,9 @@ public class StatCalculatorTest {
     @Test
     public void monkBreezeMasterReachesDesignTotals() {
         Map<Key, Double> t = totals(player("monk", 10, "breeze_master", 10), NO_ARMOR);
-        assertEquals(0.80, t.get(new Key("minecraft:generic.movement_speed", "multiply_base")), EPS);
-        assertEquals(1.20, t.get(new Key("rpgclasses:jump_bonus", "add")), EPS);
+        // Viento 2.7b (+35%) + Cefiro Marcial (+40% / +80%).
+        assertEquals(0.75, t.get(new Key("minecraft:generic.movement_speed", "multiply_base")), EPS);
+        assertEquals(1.15, t.get(new Key("rpgclasses:jump_bonus", "add")), EPS);
     }
 
     @Test
@@ -108,7 +109,7 @@ public class StatCalculatorTest {
                         "minecraft:generic.movement_speed", 0.25)));
         assertEquals(20.0, stone.get(new Key("minecraft:generic.armor", "add")), EPS);
         assertEquals(7.5, stone.get(new Key("minecraft:generic.armor_toughness", "add")), EPS);
-        assertEquals(0.20, stone.get(new Key("minecraft:generic.movement_speed", "multiply_base")), EPS);
+        assertEquals(0.1875, stone.get(new Key("minecraft:generic.movement_speed", "multiply_base")), EPS);
         // Agua: +80% x2 superaría el tope global de +100%.
         Map<Key, Double> water = StatCalculator.attributeTotals(monk, c, STORE.subclassDef(monk.subclassId),
                 new Context(false, Map.of("minecraft:generic.movement_speed", 2.0, "rpgclasses:jump_bonus", 2.0)));
@@ -136,7 +137,66 @@ public class StatCalculatorTest {
         double[] cuirass = StatCalculator.equippedArmorBonus(s, STORE.classDef(s.classId));
         assertEquals(0.25, cuirass[0], EPS);
         assertEquals(0.40, cuirass[1], EPS);
-        assertEquals(0.60, totals(s, ARMORED).get(new Key("minecraft:generic.max_health", "multiply_base")), EPS);
+        // Rasgo del Paladín (+20%) + Vigor Colosal (+60%) = +80%; la velocidad lleva el -10% del rasgo.
+        assertEquals(0.80, totals(s, ARMORED).get(new Key("minecraft:generic.max_health", "multiply_base")), EPS);
+        assertEquals(-0.10, totals(s, ARMORED).get(new Key("minecraft:generic.movement_speed", "multiply_base")), EPS);
+        // Con Cuerpo Colosal (+20%) llega justo al tope global de +100%.
+        s.perks.put("cuirass", "colossal_body");
+        assertEquals(1.0, totals(s, ARMORED).get(new Key("minecraft:generic.max_health", "multiply_base")), EPS);
+    }
+
+    @Test
+    public void traitsApplyInFullFromTheStart() {
+        assertEquals(-0.20, totals(player("mage", 0, null, 0), NO_ARMOR).get(new Key("minecraft:generic.max_health", "multiply_base")), EPS);
+        assertEquals(-0.15, totals(player("rogue", 0, null, 0), NO_ARMOR).get(new Key("minecraft:generic.max_health", "multiply_base")), EPS);
+        assertFalse(totals(player("barbarian", 0, null, 0), NO_ARMOR).containsKey(new Key("minecraft:generic.max_health", "multiply_base")));
+    }
+
+    @Test
+    public void perksApplyOnlyWithAFullBranch() {
+        ProgressState s = player("rogue", 10, null, 0);
+        s.perks.put("wind", "evasion");
+        // Rasgo -15% + Esquiva -10% = -25% (15 HP).
+        assertEquals(-0.25, totals(s, NO_ARMOR).get(new Key("minecraft:generic.max_health", "multiply_base")), EPS);
+        s.branchPoints.put("wind", 9);
+        assertEquals(-0.15, totals(s, NO_ARMOR).get(new Key("minecraft:generic.max_health", "multiply_base")), EPS);
+        s.branchPoints.put("wind", 10);
+        // Filo +25% + Ráfaga +25% de velocidad de ataque.
+        s.perks.put("edge", "flurry");
+        assertEquals(0.50, totals(s, NO_ARMOR).get(new Key("minecraft:generic.attack_speed", "multiply_base")), EPS);
+        assertEquals(-0.12, totals(s, NO_ARMOR).get(new Key("minecraft:generic.attack_damage", "multiply_base")), EPS);
+    }
+
+    @Test
+    public void perkMechanicsAndCoraza() {
+        ProgressState s = player("paladin", 10, null, 0);
+        s.perks.put("cuirass", "heavy_cuirass");
+        double[] cuirass = StatCalculator.equippedArmorBonus(s, STORE.classDef(s.classId));
+        assertEquals(0.45, cuirass[0], EPS);
+        assertEquals(0.60, cuirass[1], EPS);
+        s.perks.put("push", "shockwave");
+        java.util.List<StatCalculator.ActiveMechanic> m = StatCalculator.mechanics(s, STORE.classDef(s.classId), null);
+        assertEquals(1, m.size());
+        assertEquals("rpgclasses:shockwave", m.get(0).id());
+        assertEquals(5, m.get(0).number("every_hits", 0), EPS);
+        // Mecánica de rama que escala: Toxinas al 3% por punto.
+        ProgressState r = player("rogue", 0, null, 0);
+        r.branchPoints.put("toxins", 4);
+        StatCalculator.ActiveMechanic toxin = StatCalculator.mechanics(r, STORE.classDef(r.classId), null).get(0);
+        assertEquals(0.12, toxin.number("chance", 0), EPS);
+    }
+
+    @Test
+    public void barbarianBrutalityPerksKeepExpectedDamage() {
+        ProgressState s = player("barbarian", 10, null, 0);
+        s.perks.put("brutality", "crushing_blow");
+        Map<Key, Double> a = totals(s, NO_ARMOR);
+        assertEquals(1.25, a.get(new Key("rpgclasses:crit_damage", "add")), EPS);
+        assertEquals(-0.15, a.get(new Key("rpgclasses:crit_chance", "add")), EPS);
+        s.perks.put("brutality", "steady_blow");
+        Map<Key, Double> b = totals(s, NO_ARMOR);
+        assertEquals(0.15, b.get(new Key("rpgclasses:crit_damage", "add")), EPS);
+        assertEquals(0.20, b.get(new Key("rpgclasses:crit_chance", "add")), EPS);
     }
 
     @Test

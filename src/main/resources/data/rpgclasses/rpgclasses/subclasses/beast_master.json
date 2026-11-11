@@ -8,8 +8,8 @@
     {
       "type": "rpgclasses:mechanic",
       "id": "rpgclasses:wild_bond",
-      "health": 0.5,
-      "damage": 0.5,
+      "health": 0.35,
+      "damage": 0.35,
       "speed": 0.25,
       "max_pets": 8
     },

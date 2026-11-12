@@ -115,6 +115,7 @@ def speed_lines(cv, color, ys=(10, 18, 26), x0=2, x1=9):
 # ---------------------------------------------------------------- efectos
 
 def fx_bulwark(cv):
+    cv.sparkle(32, 4, r=2.5)
     shield(cv, GOLD, GOLD_D, lambda cv: cv.layer("#fff3c4", lambda d: (d.rect(16.5, 9, 19.5, 26), d.rect(11, 14, 25, 17)), shade=False))
 
 
@@ -171,6 +172,7 @@ def fx_condemned(cv):
 
 
 def fx_banner(cv):
+    cv.sparkle(33, 30, r=2.5)
     cv.layer(WOOD, lambda d: d.rect(7, 2, 10, 34))
     cv.layer("#e6c35a", lambda d: d.poly((10, 4), (30, 4), (30, 26), (20, 21), (10, 26)))
     cv.layer("#b02a2a", lambda d: star(d, 20, 13, 6, 2.6, 4), shade=False)
@@ -190,6 +192,7 @@ def fx_retreat(cv):
 
 
 def fx_arcane_step(cv):
+    cv.sparkle(33, 4, "#e6d6ff", r=2)
     cv.layer(PURPLE, lambda d: star(d, 21, 16, 13, 4, 4))
     cv.layer("#e6d6ff", lambda d: star(d, 21, 16, 5, 1.8, 4), shade=False)
     speed_lines(cv, "#c9b0ff", ys=(22, 28), x0=3, x1=11)

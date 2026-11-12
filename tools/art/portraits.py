@@ -18,6 +18,7 @@ SIZE = 36
 # ---------------------------------------------------------------- clases
 
 def mage(cv):
+    cv.sparkle(31, 6); cv.sparkle(4, 13, r=1.5)
     cv.layer("#5b4bc4", lambda d: d.poly((19, 2), (24, 6), (21, 7), (27, 25), (9, 25), (16, 8)))
     cv.layer("#3e3290", lambda d: d.ellipse(3, 22, 33, 31))
     cv.layer(FIRE1, lambda d: (star(d, 17, 15, 4, 1.4), star(d, 22, 20, 2.6, 1)), shade=False)
@@ -66,16 +67,19 @@ def monk(cv):
 # ---------------------------------------------------------------- subclases
 
 def battle_mage(cv):
+    cv.sparkle(31, 26, "#d9c4ff")
     cv.layer(STEEL, lambda d: d.poly((9, 5), (14, 5), (18, 9), (22, 5), (27, 5), (32, 11), (28, 16), (27, 32), (9, 32), (8, 16), (4, 11)))
     cv.layer(STEEL_D, lambda d: d.rect(17, 11, 19, 31), shade=False)
     cv.layer(PURPLE, lambda d: star(d, 18, 19, 6, 2.2))
 
 
 def chaotic_evoker(cv):
+    cv.sparkle(5, 6, "#ff9ad5"); cv.sparkle(31, 9, "#d9a4ff", r=1.5)
     flame(cv, colors=("#6a1fa0", "#d0389a", "#ff9ad5"))
 
 
 def elementalist(cv):
+    cv.sparkle(31, 4); cv.sparkle(5, 31, r=1.5)
     cv.layer("#e0452b", lambda d: d.poly((18, 3), (18, 18), (3, 18)))
     cv.layer("#4fa8e8", lambda d: d.poly((18, 3), (33, 18), (18, 18)))
     cv.layer("#5aa02d", lambda d: d.poly((18, 18), (33, 18), (18, 33)))
@@ -84,6 +88,7 @@ def elementalist(cv):
 
 
 def blessed_guardian(cv):
+    cv.sparkle(4, 8); cv.sparkle(32, 12, r=1.5)
     cv.layer(GOLD, lambda d: d.arc(8, 1, 28, 9, 0, 360, w=2))
     shield(cv, "#eef1f5", GOLD_D, lambda cv: cv.layer(GOLD, lambda d: (d.rect(16.5, 14, 19.5, 30), d.rect(12, 18, 24, 21))), y=4, s=0.82)
 
@@ -101,6 +106,7 @@ def unyielding_bastion(cv):
 
 
 def indestructible(cv):
+    cv.sparkle(31, 6); cv.sparkle(5, 27, r=1.5)
     def ankh(d):
         d.arc(11, 2, 25, 18, 0, 360, w=4)
         d.rect(16, 15, 20, 34)
@@ -121,6 +127,7 @@ def suicidal_berserker(cv):
 
 
 def arcane_blade(cv):
+    cv.sparkle(6, 7, "#e6d6ff"); cv.sparkle(30, 26, "#d9c4ff", r=1.5)
     cv.layer("#b38cf2", lambda d: blade(d, 13, 23, 32, 4, 6))
     cv.layer("#e6d6ff", lambda d: d.line(15, 21, 28, 8, w=1), shade=False)
     cv.layer(GOLD_D, lambda d: d.poly((8, 20), (11, 17), (19, 25), (16, 28)))
@@ -175,6 +182,7 @@ def heavy_palm(cv):
 
 
 def triworld_guardian(cv):
+    cv.sparkle(31, 6, r=1.5); cv.sparkle(4, 8)
     cv.layer(GOLD_D, lambda d: (d.line(18, 9, 9, 25, w=2), d.line(18, 9, 27, 25, w=2), d.line(9, 25, 27, 25, w=2)))
     cv.layer("#5aa02d", lambda d: d.circle(18, 9, 6.5))
     cv.layer("#d9361c", lambda d: d.circle(9, 26, 6.5))
@@ -252,6 +260,7 @@ def undead(cv):
 # ---------------------------------------------------------------- subrazas
 
 def polyvalent(cv):
+    cv.sparkle(31, 31, r=1.5)
     cv.layer(GOLD, lambda d: star(d, 18, 18, 16, 4, 4))
     cv.layer(STEEL, lambda d: star(d, 18, 18, 10, 3, 4, rot=-45))
     cv.layer(RED, lambda d: d.circle(18, 18, 3))
@@ -290,6 +299,7 @@ def warlord(cv):
 
 
 def deep(cv):
+    cv.sparkle(31, 5, "#d6fbff"); cv.sparkle(4, 6, "#d6fbff", r=1.5)
     cv.layer("#2fd4e0", lambda d: d.poly((18, 2), (26, 12), (18, 34), (10, 12)))
     cv.layer("#1d8fa8", lambda d: d.poly((8, 14), (13, 20), (9, 32), (4, 20)))
     cv.layer("#1d8fa8", lambda d: d.poly((28, 14), (32, 20), (27, 32), (23, 20)))
@@ -319,6 +329,7 @@ def dark_elf(cv):
 
 
 def arcane_elf(cv):
+    cv.sparkle(5, 30, "#e6d6ff", r=1.5); cv.sparkle(31, 31, "#e6d6ff")
     cv.layer(PURPLE, lambda d: star(d, 18, 18, 16, 5, 4))
     cv.layer("#c9b0ff", lambda d: star(d, 18, 18, 11, 4, 4, rot=-45))
     cv.layer("#ffffff", lambda d: d.circle(18, 18, 3), shade=False)
@@ -379,6 +390,7 @@ def abyssal(cv):
 
 
 def native(cv):
+    cv.sparkle(31, 6); cv.sparkle(5, 4, r=1.5)
     def ingot(d, y):
         d.poly((6, y + 8), (10, y), (26, y), (30, y + 8))
     cv.layer(GOLD, lambda d: ingot(d, 20))
@@ -419,6 +431,7 @@ def skeleton(cv):
 
 
 def specter(cv):
+    cv.sparkle(3, 10, "#d6e6f2", r=1.5); cv.sparkle(33, 18, "#d6e6f2", r=1)
     cv.layer("#d6e6f2", lambda d: (d.ellipse(7, 3, 29, 25), d.rect(7, 14, 29, 28), d.poly((7, 27), (7, 34), (12, 29), (16, 34), (20, 29),
                                                                                          (24, 34), (29, 29), (29, 27))))
     cv.layer("#1d2a3a", lambda d: (d.ellipse(11, 11, 16, 18), d.ellipse(20, 11, 25, 18), d.ellipse(15, 20, 21, 25)), shade=False)
@@ -484,12 +497,11 @@ def frame(color, accent=None):
 
 
 def portrait(color, glyph, accent=None):
-    img = frame(color, accent)
-    cv = Canvas(SIZE, k=0.74, off=4.7)
+    """Sin marco (estilo de iconos sueltos): el glifo ocupa casi todo el lienzo, con contorno teñido y destellos."""
+    cv = Canvas(SIZE, k=0.9, off=1.8)
     glyph(cv)
-    cv.outline("#141216")
-    img.alpha_composite(cv.img)
-    return img
+    cv.finish()
+    return cv.img
 
 
 def all_portraits():
@@ -509,9 +521,9 @@ def all_portraits():
 def all_effects():
     out = []
     for name, fn in glyphs.EFFECTS.items():
-        cv = Canvas(18)
+        cv = Canvas(18, k=0.47, off=0.55)
         fn(cv)
-        cv.outline()
+        cv.finish()
         out.append((name + ".png", cv.img))
     return out
 

@@ -1,0 +1,14 @@
+{
+  "replace": false,
+  "values": [
+    "#forge:ores",
+    "#forge:raw_materials",
+    "minecraft:coal",
+    "minecraft:diamond",
+    "minecraft:emerald",
+    "minecraft:lapis_lazuli",
+    "minecraft:redstone",
+    "minecraft:quartz",
+    "minecraft:amethyst_shard"
+  ]
+}

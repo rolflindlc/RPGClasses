@@ -91,7 +91,7 @@ public final class DefinitionParser {
             JsonObject s = se.getAsJsonObject();
             JsonObject sd = s.has("display") ? s.getAsJsonObject("display") : new JsonObject();
             subraces.add(new Definitions.SubraceDef(string(s, "id"), optString(sd, "icon", "minecraft:barrier"),
-                    !s.has("available") || s.get("available").getAsBoolean(), effects(s)));
+                    !s.has("available") || s.get("available").getAsBoolean(), effects(s), rites(s)));
         }
         List<EffectDef> effects = effects(o);
         // Validación: cada efecto debe poder evaluarse en los 4 rangos.
@@ -103,6 +103,29 @@ public final class DefinitionParser {
             else throw new IllegalArgumentException("tipo de efecto no admitido en razas: " + e.type());
         }
         return new Definitions.RaceDef(id, optString(display, "icon", "minecraft:barrier"), effects, List.copyOf(subraces));
+    }
+
+    public static final java.util.Set<String> OBJECTIVE_TYPES = java.util.Set.of(
+            "kill", "kill_variety", "kill_styles", "hits_taken", "steals", "barters", "offer", "structure", "boss");
+
+    private static List<Definitions.RiteDef> rites(JsonObject s) {
+        List<Definitions.RiteDef> out = new ArrayList<>();
+        if (!s.has("rites")) return out;
+        for (JsonElement re : array(s, "rites")) {
+            JsonObject r = re.getAsJsonObject();
+            List<Definitions.ObjectiveDef> objectives = new ArrayList<>();
+            for (JsonElement oe : array(r, "objectives")) {
+                JsonObject o = oe.getAsJsonObject();
+                String type = string(o, "type");
+                if (!OBJECTIVE_TYPES.contains(type)) throw new IllegalArgumentException("tipo de objetivo de rito desconocido: " + type);
+                int count = o.has("count") ? o.get("count").getAsInt() : 1;
+                if (count < 1) throw new IllegalArgumentException("count debe ser >= 1 en " + string(r, "id"));
+                objectives.add(new Definitions.ObjectiveDef(type, count, o));
+            }
+            if (objectives.isEmpty()) throw new IllegalArgumentException("rito sin objetivos: " + string(r, "id"));
+            out.add(new Definitions.RiteDef(string(r, "id"), optString(r, "kind", "feat"), List.copyOf(objectives)));
+        }
+        return List.copyOf(out);
     }
 
     public static Definitions.AbilityDef parseAbility(String id, String json) {

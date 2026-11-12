@@ -61,6 +61,7 @@ public final class ProgressionRules {
         s.subraceId = subraceId;
         s.raceRank = 0;
         s.humanWalls.clear();
+        s.riteProgress.clear();
     }
 
     /** Humano: elegir el muro (o el segundo, el Polivalente) al que se aplica Adaptable. */

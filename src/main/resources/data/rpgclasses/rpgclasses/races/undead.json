@@ -58,6 +58,55 @@
           },
           "cap_per_second": 5
         }
+      ],
+      "rites": [
+        {
+          "id": "undead.vampire.1",
+          "kind": "feat",
+          "objectives": [
+            {
+              "type": "kill",
+              "count": 30,
+              "filter": {
+                "target": "enemy",
+                "dark_or_night": true
+              }
+            }
+          ]
+        },
+        {
+          "id": "undead.vampire.2",
+          "kind": "craft",
+          "objectives": [
+            {
+              "type": "offer",
+              "items": [
+                {
+                  "item": "minecraft:redstone",
+                  "count": 16
+                },
+                {
+                  "item": "minecraft:beetroot",
+                  "count": 8
+                },
+                {
+                  "item": "minecraft:red_mushroom",
+                  "count": 8
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "undead.vampire.3",
+          "kind": "ritual",
+          "objectives": [
+            {
+              "type": "boss",
+              "thirst": 100
+            }
+          ]
+        }
       ]
     },
     {
@@ -86,6 +135,60 @@
               1.5
             ]
           }
+        }
+      ],
+      "rites": [
+        {
+          "id": "undead.skeleton.1",
+          "kind": "feat",
+          "objectives": [
+            {
+              "type": "hits_taken",
+              "count": 50,
+              "projectile": true
+            },
+            {
+              "type": "kill",
+              "count": 20,
+              "filter": {
+                "target": "enemy",
+                "exclude_tag": "minecraft:skeletons"
+              }
+            }
+          ]
+        },
+        {
+          "id": "undead.skeleton.2",
+          "kind": "craft",
+          "objectives": [
+            {
+              "type": "offer",
+              "items": [
+                {
+                  "item": "minecraft:bone",
+                  "count": 64
+                },
+                {
+                  "tag": "minecraft:arrows",
+                  "count": 32
+                },
+                {
+                  "item": "minecraft:bone_block",
+                  "count": 4
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "undead.skeleton.3",
+          "kind": "ritual",
+          "objectives": [
+            {
+              "type": "boss",
+              "projectiles": 10
+            }
+          ]
         }
       ]
     },
@@ -120,6 +223,56 @@
               40
             ]
           }
+        }
+      ],
+      "rites": [
+        {
+          "id": "undead.specter.1",
+          "kind": "feat",
+          "objectives": [
+            {
+              "type": "kill",
+              "count": 20,
+              "filter": {
+                "target": "any",
+                "entity_tag": "rpgclasses:rite/flying"
+              }
+            }
+          ]
+        },
+        {
+          "id": "undead.specter.2",
+          "kind": "craft",
+          "objectives": [
+            {
+              "type": "offer",
+              "items": [
+                {
+                  "item": "minecraft:phantom_membrane",
+                  "count": 16
+                },
+                {
+                  "item": "minecraft:feather",
+                  "count": 16
+                },
+                {
+                  "item": "minecraft:ender_pearl",
+                  "count": 4
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "undead.specter.3",
+          "kind": "ritual",
+          "objectives": [
+            {
+              "type": "boss",
+              "ability": "race_ethereal",
+              "uses": 3
+            }
+          ]
         }
       ]
     }

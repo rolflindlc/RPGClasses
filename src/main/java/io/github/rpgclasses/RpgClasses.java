@@ -60,6 +60,9 @@ public class RpgClasses {
         MonkSubclasses.register();
         RogueAbilities.register();
         ModEntities.ENTITIES.register(modBus);
+        io.github.rpgclasses.registry.ModBlocks.BLOCKS.register(modBus);
+        io.github.rpgclasses.registry.ModBlocks.ITEMS.register(modBus);
+        modBus.addListener(io.github.rpgclasses.registry.ModBlocks::onCreativeTab);
         modBus.addListener(ModEntities::onAttributes);
         modBus.addListener(ModAttributes::onAttributeModification);
 
@@ -109,6 +112,7 @@ public class RpgClasses {
         MinecraftForge.EVENT_BUS.register(new io.github.rpgclasses.content.race.RaceAbilities());
         MinecraftForge.EVENT_BUS.register(new io.github.rpgclasses.content.race.CraftTraits());
         MinecraftForge.EVENT_BUS.register(new io.github.rpgclasses.content.race.WolfRider());
+        MinecraftForge.EVENT_BUS.register(io.github.rpgclasses.content.race.Rites.listener());
     }
 
     private void commonSetup(FMLCommonSetupEvent event) {

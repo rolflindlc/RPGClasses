@@ -70,6 +70,53 @@
             ]
           }
         }
+      ],
+      "rites": [
+        {
+          "id": "elf.dark.1",
+          "kind": "feat",
+          "objectives": [
+            {
+              "type": "kill",
+              "count": 30,
+              "filter": {
+                "target": "enemy",
+                "max_light": 7
+              }
+            }
+          ]
+        },
+        {
+          "id": "elf.dark.2",
+          "kind": "craft",
+          "objectives": [
+            {
+              "type": "offer",
+              "items": [
+                {
+                  "item": "minecraft:campfire",
+                  "count": 8
+                },
+                {
+                  "item": "minecraft:charcoal",
+                  "count": 16
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "elf.dark.3",
+          "kind": "ritual",
+          "objectives": [
+            {
+              "type": "boss",
+              "night": true,
+              "ability": "race_smoke_cloud",
+              "uses": 3
+            }
+          ]
+        }
       ]
     },
     {
@@ -107,6 +154,54 @@
             ]
           },
           "fusion_cost_levels": 30
+        }
+      ],
+      "rites": [
+        {
+          "id": "elf.arcane.1",
+          "kind": "feat",
+          "objectives": [
+            {
+              "type": "kill",
+              "count": 30,
+              "filter": {
+                "target": "enemy",
+                "weapon_enchanted": true
+              }
+            }
+          ]
+        },
+        {
+          "id": "elf.arcane.2",
+          "kind": "craft",
+          "objectives": [
+            {
+              "type": "offer",
+              "items": [
+                {
+                  "item": "*",
+                  "count": 3,
+                  "pred": "enchanted_by_you"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "elf.arcane.3",
+          "kind": "ritual",
+          "objectives": [
+            {
+              "type": "offer",
+              "items": [
+                {
+                  "item": "minecraft:enchanted_book",
+                  "count": 2,
+                  "pred": "twin_books"
+                }
+              ]
+            }
+          ]
         }
       ]
     },
@@ -147,6 +242,48 @@
               2
             ]
           }
+        }
+      ],
+      "rites": [
+        {
+          "id": "elf.sylvan.1",
+          "kind": "feat",
+          "objectives": [
+            {
+              "type": "kill",
+              "count": 30,
+              "filter": {
+                "target": "enemy",
+                "biome": "minecraft:is_forest"
+              }
+            }
+          ]
+        },
+        {
+          "id": "elf.sylvan.2",
+          "kind": "craft",
+          "objectives": [
+            {
+              "type": "offer",
+              "items": [
+                {
+                  "tag": "rpgclasses:rite/crops",
+                  "count": 16,
+                  "types": 4
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "elf.sylvan.3",
+          "kind": "ritual",
+          "objectives": [
+            {
+              "type": "boss",
+              "altar": "forest"
+            }
+          ]
         }
       ]
     }

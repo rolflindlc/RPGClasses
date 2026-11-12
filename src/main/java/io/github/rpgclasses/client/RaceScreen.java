@@ -47,7 +47,9 @@ public final class RaceScreen extends Screen {
     private String selectedSubrace;
     private List<FormattedCharSequence> lines = List.of();
     private int scroll;
-    private int panelLeft, panelTop, panelRight, panelBottom;
+    private int panelLeft, panelTop, panelRight, panelBottom, headerTop;
+    private int header = 46;
+    private static final int TABS_Y = 28;
 
     public RaceScreen(Mode mode) {
         super(Component.translatable(mode == Mode.WALL ? "ui.rpgclasses.race.title_wall"
@@ -88,8 +90,11 @@ public final class RaceScreen extends Screen {
 
     @Override
     protected void init() {
+        Portraits.clearCache();
         panelLeft = LEFT_WIDTH + 14;
-        panelTop = mode == Mode.SELECT ? 66 : 54;
+        header = height >= 330 ? 46 : 24;
+        headerTop = TABS_Y + 26;
+        panelTop = headerTop + header;
         panelRight = width - 10;
         panelBottom = height - 36;
         int footerY = height - 28;
@@ -109,27 +114,36 @@ public final class RaceScreen extends Screen {
         RaceDef race = RaceStore.CLIENT.race(selectedRace);
         if (race != null && race.subrace(selectedSubrace) == null) selectedSubrace = race.subraces().get(0).id();
 
-        int y = 30;
-        for (String id : raceIds) {
-            Button b = Button.builder(Component.translatable(Ids.langKey("race", id, "name")), btn -> {
-                selectedRace = id;
-                selectedSubrace = null;
-                scroll = 0;
-                rebuildWidgets();
-            }).bounds(10, y, LEFT_WIDTH - 2, 20).build();
+        // Rejilla de razas: tarjetas con retrato (si no caben, solo el retrato y el nombre en la ayuda).
+        int cols = 2, gap = 2;
+        int cellW = (LEFT_WIDTH - 4 - gap) / cols;
+        int rows = Math.max(1, (raceIds.size() + cols - 1) / cols);
+        int cellH = Math.max(26, Math.min(52, (height - 8 - TABS_Y) / rows - gap));
+        for (int i = 0; i < raceIds.size(); i++) {
+            String id = raceIds.get(i);
+            RaceDef def = RaceStore.CLIENT.race(id);
+            PortraitButton b = new PortraitButton(8 + (i % cols) * (cellW + gap), TABS_Y + (i / cols) * (cellH + gap), cellW, cellH,
+                    Component.translatable(Ids.langKey("race", id, "name")), Portraits.raceTex(id), def == null ? null : def.icon(),
+                    PortraitButton.Layout.VERTICAL, cellH >= 48, btn -> {
+                        selectedRace = id;
+                        selectedSubrace = null;
+                        scroll = 0;
+                        rebuildWidgets();
+                    });
             b.active = !id.equals(selectedRace);
             addRenderableWidget(b);
-            y += 22;
         }
+        // Pestañas de subraza con retrato pequeño.
         if (race != null) {
             int tabWidth = (panelRight - panelLeft) / race.subraces().size();
             for (int i = 0; i < race.subraces().size(); i++) {
                 SubraceDef sub = race.subraces().get(i);
-                Button b = Button.builder(subraceName(race, sub), btn -> {
-                    selectedSubrace = sub.id();
-                    scroll = 0;
-                    rebuildWidgets();
-                }).bounds(panelLeft + i * tabWidth, 30, tabWidth - 2, 20).build();
+                PortraitButton b = new PortraitButton(panelLeft + i * tabWidth, TABS_Y, tabWidth - 2, 22, subraceName(race, sub),
+                        Portraits.subraceTex(race.id(), sub.id()), sub.icon(), PortraitButton.Layout.HORIZONTAL, true, btn -> {
+                            selectedSubrace = sub.id();
+                            scroll = 0;
+                            rebuildWidgets();
+                        });
                 b.active = !sub.id().equals(selectedSubrace);
                 addRenderableWidget(b);
             }
@@ -277,6 +291,34 @@ public final class RaceScreen extends Screen {
 
     // --- Dibujo y entrada ---
 
+    /** Cabecera: retrato y nombre de la raza a la izquierda; de la subraza a la derecha. */
+    private void renderHeader(GuiGraphics g) {
+        UiStyle.header(g, panelLeft, headerTop, panelRight, headerTop + header);
+        RaceDef race = RaceStore.CLIENT.race(selectedRace);
+        if (race == null) return;
+        SubraceDef sub = race.subrace(selectedSubrace);
+        boolean big = header >= 46;
+        int size = big ? Portraits.TEX : 18;
+        int x = panelLeft + 6, y = headerTop + (big ? 5 : 3);
+        Portraits.draw(g, Portraits.raceTex(race.id()), race.icon(), x, y, size);
+        Component raceName = Component.translatable(Ids.langKey("race", race.id(), "name"));
+        if (big) UiStyle.scaledText(g, font, raceName, x + 44, y + 4, 1.5f, 0xFFFFE08A);
+        else g.drawString(font, raceName, x + 24, y + 5, 0xFFFFE08A);
+        if (big && race.id().equals(state().raceId)) {
+            g.drawString(font, Component.translatable("ui.rpgclasses.race.header_rank", state().raceRank), x + 44, y + 22, 0x55FF55);
+        }
+        if (sub != null) {
+            int sx = panelRight - 6 - size;
+            Portraits.draw(g, Portraits.subraceTex(race.id(), sub.id()), sub.icon(), sx, y, size);
+            Component name = subraceName(race, sub);
+            g.drawString(font, name, sx - 6 - font.width(name), y + (big ? 8 : 5), sub.available() ? 0x55FFFF : 0x888888);
+            if (big) {
+                Component label = Component.translatable("ui.rpgclasses.race.header_subrace");
+                g.drawString(font, label, sx - 6 - font.width(label), y + 20, 0x888888);
+            }
+        }
+    }
+
     private int visibleLines() {
         return Math.max(1, (panelBottom - panelTop - 8) / LINE_HEIGHT);
     }
@@ -302,7 +344,8 @@ public final class RaceScreen extends Screen {
                 y += LINE_HEIGHT;
             }
         } else {
-            g.fill(panelLeft, panelTop, panelRight, panelBottom, 0x90000000);
+            UiStyle.panel(g, panelLeft, headerTop, panelRight, panelBottom);
+            renderHeader(g);
             int y = panelTop + 4;
             for (int i = scroll; i < Math.min(lines.size(), scroll + visibleLines()); i++) {
                 g.drawString(font, lines.get(i), panelLeft + 6, y, 0xE0E0E0);
@@ -310,7 +353,7 @@ public final class RaceScreen extends Screen {
             }
             if (mode == Mode.SELECT) {
                 g.drawCenteredString(font, Component.translatable("ui.rpgclasses.race.permanent").withStyle(ChatFormatting.GOLD),
-                        (panelLeft + panelRight) / 2, 54, 0xFFFFFF);
+                        (panelLeft + panelRight) / 2, 19, 0xFFFFFF);
             }
         }
         super.render(g, mouseX, mouseY, partialTick);

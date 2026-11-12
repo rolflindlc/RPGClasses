@@ -314,6 +314,9 @@ PARAMS = {
 
 UI = {
     "ui.rpgclasses.title_select": "Elige tu clase",
+    "ui.rpgclasses.header_subclass": "Tu subclase",
+    "ui.rpgclasses.race.header_rank": "Tu raza · Rango %s",
+    "ui.rpgclasses.race.header_subrace": "Subraza",
     "ui.rpgclasses.title_book": "Clases",
     "ui.rpgclasses.tab.progress": "Progreso",
     "ui.rpgclasses.progress_header": "Nivel total %s/40  |  XP: %s  |  %s",

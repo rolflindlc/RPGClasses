@@ -19,5 +19,6 @@ UI = {
  "msg.rpgclasses.bond.full": "Ya tienes el máximo de vínculos (%s).",
  "msg.rpgclasses.bond.need_near": "Acércate a la mascota (menos de %s bloques).",
  "msg.rpgclasses.bond.saved": "Punto %s guardado aquí.",
+ "msg.rpgclasses.bond.kit": "Has recibido el Libro de Vínculos.",
  "msg.rpgclasses.bond.only_beast_master": "Solo el Maestro de Bestias puede usar este libro.",
 }

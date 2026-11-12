@@ -16,7 +16,10 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.common.util.FakePlayer;
+import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -227,6 +230,46 @@ public final class BondBook {
             default -> { return; }
         }
         open(p);
+    }
+
+    // ------------------------------------------------------------------ kit
+
+    /** Valor de la marca de kit del libro: lo entrega la subclase, no la clase. */
+    private static final String KIT_OWNER = io.github.rpgclasses.core.Ids.NS + ":beast_master";
+
+    private static boolean isKitBook(net.minecraft.world.item.ItemStack stack) {
+        return stack.is(io.github.rpgclasses.registry.ModBlocks.BOND_BOOK.get()) && stack.hasTag()
+                && KIT_OWNER.equals(stack.getTag().getString(io.github.rpgclasses.server.KitService.KIT_TAG));
+    }
+
+    /**
+     * Kit del Maestro de Bestias: al tener la subclase recibe una vez un Libro de Vínculos marcado como kit; al perderla
+     * (reinicio de subclase o de clase) se le retira. Cubre también a quien ya era Maestro de Bestias antes del libro.
+     */
+    @SubscribeEvent
+    public void onPlayerTick(TickEvent.PlayerTickEvent event) {
+        if (event.phase != TickEvent.Phase.END || !(event.player instanceof ServerPlayer p) || p instanceof FakePlayer) return;
+        if (p.tickCount % 20 != 7 || !p.isAlive()) return;
+        CompoundTag r = root(p);
+        boolean master = RangerSubclasses.isBeastMaster(p);
+        if (master && !r.getBoolean("kit_given")) {
+            net.minecraft.world.item.ItemStack book = new net.minecraft.world.item.ItemStack(io.github.rpgclasses.registry.ModBlocks.BOND_BOOK.get());
+            book.getOrCreateTag().putString(io.github.rpgclasses.server.KitService.KIT_TAG, KIT_OWNER);
+            p.getInventory().placeItemBackInInventory(book);
+            r.putBoolean("kit_given", true);
+            p.displayClientMessage(Component.translatable("msg.rpgclasses.bond.kit"), true);
+        } else if (!master && r.getBoolean("kit_given")) {
+            p.getInventory().clearOrCountMatchingItems(BondBook::isKitBook, -1, p.inventoryMenu.getCraftSlots());
+            p.inventoryMenu.broadcastChanges();
+            r.remove("kit_given");
+        }
+    }
+
+    /** Forge no conserva los datos persistentes del jugador al morir: se copian los del libro. */
+    @SubscribeEvent
+    public void onClone(PlayerEvent.Clone event) {
+        CompoundTag old = event.getOriginal().getPersistentData();
+        if (old.contains(KEY)) event.getEntity().getPersistentData().put(KEY, old.getCompound(KEY).copy());
     }
 
     /** Mascota vinculada que muere: se quita del libro. */

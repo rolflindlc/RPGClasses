@@ -51,7 +51,8 @@ import java.util.WeakHashMap;
 /**
  * Rasgos de Rango 0 de las ocho razas (anexo de razas, sección 3). Los números salen de races/*.json.
  * <ul>
- *   <li>Tamaño (Orco, Enano, Goblin): atributo {@code rpgclasses:scale}, hitbox y altura de ojos.</li>
+ *   <li>Tamaño (Orco, Enano, Goblin): atributo {@code rpgclasses:scale}; la hitbox la escala {@code PlayerSizeMixin}
+ *       en todas las poses y aquí solo se ajusta la altura de los ojos.</li>
  *   <li>Orco: hambre extra y Última Resistencia. Enano: Minero. Goblin: Saqueo. Elfo: sin carne ni pescado.</li>
  *   <li>Tritón: respiración, minería y visión bajo el agua, daño de fuego extra.</li>
  *   <li>Infernal: inmune al fuego, golems hostiles, aldeanos más caros.</li>
@@ -77,12 +78,12 @@ public final class RaceTraits {
         return (float) Math.max(0.1, 1 + ModAttributes.value(player, ModAttributes.SCALE));
     }
 
+    /** La hitbox ya viene escalada de {@code PlayerSizeMixin}; aquí solo se escala la altura de los ojos. */
     @SubscribeEvent
     public void onSize(EntityEvent.Size event) {
         if (!(event.getEntity() instanceof Player player)) return;
         float s = scale(player);
         if (s == 1f) return;
-        event.setNewSize(event.getNewSize().scale(s));
         event.setNewEyeHeight(event.getNewEyeHeight() * s);
     }
 

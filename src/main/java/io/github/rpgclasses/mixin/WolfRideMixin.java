@@ -1,5 +1,6 @@
 package io.github.rpgclasses.mixin;
 
+import io.github.rpgclasses.content.race.Races;
 import io.github.rpgclasses.content.race.WolfRider;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -37,6 +38,14 @@ public abstract class WolfRideMixin extends TamableAnimal {
         yBodyRot = getYRot();
         yHeadRot = getYRot();
         if (((LivingEntityAccessor) rider).rpgclasses$isJumping() && onGround()) jumpFromGround();
+    }
+
+    /** Salto del lobo montado: el de vanilla es muy corto. Solo cambia cuando hay jinete. */
+    @Override
+    public float getJumpPower() {
+        float base = super.getJumpPower();
+        Player rider = WolfRider.rider((Wolf) (Object) this);
+        return rider == null ? base : base * (float) Races.number(rider, "race_wolf_mount", "jump_factor", 1.0);
     }
 
     @Override

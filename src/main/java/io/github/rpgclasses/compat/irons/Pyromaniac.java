@@ -36,14 +36,13 @@ import java.util.UUID;
  * Infernal Pirómano (anexo de razas, 3.7). Solo los conjuros raciales (los de la ranura racial de la rueda):
  * <ul>
  *   <li>R0–R1: el Disparo de fuego atraviesa 1 y luego 2 enemigos (el "pierce" propio de Iron's).</li>
- *   <li>R2: la Bola de fuego deja un charco de llamas de 4 s que prende a los enemigos.</li>
- *   <li>R3: la Bomba de magma deja un charco de lava de 5 s que prende y ralentiza a los enemigos.</li>
+ *   <li>R2: la Bomba de magma deja un charco de llamas de 4 s que prende a los enemigos.</li>
+ *   <li>R3: la misma Bomba de magma deja un charco de lava de 5 s que prende y ralentiza a los enemigos.</li>
  * </ul>
  * Los charcos son zonas de efecto (sin bloques de fuego ni de lava, para no quemar construcciones).
  */
 public final class Pyromaniac {
     private static final ResourceLocation FIREBOLT = new ResourceLocation(IronsCompat.IRONS, "firebolt");
-    private static final ResourceLocation FIREBALL = new ResourceLocation(IronsCompat.IRONS, "fireball");
     private static final ResourceLocation MAGMA = new ResourceLocation(IronsCompat.IRONS, "magma_ball");
 
     private record Tracked(UUID owner, boolean lava) {}
@@ -66,15 +65,15 @@ public final class Pyromaniac {
     public void onJoin(EntityJoinLevelEvent event) {
         if (event.getLevel().isClientSide() || !(event.getEntity() instanceof Projectile projectile)) return;
         ResourceLocation type = ForgeRegistries.ENTITY_TYPES.getKey(projectile.getType());
-        if (!FIREBOLT.equals(type) && !FIREBALL.equals(type) && !MAGMA.equals(type)) return;
+        if (!FIREBOLT.equals(type) && !MAGMA.equals(type)) return;
         if (!(projectile.getOwner() instanceof ServerPlayer p) || !Races.has(p, "race_piercing_fire") || !racialSelected(p)) return;
         if (FIREBOLT.equals(type)) {
             int pierce = (int) Races.number(p, "race_piercing_fire", "pierce", 0);
             if (pierce > 0 && setPierce(projectile, pierce)) DebugLog.event(p, "raza", "Fuego Penetrante: atraviesa {}", pierce);
-        } else if (FIREBALL.equals(type) && Races.has(p, "race_flame_pool")) {
-            TRACKED.put(projectile.getId(), new Tracked(p.getUUID(), false));
         } else if (MAGMA.equals(type) && Races.has(p, "race_lava_pool")) {
             TRACKED.put(projectile.getId(), new Tracked(p.getUUID(), true));
+        } else if (MAGMA.equals(type) && Races.has(p, "race_flame_pool")) {
+            TRACKED.put(projectile.getId(), new Tracked(p.getUUID(), false));
         }
     }
 

@@ -19,7 +19,7 @@
           2
         ]
       },
-      "fireball": {
+      "magma_bomb": {
         "values": [
           0,
           0,
@@ -27,7 +27,7 @@
           1
         ]
       },
-      "magma_bomb": {
+      "raise_hell": {
         "values": [
           0,
           0,

@@ -57,14 +57,14 @@ RACES = {
     attr((R("scale"), -.50, "add"), (MC + "max_health", -.25, "multiply_base"), (MC + "luck", 1, "add")),
     mech("looting", level=V(1, 1, 2, 2))], [
     ("wolf_rider", "minecraft:bone", True, [
-        mech("wolf_mount", speed_factor=1.0), mech("wolf_vigor", 1, health=.25),
+        mech("wolf_mount", speed_factor=1.0, jump_factor=1.6), mech("wolf_vigor", 1, health=.25),
         mech("wolf_bite", 2, cooldown_seconds=1, reach=3.5), mech("wolf_regen", 3, amplifier=1)]),
     ("thief", "minecraft:bundle", True, [
         mech("long_hand", mob_chance=V(.10, .15, .20, .25), player_chance=V(.05, .07, .10, .12), steals_per_mob=V(1, 1, 2, 2),
-             equip_share_mob=V(0, 0, 0, .20), equip_share_player=V(0, 0, 0, .10), player_cooldown_seconds=30)]),
+             equip_share_mob=V(0, 0, 0, .20), equip_share_player=V(0, 0, 0, .10), player_cooldown_seconds=30, cooldown_seconds=2)]),
     ("trapper", "minecraft:tripwire_hook", True, [
         mech("snare", traps=V(1, 2, 2, 3), cooldown_seconds=V(20, 20, 20, 12), root_seconds=V(3, 3, 5, 5),
-             boss_root_seconds=V(1, 1, 2, 2), lifetime_seconds=60, pvp_factor=.5)])]),
+             boss_root_seconds=V(1, 1, 2, 2), trap_damage=V(2, 4, 6, 8), pvp_factor=.5)])]),
  "triton": ("minecraft:trident", [
     attr(("forge:swim_speed", .50, "multiply_base")),
     mech("water_breathing"), mech("aquatic", fire_damage=.30)], [
@@ -78,7 +78,7 @@ RACES = {
         mech("sea_friend"), mech("abyss_immunity", 1), mech("camouflage", 2), mech("escort", 3, radius=16)])]),
  "infernal": ("minecraft:blaze_powder", [
     mech("fire_immune"),
-    mech("racial_spells", fire_bolt=V(1, 2, 2, 2), fireball=V(0, 0, 1, 1), magma_bomb=V(0, 0, 0, 1)),
+    mech("racial_spells", fire_bolt=V(1, 2, 2, 2), magma_bomb=V(0, 0, 1, 1), raise_hell=V(0, 0, 0, 1)),
     mech("outcast", price_increase=.50, golem_radius=16)], [
     ("native", "minecraft:gold_ingot", True, [
         mech("nether_native"), mech("wither_immune", 1), mech("barter", 2, extra_chance=.25), mech("nether_compass", 3, cooldown_seconds=600)]),
@@ -126,13 +126,13 @@ SUBRACE_TEXT = {  # (raza, subraza): (nombre, descripción)
  ("elf", "sylvan"): ("Silvano", "Tus cultivos dan más cosecha; con los rangos la comida vegetal sacia más y puedes hacer crecer cultivos con la mano vacía."),
  ("goblin", "wolf_rider"): ("Jinete de Lobo", "Clic derecho con la mano vacía en tu lobo para montarlo (agachado: sentarlo, como siempre). Con los rangos: tus lobos tienen más vida, el lobo montado muerde a lo que golpeas y regenera mientras lo montas."),
  ("goblin", "thief"): ("Ladrón", "Mano Larga: al golpear cuerpo a cuerpo puedes robar un objeto del botín de un mob (sin matarlo) o del inventario de un jugador (nunca de la barra rápida ni del kit)."),
- ("goblin", "trapper"): ("Artificiero", "Cepo (tecla racial 1): colocas una trampa que inmoviliza al primer enemigo que la pise."),
+ ("goblin", "trapper"): ("Artificiero", "Cepo (tecla racial 1): colocas una trampa que no caduca, solo tú la ves y, al primer enemigo que la pise, le hace daño y lo inmoviliza."),
  ("triton", "fisher"): ("Pescador", "Los peces pican antes y tienes Suerte del Mar racial al pescar; con los rangos, capturas extra, más tesoros y más experiencia."),
  ("triton", "shaper"): ("Moldeador", "Agua Dócil (tecla racial 1): fuente de agua temporal. Ola (tecla racial 2, Rango 1): empuja a los enemigos; 2 cargas en Rango 3. Muro de Agua (agachado + tecla racial 1, Rango 2)."),
  ("triton", "abyssal"): ("Abisal", "Ahogados y guardianes son neutrales contigo salvo que los ataques. Con los rangos: inmunidades bajo el agua, camuflaje y escolta de guardianes."),
  ("infernal", "native"): ("Nativo", "Piglins, brutos y hoglins son neutrales contigo salvo que los ataques. Con los rangos: inmune a Wither, trueques con piglins mejores y Brújula Infernal (tecla racial 1, Rango 3)."),
  ("infernal", "smelter"): ("Fundidor", "Caminas sobre la lava. Con los rangos, los hornos cercanos van más rápido, los minerales que picas salen fundidos y fundes al instante lo que llevas en la mano (tecla racial 1, Rango 3)."),
- ("infernal", "pyromaniac"): ("Pirómano", "Tu Disparo de fuego racial atraviesa enemigos. Con los rangos, tu Bola de fuego racial deja un charco de llamas y tu Bomba de magma, lava que ralentiza. Requiere Iron's Spells."),
+ ("infernal", "pyromaniac"): ("Pirómano", "Tu Disparo de fuego racial atraviesa enemigos. Con los rangos, tu Bomba de magma racial deja un charco de llamas y, al Rango 3, lava que ralentiza. Requiere Iron's Spells."),
  ("undead", "vampire"): ("Vampiro", "Sed: matar te cura y, con los rangos, robas vida con el daño que haces (con un tope por segundo)."),
  ("undead", "skeleton"): ("Esqueleto", "Los esqueletos son neutrales contigo salvo que los ataques y recibes menos daño de proyectiles. En Rango 3 tu regeneración se corta menos tiempo."),
  ("undead", "specter"): ("Espectro", "No recibes daño de caída y caes despacio (agacharte lo evita). Forma Etérea (tecla racial 1, Rango 1): unos segundos sin poder recibir daño ni atacar; no protege del sol."),
@@ -167,7 +167,7 @@ MECHANIC_TEXT = {  # id sin "race_": (nombre, descripción corta)
  "green_touch": ("Toque Verde", "Clic derecho con la mano vacía: polvo de hueso gratis en un cultivo."),
  "looting": ("Saqueo racial", "Nivel de Saqueo (cuenta el mayor con el encantamiento)."),
  "long_hand": ("Mano Larga", "Probabilidad de robar al golpear cuerpo a cuerpo."),
- "snare": ("Cepo", "Trampa que inmoviliza al primer enemigo que la pisa."),
+ "snare": ("Cepo", "Trampa que no caduca: al primer enemigo que la pisa le hace daño y lo inmoviliza. Solo la ves tú."),
  "water_breathing": ("Respiración Acuática", "No consumes aire bajo el agua."),
  "aquatic": ("Criatura del agua", "Picas sumergido a velocidad normal y ves bajo el agua. El fuego te daña más."),
  "fisher": ("Pesca Experta", "Mejoras al pescar."),
@@ -205,7 +205,7 @@ MECHANIC_TEXT = {  # id sin "race_": (nombre, descripción corta)
  "barter": ("Trato Infernal", "Probabilidad de que un trueque con piglins dé el doble."),
  "forge_heat": ("Calor de Forja", "Los hornos cercanos funcionan más rápido."),
  "piercing_fire": ("Fuego Penetrante", "Tu Disparo de fuego racial atraviesa enemigos."),
- "flame_pool": ("Charco de Llamas", "Tu Bola de fuego racial deja llamas que queman a los enemigos."),
+ "flame_pool": ("Charco de Llamas", "Tu Bomba de magma racial deja llamas que queman a los enemigos."),
  "lava_pool": ("Charco de Lava", "Tu Bomba de magma racial deja lava que quema y ralentiza a los enemigos."),
 }
 
@@ -218,10 +218,10 @@ RACE_PARAMS = {
  "steals_per_mob": "Robos por mob", "equip_share_mob": "Manos Vacías: robos de equipo a mobs|%",
  "equip_share_player": "Manos Vacías: robos de equipo a jugadores|%", "player_cooldown_seconds": "Enfriamiento por jugador|s",
  "traps": "Trampas a la vez", "root_seconds": "Inmovilización|s", "boss_root_seconds": "Inmovilización a jefes|s",
- "lifetime_seconds": "Duración de la trampa|s", "pvp_factor": "Contra jugadores x", "fire_damage": "Daño de fuego recibido extra|%",
+ "trap_damage": "Daño del Cepo|HP", "jump_factor": "Fuerza del salto x", "pvp_factor": "Contra jugadores x", "fire_damage": "Daño de fuego recibido extra|%",
  "luck": "Suerte del Mar racial", "extra_catch": "Red: captura extra|%", "treasure_chance": "Tesoro extra|%", "xp_bonus": "XP de pesca extra|%",
- "strength": "Fuerza del empuje", "range": "Alcance (bloques)", "fire_bolt": "Disparo de fuego (nivel)", "fireball": "Bola de fuego (nivel)",
- "magma_bomb": "Bomba de magma (nivel)", "price_increase": "Precio de los aldeanos|+%", "golem_radius": "Radio de golems (bloques)",
+ "strength": "Fuerza del empuje", "range": "Alcance (bloques)", "fire_bolt": "Disparo de fuego (nivel)", "magma_bomb": "Bomba de magma (nivel)",
+ "raise_hell": "Infierno que resurge (nivel)", "price_increase": "Precio de los aldeanos|+%", "golem_radius": "Radio de golems (bloques)",
  "max_items": "Objetos por uso", "pause_seconds": "Corte al recibir daño|s", "kill_heal": "Curación por muerte (HP)",
  "lifesteal": "Robo de vida|%", "cap_per_second": "Tope de curación por segundo (HP)", "arrow_reduction": "Menos daño de proyectiles|%",
  "regen_pause_seconds": "Corte de la regeneración|s", "max_blocks": "Bloques conectados",

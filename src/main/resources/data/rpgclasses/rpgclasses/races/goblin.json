@@ -63,7 +63,8 @@
         {
           "type": "rpgclasses:mechanic",
           "id": "rpgclasses:race_wolf_mount",
-          "speed_factor": 1.0
+          "speed_factor": 1.0,
+          "jump_factor": 1.6
         },
         {
           "type": "rpgclasses:mechanic",
@@ -181,7 +182,8 @@
               0.1
             ]
           },
-          "player_cooldown_seconds": 30
+          "player_cooldown_seconds": 30,
+          "cooldown_seconds": 2
         }
       ],
       "rites": [
@@ -274,7 +276,14 @@
               2
             ]
           },
-          "lifetime_seconds": 60,
+          "trap_damage": {
+            "values": [
+              2,
+              4,
+              6,
+              8
+            ]
+          },
           "pvp_factor": 0.5
         }
       ],

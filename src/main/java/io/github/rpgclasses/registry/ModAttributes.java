@@ -43,6 +43,11 @@ public final class ModAttributes {
     public static final RegistryObject<Attribute> SNEAK_SPEED = register("sneak_speed", 0, 0, 10);
     public static final RegistryObject<Attribute> SPELL_SIZE = register("spell_size", 0, 0, 10);
 
+    /** Tamaño racial como fracción sumada a 1 (−0,5 = la mitad). Sincronizado: lo leen el cliente y el servidor. */
+    public static final RegistryObject<Attribute> SCALE = register("scale", 0, -0.9, 10);
+    /** Elfo: mayor que 0 = atraviesa y trepa hojas (se usa como bandera sincronizada). */
+    public static final RegistryObject<Attribute> LEAF_WALKER = register("leaf_walker", 0, 0, 1);
+
     private static RegistryObject<Attribute> register(String name, double def, double min, double max) {
         return ATTRIBUTES.register(name,
                 () -> new RangedAttribute("attribute." + RpgClasses.MODID + "." + name, def, min, max).setSyncable(true));

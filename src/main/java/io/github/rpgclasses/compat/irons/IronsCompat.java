@@ -140,6 +140,7 @@ public final class IronsCompat {
     public static void init() {
         MinecraftForge.EVENT_BUS.register(new IronsCompat());
         KitService.spellInscriber = IronsCompat::inscribe;
+        MinecraftForge.EVENT_BUS.register(new RacialSpells());
         RpgClasses.LOGGER.info("[rpgclasses] Iron's Spells detectado: puente activado");
     }
 
@@ -539,11 +540,11 @@ public final class IronsCompat {
         ElementalDebuffs.onSpellHit(player, event.getEntity(), source, event.getAmount(), tick);
     }
 
-    private static boolean isSpellDamage(DamageSource source) {
+    static boolean isSpellDamage(DamageSource source) {
         return source.typeHolder().unwrapKey().map(k -> IRONS.equals(k.location().getNamespace())).orElse(false);
     }
 
-    private static String spellId(DamageSource source) {
+    static String spellId(DamageSource source) {
         Method spellOf = method("io.redspace.ironsspellbooks.damage.SpellDamageSource", "spell");
         if (spellOf == null || !spellOf.getDeclaringClass().isInstance(source)) return null;
         try {

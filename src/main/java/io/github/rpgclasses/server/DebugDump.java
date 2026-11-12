@@ -48,6 +48,8 @@ public final class DebugDump {
         } else {
             out.add("clase " + data.state.classId + " | nivel base " + data.state.basePoints() + " | subclase " + data.state.subclassId
                     + " nivel " + data.state.subclassLevel);
+            out.add("raza " + data.state.raceId + " | subraza " + data.state.subraceId + " | rango " + data.state.raceRank
+                    + " | muros de Adaptable " + data.state.humanWalls);
             out.add("ramas " + data.state.branchPoints + " | perks " + data.state.perks);
             out.add("xp pagada base " + data.state.xpPaidBase + ", subclase " + data.state.xpPaidSubclass + " | kit entregado "
                     + data.state.kitGranted + " | xp actual " + ProgressionService.currentXp(player));

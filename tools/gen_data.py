@@ -1,6 +1,7 @@
 import json, os, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import texts
+import races
 out = sys.argv[1]
 NS = "rpgclasses"
 def R(x): return f"{NS}:{x}"
@@ -303,6 +304,13 @@ for mid, name in texts.MECHANIC_NAMES.items(): lang[f"mechanic.{NS}.{mid}.name"]
 for did, name in texts.DISCIPLINE_NAMES.items(): lang[f"discipline.{NS}.{did}.name"] = name
 for key, label in texts.PARAMS.items(): lang[f"param.{NS}.{key}"] = label.split("|")[0]
 lang.update(texts.UI)
+# Razas (anexo de razas): races/*.json y sus textos.
+races.EXISTING_PARAMS = set(texts.PARAMS)
+for key, label in races.RACE_PARAMS.items():
+    assert key not in texts.PARAMS, key
+    texts.PARAMS[key] = label
+    lang[f"param.{NS}.{key}"] = label.split("|")[0]
+lang.update(races.build(dump, base))
 # Unidades de los parámetros, para que el cliente sepa formatearlos: "%" porcentaje, "s" segundos.
 dump(os.path.join(out, "assets", NS, "rpgclasses_param_units.json"),
      {k: v.split("|")[1] for k, v in sorted(texts.PARAMS.items()) if "|" in v})

@@ -112,6 +112,12 @@ public final class ClassScreen extends Screen {
             y += ROW;
         }
 
+        // Raza propia (permanente): se consulta en su pantalla.
+        if (!selecting && !io.github.rpgclasses.core.definition.RaceStore.CLIENT.ids().isEmpty()) {
+            addRenderableWidget(Button.builder(Component.translatable("ui.rpgclasses.race.button"),
+                    btn -> minecraft.setScreen(new RaceScreen(RaceScreen.Mode.VIEW))).bounds(30, height - 28, LEFT_WIDTH - 22, 20).build());
+        }
+
         // Pestañas.
         List<ClassPages.Tab> tabs = new ArrayList<>();
         for (ClassPages.Tab t : ClassPages.Tab.values()) {

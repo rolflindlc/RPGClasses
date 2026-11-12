@@ -63,8 +63,11 @@ public final class MechanicService {
         PlayerClassData data = PlayerClassDataProvider.get(player);
         if (data == null) return List.of();
         ClassDef classDef = DefinitionStore.SERVER.classDef(data.state.classId);
-        if (classDef == null) return List.of();
-        List<ActiveMechanic> list = List.copyOf(StatCalculator.mechanics(data.state, classDef, DefinitionStore.SERVER.subclassDef(data.state.subclassId)));
+        List<ActiveMechanic> both = new java.util.ArrayList<>();
+        if (classDef != null) both.addAll(StatCalculator.mechanics(data.state, classDef, DefinitionStore.SERVER.subclassDef(data.state.subclassId)));
+        // Rasgos de raza y subraza: van con el jugador aunque no tenga clase.
+        both.addAll(StatCalculator.raceMechanics(data.state, io.github.rpgclasses.core.definition.RaceStore.SERVER.race(data.state.raceId)));
+        List<ActiveMechanic> list = List.copyOf(both);
         java.util.Set<String> ids = new java.util.TreeSet<>();
         for (ActiveMechanic m : list) ids.add(m.id() + "@" + m.level());
         java.util.Set<String> before = LAST_IDS.put(player.getUUID(), ids);

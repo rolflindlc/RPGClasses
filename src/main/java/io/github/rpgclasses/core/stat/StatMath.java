@@ -6,6 +6,9 @@ public final class StatMath {
     public static final double JUMP_BONUS_CAP = 1.5;
     /** Regla 7: suma de bonos porcentuales de vida máxima (los penalizadores restan). */
     public static final double MAX_HEALTH_PCT_CAP = 1.0;
+    /** Suelos (anexo de razas, regla 8): vida mínima 10 HP (−50 % de 20) y velocidad total mínima −25 %. */
+    public static final double MAX_HEALTH_PCT_FLOOR = -0.5;
+    public static final double SPEED_PENALTY_FLOOR = -0.25;
     public static final double BASE_CRIT_MULTIPLIER = 1.5;
     private static final int WALL_FULL_AT = 30;
 
@@ -37,7 +40,7 @@ public final class StatMath {
 
     /** Tope global: solo se suman aquí los bonus del propio mod. */
     public static double capSpeedBonus(double modBonusSum) {
-        return Math.min(modBonusSum, SPEED_BONUS_CAP);
+        return Math.max(SPEED_PENALTY_FLOOR, Math.min(modBonusSum, SPEED_BONUS_CAP));
     }
 
     public static double capJumpBonus(double modBonusSum) {
@@ -45,7 +48,7 @@ public final class StatMath {
     }
 
     public static double capHealthPctBonus(double modBonusSum) {
-        return Math.min(modBonusSum, MAX_HEALTH_PCT_CAP);
+        return Math.max(MAX_HEALTH_PCT_FLOOR, Math.min(modBonusSum, MAX_HEALTH_PCT_CAP));
     }
 
     public static double critChance(double base, double classBonus, boolean guaranteed) {

@@ -1,0 +1,144 @@
+{
+  "schema_version": 1,
+  "display": {
+    "icon": "minecraft:iron_axe"
+  },
+  "effects": [
+    {
+      "type": "rpgclasses:attribute",
+      "modifiers": [
+        {
+          "attribute": "rpgclasses:scale",
+          "operation": "add",
+          "values": [
+            0.1,
+            0.1,
+            0.1,
+            0.1
+          ]
+        },
+        {
+          "attribute": "minecraft:generic.max_health",
+          "operation": "multiply_base",
+          "values": [
+            0.1,
+            0.1,
+            0.1,
+            0.1
+          ]
+        }
+      ]
+    },
+    {
+      "type": "rpgclasses:mechanic",
+      "id": "rpgclasses:race_last_stand",
+      "invulnerable_seconds": 2
+    },
+    {
+      "type": "rpgclasses:mechanic",
+      "id": "rpgclasses:race_hunger",
+      "exhaustion": 0.25
+    }
+  ],
+  "subraces": [
+    {
+      "id": "stoneskin",
+      "display": {
+        "icon": "minecraft:stone"
+      },
+      "available": true,
+      "effects": [
+        {
+          "type": "rpgclasses:mechanic",
+          "id": "rpgclasses:race_thick_skin",
+          "flat_reduction": {
+            "values": [
+              1,
+              1.25,
+              1.5,
+              2
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "devourer",
+      "display": {
+        "icon": "minecraft:cooked_beef"
+      },
+      "available": true,
+      "effects": [
+        {
+          "type": "rpgclasses:mechanic",
+          "id": "rpgclasses:race_iron_stomach"
+        },
+        {
+          "type": "rpgclasses:mechanic",
+          "id": "rpgclasses:race_devour",
+          "min_rank": 1,
+          "food": 2,
+          "saturation": 1,
+          "icd_seconds": 1
+        },
+        {
+          "type": "rpgclasses:mechanic",
+          "id": "rpgclasses:race_hunger_immune",
+          "min_rank": 2
+        },
+        {
+          "type": "rpgclasses:mechanic",
+          "id": "rpgclasses:race_feast",
+          "min_rank": 3,
+          "mob_factor": 0.5,
+          "icd_seconds": 15
+        }
+      ]
+    },
+    {
+      "id": "warlord",
+      "display": {
+        "icon": "minecraft:goat_horn"
+      },
+      "available": true,
+      "effects": [
+        {
+          "type": "rpgclasses:mechanic",
+          "id": "rpgclasses:race_warcry",
+          "radius": {
+            "values": [
+              8,
+              12,
+              12,
+              12
+            ]
+          },
+          "cooldown_seconds": {
+            "values": [
+              60,
+              60,
+              60,
+              40
+            ]
+          },
+          "immunity_seconds": {
+            "values": [
+              0,
+              0,
+              4,
+              4
+            ]
+          },
+          "effects": [
+            "minecraft:slowness",
+            "minecraft:weakness",
+            "minecraft:blindness",
+            "minecraft:mining_fatigue",
+            "minecraft:nausea",
+            "minecraft:darkness"
+          ]
+        }
+      ]
+    }
+  ]
+}

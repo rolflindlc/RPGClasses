@@ -23,15 +23,18 @@ public final class Packets {
     private static final int MAX_ID = 256;
 
     /** Servidor -> cliente: JSON en bruto de clases y subclases (el cliente lo interpreta igual que el servidor). */
-    public record SyncDefinitions(Map<String, String> classes, Map<String, String> subclasses, Map<String, String> abilities) {
+    public record SyncDefinitions(Map<String, String> classes, Map<String, String> subclasses, Map<String, String> abilities,
+                                  Map<String, String> races) {
         public void encode(FriendlyByteBuf buf) {
             buf.writeMap(classes, (b, k) -> b.writeUtf(k, MAX_ID), (b, v) -> b.writeUtf(v, MAX_JSON));
             buf.writeMap(subclasses, (b, k) -> b.writeUtf(k, MAX_ID), (b, v) -> b.writeUtf(v, MAX_JSON));
             buf.writeMap(abilities, (b, k) -> b.writeUtf(k, MAX_ID), (b, v) -> b.writeUtf(v, MAX_JSON));
+            buf.writeMap(races, (b, k) -> b.writeUtf(k, MAX_ID), (b, v) -> b.writeUtf(v, MAX_JSON));
         }
 
         public static SyncDefinitions decode(FriendlyByteBuf buf) {
             return new SyncDefinitions(
+                    buf.readMap(b -> b.readUtf(MAX_ID), b -> b.readUtf(MAX_JSON)),
                     buf.readMap(b -> b.readUtf(MAX_ID), b -> b.readUtf(MAX_JSON)),
                     buf.readMap(b -> b.readUtf(MAX_ID), b -> b.readUtf(MAX_JSON)),
                     buf.readMap(b -> b.readUtf(MAX_ID), b -> b.readUtf(MAX_JSON)));
@@ -73,7 +76,7 @@ public final class Packets {
 
     /** Cliente -> servidor: una intención de progresión. El servidor la valida entera. */
     public record ClassAction(Action action, String arg) {
-        public enum Action { CHOOSE_CLASS, SPEND_BRANCH, CHOOSE_SUBCLASS, SPEND_SUBCLASS, RESPEC_CLASS, RESPEC_SUBCLASS, CHOOSE_PERK }
+        public enum Action { CHOOSE_CLASS, SPEND_BRANCH, CHOOSE_SUBCLASS, SPEND_SUBCLASS, RESPEC_CLASS, RESPEC_SUBCLASS, CHOOSE_PERK, CHOOSE_RACE, CHOOSE_WALL }
 
         /** Argumento de CHOOSE_PERK: "rama/perk". */
         public static String perkArg(String branchId, String perkId) {
@@ -108,6 +111,22 @@ public final class Packets {
         public void handle(Supplier<NetworkEvent.Context> ctx) {
             ServerPlayer sender = ctx.get().getSender();
             if (sender != null) AbilityService.use(sender, slot);
+        }
+    }
+
+    /** Cliente -> servidor: tecla de habilidad racial (0 o 1; +2 si se pulsa agachado). */
+    public record UseRaceAbility(int slot) {
+        public void encode(FriendlyByteBuf buf) {
+            buf.writeByte(slot);
+        }
+
+        public static UseRaceAbility decode(FriendlyByteBuf buf) {
+            return new UseRaceAbility(buf.readByte());
+        }
+
+        public void handle(Supplier<NetworkEvent.Context> ctx) {
+            ServerPlayer sender = ctx.get().getSender();
+            if (sender != null) io.github.rpgclasses.content.race.RaceAbilities.use(sender, slot);
         }
     }
 

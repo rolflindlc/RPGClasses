@@ -1,0 +1,128 @@
+{
+  "schema_version": 1,
+  "display": {
+    "icon": "minecraft:iron_pickaxe"
+  },
+  "effects": [
+    {
+      "type": "rpgclasses:attribute",
+      "modifiers": [
+        {
+          "attribute": "rpgclasses:scale",
+          "operation": "add",
+          "values": [
+            -0.25,
+            -0.25,
+            -0.25,
+            -0.25
+          ]
+        },
+        {
+          "attribute": "minecraft:generic.movement_speed",
+          "operation": "multiply_base",
+          "values": [
+            -0.1,
+            -0.1,
+            -0.1,
+            -0.1
+          ]
+        }
+      ]
+    },
+    {
+      "type": "rpgclasses:mechanic",
+      "id": "rpgclasses:race_miner",
+      "mining_speed": 0.25
+    },
+    {
+      "type": "rpgclasses:mechanic",
+      "id": "rpgclasses:race_fortune",
+      "level": {
+        "values": [
+          1,
+          1,
+          2,
+          3
+        ]
+      }
+    }
+  ],
+  "subraces": [
+    {
+      "id": "deep",
+      "display": {
+        "icon": "minecraft:deepslate"
+      },
+      "available": true,
+      "effects": [
+        {
+          "type": "rpgclasses:mechanic",
+          "id": "rpgclasses:race_cave_eyes"
+        },
+        {
+          "type": "rpgclasses:mechanic",
+          "id": "rpgclasses:race_stone_sense",
+          "min_rank": 1,
+          "radius": {
+            "values": [
+              8,
+              8,
+              12,
+              16
+            ]
+          },
+          "duration_seconds": {
+            "values": [
+              5,
+              5,
+              8,
+              8
+            ]
+          },
+          "cooldown_seconds": {
+            "values": [
+              30,
+              30,
+              30,
+              20
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "smith",
+      "display": {
+        "icon": "minecraft:anvil"
+      },
+      "available": false,
+      "effects": []
+    },
+    {
+      "id": "demolisher",
+      "display": {
+        "icon": "minecraft:tnt"
+      },
+      "available": true,
+      "effects": [
+        {
+          "type": "rpgclasses:mechanic",
+          "id": "rpgclasses:race_blast_proof"
+        },
+        {
+          "type": "rpgclasses:mechanic",
+          "id": "rpgclasses:race_vein_miner",
+          "min_rank": 1,
+          "max_blocks": {
+            "values": [
+              8,
+              8,
+              16,
+              16
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

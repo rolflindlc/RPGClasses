@@ -1,0 +1,105 @@
+{
+  "schema_version": 1,
+  "display": {
+    "icon": "minecraft:blaze_powder"
+  },
+  "effects": [
+    {
+      "type": "rpgclasses:mechanic",
+      "id": "rpgclasses:race_fire_immune"
+    },
+    {
+      "type": "rpgclasses:mechanic",
+      "id": "rpgclasses:race_racial_spells",
+      "fire_bolt": {
+        "values": [
+          1,
+          2,
+          2,
+          2
+        ]
+      },
+      "fireball": {
+        "values": [
+          0,
+          0,
+          1,
+          1
+        ]
+      },
+      "magma_bomb": {
+        "values": [
+          0,
+          0,
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "type": "rpgclasses:mechanic",
+      "id": "rpgclasses:race_outcast",
+      "price_increase": 0.5,
+      "golem_radius": 16
+    }
+  ],
+  "subraces": [
+    {
+      "id": "native",
+      "display": {
+        "icon": "minecraft:gold_ingot"
+      },
+      "available": true,
+      "effects": [
+        {
+          "type": "rpgclasses:mechanic",
+          "id": "rpgclasses:race_nether_native"
+        },
+        {
+          "type": "rpgclasses:mechanic",
+          "id": "rpgclasses:race_wither_immune",
+          "min_rank": 1
+        },
+        {
+          "type": "rpgclasses:mechanic",
+          "id": "rpgclasses:race_nether_compass",
+          "min_rank": 3,
+          "cooldown_seconds": 600
+        }
+      ]
+    },
+    {
+      "id": "smelter",
+      "display": {
+        "icon": "minecraft:blast_furnace"
+      },
+      "available": true,
+      "effects": [
+        {
+          "type": "rpgclasses:mechanic",
+          "id": "rpgclasses:race_lava_walk"
+        },
+        {
+          "type": "rpgclasses:mechanic",
+          "id": "rpgclasses:race_auto_smelt",
+          "min_rank": 2
+        },
+        {
+          "type": "rpgclasses:mechanic",
+          "id": "rpgclasses:race_portable_furnace",
+          "min_rank": 3,
+          "max_items": 16,
+          "cooldown_seconds": 20
+        }
+      ]
+    },
+    {
+      "id": "pyromaniac",
+      "display": {
+        "icon": "minecraft:fire_charge"
+      },
+      "available": false,
+      "effects": []
+    }
+  ]
+}

@@ -101,7 +101,9 @@ public final class ServerEvents {
         if (!(event.getEntity() instanceof ServerPlayer player) || player instanceof FakePlayer) return;
         if (event.getSource().is(net.minecraft.tags.DamageTypeTags.BYPASSES_INVULNERABILITY)) return;
         PlayerClassData data = PlayerClassDataProvider.get(player);
-        if (data != null && data.state.classId == null && ServerConfig.PROTECT_UNCLASSED.get()) {
+        boolean choosing = data != null && (data.state.classId == null
+                || (data.state.raceId == null && !io.github.rpgclasses.core.definition.RaceStore.SERVER.ids().isEmpty()));
+        if (choosing && ServerConfig.PROTECT_UNCLASSED.get()) {
             event.setCanceled(true);
         }
     }

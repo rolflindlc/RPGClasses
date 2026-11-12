@@ -1,0 +1,146 @@
+{
+  "schema_version": 1,
+  "display": {
+    "icon": "minecraft:oak_leaves"
+  },
+  "effects": [
+    {
+      "type": "rpgclasses:attribute",
+      "modifiers": [
+        {
+          "attribute": "rpgclasses:leaf_walker",
+          "operation": "add",
+          "values": [
+            1,
+            1,
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "type": "rpgclasses:mechanic",
+      "id": "rpgclasses:race_leaf_walker"
+    },
+    {
+      "type": "rpgclasses:mechanic",
+      "id": "rpgclasses:race_no_meat"
+    }
+  ],
+  "subraces": [
+    {
+      "id": "dark",
+      "display": {
+        "icon": "minecraft:campfire"
+      },
+      "available": true,
+      "effects": [
+        {
+          "type": "rpgclasses:mechanic",
+          "id": "rpgclasses:race_dark_vision"
+        },
+        {
+          "type": "rpgclasses:mechanic",
+          "id": "rpgclasses:race_smoke_cloud",
+          "min_rank": 1,
+          "radius": {
+            "values": [
+              8,
+              8,
+              10,
+              16
+            ]
+          },
+          "duration_seconds": {
+            "values": [
+              6,
+              6,
+              8,
+              8
+            ]
+          },
+          "cooldown_seconds": 22,
+          "slowness": {
+            "values": [
+              0,
+              0,
+              0,
+              1
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "arcane",
+      "display": {
+        "icon": "minecraft:enchanting_table"
+      },
+      "available": true,
+      "effects": [
+        {
+          "type": "rpgclasses:mechanic",
+          "id": "rpgclasses:race_arcane",
+          "enchant_bonus": {
+            "values": [
+              0.1,
+              0.2,
+              0.3,
+              0.3
+            ]
+          },
+          "fusion": {
+            "values": [
+              0,
+              0,
+              0,
+              1
+            ]
+          },
+          "fusion_cost_levels": 30
+        }
+      ]
+    },
+    {
+      "id": "sylvan",
+      "display": {
+        "icon": "minecraft:wheat"
+      },
+      "available": true,
+      "effects": [
+        {
+          "type": "rpgclasses:mechanic",
+          "id": "rpgclasses:race_harvest",
+          "bonus": {
+            "values": [
+              0.25,
+              0.25,
+              0.25,
+              0.5
+            ]
+          }
+        },
+        {
+          "type": "rpgclasses:mechanic",
+          "id": "rpgclasses:race_plant_food",
+          "min_rank": 1,
+          "bonus": 0.25
+        },
+        {
+          "type": "rpgclasses:mechanic",
+          "id": "rpgclasses:race_green_touch",
+          "min_rank": 2,
+          "cooldown_seconds": {
+            "values": [
+              5,
+              5,
+              5,
+              2
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

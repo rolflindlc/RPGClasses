@@ -44,7 +44,7 @@ import java.util.TreeSet;
 public final class ClassPages {
     public enum Tab { PROGRESS, SUMMARY, BRANCHES, SUBCLASSES, DATA }
 
-    private static final Set<String> SKIPPED_PARAMS = Set.of("type", "id", "schema_version", "passive", "condition", "modifiers");
+    static final Set<String> SKIPPED_PARAMS = Set.of("type", "id", "schema_version", "passive", "condition", "modifiers");
     private static final int LEVELS = 10;
     private static Map<String, String> paramUnits;
 
@@ -280,7 +280,7 @@ public final class ClassPages {
 
     // --- Formato ---
 
-    private static String format(double v, String unit, boolean signed) {
+    static String format(double v, String unit, boolean signed) {
         if ("sí".equals(unit)) return v != 0 ? "sí" : "no";
         if (unit.startsWith("+")) {
             signed = true;
@@ -329,19 +329,19 @@ public final class ClassPages {
     }
 
     /** Los multiplicadores y las fracciones propias del mod se muestran como porcentaje; el resto, como número. */
-    private static boolean isPercent(AttributeEffect.Modifier m) {
+    static boolean isPercent(AttributeEffect.Modifier m) {
         if (!"add".equals(m.operation())) return true;
         if (m.attribute().equals("minecraft:generic.knockback_resistance")) return true;
         return m.attribute().startsWith(Ids.NS + ":") && !m.attribute().equals(Ids.NS + ":unarmed_damage");
     }
 
-    private static Component attributeName(String id) {
+    static Component attributeName(String id) {
         ResourceLocation key = ResourceLocation.tryParse(id);
         Attribute attribute = key == null ? null : ForgeRegistries.ATTRIBUTES.getValue(key);
         return attribute != null ? Component.translatable(attribute.getDescriptionId()) : Component.literal(id);
     }
 
-    private static MutableComponent discipline(String id) {
+    static MutableComponent discipline(String id) {
         return Component.translatable(Ids.langKey("discipline", id, "name"));
     }
 
@@ -404,7 +404,7 @@ public final class ClassPages {
     }
 
     /** Unidades de cada parámetro ("%" o "s"), generadas junto a los textos. */
-    private static Map<String, String> units() {
+    static Map<String, String> units() {
         if (paramUnits == null) {
             Map<String, String> loaded = new HashMap<>();
             try (Reader reader = Minecraft.getInstance().getResourceManager()

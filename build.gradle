@@ -2,6 +2,7 @@ plugins {
     id 'eclipse'
     id 'idea'
     id 'net.minecraftforge.gradle' version '[6.0,6.2)'
+    id 'org.spongepowered.mixin' version '0.7.+'
 }
 
 version = mod_version
@@ -41,6 +42,12 @@ minecraft {
     }
 }
 
+// Mixins (razas): colisión de hojas del Elfo y curación instantánea del No-muerto.
+mixin {
+    add sourceSets.main, 'rpgclasses.refmap.json'
+    config 'rpgclasses.mixins.json'
+}
+
 repositories {
     mavenCentral()
     // Iron's Spells 'n Spellbooks (API estable, solo para compilar)
@@ -58,6 +65,8 @@ dependencies {
     // Dependencias opcionales: el mod funciona sin ellas, solo se compila contra ellas.
     compileOnly fg.deobf("io.redspace:irons_spellbooks:${irons_spells_version}:api")
     compileOnly fg.deobf("maven.modrinth:epic-fight:${epicfight_version}")
+
+    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 
     // Las pruebas unitarias solo usan core/ (lógica pura) y Gson.
     testImplementation 'junit:junit:4.13.2'

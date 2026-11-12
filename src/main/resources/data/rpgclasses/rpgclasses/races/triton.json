@@ -1,0 +1,138 @@
+{
+  "schema_version": 1,
+  "display": {
+    "icon": "minecraft:trident"
+  },
+  "effects": [
+    {
+      "type": "rpgclasses:attribute",
+      "modifiers": [
+        {
+          "attribute": "forge:swim_speed",
+          "operation": "multiply_base",
+          "values": [
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ]
+        }
+      ]
+    },
+    {
+      "type": "rpgclasses:mechanic",
+      "id": "rpgclasses:race_water_breathing"
+    },
+    {
+      "type": "rpgclasses:mechanic",
+      "id": "rpgclasses:race_aquatic",
+      "fire_damage": 0.3
+    }
+  ],
+  "subraces": [
+    {
+      "id": "fisher",
+      "display": {
+        "icon": "minecraft:fishing_rod"
+      },
+      "available": true,
+      "effects": [
+        {
+          "type": "rpgclasses:mechanic",
+          "id": "rpgclasses:race_fisher",
+          "luck": 1,
+          "extra_catch": {
+            "values": [
+              0,
+              0.25,
+              0.25,
+              0.5
+            ]
+          },
+          "treasure_chance": {
+            "values": [
+              0,
+              0,
+              0.05,
+              0.05
+            ]
+          },
+          "xp_bonus": {
+            "values": [
+              0,
+              0,
+              0,
+              1
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "shaper",
+      "display": {
+        "icon": "minecraft:water_bucket"
+      },
+      "available": true,
+      "effects": [
+        {
+          "type": "rpgclasses:mechanic",
+          "id": "rpgclasses:race_tame_water",
+          "duration_seconds": 30,
+          "cooldown_seconds": 5
+        },
+        {
+          "type": "rpgclasses:mechanic",
+          "id": "rpgclasses:race_wave",
+          "min_rank": 1,
+          "cooldown_seconds": {
+            "values": [
+              15,
+              15,
+              15,
+              10
+            ]
+          },
+          "strength": 1.5,
+          "range": 6
+        },
+        {
+          "type": "rpgclasses:mechanic",
+          "id": "rpgclasses:race_water_wall",
+          "min_rank": 2,
+          "duration_seconds": 8,
+          "cooldown_seconds": 20
+        }
+      ]
+    },
+    {
+      "id": "abyssal",
+      "display": {
+        "icon": "minecraft:prismarine_shard"
+      },
+      "available": true,
+      "effects": [
+        {
+          "type": "rpgclasses:mechanic",
+          "id": "rpgclasses:race_sea_friend"
+        },
+        {
+          "type": "rpgclasses:mechanic",
+          "id": "rpgclasses:race_abyss_immunity",
+          "min_rank": 1
+        },
+        {
+          "type": "rpgclasses:mechanic",
+          "id": "rpgclasses:race_camouflage",
+          "min_rank": 2
+        },
+        {
+          "type": "rpgclasses:mechanic",
+          "id": "rpgclasses:race_escort",
+          "min_rank": 3,
+          "radius": 16
+        }
+      ]
+    }
+  ]
+}

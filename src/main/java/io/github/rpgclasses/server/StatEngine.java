@@ -58,28 +58,30 @@ public final class StatEngine {
         SubclassDef subDef = classDef == null ? null : DefinitionStore.SERVER.subclassDef(s.subclassId);
 
         removeAll(player);
+        io.github.rpgclasses.core.definition.Definitions.RaceDef race = race(s);
+
+        // 1. Pasivas de atributo de ramas, subclase y raza (con topes y suelos globales ya aplicados).
+        StatCalculator.Context ctx = new StatCalculator.Context(isWearingArmor(player), MonkAbilities.stanceFactors(player));
+        for (Map.Entry<StatCalculator.Key, Double> e : StatCalculator.attributeTotals(s, classDef, subDef, race, ctx).entrySet()) {
+            apply(player, new ResourceLocation(e.getKey().attribute()), "stat", operation(e.getKey().operation()), e.getValue());
+        }
         if (classDef == null) {
             clampHealth(player);
+            player.refreshDimensions();
             return;
-        }
-
-        // 1. Pasivas de atributo de ramas y subclase (con topes globales ya aplicados).
-        StatCalculator.Context ctx = new StatCalculator.Context(isWearingArmor(player), MonkAbilities.stanceFactors(player));
-        for (Map.Entry<StatCalculator.Key, Double> e : StatCalculator.attributeTotals(s, classDef, subDef, ctx).entrySet()) {
-            apply(player, new ResourceLocation(e.getKey().attribute()), "stat", operation(e.getKey().operation()), e.getValue());
         }
 
         // 2. Armadura de las piezas equipadas: Coraza la aumenta y el muro de Armadura la reduce.
         //    Es aditivo sobre lo que aportan las piezas, así que no toca la defensa desarmada ni las pociones.
         double[] cuirass = StatCalculator.equippedArmorBonus(s, classDef);
-        double armorWall = StatCalculator.wall(s, classDef, subDef, Ids.ARMOR);
+        double armorWall = StatCalculator.wall(s, classDef, subDef, race, Ids.ARMOR);
         double pieceArmor = equippedTotal(player, Attributes.ARMOR);
         double pieceToughness = equippedTotal(player, Attributes.ARMOR_TOUGHNESS);
         applyTo(player, Attributes.ARMOR, "equipped", AttributeModifier.Operation.ADDITION, pieceArmor * (cuirass[0] - armorWall));
         applyTo(player, Attributes.ARMOR_TOUGHNESS, "equipped", AttributeModifier.Operation.ADDITION, pieceToughness * (cuirass[1] - armorWall));
 
         // 3. Muro de Magia: multiplicador total sobre el poder de hechizo de Iron's (si está instalado).
-        double magicWall = StatCalculator.wall(s, classDef, subDef, Ids.MAGIC);
+        double magicWall = StatCalculator.wall(s, classDef, subDef, race, Ids.MAGIC);
         Attribute spellPower = ForgeRegistries.ATTRIBUTES.getValue(IRONS_SPELL_POWER);
         if (spellPower != null) {
             applyTo(player, spellPower, "wall", AttributeModifier.Operation.MULTIPLY_TOTAL, -magicWall);
@@ -106,6 +108,12 @@ public final class StatEngine {
         }
 
         clampHealth(player);
+        player.refreshDimensions(); // tamaño racial
+    }
+
+    /** Raza del jugador según el datapack (null si no tiene o ya no existe). */
+    public static io.github.rpgclasses.core.definition.Definitions.RaceDef race(ProgressState s) {
+        return io.github.rpgclasses.core.definition.RaceStore.SERVER.race(s.raceId);
     }
 
     /** Muro efectivo (0..1) del jugador en una disciplina; 0 si no tiene clase. */
@@ -114,7 +122,7 @@ public final class StatEngine {
         if (data == null) return 0;
         ClassDef classDef = DefinitionStore.SERVER.classDef(data.state.classId);
         if (classDef == null) return 0;
-        return StatCalculator.wall(data.state, classDef, DefinitionStore.SERVER.subclassDef(data.state.subclassId), discipline);
+        return StatCalculator.wall(data.state, classDef, DefinitionStore.SERVER.subclassDef(data.state.subclassId), race(data.state), discipline);
     }
 
     /** Muro fijo (0..1) del jugador en una escuela de Iron's ("irons_spellbooks:holy"); 0 si no tiene clase. */

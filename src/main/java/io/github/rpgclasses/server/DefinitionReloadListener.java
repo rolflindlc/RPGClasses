@@ -29,6 +29,7 @@ public final class DefinitionReloadListener extends SimpleJsonResourceReloadList
         Map<String, String> classes = new HashMap<>();
         Map<String, String> subclasses = new HashMap<>();
         Map<String, String> abilities = new HashMap<>();
+        Map<String, String> races = new HashMap<>();
         for (Map.Entry<ResourceLocation, JsonElement> e : files.entrySet()) {
             String path = e.getKey().getPath();
             if (path.startsWith("classes/")) {
@@ -37,9 +38,18 @@ public final class DefinitionReloadListener extends SimpleJsonResourceReloadList
                 subclasses.put(e.getKey().getNamespace() + ":" + path.substring("subclasses/".length()), e.getValue().toString());
             } else if (path.startsWith("abilities/")) {
                 abilities.put(e.getKey().getNamespace() + ":" + path.substring("abilities/".length()), e.getValue().toString());
+            } else if (path.startsWith("races/")) {
+                races.put(e.getKey().getNamespace() + ":" + path.substring("races/".length()), e.getValue().toString());
             }
         }
         DefinitionStore.SERVER.load(classes, subclasses, abilities);
+        io.github.rpgclasses.core.definition.RaceStore.SERVER.load(races);
+        for (Map.Entry<String, List<String>> err : io.github.rpgclasses.core.definition.RaceStore.SERVER.errors().entrySet()) {
+            for (String message : err.getValue()) {
+                RpgClasses.LOGGER.error("[rpgclasses] Raza inválida '{}': {}", err.getKey(), message);
+            }
+        }
+        RpgClasses.LOGGER.info("[rpgclasses] {} razas cargadas", io.github.rpgclasses.core.definition.RaceStore.SERVER.ids().size());
 
         for (Map.Entry<String, List<String>> err : DefinitionStore.SERVER.errors().entrySet()) {
             for (String message : err.getValue()) {

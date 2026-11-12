@@ -1,0 +1,280 @@
+# Razas y subrazas (anexo de razas, rev. 0.5): números -> races/*.json; textos en español.
+# Lo importa gen_data.py. Los valores por rango son listas [R0, R1, R2, R3].
+NS = "rpgclasses"
+MC = "minecraft:generic."
+def R(x): return f"{NS}:{x}"
+def V(*v):
+    assert len(v) == 4
+    return {"values": list(v)}
+def K(v): return V(v, v, v, v)                       # igual en todos los rangos
+def attr(*mods):                                     # (atributo, valor, operación)
+    return {"type": R("attribute"), "modifiers": [dict(attribute=a, operation=op, **K(v)) for a, v, op in mods]}
+def mech(i, min_rank=0, **p):
+    e = {"type": R("mechanic"), "id": R("race_" + i)}
+    if min_rank: e["min_rank"] = min_rank
+    e.update(p)
+    return e
+CONTROL = ["minecraft:slowness", "minecraft:weakness", "minecraft:blindness", "minecraft:mining_fatigue", "minecraft:nausea", "minecraft:darkness"]
+
+# id: (icono, [rasgos de raza], [(subraza, icono, disponible, [rasgos])])
+RACES = {
+ "human": ("minecraft:player_head", [mech("adaptable", wall_reduction=V(.10, .20, .35, .50))], [
+    ("polyvalent", "minecraft:crafting_table", True, [mech("second_wall", factor=.5)]),
+    ("specialist", "minecraft:diamond_sword", True, [mech("wall_mastery", factor=1.5)]),
+    ("autodidact", "minecraft:writable_book", True, [mech("flexible_respec")])]),
+ "orc": ("minecraft:iron_axe", [
+    attr((R("scale"), .10, "add"), (MC + "max_health", .10, "multiply_base")),
+    mech("last_stand", invulnerable_seconds=2), mech("hunger", exhaustion=.25)], [
+    ("stoneskin", "minecraft:stone", True, [mech("thick_skin", flat_reduction=V(1, 1.25, 1.5, 2))]),
+    ("devourer", "minecraft:cooked_beef", True, [
+        mech("iron_stomach"), mech("devour", 1, food=2, saturation=1, icd_seconds=1),
+        mech("hunger_immune", 2), mech("feast", 3, mob_factor=.5, icd_seconds=15)]),
+    ("warlord", "minecraft:goat_horn", True, [
+        mech("warcry", radius=V(8, 12, 12, 12), cooldown_seconds=V(60, 60, 60, 40), immunity_seconds=V(0, 0, 4, 4), effects=CONTROL)])]),
+ "dwarf": ("minecraft:iron_pickaxe", [
+    attr((R("scale"), -.25, "add"), (MC + "movement_speed", -.10, "multiply_base")),
+    mech("miner", mining_speed=.25), mech("fortune", level=V(1, 1, 2, 3))], [
+    ("deep", "minecraft:deepslate", True, [
+        mech("cave_eyes"),
+        mech("stone_sense", 1, radius=V(8, 8, 12, 16), duration_seconds=V(5, 5, 8, 8), cooldown_seconds=V(30, 30, 30, 20))]),
+    ("smith", "minecraft:anvil", False, []),
+    ("demolisher", "minecraft:tnt", True, [mech("blast_proof"), mech("vein_miner", 1, max_blocks=V(8, 8, 16, 16))])]),
+ "elf": ("minecraft:oak_leaves", [
+    attr((R("leaf_walker"), 1, "add")), mech("leaf_walker"), mech("no_meat")], [
+    ("dark", "minecraft:campfire", True, [
+        mech("dark_vision"),
+        mech("smoke_cloud", 1, radius=V(8, 8, 10, 16), duration_seconds=V(6, 6, 8, 8), cooldown_seconds=22, slowness=V(0, 0, 0, 1))]),
+    ("arcane", "minecraft:enchanting_table", True, [
+        mech("arcane", enchant_bonus=V(.10, .20, .30, .30), fusion=V(0, 0, 0, 1), fusion_cost_levels=30)]),
+    ("sylvan", "minecraft:wheat", True, [
+        mech("harvest", bonus=V(.25, .25, .25, .50)), mech("plant_food", 1, bonus=.25),
+        mech("green_touch", 2, cooldown_seconds=V(5, 5, 5, 2))])]),
+ "goblin": ("minecraft:gold_nugget", [
+    attr((R("scale"), -.50, "add"), (MC + "max_health", -.25, "multiply_base"), (MC + "luck", 1, "add")),
+    mech("looting", level=V(1, 1, 2, 2))], [
+    ("wolf_rider", "minecraft:bone", False, []),
+    ("thief", "minecraft:bundle", True, [
+        mech("long_hand", mob_chance=V(.10, .15, .20, .25), player_chance=V(.05, .07, .10, .12), steals_per_mob=V(1, 1, 2, 2),
+             equip_share_mob=V(0, 0, 0, .20), equip_share_player=V(0, 0, 0, .10), player_cooldown_seconds=30)]),
+    ("trapper", "minecraft:tripwire_hook", True, [
+        mech("snare", traps=V(1, 2, 2, 3), cooldown_seconds=V(20, 20, 20, 12), root_seconds=V(3, 3, 5, 5),
+             boss_root_seconds=V(1, 1, 2, 2), lifetime_seconds=60, pvp_factor=.5)])]),
+ "triton": ("minecraft:trident", [
+    attr(("forge:swim_speed", .50, "multiply_base")),
+    mech("water_breathing"), mech("aquatic", fire_damage=.30)], [
+    ("fisher", "minecraft:fishing_rod", True, [
+        mech("fisher", luck=1, extra_catch=V(0, .25, .25, .50), treasure_chance=V(0, 0, .05, .05), xp_bonus=V(0, 0, 0, 1))]),
+    ("shaper", "minecraft:water_bucket", True, [
+        mech("tame_water", duration_seconds=30, cooldown_seconds=5),
+        mech("wave", 1, cooldown_seconds=V(15, 15, 15, 10), strength=1.5, range=6),
+        mech("water_wall", 2, duration_seconds=8, cooldown_seconds=20)]),
+    ("abyssal", "minecraft:prismarine_shard", True, [
+        mech("sea_friend"), mech("abyss_immunity", 1), mech("camouflage", 2), mech("escort", 3, radius=16)])]),
+ "infernal": ("minecraft:blaze_powder", [
+    mech("fire_immune"),
+    mech("racial_spells", fire_bolt=V(1, 2, 2, 2), fireball=V(0, 0, 1, 1), magma_bomb=V(0, 0, 0, 1)),
+    mech("outcast", price_increase=.50, golem_radius=16)], [
+    ("native", "minecraft:gold_ingot", True, [
+        mech("nether_native"), mech("wither_immune", 1), mech("nether_compass", 3, cooldown_seconds=600)]),
+    ("smelter", "minecraft:blast_furnace", True, [
+        mech("lava_walk"), mech("auto_smelt", 2), mech("portable_furnace", 3, max_items=16, cooldown_seconds=20)]),
+    ("pyromaniac", "minecraft:fire_charge", False, [])]),
+ "undead": ("minecraft:skeleton_skull", [
+    mech("water_breathing"), mech("sunburn", damage_per_second=1), mech("fixed_hunger", food=10),
+    mech("dead_regen", heal_per_second=1, pause_seconds=3), mech("lifeless")], [
+    ("vampire", "minecraft:redstone", True, [
+        mech("thirst", kill_heal=V(1, 1, 2, 2), lifesteal=V(0, .03, .05, .07), cap_per_second=5)]),
+    ("skeleton", "minecraft:bone", True, [
+        mech("bones", arrow_reduction=V(.10, .20, .30, .30), regen_pause_seconds=V(3, 3, 3, 1.5))]),
+    ("specter", "minecraft:phantom_membrane", True, [
+        mech("weightless"),
+        mech("ethereal", 1, duration_seconds=V(2, 2, 3, 3), cooldown_seconds=V(60, 60, 60, 40))])]),
+}
+
+RACE_TEXT = {  # id: (nombre, descripción)
+ "human": ("Humano", "Versátil: alivia las desventajas de su clase. Tras elegir clase escoge un muro, cuya penalización se reduce según el Rango; los rasgos base negativos de la clase se reducen igual. Sin ventajas de entorno."),
+ "orc": ("Orco", "Más grande y resistente. Una vez por vida sobrevive a un golpe letal con medio corazón. A cambio consume más hambre y es más fácil de golpear."),
+ "dwarf": ("Enano", "Pequeño y lento, pero minero nato: rompe piedra y minerales más rápido y tiene Fortuna racial en minerales (no se suma al encantamiento: cuenta el mayor)."),
+ "elf": ("Elfo", "Atraviesa las hojas y trepa por ellas como si fueran andamios (saltar sube, agacharse baja). No puede comer carne ni pescado."),
+ "goblin": ("Goblin", "La mitad de alto: muy difícil de golpear y cabe por huecos pequeños. Tiene Suerte y Saqueo racial (cuenta el mayor con el encantamiento). A cambio, mucha menos vida."),
+ "triton": ("Tritón", "Respira bajo el agua, nada más rápido, pica sumergido a velocidad normal y ve en la oscuridad bajo el agua. El fuego le hace más daño."),
+ "infernal": ("Infernal", "Inmune al fuego y la lava. Con Iron's Spells tiene conjuros de fuego raciales siempre disponibles, a los que no afecta el muro de Magia. Los golems de hierro lo atacan siempre y los aldeanos le cobran más."),
+ "undead": ("No-muerto", "Respira bajo el agua, su hambre está fija y regenera vida constantemente (se corta unos segundos al recibir daño). El sol directo le daña aunque lleve casco, y ni las pociones de curación ni los conjuros le curan."),
+}
+
+SUBRACE_TEXT = {  # (raza, subraza): (nombre, descripción)
+ ("human", "polyvalent"): ("Polivalente", "Elige un segundo muro, que recibe la mitad de la reducción."),
+ ("human", "specialist"): ("Especialista", "La reducción de tu muro elegido es un 50 % mayor (hasta −75 % en Rango 3)."),
+ ("human", "autodidact"): ("Autodidacta", "Pierdes menos XP al reiniciar la clase o la subclase: la pérdida se reduce en el porcentaje de tu Rango."),
+ ("orc", "stoneskin"): ("Pétreo", "Piel Gruesa: cada golpe que recibes hace menos daño en un valor fijo, sin mínimo."),
+ ("orc", "devourer"): ("Devorador", "Comes carne y pescado crudos sin efectos negativos y sacian como cocinados. Con los rangos, matar te alimenta y te da efectos de combate."),
+ ("orc", "warlord"): ("Caudillo", "Voz del Caudillo (tecla racial 1): elimina los efectos de control de ti y de los aliados cercanos."),
+ ("dwarf", "deep"): ("de las Profundidades", "Ves en la oscuridad bajo tierra y eres inmune a Oscuridad. Sentido de la Piedra (tecla racial 1, Rango 1) resalta minerales y lava cercanos."),
+ ("dwarf", "smith"): ("Herrero", "Tus objetos duran más y el yunque te cuesta menos."),
+ ("dwarf", "demolisher"): ("Demoledor", "Tu propia TNT no te hace daño. Desde Rango 1, al romper un mineral rompes también los conectados (agachado no). El radio extra de la TNT y el Túnel de Rango 3 aún están en desarrollo."),
+ ("elf", "dark"): ("Oscuro", "Ves en cualquier oscuridad. Nube de Humo (tecla racial 1, Rango 1): todo lo que hay dentro es invisible y los mobs de fuera pierden de vista a quien está dentro. No se revela por cercanía."),
+ ("elf", "arcane"): ("Arcano", "La mesa de encantamientos cuenta como si su nivel fuera mayor. En Rango 3, fusiona en el yunque dos encantamientos iguales de nivel máximo para superar ese máximo en 1."),
+ ("elf", "sylvan"): ("Silvano", "Tus cultivos dan más cosecha; con los rangos la comida vegetal sacia más y puedes hacer crecer cultivos con la mano vacía."),
+ ("goblin", "wolf_rider"): ("Jinete de Lobo", "Monta a tus lobos domesticados."),
+ ("goblin", "thief"): ("Ladrón", "Mano Larga: al golpear cuerpo a cuerpo puedes robar un objeto del botín de un mob (sin matarlo) o del inventario de un jugador (nunca de la barra rápida ni del kit)."),
+ ("goblin", "trapper"): ("Artificiero", "Cepo (tecla racial 1): colocas una trampa que inmoviliza al primer enemigo que la pise."),
+ ("triton", "fisher"): ("Pescador", "Suerte del Mar racial al pescar; con los rangos, capturas extra, más tesoros y más experiencia."),
+ ("triton", "shaper"): ("Moldeador", "Agua Dócil (tecla racial 1): fuente de agua temporal. Ola (tecla racial 2, Rango 1): empuja a los enemigos. Muro de Agua (agachado + tecla racial 1, Rango 2)."),
+ ("triton", "abyssal"): ("Abisal", "Ahogados y guardianes son neutrales contigo salvo que los ataques. Con los rangos: inmunidades bajo el agua, camuflaje y escolta de guardianes."),
+ ("infernal", "native"): ("Nativo", "Piglins, brutos y hoglins son neutrales contigo salvo que los ataques. Con los rangos: inmune a Wither y Brújula Infernal (tecla racial 1, Rango 3)."),
+ ("infernal", "smelter"): ("Fundidor", "Caminas sobre la lava. Con los rangos, los minerales que picas salen fundidos y fundes al instante lo que llevas en la mano (tecla racial 1, Rango 3)."),
+ ("infernal", "pyromaniac"): ("Pirómano", "Tus conjuros raciales atraviesan enemigos y dejan fuego."),
+ ("undead", "vampire"): ("Vampiro", "Sed: matar te cura y, con los rangos, robas vida con el daño que haces (con un tope por segundo)."),
+ ("undead", "skeleton"): ("Esqueleto", "Los esqueletos son neutrales contigo salvo que los ataques y recibes menos daño de proyectiles. En Rango 3 tu regeneración se corta menos tiempo."),
+ ("undead", "specter"): ("Espectro", "No recibes daño de caída y caes despacio (agacharte lo evita). Forma Etérea (tecla racial 1, Rango 1): unos segundos sin poder recibir daño ni atacar; no protege del sol."),
+}
+
+MECHANIC_TEXT = {  # id sin "race_": (nombre, descripción corta)
+ "adaptable": ("Adaptable", "Reduce el muro elegido y los rasgos base negativos de tu clase."),
+ "second_wall": ("Segundo muro", "Un segundo muro recibe parte de la reducción."),
+ "wall_mastery": ("Maestría de Muro", "Multiplica la reducción del muro principal."),
+ "flexible_respec": ("Reinicio Flexible", "La pérdida de XP al reiniciar se reduce en el porcentaje de Adaptable."),
+ "last_stand": ("Última Resistencia", "Sobrevives a un golpe letal con 1 HP, 1 vez por vida. Va después de las habilidades de clase y antes del Tótem."),
+ "hunger": ("Apetito de orco", "Consumes más hambre."),
+ "thick_skin": ("Piel Gruesa", "Daño restado a cada golpe recibido."),
+ "iron_stomach": ("Estómago de Hierro", "Carne y pescado crudos sin efectos negativos; sacian como cocinados."),
+ "devour": ("Devorar", "Matar a un enemigo te da hambre y saturación."),
+ "hunger_immune": ("Estómago curtido", "Inmune al efecto Hambre."),
+ "feast": ("Festín", "Al matar un mob hostil o un jefe ganas al azar Fuerza, Resistencia o Regeneración I tantos segundos como vida máxima tuviera (jefes) o una parte (resto)."),
+ "warcry": ("Voz del Caudillo", "Purga Lentitud, Debilidad, Ceguera, Fatiga, Náusea y Oscuridad en el radio."),
+ "miner": ("Minero", "Velocidad extra al romper piedra y minerales."),
+ "fortune": ("Fortuna racial", "Nivel de Fortuna en minerales (nunca con Toque de Seda)."),
+ "blast_proof": ("A prueba de explosiones", "Las explosiones que provocas tú no te hacen daño."),
+ "vein_miner": ("Vetas", "Al romper un mineral rompes los del mismo tipo conectados."),
+ "cave_eyes": ("Ojos de Cueva", "Visión nocturna sin luz de cielo; inmune a Oscuridad."),
+ "stone_sense": ("Sentido de la Piedra", "Resalta minerales y lava cercanos."),
+ "leaf_walker": ("Paso entre Hojas", "Atraviesas las hojas y trepas por ellas."),
+ "no_meat": ("Dieta élfica", "No puedes comer carne ni pescado."),
+ "dark_vision": ("Visión en la oscuridad", "Visión nocturna con poca luz."),
+ "smoke_cloud": ("Nube de Humo", "Nube que vuelve invisible todo lo que hay dentro."),
+ "arcane": ("Saber Arcano", "Mesa de encantamientos mejorada y Fusión Arcana."),
+ "harvest": ("Cosecha Abundante", "Cosecha extra de cultivos maduros."),
+ "plant_food": ("Dieta vegetal", "La comida que no es carne ni pescado sacia más."),
+ "green_touch": ("Toque Verde", "Clic derecho con la mano vacía: polvo de hueso gratis en un cultivo."),
+ "looting": ("Saqueo racial", "Nivel de Saqueo (cuenta el mayor con el encantamiento)."),
+ "long_hand": ("Mano Larga", "Probabilidad de robar al golpear cuerpo a cuerpo."),
+ "snare": ("Cepo", "Trampa que inmoviliza al primer enemigo que la pisa."),
+ "water_breathing": ("Respiración Acuática", "No consumes aire bajo el agua."),
+ "aquatic": ("Criatura del agua", "Picas sumergido a velocidad normal y ves bajo el agua. El fuego te daña más."),
+ "fisher": ("Pesca Experta", "Mejoras al pescar."),
+ "tame_water": ("Agua Dócil", "Crea una fuente de agua temporal donde apuntas."),
+ "wave": ("Ola", "Empuja a los enemigos que tienes delante, sin daño."),
+ "water_wall": ("Muro de Agua", "Muro de agua temporal de 3×3 delante de ti."),
+ "sea_friend": ("Amigo del Mar", "Ahogados y guardianes neutrales."),
+ "abyss_immunity": ("Hijo del Abismo", "Bajo el agua, inmune a Fatiga de minero, Ceguera y Oscuridad."),
+ "camouflage": ("Camuflaje", "Invisible bajo el agua mientras estás quieto."),
+ "escort": ("Escolta", "Los guardianes cercanos atacan a tus enemigos."),
+ "fire_immune": ("Piel de Brasa", "Inmune al fuego y la lava (no al daño mágico de fuego). La leche no lo quita."),
+ "racial_spells": ("Conjuros Raciales", "Nivel de cada conjuro de fuego racial (0 = aún no lo tienes). Requiere Iron's Spells."),
+ "outcast": ("Marcado", "Golems de hierro siempre hostiles y aldeanos más caros."),
+ "nether_native": ("Nativo del Nether", "Piglins, brutos y hoglins neutrales."),
+ "wither_immune": ("Sangre de ceniza", "Inmune a Wither."),
+ "nether_compass": ("Brújula Infernal", "Localiza la fortaleza o el bastión más cercano."),
+ "lava_walk": ("Caminalava", "Caminas sobre la lava (agacharte te hunde)."),
+ "auto_smelt": ("Toque fundente", "Los minerales que picas salen fundidos."),
+ "portable_furnace": ("Horno Portátil", "Funde al instante lo que llevas en la mano con combustible del inventario."),
+ "sunburn": ("Luz Solar", "El sol directo te daña (ignora la armadura) y anula tu regeneración."),
+ "fixed_hunger": ("Hambre Fija", "Tu hambre no sube ni baja y no tienes saturación."),
+ "dead_regen": ("Regeneración Muerta", "Regeneras vida constantemente; se corta al recibir daño."),
+ "lifeless": ("Cuerpo Sin Vida", "Las pociones de curación y los conjuros de curación no te curan."),
+ "thirst": ("Sed", "Curación por matar y robo de vida."),
+ "bones": ("Huesos", "Esqueletos neutrales y menos daño de proyectiles."),
+ "weightless": ("Ingrávido", "Sin daño de caída y caída lenta."),
+ "ethereal": ("Forma Etérea", "No puedes recibir daño ni atacar."),
+}
+
+RACE_PARAMS = {
+ "wall_reduction": "Reducción del muro y de los rasgos base|%", "factor": "Factor x", "invulnerable_seconds": "Invulnerable después|s", "exhaustion": "Hambre extra|%",
+ "flat_reduction": "Daño restado por golpe (HP)", "food": "Hambre (puntos)", "saturation": "Saturación", "mob_factor": "Mobs que no son jefes x",
+ "immunity_seconds": "Inmunidad posterior|s", "mining_speed": "Velocidad de minado extra|%", "level": "Nivel", "slowness": "Lentitud a enemigos (nivel)",
+ "enchant_bonus": "Nivel extra de la mesa|%", "fusion": "Fusión Arcana|sí", "fusion_cost_levels": "Coste de la fusión (niveles)",
+ "bonus": "Extra|%", "mob_chance": "Probabilidad contra mobs|%", "player_chance": "Probabilidad contra jugadores|%",
+ "steals_per_mob": "Robos por mob", "equip_share_mob": "Manos Vacías: robos de equipo a mobs|%",
+ "equip_share_player": "Manos Vacías: robos de equipo a jugadores|%", "player_cooldown_seconds": "Enfriamiento por jugador|s",
+ "traps": "Trampas a la vez", "root_seconds": "Inmovilización|s", "boss_root_seconds": "Inmovilización a jefes|s",
+ "lifetime_seconds": "Duración de la trampa|s", "pvp_factor": "Contra jugadores x", "fire_damage": "Daño de fuego recibido extra|%",
+ "luck": "Suerte del Mar racial", "extra_catch": "Red: captura extra|%", "treasure_chance": "Tesoro extra|%", "xp_bonus": "XP de pesca extra|%",
+ "strength": "Fuerza del empuje", "range": "Alcance (bloques)", "fire_bolt": "Disparo de fuego (nivel)", "fireball": "Bola de fuego (nivel)",
+ "magma_bomb": "Bomba de magma (nivel)", "price_increase": "Precio de los aldeanos|+%", "golem_radius": "Radio de golems (bloques)",
+ "max_items": "Objetos por uso", "pause_seconds": "Corte al recibir daño|s", "kill_heal": "Curación por muerte (HP)",
+ "lifesteal": "Robo de vida|%", "cap_per_second": "Tope de curación por segundo (HP)", "arrow_reduction": "Menos daño de proyectiles|%",
+ "regen_pause_seconds": "Corte de la regeneración|s", "max_blocks": "Bloques conectados",
+}
+
+RACE_UI = {
+ "ui.rpgclasses.race.title_select": "Elige tu raza y subraza",
+ "ui.rpgclasses.race.title_view": "Razas",
+ "ui.rpgclasses.race.title_wall": "Humano: elige tu muro",
+ "ui.rpgclasses.race.button": "Raza",
+ "ui.rpgclasses.race.permanent": "La raza y la subraza son permanentes: no se pueden cambiar.",
+ "ui.rpgclasses.race.confirm_text": "La raza y la subraza son PERMANENTES. No se pueden cambiar ni reiniciar, tampoco al reiniciar la clase.",
+ "ui.rpgclasses.race.traits": "Rasgos de la raza (Rango 0)",
+ "ui.rpgclasses.race.by_rank": "Rasgos de la subraza. R0–R3 = valor en cada Rango (los Rangos 1–3 se ganan con ritos).",
+ "ui.rpgclasses.race.from_rank": " (desde Rango %s)",
+ "ui.rpgclasses.race.unavailable": "Aún no disponible: sus rasgos están en desarrollo.",
+ "ui.rpgclasses.race.own": "Tu raza. Subraza: %s. Rango %s.",
+ "ui.rpgclasses.race.wall_text": "Adaptable reduce la penalización del muro que elijas. Se elige al elegir clase y solo cambia al reiniciarla.",
+ "ui.rpgclasses.race.wall_text_second": "Polivalente: elige un segundo muro, que recibe la mitad de la reducción.",
+ "ui.rpgclasses.race.wall_option": "%s: −%s%% → −%s (con 30 puntos)",
+ "key.rpgclasses.race_1": "Habilidad racial 1",
+ "key.rpgclasses.race_2": "Habilidad racial 2",
+ "attribute.rpgclasses.scale": "Tamaño",
+ "attribute.rpgclasses.leaf_walker": "Paso entre Hojas",
+ "msg.rpgclasses.race_none": "%s aún no ha elegido raza.",
+ "msg.rpgclasses.race_info": "%s — Raza: %s | Subraza: %s | Rango %s%s",
+ "msg.rpgclasses.result.no_race": "Antes de elegir clase debes elegir raza.",
+ "msg.rpgclasses.result.already_has_race": "Ya tienes raza: es permanente.",
+ "msg.rpgclasses.result.unknown_race": "Esa raza o subraza no existe.",
+ "msg.rpgclasses.result.unknown_subrace": "Esa subraza no pertenece a esa raza.",
+ "msg.rpgclasses.result.subrace_unavailable": "Esa subraza aún no está disponible.",
+ "msg.rpgclasses.result.not_human": "Solo los humanos eligen muro.",
+ "msg.rpgclasses.result.wall_invalid": "Ese muro no se puede elegir (tu clase no lo tiene o ya lo elegiste).",
+ "msg.rpgclasses.result.wall_slots_full": "Ya has elegido tus muros. Cambian al reiniciar la clase.",
+ "message.rpgclasses.last_stand": "¡Última Resistencia! Sobrevives con medio corazón",
+ "message.rpgclasses.elf_no_meat": "Los elfos no comen carne ni pescado",
+ "message.rpgclasses.robbed": "¡%s te ha robado un objeto!",
+ "message.rpgclasses.stole": "Has robado: %s",
+ "message.rpgclasses.no_race_ability": "Tu subraza no tiene habilidad activa (o aún no tienes el Rango)",
+ "message.rpgclasses.stone_sense": "Sentido de la Piedra: %s bloques resaltados",
+ "message.rpgclasses.compass_not_nether": "La Brújula Infernal solo funciona en el Nether",
+ "message.rpgclasses.compass_nothing": "No hay fortaleza ni bastión cerca",
+ "message.rpgclasses.compass_found": "Brújula Infernal: estructura en X %s, Z %s (a %s bloques)",
+ "message.rpgclasses.furnace_no_fuel": "Horno Portátil: no tienes combustible suficiente",
+ "death.attack.rpgclasses.sunlight": "%1$s se consumió bajo el sol",
+}
+
+def build(dump, base):
+    """Escribe races/*.json y devuelve las entradas de idioma."""
+    import os
+    lang = {}
+    for rid, (icon, effects, subraces) in RACES.items():
+        dump(os.path.join(base, "races", rid + ".json"), {
+            "schema_version": 1, "display": {"icon": icon}, "effects": effects,
+            "subraces": [{"id": sid, "display": {"icon": sicon}, "available": ok, "effects": seffects}
+                         for sid, sicon, ok, seffects in subraces]})
+        assert len(subraces) == 3, rid
+        name, desc = RACE_TEXT[rid]
+        lang[f"race.{NS}.{rid}.name"] = name
+        lang[f"race.{NS}.{rid}.desc"] = desc
+        for sid, _, _, seffects in subraces:
+            sname, sdesc = SUBRACE_TEXT[(rid, sid)]
+            lang[f"subrace.{NS}.{rid}.{sid}.name"] = sname
+            lang[f"subrace.{NS}.{rid}.{sid}.desc"] = sdesc
+        for e in effects + [x for _, _, _, se in subraces for x in se]:
+            if e["type"] == R("mechanic"):
+                key = e["id"].split(":")[1][len("race_"):]
+                assert key in MECHANIC_TEXT, key
+                for p in e:
+                    assert p in ("type", "id", "min_rank", "effects") or p in RACE_PARAMS or p in EXISTING_PARAMS, (key, p)
+    for mid, (name, desc) in MECHANIC_TEXT.items():
+        lang[f"mechanic.{NS}.race_{mid}.name"] = name
+        lang[f"mechanic.{NS}.race_{mid}.desc"] = desc
+    lang.update(RACE_UI)
+    return lang
+
+EXISTING_PARAMS = set()

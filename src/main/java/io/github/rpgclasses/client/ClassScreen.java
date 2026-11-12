@@ -19,11 +19,7 @@ import net.minecraft.client.gui.screens.PauseScreen;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FormattedCharSequence;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.registries.ForgeRegistries;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.ArrayList;
@@ -38,7 +34,9 @@ import java.util.Locale;
 public final class ClassScreen extends Screen {
     private static final int LINE_HEIGHT = 10;
     private static final int LEFT_WIDTH = 112;
-    private static final int ROW = 24;
+    /** Cabecera del panel (retrato y nombre) entre las pestañas y el contenido; compacta en pantallas bajas. */
+    private int header = 46;
+    private static final int TABS_Y = 28;
 
     private final boolean selecting;
     private final List<String> classIds = new ArrayList<>();
@@ -47,7 +45,7 @@ public final class ClassScreen extends Screen {
 
     private List<FormattedCharSequence> lines = List.of();
     private int scroll;
-    private int panelLeft, panelTop, panelRight, panelBottom;
+    private int panelLeft, panelTop, panelRight, panelBottom, headerTop;
     private long lastXp = -1;
     /** Ayuda de la fila bajo el ratón en la pestaña de progreso (rama bloqueada o perk elegido). */
     private Component pendingTooltip;
@@ -97,30 +95,27 @@ public final class ClassScreen extends Screen {
         }
         if (tab == ClassPages.Tab.PROGRESS && !progressAvailable()) tab = ClassPages.Tab.SUMMARY;
 
+        Portraits.clearCache();
         panelLeft = LEFT_WIDTH + 14;
-        panelTop = 54;
+        header = height >= 330 ? 46 : 24;
+        headerTop = TABS_Y + 24;
+        panelTop = headerTop + header;
         panelRight = width - 10;
         panelBottom = height - 36;
 
-        // Columna de clases.
-        int y = 30;
-        for (String id : classIds) {
-            Button b = Button.builder(Component.translatable(Ids.langKey("class", id, "name")), btn -> select(id))
-                    .bounds(30, y, LEFT_WIDTH - 22, 20).build();
-            b.active = !id.equals(selectedClass);
-            addRenderableWidget(b);
-            y += ROW;
-        }
+        // Rejilla de clases: tarjetas con retrato.
+        int gridBottom = selecting ? height - 8 : height - 56;
+        addPortraitGrid(classIds, gridBottom);
 
         // Raza propia (permanente): se consulta en su pantalla.
         if (!selecting && !io.github.rpgclasses.core.definition.RaceStore.CLIENT.ids().isEmpty()) {
             addRenderableWidget(Button.builder(Component.translatable("ui.rpgclasses.race.button"),
-                    btn -> minecraft.setScreen(new RaceScreen(RaceScreen.Mode.VIEW))).bounds(30, height - 28, LEFT_WIDTH - 22, 20).build());
+                    btn -> minecraft.setScreen(new RaceScreen(RaceScreen.Mode.VIEW))).bounds(8, height - 28, LEFT_WIDTH - 4, 20).build());
         }
         // Aliados (tecla J): quién cuenta como aliado; el resto son enemigos.
         if (!selecting) {
             addRenderableWidget(Button.builder(Component.translatable("ui.rpgclasses.ally.button"),
-                    btn -> minecraft.setScreen(new AllyScreen(this))).bounds(30, height - 50, LEFT_WIDTH - 22, 20).build());
+                    btn -> minecraft.setScreen(new AllyScreen(this))).bounds(8, height - 50, LEFT_WIDTH - 4, 20).build());
         }
 
         // Pestañas.
@@ -135,7 +130,7 @@ public final class ClassScreen extends Screen {
                 tab = t;
                 scroll = 0;
                 rebuildWidgets();
-            }).bounds(panelLeft + i * tabWidth, 30, tabWidth - 2, 20).build();
+            }).bounds(panelLeft + i * tabWidth, TABS_Y, tabWidth - 2, 20).build();
             b.active = t != tab;
             addRenderableWidget(b);
         }
@@ -167,6 +162,55 @@ public final class ClassScreen extends Screen {
             initProgress();
         } else {
             rebuildLines();
+        }
+    }
+
+    /** Dos columnas de tarjetas; si no caben, se encogen y dejan solo el retrato (el nombre va en la ayuda). */
+    private void addPortraitGrid(List<String> ids, int bottom) {
+        int cols = 2, gap = 2, top = TABS_Y;
+        int cellW = (LEFT_WIDTH - 4 - gap) / cols;
+        int rows = Math.max(1, (ids.size() + cols - 1) / cols);
+        int cellH = Math.max(26, Math.min(52, (bottom - top) / rows - gap));
+        boolean names = cellH >= 48;
+        for (int i = 0; i < ids.size(); i++) {
+            String id = ids.get(i);
+            ClassDef def = DefinitionStore.CLIENT.classDef(id);
+            PortraitButton b = new PortraitButton(8 + (i % cols) * (cellW + gap), top + (i / cols) * (cellH + gap), cellW, cellH,
+                    Component.translatable(Ids.langKey("class", id, "name")), Portraits.classTex(id), def == null ? null : def.icon(),
+                    PortraitButton.Layout.VERTICAL, names, btn -> select(id));
+            b.active = !id.equals(selectedClass);
+            addRenderableWidget(b);
+        }
+    }
+
+    /** Cabecera del panel: retrato y nombre de la clase; si es la tuya y tienes subclase, también la subclase. */
+    private void renderHeader(GuiGraphics g) {
+        UiStyle.header(g, panelLeft, headerTop, panelRight, headerTop + header);
+        if (selectedClass == null) return;
+        ClassDef def = DefinitionStore.CLIENT.classDef(selectedClass);
+        boolean big = header >= 46;
+        int size = big ? Portraits.TEX : 18;
+        int x = panelLeft + 6, y = headerTop + (big ? 5 : 3);
+        Portraits.draw(g, Portraits.classTex(selectedClass), def == null ? null : def.icon(), x, y, size);
+        Component className = Component.translatable(Ids.langKey("class", selectedClass, "name"));
+        if (big) UiStyle.scaledText(g, font, className, x + 44, y + 4, 1.5f, 0xFFFFE08A);
+        else g.drawString(font, className, x + 24, y + 5, 0xFFFFE08A);
+        if (def != null && !def.roles().isEmpty()) {
+            Component roles = Component.translatable("ui.rpgclasses.roles", String.join(", ", def.roles()));
+            if (big) g.drawString(font, roles, x + 44, y + 22, 0xAAAAAA);
+            else g.drawString(font, roles, x + 30 + font.width(className), y + 5, 0xAAAAAA);
+        }
+        String sub = state().subclassId;
+        if (!selecting && sub != null && selectedClass.equals(state().classId)) {
+            var subDef = DefinitionStore.CLIENT.subclassDef(sub);
+            Component name = Component.translatable(Ids.langKey("subclass", sub, "name"));
+            int sx = panelRight - 6 - size;
+            Portraits.draw(g, Portraits.subclassTex(sub), subDef == null ? null : subDef.icon(), sx, y, size);
+            g.drawString(font, name, sx - 6 - font.width(name), y + (big ? 8 : 5), 0x55FFFF);
+            if (big) {
+                Component label = Component.translatable("ui.rpgclasses.header_subclass");
+                g.drawString(font, label, sx - 6 - font.width(label), y + 20, 0x888888);
+            }
         }
     }
 
@@ -245,10 +289,11 @@ public final class ClassScreen extends Screen {
             int w = (panelRight - panelLeft - 16) / Math.max(1, count);
             for (int i = 0; i < count; i++) {
                 String subId = def.subclasses().get(i);
+                var subDef = DefinitionStore.CLIENT.subclassDef(subId);
                 Component name = Component.translatable(Ids.langKey("subclass", subId, "name"));
-                addRenderableWidget(Button.builder(name, btn -> confirmNamed("ui.rpgclasses.confirm_subclass", name,
-                                ClassAction.Action.CHOOSE_SUBCLASS, subId))
-                        .bounds(panelLeft + 8 + i * w, y + 12, w - 4, 20).build());
+                addRenderableWidget(new PortraitButton(panelLeft + 8 + i * w, y + 10, w - 4, 22, name, Portraits.subclassTex(subId),
+                        subDef == null ? null : subDef.icon(), PortraitButton.Layout.HORIZONTAL, true,
+                        btn -> confirmNamed("ui.rpgclasses.confirm_subclass", name, ClassAction.Action.CHOOSE_SUBCLASS, subId)));
             }
         }
     }
@@ -296,8 +341,10 @@ public final class ClassScreen extends Screen {
         int y = subclassRowY(def.branches().size());
         if (s.subclassId != null) {
             int cap = ProgressionRules.subclassCap(s.basePoints());
-            g.drawString(font, Component.translatable(Ids.langKey("subclass", s.subclassId, "name")), x, y + 5, 0x55FFFF);
-            g.drawString(font, Component.translatable("ui.rpgclasses.subclass_level", s.subclassLevel, cap), x + 130, y + 5, 0xFFFFFF);
+            var subDef = DefinitionStore.CLIENT.subclassDef(s.subclassId);
+            Portraits.draw(g, Portraits.subclassTex(s.subclassId), subDef == null ? null : subDef.icon(), x, y, 18);
+            g.drawString(font, Component.translatable(Ids.langKey("subclass", s.subclassId, "name")), x + 22, y + 5, 0x55FFFF);
+            g.drawString(font, Component.translatable("ui.rpgclasses.subclass_level", s.subclassLevel, cap), x + 140, y + 5, 0xFFFFFF);
         } else if (s.basePoints() >= ProgressionRules.SUBCLASS_UNLOCK) {
             g.drawString(font, Component.translatable("ui.rpgclasses.subclass_pick"), x, y, 0x55FFFF);
         } else {
@@ -394,22 +441,11 @@ public final class ClassScreen extends Screen {
         renderBackground(g);
         g.drawCenteredString(font, title, width / 2, 8, 0xFFFFFF);
         if (selecting) {
-            g.drawCenteredString(font, Component.translatable("ui.rpgclasses.must_choose"), width / 2, 19, 0xAAAAAA);
+            g.drawCenteredString(font, Component.translatable("ui.rpgclasses.must_choose"), (panelLeft + panelRight) / 2, 18, 0xAAAAAA);
         }
 
-        // Iconos de las clases.
-        int y = 32;
-        for (String id : classIds) {
-            ClassDef def = DefinitionStore.CLIENT.classDef(id);
-            if (def != null) {
-                ResourceLocation iconId = ResourceLocation.tryParse(def.icon());
-                Item item = iconId == null ? null : ForgeRegistries.ITEMS.getValue(iconId);
-                if (item != null) g.renderItem(new ItemStack(item), 10, y);
-            }
-            y += ROW;
-        }
-
-        g.fill(panelLeft, panelTop, panelRight, panelBottom, 0x90000000);
+        UiStyle.panel(g, panelLeft, headerTop, panelRight, panelBottom);
+        renderHeader(g);
         pendingTooltip = null;
         if (tab == ClassPages.Tab.PROGRESS) {
             renderProgress(g, mouseX, mouseY);

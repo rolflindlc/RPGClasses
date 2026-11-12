@@ -10,6 +10,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 
 /**
  * Goblin Jinete de Lobo: el dueño montado controla a su lobo como a un caballo (el cliente del jinete mueve al
@@ -18,6 +19,9 @@ import org.spongepowered.asm.mixin.Mixin;
  */
 @Mixin(Wolf.class)
 public abstract class WolfRideMixin extends TamableAnimal {
+    /** Ticks que el jinete lleva manteniendo el salto en el suelo. */
+    @Unique private int rpgclasses$jumpCharge;
+
     protected WolfRideMixin(EntityType<? extends TamableAnimal> type, Level level) {
         super(type, level);
     }
@@ -37,7 +41,18 @@ public abstract class WolfRideMixin extends TamableAnimal {
         setRot(getYRot(), getXRot());
         yBodyRot = getYRot();
         yHeadRot = getYRot();
-        if (((LivingEntityAccessor) rider).rpgclasses$isJumping() && onGround()) jumpFromGround();
+        // Mantener el salto carga la fuerza (hasta 1 s); al soltarlo en el suelo, el lobo salta.
+        boolean pressed = ((LivingEntityAccessor) rider).rpgclasses$isJumping();
+        if (!onGround()) {
+            rpgclasses$jumpCharge = 0;
+        } else if (pressed) {
+            rpgclasses$jumpCharge = Math.min(WolfRider.CHARGE_TICKS, rpgclasses$jumpCharge + 1);
+        } else if (rpgclasses$jumpCharge > 0) {
+            Vec3 v = getDeltaMovement();
+            setDeltaMovement(v.x, getJumpPower() * WolfRider.chargeFraction(rpgclasses$jumpCharge), v.z);
+            hasImpulse = true;
+            rpgclasses$jumpCharge = 0;
+        }
     }
 
     /** Salto del lobo montado: el de vanilla es muy corto. Solo cambia cuando hay jinete. */

@@ -101,6 +101,7 @@ public class RpgClasses {
         MinecraftForge.EVENT_BUS.register(new BannerAura());
         MinecraftForge.EVENT_BUS.register(new RangerPerks());
         MinecraftForge.EVENT_BUS.register(new RangerSubclasses());
+        MinecraftForge.EVENT_BUS.register(new io.github.rpgclasses.content.BondBook());
         MinecraftForge.EVENT_BUS.register(new RoguePerks());
         MinecraftForge.EVENT_BUS.register(new MonkPerks());
         MinecraftForge.EVENT_BUS.register(new MonkSubclasses());

@@ -1,0 +1,23 @@
+# Libro de Vínculos del Maestro de Bestias: textos de la pantalla, los avisos y el objeto.
+UI = {
+ "item.rpgclasses.bond_book": "Libro de Vínculos",
+ "ui.rpgclasses.bond.title": "Libro de Vínculos",
+ "ui.rpgclasses.bond.bonded": "Vinculadas (%s/%s)",
+ "ui.rpgclasses.bond.none": "Aún no tienes mascotas vinculadas.",
+ "ui.rpgclasses.bond.stats": "Vida %s/%s · Daño %s · Vel. %s",
+ "ui.rpgclasses.bond.unloaded": "No cargada: acércate para verla o soltarla",
+ "ui.rpgclasses.bond.break": "Romper",
+ "ui.rpgclasses.bond.dest": "Destino al morir",
+ "ui.rpgclasses.bond.dest_spawn": "Punto de aparición",
+ "ui.rpgclasses.bond.point_line": "Punto %s: %s, %s, %s (%s)",
+ "ui.rpgclasses.bond.point_empty": "Punto %s: vacío",
+ "ui.rpgclasses.bond.use": "Usar",
+ "ui.rpgclasses.bond.save_here": "Guardar aquí",
+ "ui.rpgclasses.bond.nearby": "Cercanas sin vincular",
+ "ui.rpgclasses.bond.no_nearby": "No tienes mascotas sin vincular a menos de %s bloques.",
+ "ui.rpgclasses.bond.link": "Vincular",
+ "msg.rpgclasses.bond.full": "Ya tienes el máximo de vínculos (%s).",
+ "msg.rpgclasses.bond.need_near": "Acércate a la mascota (menos de %s bloques).",
+ "msg.rpgclasses.bond.saved": "Punto %s guardado aquí.",
+ "msg.rpgclasses.bond.only_beast_master": "Solo el Maestro de Bestias puede usar este libro.",
+}

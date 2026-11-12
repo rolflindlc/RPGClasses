@@ -90,11 +90,11 @@ RACES = {
         mech("lava_pool", 3, duration_seconds=5, radius=2.5, burn_seconds=3, slowness=2)])]),
  "undead": ("minecraft:skeleton_skull", [
     mech("water_breathing"), mech("sunburn", damage_per_second=1), mech("fixed_hunger", food=10),
-    mech("dead_regen", heal_per_second=1, pause_seconds=3), mech("lifeless")], [
+    mech("dead_regen", heal_per_second=1, pause_seconds=6), mech("lifeless")], [
     ("vampire", "minecraft:redstone", True, [
         mech("thirst", kill_heal=V(1, 1, 2, 2), lifesteal=V(0, .03, .05, .07), cap_per_second=5)]),
     ("skeleton", "minecraft:bone", True, [
-        mech("bones", arrow_reduction=V(.10, .20, .30, .30), regen_pause_seconds=V(3, 3, 3, 1.5))]),
+        mech("bones", arrow_reduction=V(.10, .20, .30, .30), regen_pause_seconds=V(6, 6, 6, 3))]),
     ("specter", "minecraft:phantom_membrane", True, [
         mech("weightless"),
         mech("ethereal", 1, duration_seconds=V(2, 2, 3, 3), cooldown_seconds=V(60, 60, 60, 40))])]),

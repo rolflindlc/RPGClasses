@@ -268,4 +268,91 @@ public final class Packets {
             DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> io.github.rpgclasses.client.CoinFlipFx.start(this));
         }
     }
+
+    /** Una mascota en el Libro de Vínculos: vinculada (con estadísticas si está cargada) o cercana sin vincular. */
+    public record BookEntry(java.util.UUID id, String name, String type, boolean loaded, float health, float maxHealth,
+                            double attack, double speed, boolean boosted) {
+        void write(FriendlyByteBuf buf) {
+            buf.writeUUID(id);
+            buf.writeUtf(name, 64);
+            buf.writeUtf(type, 128);
+            buf.writeBoolean(loaded);
+            buf.writeFloat(health);
+            buf.writeFloat(maxHealth);
+            buf.writeDouble(attack);
+            buf.writeDouble(speed);
+            buf.writeBoolean(boosted);
+        }
+
+        static BookEntry read(FriendlyByteBuf buf) {
+            return new BookEntry(buf.readUUID(), buf.readUtf(64), buf.readUtf(128), buf.readBoolean(), buf.readFloat(),
+                    buf.readFloat(), buf.readDouble(), buf.readDouble(), buf.readBoolean());
+        }
+    }
+
+    /** Un punto de destino guardado en el Libro de Vínculos. */
+    public record BookPoint(boolean set, String dim, int x, int y, int z) {}
+
+    /** Servidor -> cliente: contenido del Libro de Vínculos (abre la pantalla al llegar). */
+    public record BondBookSync(java.util.List<BookEntry> bonded, java.util.List<BookEntry> nearby,
+                               java.util.List<BookPoint> points, int selected) {
+        public void encode(FriendlyByteBuf buf) {
+            writeEntries(buf, bonded);
+            writeEntries(buf, nearby);
+            buf.writeVarInt(points.size());
+            for (BookPoint p : points) {
+                buf.writeBoolean(p.set());
+                buf.writeUtf(p.dim(), 128);
+                buf.writeVarInt(p.x());
+                buf.writeVarInt(p.y());
+                buf.writeVarInt(p.z());
+            }
+            buf.writeVarInt(selected);
+        }
+
+        private static void writeEntries(FriendlyByteBuf buf, java.util.List<BookEntry> list) {
+            buf.writeVarInt(list.size());
+            for (BookEntry e : list) e.write(buf);
+        }
+
+        private static java.util.List<BookEntry> readEntries(FriendlyByteBuf buf) {
+            int n = Math.min(buf.readVarInt(), 64);
+            java.util.List<BookEntry> out = new java.util.ArrayList<>();
+            for (int i = 0; i < n; i++) out.add(BookEntry.read(buf));
+            return out;
+        }
+
+        public static BondBookSync decode(FriendlyByteBuf buf) {
+            java.util.List<BookEntry> bonded = readEntries(buf);
+            java.util.List<BookEntry> nearby = readEntries(buf);
+            int n = Math.min(buf.readVarInt(), 8);
+            java.util.List<BookPoint> points = new java.util.ArrayList<>();
+            for (int i = 0; i < n; i++) {
+                points.add(new BookPoint(buf.readBoolean(), buf.readUtf(128), buf.readVarInt(), buf.readVarInt(), buf.readVarInt()));
+            }
+            return new BondBookSync(bonded, nearby, points, buf.readVarInt());
+        }
+
+        public void handle(Supplier<NetworkEvent.Context> ctx) {
+            DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> ClientHandlers.onBondBookSync(this));
+        }
+    }
+
+    /** Cliente -> servidor: acción del Libro de Vínculos (vincular, romper, guardar punto, elegir destino). */
+    public record BondBookAction(int kind, java.util.UUID pet, int slot) {
+        public void encode(FriendlyByteBuf buf) {
+            buf.writeVarInt(kind);
+            buf.writeUUID(pet);
+            buf.writeVarInt(slot);
+        }
+
+        public static BondBookAction decode(FriendlyByteBuf buf) {
+            return new BondBookAction(buf.readVarInt(), buf.readUUID(), buf.readVarInt());
+        }
+
+        public void handle(Supplier<NetworkEvent.Context> ctx) {
+            ServerPlayer player = ctx.get().getSender();
+            if (player != null) io.github.rpgclasses.content.BondBook.act(player, kind, pet, slot);
+        }
+    }
 }

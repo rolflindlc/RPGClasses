@@ -3,6 +3,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import texts
 import races
 import allies
+import bonds
 out = sys.argv[1]
 NS = "rpgclasses"
 def R(x): return f"{NS}:{x}"
@@ -317,6 +318,8 @@ import rites
 rites.write_static(dump, out)
 for key in allies.UI: assert key not in lang, key
 lang.update(allies.UI)
+for key in bonds.UI: assert key not in lang, key
+lang.update(bonds.UI)
 # Unidades de los parámetros, para que el cliente sepa formatearlos: "%" porcentaje, "s" segundos.
 dump(os.path.join(out, "assets", NS, "rpgclasses_param_units.json"),
      {k: v.split("|")[1] for k, v in sorted(texts.PARAMS.items()) if "|" in v})

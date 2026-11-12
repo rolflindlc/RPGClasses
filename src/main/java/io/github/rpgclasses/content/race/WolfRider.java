@@ -36,6 +36,16 @@ import java.util.UUID;
 public final class WolfRider {
     private static final UUID VIGOR_ID = UUID.fromString("2e8f6a4c-1b7d-4c8e-9f3a-5d6b7c8e9f01");
 
+    /** Ticks que hay que mantener el salto para la fuerza máxima (1 s). */
+    public static final int CHARGE_TICKS = 20;
+    /** Fuerza mínima de un toque: el salto nunca sale del todo flojo. */
+    private static final float MIN_CHARGE = 0.35f;
+
+    /** Fracción de la fuerza de salto según los ticks cargados (cliente y servidor usan la misma fórmula). */
+    public static float chargeFraction(int ticks) {
+        return MIN_CHARGE + (1 - MIN_CHARGE) * Math.min(1f, ticks / (float) CHARGE_TICKS);
+    }
+
     /** Jinete que controla al lobo: su dueño, si va montado en él. */
     public static Player rider(Wolf wolf) {
         if (!(wolf.getFirstPassenger() instanceof Player p) || !wolf.isTame()) return null;

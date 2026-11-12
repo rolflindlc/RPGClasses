@@ -67,6 +67,62 @@
             ]
           }
         }
+      ],
+      "rites": [
+        {
+          "id": "triton.fisher.1",
+          "kind": "feat",
+          "objectives": [
+            {
+              "type": "kill",
+              "count": 20,
+              "filter": {
+                "target": "any",
+                "entity_tag": "rpgclasses:rite/aquatic"
+              }
+            }
+          ]
+        },
+        {
+          "id": "triton.fisher.2",
+          "kind": "craft",
+          "objectives": [
+            {
+              "type": "offer",
+              "items": [
+                {
+                  "tag": "rpgclasses:rite/fish",
+                  "count": 32,
+                  "distinct": 4
+                },
+                {
+                  "item": "minecraft:fishing_rod",
+                  "count": 1,
+                  "pred": "enchanted"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "triton.fisher.3",
+          "kind": "ritual",
+          "objectives": [
+            {
+              "type": "offer",
+              "items": [
+                {
+                  "tag": "rpgclasses:rite/fishing_treasure",
+                  "count": 1,
+                  "pred": "fished"
+                }
+              ]
+            },
+            {
+              "type": "boss"
+            }
+          ]
+        }
       ]
     },
     {
@@ -112,6 +168,56 @@
           "duration_seconds": 8,
           "cooldown_seconds": 20
         }
+      ],
+      "rites": [
+        {
+          "id": "triton.shaper.1",
+          "kind": "feat",
+          "objectives": [
+            {
+              "type": "kill",
+              "count": 30,
+              "filter": {
+                "target": "enemy",
+                "target_in_water": true
+              }
+            }
+          ]
+        },
+        {
+          "id": "triton.shaper.2",
+          "kind": "craft",
+          "objectives": [
+            {
+              "type": "offer",
+              "items": [
+                {
+                  "item": "minecraft:sponge",
+                  "count": 4
+                },
+                {
+                  "tag": "minecraft:coral_blocks",
+                  "count": 8
+                },
+                {
+                  "item": "minecraft:water_bucket",
+                  "count": 3
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "triton.shaper.3",
+          "kind": "ritual",
+          "objectives": [
+            {
+              "type": "boss",
+              "ability": "race_wave,race_water_wall",
+              "uses": 3
+            }
+          ]
+        }
       ]
     },
     {
@@ -140,6 +246,57 @@
           "id": "rpgclasses:race_escort",
           "min_rank": 3,
           "radius": 16
+        }
+      ],
+      "rites": [
+        {
+          "id": "triton.abyssal.1",
+          "kind": "feat",
+          "objectives": [
+            {
+              "type": "kill",
+              "count": 30,
+              "filter": {
+                "target": "enemy",
+                "submerged": true
+              }
+            }
+          ]
+        },
+        {
+          "id": "triton.abyssal.2",
+          "kind": "craft",
+          "objectives": [
+            {
+              "type": "offer",
+              "items": [
+                {
+                  "item": "minecraft:prismarine_crystals",
+                  "count": 16
+                },
+                {
+                  "item": "minecraft:sea_lantern",
+                  "count": 8
+                },
+                {
+                  "item": "minecraft:nautilus_shell",
+                  "count": 3
+                }
+              ],
+              "altar": "underwater"
+            }
+          ]
+        },
+        {
+          "id": "triton.abyssal.3",
+          "kind": "ritual",
+          "objectives": [
+            {
+              "type": "boss",
+              "altar": "underwater",
+              "alt_entity": "minecraft:elder_guardian"
+            }
+          ]
         }
       ]
     }

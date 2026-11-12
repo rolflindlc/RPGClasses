@@ -184,6 +184,7 @@ public final class SubraceTraits {
         if (heal <= 0) return;
         window[1] += heal;
         p.heal((float) heal);
+        Rites.onThirstHeal(p, heal);
     }
 
     private static void escort(ServerPlayer p, LivingEntity enemy) {
@@ -218,7 +219,10 @@ public final class SubraceTraits {
         } else if (victim instanceof Mob mob && mob instanceof Enemy && !Races.isBoss(mob) && mob.getSpawnType() != MobSpawnType.SPAWNER) {
             int done = mob.getPersistentData().getInt(STEAL_TAG);
             if (done >= (int) m.number("steals_per_mob", 1) || rnd.nextDouble() >= m.number("mob_chance", 0)) return;
-            if (rnd.nextDouble() < m.number("equip_share_mob", 0)) stolen = takeEquipment(mob, rnd);
+            if (rnd.nextDouble() < m.number("equip_share_mob", 0)) {
+                stolen = takeEquipment(mob, rnd);
+                Rites.markMobEquipment(stolen);
+            }
             if (stolen.isEmpty() && thief.level() instanceof ServerLevel level) {
                 LootTable table = level.getServer().getLootData().getLootTable(mob.getLootTable());
                 LootParams params = new LootParams.Builder(level)
@@ -236,6 +240,7 @@ public final class SubraceTraits {
                 stolen = rolled.get(rnd.nextInt(rolled.size()));
             }
             mob.getPersistentData().putInt(STEAL_TAG, done + 1);
+            if (!stolen.isEmpty()) Rites.onSteal(thief);
         }
         if (stolen.isEmpty()) return;
         ItemEntity drop = victim.spawnAtLocation(stolen, 0.5f);
@@ -323,6 +328,7 @@ public final class SubraceTraits {
         if (!(event.getEntity() instanceof ServerPlayer p) || !(p.level() instanceof ServerLevel level)) return;
         ActiveMechanic m = Races.find(p, "race_fisher");
         if (m == null) return;
+        Rites.markFished(p, event.getDrops());
         RandomSource rnd = p.getRandom();
         List<ItemStack> extra = new ArrayList<>();
         double net = m.number("extra_catch", 0);

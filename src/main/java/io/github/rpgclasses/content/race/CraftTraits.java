@@ -76,6 +76,7 @@ public final class CraftTraits {
     /** Mixin de {@code Item.onCraftedBy} (mesa de trabajo, herrería): marca y, en Rango 3, Irrompibilidad +1. */
     public static void onCrafted(Player player, ItemStack stack) {
         if (!(player instanceof ServerPlayer p) || p instanceof FakePlayer || stack.isEmpty()) return;
+        Rites.markCrafted(p, stack);
         ActiveMechanic m = Races.find(p, "race_forged");
         if (m == null || stack.getItem().getMaxDamage(stack) <= 0) return;
         boolean first = stack.getTag() == null || !stack.getTag().contains(FORGED_TAG);
@@ -116,8 +117,9 @@ public final class CraftTraits {
     // ------------------------------------------------------------------ Elfo Arcano
 
     /** Mixin de {@code Player.onEnchantmentPerformed}: devuelve una parte de la experiencia gastada en la mesa. */
-    public static void onEnchanted(Player player, int levels) {
+    public static void onEnchanted(Player player, ItemStack stack, int levels) {
         if (!(player instanceof ServerPlayer p) || p instanceof FakePlayer || levels <= 0) return;
+        Rites.markEnchanted(p, stack);
         double discount = Races.number(p, "race_arcane", "xp_discount", 0);
         if (discount <= 0) return;
         int points = 0;
@@ -140,6 +142,7 @@ public final class CraftTraits {
         if (items.isEmpty() || !(piglin.level() instanceof ServerLevel)) return items;
         Player near = piglin.level().getNearestPlayer(piglin, 10);
         if (!(near instanceof ServerPlayer p)) return items;
+        Rites.onBarter(p);
         double chance = Races.number(p, "race_barter", "extra_chance", 0);
         if (chance <= 0 || piglin.getRandom().nextDouble() >= chance) return items;
         List<ItemStack> out = new ArrayList<>(items);

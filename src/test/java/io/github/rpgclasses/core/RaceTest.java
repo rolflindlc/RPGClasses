@@ -181,4 +181,44 @@ public class RaceTest {
         assertEquals(1.25, StatCalculator.raceMechanic(stone, orc, "rpgclasses:race_thick_skin").number("flat_reduction", 0), 1e-9);
         assertFalse(StatCalculator.raceMechanics(stone, orc).isEmpty());
     }
+
+    @Test
+    public void everySubraceHasThreeRites() {
+        int total = 0;
+        for (String race : new String[]{"human", "orc", "dwarf", "elf", "goblin", "triton", "infernal", "undead"}) {
+            for (var sub : RACES.race("rpgclasses:" + race).subraces()) {
+                assertEquals(race + "/" + sub.id(), 3, sub.rites().size());
+                assertNotNull(sub.riteFor(0));
+                assertNull(sub.riteFor(3));
+                total += sub.rites().size();
+            }
+        }
+        assertEquals(72, total);
+    }
+
+    @Test
+    public void riteProgressCountsAndCompletes() {
+        var orc = RACES.race("rpgclasses:orc").subrace("stoneskin").riteFor(0); // 100 golpes + 30 enemigos
+        java.util.Map<String, Integer> p = new java.util.HashMap<>();
+        io.github.rpgclasses.core.rite.RiteProgress.add(p, 0, 100);
+        assertFalse(io.github.rpgclasses.core.rite.RiteProgress.complete(orc, p));
+        io.github.rpgclasses.core.rite.RiteProgress.add(p, 1, 30);
+        assertTrue(io.github.rpgclasses.core.rite.RiteProgress.complete(orc, p));
+
+        var curiosity = RACES.race("rpgclasses:human").subrace("autodidact").riteFor(0); // 6 de cada uno de 5 tipos
+        var o = curiosity.objectives().get(0);
+        java.util.Map<String, Integer> q = new java.util.HashMap<>();
+        for (int t = 0; t < 4; t++) io.github.rpgclasses.core.rite.RiteProgress.addSub(q, 0, "mob" + t, 6);
+        io.github.rpgclasses.core.rite.RiteProgress.addSub(q, 0, "mob4", 5);
+        assertEquals(4, io.github.rpgclasses.core.rite.RiteProgress.value(o, 0, q));
+        assertEquals(5, io.github.rpgclasses.core.rite.RiteProgress.target(o));
+        io.github.rpgclasses.core.rite.RiteProgress.addSub(q, 0, "mob4", 1);
+        assertTrue(io.github.rpgclasses.core.rite.RiteProgress.complete(curiosity, q));
+
+        var boss = RACES.race("rpgclasses:dwarf").subrace("deep").riteFor(2);
+        java.util.Map<String, Integer> b = new java.util.HashMap<>();
+        assertFalse(io.github.rpgclasses.core.rite.RiteProgress.complete(boss, b));
+        io.github.rpgclasses.core.rite.RiteProgress.markDone(b, 0);
+        assertTrue(io.github.rpgclasses.core.rite.RiteProgress.complete(boss, b));
+    }
 }

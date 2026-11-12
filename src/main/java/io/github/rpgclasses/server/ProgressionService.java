@@ -149,6 +149,7 @@ public final class ProgressionService {
         data.state.raceId = raceId;
         data.state.subraceId = raceId == null ? null : subraceId;
         data.state.raceRank = Math.max(0, Math.min(ProgressionRules.RACE_MAX_RANK, rank));
+        data.state.riteProgress.clear(); // el rito en curso cambia con el rango
         data.state.humanWalls.clear();
         DebugLog.event(player, "raza", "admin: raza {} subraza {} rango {}", raceId, subraceId, data.state.raceRank);
         StatEngine.refresh(player);

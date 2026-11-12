@@ -43,6 +43,9 @@ public final class PlayerClassData {
         net.minecraft.nbt.ListTag walls = new net.minecraft.nbt.ListTag();
         for (String w : state.humanWalls) walls.add(net.minecraft.nbt.StringTag.valueOf(w));
         tag.put("humanWalls", walls);
+        net.minecraft.nbt.CompoundTag rites = new net.minecraft.nbt.CompoundTag();
+        state.riteProgress.forEach(rites::putInt);
+        tag.put("riteProgress", rites);
         CompoundTag cds = new CompoundTag();
         for (Map.Entry<String, Long> e : cooldowns.entrySet()) cds.putLong(e.getKey(), e.getValue());
         tag.put("cooldowns", cds);
@@ -74,6 +77,9 @@ public final class PlayerClassData {
         state.raceId = tag.contains("race", Tag.TAG_STRING) ? tag.getString("race") : null;
         state.subraceId = tag.contains("subrace", Tag.TAG_STRING) ? tag.getString("subrace") : null;
         state.raceRank = Math.max(0, Math.min(3, tag.getInt("raceRank")));
+        state.riteProgress.clear();
+        net.minecraft.nbt.CompoundTag rites = tag.getCompound("riteProgress");
+        for (String k : rites.getAllKeys()) state.riteProgress.put(k, rites.getInt(k));
         state.humanWalls.clear();
         net.minecraft.nbt.ListTag walls = tag.getList("humanWalls", Tag.TAG_STRING);
         for (int i = 0; i < walls.size(); i++) state.humanWalls.add(walls.getString(i));

@@ -278,12 +278,15 @@ RACE_UI = {
 def build(dump, base):
     """Escribe races/*.json y devuelve las entradas de idioma."""
     import os
+    import rites
     lang = {}
+    objs = {rid: {"schema_version": 1, "display": {"icon": icon}, "effects": effects,
+                  "subraces": [{"id": sid, "display": {"icon": sicon}, "available": ok, "effects": seffects}
+                               for sid, sicon, ok, seffects in subraces]}
+            for rid, (icon, effects, subraces) in RACES.items()}
+    lang.update(rites.attach(objs))
     for rid, (icon, effects, subraces) in RACES.items():
-        dump(os.path.join(base, "races", rid + ".json"), {
-            "schema_version": 1, "display": {"icon": icon}, "effects": effects,
-            "subraces": [{"id": sid, "display": {"icon": sicon}, "available": ok, "effects": seffects}
-                         for sid, sicon, ok, seffects in subraces]})
+        dump(os.path.join(base, "races", rid + ".json"), objs[rid])
         assert len(subraces) == 3, rid
         name, desc = RACE_TEXT[rid]
         lang[f"race.{NS}.{rid}.name"] = name

@@ -88,6 +88,48 @@
             ]
           }
         }
+      ],
+      "rites": [
+        {
+          "id": "dwarf.deep.1",
+          "kind": "feat",
+          "objectives": [
+            {
+              "type": "kill",
+              "count": 30,
+              "filter": {
+                "target": "enemy",
+                "underground": true
+              }
+            }
+          ]
+        },
+        {
+          "id": "dwarf.deep.2",
+          "kind": "craft",
+          "objectives": [
+            {
+              "type": "offer",
+              "items": [
+                {
+                  "tag": "rpgclasses:rite/ores",
+                  "count": 64,
+                  "distinct": 3
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "dwarf.deep.3",
+          "kind": "ritual",
+          "objectives": [
+            {
+              "type": "boss",
+              "altar": "underground"
+            }
+          ]
+        }
       ]
     },
     {
@@ -123,6 +165,68 @@
           "min_rank": 1,
           "discount": 0.5
         }
+      ],
+      "rites": [
+        {
+          "id": "dwarf.smith.1",
+          "kind": "feat",
+          "objectives": [
+            {
+              "type": "kill",
+              "count": 30,
+              "filter": {
+                "target": "enemy",
+                "weapon_crafted": true
+              }
+            }
+          ]
+        },
+        {
+          "id": "dwarf.smith.2",
+          "kind": "craft",
+          "objectives": [
+            {
+              "type": "offer",
+              "items": [
+                {
+                  "item": "minecraft:iron_helmet",
+                  "count": 1,
+                  "pred": "crafted_by_you"
+                },
+                {
+                  "item": "minecraft:iron_chestplate",
+                  "count": 1,
+                  "pred": "crafted_by_you"
+                },
+                {
+                  "item": "minecraft:iron_leggings",
+                  "count": 1,
+                  "pred": "crafted_by_you"
+                },
+                {
+                  "item": "minecraft:iron_boots",
+                  "count": 1,
+                  "pred": "crafted_by_you"
+                },
+                {
+                  "tag": "rpgclasses:rite/iron_weapons",
+                  "count": 1,
+                  "pred": "crafted_by_you"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "dwarf.smith.3",
+          "kind": "ritual",
+          "objectives": [
+            {
+              "type": "boss",
+              "crafted_diamond": true
+            }
+          ]
+        }
       ]
     },
     {
@@ -156,6 +260,48 @@
           "min_rank": 3,
           "size": 3,
           "exhaustion_per_block": 0.1
+        }
+      ],
+      "rites": [
+        {
+          "id": "dwarf.demolisher.1",
+          "kind": "feat",
+          "objectives": [
+            {
+              "type": "kill",
+              "count": 20,
+              "filter": {
+                "target": "enemy",
+                "explosion": true
+              }
+            }
+          ]
+        },
+        {
+          "id": "dwarf.demolisher.2",
+          "kind": "craft",
+          "objectives": [
+            {
+              "type": "offer",
+              "items": [
+                {
+                  "item": "minecraft:tnt",
+                  "count": 16,
+                  "pred": "crafted_by_you"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "dwarf.demolisher.3",
+          "kind": "ritual",
+          "objectives": [
+            {
+              "type": "boss",
+              "explosions": 4
+            }
+          ]
         }
       ]
     }

@@ -72,6 +72,51 @@
           "min_rank": 3,
           "cooldown_seconds": 600
         }
+      ],
+      "rites": [
+        {
+          "id": "infernal.native.1",
+          "kind": "feat",
+          "objectives": [
+            {
+              "type": "kill",
+              "count": 30,
+              "filter": {
+                "target": "any",
+                "entity_tag": "rpgclasses:rite/nether_hostile"
+              }
+            }
+          ]
+        },
+        {
+          "id": "infernal.native.2",
+          "kind": "craft",
+          "objectives": [
+            {
+              "type": "barters",
+              "count": 20
+            },
+            {
+              "type": "offer",
+              "items": [
+                {
+                  "item": "minecraft:quartz",
+                  "count": 16
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "infernal.native.3",
+          "kind": "ritual",
+          "objectives": [
+            {
+              "type": "boss",
+              "altar": "nether"
+            }
+          ]
+        }
       ]
     },
     {
@@ -103,6 +148,48 @@
           "min_rank": 3,
           "max_items": 16,
           "cooldown_seconds": 20
+        }
+      ],
+      "rites": [
+        {
+          "id": "infernal.smelter.1",
+          "kind": "feat",
+          "objectives": [
+            {
+              "type": "kill",
+              "count": 20,
+              "filter": {
+                "target": "enemy",
+                "on_lava": true
+              }
+            }
+          ]
+        },
+        {
+          "id": "infernal.smelter.2",
+          "kind": "craft",
+          "objectives": [
+            {
+              "type": "offer",
+              "items": [
+                {
+                  "tag": "forge:ingots",
+                  "count": 64,
+                  "distinct": 3
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "infernal.smelter.3",
+          "kind": "ritual",
+          "objectives": [
+            {
+              "type": "boss",
+              "altar": "near_lava"
+            }
+          ]
         }
       ]
     },
@@ -141,6 +228,55 @@
           "radius": 2.5,
           "burn_seconds": 3,
           "slowness": 2
+        }
+      ],
+      "rites": [
+        {
+          "id": "infernal.pyromaniac.1",
+          "kind": "feat",
+          "objectives": [
+            {
+              "type": "kill",
+              "count": 40,
+              "filter": {
+                "target": "enemy",
+                "racial_spell": true
+              }
+            }
+          ]
+        },
+        {
+          "id": "infernal.pyromaniac.2",
+          "kind": "craft",
+          "objectives": [
+            {
+              "type": "offer",
+              "items": [
+                {
+                  "item": "minecraft:fire_charge",
+                  "count": 8
+                },
+                {
+                  "item": "minecraft:magma_block",
+                  "count": 4
+                },
+                {
+                  "item": "minecraft:blaze_rod",
+                  "count": 8
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "infernal.pyromaniac.3",
+          "kind": "ritual",
+          "objectives": [
+            {
+              "type": "boss",
+              "racial_share": 0.5
+            }
+          ]
         }
       ]
     }

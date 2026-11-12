@@ -145,6 +145,7 @@ public final class RaceAbilities {
         }
         DebugLog.event(player, "raza", "{} pulsada: {}", key, used ? "usada" : "no se activó");
         if (!used) return;
+        Rites.onAbilityUsed(player, entry.mechanic());
         AbilityService.setCooldown(player, key, (int) Math.round(m.number("cooldown_seconds", 0) * 20));
         player.displayClientMessage(Component.translatable("msg.rpgclasses.ability_used", name), true);
         io.github.rpgclasses.network.Net.syncPlayer(player);
@@ -302,6 +303,7 @@ public final class RaceAbilities {
             e.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, ticks, 9, false, true, true));
             e.addEffect(new MobEffectInstance(MobEffects.JUMP, ticks, 128, false, false, false));
             e.getPersistentData().putUUID(SNARED_BY, t.owner());
+            Rites.onSnared(t.owner(), e);
             level.playSound(null, BlockPos.containing(t.pos()), SoundEvents.TRIPWIRE_CLICK_ON, SoundSource.PLAYERS, 1f, 0.7f);
             DebugLog.event(owner, "raza", "Cepo: atrapa a {} durante {} s", DebugLog.describe(e), seconds);
             return true;

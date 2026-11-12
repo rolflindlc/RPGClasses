@@ -76,7 +76,21 @@ public final class Definitions {
     public record AbilityDef(String id, JsonObject params) {}
 
     /** Subraza: variante de una raza. {@code available} = false mientras sus rasgos no estén programados. */
-    public record SubraceDef(String id, String icon, boolean available, List<EffectDef> effects) {}
+    public record SubraceDef(String id, String icon, boolean available, List<EffectDef> effects, List<RiteDef> rites) {
+        /** Rito que lleva al rango {@code rank + 1}, o null si ya tiene el rango máximo o no hay ritos. */
+        public RiteDef riteFor(int rank) {
+            return rank >= 0 && rank < rites.size() ? rites.get(rank) : null;
+        }
+    }
+
+    /**
+     * Rito (anexo de razas, regla 5): misión que sube el rango de raza. Todos sus objetivos deben cumplirse.
+     * Tipos de objetivo: kill, kill_variety, kill_styles, hits_taken, steals, barters, offer, structure, boss.
+     */
+    public record RiteDef(String id, String kind, List<ObjectiveDef> objectives) {}
+
+    /** Objetivo de un rito: tipo, cantidad y parámetros propios del tipo (filtros, objetos, condiciones del jefe). */
+    public record ObjectiveDef(String type, int count, JsonObject params) {}
 
     /**
      * Raza (anexo de razas). Sus efectos y los de la subraza se evalúan con nivel = rango + 1 (de 4):

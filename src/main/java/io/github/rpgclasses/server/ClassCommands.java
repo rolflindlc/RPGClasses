@@ -74,6 +74,10 @@ public final class ClassCommands {
         // /raza (cualquier jugador): la raza es permanente; aquí solo se consulta o se elige (también hay pantalla).
         dispatcher.register(Commands.literal("raza")
                 .then(Commands.literal("info").executes(c -> raceInfo(c.getSource(), c.getSource().getPlayerOrException())))
+                .then(Commands.literal("ritos").executes(c -> {
+                    io.github.rpgclasses.content.race.Rites.showStatus(c.getSource().getPlayerOrException());
+                    return 1;
+                }))
                 .then(Commands.literal("elegir").then(Commands.argument("raza", ResourceLocationArgument.id()).suggests(RACE_IDS)
                         .then(Commands.argument("subraza", StringArgumentType.word())
                                 .executes(c -> act(c, Action.CHOOSE_RACE, ResourceLocationArgument.getId(c, "raza") + "/"

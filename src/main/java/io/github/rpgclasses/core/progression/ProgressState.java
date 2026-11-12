@@ -30,6 +30,8 @@ public final class ProgressState {
     public int raceRank;
     /** Humano: muros elegidos para Adaptable (1, o 2 el Polivalente). Se eligen de nuevo al reiniciar la clase. */
     public final java.util.List<String> humanWalls = new java.util.ArrayList<>();
+    /** Progreso del rito en curso (el que lleva al rango siguiente). Claves de {@code RiteProgress}. */
+    public final java.util.Map<String, Integer> riteProgress = new java.util.HashMap<>();
 
     public int basePoints() {
         int sum = 0;
@@ -74,5 +76,7 @@ public final class ProgressState {
         raceRank = o.raceRank;
         humanWalls.clear();
         humanWalls.addAll(o.humanWalls);
+        riteProgress.clear();
+        riteProgress.putAll(o.riteProgress);
     }
 }

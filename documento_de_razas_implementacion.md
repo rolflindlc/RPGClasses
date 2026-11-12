@@ -83,8 +83,8 @@ Nada de esto se ha probado en el juego: compila y pasa las pruebas, pero es la p
 5. Humano: elegir muro tras la clase y comprobar el muro con `/clases debug stats`.
 6. Subir el rango con `/clases raza rango` y probar las teclas V y B.
 7. Pícaro en PvP: el Sigilo ya no se corta al acercarse a otro jugador.
+8. **Aliados** (dos jugadores, tecla J o `/aliados`): sin marcar, las áreas, trampas y conjuros de uno dañan al otro; tras marcar, no. Estandarte, Baluarte Sanador, curas de Iron's y Voz del Caudillo solo alcanzan a aliados. Las mascotas de un aliado no te atacan. La Nube de Humo solo oculta al Elfo y a sus aliados.
 9. **Apuesta con la Muerte** (Bárbaro Indestructible, `/xp` hasta la subclase): moneda girando sobre la cabeza, inmóvil e inmortal mientras gira, resultado en grande; con el anj, 1 s inmortal. En primera persona, la moneda sale arriba en la pantalla.
 10. **Fase R2a:** Herrero (fabricar y reparar: durabilidad en la descripción; yunque a mitad), Demoledor (TNT y Túnel con `/clases raza rango`), Jinete de Lobo (montar, saltar, mordisco, vida), Pirómano (con Iron's: atravesar, charcos), Fundidor (hornos), Nativo (trueques), Pescador (picos) y Elfo Arcano (experiencia).
-8. **Aliados** (dos jugadores, tecla J o `/aliados`): sin marcar, las áreas, trampas y conjuros de uno dañan al otro; tras marcar, no. Estandarte, Baluarte Sanador, curas de Iron's y Voz del Caudillo solo alcanzan a aliados. Las mascotas de un aliado no te atacan. La Nube de Humo solo oculta al Elfo y a sus aliados.
 
 Si algo falla: `/clases debug volcar` (ahora incluye raza, subraza y rango) y `logs/rpgclasses-debug.log`.

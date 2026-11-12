@@ -30,7 +30,7 @@ import java.util.UUID;
  */
 public final class RacialSpells {
     /** parámetro de la mecánica (nivel por rango) → conjuro de Iron's. */
-    private static final String[][] SPELLS = {{"fire_bolt", "firebolt"}, {"fireball", "fireball"}, {"magma_bomb", "magma_bomb"}};
+    private static final String[][] SPELLS = {{"fire_bolt", "firebolt"}, {"magma_bomb", "magma_bomb"}, {"raise_hell", "raise_hell"}};
     static final String SLOT = "rpgclasses_racial";
 
     private static final Map<UUID, Long> SPELL_HEAL_TICK = new HashMap<>();

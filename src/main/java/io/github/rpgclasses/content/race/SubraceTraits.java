@@ -86,6 +86,8 @@ public final class SubraceTraits {
     /** Vampiro: [segundo de juego, curado en ese segundo] para el tope por segundo. */
     private static final Map<UUID, double[]> THIRST_WINDOW = new HashMap<>();
     private static final Map<String, Long> STEAL_COOLDOWN = new HashMap<>();
+    /** Cooldown general de Mano Larga por ladrón (tras cada robo con éxito). */
+    private static final Map<UUID, Long> THIEF_COOLDOWN = new HashMap<>();
 
     /** Una vez por segundo y jugador, desde {@link RaceTraits}. */
     static void secondTick(ServerPlayer p) {
@@ -202,6 +204,7 @@ public final class SubraceTraits {
     private static void steal(ServerPlayer thief, LivingEntity victim, DamageSource source, ActiveMechanic m) {
         RandomSource rnd = thief.getRandom();
         long now = thief.level().getGameTime();
+        if (now < THIEF_COOLDOWN.getOrDefault(thief.getUUID(), 0L)) return;
         ItemStack stolen = ItemStack.EMPTY;
         if (victim instanceof ServerPlayer target) {
             String key = thief.getUUID() + ">" + target.getUUID();
@@ -243,6 +246,7 @@ public final class SubraceTraits {
             if (!stolen.isEmpty()) Rites.onSteal(thief);
         }
         if (stolen.isEmpty()) return;
+        THIEF_COOLDOWN.put(thief.getUUID(), now + Math.round(m.number("cooldown_seconds", 0) * 20));
         ItemEntity drop = victim.spawnAtLocation(stolen, 0.5f);
         if (drop != null) {
             drop.setTarget(thief.getUUID()); // prioridad de recogida para el Goblin

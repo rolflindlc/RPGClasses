@@ -95,7 +95,8 @@ public final class RaceAbilities {
     public static final String SNARED_BY = "rpgclasses.snared_by";
 
     private record Cloud(ResourceKey<Level> dim, Vec3 center, double radius, long end, UUID owner, int slowness) {}
-    private record Trap(ResourceKey<Level> dim, Vec3 pos, UUID owner, long end, double seconds, double bossSeconds, double pvpFactor) {}
+    private record Trap(ResourceKey<Level> dim, Vec3 pos, UUID owner, long end, double seconds, double bossSeconds, double pvpFactor,
+                        double damage) {}
     private record WaterKey(ResourceKey<Level> dim, BlockPos pos) {}
     private record Immunity(long end, Set<MobEffect> effects) {}
 
@@ -282,9 +283,12 @@ public final class RaceAbilities {
         int max = Math.max(1, (int) m.number("traps", 1));
         List<Trap> mine = TRAPS.stream().filter(t -> t.owner().equals(p.getUUID())).toList();
         for (int i = 0; i <= mine.size() - max; i++) TRAPS.remove(mine.get(i)); // se retira la más antigua
-        TRAPS.add(new Trap(p.level().dimension(), p.position(), p.getUUID(),
-                now(p) + Math.round(m.number("lifetime_seconds", 60) * 20),
-                m.number("root_seconds", 3), m.number("boss_root_seconds", 1), m.number("pvp_factor", 0.5)));
+        // Sin "lifetime_seconds" la trampa no caduca: sigue puesta hasta que salte o muera su dueño.
+        double life = m.number("lifetime_seconds", -1);
+        long end = life < 0 ? Long.MAX_VALUE : now(p) + Math.round(life * 20);
+        TRAPS.add(new Trap(p.level().dimension(), p.position(), p.getUUID(), end,
+                m.number("root_seconds", 3), m.number("boss_root_seconds", 1), m.number("pvp_factor", 0.5),
+                m.number("trap_damage", 0)));
         sound(p, SoundEvents.TRIPWIRE_ATTACH);
         return true;
     }
@@ -294,12 +298,15 @@ public final class RaceAbilities {
         ServerLevel level = server.getLevel(t.dim());
         ServerPlayer owner = server.getPlayerList().getPlayer(t.owner());
         if (level == null || owner == null) return false;
-        if (time % 10 == 0) level.sendParticles(ParticleTypes.CRIT, t.pos().x, t.pos().y + 0.1, t.pos().z, 2, 0.25, 0.02, 0.25, 0);
+        // Solo la ve su dueño: un destello cada 4 ticks, enviado únicamente a él.
+        if (time % 4 == 0) level.sendParticles(owner, ParticleTypes.HAPPY_VILLAGER, true, t.pos().x, t.pos().y + 0.2, t.pos().z,
+                4, 0.45, 0.15, 0.45, 0);
         AABB box = AABB.ofSize(t.pos().add(0, 0.5, 0), 1.4, 1.2, 1.4);
         for (LivingEntity e : level.getEntitiesOfClass(LivingEntity.class, box, e -> CombatAbilities.canHit(owner, e))) {
             double seconds = Races.isBoss(e) ? t.bossSeconds() : t.seconds();
             if (e instanceof Player) seconds *= t.pvpFactor();
             int ticks = (int) Math.round(seconds * 20);
+            if (t.damage() > 0) e.hurt(level.damageSources().playerAttack(owner), (float) t.damage());
             e.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, ticks, 9, false, true, true));
             e.addEffect(new MobEffectInstance(MobEffects.JUMP, ticks, 128, false, false, false));
             e.getPersistentData().putUUID(SNARED_BY, t.owner());

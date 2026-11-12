@@ -241,7 +241,7 @@ public final class Rites {
         }
     }
 
-    private static final Set<String> RACIAL_SPELLS = Set.of("irons_spellbooks:firebolt", "irons_spellbooks:fireball", "irons_spellbooks:magma_bomb");
+    private static final Set<String> RACIAL_SPELLS = Set.of("irons_spellbooks:firebolt", "irons_spellbooks:magma_bomb", "irons_spellbooks:raise_hell");
 
     private static boolean racialSpell(ServerPlayer p, DamageSource s) {
         String id = spellId(s);

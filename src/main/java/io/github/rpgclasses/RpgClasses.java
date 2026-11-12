@@ -107,6 +107,8 @@ public class RpgClasses {
         MinecraftForge.EVENT_BUS.register(new io.github.rpgclasses.content.race.RaceTraits());
         MinecraftForge.EVENT_BUS.register(new io.github.rpgclasses.content.race.SubraceTraits());
         MinecraftForge.EVENT_BUS.register(new io.github.rpgclasses.content.race.RaceAbilities());
+        MinecraftForge.EVENT_BUS.register(new io.github.rpgclasses.content.race.CraftTraits());
+        MinecraftForge.EVENT_BUS.register(new io.github.rpgclasses.content.race.WolfRider());
     }
 
     private void commonSetup(FMLCommonSetupEvent event) {

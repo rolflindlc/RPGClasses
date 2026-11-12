@@ -62,6 +62,12 @@
         },
         {
           "type": "rpgclasses:mechanic",
+          "id": "rpgclasses:race_barter",
+          "min_rank": 2,
+          "extra_chance": 0.25
+        },
+        {
+          "type": "rpgclasses:mechanic",
           "id": "rpgclasses:race_nether_compass",
           "min_rank": 3,
           "cooldown_seconds": 600
@@ -78,6 +84,13 @@
         {
           "type": "rpgclasses:mechanic",
           "id": "rpgclasses:race_lava_walk"
+        },
+        {
+          "type": "rpgclasses:mechanic",
+          "id": "rpgclasses:race_forge_heat",
+          "min_rank": 1,
+          "radius": 8,
+          "furnace_speed": 0.5
         },
         {
           "type": "rpgclasses:mechanic",
@@ -98,8 +111,38 @@
       "display": {
         "icon": "minecraft:fire_charge"
       },
-      "available": false,
-      "effects": []
+      "available": true,
+      "effects": [
+        {
+          "type": "rpgclasses:mechanic",
+          "id": "rpgclasses:race_piercing_fire",
+          "pierce": {
+            "values": [
+              1,
+              2,
+              2,
+              2
+            ]
+          }
+        },
+        {
+          "type": "rpgclasses:mechanic",
+          "id": "rpgclasses:race_flame_pool",
+          "min_rank": 2,
+          "duration_seconds": 4,
+          "radius": 2.5,
+          "burn_seconds": 3
+        },
+        {
+          "type": "rpgclasses:mechanic",
+          "id": "rpgclasses:race_lava_pool",
+          "min_rank": 3,
+          "duration_seconds": 5,
+          "radius": 2.5,
+          "burn_seconds": 3,
+          "slowness": 2
+        }
+      ]
     }
   ]
 }

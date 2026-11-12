@@ -218,18 +218,23 @@ public final class MonkSubclasses {
      * (y de la lava si {@code lava}). Agacharse permite hundirse.
      */
     public static void fluidWalk(Player p, boolean lava) {
+        fluidWalk(p, true, lava);
+    }
+
+    /** Caminar sobre fluidos: agua y/o lava (Marcha Elemental, Caminalava del Infernal Fundidor). */
+    public static void fluidWalk(Player p, boolean water, boolean lava) {
         if (p.isShiftKeyDown() || p.isPassenger() || p.getAbilities().flying || p.isFallFlying()) return;
         Vec3 v = p.getDeltaMovement();
         BlockPos at = BlockPos.containing(p.getX(), p.getY() + 0.05, p.getZ());
         BlockPos below = BlockPos.containing(p.getX(), p.getY() - 0.05, p.getZ());
         FluidState here = p.level().getFluidState(at);
         FluidState under = p.level().getFluidState(below);
-        if (walkable(here, lava) && p.level().getFluidState(at.above()).isEmpty()) {
+        if (walkable(here, water, lava) && p.level().getFluidState(at.above()).isEmpty()) {
             // Metido un poco en el fluido: subir a la superficie.
             double surface = at.getY() + here.getHeight(p.level(), at);
             if (surface - p.getY() < 0.7) p.setDeltaMovement(v.x, Math.min(0.25, Math.max(v.y, surface - p.getY() + 0.02)), v.z);
             p.resetFallDistance();
-        } else if (walkable(under, lava) && v.y <= 0) {
+        } else if (walkable(under, water, lava) && v.y <= 0) {
             double surface = below.getY() + under.getHeight(p.level(), below);
             if (p.getY() - surface < 0.1) {
                 p.setDeltaMovement(v.x, 0, v.z);
@@ -239,8 +244,8 @@ public final class MonkSubclasses {
         }
     }
 
-    private static boolean walkable(FluidState f, boolean lava) {
-        return !f.isEmpty() && (f.is(FluidTags.WATER) || (lava && f.is(FluidTags.LAVA)));
+    private static boolean walkable(FluidState f, boolean water, boolean lava) {
+        return !f.isEmpty() && ((water && f.is(FluidTags.WATER)) || (lava && f.is(FluidTags.LAVA)));
     }
 
     /** Postura actual ("none", "water", "stone", "fire"). */

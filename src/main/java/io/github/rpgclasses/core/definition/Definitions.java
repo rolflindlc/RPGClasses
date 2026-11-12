@@ -75,5 +75,20 @@ public final class Definitions {
     /** Habilidad: sus números (cooldown, duración, porcentajes). El comportamiento lo pone el código (fase 4). */
     public record AbilityDef(String id, JsonObject params) {}
 
+    /** Subraza: variante de una raza. {@code available} = false mientras sus rasgos no estén programados. */
+    public record SubraceDef(String id, String icon, boolean available, List<EffectDef> effects) {}
+
+    /**
+     * Raza (anexo de razas). Sus efectos y los de la subraza se evalúan con nivel = rango + 1 (de 4):
+     * los valores por rango son tablas {@code "values": [r0, r1, r2, r3]}. Una mecánica con
+     * {@code "min_rank": n} solo está activa a partir de ese rango.
+     */
+    public record RaceDef(String id, String icon, List<EffectDef> effects, List<SubraceDef> subraces) {
+        public SubraceDef subrace(String subraceId) {
+            for (SubraceDef s : subraces) if (s.id().equals(subraceId)) return s;
+            return null;
+        }
+    }
+
     private Definitions() {}
 }

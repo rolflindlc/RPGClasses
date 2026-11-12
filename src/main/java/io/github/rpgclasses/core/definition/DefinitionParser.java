@@ -83,6 +83,28 @@ public final class DefinitionParser {
                 milestones(o));
     }
 
+    public static Definitions.RaceDef parseRace(String id, String json) {
+        JsonObject o = root(json);
+        JsonObject display = o.has("display") ? o.getAsJsonObject("display") : new JsonObject();
+        List<Definitions.SubraceDef> subraces = new ArrayList<>();
+        for (JsonElement se : array(o, "subraces")) {
+            JsonObject s = se.getAsJsonObject();
+            JsonObject sd = s.has("display") ? s.getAsJsonObject("display") : new JsonObject();
+            subraces.add(new Definitions.SubraceDef(string(s, "id"), optString(sd, "icon", "minecraft:barrier"),
+                    !s.has("available") || s.get("available").getAsBoolean(), effects(s)));
+        }
+        List<EffectDef> effects = effects(o);
+        // Validación: cada efecto debe poder evaluarse en los 4 rangos.
+        List<EffectDef> all = new ArrayList<>(effects);
+        for (Definitions.SubraceDef s : subraces) all.addAll(s.effects());
+        for (EffectDef e : all) {
+            if ("rpgclasses:attribute".equals(e.type())) AttributeEffect.parse(e.params(), 4);
+            else if ("rpgclasses:mechanic".equals(e.type())) string(e.params(), "id");
+            else throw new IllegalArgumentException("tipo de efecto no admitido en razas: " + e.type());
+        }
+        return new Definitions.RaceDef(id, optString(display, "icon", "minecraft:barrier"), effects, List.copyOf(subraces));
+    }
+
     public static Definitions.AbilityDef parseAbility(String id, String json) {
         return new Definitions.AbilityDef(id, root(json));
     }

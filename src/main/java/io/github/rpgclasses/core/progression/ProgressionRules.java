@@ -24,7 +24,8 @@ public final class ProgressionRules {
     public enum Result {
         OK, NO_CLASS, ALREADY_HAS_CLASS, UNKNOWN_CLASS, UNKNOWN_BRANCH, BRANCH_FULL,
         SUBCLASS_LOCKED, UNKNOWN_SUBCLASS, ALREADY_HAS_SUBCLASS, NO_SUBCLASS, SUBCLASS_CAP,
-        NOT_ENOUGH_XP, IN_COMBAT, CLASS_DISABLED, BRANCH_LOCKED, UNKNOWN_PERK, PERK_UNAVAILABLE, PERK_ALREADY_CHOSEN;
+        NOT_ENOUGH_XP, IN_COMBAT, CLASS_DISABLED, BRANCH_LOCKED, UNKNOWN_PERK, PERK_UNAVAILABLE, PERK_ALREADY_CHOSEN,
+        NO_RACE, ALREADY_HAS_RACE, UNKNOWN_RACE, UNKNOWN_SUBRACE, SUBRACE_UNAVAILABLE, NOT_HUMAN, WALL_INVALID, WALL_SLOTS_FULL;
 
         public boolean ok() {
             return this == OK;
@@ -40,6 +41,37 @@ public final class ProgressionRules {
     /** Coste del siguiente punto, sea de base o de subclase. */
     public static int nextCost(ProgressState s, double multiplier) {
         return XpMath.costOfLevel(s.totalLevel() + 1, multiplier);
+    }
+
+    // --- Raza (anexo de razas): permanente ---
+
+    public static final int RACE_MAX_RANK = 3;
+
+    public static Result checkChooseRace(ProgressState s, io.github.rpgclasses.core.definition.Definitions.RaceDef race, String subraceId) {
+        if (s.raceId != null) return Result.ALREADY_HAS_RACE;
+        if (race == null) return Result.UNKNOWN_RACE;
+        io.github.rpgclasses.core.definition.Definitions.SubraceDef sub = race.subrace(subraceId);
+        if (sub == null) return Result.UNKNOWN_SUBRACE;
+        if (!sub.available()) return Result.SUBRACE_UNAVAILABLE;
+        return Result.OK;
+    }
+
+    public static void chooseRace(ProgressState s, io.github.rpgclasses.core.definition.Definitions.RaceDef race, String subraceId) {
+        s.raceId = race.id();
+        s.subraceId = subraceId;
+        s.raceRank = 0;
+        s.humanWalls.clear();
+    }
+
+    /** Humano: elegir el muro (o el segundo, el Polivalente) al que se aplica Adaptable. */
+    public static Result checkChooseWall(ProgressState s, ClassDef def, io.github.rpgclasses.core.definition.Definitions.RaceDef race, String discipline) {
+        if (s.classId == null) return Result.NO_CLASS;
+        if (def == null || !def.id().equals(s.classId)) return Result.UNKNOWN_CLASS;
+        int slots = io.github.rpgclasses.core.stat.StatCalculator.humanWallSlots(s, race);
+        if (slots <= 0) return Result.NOT_HUMAN;
+        if (s.humanWalls.size() >= slots) return Result.WALL_SLOTS_FULL;
+        if (def.walls().getOrDefault(discipline, 0.0) <= 0 || s.humanWalls.contains(discipline)) return Result.WALL_INVALID;
+        return Result.OK;
     }
 
     // --- Elegir clase ---
@@ -188,6 +220,7 @@ public final class ProgressionRules {
         s.xpPaidBase = 0;
         s.xpPaidSubclass = 0;
         s.kitGranted = false;
+        s.humanWalls.clear();
         return refund(paid, lossFraction);
     }
 

@@ -17,7 +17,7 @@ import net.minecraftforge.network.simple.SimpleChannel;
 
 public final class Net {
     /** Cliente y servidor con versiones de protocolo distintas no se conectan. Subir al cambiar cualquier paquete. */
-    private static final String PROTOCOL = "6";
+    private static final String PROTOCOL = "7";
 
     public static final SimpleChannel CHANNEL = NetworkRegistry.newSimpleChannel(
             RpgClasses.id("main"), () -> PROTOCOL, PROTOCOL::equals, PROTOCOL::equals);
@@ -51,6 +51,9 @@ public final class Net {
         CHANNEL.messageBuilder(Packets.BondAnswer.class, id++, NetworkDirection.PLAY_TO_SERVER)
                 .encoder(Packets.BondAnswer::encode).decoder(Packets.BondAnswer::decode)
                 .consumerMainThread(Packets.BondAnswer::handle).add();
+        CHANNEL.messageBuilder(Packets.UseRaceAbility.class, id++, NetworkDirection.PLAY_TO_SERVER)
+                .encoder(Packets.UseRaceAbility::encode).decoder(Packets.UseRaceAbility::decode)
+                .consumerMainThread(Packets.UseRaceAbility::handle).add();
     }
 
     public static void toPlayer(ServerPlayer player, Object message) {
@@ -59,7 +62,7 @@ public final class Net {
 
     public static void syncDefinitions(ServerPlayer player) {
         toPlayer(player, new SyncDefinitions(DefinitionStore.SERVER.rawClasses(), DefinitionStore.SERVER.rawSubclasses(),
-                DefinitionStore.SERVER.rawAbilities()));
+                DefinitionStore.SERVER.rawAbilities(), io.github.rpgclasses.core.definition.RaceStore.SERVER.raw()));
     }
 
     /** Envía el progreso completo y, si no hay clase, pide al cliente que muestre la selección. */
@@ -67,6 +70,7 @@ public final class Net {
         PlayerClassData data = PlayerClassDataProvider.get(player);
         if (data == null) return;
         toPlayer(player, new SyncPlayerData(data.save()));
+        // Sin raza, el cliente abre antes la selección de raza (lo decide él con los datos sincronizados).
         if (data.state.classId == null) toPlayer(player, new OpenClassSelection());
     }
 

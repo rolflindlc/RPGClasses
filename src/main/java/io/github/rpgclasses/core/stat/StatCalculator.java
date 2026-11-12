@@ -8,6 +8,8 @@ import io.github.rpgclasses.core.definition.Definitions.BranchDef;
 import io.github.rpgclasses.core.definition.Definitions.ClassDef;
 import io.github.rpgclasses.core.definition.Definitions.EffectDef;
 import io.github.rpgclasses.core.definition.Definitions.PerkDef;
+import io.github.rpgclasses.core.definition.Definitions.RaceDef;
+import io.github.rpgclasses.core.definition.Definitions.SubraceDef;
 import io.github.rpgclasses.core.definition.Definitions.SubclassDef;
 import io.github.rpgclasses.core.progression.ProgressState;
 import io.github.rpgclasses.core.progression.ProgressionRules;
@@ -49,8 +51,22 @@ public final class StatCalculator {
      * crecen con puntos (ramas y subclase), no los rasgos ni los perks.
      */
     public static Map<Key, Double> attributeTotals(ProgressState s, ClassDef c, SubclassDef sub, Context ctx) {
+        return attributeTotals(s, c, sub, null, ctx);
+    }
+
+    /** Igual, sumando los rasgos de raza y subraza (que cuentan para los topes y tienen suelos). */
+    public static Map<Key, Double> attributeTotals(ProgressState s, ClassDef c, SubclassDef sub, RaceDef race, Context ctx) {
         Map<Key, Double> totals = new LinkedHashMap<>();
-        if (c == null || !c.id().equals(s.classId)) return totals;
+        if (c != null && c.id().equals(s.classId)) addClassTotals(totals, s, c, sub, adaptable(s, race), ctx);
+        for (EffectDef e : raceEffects(s, race)) addAttributeEffect(totals, e, s.raceRank + 1, RACE_RANKS, ctx);
+        // Topes globales (regla 7): solo cuentan los bonus del mod.
+        totals.computeIfPresent(new Key(MOVEMENT_SPEED, "multiply_base"), (k, v) -> StatMath.capSpeedBonus(v));
+        totals.computeIfPresent(new Key(JUMP_BONUS, "add"), (k, v) -> StatMath.capJumpBonus(v));
+        totals.computeIfPresent(new Key(MAX_HEALTH, "multiply_base"), (k, v) -> StatMath.capHealthPctBonus(v));
+        return totals;
+    }
+
+    private static void addClassTotals(Map<Key, Double> totals, ProgressState s, ClassDef c, SubclassDef sub, double adaptable, Context ctx) {
         for (BranchDef b : c.branches()) {
             int points = s.pointsIn(b.id());
             if (points <= 0) continue;
@@ -65,15 +81,78 @@ public final class StatCalculator {
             totals.replaceAll((key, value) -> value * ctx.factors().getOrDefault(key.attribute(), 1.0));
         }
         // Rasgos base (regla 12) y perks (regla 11): enteros desde el primer momento.
-        for (EffectDef e : c.traits()) addAttributeEffect(totals, e, 1, 1, ctx);
+        // Humano (Adaptable): las penalizaciones de los rasgos base se reducen en el porcentaje del rango.
+        Map<Key, Double> traits = new LinkedHashMap<>();
+        for (EffectDef e : c.traits()) addAttributeEffect(traits, e, 1, 1, ctx);
+        traits.forEach((k, v) -> totals.merge(k, v < 0 ? v * (1 - Math.max(0, Math.min(1, adaptable))) : v, Double::sum));
         for (PerkDef p : chosenPerks(s, c)) {
             for (EffectDef e : p.effects()) addAttributeEffect(totals, e, 1, 1, ctx);
         }
-        // Topes globales (regla 7): solo cuentan los bonus del mod.
-        totals.computeIfPresent(new Key(MOVEMENT_SPEED, "multiply_base"), (k, v) -> StatMath.capSpeedBonus(v));
-        totals.computeIfPresent(new Key(JUMP_BONUS, "add"), (k, v) -> StatMath.capJumpBonus(v));
-        totals.computeIfPresent(new Key(MAX_HEALTH, "multiply_base"), (k, v) -> StatMath.capHealthPctBonus(v));
-        return totals;
+    }
+
+    // --- Razas ---
+
+    public static final int RACE_RANKS = 4;
+    public static final String RACE_ADAPTABLE = Ids.NS + ":race_adaptable";
+    public static final String RACE_SECOND_WALL = Ids.NS + ":race_second_wall";
+    public static final String RACE_WALL_MASTERY = Ids.NS + ":race_wall_mastery";
+    public static final String RACE_FLEXIBLE_RESPEC = Ids.NS + ":race_flexible_respec";
+
+    /** Efectos de la raza del jugador y de su subraza (vacío si la raza no es la suya o no existe). */
+    public static List<EffectDef> raceEffects(ProgressState s, RaceDef race) {
+        List<EffectDef> out = new ArrayList<>();
+        if (race == null || !race.id().equals(s.raceId)) return out;
+        out.addAll(race.effects());
+        SubraceDef sub = race.subrace(s.subraceId);
+        if (sub != null) out.addAll(sub.effects());
+        return out;
+    }
+
+    /** Mecánicas raciales activas en el rango actual (nivel = rango + 1 de 4). */
+    public static List<ActiveMechanic> raceMechanics(ProgressState s, RaceDef race) {
+        List<ActiveMechanic> out = new ArrayList<>();
+        for (EffectDef e : raceEffects(s, race)) {
+            if (!Ids.EFFECT_MECHANIC.equals(e.type())) continue;
+            JsonObject p = e.params();
+            int minRank = p.has("min_rank") ? p.get("min_rank").getAsInt() : 0;
+            if (s.raceRank >= minRank) out.add(new ActiveMechanic(p.get("id").getAsString(), p, s.raceRank + 1, RACE_RANKS));
+        }
+        return out;
+    }
+
+    public static ActiveMechanic raceMechanic(ProgressState s, RaceDef race, String id) {
+        for (ActiveMechanic m : raceMechanics(s, race)) if (m.id().equals(id)) return m;
+        return null;
+    }
+
+    /** Humano: fracción en que se reducen el muro elegido y los rasgos base (0 si no es humano). */
+    public static double adaptable(ProgressState s, RaceDef race) {
+        ActiveMechanic m = raceMechanic(s, race, RACE_ADAPTABLE);
+        return m == null ? 0 : m.number("wall_reduction", 0);
+    }
+
+    /** Humano: muros que puede elegir (0 si no es humano, 2 el Polivalente). */
+    public static int humanWallSlots(ProgressState s, RaceDef race) {
+        if (raceMechanic(s, race, RACE_ADAPTABLE) == null) return 0;
+        return raceMechanic(s, race, RACE_SECOND_WALL) != null ? 2 : 1;
+    }
+
+    /** Humano: reducción (relativa al muro original) que Adaptable da en esa disciplina. */
+    public static double humanWallReduction(ProgressState s, RaceDef race, String discipline) {
+        double a = adaptable(s, race);
+        int index = s.humanWalls.indexOf(discipline);
+        if (a <= 0 || index < 0) return 0;
+        if (index == 0) {
+            ActiveMechanic mastery = raceMechanic(s, race, RACE_WALL_MASTERY);
+            return a * (mastery == null ? 1 : mastery.number("factor", 1.5));
+        }
+        ActiveMechanic second = raceMechanic(s, race, RACE_SECOND_WALL);
+        return second == null ? 0 : a * second.number("factor", 0.5);
+    }
+
+    /** Humano Autodidacta: factor sobre la XP que se pierde al reiniciar (1 = sin cambio). */
+    public static double respecLossFactor(ProgressState s, RaceDef race) {
+        return raceMechanic(s, race, RACE_FLEXIBLE_RESPEC) == null ? 1 : 1 - adaptable(s, race);
     }
 
     /** Perks elegidos que siguen existiendo en la definición (una rama llena con su perk). */
@@ -130,10 +209,15 @@ public final class StatCalculator {
 
     /** Muro efectivo (0..1) en una disciplina: escala con los puntos de base y lo reducen las pasivas de mitigación. */
     public static double wall(ProgressState s, ClassDef c, SubclassDef sub, String discipline) {
+        return wall(s, c, sub, null, discipline);
+    }
+
+    /** Igual, con la reducción de Adaptable del Humano sumada a las mitigaciones (tope 100 %). */
+    public static double wall(ProgressState s, ClassDef c, SubclassDef sub, RaceDef race, String discipline) {
         if (c == null || !c.id().equals(s.classId)) return 0;
         double penalty = StatMath.wallPenalty(c.walls().getOrDefault(discipline, 0.0), s.basePoints());
         if (penalty <= 0) return 0;
-        double mitigation = 0;
+        double mitigation = humanWallReduction(s, race, discipline);
         if (activeSubclass(s, sub) && s.subclassLevel > 0) {
             for (EffectDef e : sub.effects()) {
                 JsonObject p = e.params();

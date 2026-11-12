@@ -100,6 +100,11 @@ public class RpgClasses {
         MinecraftForge.EVENT_BUS.register(new MonkPerks());
         MinecraftForge.EVENT_BUS.register(new MonkSubclasses());
         MinecraftForge.EVENT_BUS.register(new MovementPerks());
+        // Razas (anexo de razas): rasgos, subrazas, habilidades raciales y botín.
+        io.github.rpgclasses.content.race.RaceLootModifier.SERIALIZERS.register(modBus);
+        MinecraftForge.EVENT_BUS.register(new io.github.rpgclasses.content.race.RaceTraits());
+        MinecraftForge.EVENT_BUS.register(new io.github.rpgclasses.content.race.SubraceTraits());
+        MinecraftForge.EVENT_BUS.register(new io.github.rpgclasses.content.race.RaceAbilities());
     }
 
     private void commonSetup(FMLCommonSetupEvent event) {

@@ -118,7 +118,7 @@ public final class DamagePipeline {
         // Disparo Pesado/Letal suma de forma aditiva con el bonus de arco de la clase.
         double[] shot = projectile instanceof AbstractArrow ? RangerAbilities.takeShot(shooter) : new double[] {0, 0};
         double factor = StatMath.additiveFactor(ModAttributes.value(shooter, ModAttributes.BOW_DAMAGE), shot[0])
-                * StatMath.wallDamageFactor(StatCalculator.wall(data.state, classDef, subDef, Ids.BOW));
+                * StatMath.wallDamageFactor(StatCalculator.wall(data.state, classDef, subDef, StatEngine.race(data.state), Ids.BOW));
         if (projectile instanceof AbstractArrow arrow) factor *= RangerPerks.spawnFactor(shooter, arrow);
         tag.putDouble(TAG_FACTOR, factor);
         if (projectile instanceof AbstractArrow arrow) {
@@ -179,7 +179,7 @@ public final class DamagePipeline {
                     log.append(String.format(Locale.ROOT, " | flujo/impulso x%.2f", monk));
                 }
             } else if (weapon.discipline() != null) {
-                double wall = StatCalculator.wall(s, classDef, subDef, weapon.discipline());
+                double wall = StatCalculator.wall(s, classDef, subDef, StatEngine.race(s), weapon.discipline());
                 damage *= StatMath.wallDamageFactor(wall);
                 log.append(String.format(Locale.ROOT, " | muro %s x%.2f", weapon.discipline(), StatMath.wallDamageFactor(wall)));
             }

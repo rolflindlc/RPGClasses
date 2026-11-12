@@ -71,7 +71,38 @@ public final class ClassCommands {
                         .then(Commands.literal("subclase").executes(c -> act(c, Action.RESPEC_SUBCLASS, ""))))
                 .then(Commands.literal("info").executes(c -> info(c.getSource(), c.getSource().getPlayerOrException()))));
 
+        // /raza (cualquier jugador): la raza es permanente; aquí solo se consulta o se elige (también hay pantalla).
+        dispatcher.register(Commands.literal("raza")
+                .then(Commands.literal("info").executes(c -> raceInfo(c.getSource(), c.getSource().getPlayerOrException())))
+                .then(Commands.literal("elegir").then(Commands.argument("raza", ResourceLocationArgument.id()).suggests(RACE_IDS)
+                        .then(Commands.argument("subraza", StringArgumentType.word())
+                                .executes(c -> act(c, Action.CHOOSE_RACE, ResourceLocationArgument.getId(c, "raza") + "/"
+                                        + StringArgumentType.getString(c, "subraza"))))))
+                .then(Commands.literal("muro").then(Commands.argument("disciplina", ResourceLocationArgument.id())
+                        .suggests((c, b) -> SharedSuggestionProvider.suggest(Ids.DISCIPLINES, b))
+                        .executes(c -> act(c, Action.CHOOSE_WALL, ResourceLocationArgument.getId(c, "disciplina").toString())))));
+
         dispatcher.register(Commands.literal("clases").requires(s -> s.hasPermission(2))
+                .then(Commands.literal("raza")
+                        .then(Commands.literal("set").then(Commands.argument("jugador", EntityArgument.player())
+                                .then(Commands.argument("raza", ResourceLocationArgument.id()).suggests(RACE_IDS)
+                                        .then(Commands.argument("subraza", StringArgumentType.word())
+                                                .executes(c -> adminRace(c, 0))
+                                                .then(Commands.argument("rango", com.mojang.brigadier.arguments.IntegerArgumentType.integer(0, 3))
+                                                        .executes(c -> adminRace(c, com.mojang.brigadier.arguments.IntegerArgumentType.getInteger(c, "rango"))))))))
+                        .then(Commands.literal("rango").then(Commands.argument("jugador", EntityArgument.player())
+                                .then(Commands.argument("rango", com.mojang.brigadier.arguments.IntegerArgumentType.integer(0, 3))
+                                        .executes(c -> {
+                                            ServerPlayer target = EntityArgument.getPlayer(c, "jugador");
+                                            boolean ok = ProgressionService.adminSetRank(target,
+                                                    com.mojang.brigadier.arguments.IntegerArgumentType.getInteger(c, "rango"));
+                                            return raceInfoOrFail(c.getSource(), target, ok);
+                                        }))))
+                        .then(Commands.literal("quitar").then(Commands.argument("jugador", EntityArgument.player())
+                                .executes(c -> {
+                                    ServerPlayer target = EntityArgument.getPlayer(c, "jugador");
+                                    return raceInfoOrFail(c.getSource(), target, ProgressionService.adminSetRace(target, null, null, 0));
+                                }))))
                 .then(Commands.literal("info").then(Commands.argument("jugador", EntityArgument.player())
                         .executes(c -> info(c.getSource(), EntityArgument.getPlayer(c, "jugador")))))
                 .then(Commands.literal("reset").then(Commands.argument("jugador", EntityArgument.player())
@@ -95,6 +126,41 @@ public final class ClassCommands {
                         .then(Commands.literal("volcar").executes(c -> dump(c.getSource(), c.getSource().getPlayerOrException()))
                                 .then(Commands.argument("jugador", EntityArgument.player())
                                         .executes(c -> dump(c.getSource(), EntityArgument.getPlayer(c, "jugador")))))));
+    }
+
+    private static final SuggestionProvider<CommandSourceStack> RACE_IDS =
+            (ctx, builder) -> SharedSuggestionProvider.suggest(io.github.rpgclasses.core.definition.RaceStore.SERVER.ids(), builder);
+
+    private static int adminRace(CommandContext<CommandSourceStack> c, int rank) throws CommandSyntaxException {
+        ServerPlayer target = EntityArgument.getPlayer(c, "jugador");
+        boolean ok = ProgressionService.adminSetRace(target, ResourceLocationArgument.getId(c, "raza").toString(),
+                StringArgumentType.getString(c, "subraza"), rank);
+        return raceInfoOrFail(c.getSource(), target, ok);
+    }
+
+    private static int raceInfoOrFail(CommandSourceStack source, ServerPlayer target, boolean ok) {
+        if (!ok) {
+            source.sendFailure(Component.translatable("msg.rpgclasses.result.unknown_race"));
+            return 0;
+        }
+        return raceInfo(source, target);
+    }
+
+    private static int raceInfo(CommandSourceStack source, ServerPlayer target) {
+        PlayerClassData data = PlayerClassDataProvider.get(target);
+        if (data == null) return 0;
+        ProgressState s = data.state;
+        if (s.raceId == null) {
+            source.sendSuccess(() -> Component.translatable("msg.rpgclasses.race_none", target.getDisplayName()), false);
+            return 1;
+        }
+        List<String> walls = new ArrayList<>();
+        for (String w : s.humanWalls) walls.add(Component.translatable(Ids.langKey("discipline", w, "name")).getString());
+        source.sendSuccess(() -> Component.translatable("msg.rpgclasses.race_info", target.getDisplayName(),
+                Component.translatable(Ids.langKey("race", s.raceId, "name")),
+                Component.translatable(Ids.langKey("subrace", s.raceId + "." + s.subraceId, "name")), s.raceRank,
+                walls.isEmpty() ? "" : " | " + String.join(", ", walls)), false);
+        return 1;
     }
 
     private static int act(CommandContext<CommandSourceStack> ctx, Action action, String arg) throws CommandSyntaxException {
@@ -157,7 +223,7 @@ public final class ClassCommands {
         StatEngine.recompute(player);
         List<String> lines = new ArrayList<>(StatEngine.describe(player));
         for (String discipline : new java.util.TreeSet<>(Ids.DISCIPLINES)) {
-            double wall = StatCalculator.wall(data.state, def, DefinitionStore.SERVER.subclassDef(data.state.subclassId), discipline);
+            double wall = StatCalculator.wall(data.state, def, DefinitionStore.SERVER.subclassDef(data.state.subclassId), StatEngine.race(data.state), discipline);
             if (wall > 0) lines.add(String.format(java.util.Locale.ROOT, "muro %s: -%.1f%%", discipline, wall * 100));
         }
         lines.add(String.format(java.util.Locale.ROOT, "crítico: %.0f%% x%.2f | sin armadura: %s",

@@ -12,6 +12,12 @@ public final class ClientHandlers {
     public static final PlayerClassData LOCAL_DATA = new PlayerClassData();
 
     private static boolean needsSelection;
+    /** true cuando ya ha llegado el progreso del servidor (para saber si falta elegir raza). */
+    private static boolean dataReceived;
+
+    public static boolean dataReceived() {
+        return dataReceived;
+    }
 
     /** true mientras el servidor diga que el jugador no tiene clase. */
     public static boolean needsSelection() {
@@ -20,6 +26,7 @@ public final class ClientHandlers {
 
     public static void onDefinitions(SyncDefinitions msg) {
         DefinitionStore.CLIENT.load(msg.classes(), msg.subclasses(), msg.abilities());
+        io.github.rpgclasses.core.definition.RaceStore.CLIENT.load(msg.races());
         // Tras un /reload, una pantalla abierta se reconstruye con los datos nuevos.
         Minecraft mc = Minecraft.getInstance();
         if (mc.screen instanceof ClassScreen screen) mc.setScreen(new ClassScreen(screen.isSelecting()));
@@ -44,13 +51,27 @@ public final class ClientHandlers {
     }
 
     public static void onPlayerData(SyncPlayerData msg) {
+        String raceBefore = LOCAL_DATA.state.raceId + "/" + LOCAL_DATA.state.raceRank;
         LOCAL_DATA.load(msg.data());
+        dataReceived = true;
+        if (!raceBefore.equals(LOCAL_DATA.state.raceId + "/" + LOCAL_DATA.state.raceRank)) refreshIronsSpellWheel();
+        if (Minecraft.getInstance().screen instanceof RaceScreen rs) rs.onDataChanged();
         if (LOCAL_DATA.state.classId != null) {
             needsSelection = false;
             Minecraft mc = Minecraft.getInstance();
             if (mc.screen instanceof ClassScreen screen && screen.isSelecting()) mc.setScreen(null);
         }
         if (Minecraft.getInstance().screen instanceof ClassScreen screen) screen.onDataChanged();
+    }
+
+    /** Conjuros raciales del Infernal: Iron's solo reconstruye la rueda al cambiar el equipo, así que se le pide aquí. */
+    private static void refreshIronsSpellWheel() {
+        if (!net.minecraftforge.fml.ModList.get().isLoaded("irons_spellbooks")) return;
+        try {
+            Class.forName("io.redspace.ironsspellbooks.player.ClientMagicData").getMethod("updateSpellSelectionManager").invoke(null);
+        } catch (ReflectiveOperationException | RuntimeException e) {
+            io.github.rpgclasses.RpgClasses.LOGGER.debug("[rpgclasses] No se pudo refrescar la rueda de conjuros de Iron's", e);
+        }
     }
 
     /** El servidor avisa de que el jugador no tiene clase; ClientSetup abre la pantalla en el siguiente tick. */
@@ -61,6 +82,7 @@ public final class ClientHandlers {
     /** Al desconectar: nada de un servidor debe quedar para el siguiente. */
     public static void reset() {
         needsSelection = false;
+        dataReceived = false;
         LOCAL_DATA.load(new net.minecraft.nbt.CompoundTag());
     }
 

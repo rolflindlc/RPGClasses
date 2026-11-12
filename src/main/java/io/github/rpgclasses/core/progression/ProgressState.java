@@ -23,6 +23,13 @@ public final class ProgressState {
     /** Sin uso desde que los reinicios son ilimitados; se conserva por compatibilidad del guardado. */
     public boolean firstRespecUsed;
     public boolean kitGranted;
+    /** Raza y subraza (anexo de razas): permanentes, no se pierden al reiniciar la clase. null = sin elegir. */
+    public String raceId;
+    public String subraceId;
+    /** Rango de raza, 0..3 (sube con los ritos). */
+    public int raceRank;
+    /** Humano: muros elegidos para Adaptable (1, o 2 el Polivalente). Se eligen de nuevo al reiniciar la clase. */
+    public final java.util.List<String> humanWalls = new java.util.ArrayList<>();
 
     public int basePoints() {
         int sum = 0;
@@ -62,5 +69,10 @@ public final class ProgressState {
         xpPaidSubclass = o.xpPaidSubclass;
         firstRespecUsed = o.firstRespecUsed;
         kitGranted = o.kitGranted;
+        raceId = o.raceId;
+        subraceId = o.subraceId;
+        raceRank = o.raceRank;
+        humanWalls.clear();
+        humanWalls.addAll(o.humanWalls);
     }
 }

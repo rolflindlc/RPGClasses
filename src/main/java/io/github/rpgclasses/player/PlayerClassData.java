@@ -9,7 +9,7 @@ import java.util.Map;
 /** Progreso de clase de un jugador y su serialización NBT. */
 public final class PlayerClassData {
     /** Subir al cambiar el formato guardado, y añadir la migración en {@link #load}. */
-    public static final int DATA_VERSION = 2;
+    public static final int DATA_VERSION = 3;
 
     public final ProgressState state = new ProgressState();
     /** Vida con la que se guardó el jugador; -1 si no se conoce. Solo se usa al iniciar sesión. */
@@ -37,6 +37,12 @@ public final class PlayerClassData {
         tag.putLong("xpSub", state.xpPaidSubclass);
         tag.putBoolean("firstRespec", state.firstRespecUsed);
         tag.putBoolean("kit", state.kitGranted);
+        if (state.raceId != null) tag.putString("race", state.raceId);
+        if (state.subraceId != null) tag.putString("subrace", state.subraceId);
+        tag.putInt("raceRank", state.raceRank);
+        net.minecraft.nbt.ListTag walls = new net.minecraft.nbt.ListTag();
+        for (String w : state.humanWalls) walls.add(net.minecraft.nbt.StringTag.valueOf(w));
+        tag.put("humanWalls", walls);
         CompoundTag cds = new CompoundTag();
         for (Map.Entry<String, Long> e : cooldowns.entrySet()) cds.putLong(e.getKey(), e.getValue());
         tag.put("cooldowns", cds);
@@ -64,6 +70,13 @@ public final class PlayerClassData {
         state.xpPaidSubclass = Math.max(0, tag.getLong("xpSub"));
         state.firstRespecUsed = tag.getBoolean("firstRespec");
         state.kitGranted = tag.getBoolean("kit");
+        // v2 -> v3: razas (ausente = sin raza; se pedirá elegirla al entrar).
+        state.raceId = tag.contains("race", Tag.TAG_STRING) ? tag.getString("race") : null;
+        state.subraceId = tag.contains("subrace", Tag.TAG_STRING) ? tag.getString("subrace") : null;
+        state.raceRank = Math.max(0, Math.min(3, tag.getInt("raceRank")));
+        state.humanWalls.clear();
+        net.minecraft.nbt.ListTag walls = tag.getList("humanWalls", Tag.TAG_STRING);
+        for (int i = 0; i < walls.size(); i++) state.humanWalls.add(walls.getString(i));
         cooldowns.clear();
         CompoundTag cds = tag.getCompound("cooldowns");
         for (String key : cds.getAllKeys()) cooldowns.put(key, cds.getLong(key));

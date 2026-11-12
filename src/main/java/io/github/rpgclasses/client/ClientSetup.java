@@ -37,11 +37,22 @@ public final class ClientSetup {
             new KeyMapping("key.rpgclasses.ability_3", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_C, "key.categories.rpgclasses"),
     };
 
+    /** Habilidades raciales: agachado se usan las ranuras 2 y 3. */
+    public static final KeyMapping[] RACE_KEYS = {
+            new KeyMapping("key.rpgclasses.race_1", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_V, "key.categories.rpgclasses"),
+            new KeyMapping("key.rpgclasses.race_2", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_B, "key.categories.rpgclasses"),
+    };
+
     public static void init(IEventBus modBus) {
         modBus.addListener((RegisterKeyMappingsEvent event) -> {
             event.register(OPEN_BOOK);
             for (KeyMapping key : ABILITY_KEYS) event.register(key);
+            for (KeyMapping key : RACE_KEYS) event.register(key);
         });
+        io.github.rpgclasses.content.race.Races.clientLookup = (player, id) ->
+                player == Minecraft.getInstance().player ? localMechanic(id) : null;
+        MinecraftForge.EVENT_BUS.addListener(net.minecraftforge.eventbus.api.EventPriority.LOWEST, ClientSetup::onRenderScaledPre);
+        MinecraftForge.EVENT_BUS.addListener(net.minecraftforge.eventbus.api.EventPriority.HIGHEST, ClientSetup::onRenderScaledPost);
         modBus.addListener((RegisterGuiOverlaysEvent event) -> event.registerAboveAll("abilities", AbilityHud::render));
         MinecraftForge.EVENT_BUS.addListener(ClientSetup::onClientTick);
         MinecraftForge.EVENT_BUS.addListener(ClientSetup::onFov);
@@ -61,15 +72,62 @@ public final class ClientSetup {
         if (player.isInvisible() && player.isCrouching() && !player.isSpectator()) event.setCanceled(true);
     }
 
+    private static boolean scaledRender;
+
+    /** Tamaño racial: el modelo se dibuja a escala (la hitbox la cambia RaceTraits en ambos lados). */
+    private static void onRenderScaledPre(net.minecraftforge.client.event.RenderPlayerEvent.Pre event) {
+        float s = io.github.rpgclasses.content.race.RaceTraits.scale(event.getEntity());
+        scaledRender = s != 1f;
+        if (!scaledRender) return;
+        event.getPoseStack().pushPose();
+        event.getPoseStack().scale(s, s, s);
+    }
+
+    private static void onRenderScaledPost(net.minecraftforge.client.event.RenderPlayerEvent.Post event) {
+        if (!scaledRender) return;
+        scaledRender = false;
+        event.getPoseStack().popPose();
+    }
+
+    /** Elfo, Trepar Hojas: dentro de las hojas se sostiene; saltar sube y agacharse baja (como en un andamio). */
+    private static void leafClimb(LocalPlayer p, boolean jumping) {
+        if (ModAttributes.value(p, ModAttributes.LEAF_WALKER) <= 0 || p.getAbilities().flying || p.isPassenger()) return;
+        var level = p.level();
+        boolean inLeaves = level.getBlockState(p.blockPosition()).is(net.minecraft.tags.BlockTags.LEAVES)
+                || level.getBlockState(net.minecraft.core.BlockPos.containing(p.getX(), p.getY() + 1.0, p.getZ())).is(net.minecraft.tags.BlockTags.LEAVES);
+        if (!inLeaves) return;
+        Vec3 v = p.getDeltaMovement();
+        p.setDeltaMovement(v.x, jumping ? 0.2 : p.isShiftKeyDown() ? -0.15 : 0.0, v.z);
+        p.resetFallDistance();
+    }
+
     private static void onClientTick(TickEvent.ClientTickEvent event) {
         if (event.phase != TickEvent.Phase.END) return;
         Minecraft mc = Minecraft.getInstance();
         if (mc.player == null) return;
 
+        // Sin raza: primero se elige raza y subraza (permanentes); después, la clase.
+        if (mc.screen == null && ClientHandlers.dataReceived() && ClientHandlers.LOCAL_DATA.state.raceId == null
+                && !io.github.rpgclasses.core.definition.RaceStore.CLIENT.ids().isEmpty()) {
+            mc.setScreen(new RaceScreen(RaceScreen.Mode.SELECT));
+            return;
+        }
         // Sin clase: la pantalla de selección vuelve a abrirse siempre que no haya otra pantalla.
         if (ClientHandlers.needsSelection() && mc.screen == null && !DefinitionStore.CLIENT.classIds().isEmpty()) {
             mc.setScreen(new ClassScreen(true));
             return;
+        }
+        // Humano: tras elegir clase, elige el muro (o muros) de Adaptable.
+        if (mc.screen == null && RaceScreen.needsWall()) {
+            mc.setScreen(new RaceScreen(RaceScreen.Mode.WALL));
+            return;
+        }
+        leafClimb(mc.player, mc.screen == null && mc.options.keyJump.isDown());
+        if (hasLocalMechanic("rpgclasses:race_lava_walk")) io.github.rpgclasses.content.MonkSubclasses.fluidWalk(mc.player, false, true);
+        for (int i = 0; i < RACE_KEYS.length; i++) {
+            while (RACE_KEYS[i].consumeClick()) {
+                if (mc.screen == null) Net.CHANNEL.sendToServer(new Packets.UseRaceAbility(i + (mc.player.isShiftKeyDown() ? 2 : 0)));
+            }
         }
         airJump(mc);
         wallClimb(mc);
@@ -232,24 +290,19 @@ public final class ClientSetup {
     static io.github.rpgclasses.core.stat.StatCalculator.ActiveMechanic localMechanic(String id) {
         var s = ClientHandlers.LOCAL_DATA.state;
         var classDef = io.github.rpgclasses.core.definition.DefinitionStore.CLIENT.classDef(s.classId);
-        if (classDef == null) return null;
-        for (var m : io.github.rpgclasses.core.stat.StatCalculator.mechanics(s, classDef,
-                io.github.rpgclasses.core.definition.DefinitionStore.CLIENT.subclassDef(s.subclassId))) {
-            if (m.id().equals(id)) return m;
+        if (classDef != null) {
+            for (var m : io.github.rpgclasses.core.stat.StatCalculator.mechanics(s, classDef,
+                    io.github.rpgclasses.core.definition.DefinitionStore.CLIENT.subclassDef(s.subclassId))) {
+                if (m.id().equals(id)) return m;
+            }
         }
-        return null;
+        return io.github.rpgclasses.core.stat.StatCalculator.raceMechanic(s,
+                io.github.rpgclasses.core.definition.RaceStore.CLIENT.race(s.raceId), id);
     }
 
     /** Si el jugador local tiene una mecánica (rama, perk o subclase), según los datos sincronizados. */
     static boolean hasLocalMechanic(String id) {
-        var s = ClientHandlers.LOCAL_DATA.state;
-        var classDef = io.github.rpgclasses.core.definition.DefinitionStore.CLIENT.classDef(s.classId);
-        if (classDef == null) return false;
-        for (var m : io.github.rpgclasses.core.stat.StatCalculator.mechanics(s, classDef,
-                io.github.rpgclasses.core.definition.DefinitionStore.CLIENT.subclassDef(s.subclassId))) {
-            if (m.id().equals(id)) return true;
-        }
-        return false;
+        return localMechanic(id) != null;
     }
 
     private ClientSetup() {}

@@ -6,6 +6,7 @@
     "rpgclasses:toxin",
     "rpgclasses:shockwave",
     "rpgclasses:arrow_blast",
-    "rpgclasses:plague"
+    "rpgclasses:plague",
+    "rpgclasses:sunlight"
   ]
 }

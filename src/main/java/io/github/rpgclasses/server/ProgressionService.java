@@ -31,8 +31,8 @@ public final class ProgressionService {
         long xpBefore = currentXp(player);
 
         Result result = perform(player, s, action, arg == null ? "" : arg);
-        DebugLog.event(player, "progreso", "{} '{}' → {}; clase {}, ramas {}, perks {}, subclase {} ({})", action, arg, result,
-                s.classId, s.branchPoints, s.perks, s.subclassId, s.subclassLevel);
+        DebugLog.event(player, "progreso", "{} '{}' → {}; clase {}, ramas {}, perks {}, subclase {} ({}); raza {}/{} rango {} muros {}", action, arg, result,
+                s.classId, s.branchPoints, s.perks, s.subclassId, s.subclassLevel, s.raceId, s.subraceId, s.raceRank, s.humanWalls);
 
         if (!result.ok()) {
             player.sendSystemMessage(resultMessage(result).withStyle(ChatFormatting.RED));
@@ -60,7 +60,22 @@ public final class ProgressionService {
         ClassDef classDef = defs.classDef(s.classId);
 
         switch (action) {
+            case CHOOSE_RACE -> {
+                int slash = arg.indexOf('/');
+                if (slash <= 0) return Result.UNKNOWN_SUBRACE;
+                var race = io.github.rpgclasses.core.definition.RaceStore.SERVER.race(arg.substring(0, slash));
+                String subraceId = arg.substring(slash + 1);
+                Result r = ProgressionRules.checkChooseRace(s, race, subraceId);
+                if (r.ok()) ProgressionRules.chooseRace(s, race, subraceId);
+                return r;
+            }
+            case CHOOSE_WALL -> {
+                Result r = ProgressionRules.checkChooseWall(s, classDef, StatEngine.race(s), arg);
+                if (r.ok()) s.humanWalls.add(arg);
+                return r;
+            }
             case CHOOSE_CLASS -> {
+                if (s.raceId == null && !io.github.rpgclasses.core.definition.RaceStore.SERVER.ids().isEmpty()) return Result.NO_RACE;
                 if (ServerConfig.DISABLED_CLASSES.get().contains(arg)) return Result.CLASS_DISABLED;
                 ClassDef chosen = defs.classDef(arg);
                 Result r = ProgressionRules.checkChooseClass(s, chosen);
@@ -93,19 +108,21 @@ public final class ProgressionService {
                 if (slash <= 0) return Result.UNKNOWN_PERK;
                 String branchId = arg.substring(0, slash);
                 String perkId = arg.substring(slash + 1);
+                // Elfo × Carnívoro (anexo de razas, sección 4): no puede comer carne ni pescado, así que no puede elegirlo.
+                if ("carnivore".equals(perkId) && MechanicService.has(player, "race_no_meat")) return Result.PERK_UNAVAILABLE;
                 Result r = ProgressionRules.checkChoosePerk(s, classDef, branchId, perkId);
                 if (r.ok()) ProgressionRules.choosePerk(s, branchId, perkId);
                 return r;
             }
             case RESPEC_SUBCLASS -> {
                 Result r = ProgressionRules.checkRespecSubclass(s, CombatTracker.inCombat(player));
-                if (r.ok()) setXp(player, xp + ProgressionRules.respecSubclass(s, mult, ServerConfig.RESPEC_XP_LOSS.get()));
+                if (r.ok()) setXp(player, xp + ProgressionRules.respecSubclass(s, mult, respecLoss(s)));
                 return r;
             }
             case RESPEC_CLASS -> {
                 Result r = ProgressionRules.checkRespecClass(s, CombatTracker.inCombat(player));
                 if (r.ok()) {
-                    setXp(player, xp + ProgressionRules.respecClass(s, ServerConfig.RESPEC_XP_LOSS.get()));
+                    setXp(player, xp + ProgressionRules.respecClass(s, respecLoss(s)));
                     KitService.removeAll(player);
                     PlayerClassData d = PlayerClassDataProvider.get(player);
                     if (d != null) d.clearClassBindings();
@@ -114,6 +131,37 @@ public final class ProgressionService {
             }
         }
         return Result.OK;
+    }
+
+    /** Pérdida de XP al reiniciar: la del servidor, reducida por el Humano Autodidacta. */
+    public static double respecLoss(ProgressState s) {
+        return ServerConfig.RESPEC_XP_LOSS.get() * io.github.rpgclasses.core.stat.StatCalculator.respecLossFactor(s, StatEngine.race(s));
+    }
+
+    /** Administración: fija (o quita, con race == null) la raza y subraza sin comprobaciones de permanencia. */
+    public static boolean adminSetRace(ServerPlayer player, String raceId, String subraceId, int rank) {
+        PlayerClassData data = PlayerClassDataProvider.get(player);
+        if (data == null) return false;
+        if (raceId != null) {
+            var race = io.github.rpgclasses.core.definition.RaceStore.SERVER.race(raceId);
+            if (race == null || race.subrace(subraceId) == null) return false;
+        }
+        data.state.raceId = raceId;
+        data.state.subraceId = raceId == null ? null : subraceId;
+        data.state.raceRank = Math.max(0, Math.min(ProgressionRules.RACE_MAX_RANK, rank));
+        data.state.humanWalls.clear();
+        DebugLog.event(player, "raza", "admin: raza {} subraza {} rango {}", raceId, subraceId, data.state.raceRank);
+        StatEngine.refresh(player);
+        return true;
+    }
+
+    public static boolean adminSetRank(ServerPlayer player, int rank) {
+        PlayerClassData data = PlayerClassDataProvider.get(player);
+        if (data == null || data.state.raceId == null) return false;
+        data.state.raceRank = Math.max(0, Math.min(ProgressionRules.RACE_MAX_RANK, rank));
+        DebugLog.event(player, "raza", "admin: rango {}", data.state.raceRank);
+        StatEngine.refresh(player);
+        return true;
     }
 
     /** Reinicio administrativo: sin comprobación de combate y sin devolver XP. */

@@ -92,7 +92,7 @@ public final class BarbarianPerks {
     public void onStartEating(LivingEntityUseItemEvent.Start event) {
         if (!(event.getEntity() instanceof ServerPlayer player) || player instanceof FakePlayer) return;
         FoodProperties food = event.getItem().getFoodProperties(player);
-        if (food == null || food.isMeat() || !MechanicService.has(player, CARNIVORE)) return;
+        if (food == null || food.isMeat() || event.getItem().is(net.minecraft.tags.ItemTags.FISHES) || !MechanicService.has(player, CARNIVORE)) return;
         event.setCanceled(true);
         player.stopUsingItem();
         player.displayClientMessage(net.minecraft.network.chat.Component.translatable("message.rpgclasses.carnivore"), true);
@@ -110,7 +110,7 @@ public final class BarbarianPerks {
         CompoundTag tag = foodTag(player.getFoodData());
         int level = tag.getInt("foodLevel");
         float currentSaturation = tag.getFloat("foodSaturationLevel");
-        if (food.isMeat()) {
+        if (food.isMeat() || event.getItem().is(net.minecraft.tags.ItemTags.FISHES)) { // anexo de razas: el pescado cuenta
             float extra = (float) (saturation * m.number("meat_saturation", 1.0));
             tag.putFloat("foodSaturationLevel", Math.min(level, currentSaturation + extra));
         } else {

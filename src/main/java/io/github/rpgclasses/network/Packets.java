@@ -110,7 +110,7 @@ public final class Packets {
 
         public void handle(Supplier<NetworkEvent.Context> ctx) {
             ServerPlayer sender = ctx.get().getSender();
-            if (sender != null) AbilityService.use(sender, slot);
+            if (sender != null && !io.github.rpgclasses.content.DeathGamble.flipping(sender)) AbilityService.use(sender, slot);
         }
     }
 
@@ -126,7 +126,9 @@ public final class Packets {
 
         public void handle(Supplier<NetworkEvent.Context> ctx) {
             ServerPlayer sender = ctx.get().getSender();
-            if (sender != null) io.github.rpgclasses.content.race.RaceAbilities.use(sender, slot);
+            if (sender != null && !io.github.rpgclasses.content.DeathGamble.flipping(sender)) {
+                io.github.rpgclasses.content.race.RaceAbilities.use(sender, slot);
+            }
         }
     }
 
@@ -246,6 +248,24 @@ public final class Packets {
             if (player == null) return;
             io.github.rpgclasses.server.Allies.set(player, target,
                     io.github.rpgclasses.server.Allies.nameOf(player.server, target), ally);
+        }
+    }
+
+    /** Servidor -> clientes que ven al jugador: Apuesta con la Muerte, moneda en el aire con el resultado ya decidido. */
+    public record CoinFlip(int entityId, boolean win, int flipTicks, int showTicks) {
+        public void encode(FriendlyByteBuf buf) {
+            buf.writeVarInt(entityId);
+            buf.writeBoolean(win);
+            buf.writeVarInt(flipTicks);
+            buf.writeVarInt(showTicks);
+        }
+
+        public static CoinFlip decode(FriendlyByteBuf buf) {
+            return new CoinFlip(buf.readVarInt(), buf.readBoolean(), buf.readVarInt(), buf.readVarInt());
+        }
+
+        public void handle(Supplier<NetworkEvent.Context> ctx) {
+            DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> io.github.rpgclasses.client.CoinFlipFx.start(this));
         }
     }
 }

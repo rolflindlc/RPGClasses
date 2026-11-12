@@ -175,7 +175,8 @@ subs = {
  "charging_juggernaut": ("paladin","minecraft:anvil",[attr([(MC+"max_health", to(.6,"multiply_base"))])],
      [ms(5,"charging_bulwark",True,"bulwark")]),
  "indestructible": ("barbarian","minecraft:totem_of_undying",[attr([(MC+"max_health", to(10))]),
-     mech("death_gamble", chances=[.75,.45,.15], area_damage=1, radius=3, knockback_blocks=5)], []),
+     mech("death_gamble", first_chance=.75, chance=.5, flip_seconds=1.6, result_seconds=1.5, immortal_seconds=1,
+          area_damage=1, radius=3, knockback_blocks=5)], []),
  "suicidal_berserker": ("barbarian","minecraft:netherite_axe",[attr([(MC+"attack_damage", to(.25,"multiply_base"))]),
      mech("last_immortal_fury", min_seconds=7, max_seconds=17, cooldown_seconds=300, weakness_seconds=10)], []),
  "plague_corruptor": ("barbarian","minecraft:rotten_flesh",[

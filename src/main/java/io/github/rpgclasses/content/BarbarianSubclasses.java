@@ -45,7 +45,7 @@ import java.util.UUID;
 /**
  * Subclases del Bárbaro (rev. 2.7d):
  * <ul>
- *   <li>Indestructible — Apuesta con la Muerte ({@code death_gamble}): sobrevivir a 1 HP con 75/45/15 %; se restablece al morir.</li>
+ *   <li>Indestructible — Apuesta con la Muerte ({@code death_gamble}): moneda; 75 % la primera vez y luego 50 %; se restablece al morir.</li>
  *   <li>Berserker Suicida — Última Furia Inmortal ({@code last_immortal_fury}): 7–17 s inmortal para matar al agresor.</li>
  *   <li>Corruptor de Plagas — Sangre Resistente (en EffectRules) y Golpe Aflictivo ({@code afflicting_strike}): Plaga con contagio.</li>
  * </ul>
@@ -86,34 +86,15 @@ public final class BarbarianSubclasses {
             event.setAmount(survive);
             return;
         }
-        if (tryGamble(player)) event.setAmount(survive);
+        if (tryGamble(player, source)) event.setAmount(survive);
     }
 
-    private static boolean tryGamble(ServerPlayer player) {
+    /** Apuesta con la Muerte: lanza la moneda (ver {@link DeathGamble}). Mientras gira, el Bárbaro queda a 1 HP. */
+    private static boolean tryGamble(ServerPlayer player, DamageSource source) {
         ActiveMechanic m = MechanicService.find(player, DEATH_GAMBLE);
         PlayerClassData data = PlayerClassDataProvider.get(player);
-        if (m == null || data == null || !m.params().has("chances")) return false;
-        JsonArray chances = m.params().getAsJsonArray("chances");
-        int uses = data.counters.getOrDefault(GAMBLE_COUNTER, 0);
-        if (uses >= chances.size()) return false;
-        if (player.getRandom().nextDouble() >= chances.get(uses).getAsDouble()) return false;
-        data.counters.put(GAMBLE_COUNTER, uses + 1);
-
-        // Grito: daño mínimo y empuje en área.
-        double radius = m.number("radius", 3);
-        float damage = (float) m.number("area_damage", 1);
-        double strength = m.number("knockback_blocks", 5) * 0.4; // [MEDIR] ~0,4 de fuerza por bloque
-        for (LivingEntity target : player.level().getEntitiesOfClass(LivingEntity.class, player.getBoundingBox().inflate(radius),
-                e -> CombatAbilities.canHit(player, e) && e.distanceToSqr(player) <= radius * radius)) {
-            if (damage > 0) target.hurt(new DamageSource(player.level().registryAccess().registryOrThrow(Registries.DAMAGE_TYPE)
-                    .getHolderOrThrow(PaladinPerks.SHOCKWAVE_DAMAGE), player), damage);
-            Vec3 away = target.position().subtract(player.position());
-            if (away.horizontalDistanceSqr() > 1.0E-4) target.knockback(strength, -away.x, -away.z);
-        }
-        player.level().playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.RAVAGER_ROAR, SoundSource.PLAYERS, 1.2f, 1.2f);
-        String next = uses + 1 < chances.size()
-                ? String.format(Locale.ROOT, "%.0f%%", chances.get(uses + 1).getAsDouble() * 100) : "0%";
-        player.displayClientMessage(Component.translatable("message.rpgclasses.death_gamble", next), true);
+        if (m == null || data == null || DeathGamble.resolving(player) || DeathGamble.flipping(player)) return false;
+        DeathGamble.start(player, source, m, data, GAMBLE_COUNTER);
         return true;
     }
 
@@ -159,7 +140,7 @@ public final class BarbarianSubclasses {
         LivingEntity dead = event.getEntity();
         if (dead.level().isClientSide()) return;
 
-        // Muerte real del jugador: Apuesta con la Muerte vuelve al 75 %.
+        // Muerte real del jugador: la Apuesta con la Muerte vuelve al 75 %.
         if (dead instanceof ServerPlayer player) {
             Fury fury = FURY.get(player.getUUID());
             if (fury != null && !event.getSource().is(DamageTypeTags.BYPASSES_INVULNERABILITY)) {

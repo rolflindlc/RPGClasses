@@ -58,6 +58,11 @@ public final class ClientSetup {
         MinecraftForge.EVENT_BUS.addListener(net.minecraftforge.eventbus.api.EventPriority.LOWEST, ClientSetup::onRenderScaledPre);
         MinecraftForge.EVENT_BUS.addListener(net.minecraftforge.eventbus.api.EventPriority.HIGHEST, ClientSetup::onRenderScaledPost);
         modBus.addListener((RegisterGuiOverlaysEvent event) -> event.registerAboveAll("abilities", AbilityHud::render));
+        modBus.addListener((RegisterGuiOverlaysEvent event) -> event.registerAboveAll("coin_flip", CoinFlipFx::renderHud));
+        MinecraftForge.EVENT_BUS.addListener(CoinFlipFx::onRenderPlayer);
+        MinecraftForge.EVENT_BUS.addListener(CoinFlipFx::onMovementInput);
+        MinecraftForge.EVENT_BUS.addListener(CoinFlipFx::onInteractionKey);
+        MinecraftForge.EVENT_BUS.addListener(CoinFlipFx::onClientTick);
         MinecraftForge.EVENT_BUS.addListener(ClientSetup::onClientTick);
         MinecraftForge.EVENT_BUS.addListener(ClientSetup::onFov);
         MinecraftForge.EVENT_BUS.addListener(ClientSetup::onMovementInput);

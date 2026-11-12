@@ -44,6 +44,7 @@ Las tres subrazas sin hacer (Herrero, Jinete de Lobo, Pirómano) **salen en la p
 ## 2. Decisiones que he tomado (pendientes de tu confirmación)
 
 * **Jugadores existentes:** eligen raza al entrar, aunque ya tengan clase.
+* **Última Resistencia del Orco:** tras sobrevivir con medio corazón, **1 s** de inmortalidad (antes 2 s; cambio pedido por el usuario).
 * **Voz del Caudillo:** purga al Caudillo, a los jugadores que tiene como aliados y a las mascotas e invocaciones de todos ellos (sistema de aliados, regla 15 del documento v2).
 * **Nube de Humo y aliados:** la invisibilidad solo se aplica al Elfo y a sus aliados (y sus mascotas); los enemigos dentro no se vuelven invisibles y, desde R3, se ralentizan. Sustituye a "todo lo que hay dentro es invisible" del anexo.
 * **Ladrón y Escolta:** Mano Larga no roba a quien el Goblin tiene como aliado; los guardianes del Abisal no atacan a mascotas ni invocaciones de aliados.
@@ -74,6 +75,7 @@ Nada de esto se ha probado en el juego: compila y pasa las pruebas, pero es la p
 5. Humano: elegir muro tras la clase y comprobar el muro con `/clases debug stats`.
 6. Subir el rango con `/clases raza rango` y probar las teclas V y B.
 7. Pícaro en PvP: el Sigilo ya no se corta al acercarse a otro jugador.
+9. **Apuesta con la Muerte** (Bárbaro Indestructible, `/xp` hasta la subclase): moneda girando sobre la cabeza, inmóvil e inmortal mientras gira, resultado en grande; con el anj, 1 s inmortal. En primera persona, la moneda sale arriba en la pantalla.
 8. **Aliados** (dos jugadores, tecla J o `/aliados`): sin marcar, las áreas, trampas y conjuros de uno dañan al otro; tras marcar, no. Estandarte, Baluarte Sanador, curas de Iron's y Voz del Caudillo solo alcanzan a aliados. Las mascotas de un aliado no te atacan. La Nube de Humo solo oculta al Elfo y a sus aliados.
 
 Si algo falla: `/clases debug volcar` (ahora incluye raza, subraza y rango) y `logs/rpgclasses-debug.log`.

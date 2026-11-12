@@ -18,11 +18,11 @@
     {
       "type": "rpgclasses:mechanic",
       "id": "rpgclasses:death_gamble",
-      "chances": [
-        0.75,
-        0.45,
-        0.15
-      ],
+      "first_chance": 0.75,
+      "chance": 0.5,
+      "flip_seconds": 1.6,
+      "result_seconds": 1.5,
+      "immortal_seconds": 1,
       "area_damage": 1,
       "radius": 3,
       "knockback_blocks": 5

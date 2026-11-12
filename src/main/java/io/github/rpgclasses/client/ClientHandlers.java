@@ -105,6 +105,7 @@ public final class ClientHandlers {
         dataReceived = false;
         ALLIES = java.util.List.of();
         ALLIED_BY = java.util.List.of();
+        CoinFlipFx.reset();
         LOCAL_DATA.load(new net.minecraft.nbt.CompoundTag());
     }
 

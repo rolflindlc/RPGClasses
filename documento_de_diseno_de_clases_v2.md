@@ -289,11 +289,14 @@ Notas de los perks:
 
 **1. Indestructible**
 * **Vitalidad Salvaje:** +1 HP de vida máxima por nivel de subclase (+10 HP, 5 corazones, al nivel 10). Bonus plano: no cuenta para el tope global de vida.
-* **Apuesta con la Muerte:** al recibir daño letal, hay una probabilidad de sobrevivir con **1 HP**. **No tiene cooldown.**
-  * La probabilidad inicial es del **75%**. Cada vez que funciona, **baja 30 puntos**: 75% → 45% → 15% → 0%. Con 0% la habilidad no se activa.
-  * La probabilidad **solo se restablece al 75% si el Bárbaro muere.**
-  * Cada vez que se activa con éxito, emite un **grito** (sonido) y hace **1 de daño en área de 3 bloques** alrededor del Bárbaro, con **empuje de unos 5 bloques** a quien golpee.
-* Valor de referencia: supervivientes esperados por vida = 0,75 + 0,75×0,45 + 0,75×0,45×0,15 ≈ **1,14**, comparable a un Tótem de la Inmortalidad por vida.
+* **Apuesta con la Muerte (rev. 2.10):** al recibir daño letal se lanza una **moneda** con un **anj** y una **calavera**. **No tiene cooldown ni límite de usos.**
+  * Mientras la moneda gira (unos **1,6 s**), el Bárbaro queda a **1 HP**, **inmortal** y **sin poder hacer nada** (ni moverse, atacar, usar objetos, habilidades o conjuros). La moneda se ve girando sobre su cabeza (en primera persona, arriba en la pantalla).
+  * Probabilidad del anj: **75%** la primera vez de cada vida y **50%** las siguientes. Se restablece al 75% **solo si el Bárbaro muere**.
+  * Al caer la moneda, la cara ganadora aparece **en grande sobre la cabeza** y se aplica el resultado:
+    * **Anj:** sobrevive con 1 HP, **1 s de inmortalidad**, **grito** con **1 de daño en área de 3 bloques** y **empuje de unos 5 bloques** a los enemigos.
+    * **Calavera:** recibe de nuevo el golpe letal; aún pueden salvarle la Última Resistencia del Orco o el Tótem.
+  * Si se desconecta con la moneda en el aire, el resultado se aplica al momento.
+* Valor de referencia: supervivientes esperados por vida = 0,75 × (1 + 1) = **1,5** (antes 1,14) **[MEDIR]**.
 
 **2. Berserker Suicida**
 * **Fuerza Desmedida:** +25% de daño base progresivo (nivel 10).

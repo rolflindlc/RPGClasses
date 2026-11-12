@@ -1,6 +1,6 @@
 # Documento de Diseño v2: Mod de Clases y Árboles de Habilidades para Minecraft Java
 
-Versión 2 del diseño (revisión 2.7f, en desarrollo). Plataforma prevista: Forge 1.20.1 con Iron's Spells and Spellbooks, Epic Fight, Mowzie's Mobs y Cataclysm. Servidor principalmente PvE con algo de PvP. Objetivo del mod: sistema de clases balanceadas y programado de forma estructurada y orientada a la expansibilidad (clases futuras previstas: Alquimista, Nigromante, Druida).
+Versión 2 del diseño (revisión 2.7g, en desarrollo). Plataforma prevista: Forge 1.20.1 con Iron's Spells and Spellbooks, Epic Fight, Mowzie's Mobs y Cataclysm. Servidor principalmente PvE con algo de PvP. Objetivo del mod: sistema de clases balanceadas y programado de forma estructurada y orientada a la expansibilidad (clases futuras previstas: Alquimista, Nigromante, Druida).
 
 Los valores marcados con **[MEDIR]** son objetivos de diseño que deben calibrarse en el juego real antes de darlos por cerrados.
 
@@ -334,6 +334,7 @@ Notas de los perks:
 * **Viento A** suma −10% de vida al rasgo base (−25% en total, 15 HP).
 
 ### Activa (Nivel Total 5): Sigilo por barra
+* **Acrobacia con Epic Fight (rev. 2.7g).** En Epic Fight 20.x la esquiva es invulnerable durante toda su animación (no hay marcos aparte). Por eso: *+invulnerabilidad* = ventana extra tras la animación en la que los golpes esquivables fallan y cuentan como esquiva con éxito; *−invulnerabilidad* (Voltereta Larga) = en el último tramo de la animación los golpes entran. Con Acrobacia al máximo y Voltereta Larga, el factor es 1,25 × 0,85 ≈ 1,06. La distancia de la esquiva escala con la velocidad de movimiento, así que Voltereta Larga suma +50 % de velocidad solo mientras dura la esquiva. Contraataque se gasta en el primer golpe (cuerpo a cuerpo o flecha) dentro de los 3 s. **[MEDIR]** en el juego.
 * El Pícaro tiene una **barra propia de Sigilo**, separada de la estamina de Epic Fight.
 * Agacharse activa la **invisibilidad verdadera**. Drenaje del **10%/s** (10 s de invisibilidad; antes 4%/s, rev. 2.7d); recuperación del **8%/s** fuera del sigilo.
 * **Atacar o lanzar un hechizo cuesta el 40% del máximo de la barra.** Si la barra se agota, hay bloqueo hasta el 50%.

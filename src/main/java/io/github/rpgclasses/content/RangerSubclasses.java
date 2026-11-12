@@ -69,7 +69,7 @@ public final class RangerSubclasses {
     private static final String TAG_SAFEGUARD_UNTIL = "rpgclasses.safeguard_until";
     private static final String TAG_IDLE_UNTIL = "rpgclasses.safeguard_idle";
     private static final int PERIOD_TICKS = 20;
-    private static final String TAG_BONDED = "rpgclasses.bonded";
+    public static final String TAG_BONDED = "rpgclasses.bonded";
     /** Preguntas de vínculo pendientes: Ranger → (id de entidad, tick límite). */
     private static final Map<UUID, long[]> PROMPTS = new HashMap<>();
     /** Animales recién domesticados: se pregunta en el tick siguiente, cuando ya tienen dueño. */
@@ -110,6 +110,8 @@ public final class RangerSubclasses {
                 List<LivingEntity> pets = ranger.serverLevel().getEntitiesOfClass(LivingEntity.class,
                         ranger.getBoundingBox().inflate(64), e -> isPetOf(e, ranger));
                 pets.sort(Comparator.comparingDouble(e -> e.distanceToSqr(ranger)));
+                // Vínculos anteriores al Libro: se añaden a la lista la primera vez que se ven.
+                for (LivingEntity pet : pets) BondBook.ensureBond(ranger, pet.getUUID(), pet.getName().getString());
                 for (int i = 0; i < Math.min(max, pets.size()); i++) {
                     LivingEntity pet = pets.get(i);
                     boost(pet, bond.number("health", 0.35), bond.number("damage", 0.35), bond.number("speed", 0.25));
@@ -126,7 +128,7 @@ public final class RangerSubclasses {
     }
 
     /** Mascota domesticada del Ranger (lobos, gatos, loros, caballos...). Las invocaciones de Iron's no cuentan. */
-    private static boolean isPetOf(Entity e, ServerPlayer ranger) {
+    public static boolean isPetOf(Entity e, ServerPlayer ranger) {
         if (!ownedBy(e, ranger)) return false;
         // Rev. 2.7f: solo las mascotas con las que el Ranger se ha vinculado.
         CompoundTag data = e.getPersistentData();
@@ -134,7 +136,7 @@ public final class RangerSubclasses {
     }
 
     /** Mascota domesticada del jugador, vinculable (sin contar invocaciones de Iron's). */
-    private static boolean ownedBy(Entity e, ServerPlayer ranger) {
+    public static boolean ownedBy(Entity e, ServerPlayer ranger) {
         if (!(e instanceof OwnableEntity own) || !e.isAlive() || !ranger.getUUID().equals(own.getOwnerUUID())) return false;
         if (e instanceof AbstractHorse horse && !horse.isTamed()) return false;
         if (e.getPersistentData().contains("rpgclasses:summon_done")) return false;
@@ -167,8 +169,41 @@ public final class RangerSubclasses {
 
     // --- Vínculo (rev. 2.7f) ---
 
-    private static boolean isBeastMaster(ServerPlayer player) {
+    public static boolean isBeastMaster(ServerPlayer player) {
         return MechanicService.has(player, WILD_BOND) || MechanicService.has(player, SAFEGUARD);
+    }
+
+    /** ¿La mascota recibe ahora el bono del Vínculo Salvaje (entre las más cercanas)? */
+    public static boolean isBoosted(UUID ranger, UUID pet) {
+        Set<UUID> set = BOOSTED.get(ranger);
+        return set != null && set.contains(pet);
+    }
+
+    /**
+     * Vincula una mascota del Ranger. Lo usan el animal recién domesticado (pregunta) y el Libro de Vínculos.
+     * @return false si no es posible (no es Maestro de Bestias, no es suya, ya vinculada o libro lleno).
+     */
+    public static boolean bond(ServerPlayer ranger, LivingEntity pet) {
+        if (!isBeastMaster(ranger) || !ownedBy(pet, ranger) || isPetOf(pet, ranger)) return false;
+        if (BondBook.bonds(ranger).size() >= BondBook.MAX_BONDS) {
+            ranger.displayClientMessage(Component.translatable("msg.rpgclasses.bond.full", BondBook.MAX_BONDS), true);
+            return false;
+        }
+        pet.getPersistentData().putUUID(TAG_BONDED, ranger.getUUID());
+        BondBook.ensureBond(ranger, pet.getUUID(), pet.getName().getString());
+        ranger.displayClientMessage(Component.translatable("message.rpgclasses.bond_made", pet.getName()), true);
+        if (ranger.level() instanceof ServerLevel level) {
+            level.sendParticles(net.minecraft.core.particles.ParticleTypes.HEART, pet.getX(), pet.getY() + pet.getBbHeight(), pet.getZ(), 6, 0.3, 0.2, 0.3, 0.02);
+        }
+        return true;
+    }
+
+    /** Rompe el vínculo de una mascota cargada. */
+    public static void unbond(ServerPlayer ranger, LivingEntity pet) {
+        pet.getPersistentData().remove(TAG_BONDED);
+        unboost(pet);
+        BondBook.removeBond(ranger, pet.getUUID());
+        ranger.displayClientMessage(Component.translatable("message.rpgclasses.bond_broken", pet.getName()), true);
     }
 
     @SubscribeEvent
@@ -187,13 +222,7 @@ public final class RangerSubclasses {
     public static void answerBond(ServerPlayer ranger, int entityId, boolean accept) {
         long[] pending = PROMPTS.remove(ranger.getUUID());
         if (pending == null || pending[0] != entityId || ranger.serverLevel().getGameTime() > pending[1] || !accept) return;
-        Entity pet = ranger.serverLevel().getEntity(entityId);
-        if (pet == null || !ownedBy(pet, ranger) || !isBeastMaster(ranger)) return;
-        pet.getPersistentData().putUUID(TAG_BONDED, ranger.getUUID());
-        ranger.displayClientMessage(Component.translatable("message.rpgclasses.bond_made", pet.getName()), true);
-        if (ranger.level() instanceof ServerLevel level) {
-            level.sendParticles(net.minecraft.core.particles.ParticleTypes.HEART, pet.getX(), pet.getY() + pet.getBbHeight(), pet.getZ(), 6, 0.3, 0.2, 0.3, 0.02);
-        }
+        if (ranger.serverLevel().getEntity(entityId) instanceof LivingEntity pet) bond(ranger, pet);
     }
 
     /** Agachado y con la mano vacía sobre una mascota propia: vincularse (pregunta) o romper el vínculo. */
@@ -206,9 +235,12 @@ public final class RangerSubclasses {
         event.setCanceled(true);
         event.setCancellationResult(net.minecraft.world.InteractionResult.SUCCESS);
         if (isPetOf(pet, ranger)) {
-            pet.getPersistentData().remove(TAG_BONDED);
-            if (pet instanceof LivingEntity living) unboost(living);
-            ranger.displayClientMessage(Component.translatable("message.rpgclasses.bond_broken", pet.getName()), true);
+            if (pet instanceof LivingEntity living) {
+                unbond(ranger, living);
+            } else {
+                pet.getPersistentData().remove(TAG_BONDED);
+                BondBook.removeBond(ranger, pet.getUUID());
+            }
         } else if (pet instanceof LivingEntity living) {
             prompt(ranger, living);
         }
@@ -237,8 +269,10 @@ public final class RangerSubclasses {
         LivingEntity pet = r.pet();
         if (!pet.isAlive()) return;
         ServerPlayer ranger = server.getPlayerList().getPlayer(r.owner());
-        ResourceKey<Level> dim = ranger != null ? ranger.getRespawnDimension() : Level.OVERWORLD;
-        BlockPos pos = ranger != null ? ranger.getRespawnPosition() : null;
+        // Destino elegido en el Libro de Vínculos; si no hay ninguno, el punto de aparición.
+        BondBook.Point choice = ranger != null ? BondBook.destination(ranger) : null;
+        ResourceKey<Level> dim = choice != null ? choice.dim() : ranger != null ? ranger.getRespawnDimension() : Level.OVERWORLD;
+        BlockPos pos = choice != null ? choice.pos() : ranger != null ? ranger.getRespawnPosition() : null;
         ServerLevel dest = server.getLevel(dim);
         if (dest == null || pos == null) {
             dest = server.overworld();

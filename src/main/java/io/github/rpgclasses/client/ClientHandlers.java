@@ -39,6 +39,17 @@ public final class ClientHandlers {
         if (e instanceof net.minecraft.world.entity.projectile.AbstractArrow) e.setDeltaMovement(msg.x(), msg.y(), msg.z());
     }
 
+    /** Último contenido del Libro de Vínculos recibido del servidor. */
+    public static io.github.rpgclasses.network.Packets.BondBookSync BOND_BOOK;
+
+    /** Maestro de Bestias: abre el Libro de Vínculos, o refresca la pantalla si ya está abierta. */
+    public static void onBondBookSync(io.github.rpgclasses.network.Packets.BondBookSync msg) {
+        BOND_BOOK = msg;
+        Minecraft mc = Minecraft.getInstance();
+        if (mc.screen instanceof BondBookScreen screen) screen.onDataChanged();
+        else mc.setScreen(new BondBookScreen());
+    }
+
     /** Maestro de Bestias: pregunta si vincularse con el animal recién domesticado. */
     public static void onBondPrompt(io.github.rpgclasses.network.Packets.BondPrompt msg) {
         Minecraft mc = Minecraft.getInstance();

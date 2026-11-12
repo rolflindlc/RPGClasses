@@ -1,6 +1,7 @@
 package io.github.rpgclasses.registry;
 
 import io.github.rpgclasses.RpgClasses;
+import io.github.rpgclasses.content.BondBookItem;
 import io.github.rpgclasses.content.race.RaceAltarBlock;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTabs;
@@ -25,8 +26,12 @@ public final class ModBlocks {
     public static final RegistryObject<Item> RACE_ALTAR_ITEM = ITEMS.register("race_altar",
             () -> new BlockItem(RACE_ALTAR.get(), new Item.Properties()));
 
+    public static final RegistryObject<Item> BOND_BOOK = ITEMS.register("bond_book",
+            () -> new BondBookItem(new Item.Properties()));
+
     public static void onCreativeTab(BuildCreativeModeTabContentsEvent event) {
         if (event.getTabKey() == CreativeModeTabs.FUNCTIONAL_BLOCKS) event.accept(RACE_ALTAR_ITEM);
+        if (event.getTabKey() == CreativeModeTabs.TOOLS_AND_UTILITIES) event.accept(BOND_BOOK);
     }
 
     private ModBlocks() {}

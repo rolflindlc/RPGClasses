@@ -59,6 +59,7 @@ public final class ClientSetup {
         MinecraftForge.EVENT_BUS.addListener(net.minecraftforge.eventbus.api.EventPriority.HIGHEST, ClientSetup::onRenderScaledPost);
         modBus.addListener((RegisterGuiOverlaysEvent event) -> event.registerAboveAll("abilities", AbilityHud::render));
         modBus.addListener((RegisterGuiOverlaysEvent event) -> event.registerAboveAll("coin_flip", CoinFlipFx::renderHud));
+        modBus.addListener((RegisterGuiOverlaysEvent event) -> event.registerAboveAll("wolf_jump", WolfJumpGauge::renderHud));
         MinecraftForge.EVENT_BUS.addListener(CoinFlipFx::onRenderPlayer);
         MinecraftForge.EVENT_BUS.addListener(ClientSetup::onTooltip);
         MinecraftForge.EVENT_BUS.addListener(CoinFlipFx::onMovementInput);
@@ -123,6 +124,7 @@ public final class ClientSetup {
     private static void onClientTick(TickEvent.ClientTickEvent event) {
         if (event.phase != TickEvent.Phase.END) return;
         Minecraft mc = Minecraft.getInstance();
+        WolfJumpGauge.tick();
         if (mc.player == null) return;
 
         // Sin raza: primero se elige raza y subraza (permanentes); después, la clase.

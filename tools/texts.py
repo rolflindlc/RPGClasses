@@ -19,7 +19,7 @@ ABILITIES = {
     "charge": dict(distance=6, cooldown_seconds=20, hit_damage=2, knockback_strength=1.0, bounce_strength=.4),
     "berserker_rage": dict(duration_seconds=10, attack_speed=0.3, damage_bonus=0.25, damage_taken=0.2, cooldown_seconds=60, weakness_radius=6, weakness_seconds=6),
     # Pícaro
-    "stealth": dict(passive=True, drain_per_second=0.10, regen_per_second=0.08, action_cost=0.4, lockout_until=0.5, pvp_reveal_distance=1),
+    "stealth": dict(passive=True, drain_per_second=0.10, regen_per_second=0.08, action_cost=0.4, lockout_until=0.5),
     "shadow_step": dict(distance=8, cooldown_seconds=20),
     "decoy": dict(passive=True, cooldown_seconds=10),
     # Ranger
@@ -253,7 +253,7 @@ PARAMS = {
     "duration_seconds": "Duración|s", "attack_speed": "Velocidad de ataque|%", "damage_taken": "Daño recibido extra|%",
     "drain_per_second": "Barra gastada por segundo|%", "regen_per_second": "Barra recuperada por segundo|%",
     "action_cost": "Coste de atacar o lanzar un hechizo|%", "lockout_until": "Bloqueo al agotarse, hasta|%",
-    "pvp_reveal_distance": "Distancia de revelado en PvP (bloques)", "chance": "Probabilidad|%",
+    "chance": "Probabilidad|%",
     "thresholds_seconds": "Tramos de tensado|s", "damage_bonuses": "Bonus de daño por tramo|%",
     "switch_cooldown_seconds": "Cooldown al cambiar de postura|s", "water_speed_factor": "Agua: velocidad y salto x",
     "water_damage_factor": "Agua: daño desarmado x", "stone_armor_factor": "Piedra: armadura x",

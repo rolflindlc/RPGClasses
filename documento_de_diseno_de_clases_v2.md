@@ -338,7 +338,7 @@ Notas de los perks:
 * El Pícaro tiene una **barra propia de Sigilo**, separada de la estamina de Epic Fight.
 * Agacharse activa la **invisibilidad verdadera**. Drenaje del **10%/s** (10 s de invisibilidad; antes 4%/s, rev. 2.7d); recuperación del **8%/s** fuera del sigilo.
 * **Atacar o lanzar un hechizo cuesta el 40% del máximo de la barra.** Si la barra se agota, hay bloqueo hasta el 50%.
-* **PvP:** la invisibilidad se revela a menos de 1 bloque o al recibir daño.
+* **PvP:** la invisibilidad **ya no se revela por cercanía** a otro jugador (rev. 2.8); solo se pierde al agotarse la barra o al soltar agacharse.
 
 ### Subclases
 

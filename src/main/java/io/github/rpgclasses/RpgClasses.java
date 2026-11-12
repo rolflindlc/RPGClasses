@@ -83,6 +83,11 @@ public class RpgClasses {
         if (net.minecraftforge.fml.ModList.get().isLoaded("irons_spellbooks")) {
             io.github.rpgclasses.compat.irons.IronsCompat.init();
         }
+        // Puente con Epic Fight (Acrobacia del Pícaro): solo si el mod está instalado.
+        if (net.minecraftforge.fml.ModList.get().isLoaded("epicfight")) {
+            io.github.rpgclasses.compat.epicfight.EpicFightCompat.init();
+            DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> ClientSetup.initEpicFight());
+        }
         MinecraftForge.EVENT_BUS.register(new Toxins());
         MinecraftForge.EVENT_BUS.register(new BarbarianPerks());
         MinecraftForge.EVENT_BUS.register(new BarbarianSubclasses());

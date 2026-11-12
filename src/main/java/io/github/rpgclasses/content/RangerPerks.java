@@ -172,9 +172,8 @@ public final class RangerPerks {
         double knockback = m.number("knockback_strength", 0.8);
         // Rev. 2.7f: el radio se mide hasta el cuerpo del enemigo (no hasta sus pies) y empuja, también al alcanzado.
         for (LivingEntity e : level.getEntitiesOfClass(LivingEntity.class, new AABB(at, at).inflate(radius + 2),
-                e -> e != shooter && e.isAlive() && !e.isAlliedTo(shooter)
+                e -> CombatAbilities.canHit(shooter, e)
                         && closest(e.getBoundingBox(), at).distanceToSqr(at) <= radius * radius)) {
-            if (e instanceof ServerPlayer other && !shooter.canHarmPlayer(other)) continue;
             if (damage > 0 && e != exclude) e.hurt(source, damage);
             Vec3 away = e.position().subtract(at);
             if (knockback > 0 && away.horizontalDistanceSqr() > 1.0E-4) {
@@ -313,10 +312,10 @@ public final class RangerPerks {
                 continue;
             }
             ServerPlayer owner = event.getServer().getPlayerList().getPlayer(t.owner());
+            net.minecraft.server.MinecraftServer server = event.getServer();
             if (particles) t.level().sendParticles(ParticleTypes.CRIT, t.pos().x, t.pos().y + 0.1, t.pos().z, 4, 0.4, 0, 0.4, 0);
             for (LivingEntity e : t.level().getEntitiesOfClass(LivingEntity.class, new AABB(t.pos(), t.pos()).inflate(0.9, 0.5, 0.9),
-                    e -> e.isAlive() && !e.getUUID().equals(t.owner()) && (owner == null || !e.isAlliedTo(owner)))) {
-                if (e instanceof ServerPlayer other && owner != null && !owner.canHarmPlayer(other)) continue;
+                    e -> io.github.rpgclasses.server.Allies.isEnemyOf(server, t.owner(), e))) {
                 e.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 40, t.amplifier()), owner);
             }
         }

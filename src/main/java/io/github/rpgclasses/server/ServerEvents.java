@@ -111,5 +111,6 @@ public final class ServerEvents {
     @SubscribeEvent
     public void onRegisterCommands(RegisterCommandsEvent event) {
         ClassCommands.register(event.getDispatcher());
+        AllyCommands.register(event.getDispatcher());
     }
 }

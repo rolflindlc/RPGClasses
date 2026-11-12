@@ -9,7 +9,6 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.scores.Team;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -27,7 +26,7 @@ import java.util.UUID;
  *   <li>Estandarte de Guerra: +daño a los aliados (no al Paladín; lo aplica DamagePipeline).</li>
  *   <li>Estandarte de Vida: regenera a los aliados (no al Paladín).</li>
  * </ul>
- * Aliados = otros jugadores, salvo los de un equipo (scoreboard) distinto al del Paladín.
+ * Aliados = los jugadores que el Paladín tiene como aliados (sistema de aliados, /aliados).
  */
 public final class BannerAura {
     public static final String AURA = "banner_aura";
@@ -108,10 +107,9 @@ public final class BannerAura {
         }
     }
 
+    /** Aliado del Paladín según el sistema de aliados (lista propia o mismo equipo de scoreboard). */
     public static boolean isAlly(ServerPlayer paladin, ServerPlayer other) {
-        Team a = paladin.getTeam();
-        Team b = other.getTeam();
-        return a == null || b == null || a.isAlliedTo(b);
+        return io.github.rpgclasses.server.Allies.isAlly(paladin, other);
     }
 
     private static void setArmor(ServerPlayer player, double fraction) {

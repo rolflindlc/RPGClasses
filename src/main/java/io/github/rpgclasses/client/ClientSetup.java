@@ -38,6 +38,9 @@ public final class ClientSetup {
     };
 
     /** Habilidades raciales: agachado se usan las ranuras 2 y 3. */
+    public static final KeyMapping OPEN_ALLIES = new KeyMapping(
+            "key.rpgclasses.allies", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_J, "key.categories.rpgclasses");
+
     public static final KeyMapping[] RACE_KEYS = {
             new KeyMapping("key.rpgclasses.race_1", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_V, "key.categories.rpgclasses"),
             new KeyMapping("key.rpgclasses.race_2", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_B, "key.categories.rpgclasses"),
@@ -46,6 +49,7 @@ public final class ClientSetup {
     public static void init(IEventBus modBus) {
         modBus.addListener((RegisterKeyMappingsEvent event) -> {
             event.register(OPEN_BOOK);
+            event.register(OPEN_ALLIES);
             for (KeyMapping key : ABILITY_KEYS) event.register(key);
             for (KeyMapping key : RACE_KEYS) event.register(key);
         });
@@ -142,6 +146,9 @@ public final class ClientSetup {
         }
         while (OPEN_BOOK.consumeClick()) {
             if (mc.screen == null) mc.setScreen(new ClassScreen(false));
+        }
+        while (OPEN_ALLIES.consumeClick()) {
+            if (mc.screen == null) mc.setScreen(new AllyScreen(null));
         }
     }
 

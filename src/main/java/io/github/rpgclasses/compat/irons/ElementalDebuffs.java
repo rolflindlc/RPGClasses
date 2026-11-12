@@ -172,8 +172,7 @@ final class ElementalDebuffs {
 
     private static List<LivingEntity> enemiesAround(ServerPlayer player, Vec3 at, double radius) {
         return player.level().getEntitiesOfClass(LivingEntity.class, new net.minecraft.world.phys.AABB(at, at).inflate(radius),
-                e -> e != player && e.isAlive() && !e.isAlliedTo(player) && e.distanceToSqr(at) <= radius * radius
-                        && !(e instanceof ServerPlayer other && !player.canHarmPlayer(other)));
+                e -> io.github.rpgclasses.server.Allies.isEnemy(player, e) && e.distanceToSqr(at) <= radius * radius);
     }
 
     private static void line(ServerLevel level, Vec3 from, Vec3 to) {

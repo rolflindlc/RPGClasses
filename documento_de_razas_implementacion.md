@@ -44,7 +44,9 @@ Las tres subrazas sin hacer (Herrero, Jinete de Lobo, Pirómano) **salen en la p
 ## 2. Decisiones que he tomado (pendientes de tu confirmación)
 
 * **Jugadores existentes:** eligen raza al entrar, aunque ya tengan clase.
-* **Voz del Caudillo:** cuenta como aliado a cualquier jugador en el radio y a las mascotas domesticadas.
+* **Voz del Caudillo:** purga al Caudillo, a los jugadores que tiene como aliados y a las mascotas e invocaciones de todos ellos (sistema de aliados, regla 15 del documento v2).
+* **Nube de Humo y aliados:** la invisibilidad solo se aplica al Elfo y a sus aliados (y sus mascotas); los enemigos dentro no se vuelven invisibles y, desde R3, se ralentizan. Sustituye a "todo lo que hay dentro es invisible" del anexo.
+* **Ladrón y Escolta:** Mano Larga no roba a quien el Goblin tiene como aliado; los guardianes del Abisal no atacan a mascotas ni invocaciones de aliados.
 * **Fusión Arcana:** cuesta 30 niveles y 1 objeto; solo sube los encantamientos que están a nivel máximo en los dos objetos.
 * **Fortuna racial:** solo en bloques del tag `forge:ores`. **Minero:** tag `rpgclasses:dwarf_mineable`.
 * **Carne y pescado:** tags `rpgclasses:meat` y `rpgclasses:elf_forbidden_food`. El perk *Carnívoro* del Bárbaro ya cuenta el pescado y **no se puede elegir siendo Elfo**.

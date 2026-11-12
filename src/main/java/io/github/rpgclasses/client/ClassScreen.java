@@ -117,6 +117,11 @@ public final class ClassScreen extends Screen {
             addRenderableWidget(Button.builder(Component.translatable("ui.rpgclasses.race.button"),
                     btn -> minecraft.setScreen(new RaceScreen(RaceScreen.Mode.VIEW))).bounds(30, height - 28, LEFT_WIDTH - 22, 20).build());
         }
+        // Aliados (tecla J): quién cuenta como aliado; el resto son enemigos.
+        if (!selecting) {
+            addRenderableWidget(Button.builder(Component.translatable("ui.rpgclasses.ally.button"),
+                    btn -> minecraft.setScreen(new AllyScreen(this))).bounds(30, height - 50, LEFT_WIDTH - 22, 20).build());
+        }
 
         // Pestañas.
         List<ClassPages.Tab> tabs = new ArrayList<>();

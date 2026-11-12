@@ -2,6 +2,7 @@ import json, os, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import texts
 import races
+import allies
 out = sys.argv[1]
 NS = "rpgclasses"
 def R(x): return f"{NS}:{x}"
@@ -311,6 +312,8 @@ for key, label in races.RACE_PARAMS.items():
     texts.PARAMS[key] = label
     lang[f"param.{NS}.{key}"] = label.split("|")[0]
 lang.update(races.build(dump, base))
+for key in allies.UI: assert key not in lang, key
+lang.update(allies.UI)
 # Unidades de los parámetros, para que el cliente sepa formatearlos: "%" porcentaje, "s" segundos.
 dump(os.path.join(out, "assets", NS, "rpgclasses_param_units.json"),
      {k: v.split("|")[1] for k, v in sorted(texts.PARAMS.items()) if "|" in v})

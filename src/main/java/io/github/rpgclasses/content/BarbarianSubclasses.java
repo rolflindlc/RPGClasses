@@ -207,7 +207,12 @@ public final class BarbarianSubclasses {
     /** Golpe Aflictivo: llamado por DamagePipeline tras un golpe cuerpo a cuerpo. No se apila ni se renueva. */
     public static void onMeleeHit(ServerPlayer attacker, LivingEntity target) {
         ActiveMechanic m = MechanicService.find(attacker, AFFLICTING_STRIKE);
-        if (m == null || !target.isAlive() || target.hasEffect(ModEffects.PLAGUE.get())) return;
+        if (m == null) return;
+        if (!target.isAlive() || target.hasEffect(ModEffects.PLAGUE.get())) {
+            io.github.rpgclasses.server.DebugLog.event(attacker, "Plaga", "no se aplica a {}: {}", io.github.rpgclasses.server.DebugLog.describe(target),
+                    target.isAlive() ? "ya tiene Plaga" : "ha muerto con el golpe");
+            return;
+        }
         CompoundTag dose = new CompoundTag();
         double perSecond = m.number("damage_per_second", 2) * (target.getType().is(BOSSES) ? m.number("boss_factor", 0.5) : 1);
         dose.putFloat("damage", (float) (perSecond / 2)); // un tic cada 10 ticks
@@ -217,10 +222,10 @@ public final class BarbarianSubclasses {
 
     private static void applyPlague(ServerPlayer owner, LivingEntity target, int ticks, CompoundTag base) {
         if (!target.addEffect(new MobEffectInstance(ModEffects.PLAGUE.get(), ticks, 0), owner)) {
-            io.github.rpgclasses.RpgClasses.LOGGER.info("[rpgclasses] Plaga: {} no acepta el efecto", target);
+            io.github.rpgclasses.server.DebugLog.event(owner, "Plaga", "{} no acepta el efecto", target);
             return;
         }
-        io.github.rpgclasses.RpgClasses.LOGGER.info("[rpgclasses] Plaga: {} infecta a {} ({} ticks, {} por tic)",
+        io.github.rpgclasses.server.DebugLog.event(owner, "Plaga", "{} infecta a {} ({} ticks, {} por tic)",
                 owner.getGameProfile().getName(), target, ticks, base.getFloat("damage"));
         CompoundTag dose = base.copy();
         dose.putUUID("owner", owner.getUUID());

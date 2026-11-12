@@ -262,14 +262,19 @@ public final class DamagePipeline {
         float result = StatMath.sanitizeDamage(damage);
         log.append(String.format(Locale.ROOT, " = %.2f (antes de armadura)", result));
         LAST_BREAKDOWN.put(attacker.getUUID(), log.toString());
+        DebugLog.event(attacker, "golpe", "{} → {} ({}, {}): {}", attacker.getGameProfile().getName(), DebugLog.describe(target),
+                melee ? "cuerpo a cuerpo con " + attacker.getMainHandItem().getItem() : "proyectil " + DebugLog.describe(direct),
+                source.getMsgId(), log);
         event.setAmount(result);
 
-        if (judgement > 0) PaladinPerks.judgementArea(attacker, target, (float) holyDamage);
-        if (direct instanceof Projectile projectile) RangerPerks.onArrowHit(attacker, projectile, target, result);
+        if (judgement > 0) DebugLog.guard(attacker, "Juicio (área)", () -> PaladinPerks.judgementArea(attacker, target, (float) holyDamage));
+        if (direct instanceof Projectile projectile) {
+            DebugLog.guard(attacker, "perks de flecha al impactar", () -> RangerPerks.onArrowHit(attacker, projectile, target, result));
+        }
         if (melee) {
-            Toxins.onMeleeHit(attacker, target);
-            BarbarianSubclasses.onMeleeHit(attacker, target);
-            PaladinPerks.shockwave(attacker, target, result);
+            DebugLog.guard(attacker, "Toxinas", () -> Toxins.onMeleeHit(attacker, target));
+            DebugLog.guard(attacker, "subclase Bárbaro al golpear (Plaga...)", () -> BarbarianSubclasses.onMeleeHit(attacker, target));
+            DebugLog.guard(attacker, "Onda de choque", () -> PaladinPerks.shockwave(attacker, target, result));
         }
     }
 
@@ -278,22 +283,40 @@ public final class DamagePipeline {
     public void onDefend(LivingHurtEvent event) {
         if (!(event.getEntity() instanceof ServerPlayer victim) || victim instanceof FakePlayer || event.getAmount() <= 0) return;
         if (event.getSource().is(DamageTypeTags.BYPASSES_INVULNERABILITY)) return;
-        double factor = BarbarianPerks.hazardFactor(victim, event.getSource()) * BarbarianPerks.enduranceFactor(victim);
+        StringBuilder log = new StringBuilder(String.format(Locale.ROOT, "recibe %.2f (%s de %s)", event.getAmount(),
+                event.getSource().getMsgId(), DebugLog.describe(event.getSource().getEntity())));
+        double hazard = BarbarianPerks.hazardFactor(victim, event.getSource());
+        double endurance = BarbarianPerks.enduranceFactor(victim);
+        double factor = hazard * endurance;
+        if (hazard != 1) log.append(String.format(Locale.ROOT, " | peligros x%.2f", hazard));
+        if (endurance != 1) log.append(String.format(Locale.ROOT, " | aguante x%.2f", endurance));
+        double beforeSkin = factor;
         factor = MonkPerks.spiritSkinFactor(victim, event.getSource(), factor);
-        factor *= PaladinSubclasses.tenacityFactor(victim);
+        if (factor != beforeSkin) log.append(String.format(Locale.ROOT, " | piel espiritual %.2f→%.2f", beforeSkin, factor));
+        double tenacity = PaladinSubclasses.tenacityFactor(victim);
+        factor *= tenacity;
+        if (tenacity != 1) log.append(String.format(Locale.ROOT, " | tenacidad x%.2f", tenacity));
         if (victim.hasEffect(ModEffects.BULWARK.get())) {
             double reduction = CombatAbilities.bulwarkReduction(victim);
             // Baluarte Sanador: cura con lo que Baluarte ha quitado de este golpe.
-            PaladinSubclasses.healingBulwark(victim, event.getAmount() * factor * reduction);
+            float prevented = (float) (event.getAmount() * factor * reduction);
+            DebugLog.guard(victim, "Baluarte Sanador", () -> PaladinSubclasses.healingBulwark(victim, prevented));
             factor *= 1 - reduction;
+            log.append(String.format(Locale.ROOT, " | baluarte -%.0f%%", reduction * 100));
         }
         if (victim.hasEffect(ModEffects.TAUNT_GUARD.get())) {
-            factor *= 1 - AbilityService.number(AbilityService.params(CombatAbilities.TAUNT), "damage_reduction", 0.2);
+            double reduction = AbilityService.number(AbilityService.params(CombatAbilities.TAUNT), "damage_reduction", 0.2);
+            factor *= 1 - reduction;
+            log.append(String.format(Locale.ROOT, " | provocar -%.0f%%", reduction * 100));
         }
         if (victim.hasEffect(ModEffects.BERSERKER_RAGE.get())) {
-            factor *= 1 + AbilityService.number(AbilityService.params(CombatAbilities.BERSERKER_RAGE), "damage_taken", 0.2);
+            double extra = AbilityService.number(AbilityService.params(CombatAbilities.BERSERKER_RAGE), "damage_taken", 0.2);
+            factor *= 1 + extra;
+            log.append(String.format(Locale.ROOT, " | berserker +%.0f%%", extra * 100));
         }
         if (factor != 1) event.setAmount(StatMath.sanitizeDamage(event.getAmount() * factor));
+        log.append(String.format(Locale.ROOT, " = %.2f (antes de armadura)", event.getAmount()));
+        DebugLog.event(victim, "defensa", "{}", log);
     }
 
     @SubscribeEvent

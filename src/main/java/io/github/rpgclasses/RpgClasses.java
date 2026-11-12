@@ -66,6 +66,8 @@ public class RpgClasses {
         // Todo lo de cliente se registra aparte: el servidor dedicado nunca carga esas clases.
         DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> ClientSetup.init(modBus));
 
+        io.github.rpgclasses.server.DebugEvents.install();
+        MinecraftForge.EVENT_BUS.register(new io.github.rpgclasses.server.DebugEvents());
         MinecraftForge.EVENT_BUS.register(new ServerEvents());
         MinecraftForge.EVENT_BUS.register(new CombatTracker());
         MinecraftForge.EVENT_BUS.register(new DamagePipeline());

@@ -150,6 +150,7 @@ public final class IronsCompat {
         if (!(event.getEntity() instanceof ServerPlayer player)) return;
         String school = event.getSchoolType().getId().toString();
         if (StatEngine.schoolWall(player, school) >= 1.0) {
+            io.github.rpgclasses.server.DebugLog.event(player, "conjuro", "bloqueado: la escuela {} está vetada para su clase", school);
             event.setCanceled(true);
             player.displayClientMessage(Component.translatable("message.rpgclasses.school_locked",
                     event.getSchoolType().getDisplayName()), true);
@@ -211,6 +212,8 @@ public final class IronsCompat {
         if (player.getHealth() - health < floor) return;
         player.setHealth(player.getHealth() - health);
         magic.setMana(magic.getMana() + missing);
+        io.github.rpgclasses.server.DebugLog.event(player, "Magia de Sangre", "{}: faltaban {} de maná, paga {} de vida",
+                spellId, missing, health);
         LOANS.put(player.getUUID(), new Loan(tick, spellId, missing, health, 0));
     }
 
@@ -255,7 +258,7 @@ public final class IronsCompat {
         if (count != null) {
             SUMMON_CASTS.put(player.getUUID(), tick);
             if (isSummonSpell(spellId)) {
-                RpgClasses.LOGGER.info("[rpgclasses] Legión/Élite: {} lanza {} (tick {})", player.getGameProfile().getName(), spellId, tick);
+                io.github.rpgclasses.server.DebugLog.event(player, "Legión/Élite", "{} lanza {} (tick {})", player.getGameProfile().getName(), spellId, tick);
             }
             double extra = count.number("summon_mana_cost", 0);
             if (extra != 0 && isSummonSpell(spellId)) {
@@ -295,6 +298,10 @@ public final class IronsCompat {
         }
         float blood = BLOOD_MANA.getOrDefault(player.getUUID(), 0f);
         BLOOD_MANA.remove(player.getUUID());
+        io.github.rpgclasses.server.DebugLog.event(player, "conjuro", "{} lanzado; coste final {} maná, fuente {}{}{}",
+                event.getSpellId(), event.getManaCost(), event.getCastSource(),
+                free != null && free.spellId().equals(event.getSpellId()) ? ", Conjuro Gratuito (ranura " + free.slot() + ")" : "",
+                blood > 0 ? ", " + blood + " de maná pagado con vida (Magia de Sangre)" : "");
         if (!event.getCastSource().consumesMana() || player.isCreative()) return;
         float spent = Math.max(0, event.getManaCost() - blood);
         ActiveMechanic shield = MechanicService.find(player, "arcane_shield");
@@ -313,7 +320,9 @@ public final class IronsCompat {
         if (wild != null && spent > 0 && replicating == null && AbilityService.remainingTicks(player, CD_WILD) <= 0) {
             double chance = Math.min(wild.number("chance_cap", 0.5),
                     Math.max(wild.number("min_chance", 0), spent * wild.number("chance_per_mana", 0.0033)));
-            if (player.getRandom().nextDouble() < chance) {
+            boolean proc = player.getRandom().nextDouble() < chance;
+            io.github.rpgclasses.server.DebugLog.event(player, "Magia Salvaje", "tirada {}%: {}", chance * 100, proc ? "SALTA" : "no");
+            if (proc) {
                 AbilityService.setCooldown(player, CD_WILD, (int) Math.round(wild.number("icd_ticks", 30)));
                 WILD_PENDING.add(new WildProc(player.getUUID(), event.getSpellId()));
             }
@@ -347,7 +356,7 @@ public final class IronsCompat {
             return;
         }
         if (options.isEmpty()) {
-            RpgClasses.LOGGER.info("[rpgclasses] Magia Salvaje: {} no tiene conjuros ofensivos válidos para replicar", player.getGameProfile().getName());
+            io.github.rpgclasses.server.DebugLog.event(player, "Magia Salvaje", "{} no tiene conjuros ofensivos válidos para replicar", player.getGameProfile().getName());
             return;
         }
         // Se prefiere otro conjuro distinto del lanzado; si solo está ese, se replica el mismo (rev. 2.7f).
@@ -382,7 +391,7 @@ public final class IronsCompat {
             player.setXRot(pitch);
             replicating = null;
         }
-        RpgClasses.LOGGER.info("[rpgclasses] Magia Salvaje: {} replica {} en {} direcciones ({} lanzadas)",
+        io.github.rpgclasses.server.DebugLog.event(player, "Magia Salvaje", "{} replica {} en {} direcciones ({} lanzadas)",
                 player.getGameProfile().getName(), spell.getSpellId(), directions, cast);
         if (cast > 0) {
             level.sendParticles(net.minecraft.core.particles.ParticleTypes.WITCH,
@@ -648,7 +657,7 @@ public final class IronsCompat {
                         if (clone != null) fresh.add(clone);
                     }
                 }
-                RpgClasses.LOGGER.info("[rpgclasses] Legión/Élite: {} invocaciones nuevas de {}, cambio {}",
+                io.github.rpgclasses.server.DebugLog.event(null, "Legión/Élite", "{} invocaciones nuevas de {}, cambio {}",
                         originals.size(), owner.getGameProfile().getName(), change);
             }
             for (LivingEntity s : fresh) applySummonStats(owner, s);

@@ -84,7 +84,17 @@ public final class ClassCommands {
                 .then(Commands.literal("validar").executes(c -> validate(c.getSource())))
                 .then(Commands.literal("debug")
                         .then(Commands.literal("item").executes(c -> debugItem(c.getSource())))
-                        .then(Commands.literal("stats").executes(c -> debugStats(c.getSource())))));
+                        .then(Commands.literal("stats").executes(c -> debugStats(c.getSource())))
+                        .then(Commands.literal("log")
+                                .then(Commands.literal("on").executes(c -> setLog(c.getSource(), true)))
+                                .then(Commands.literal("off").executes(c -> setLog(c.getSource(), false)))
+                                .then(Commands.literal("ver").executes(c -> showLog(c.getSource(), 15))
+                                        .then(Commands.argument("lineas", com.mojang.brigadier.arguments.IntegerArgumentType.integer(1, 100))
+                                                .executes(c -> showLog(c.getSource(),
+                                                        com.mojang.brigadier.arguments.IntegerArgumentType.getInteger(c, "lineas"))))))
+                        .then(Commands.literal("volcar").executes(c -> dump(c.getSource(), c.getSource().getPlayerOrException()))
+                                .then(Commands.argument("jugador", EntityArgument.player())
+                                        .executes(c -> dump(c.getSource(), EntityArgument.getPlayer(c, "jugador")))))));
     }
 
     private static int act(CommandContext<CommandSourceStack> ctx, Action action, String arg) throws CommandSyntaxException {
@@ -159,6 +169,32 @@ public final class ClassCommands {
         if (last != null) lines.add("último golpe: " + last);
         for (String line : lines) source.sendSuccess(() -> Component.literal(line), false);
         return 1;
+    }
+
+    private static int setLog(CommandSourceStack source, boolean on) {
+        DebugLog.setEnabled(on);
+        source.sendSuccess(() -> Component.literal("Registro de depuración " + (on ? "activado" : "desactivado (los errores se siguen registrando)")), true);
+        return 1;
+    }
+
+    private static int showLog(CommandSourceStack source, int lines) {
+        ServerPlayer player = source.getPlayer();
+        List<String> recent = DebugLog.recent(player == null ? null : player.getUUID(), lines);
+        if (recent.isEmpty()) source.sendSuccess(() -> Component.literal("Sin eventos registrados todavía."), false);
+        for (String line : recent) source.sendSuccess(() -> Component.literal(line).withStyle(ChatFormatting.GRAY), false);
+        return recent.size();
+    }
+
+    private static int dump(CommandSourceStack source, ServerPlayer target) {
+        try {
+            java.nio.file.Path file = DebugDump.write(target);
+            source.sendSuccess(() -> DebugDump.link(file), false);
+            return 1;
+        } catch (Throwable t) {
+            DebugLog.error(target, "volcado", t, "no se pudo escribir");
+            source.sendFailure(Component.literal("No se pudo escribir el volcado: " + t));
+            return 0;
+        }
     }
 
     private ClassCommands() {}

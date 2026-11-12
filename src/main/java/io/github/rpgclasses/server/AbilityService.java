@@ -50,7 +50,9 @@ public final class AbilityService {
     }
 
     public static boolean has(ServerPlayer player, String abilityId) {
-        return unlocked(player).contains(abilityId);
+        boolean has = unlocked(player).contains(abilityId);
+        if (has) DebugLog.throttled(player, "ability:" + abilityId, 15_000, "pasiva", "{} comprobada (la tiene)", abilityId);
+        return has;
     }
 
     public static JsonObject params(String abilityId) {
@@ -92,19 +94,37 @@ public final class AbilityService {
 
         Active active = ACTIVES.get(id);
         if (active == null) {
+            DebugLog.warn(player, "habilidad", "{} (ranura {}) no tiene código registrado", id, slot);
             player.displayClientMessage(Component.translatable("msg.rpgclasses.ability_not_ready", name), true);
             return;
         }
         long remaining = remainingTicks(player, id);
         if (remaining > 0) {
+            DebugLog.event(player, "habilidad", "{} en enfriamiento ({} s)", id, remaining / 20.0);
             player.displayClientMessage(Component.translatable("msg.rpgclasses.ability_cooldown", name,
                     String.format(Locale.ROOT, "%.1f", remaining / 20.0)), true);
             return;
         }
         JsonObject params = params(id);
-        if (active.activate(player, params)) {
+        boolean used;
+        try {
+            used = active.activate(player, params);
+        } catch (Throwable t) {
+            DebugLog.error(player, "habilidad", t, "{} lanzó una excepción al activarse (params {})", id, params);
+            player.displayClientMessage(Component.literal("Error en " + id + ": mira logs/rpgclasses-debug.log")
+                    .withStyle(net.minecraft.ChatFormatting.RED), true);
+            return;
+        }
+        if (!used) {
+            DebugLog.event(player, "habilidad", "{} pulsada pero no se activó (condiciones no cumplidas); vida {}, en suelo {}",
+                    id, player.getHealth(), player.onGround());
+            return;
+        }
+        {
             double factor = COOLDOWN_MODIFIERS.containsKey(id) ? Math.max(0, COOLDOWN_MODIFIERS.get(id).applyAsDouble(player)) : 1;
             setCooldown(player, id, (int) Math.round(ticks(params, "cooldown_seconds", 0) * factor));
+            DebugLog.event(player, "habilidad", "{} usada; enfriamiento {} s (factor {})", id,
+                    ticks(params, "cooldown_seconds", 0) * factor / 20.0, factor);
             player.displayClientMessage(Component.translatable("msg.rpgclasses.ability_used", name), true);
             Net.syncPlayer(player);
         }

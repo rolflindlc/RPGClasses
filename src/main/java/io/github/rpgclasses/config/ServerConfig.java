@@ -14,6 +14,7 @@ public final class ServerConfig {
     public static final ForgeConfigSpec.BooleanValue PROTECT_UNCLASSED;
     public static final ForgeConfigSpec.DoubleValue BASE_CRIT_CHANCE;
     public static final ForgeConfigSpec.ConfigValue<List<? extends String>> DISABLED_CLASSES;
+    public static final ForgeConfigSpec.BooleanValue DEBUG_LOG;
 
     static {
         ForgeConfigSpec.Builder b = new ForgeConfigSpec.Builder();
@@ -38,6 +39,12 @@ public final class ServerConfig {
         BASE_CRIT_CHANCE = b
                 .comment("Probabilidad base de crítico para todas las clases [MEDIR]. Cada clase suma su crit_chance_bonus.")
                 .defineInRange("baseCritChance", 0.30, 0.0, 1.0);
+        b.pop();
+        b.push("debug");
+        DEBUG_LOG = b
+                .comment("Registro de depuración en logs/rpgclasses-debug.log: habilidades, pasivas, efectos, daño y curas.",
+                        "Los errores se registran siempre. También se cambia en partida con /clases debug log on|off.")
+                .define("debugLog", true);
         b.pop();
         SPEC = b.build();
     }

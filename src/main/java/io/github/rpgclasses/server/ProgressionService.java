@@ -31,6 +31,8 @@ public final class ProgressionService {
         long xpBefore = currentXp(player);
 
         Result result = perform(player, s, action, arg == null ? "" : arg);
+        DebugLog.event(player, "progreso", "{} '{}' → {}; clase {}, ramas {}, perks {}, subclase {} ({})", action, arg, result,
+                s.classId, s.branchPoints, s.perks, s.subclassId, s.subclassLevel);
 
         if (!result.ok()) {
             player.sendSystemMessage(resultMessage(result).withStyle(ChatFormatting.RED));

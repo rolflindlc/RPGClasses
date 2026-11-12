@@ -23,6 +23,8 @@ import java.util.UUID;
  */
 public final class MechanicService {
     private static final Map<UUID, List<ActiveMechanic>> CACHE = new HashMap<>();
+    /** Ids de la última lista calculada, para registrar qué pasivas se ganan o se pierden. */
+    private static final Map<UUID, java.util.Set<String>> LAST_IDS = new HashMap<>();
 
     /** Todas las mecánicas activas del jugador (lista vacía sin clase). */
     public static List<ActiveMechanic> all(ServerPlayer player) {
@@ -33,7 +35,13 @@ public final class MechanicService {
     /** La mecánica con ese id (con o sin el prefijo "rpgclasses:"), o null si no la tiene. */
     public static ActiveMechanic find(ServerPlayer player, String id) {
         String full = id.contains(":") ? id : Ids.NS + ":" + id;
-        for (ActiveMechanic m : all(player)) if (m.id().equals(full)) return m;
+        for (ActiveMechanic m : all(player)) {
+            if (m.id().equals(full)) {
+                DebugLog.throttled(player, "mech:" + full, 15_000, "pasiva", "{} comprobada (la tiene, nivel {}/{})",
+                        full, m.level(), m.maxLevel());
+                return m;
+            }
+        }
         return null;
     }
 
@@ -56,12 +64,24 @@ public final class MechanicService {
         if (data == null) return List.of();
         ClassDef classDef = DefinitionStore.SERVER.classDef(data.state.classId);
         if (classDef == null) return List.of();
-        return List.copyOf(StatCalculator.mechanics(data.state, classDef, DefinitionStore.SERVER.subclassDef(data.state.subclassId)));
+        List<ActiveMechanic> list = List.copyOf(StatCalculator.mechanics(data.state, classDef, DefinitionStore.SERVER.subclassDef(data.state.subclassId)));
+        java.util.Set<String> ids = new java.util.TreeSet<>();
+        for (ActiveMechanic m : list) ids.add(m.id() + "@" + m.level());
+        java.util.Set<String> before = LAST_IDS.put(player.getUUID(), ids);
+        if (!ids.equals(before)) {
+            java.util.Set<String> gained = new java.util.TreeSet<>(ids);
+            if (before != null) gained.removeAll(before);
+            java.util.Set<String> lost = before == null ? new java.util.TreeSet<>() : new java.util.TreeSet<>(before);
+            lost.removeAll(ids);
+            DebugLog.event(player, "pasivas", "activas ahora {}; nuevas {}; perdidas {}", ids, gained, lost);
+        }
+        return list;
     }
 
     @SubscribeEvent
     public void onLogout(PlayerEvent.PlayerLoggedOutEvent event) {
         CACHE.remove(event.getEntity().getUUID());
+        LAST_IDS.remove(event.getEntity().getUUID());
     }
 
     private MechanicService() {}

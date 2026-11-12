@@ -55,6 +55,28 @@ public final class RoguePerks {
      * Golpe a Traición: bonus contra quien no te tiene como objetivo. Mobs: su objetivo actual.
      * Jugadores: no te han golpeado en los últimos {@code pvp_window_seconds}.
      */
+    // --- Contraataque (Acrobacia A, Epic Fight) ---
+
+    private record Counter(double bonus, long until) {}
+    private static final Map<UUID, Counter> DODGE_COUNTERS = new HashMap<>();
+
+    /** Tras una esquiva con éxito: el siguiente golpe en {@code ticks} hace +{@code bonus}. */
+    public static void armDodgeCounter(ServerPlayer player, double bonus, int ticks) {
+        DODGE_COUNTERS.put(player.getUUID(), new Counter(bonus, player.level().getGameTime() + ticks));
+        io.github.rpgclasses.server.DebugLog.event(player, "Contraataque", "preparado: +{}% al siguiente golpe en {} s", bonus * 100, ticks / 20.0);
+    }
+
+    /** Bonus de Contraataque del golpe actual (se gasta al usarlo), o 0. */
+    public static double takeDodgeCounter(ServerPlayer player) {
+        Counter c = DODGE_COUNTERS.remove(player.getUUID());
+        if (c == null) return 0;
+        if (player.level().getGameTime() > c.until()) {
+            io.github.rpgclasses.server.DebugLog.event(player, "Contraataque", "caducado sin usar");
+            return 0;
+        }
+        return c.bonus();
+    }
+
     public static double treacherousBonus(ServerPlayer attacker, LivingEntity target) {
         ActiveMechanic m = MechanicService.find(attacker, TREACHEROUS);
         if (m == null) return 0;

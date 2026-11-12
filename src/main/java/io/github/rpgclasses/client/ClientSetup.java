@@ -222,6 +222,24 @@ public final class ClientSetup {
         event.getInput().forwardImpulse *= factor;
     }
 
+    /** Epic Fight en el cliente: las esquivas del jugador local consultan sus mecánicas sincronizadas. */
+    public static void initEpicFight() {
+        io.github.rpgclasses.compat.epicfight.EpicFightCompat.clientMechanic = (player, id) ->
+                player == Minecraft.getInstance().player ? localMechanic(id) : null;
+    }
+
+    /** La mecánica del jugador local con ese id completo, o null. */
+    static io.github.rpgclasses.core.stat.StatCalculator.ActiveMechanic localMechanic(String id) {
+        var s = ClientHandlers.LOCAL_DATA.state;
+        var classDef = io.github.rpgclasses.core.definition.DefinitionStore.CLIENT.classDef(s.classId);
+        if (classDef == null) return null;
+        for (var m : io.github.rpgclasses.core.stat.StatCalculator.mechanics(s, classDef,
+                io.github.rpgclasses.core.definition.DefinitionStore.CLIENT.subclassDef(s.subclassId))) {
+            if (m.id().equals(id)) return m;
+        }
+        return null;
+    }
+
     /** Si el jugador local tiene una mecánica (rama, perk o subclase), según los datos sincronizados. */
     static boolean hasLocalMechanic(String id) {
         var s = ClientHandlers.LOCAL_DATA.state;

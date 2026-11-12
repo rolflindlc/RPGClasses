@@ -45,6 +45,11 @@ repositories {
     mavenCentral()
     // Iron's Spells 'n Spellbooks (API estable, solo para compilar)
     maven { name = "Iron's Maven - Release"; url = "https://code.redspace.io/releases" }
+    // Epic Fight (solo para compilar el puente compat/epicfight)
+    maven {
+        name = "Modrinth"; url = "https://api.modrinth.com/maven"
+        content { includeGroup "maven.modrinth" }
+    }
 }
 
 dependencies {
@@ -52,6 +57,7 @@ dependencies {
 
     // Dependencias opcionales: el mod funciona sin ellas, solo se compila contra ellas.
     compileOnly fg.deobf("io.redspace:irons_spellbooks:${irons_spells_version}:api")
+    compileOnly fg.deobf("maven.modrinth:epic-fight:${epicfight_version}")
 
     // Las pruebas unitarias solo usan core/ (lógica pura) y Gson.
     testImplementation 'junit:junit:4.13.2'

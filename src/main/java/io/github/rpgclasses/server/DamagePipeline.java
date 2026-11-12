@@ -210,6 +210,11 @@ public final class DamagePipeline {
             damage *= 1 + treacherous;
             log.append(String.format(Locale.ROOT, " | traición x%.2f", 1 + treacherous));
         }
+        double counter = RoguePerks.takeDodgeCounter(attacker);
+        if (counter != 0) {
+            damage *= 1 + counter;
+            log.append(String.format(Locale.ROOT, " | contraataque x%.2f", 1 + counter));
+        }
         double condemn = PaladinPerks.condemnBonus(attacker, target);
         if (condemn != 0) {
             damage *= 1 + condemn;

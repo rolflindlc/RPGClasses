@@ -24,7 +24,7 @@ RACES = {
     ("autodidact", "minecraft:writable_book", True, [mech("flexible_respec")])]),
  "orc": ("minecraft:iron_axe", [
     attr((R("scale"), .10, "add"), (MC + "max_health", .10, "multiply_base")),
-    mech("last_stand", invulnerable_seconds=2), mech("hunger", exhaustion=.25)], [
+    mech("last_stand", invulnerable_seconds=1), mech("hunger", exhaustion=.25)], [
     ("stoneskin", "minecraft:stone", True, [mech("thick_skin", flat_reduction=V(1, 1.25, 1.5, 2))]),
     ("devourer", "minecraft:cooked_beef", True, [
         mech("iron_stomach"), mech("devour", 1, food=2, saturation=1, icd_seconds=1),

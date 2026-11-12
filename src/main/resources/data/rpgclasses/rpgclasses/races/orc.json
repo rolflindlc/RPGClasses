@@ -32,7 +32,7 @@
     {
       "type": "rpgclasses:mechanic",
       "id": "rpgclasses:race_last_stand",
-      "invulnerable_seconds": 2
+      "invulnerable_seconds": 1
     },
     {
       "type": "rpgclasses:mechanic",

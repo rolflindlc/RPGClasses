@@ -80,6 +80,7 @@ public class RpgClasses {
         MinecraftForge.EVENT_BUS.register(MechanicService.listener());
         MinecraftForge.EVENT_BUS.register(new EffectRules());
         MinecraftForge.EVENT_BUS.register(io.github.rpgclasses.server.Allies.listener());
+        MinecraftForge.EVENT_BUS.register(new io.github.rpgclasses.content.DeathGamble());
         // Puente con Iron's: la clase solo se carga si el mod está instalado.
         if (net.minecraftforge.fml.ModList.get().isLoaded("irons_spellbooks")) {
             io.github.rpgclasses.compat.irons.IronsCompat.init();

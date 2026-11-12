@@ -149,6 +149,10 @@ public final class IronsCompat {
     @SubscribeEvent(priority = EventPriority.HIGH)
     public void onPreCast(SpellPreCastEvent event) {
         if (!(event.getEntity() instanceof ServerPlayer player)) return;
+        if (io.github.rpgclasses.content.DeathGamble.flipping(player)) { // Apuesta con la Muerte: no puede hacer nada
+            event.setCanceled(true);
+            return;
+        }
         String school = event.getSchoolType().getId().toString();
         if (StatEngine.schoolWall(player, school) >= 1.0) {
             io.github.rpgclasses.server.DebugLog.event(player, "conjuro", "bloqueado: la escuela {} está vetada para su clase", school);

@@ -274,9 +274,10 @@ public class CoreLogicTest {
 
     @Test
     public void deathGambleExpectedSurvivals() {
-        double[] p = {0.75, 0.45, 0.15};
-        double expected = p[0] + p[0] * p[1] + p[0] * p[1] * p[2];
-        assertEquals(1.14, expected, 0.005);
+        // Rev. 2.10: 75 % la primera vez y 50 % después, sin límite. E = 0,75 × (1 + E'), con E' = 0,5 × (1 + E') = 1.
+        double first = 0.75, rest = 0.5;
+        double expected = first * (1 + rest / (1 - rest));
+        assertEquals(1.5, expected, 1e-9);
     }
 
     @Test

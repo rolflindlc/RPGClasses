@@ -1,4 +1,4 @@
-# Razas: estado de implementación (fases R1 y R2a)
+# Razas: estado de implementación (fases R1 y R2)
 
 Acompaña a *Documento de Diseño: Razas* (anexo, rev. 0.5). Describe qué hay programado en el mod, cómo probarlo y qué falta. Fecha: 2026-11-12.
 
@@ -8,7 +8,10 @@ Acompaña a *Documento de Diseño: Razas* (anexo, rev. 0.5). Describe qué hay p
 
 * **Sistema:** 8 razas × 3 subrazas en el datapack (`data/rpgclasses/rpgclasses/races/*.json`), con todos los valores por Rango. Se pueden cambiar con un datapack y `/reload`.
 * **Elección:** al entrar, pantallas **Raza → Subraza → Clase**. La raza y la subraza son permanentes y sobreviven al reinicio de clase. Los jugadores que ya tenían clase eligen raza al entrar. Mientras eligen no reciben daño.
-* **Rangos 0–3:** guardados por jugador. **Los ritos aún no existen**: de momento el rango se fija con un comando de administrador.
+* **Rangos 0–3:** guardados por jugador; suben con los **ritos** (también se pueden fijar con un comando de administrador).
+* **Ritos (fase R2b):** los 72 ritos del anexo (3 por subraza, en orden). Las hazañas cuentan solas; las ofrendas y construcciones se entregan en el **Altar de Raza** (clic derecho), y los jefes de rito se invocan en él (**agachado + clic derecho**). `/raza ritos` muestra el rito en curso.
+* **Altar de Raza:** receta `vela · libro · vela / oro · diamante · oro / 3 ladrillos de piedra`. Aparece en la pestaña de bloques funcionales.
+* **Jefes de rito:** uno al azar del tag `rpgclasses:rite_bosses` (jefes medianos de Cataclysm y Mowzie's si están instalados); si no hay ninguno, un devastador o un evocador con el doble de vida. Solo cuentan para quien los invoca, que debe hacerles al menos el 25 % del daño. Desaparecen si su dueño muere, se desconecta, se aleja más de 64 bloques durante 30 s o pasan 10 minutos; 1 minuto de espera entre invocaciones.
 * **Topes y suelos:** la vida y la velocidad raciales suman con las de clase (tope +100 %); suelos de −50 % de vida (10 HP) y −25 % de velocidad.
 * **Tamaño** (Orco +10 %, Enano −25 %, Goblin −50 %): implementación propia, sin librería. Cambia modelo, hitbox y altura de ojos.
 * **Supervivencia:** habilidades de clase → Última Resistencia del Orco → Tótem.
@@ -39,7 +42,7 @@ Ids de raza: `rpgclasses:human`, `orc`, `dwarf`, `elf`, `goblin`, `triton`, `inf
 | **Infernal** | Inmune al fuego, conjuros raciales (con Iron's), golems hostiles, aldeanos +50 % | Nativo (`native`, V en R3), Fundidor (`smelter`, V en R3), Pirómano (`pyromaniac`, con Iron's) | — |
 | **No-muerto** | Sol, respiración, hambre fija, regeneración con corte, sin curación de pociones ni conjuros | Vampiro (`vampire`), Esqueleto (`skeleton`), Espectro (`specter`, V desde R1) | — |
 
-**Fase R2a (hecha):** las **24 subrazas** están programadas y se pueden elegir, con todos sus rasgos. Faltan solo los ritos.
+**Fase R2 (hecha):** las **24 subrazas** con todos sus rasgos y sus **72 ritos**.
 
 ## 2. Decisiones que he tomado (pendientes de tu confirmación)
 
@@ -64,27 +67,43 @@ Ids de raza: `rpgclasses:human`, `orc`, `dwarf`, `elf`, `goblin`, `triton`, `inf
 * **Moldeador:** las 2 cargas de Ola tienen enfriamientos independientes.
 * **Nativo:** 25 % de que un trueque con un piglin salga doble (cuenta el Nativo a 10 bloques o menos del piglin).
 * **Fundidor:** +50 % de velocidad de cocción en hornos, altos hornos y ahumadores a 8 bloques, sin gastar más combustible; dos fundidores no lo duplican.
+* **Ritos, interpretaciones:** "enemigo" = mob hostil, jefe de rito o jugador enemigo; "bajo tierra" = sin cielo encima; luz medida en el enemigo; "sobre lava" = en lava o encima de ella; el arma "fabricada/encantada por ti" va marcada en el objeto (solo desde que eres Herrero o Arcano). Muro Armadura = llevar 3+ piezas; muro Escudos = 10 bloqueos en los últimos 30 s (o en el combate contra el jefe). "Mapa completamente explorado" = 90 % pintado. "Equipo de mob" (Ladrón 3) = equipo robado o soltado por mobs que mataste siendo Ladrón (Manos Vacías llega en el Rango 3, después de este rito). Las 16 TNT del Demoledor deben fabricarse mientras haces ese rito. Abisal 3: también vale matar a cualquier guardián ancestral.
 * **Pirómano:** solo los conjuros raciales (ranura racial de la rueda). Los charcos de llamas y de lava son **zonas de efecto** (prenden a los enemigos; la lava además da Lentitud II, menos a jefes), **sin colocar bloques** de fuego ni de lava para no quemar construcciones.
 
-## 3. Qué falta (fase R2)
+## 3. Qué falta
 
-1. **Ritos y Altar de Raza** (24 líneas de ritos, jefes de rito, ofrendas). Es el bloque más grande.
-2. Tamaño con **Epic Fight**: el modelo de Epic Fight puede no escalarse **[MEDIR]**.
+1. Tamaño con **Epic Fight**: el modelo de Epic Fight puede no escalarse **[MEDIR]**.
+2. Calibrar cantidades de ritos y valores **[MEDIR]**.
 3. Integrar el anexo en el documento v2 y actualizar el documento de arquitectura.
 
-## 4. Qué probar primero
+## 4. Qué probar
 
-Nada de esto se ha probado en el juego: compila y pasa las pruebas, pero es la primera vez que corre.
+Nada de esto se ha probado en el juego. Perfil: Forge 1.20.1 (47.4.x) + Iron's Spells 3.16.3 + Epic Fight 20.15.x + el jar del último run verde; Cataclysm o Mowzie's opcionales (jefes de rito). Varias pruebas necesitan un segundo jugador (LAN). Si algo falla: `/clases debug volcar`, `logs/rpgclasses-debug.log` y, si hay, el crash-report.
 
-1. Entrar con un mundo nuevo: pantallas Raza → Subraza → Clase. Entrar con un personaje que ya tenía clase.
-2. Goblin y Enano: hitbox, cámara, huecos de 1 bloque. Con Epic Fight instalado, ver si el modelo se escala.
-3. Elfo: atravesar copas de árboles, subir y bajar, y que el servidor no expulse por "volar".
-4. No-muerto: sol, hambre fija, regeneración y que una poción de curación no cure.
-5. Humano: elegir muro tras la clase y comprobar el muro con `/clases debug stats`.
-6. Subir el rango con `/clases raza rango` y probar las teclas V y B.
-7. Pícaro en PvP: el Sigilo ya no se corta al acercarse a otro jugador.
-8. **Aliados** (dos jugadores, tecla J o `/aliados`): sin marcar, las áreas, trampas y conjuros de uno dañan al otro; tras marcar, no. Estandarte, Baluarte Sanador, curas de Iron's y Voz del Caudillo solo alcanzan a aliados. Las mascotas de un aliado no te atacan. La Nube de Humo solo oculta al Elfo y a sus aliados.
-9. **Apuesta con la Muerte** (Bárbaro Indestructible, `/xp` hasta la subclase): moneda girando sobre la cabeza, inmóvil e inmortal mientras gira, resultado en grande; con el anj, 1 s inmortal. En primera persona, la moneda sale arriba en la pantalla.
-10. **Fase R2a:** Herrero (fabricar y reparar: durabilidad en la descripción; yunque a mitad), Demoledor (TNT y Túnel con `/clases raza rango`), Jinete de Lobo (montar, saltar, mordisco, vida), Pirómano (con Iron's: atravesar, charcos), Fundidor (hornos), Nativo (trueques), Pescador (picos) y Elfo Arcano (experiencia).
+**A. Arranque.** El juego abre y entra al mundo sin errores de Mixin en el log (hay 13 mixins). Servidor y cliente con el mismo jar (protocolo de red 9).
 
-Si algo falla: `/clases debug volcar` (ahora incluye raza, subraza y rango) y `logs/rpgclasses-debug.log`.
+**B. Elección.** Mundo nuevo: Raza → Subraza → Clase. Personaje que ya tenía clase: le pide la raza. Las 24 subrazas se pueden elegir.
+
+**C. Razas (tronco).** Tamaño de Goblin, Enano y Orco (hitbox, cámara, huecos de 1 bloque, con y sin Epic Fight). Elfo en copas de árbol (atravesar, subir, bajar, sin expulsión por "volar"). No-muerto: sol, hambre fija, regeneración que se corta, poción de curación que no cura. Humano: elegir muro y verlo en `/clases debug stats`. Orco: Última Resistencia con 1 s de inmortalidad. Infernal: conjuros raciales en la rueda de Iron's.
+
+**D. Subrazas** (subir rango con `/clases raza rango <jugador> <0-3>`; habilidades con V, B y agachado + V). Las de la fase R1 y además:
+1. Herrero: fabricar y reparar (durabilidad en la descripción), yunque a mitad, Irrompibilidad +1 en Rango 3.
+2. Demoledor: TNT propia (radio mayor, sin daño), Vetas (Rango 1), Túnel agachado (Rango 3).
+3. Elfo Arcano: experiencia devuelta al encantar en la mesa, yunque más barato, Fusión Arcana (Rango 3).
+4. Jinete de Lobo: montar (clic derecho con mano vacía), moverse, saltar, bajarse agachado; vida extra (R1), mordisco (R2), regeneración (R3). Probar también con Epic Fight.
+5. Pescador: picos más rápidos. Moldeador: 2 cargas de Ola en Rango 3.
+6. Nativo: trueques dobles. Fundidor: hornos más rápidos cerca.
+7. Pirómano (con Iron's): Disparo de fuego racial que atraviesa; charco de llamas (R2) y de lava (R3).
+
+**E. Ritos.**
+1. Fabricar el Altar de Raza; clic derecho muestra el rito; `/raza ritos` también.
+2. Una hazaña de cada tipo: derrotas (p. ej. Orco Pétreo: golpes + enemigos), variedad (Autodidacta), estilos (Polivalente), robos (Ladrón), trueques (Nativo). La barra de acción muestra el progreso.
+3. Una ofrenda (consume solo si está todo) y una construcción (estanterías del Autodidacta o campamento del Caudillo).
+4. Un jefe de rito: invocar agachado, que solo cuente para ti, que falle si no cumples la condición, que desaparezca si mueres o te alejas, y la espera de 1 minuto.
+5. Completar un rito: sube el rango, se aplican los rasgos nuevos y el progreso se conserva al salir y entrar.
+
+**F. Aliados** (dos jugadores, tecla J o `/aliados`): sin marcar, las áreas, trampas y conjuros de uno dañan al otro; tras marcar, no. Estandarte, Baluarte Sanador, curas de Iron's y Voz del Caudillo solo alcanzan a aliados. Las mascotas de un aliado no te atacan. La Nube de Humo solo oculta al Elfo y a sus aliados.
+
+**G. Apuesta con la Muerte** (Bárbaro Indestructible): moneda girando sobre la cabeza (en primera persona, arriba en la pantalla), inmóvil e inmortal mientras gira, cara ganadora en grande; anj = 1 s inmortal; calavera = muere (o le salva el Orco o el Tótem).
+
+**H. Clases sin probar de antes.** Cambios 2.7f y 2.7g, Estandarte, subclases del Pícaro, Ranger y Monje, compatibilidad con Epic Fight, Sigilo del Pícaro en PvP (ya no se revela por cercanía).

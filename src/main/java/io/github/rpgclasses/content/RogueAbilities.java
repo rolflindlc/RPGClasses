@@ -99,10 +99,8 @@ public final class RogueAbilities {
         double drain = AbilityService.number(p, "drain_per_second", 0.10) / 20.0 * RoguePerks.stealthDrainFactor(player);
         double regen = AbilityService.number(p, "regen_per_second", 0.08) / 20.0;
         double lockoutUntil = AbilityService.number(p, "lockout_until", 0.5);
-        double revealDistance = AbilityService.number(p, "pvp_reveal_distance", 2.5);
 
-        boolean wants = player.isShiftKeyDown() && !st.locked && st.bar > 0 && !player.isSpectator() && player.isAlive()
-                && !playerNearby(player, revealDistance);
+        boolean wants = player.isShiftKeyDown() && !st.locked && st.bar > 0 && !player.isSpectator() && player.isAlive();
         if (wants) {
             if (!st.active) beginStealth(player, st);
             st.bar -= drain;
@@ -122,15 +120,6 @@ public final class RogueAbilities {
             if (st.locked && st.bar >= lockoutUntil) st.locked = false;
         }
         publish(player, st, false);
-    }
-
-    private static boolean playerNearby(ServerPlayer player, double distance) {
-        if (!STATES.getOrDefault(player.getUUID(), new State()).active && !player.isShiftKeyDown()) return false;
-        AABB box = player.getBoundingBox().inflate(distance);
-        for (ServerPlayer other : player.serverLevel().getEntitiesOfClass(ServerPlayer.class, box)) {
-            if (other != player && !other.isSpectator() && other.distanceTo(player) <= distance) return true;
-        }
-        return false;
     }
 
     private static void beginStealth(ServerPlayer player, State st) {

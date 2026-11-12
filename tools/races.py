@@ -37,22 +37,28 @@ RACES = {
     ("deep", "minecraft:deepslate", True, [
         mech("cave_eyes"),
         mech("stone_sense", 1, radius=V(8, 8, 12, 16), duration_seconds=V(5, 5, 8, 8), cooldown_seconds=V(30, 30, 30, 20))]),
-    ("smith", "minecraft:anvil", False, []),
-    ("demolisher", "minecraft:tnt", True, [mech("blast_proof"), mech("vein_miner", 1, max_blocks=V(8, 8, 16, 16))])]),
+    ("smith", "minecraft:anvil", True, [
+        mech("forged", durability=V(.20, .20, .40, .40), unbreaking=V(0, 0, 0, 1)),
+        mech("anvil_discount", 1, discount=.50)]),
+    ("demolisher", "minecraft:tnt", True, [
+        mech("blast_proof", tnt_radius=.25), mech("vein_miner", 1, max_blocks=V(8, 8, 16, 16)),
+        mech("tunnel", 3, size=3, exhaustion_per_block=.1)])]),
  "elf": ("minecraft:oak_leaves", [
     attr((R("leaf_walker"), 1, "add")), mech("leaf_walker"), mech("no_meat")], [
     ("dark", "minecraft:campfire", True, [
         mech("dark_vision"),
         mech("smoke_cloud", 1, radius=V(8, 8, 10, 16), duration_seconds=V(6, 6, 8, 8), cooldown_seconds=22, slowness=V(0, 0, 0, 1))]),
     ("arcane", "minecraft:enchanting_table", True, [
-        mech("arcane", enchant_bonus=V(.10, .20, .30, .30), fusion=V(0, 0, 0, 1), fusion_cost_levels=30)]),
+        mech("arcane", enchant_bonus=V(.10, .20, .30, .30), xp_discount=V(.10, .20, .30, .30), fusion=V(0, 0, 0, 1), fusion_cost_levels=30)]),
     ("sylvan", "minecraft:wheat", True, [
         mech("harvest", bonus=V(.25, .25, .25, .50)), mech("plant_food", 1, bonus=.25),
         mech("green_touch", 2, cooldown_seconds=V(5, 5, 5, 2))])]),
  "goblin": ("minecraft:gold_nugget", [
     attr((R("scale"), -.50, "add"), (MC + "max_health", -.25, "multiply_base"), (MC + "luck", 1, "add")),
     mech("looting", level=V(1, 1, 2, 2))], [
-    ("wolf_rider", "minecraft:bone", False, []),
+    ("wolf_rider", "minecraft:bone", True, [
+        mech("wolf_mount", speed_factor=1.0), mech("wolf_vigor", 1, health=.25),
+        mech("wolf_bite", 2, cooldown_seconds=1, reach=3.5), mech("wolf_regen", 3, amplifier=1)]),
     ("thief", "minecraft:bundle", True, [
         mech("long_hand", mob_chance=V(.10, .15, .20, .25), player_chance=V(.05, .07, .10, .12), steals_per_mob=V(1, 1, 2, 2),
              equip_share_mob=V(0, 0, 0, .20), equip_share_player=V(0, 0, 0, .10), player_cooldown_seconds=30)]),
@@ -63,10 +69,10 @@ RACES = {
     attr(("forge:swim_speed", .50, "multiply_base")),
     mech("water_breathing"), mech("aquatic", fire_damage=.30)], [
     ("fisher", "minecraft:fishing_rod", True, [
-        mech("fisher", luck=1, extra_catch=V(0, .25, .25, .50), treasure_chance=V(0, 0, .05, .05), xp_bonus=V(0, 0, 0, 1))]),
+        mech("fisher", luck=1, lure_speed=.40, extra_catch=V(0, .25, .25, .50), treasure_chance=V(0, 0, .05, .05), xp_bonus=V(0, 0, 0, 1))]),
     ("shaper", "minecraft:water_bucket", True, [
         mech("tame_water", duration_seconds=30, cooldown_seconds=5),
-        mech("wave", 1, cooldown_seconds=V(15, 15, 15, 10), strength=1.5, range=6),
+        mech("wave", 1, cooldown_seconds=V(15, 15, 15, 10), charges=V(1, 1, 1, 2), strength=1.5, range=6),
         mech("water_wall", 2, duration_seconds=8, cooldown_seconds=20)]),
     ("abyssal", "minecraft:prismarine_shard", True, [
         mech("sea_friend"), mech("abyss_immunity", 1), mech("camouflage", 2), mech("escort", 3, radius=16)])]),
@@ -75,10 +81,13 @@ RACES = {
     mech("racial_spells", fire_bolt=V(1, 2, 2, 2), fireball=V(0, 0, 1, 1), magma_bomb=V(0, 0, 0, 1)),
     mech("outcast", price_increase=.50, golem_radius=16)], [
     ("native", "minecraft:gold_ingot", True, [
-        mech("nether_native"), mech("wither_immune", 1), mech("nether_compass", 3, cooldown_seconds=600)]),
+        mech("nether_native"), mech("wither_immune", 1), mech("barter", 2, extra_chance=.25), mech("nether_compass", 3, cooldown_seconds=600)]),
     ("smelter", "minecraft:blast_furnace", True, [
-        mech("lava_walk"), mech("auto_smelt", 2), mech("portable_furnace", 3, max_items=16, cooldown_seconds=20)]),
-    ("pyromaniac", "minecraft:fire_charge", False, [])]),
+        mech("lava_walk"), mech("forge_heat", 1, radius=8, furnace_speed=.50), mech("auto_smelt", 2), mech("portable_furnace", 3, max_items=16, cooldown_seconds=20)]),
+    ("pyromaniac", "minecraft:fire_charge", True, [
+        mech("piercing_fire", pierce=V(1, 2, 2, 2)),
+        mech("flame_pool", 2, duration_seconds=4, radius=2.5, burn_seconds=3),
+        mech("lava_pool", 3, duration_seconds=5, radius=2.5, burn_seconds=3, slowness=2)])]),
  "undead": ("minecraft:skeleton_skull", [
     mech("water_breathing"), mech("sunburn", damage_per_second=1), mech("fixed_hunger", food=10),
     mech("dead_regen", heal_per_second=1, pause_seconds=3), mech("lifeless")], [
@@ -110,20 +119,20 @@ SUBRACE_TEXT = {  # (raza, subraza): (nombre, descripción)
  ("orc", "devourer"): ("Devorador", "Comes carne y pescado crudos sin efectos negativos y sacian como cocinados. Con los rangos, matar te alimenta y te da efectos de combate."),
  ("orc", "warlord"): ("Caudillo", "Voz del Caudillo (tecla racial 1): elimina los efectos de control de ti y de los aliados cercanos."),
  ("dwarf", "deep"): ("de las Profundidades", "Ves en la oscuridad bajo tierra y eres inmune a Oscuridad. Sentido de la Piedra (tecla racial 1, Rango 1) resalta minerales y lava cercanos."),
- ("dwarf", "smith"): ("Herrero", "Tus objetos duran más y el yunque te cuesta menos."),
- ("dwarf", "demolisher"): ("Demoledor", "Tu propia TNT no te hace daño. Desde Rango 1, al romper un mineral rompes también los conectados (agachado no). El radio extra de la TNT y el Túnel de Rango 3 aún están en desarrollo."),
- ("elf", "dark"): ("Oscuro", "Ves en cualquier oscuridad. Nube de Humo (tecla racial 1, Rango 1): todo lo que hay dentro es invisible y los mobs de fuera pierden de vista a quien está dentro. No se revela por cercanía."),
- ("elf", "arcane"): ("Arcano", "La mesa de encantamientos cuenta como si su nivel fuera mayor. En Rango 3, fusiona en el yunque dos encantamientos iguales de nivel máximo para superar ese máximo en 1."),
+ ("dwarf", "smith"): ("Herrero", "Lo que fabricas o reparas dura más (+20 %, +40 % en Rango 2). Desde Rango 1 el yunque te cuesta la mitad de niveles. En Rango 3 lo que fabricas sale con Irrompibilidad +1 (máximo III)."),
+ ("dwarf", "demolisher"): ("Demoledor", "Tu propia TNT no te hace daño y explota con un 25 % más de radio. Desde Rango 1, al romper un mineral rompes también los conectados (agachado no). En Rango 3, agachado, picas piedra en túnel de 3×3 (gasta más hambre)."),
+ ("elf", "dark"): ("Oscuro", "Ves en cualquier oscuridad. Nube de Humo (tecla racial 1, Rango 1): tú y tus aliados dentro sois invisibles y los mobs de fuera os pierden de vista. No se revela por cercanía."),
+ ("elf", "arcane"): ("Arcano", "La mesa de encantamientos cuenta como si su nivel fuera mayor y encantar (mesa o yunque) te cuesta menos experiencia. En Rango 3, fusiona en el yunque dos encantamientos iguales de nivel máximo para superar ese máximo en 1."),
  ("elf", "sylvan"): ("Silvano", "Tus cultivos dan más cosecha; con los rangos la comida vegetal sacia más y puedes hacer crecer cultivos con la mano vacía."),
- ("goblin", "wolf_rider"): ("Jinete de Lobo", "Monta a tus lobos domesticados."),
+ ("goblin", "wolf_rider"): ("Jinete de Lobo", "Clic derecho con la mano vacía en tu lobo para montarlo (agachado: sentarlo, como siempre). Con los rangos: tus lobos tienen más vida, el lobo montado muerde a lo que golpeas y regenera mientras lo montas."),
  ("goblin", "thief"): ("Ladrón", "Mano Larga: al golpear cuerpo a cuerpo puedes robar un objeto del botín de un mob (sin matarlo) o del inventario de un jugador (nunca de la barra rápida ni del kit)."),
  ("goblin", "trapper"): ("Artificiero", "Cepo (tecla racial 1): colocas una trampa que inmoviliza al primer enemigo que la pise."),
- ("triton", "fisher"): ("Pescador", "Suerte del Mar racial al pescar; con los rangos, capturas extra, más tesoros y más experiencia."),
- ("triton", "shaper"): ("Moldeador", "Agua Dócil (tecla racial 1): fuente de agua temporal. Ola (tecla racial 2, Rango 1): empuja a los enemigos. Muro de Agua (agachado + tecla racial 1, Rango 2)."),
+ ("triton", "fisher"): ("Pescador", "Los peces pican antes y tienes Suerte del Mar racial al pescar; con los rangos, capturas extra, más tesoros y más experiencia."),
+ ("triton", "shaper"): ("Moldeador", "Agua Dócil (tecla racial 1): fuente de agua temporal. Ola (tecla racial 2, Rango 1): empuja a los enemigos; 2 cargas en Rango 3. Muro de Agua (agachado + tecla racial 1, Rango 2)."),
  ("triton", "abyssal"): ("Abisal", "Ahogados y guardianes son neutrales contigo salvo que los ataques. Con los rangos: inmunidades bajo el agua, camuflaje y escolta de guardianes."),
- ("infernal", "native"): ("Nativo", "Piglins, brutos y hoglins son neutrales contigo salvo que los ataques. Con los rangos: inmune a Wither y Brújula Infernal (tecla racial 1, Rango 3)."),
- ("infernal", "smelter"): ("Fundidor", "Caminas sobre la lava. Con los rangos, los minerales que picas salen fundidos y fundes al instante lo que llevas en la mano (tecla racial 1, Rango 3)."),
- ("infernal", "pyromaniac"): ("Pirómano", "Tus conjuros raciales atraviesan enemigos y dejan fuego."),
+ ("infernal", "native"): ("Nativo", "Piglins, brutos y hoglins son neutrales contigo salvo que los ataques. Con los rangos: inmune a Wither, trueques con piglins mejores y Brújula Infernal (tecla racial 1, Rango 3)."),
+ ("infernal", "smelter"): ("Fundidor", "Caminas sobre la lava. Con los rangos, los hornos cercanos van más rápido, los minerales que picas salen fundidos y fundes al instante lo que llevas en la mano (tecla racial 1, Rango 3)."),
+ ("infernal", "pyromaniac"): ("Pirómano", "Tu Disparo de fuego racial atraviesa enemigos. Con los rangos, tu Bola de fuego racial deja un charco de llamas y tu Bomba de magma, lava que ralentiza. Requiere Iron's Spells."),
  ("undead", "vampire"): ("Vampiro", "Sed: matar te cura y, con los rangos, robas vida con el daño que haces (con un tope por segundo)."),
  ("undead", "skeleton"): ("Esqueleto", "Los esqueletos son neutrales contigo salvo que los ataques y recibes menos daño de proyectiles. En Rango 3 tu regeneración se corta menos tiempo."),
  ("undead", "specter"): ("Espectro", "No recibes daño de caída y caes despacio (agacharte lo evita). Forma Etérea (tecla racial 1, Rango 1): unos segundos sin poder recibir daño ni atacar; no protege del sol."),
@@ -186,6 +195,18 @@ MECHANIC_TEXT = {  # id sin "race_": (nombre, descripción corta)
  "bones": ("Huesos", "Esqueletos neutrales y menos daño de proyectiles."),
  "weightless": ("Ingrávido", "Sin daño de caída y caída lenta."),
  "ethereal": ("Forma Etérea", "No puedes recibir daño ni atacar."),
+ "forged": ("Forja Enana", "Lo que fabricas o reparas dura más; en Rango 3 lo que fabricas sale con Irrompibilidad extra."),
+ "anvil_discount": ("Mano de Yunque", "El yunque te cuesta menos niveles."),
+ "tunnel": ("Túnel", "Agachado, picas piedra en un túnel de 3×3 con más gasto de hambre."),
+ "wolf_mount": ("Jinete", "Montas a tus lobos domesticados (clic derecho con la mano vacía)."),
+ "wolf_vigor": ("Lobos Fuertes", "Tus lobos tienen más vida."),
+ "wolf_bite": ("Mordisco", "El lobo que montas muerde a lo que golpeas."),
+ "wolf_regen": ("Vínculo", "El lobo que montas tiene Regeneración."),
+ "barter": ("Trato Infernal", "Probabilidad de que un trueque con piglins dé el doble."),
+ "forge_heat": ("Calor de Forja", "Los hornos cercanos funcionan más rápido."),
+ "piercing_fire": ("Fuego Penetrante", "Tu Disparo de fuego racial atraviesa enemigos."),
+ "flame_pool": ("Charco de Llamas", "Tu Bola de fuego racial deja llamas que queman a los enemigos."),
+ "lava_pool": ("Charco de Lava", "Tu Bomba de magma racial deja lava que quema y ralentiza a los enemigos."),
 }
 
 RACE_PARAMS = {
@@ -204,6 +225,11 @@ RACE_PARAMS = {
  "max_items": "Objetos por uso", "pause_seconds": "Corte al recibir daño|s", "kill_heal": "Curación por muerte (HP)",
  "lifesteal": "Robo de vida|%", "cap_per_second": "Tope de curación por segundo (HP)", "arrow_reduction": "Menos daño de proyectiles|%",
  "regen_pause_seconds": "Corte de la regeneración|s", "max_blocks": "Bloques conectados",
+ "durability": "Durabilidad extra|%", "unbreaking": "Irrompibilidad extra", "discount": "Descuento|%", "tnt_radius": "Radio de tu TNT|+%",
+ "size": "Túnel (lado)", "exhaustion_per_block": "Hambre por bloque extra", "xp_discount": "Experiencia de encantar|−%",
+ "speed_factor": "Velocidad del lobo x", "reach": "Alcance (bloques)", "amplifier": "Nivel del efecto (0 = I)",
+ "lure_speed": "Picos más rápidos|%", "extra_chance": "Probabilidad de doble|%",
+ "furnace_speed": "Velocidad de los hornos|+%", "pierce": "Enemigos atravesados", "burn_seconds": "Quemadura|s",
 }
 
 RACE_UI = {
@@ -245,6 +271,7 @@ RACE_UI = {
  "message.rpgclasses.compass_nothing": "No hay fortaleza ni bastión cerca",
  "message.rpgclasses.compass_found": "Brújula Infernal: estructura en X %s, Z %s (a %s bloques)",
  "message.rpgclasses.furnace_no_fuel": "Horno Portátil: no tienes combustible suficiente",
+ "tooltip.rpgclasses.forged": "Forja Enana: +%s%% de durabilidad",
  "death.attack.rpgclasses.sunlight": "%1$s se consumió bajo el sol",
 }
 

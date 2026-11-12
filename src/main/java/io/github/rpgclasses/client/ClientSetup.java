@@ -60,6 +60,7 @@ public final class ClientSetup {
         modBus.addListener((RegisterGuiOverlaysEvent event) -> event.registerAboveAll("abilities", AbilityHud::render));
         modBus.addListener((RegisterGuiOverlaysEvent event) -> event.registerAboveAll("coin_flip", CoinFlipFx::renderHud));
         MinecraftForge.EVENT_BUS.addListener(CoinFlipFx::onRenderPlayer);
+        MinecraftForge.EVENT_BUS.addListener(ClientSetup::onTooltip);
         MinecraftForge.EVENT_BUS.addListener(CoinFlipFx::onMovementInput);
         MinecraftForge.EVENT_BUS.addListener(CoinFlipFx::onInteractionKey);
         MinecraftForge.EVENT_BUS.addListener(CoinFlipFx::onClientTick);
@@ -79,6 +80,15 @@ public final class ClientSetup {
     private static void onRenderPlayer(net.minecraftforge.client.event.RenderPlayerEvent.Pre event) {
         var player = event.getEntity();
         if (player.isInvisible() && player.isCrouching() && !player.isSpectator()) event.setCanceled(true);
+    }
+
+    /** Enano Herrero: los objetos con Forja Enana lo indican en su descripción. */
+    private static void onTooltip(net.minecraftforge.event.entity.player.ItemTooltipEvent event) {
+        var tag = event.getItemStack().getTag();
+        if (tag == null || !tag.contains(io.github.rpgclasses.content.race.CraftTraits.FORGED_TAG)) return;
+        int pct = Math.round(tag.getFloat(io.github.rpgclasses.content.race.CraftTraits.FORGED_TAG) * 100);
+        if (pct > 0) event.getToolTip().add(net.minecraft.network.chat.Component.translatable("tooltip.rpgclasses.forged", pct)
+                .withStyle(net.minecraft.ChatFormatting.GOLD));
     }
 
     private static boolean scaledRender;

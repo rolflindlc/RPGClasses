@@ -58,8 +58,33 @@
       "display": {
         "icon": "minecraft:bone"
       },
-      "available": false,
-      "effects": []
+      "available": true,
+      "effects": [
+        {
+          "type": "rpgclasses:mechanic",
+          "id": "rpgclasses:race_wolf_mount",
+          "speed_factor": 1.0
+        },
+        {
+          "type": "rpgclasses:mechanic",
+          "id": "rpgclasses:race_wolf_vigor",
+          "min_rank": 1,
+          "health": 0.25
+        },
+        {
+          "type": "rpgclasses:mechanic",
+          "id": "rpgclasses:race_wolf_bite",
+          "min_rank": 2,
+          "cooldown_seconds": 1,
+          "reach": 3.5
+        },
+        {
+          "type": "rpgclasses:mechanic",
+          "id": "rpgclasses:race_wolf_regen",
+          "min_rank": 3,
+          "amplifier": 1
+        }
+      ]
     },
     {
       "id": "thief",

@@ -95,8 +95,35 @@
       "display": {
         "icon": "minecraft:anvil"
       },
-      "available": false,
-      "effects": []
+      "available": true,
+      "effects": [
+        {
+          "type": "rpgclasses:mechanic",
+          "id": "rpgclasses:race_forged",
+          "durability": {
+            "values": [
+              0.2,
+              0.2,
+              0.4,
+              0.4
+            ]
+          },
+          "unbreaking": {
+            "values": [
+              0,
+              0,
+              0,
+              1
+            ]
+          }
+        },
+        {
+          "type": "rpgclasses:mechanic",
+          "id": "rpgclasses:race_anvil_discount",
+          "min_rank": 1,
+          "discount": 0.5
+        }
+      ]
     },
     {
       "id": "demolisher",
@@ -107,7 +134,8 @@
       "effects": [
         {
           "type": "rpgclasses:mechanic",
-          "id": "rpgclasses:race_blast_proof"
+          "id": "rpgclasses:race_blast_proof",
+          "tnt_radius": 0.25
         },
         {
           "type": "rpgclasses:mechanic",
@@ -121,6 +149,13 @@
               16
             ]
           }
+        },
+        {
+          "type": "rpgclasses:mechanic",
+          "id": "rpgclasses:race_tunnel",
+          "min_rank": 3,
+          "size": 3,
+          "exhaustion_per_block": 0.1
         }
       ]
     }

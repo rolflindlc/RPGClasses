@@ -118,7 +118,19 @@ public final class RaceAbilities {
         ActiveMechanic m = Races.find(player, entry.mechanic());
         String key = Ids.NS + ":" + entry.mechanic();
         Component name = Component.translatable(Ids.langKey("mechanic", key, "name"));
+        // Cargas (Ola del Moldeador en Rango 3): cada carga tiene su propio enfriamiento.
+        int charges = Math.max(1, (int) m.number("charges", 1));
         long remaining = AbilityService.remainingTicks(player, key);
+        for (int c = 2; c <= charges && remaining > 0; c++) {
+            String other = key + "#" + c;
+            long left = AbilityService.remainingTicks(player, other);
+            if (left <= 0) {
+                key = other;
+                remaining = 0;
+            } else {
+                remaining = Math.min(remaining, left);
+            }
+        }
         if (remaining > 0) {
             player.displayClientMessage(Component.translatable("msg.rpgclasses.ability_cooldown", name,
                     String.format(Locale.ROOT, "%.1f", remaining / 20.0)), true);

@@ -6,9 +6,18 @@
   "refmap": "rpgclasses.refmap.json",
   "mixins": [
     "AllyEntityMixin",
+    "AnvilMenuMixin",
+    "FishingHookAccessor",
+    "FurnaceAccessor",
     "InstantHealMixin",
     "IronsHealTargetMixin",
-    "LeavesCollisionMixin"
+    "ItemCraftedMixin",
+    "ItemDurabilityMixin",
+    "LeavesCollisionMixin",
+    "LivingEntityAccessor",
+    "PiglinBarterMixin",
+    "PlayerEnchantMixin",
+    "WolfRideMixin"
   ],
   "injectors": {
     "defaultRequire": 1

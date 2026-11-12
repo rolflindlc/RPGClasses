@@ -98,9 +98,11 @@ public class RaceTest {
     }
 
     @Test
-    public void unavailableSubraceCannotBeChosen() {
-        assertEquals(Result.SUBRACE_UNAVAILABLE,
-                ProgressionRules.checkChooseRace(new ProgressState(), RACES.race("rpgclasses:goblin"), "wolf_rider"));
+    public void allSubracesAvailableAndUnknownRejected() {
+        // Fase R2: las 24 subrazas están programadas y se pueden elegir.
+        for (String[] rs : new String[][]{{"dwarf", "smith"}, {"goblin", "wolf_rider"}, {"infernal", "pyromaniac"}}) {
+            assertEquals(Result.OK, ProgressionRules.checkChooseRace(new ProgressState(), RACES.race("rpgclasses:" + rs[0]), rs[1]));
+        }
         assertEquals(Result.UNKNOWN_SUBRACE,
                 ProgressionRules.checkChooseRace(new ProgressState(), RACES.race("rpgclasses:goblin"), "nope"));
     }

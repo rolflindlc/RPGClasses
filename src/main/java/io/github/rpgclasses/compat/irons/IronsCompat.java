@@ -141,6 +141,7 @@ public final class IronsCompat {
         MinecraftForge.EVENT_BUS.register(new IronsCompat());
         KitService.spellInscriber = IronsCompat::inscribe;
         MinecraftForge.EVENT_BUS.register(new RacialSpells());
+        MinecraftForge.EVENT_BUS.register(new Pyromaniac());
         RpgClasses.LOGGER.info("[rpgclasses] Iron's Spells detectado: puente activado");
     }
 

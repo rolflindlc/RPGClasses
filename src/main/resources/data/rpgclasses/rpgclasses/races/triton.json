@@ -41,6 +41,7 @@
           "type": "rpgclasses:mechanic",
           "id": "rpgclasses:race_fisher",
           "luck": 1,
+          "lure_speed": 0.4,
           "extra_catch": {
             "values": [
               0,
@@ -91,6 +92,14 @@
               15,
               15,
               10
+            ]
+          },
+          "charges": {
+            "values": [
+              1,
+              1,
+              1,
+              2
             ]
           },
           "strength": 1.5,

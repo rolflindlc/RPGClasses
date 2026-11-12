@@ -163,9 +163,10 @@ public final class RaceAbilities {
         }
         double radius = m.number("radius", 8);
         long immuneUntil = now(p) + Math.round(m.number("immunity_seconds", 0) * 20);
+        // Aliados: el Caudillo, los jugadores que tiene como aliados y las mascotas e invocaciones de todos ellos.
         List<LivingEntity> allies = p.level().getEntitiesOfClass(LivingEntity.class, p.getBoundingBox().inflate(radius),
-                e -> e.distanceToSqr(p) <= radius * radius
-                        && (e instanceof Player || (e instanceof TamableAnimal pet && pet.getOwnerUUID() != null)));
+                e -> e.isAlive() && e.distanceToSqr(p) <= radius * radius && io.github.rpgclasses.server.Allies.isAlly(p, e)
+                        && io.github.rpgclasses.server.Allies.ownerOf(e) != null);
         for (LivingEntity ally : allies) {
             for (MobEffect effect : effects) ally.removeEffect(effect);
             if (immuneUntil > now(p)) CONTROL_IMMUNE.put(ally.getUUID(), new Immunity(immuneUntil, effects));
@@ -238,18 +239,21 @@ public final class RaceAbilities {
         ServerLevel level = server.getLevel(c.dim());
         if (level == null) return;
         double r = c.radius();
-        ServerPlayer owner = server.getPlayerList().getPlayer(c.owner());
         AABB box = AABB.ofSize(c.center(), 2 * r, 2 * r, 2 * r);
-        Set<LivingEntity> inside = new HashSet<>(level.getEntitiesOfClass(LivingEntity.class, box,
-                e -> e.isAlive() && e.position().distanceToSqr(c.center()) <= r * r));
-        for (LivingEntity e : inside) {
-            // Todo lo de dentro es invisible; no se revela por cercanía a otros jugadores.
-            e.addEffect(Races.hidden(MobEffects.INVISIBILITY, 15, 0));
-            if (c.slowness() > 0 && owner != null && CombatAbilities.canHit(owner, e) && !Races.isBoss(e)) {
+        List<LivingEntity> all = level.getEntitiesOfClass(LivingEntity.class, box,
+                e -> e.isAlive() && e.position().distanceToSqr(c.center()) <= r * r);
+        // Sistema de aliados: la nube oculta al Elfo y a sus aliados (y sus mascotas); a los enemigos no.
+        Set<LivingEntity> inside = new HashSet<>();
+        for (LivingEntity e : all) {
+            if (io.github.rpgclasses.server.Allies.isAllyOf(server, c.owner(), e)) {
+                // No se revela por cercanía a otros jugadores.
+                e.addEffect(Races.hidden(MobEffects.INVISIBILITY, 15, 0));
+                inside.add(e);
+            } else if (c.slowness() > 0 && io.github.rpgclasses.server.Allies.isEnemyOf(server, c.owner(), e) && !Races.isBoss(e)) {
                 e.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 15, c.slowness() - 1, true, false, true));
             }
         }
-        // Fuera de la nube, los mobs pierden de vista a quien está dentro.
+        // Fuera de la nube, los mobs pierden de vista a los ocultos.
         for (Mob mob : level.getEntitiesOfClass(Mob.class, box.inflate(24))) {
             LivingEntity target = mob.getTarget();
             if (target != null && inside.contains(target) && !inside.contains(mob)) mob.setTarget(null);

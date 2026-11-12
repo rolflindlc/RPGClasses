@@ -77,7 +77,7 @@ public final class CombatAbilities {
         double radius = AbilityService.number(p, "radius", 20);
         int slowTicks = AbilityService.ticks(p, "slow_seconds", 3);
         for (Mob mob : player.level().getEntitiesOfClass(Mob.class, player.getBoundingBox().inflate(radius),
-                m -> m.isAlive() && !m.getType().is(TAUNT_IMMUNE) && !m.isAlliedTo(player))) {
+                m -> m.isAlive() && !m.getType().is(TAUNT_IMMUNE) && !io.github.rpgclasses.server.Allies.isAlly(player, m))) {
             mob.setTarget(player);
             mob.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, slowTicks, 0));
         }
@@ -122,14 +122,13 @@ public final class CombatAbilities {
 
     private static boolean berserkerRage(ServerPlayer player, JsonObject p) {
         player.addEffect(new MobEffectInstance(ModEffects.BERSERKER_RAGE.get(), AbilityService.ticks(p, "duration_seconds", 10), 0));
-        // Rev. 2.7b: Debilidad I a los enemigos cercanos (hostiles, o mobs y jugadores que no sean aliados).
+        // Rev. 2.7b: Debilidad I a los enemigos cercanos (hostiles, jugadores no aliados o mobs que le atacan).
         double radius = AbilityService.number(p, "weakness_radius", 6);
         int weaknessTicks = AbilityService.ticks(p, "weakness_seconds", 6);
         for (LivingEntity e : player.level().getEntitiesOfClass(LivingEntity.class, player.getBoundingBox().inflate(radius),
-                t -> t != player && t.isAlive() && !t.isAlliedTo(player) && t.distanceToSqr(player) <= radius * radius
+                t -> canHit(player, t) && t.distanceToSqr(player) <= radius * radius
                         && (t instanceof net.minecraft.world.entity.monster.Enemy || t instanceof net.minecraft.world.entity.player.Player
                             || (t instanceof Mob m && m.getTarget() == player)))) {
-            if (e instanceof ServerPlayer other && !player.canHarmPlayer(other)) continue;
             e.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, weaknessTicks, 0), player);
         }
         sound(player, SoundEvents.WOLF_GROWL);
@@ -193,9 +192,9 @@ public final class CombatAbilities {
         }
     }
 
+    /** Objetivo válido para un efecto ofensivo del jugador: enemigo según el sistema de aliados. */
     public static boolean canHit(ServerPlayer player, LivingEntity e) {
-        if (e == player || !e.isAlive() || e.isAlliedTo(player)) return false;
-        return !(e instanceof ServerPlayer other) || player.canHarmPlayer(other);
+        return io.github.rpgclasses.server.Allies.isEnemy(player, e);
     }
 
     public static DamageSource chargeDamage(ServerPlayer player) {

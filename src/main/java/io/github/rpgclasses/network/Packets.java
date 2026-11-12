@@ -196,4 +196,56 @@ public final class Packets {
             if (player != null) io.github.rpgclasses.content.RangerSubclasses.answerBond(player, entityId, accept);
         }
     }
+
+    /** Servidor -> cliente: aliados del jugador y quién le tiene como aliado. */
+    public record SyncAllies(java.util.List<Entry> allies, java.util.List<Entry> alliedBy) {
+        public record Entry(java.util.UUID id, String name) {}
+
+        private static void write(FriendlyByteBuf buf, java.util.List<Entry> list) {
+            buf.writeVarInt(list.size());
+            for (Entry e : list) {
+                buf.writeUUID(e.id());
+                buf.writeUtf(e.name(), 64);
+            }
+        }
+
+        private static java.util.List<Entry> read(FriendlyByteBuf buf) {
+            int n = Math.min(buf.readVarInt(), 4096);
+            java.util.List<Entry> out = new java.util.ArrayList<>(n);
+            for (int i = 0; i < n; i++) out.add(new Entry(buf.readUUID(), buf.readUtf(64)));
+            return out;
+        }
+
+        public void encode(FriendlyByteBuf buf) {
+            write(buf, allies);
+            write(buf, alliedBy);
+        }
+
+        public static SyncAllies decode(FriendlyByteBuf buf) {
+            return new SyncAllies(read(buf), read(buf));
+        }
+
+        public void handle(Supplier<NetworkEvent.Context> ctx) {
+            DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> ClientHandlers.onSyncAllies(this));
+        }
+    }
+
+    /** Cliente -> servidor: marcar o desmarcar a un jugador como aliado (pantalla de aliados). */
+    public record SetAlly(java.util.UUID target, boolean ally) {
+        public void encode(FriendlyByteBuf buf) {
+            buf.writeUUID(target);
+            buf.writeBoolean(ally);
+        }
+
+        public static SetAlly decode(FriendlyByteBuf buf) {
+            return new SetAlly(buf.readUUID(), buf.readBoolean());
+        }
+
+        public void handle(Supplier<NetworkEvent.Context> ctx) {
+            ServerPlayer player = ctx.get().getSender();
+            if (player == null) return;
+            io.github.rpgclasses.server.Allies.set(player, target,
+                    io.github.rpgclasses.server.Allies.nameOf(player.server, target), ally);
+        }
+    }
 }

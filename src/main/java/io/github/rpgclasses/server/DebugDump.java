@@ -51,6 +51,11 @@ public final class DebugDump {
             out.add("raza " + data.state.raceId + " | subraza " + data.state.subraceId + " | rango " + data.state.raceRank
                     + " | muros de Adaptable " + data.state.humanWalls);
             out.add("ramas " + data.state.branchPoints + " | perks " + data.state.perks);
+            java.util.List<String> allyNames = new java.util.ArrayList<>();
+            for (java.util.UUID id : Allies.book(player.server).alliesOf(player.getUUID())) allyNames.add(Allies.nameOf(player.server, id));
+            java.util.List<String> byNames = new java.util.ArrayList<>();
+            for (java.util.UUID id : Allies.book(player.server).alliedBy(player.getUUID())) byNames.add(Allies.nameOf(player.server, id));
+            out.add("aliados " + allyNames + " | le tienen como aliado " + byNames);
             out.add("xp pagada base " + data.state.xpPaidBase + ", subclase " + data.state.xpPaidSubclass + " | kit entregado "
                     + data.state.kitGranted + " | xp actual " + ProgressionService.currentXp(player));
             out.add("contadores " + data.counters + " | textos " + data.texts);

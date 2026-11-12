@@ -93,8 +93,7 @@ public final class PaladinPerks {
         DamageSource source = new DamageSource(attacker.level().registryAccess().registryOrThrow(Registries.DAMAGE_TYPE)
                 .getHolderOrThrow(HOLY_DAMAGE), attacker);
         for (LivingEntity e : attacker.level().getEntitiesOfClass(LivingEntity.class, target.getBoundingBox().inflate(radius),
-                e -> e != target && e != attacker && e.isAlive() && !e.isAlliedTo(attacker) && e.distanceToSqr(target) <= radius * radius)) {
-            if (e instanceof ServerPlayer other && !attacker.canHarmPlayer(other)) continue;
+                e -> e != target && CombatAbilities.canHit(attacker, e) && e.distanceToSqr(target) <= radius * radius)) {
             e.hurt(source, holyDamage);
         }
         if (attacker.level() instanceof ServerLevel level) {
@@ -143,8 +142,7 @@ public final class PaladinPerks {
         DamageSource source = new DamageSource(attacker.level().registryAccess().registryOrThrow(Registries.DAMAGE_TYPE)
                 .getHolderOrThrow(SHOCKWAVE_DAMAGE), attacker);
         for (LivingEntity e : attacker.level().getEntitiesOfClass(LivingEntity.class, attacker.getBoundingBox().inflate(radius),
-                e -> e != attacker && e.isAlive() && !e.isAlliedTo(attacker) && e.distanceToSqr(attacker) <= radius * radius)) {
-            if (e instanceof ServerPlayer other && !attacker.canHarmPlayer(other)) continue;
+                e -> CombatAbilities.canHit(attacker, e) && e.distanceToSqr(attacker) <= radius * radius)) {
             if (e != target && damage > 0) e.hurt(source, damage);
             pushAway(attacker, e, 0.6);
         }
@@ -163,7 +161,7 @@ public final class PaladinPerks {
         DamageSource source = event.getDamageSource();
         if (m == null || !(source.getDirectEntity() instanceof LivingEntity attacker) || source.getEntity() != attacker) return;
         if (attacker == player || AbilityService.remainingTicks(player, SHIELD_COUNTER_COOLDOWN) > 0) return;
-        if (attacker instanceof ServerPlayer other && !player.canHarmPlayer(other)) return;
+        if (!CombatAbilities.canHit(player, attacker)) return; // no se empuja a un aliado
         // Fuerza aproximada: ~1 de knockback por cada 3 bloques [MEDIR].
         pushAway(player, attacker, m.number("knockback_blocks", 3) / 3.0);
         AbilityService.setCooldown(player, SHIELD_COUNTER_COOLDOWN, (int) Math.round(m.number("icd_seconds", 3) * 20));

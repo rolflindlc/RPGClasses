@@ -103,8 +103,7 @@ public final class MonkPerks {
         DamageSource source = new DamageSource(player.level().registryAccess().registryOrThrow(Registries.DAMAGE_TYPE)
                 .getHolderOrThrow(PaladinPerks.SHOCKWAVE_DAMAGE), player);
         for (LivingEntity e : player.level().getEntitiesOfClass(LivingEntity.class, player.getBoundingBox().inflate(radius),
-                e -> e != player && e.isAlive() && !e.isAlliedTo(player) && e.distanceToSqr(player) <= radius * radius)) {
-            if (e instanceof ServerPlayer other && !player.canHarmPlayer(other)) continue;
+                e -> CombatAbilities.canHit(player, e) && e.distanceToSqr(player) <= radius * radius)) {
             if (damage > 0) e.hurt(source, damage);
             switch (stance) {
                 case "fire" -> e.setSecondsOnFire(3);

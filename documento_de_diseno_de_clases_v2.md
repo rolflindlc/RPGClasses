@@ -1,6 +1,6 @@
 # Documento de Diseño v2: Mod de Clases y Árboles de Habilidades para Minecraft Java
 
-Versión 2 del diseño (revisión 2.7g, en desarrollo). Plataforma prevista: Forge 1.20.1 con Iron's Spells and Spellbooks, Epic Fight, Mowzie's Mobs y Cataclysm. Servidor principalmente PvE con algo de PvP. Objetivo del mod: sistema de clases balanceadas y programado de forma estructurada y orientada a la expansibilidad (clases futuras previstas: Alquimista, Nigromante, Druida).
+Versión 2 del diseño (revisión 2.9, en desarrollo). Plataforma prevista: Forge 1.20.1 con Iron's Spells and Spellbooks, Epic Fight, Mowzie's Mobs y Cataclysm. Servidor principalmente PvE con algo de PvP. Objetivo del mod: sistema de clases balanceadas y programado de forma estructurada y orientada a la expansibilidad (clases futuras previstas: Alquimista, Nigromante, Druida).
 
 Los valores marcados con **[MEDIR]** son objetivos de diseño que deben calibrarse en el juego real antes de darlos por cerrados.
 
@@ -90,6 +90,13 @@ Los valores marcados con **[MEDIR]** son objetivos de diseño que deben calibrar
 
 14. **Escuela sagrada exclusiva del Paladín (rev. 2.7c).** Todas las clases menos el Paladín tienen un **muro de −100% de poder mágico en la escuela sagrada** de Iron's (incluidas las curaciones), **además** de su muro de Magia general. Es fijo desde que se elige la clase (no escala con los puntos), así que los conjuros sagrados no hacen nada fuera del Paladín, ni con libros, varitas o pergaminos. El muro de Magia del Paladín no se aplica a la sagrada.
     * **Curación en clases sin Paladín:** se cura **comiendo y con objetos** (pociones, manzanas doradas, etc.); no hay un sustituto sagrado.
+
+15. **Aliados y enemigos (rev. 2.9).** Cada jugador elige a quién considera **aliado** (tecla **J**, botón *Aliados* del libro o `/aliados agregar|quitar <jugador>`). **Todo el que no es aliado cuenta como enemigo.**
+    * La relación es **unilateral** y se mira desde quien produce el efecto: tus apoyos (Estandarte, Baluarte Sanador, Voz del Caudillo, Nube de Humo, curas y mejoras de Iron's) solo alcanzan a tus aliados, y tus efectos ofensivos (áreas, ondas, trampas, debilitaciones, conjuros de Iron's, ataques de Epic Fight) no les afectan. Al marcar a alguien, se le avisa con un enlace para marcarte también.
+    * **Dueños:** las mascotas, invocaciones, señuelos y proyectiles cuentan como su dueño. Tus mascotas y las de tus aliados son aliadas tuyas.
+    * **Fuego amigo:** no puedes dañar a quien tienes como aliado (configurable: `allies.friendlyFire`).
+    * Un mismo equipo de scoreboard (`/team`) también cuenta como aliado (configurable). Los mobs sin dueño jugador siguen las reglas de cada efecto (hostiles, aldeanos, etc.).
+    * Ningún mod de la lista trae un sistema de aliados propio (Iron's y Epic Fight usan los equipos de scoreboard), y depender de FTB Teams añadiría tres mods y un modelo por equipos; por eso es propio, pero conectado a `isAlliedTo` para que Iron's, Epic Fight y vanilla lo respeten.
 
 ## 🧱 2. Sistema de Muros de Disciplina (sustituye a los "Debuffs de Clase" de la v1)
 

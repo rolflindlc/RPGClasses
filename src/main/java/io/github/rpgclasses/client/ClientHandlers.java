@@ -74,6 +74,26 @@ public final class ClientHandlers {
         }
     }
 
+    /** Aliados propios y quién nos tiene como aliado (copia local para la pantalla de aliados). */
+    public static java.util.List<io.github.rpgclasses.network.Packets.SyncAllies.Entry> ALLIES = java.util.List.of();
+    public static java.util.List<io.github.rpgclasses.network.Packets.SyncAllies.Entry> ALLIED_BY = java.util.List.of();
+
+    public static void onSyncAllies(io.github.rpgclasses.network.Packets.SyncAllies msg) {
+        ALLIES = java.util.List.copyOf(msg.allies());
+        ALLIED_BY = java.util.List.copyOf(msg.alliedBy());
+        if (Minecraft.getInstance().screen instanceof AllyScreen screen) screen.onDataChanged();
+    }
+
+    public static boolean isAlly(java.util.UUID id) {
+        for (var e : ALLIES) if (e.id().equals(id)) return true;
+        return false;
+    }
+
+    public static boolean isAlliedBy(java.util.UUID id) {
+        for (var e : ALLIED_BY) if (e.id().equals(id)) return true;
+        return false;
+    }
+
     /** El servidor avisa de que el jugador no tiene clase; ClientSetup abre la pantalla en el siguiente tick. */
     public static void onOpenSelection() {
         needsSelection = true;
@@ -83,6 +103,8 @@ public final class ClientHandlers {
     public static void reset() {
         needsSelection = false;
         dataReceived = false;
+        ALLIES = java.util.List.of();
+        ALLIED_BY = java.util.List.of();
         LOCAL_DATA.load(new net.minecraft.nbt.CompoundTag());
     }
 

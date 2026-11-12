@@ -187,7 +187,8 @@ public final class SubraceTraits {
     }
 
     private static void escort(ServerPlayer p, LivingEntity enemy) {
-        if (enemy instanceof Guardian || enemy instanceof Player) return;
+        // Los guardianes no van contra jugadores ni contra mascotas o invocaciones de aliados.
+        if (enemy instanceof Guardian || enemy instanceof Player || !io.github.rpgclasses.server.Allies.isEnemy(p, enemy)) return;
         ActiveMechanic m = Races.find(p, "race_escort");
         if (m == null) return;
         for (Guardian g : p.level().getEntitiesOfClass(Guardian.class, p.getBoundingBox().inflate(m.number("radius", 16)))) {
@@ -203,7 +204,7 @@ public final class SubraceTraits {
         ItemStack stolen = ItemStack.EMPTY;
         if (victim instanceof ServerPlayer target) {
             String key = thief.getUUID() + ">" + target.getUUID();
-            if (now < STEAL_COOLDOWN.getOrDefault(key, 0L) || target.isAlliedTo(thief)) return;
+            if (now < STEAL_COOLDOWN.getOrDefault(key, 0L) || io.github.rpgclasses.server.Allies.isAlly(thief, target)) return;
             if (rnd.nextDouble() >= m.number("player_chance", 0)) return;
             if (rnd.nextDouble() < m.number("equip_share_player", 0)) stolen = takeEquipment(target, rnd);
             if (stolen.isEmpty()) {

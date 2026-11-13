@@ -171,7 +171,10 @@ subs = {
           arc_targets=3, arc_range=6, arc_fraction=.5, leech_fraction=.4)], []),
  "battle_mage": ("mage","minecraft:iron_chestplate",[mech("unbreakable_concentration"),
      mech("wall_mitigation", disciplines=[R("heavy"),R("light")], mitigation={"to":1.0}),
-     mech("arcane_shield", mana_fraction={"from":.03,"to":.12}, cap_health_fraction=.5, decay_delay_seconds=6, decay_per_second=.1)], []),
+     mech("arcane_shield", mana_fraction={"from":.03,"to":.12}, cap_health_fraction=.5, decay_delay_seconds=6, decay_per_second=.1),
+     # Rev. 2.14: alterna espada y hechizo.
+     mech("imbued_blade", damage_fraction={"from":.15,"to":.35}, window_seconds=5, burn_seconds=3, slow_seconds=2, arc_range=4, arc_fraction=.5, blood_heal=.25),
+     mech("martial_echo", hits=3, window_seconds=4, mana_discount=.3)], []),
  "blessed_guardian": ("paladin","minecraft:golden_apple",[attr([(R("healing_received"), to(.5))])],
      [ms(5,"healing_bulwark",True,"bulwark")]),
  "unyielding_bastion": ("paladin","minecraft:obsidian",[attr([(MC+"knockback_resistance", to(1.0))]),
@@ -206,7 +209,10 @@ subs = {
      attr([(MC+"movement_speed", to(.4,"multiply_base")), (R("jump_bonus"), to(.8))], NOARM)], [ms(1,"wind_dash",True)]),
  "heavy_palm": ("monk","minecraft:piston",[
      attr([(R("unarmed_knockback"), to(1.0)), ("forge:entity_reach", to(.5,"multiply_base"))]),
-     mech("disabling_fist", chance=.15, icd_seconds=6, duration_seconds=1.5)], []),
+     # Rev. 2.14: Golpe Cargado e Impacto; el Puño de Inhabilitación sale con cada Impacto (ya no es una probabilidad).
+     mech("charged_palm", charge_seconds=1, damage_bonus={"from":.2,"to":.5}, knockback_bonus=1.0),
+     mech("palm_impact", window_seconds=1, flat_damage=2, damage_fraction={"from":.2,"to":.4}, stun_seconds=1),
+     mech("disabling_fist", icd_seconds=6, duration_seconds=1.5)], []),
  "triworld_guardian": ("monk","minecraft:heart_of_the_sea",[
      mech("stance_affinity", fire_damage_reduction={"to":.75}, projectile_reduction=.33, melee_reduction=.2),
      mech("elemental_manifest", ignite_seconds=6, swim_bonus=1.0, reflect_fraction=.15)], []),

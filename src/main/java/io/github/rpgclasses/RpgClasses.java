@@ -80,6 +80,7 @@ public class RpgClasses {
         MinecraftForge.EVENT_BUS.register(new MonkAbilities());
         MinecraftForge.EVENT_BUS.register(new io.github.rpgclasses.content.MonkCharges());
         MinecraftForge.EVENT_BUS.register(new io.github.rpgclasses.content.ClassFx());
+        MinecraftForge.EVENT_BUS.register(new io.github.rpgclasses.content.BattleMage());
         MinecraftForge.EVENT_BUS.register(new RogueAbilities());
         MinecraftForge.EVENT_BUS.register(new ShieldWall());
         MinecraftForge.EVENT_BUS.register(MechanicService.listener());

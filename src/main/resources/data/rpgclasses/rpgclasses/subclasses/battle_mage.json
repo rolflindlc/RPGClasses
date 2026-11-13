@@ -30,6 +30,27 @@
       "cap_health_fraction": 0.5,
       "decay_delay_seconds": 6,
       "decay_per_second": 0.1
+    },
+    {
+      "type": "rpgclasses:mechanic",
+      "id": "rpgclasses:imbued_blade",
+      "damage_fraction": {
+        "from": 0.15,
+        "to": 0.35
+      },
+      "window_seconds": 5,
+      "burn_seconds": 3,
+      "slow_seconds": 2,
+      "arc_range": 4,
+      "arc_fraction": 0.5,
+      "blood_heal": 0.25
+    },
+    {
+      "type": "rpgclasses:mechanic",
+      "id": "rpgclasses:martial_echo",
+      "hits": 3,
+      "window_seconds": 4,
+      "mana_discount": 0.3
     }
   ],
   "milestones": []

@@ -172,7 +172,11 @@ public final class DamagePipeline {
                 double flat = ModAttributes.value(attacker, ModAttributes.UNARMED_DAMAGE);
                 damage += flat;
                 log.append(String.format(Locale.ROOT, " | desarmado +%.2f", flat));
-                MonkSubclasses.onUnarmedHit(attacker, target);
+                double palm = MonkSubclasses.onUnarmedHit(attacker, target, damage);
+                if (palm != 1) {
+                    damage *= palm;
+                    log.append(String.format(Locale.ROOT, " | golpe cargado x%.2f", palm));
+                }
                 double monk = MonkPerks.unarmedFactor(attacker, target);
                 if (monk != 1) {
                     damage *= monk;
@@ -182,6 +186,12 @@ public final class DamagePipeline {
                 double wall = StatCalculator.wall(s, classDef, subDef, StatEngine.race(s), weapon.discipline());
                 damage *= StatMath.wallDamageFactor(wall);
                 log.append(String.format(Locale.ROOT, " | muro %s x%.2f", weapon.discipline(), StatMath.wallDamageFactor(wall)));
+            }
+            // Mago de Batalla: Eco Marcial cuenta golpes y Filo Imbuido añade daño de la escuela del último conjuro.
+            double imbued = io.github.rpgclasses.content.BattleMage.onMeleeHit(attacker, target, damage);
+            if (imbued != 1) {
+                damage *= imbued;
+                log.append(String.format(Locale.ROOT, " | filo imbuido x%.2f", imbued));
             }
             canCrit = true;
         } else {

@@ -10,6 +10,18 @@
     },
     {
       "type": "rpgclasses:mechanic",
+      "id": "rpgclasses:race_cold_frailty",
+      "cold_damage": 0.3,
+      "water_damage": 0.3
+    },
+    {
+      "type": "rpgclasses:mechanic",
+      "id": "rpgclasses:race_water_scald",
+      "scald_damage": 1,
+      "interval_seconds": 2
+    },
+    {
+      "type": "rpgclasses:mechanic",
       "id": "rpgclasses:race_racial_spells",
       "fire_bolt": {
         "values": [

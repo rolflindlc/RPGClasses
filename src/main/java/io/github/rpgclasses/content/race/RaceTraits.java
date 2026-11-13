@@ -69,6 +69,8 @@ public final class RaceTraits {
     private static final Map<UUID, Long> INVULNERABLE_UNTIL = new HashMap<>();
     private static final Map<UUID, Long> REGEN_PAUSED_UNTIL = new HashMap<>();
     private static final Set<UUID> NIGHT_VISION = new HashSet<>();
+    /** Segundos seguidos del Infernal en el agua. */
+    private static final Map<UUID, Integer> WET_SECONDS = new HashMap<>();
 
     // ------------------------------------------------------------------ tamaño
 
@@ -179,6 +181,27 @@ public final class RaceTraits {
             if (current != null && current.isAmbient() && current.getDuration() <= NIGHT_VISION_TICKS) p.removeEffect(MobEffects.NIGHT_VISION);
         }
 
+        // Infernal (rev. 2.17): el agua le quema poco a poco (vapor y siseo).
+        ActiveMechanic scald = Races.find(p, "race_water_scald");
+        if (scald != null && !p.isCreative() && !p.isSpectator() && p.isInWaterOrBubble()) {
+            int every = Math.max(1, (int) Math.round(scald.number("interval_seconds", 2)));
+            int wet = WET_SECONDS.merge(id, 1, Integer::sum);
+            if (wet % every == 0) p.hurt(Races.scald(p), (float) scald.number("scald_damage", 1));
+            if (level instanceof net.minecraft.server.level.ServerLevel sl) {
+                sl.sendParticles(net.minecraft.core.particles.ParticleTypes.CLOUD, p.getX(), p.getY() + p.getBbHeight() * 0.6, p.getZ(), 6, 0.3, 0.4, 0.3, 0.02);
+                sl.playSound(null, p.getX(), p.getY(), p.getZ(), net.minecraft.sounds.SoundEvents.FIRE_EXTINGUISH,
+                        net.minecraft.sounds.SoundSource.PLAYERS, 0.4f, 1.6f);
+            }
+        } else {
+            WET_SECONDS.remove(id);
+        }
+
+        // Tritón (rev. 2.17): en el Nether (dimensiones abrasadoras) tiene Debilidad.
+        ActiveMechanic dry = Races.find(p, "race_nether_weakness");
+        if (dry != null && level.dimensionType().ultraWarm()) {
+            p.addEffect(Races.hidden(MobEffects.WEAKNESS, 60, (int) Math.round(dry.number("level", 1)) - 1));
+        }
+
         // Infernal: los golems de hierro cercanos siempre lo atacan.
         ActiveMechanic outcast = Races.find(p, "race_outcast");
         if (outcast != null && !p.isCreative() && !p.isSpectator()) {
@@ -224,6 +247,16 @@ public final class RaceTraits {
         // Tritón: +30 % de daño de fuego (fuego, lava y la escuela de fuego de Iron's).
         if (source.is(DamageTypeTags.IS_FIRE) || source.is(Races.FIRE_MAGIC)) {
             double extra = Races.number(player, "race_aquatic", "fire_damage", 0);
+            if (extra != 0) event.setAmount((float) (event.getAmount() * (1 + extra)));
+        }
+        // Infernal (rev. 2.17): +30 % de daño de frío (congelación y escuela de hielo) y de agua (escuela de agua de T.O).
+        ActiveMechanic frail = Races.find(player, "race_cold_frailty");
+        if (frail != null) {
+            io.github.rpgclasses.content.Schools.School school = source.typeHolder().unwrapKey()
+                    .map(k -> io.github.rpgclasses.content.Schools.ofDamageType(k.location())).orElse(null);
+            double extra = 0;
+            if (source.is(DamageTypeTags.IS_FREEZING) || school == io.github.rpgclasses.content.Schools.School.ICE) extra = frail.number("cold_damage", 0.3);
+            else if (school == io.github.rpgclasses.content.Schools.School.AQUA) extra = frail.number("water_damage", 0.3);
             if (extra != 0) event.setAmount((float) (event.getAmount() * (1 + extra)));
         }
     }

@@ -3,6 +3,7 @@
   "values": [
     "rpgclasses:toxin",
     "rpgclasses:plague",
-    "rpgclasses:sunlight"
+    "rpgclasses:sunlight",
+    "rpgclasses:scald"
   ]
 }

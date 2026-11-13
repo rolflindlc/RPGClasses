@@ -153,7 +153,7 @@ Nada de esto se ha probado en el juego. Perfil: Forge 1.20.1 (47.4.x) + Iron's S
 2. Palma Pesada: agachado con la mano vacía 1 s (suena), golpe fuerte; lanzar enemigos contra una pared u otro enemigo los aturde (explosión de partículas y yunque).
 3. Juggernaut: estela de viento al embestir; atravesar hojas, cristal, puertas y vallas rompiéndolos (cada uno con su sonido) y recibir algo de daño. No debe romper nada en zonas protegidas ni en aventura.
 
-**N. Las 10 escuelas (rev. 2.15).**
-1. Elementalista: carga hasta detonar con conjuros de ender (el objetivo se teletransporta), invocación (anillo de colmillos), naturaleza (raíces y veneno), eldritch (debilidad, oscuridad y ceguera) y, con T.O Magic 'n Extras, agua (ola que empuja y moja). El aviso de cargas muestra el nombre de la escuela.
-2. Mago de Batalla: conjuro + golpe con ender (apareces a la espalda), invocación (colmillos), eldritch y agua.
+**N. Las escuelas (rev. 2.15–2.16).** La sagrada no pone cargas ni imbuye.
+1. Elementalista: carga hasta detonar con conjuros de ender (el objetivo se teletransporta), invocación (anillo de colmillos), naturaleza (raíces y veneno), eldritch (Marca del Vacío: anillo de almas 4 s; pegarle entre varios y ver que la implosión atrae y hace más daño cuanto más recibió; también si muere antes) y, con T.O Magic 'n Extras, agua (ola que empuja y moja). El aviso de cargas muestra el nombre de la escuela.
+2. Mago de Batalla: conjuro + golpe con ender (apareces a la espalda), invocación (colmillos), eldritch (onda sónica en línea que atraviesa a varios enemigos alineados) y agua.
 3. Arrancar sin T.O Magic 'n Extras: sin errores en el registro y las demás escuelas igual.

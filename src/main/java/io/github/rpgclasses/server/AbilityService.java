@@ -84,6 +84,12 @@ public final class AbilityService {
         if (ticks > 0) data.cooldowns.put(key, now + ticks);
     }
 
+    /** Quita el enfriamiento de una habilidad (p. ej. Paso de Sombra al matar a su objetivo). */
+    public static void clearCooldown(ServerPlayer player, String key) {
+        PlayerClassData data = PlayerClassDataProvider.get(player);
+        if (data != null) data.cooldowns.remove(key);
+    }
+
     /** El jugador pulsa la tecla de la ranura {@code slot} (0, 1, 2). Todo se valida aquí. */
     public static void use(ServerPlayer player, int slot) {
         if (slot < 0 || !player.isAlive() || player.isSpectator()) return;

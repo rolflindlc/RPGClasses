@@ -24,6 +24,13 @@ public class DecoyRenderer extends MobRenderer<DecoyEntity, PlayerModel<DecoyEnt
         addLayer(new net.minecraft.client.renderer.entity.layers.ItemInHandLayer<>(this, context.getItemInHandRenderer()));
     }
 
+    /** El render del jugador escala el modelo a 0,9375 (y la raza lo reescala): el clon hace lo mismo para medir igual. */
+    @Override
+    protected void scale(DecoyEntity entity, com.mojang.blaze3d.vertex.PoseStack poseStack, float partialTick) {
+        float s = 0.9375f * entity.getScale();
+        poseStack.scale(s, s, s);
+    }
+
     @Override
     public ResourceLocation getTextureLocation(DecoyEntity entity) {
         UUID owner = entity.getOwnerUuid().orElse(entity.getUUID());

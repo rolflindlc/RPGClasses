@@ -50,17 +50,6 @@ public final class ClientHandlers {
         else mc.setScreen(new BondBookScreen());
     }
 
-    /** Maestro de Bestias: pregunta si vincularse con el animal recién domesticado. */
-    public static void onBondPrompt(io.github.rpgclasses.network.Packets.BondPrompt msg) {
-        Minecraft mc = Minecraft.getInstance();
-        net.minecraft.client.gui.screens.Screen previous = mc.screen;
-        mc.setScreen(new net.minecraft.client.gui.screens.ConfirmScreen(accept -> {
-            io.github.rpgclasses.network.Net.CHANNEL.sendToServer(new io.github.rpgclasses.network.Packets.BondAnswer(msg.entityId(), accept));
-            mc.setScreen(previous);
-        }, net.minecraft.network.chat.Component.translatable("ui.rpgclasses.bond_title"),
-                net.minecraft.network.chat.Component.translatable("ui.rpgclasses.bond_question", msg.name())));
-    }
-
     public static void onPlayerData(SyncPlayerData msg) {
         String raceBefore = LOCAL_DATA.state.raceId + "/" + LOCAL_DATA.state.raceRank;
         LOCAL_DATA.load(msg.data());

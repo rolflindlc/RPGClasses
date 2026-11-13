@@ -73,6 +73,8 @@ public final class ClientSetup {
         MinecraftForge.EVENT_BUS.addListener(ClientSetup::onFov);
         MinecraftForge.EVENT_BUS.addListener(ClientSetup::onMovementInput);
         MinecraftForge.EVENT_BUS.addListener(ClientSetup::onRenderPlayer);
+        MinecraftForge.EVENT_BUS.addListener(ChickenFx::onRenderPlayer);
+        MinecraftForge.EVENT_BUS.addListener(RabbitFx::onRenderPlayer);
         modBus.addListener((EntityRenderersEvent.RegisterRenderers event) ->
                 event.registerEntityRenderer(ModEntities.DECOY.get(), DecoyRenderer::new));
         MinecraftForge.EVENT_BUS.addListener((ClientPlayerNetworkEvent.LoggingOut event) -> ClientHandlers.reset());

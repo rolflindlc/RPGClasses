@@ -229,31 +229,89 @@ public final class RogueAbilities {
     @SubscribeEvent
     public void onLogout(PlayerEvent.PlayerLoggedOutEvent event) {
         STATES.remove(event.getEntity().getUUID());
+        MARKS.remove(event.getEntity().getUUID());
     }
 
     // --- Paso de Sombra ---
 
+    /** Marca del Paso de Sombra: objetivo y tick en que acaba (críticos seguros contra él y recarga al matarlo). */
+    private record Mark(UUID target, long until) {}
+
+    private static final Map<UUID, Mark> MARKS = new HashMap<>();
+
+    /** ¿Tiene {@code attacker} la marca del Paso de Sombra sobre {@code target}? (golpe crítico seguro) */
+    public static boolean hasShadowMark(ServerPlayer attacker, Entity target) {
+        Mark m = MARKS.get(attacker.getUUID());
+        return m != null && m.target.equals(target.getUUID()) && attacker.level().getGameTime() <= m.until;
+    }
+
+    /** Teletransporte a la espalda del enemigo al que mira; crítico seguro 5 s y recarga si lo mata. */
     private static boolean shadowStep(ServerPlayer player, JsonObject p) {
-        double distance = AbilityService.number(p, "distance", 8);
-        Vec3 look = player.getLookAngle();
+        double range = AbilityService.number(p, "distance", 10);
+        double behind = AbilityService.number(p, "behind_distance", 1.4);
         ServerLevel level = player.serverLevel();
-        Vec3 best = null;
-        // Se avanza en pasos de medio bloque y se para ante el primer obstáculo: nunca atraviesa paredes.
-        for (double d = 0.5; d <= distance + 1e-6; d += 0.5) {
-            Vec3 offset = look.scale(d);
-            if (!level.noCollision(player, player.getBoundingBox().move(offset))) break;
-            best = player.position().add(offset);
+        Vec3 eye = player.getEyePosition();
+        Vec3 look = player.getLookAngle();
+        LivingEntity target = null;
+        double bestDot = 0.93; // ≈ 21°: hay que mirar más o menos hacia el enemigo
+        for (LivingEntity e : level.getEntitiesOfClass(LivingEntity.class, player.getBoundingBox().inflate(range),
+                e -> e != player && e.isAlive() && !e.isInvulnerable() && io.github.rpgclasses.server.Allies.isEnemy(player, e)
+                        && !(e instanceof DecoyEntity) && player.hasLineOfSight(e))) {
+            Vec3 to = e.getBoundingBox().getCenter().subtract(eye);
+            double dist = to.length();
+            if (dist > range || dist < 1.0e-3) continue;
+            double dot = to.scale(1.0 / dist).dot(look);
+            if (dot > bestDot) { bestDot = dot; target = e; }
         }
-        if (best == null || best.distanceTo(player.position()) < 1.0) {
+        if (target == null) {
             player.displayClientMessage(Component.translatable("msg.rpgclasses.shadow_step_blocked"), true);
             return false;
         }
-        level.sendParticles(ParticleTypes.PORTAL, player.getX(), player.getY() + 1, player.getZ(), 30, 0.3, 0.6, 0.3, 0.2);
-        level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 0.8f, 1.2f);
-        player.teleportTo(best.x, best.y, best.z);
+        // Espalda = opuesto a hacia donde mira el objetivo. Se prueban varias distancias y, si no hay sitio, los lados.
+        Vec3 face = Vec3.directionFromRotation(0, target.getYRot()).multiply(1, 0, 1).normalize();
+        Vec3 side = new Vec3(-face.z, 0, face.x);
+        Vec3[] tries = {
+                face.scale(-behind), face.scale(-(behind - 0.5)), face.scale(-(behind + 0.7)),
+                face.scale(-behind).add(side.scale(1.0)), face.scale(-behind).add(side.scale(-1.0))};
+        Vec3 dest = null;
+        for (Vec3 off : tries) {
+            Vec3 pos = target.position().add(off);
+            net.minecraft.world.phys.AABB box = player.getBoundingBox().move(pos.subtract(player.position()));
+            if (level.noCollision(player, box)) { dest = pos; break; }
+        }
+        if (dest == null) {
+            player.displayClientMessage(Component.translatable("msg.rpgclasses.shadow_step_blocked"), true);
+            return false;
+        }
+        Vec3 from = player.position();
+        level.sendParticles(ParticleTypes.PORTAL, from.x, from.y + 1, from.z, 30, 0.3, 0.6, 0.3, 0.2);
+        level.sendParticles(ParticleTypes.SMOKE, from.x, from.y + 1, from.z, 15, 0.3, 0.6, 0.3, 0.02);
+        level.playSound(null, from.x, from.y, from.z, SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 0.8f, 1.2f);
+        // Aparece mirando la nuca del objetivo.
+        player.connection.teleport(dest.x, dest.y, dest.z, target.getYRot(), 0.0f);
         player.fallDistance = 0;
-        level.sendParticles(ParticleTypes.PORTAL, best.x, best.y + 1, best.z, 30, 0.3, 0.6, 0.3, 0.2);
+        level.sendParticles(ParticleTypes.PORTAL, dest.x, dest.y + 1, dest.z, 30, 0.3, 0.6, 0.3, 0.2);
+        level.sendParticles(ParticleTypes.CRIT, target.getX(), target.getY() + target.getBbHeight() * 0.6, target.getZ(), 12, 0.3, 0.4, 0.3, 0.2);
+        level.playSound(null, dest.x, dest.y, dest.z, SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 0.8f, 0.8f);
+        long until = level.getGameTime() + AbilityService.ticks(p, "mark_seconds", 5);
+        MARKS.put(player.getUUID(), new Mark(target.getUUID(), until));
+        io.github.rpgclasses.server.DebugLog.event(player, "habilidad", "Paso de Sombra: a la espalda de {}", io.github.rpgclasses.server.DebugLog.describe(target));
         return true;
+    }
+
+    /** Si matas al objetivo marcado dentro de la ventana, Paso de Sombra se recarga al instante. */
+    @SubscribeEvent
+    public void onMarkedKill(net.minecraftforge.event.entity.living.LivingDeathEvent event) {
+        if (!(event.getSource().getEntity() instanceof ServerPlayer player) || player instanceof FakePlayer) return;
+        Mark m = MARKS.get(player.getUUID());
+        if (m == null || !m.target.equals(event.getEntity().getUUID())) return;
+        MARKS.remove(player.getUUID());
+        if (player.level().getGameTime() > m.until) return;
+        AbilityService.clearCooldown(player, SHADOW_STEP);
+        Net.syncPlayer(player);
+        ServerLevel level = player.serverLevel();
+        level.sendParticles(ParticleTypes.SOUL_FIRE_FLAME, player.getX(), player.getY() + 1, player.getZ(), 20, 0.3, 0.5, 0.3, 0.05);
+        level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.AMETHYST_BLOCK_CHIME, SoundSource.PLAYERS, 1.0f, 1.6f);
     }
 
     // --- Señuelo ---
@@ -266,6 +324,7 @@ public final class RogueAbilities {
         decoy.moveTo(pos.x, pos.y, pos.z, player.getYRot(), 0);
         decoy.setOwner(player.getUUID());
         decoy.setCustomName(player.getName());
+        decoy.setScale(io.github.rpgclasses.content.race.RaceTraits.scale(player));
         // El clon lleva lo mismo que el jugador (armas en ambas manos y armadura); no suelta nada al morir.
         for (net.minecraft.world.entity.EquipmentSlot slot : net.minecraft.world.entity.EquipmentSlot.values()) {
             decoy.setItemSlot(slot, player.getItemBySlot(slot).copy());

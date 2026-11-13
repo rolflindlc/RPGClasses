@@ -28,7 +28,13 @@ import java.util.UUID;
 public class DecoyEntity extends PathfinderMob {
     private static final EntityDataAccessor<Optional<UUID>> OWNER =
             SynchedEntityData.defineId(DecoyEntity.class, EntityDataSerializers.OPTIONAL_UUID);
+    /** Escala del dueño (tamaño racial: Orco, Enano, Goblin) para que el clon mida lo mismo que él. */
+    private static final EntityDataAccessor<Float> SCALE =
+            SynchedEntityData.defineId(DecoyEntity.class, EntityDataSerializers.FLOAT);
     private static final int MAX_LIFETIME_TICKS = 20 * 60;
+    /** Cada cuántos ticks da un salto mientras huye (como un jugador corriendo y saltando). */
+    private static final int HOP_PERIOD_TICKS = 11;
+    private int hopCooldown;
 
     public DecoyEntity(EntityType<? extends DecoyEntity> type, Level level) {
         super(type, level);
@@ -45,12 +51,39 @@ public class DecoyEntity extends PathfinderMob {
     protected void defineSynchedData() {
         super.defineSynchedData();
         entityData.define(OWNER, Optional.empty());
+        entityData.define(SCALE, 1.0f);
+    }
+
+    /** Mismo tamaño que el jugador: 0,6 × 1,8 por la escala de su raza. */
+    public void setScale(float scale) {
+        entityData.set(SCALE, scale);
+        refreshDimensions();
+    }
+
+    public float getScale() {
+        return entityData.get(SCALE);
+    }
+
+    @Override
+    public void onSyncedDataUpdated(EntityDataAccessor<?> key) {
+        super.onSyncedDataUpdated(key);
+        if (SCALE.equals(key)) refreshDimensions();
+    }
+
+    @Override
+    public net.minecraft.world.entity.EntityDimensions getDimensions(net.minecraft.world.entity.Pose pose) {
+        return super.getDimensions(pose).scale(getScale());
+    }
+
+    @Override
+    protected float getStandingEyeHeight(net.minecraft.world.entity.Pose pose, net.minecraft.world.entity.EntityDimensions dimensions) {
+        return 1.62f * getScale();
     }
 
     @Override
     protected void registerGoals() {
         goalSelector.addGoal(0, new FloatGoal(this));
-        goalSelector.addGoal(1, new AvoidEntityGoal<>(this, Monster.class, 14.0f, 1.1, 1.5));
+        goalSelector.addGoal(1, new AvoidEntityGoal<>(this, Monster.class, 14.0f, 1.2, 1.6));
         goalSelector.addGoal(2, new WaterAvoidingRandomStrollGoal(this, 1.0));
     }
 
@@ -66,8 +99,24 @@ public class DecoyEntity extends PathfinderMob {
     public void tick() {
         super.tick();
         if (level().isClientSide) return;
+        hop();
         ServerPlayer owner = getOwnerUuid().map(id -> level().getServer().getPlayerList().getPlayer(id)).orElse(null);
         if (owner == null || tickCount > MAX_LIFETIME_TICKS || !RogueAbilities.isStealthed(owner)) vanish();
+    }
+
+    /**
+     * Huye saltando como un jugador: mientras hay un enemigo cerca y el clon avanza, corre ("sprint") y da un salto
+     * cada pocos ticks; si no, anda con normalidad. El salto sobre desniveles lo hace además el control de movimiento.
+     */
+    private void hop() {
+        boolean fleeing = !level().getEntitiesOfClass(Monster.class, getBoundingBox().inflate(14.0), m -> m.isAlive()).isEmpty();
+        boolean moving = getDeltaMovement().horizontalDistanceSqr() > 0.0004;
+        setSprinting(fleeing && moving);
+        if (hopCooldown > 0) hopCooldown--;
+        if (fleeing && moving && onGround() && hopCooldown == 0) {
+            getJumpControl().jump();
+            hopCooldown = HOP_PERIOD_TICKS;
+        }
     }
 
     /** Desaparece en una nube de humo. */

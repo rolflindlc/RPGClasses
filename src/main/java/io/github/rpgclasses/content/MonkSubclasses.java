@@ -136,7 +136,7 @@ public final class MonkSubclasses {
 
     /** Cada tic: los objetivos lanzados que chocan contra un bloque u otro enemigo sufren el Impacto. */
     @SubscribeEvent
-    public void onServerTick(TickEvent.ServerTickEvent event) {
+    public void onImpactTick(TickEvent.ServerTickEvent event) {
         if (event.phase != TickEvent.Phase.END || THROWN.isEmpty()) return;
         var server = event.getServer();
         var it = THROWN.entrySet().iterator();

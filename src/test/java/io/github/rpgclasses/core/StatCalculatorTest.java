@@ -20,6 +20,7 @@ import java.util.Map;
 import java.util.stream.Stream;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertFalse;
 
 /** Comprueba, con los JSON reales, que los números que se aplicarán en el juego son los del diseño. */
@@ -94,27 +95,37 @@ public class StatCalculatorTest {
     @Test
     public void monkBreezeMasterReachesDesignTotals() {
         Map<Key, Double> t = totals(player("monk", 10, "breeze_master", 10), NO_ARMOR);
-        // Viento 2.7b (+35%) + Cefiro Marcial (+40% / +80%).
-        assertEquals(0.75, t.get(new Key("minecraft:generic.movement_speed", "multiply_base")), EPS);
-        assertEquals(1.15, t.get(new Key("rpgclasses:jump_bonus", "add")), EPS);
+        // Rev. 2.9: Viento ya no da bonus plano; solo Cefiro Marcial (+40% / +80%).
+        assertEquals(0.4, t.get(new Key("minecraft:generic.movement_speed", "multiply_base")), EPS);
+        assertEquals(0.8, t.get(new Key("rpgclasses:jump_bonus", "add")), EPS);
     }
 
     @Test
-    public void stanceFactorsScaleTheBonusBeforeCaps() {
-        ProgressState monk = player("monk", 10, "breeze_master", 10);
-        ClassDef c = STORE.classDef(monk.classId);
-        // Piedra: armadura x1,25 (20 / 7,5) y velocidad x0,25.
-        Map<Key, Double> stone = StatCalculator.attributeTotals(monk, c, STORE.subclassDef(monk.subclassId),
-                new Context(false, Map.of("minecraft:generic.armor", 1.25, "minecraft:generic.armor_toughness", 1.25,
-                        "minecraft:generic.movement_speed", 0.25)));
-        assertEquals(20.0, stone.get(new Key("minecraft:generic.armor", "add")), EPS);
-        assertEquals(7.5, stone.get(new Key("minecraft:generic.armor_toughness", "add")), EPS);
-        assertEquals(0.1875, stone.get(new Key("minecraft:generic.movement_speed", "multiply_base")), EPS);
-        // Agua: +80% x2 superaría el tope global de +100%.
-        Map<Key, Double> water = StatCalculator.attributeTotals(monk, c, STORE.subclassDef(monk.subclassId),
-                new Context(false, Map.of("minecraft:generic.movement_speed", 2.0, "rpgclasses:jump_bonus", 2.0)));
-        assertEquals(1.0, water.get(new Key("minecraft:generic.movement_speed", "multiply_base")), EPS);
-        assertEquals(1.5, water.get(new Key("rpgclasses:jump_bonus", "add")), EPS);
+    public void monkMartialBodyScalesWithBasePointsAndStances() {
+        // Cuerpo Marcial: 10 / 4 de armadura y dureza y +4 de daño desarmado con 30 puntos; a mitad con 15.
+        ProgressState full = player("monk", 10, null, 0);
+        Map<Key, Double> t = totals(full, NO_ARMOR);
+        assertEquals(10.0, t.get(new Key("minecraft:generic.armor", "add")), EPS);
+        assertEquals(4.0, t.get(new Key("minecraft:generic.armor_toughness", "add")), EPS);
+        assertEquals(4.0, t.get(new Key("rpgclasses:unarmed_damage", "add")), EPS);
+        Map<Key, Double> half = totals(player("monk", 5, null, 0), NO_ARMOR);
+        assertEquals(5.0, half.get(new Key("minecraft:generic.armor", "add")), EPS);
+        // Con armadura no hay suelo.
+        assertNull(totals(full, ARMORED).get(new Key("minecraft:generic.armor", "add")));
+
+        // Fuego: −25 % de la armadura del suelo. Agua: −25 % del daño y las cargas se suman antes del tope.
+        ClassDef c = STORE.classDef(full.classId);
+        Map<Key, Double> fire = StatCalculator.attributeTotals(full, c, null, new Context(false, Map.of(),
+                Map.of("minecraft:generic.armor", 0.75, "minecraft:generic.armor_toughness", 0.75), Map.of()));
+        assertEquals(7.5, fire.get(new Key("minecraft:generic.armor", "add")), EPS);
+        ProgressState breeze = player("monk", 10, "breeze_master", 10);
+        Map<Key, Double> water = StatCalculator.attributeTotals(breeze, c, STORE.subclassDef(breeze.subclassId),
+                new Context(false, Map.of(), Map.of("rpgclasses:unarmed_damage", 0.75),
+                        Map.of(new Key("minecraft:generic.movement_speed", "multiply_base"), 0.8,
+                               new Key("rpgclasses:jump_bonus", "add"), 0.8)));
+        assertEquals(3.0, water.get(new Key("rpgclasses:unarmed_damage", "add")), EPS);
+        assertEquals(1.0, water.get(new Key("minecraft:generic.movement_speed", "multiply_base")), EPS); // 0,4 + 0,8 → tope +100%
+        assertEquals(1.5, water.get(new Key("rpgclasses:jump_bonus", "add")), EPS); // 0,8 + 0,8 → tope +150%
     }
 
     @Test

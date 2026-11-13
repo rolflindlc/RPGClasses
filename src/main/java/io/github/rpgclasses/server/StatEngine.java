@@ -61,7 +61,8 @@ public final class StatEngine {
         io.github.rpgclasses.core.definition.Definitions.RaceDef race = race(s);
 
         // 1. Pasivas de atributo de ramas, subclase y raza (con topes y suelos globales ya aplicados).
-        StatCalculator.Context ctx = new StatCalculator.Context(isWearingArmor(player), MonkAbilities.stanceFactors(player));
+        StatCalculator.Context ctx = new StatCalculator.Context(isWearingArmor(player), Map.of(),
+                io.github.rpgclasses.content.MonkCharges.traitFactors(player), io.github.rpgclasses.content.MonkCharges.extra(player));
         for (Map.Entry<StatCalculator.Key, Double> e : StatCalculator.attributeTotals(s, classDef, subDef, race, ctx).entrySet()) {
             apply(player, new ResourceLocation(e.getKey().attribute()), "stat", operation(e.getKey().operation()), e.getValue());
         }
@@ -107,8 +108,16 @@ public final class StatEngine {
                     AttributeModifier.Operation.ADDITION, 0.8);
         }
 
+        // 6. Cargas de Piedra del Monje: armadura con tope 20 / 8 sobre lo ya calculado.
+        io.github.rpgclasses.content.MonkCharges.applyStoneArmor(player);
+
         clampHealth(player);
         player.refreshDimensions(); // tamaño racial
+    }
+
+    /** Modificador transitorio del mod (se borra en cada recálculo). */
+    public static void applyModifier(ServerPlayer player, Attribute attribute, String source, AttributeModifier.Operation op, double amount) {
+        applyTo(player, attribute, source, op, amount);
     }
 
     /** Raza del jugador según el datapack (null si no tiene o ya no existe). */

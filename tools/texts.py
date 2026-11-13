@@ -30,8 +30,18 @@ ABILITIES = {
     "wall_climb": dict(passive=True),
     "lethal_shot": dict(passive=True, thresholds_seconds=[1, 2, 3, 6], damage_bonuses=[0.25, 0.5, 1.0, 1.5]),
     # Monje
-    "stances": dict(switch_cooldown_seconds=4, water_speed_factor=2.0, water_damage_factor=0.5,
-                    stone_armor_factor=1.25, stone_speed_factor=0.25, fire_damage_factor=1.5, fire_armor_factor=0.67),
+    # Rev. 2.9: cargas de postura (MonkCharges). Las ramas Puño, Viento y Piel potencian cada postura.
+    "stances": dict(switch_cooldown_seconds=2, max_charges=10, finisher_threshold=10, discharge_radius=3, burn_cap_seconds=15,
+                    fire_buff_per_charge=0.03, fire_decay_delay_seconds=1.5, fire_decay_interval_seconds=0.5,
+                    fire_strike_bonus_per_charge=0.05, fire_armor_ignore_per_charge=0.05, fire_armor_ignore_cap=0.8,
+                    fire_strike_burn_seconds=4, fire_wave_per_charge=0.05, fire_floor_armor_cost=0.25,
+                    stone_hit_threshold=2, stone_hit_icd_seconds=0.5, stone_armor_per_charge=0.75, stone_toughness_per_charge=0.25,
+                    stone_armor_cap=20, stone_toughness_cap=8, stone_knockback_per_charge=0.1, stone_speed_cost=-0.15,
+                    stone_jump_cost=-0.3, stone_decay_delay_seconds=3, stone_decay_interval_seconds=2,
+                    stone_stun_per_charge=0.15, stone_stun_icd_seconds=8, stone_absorb_per_charge=0.5, stone_absorb_seconds=5,
+                    water_buff_per_charge=0.025, water_sprint_seconds=2, water_dodge_charges=3, water_decay_interval_seconds=1,
+                    water_slow_per_charge=0.2, water_dodge_window_per_charge=0.3, water_floor_damage_cost=0.25,
+                    deflect_fire_charges=1, deflect_water_charges=3, deflect_stone_charges=1),
     "deflect": dict(passive=True, cooldown_seconds=5),
     "light_step": dict(passive=True),
     "wind_dash": dict(charges=1, recharge_seconds=10, dash_speed=1.3),
@@ -59,8 +69,8 @@ ABILITY_TEXT = {
     "triple_jump": ("Triple Salto", "Añade un tercer salto en el aire."),
     "wall_climb": ("Escalada de Paredes", "Agachado junto a una pared te adhieres a ella y puedes escalarla. Si tensas un arco, te sueltas."),
     "lethal_shot": ("Disparo Letal", "Mejora Disparo Pesado: los tramos llegan antes y el último es mucho más fuerte."),
-    "stances": ("Posturas Elementales", "Cada pulsación pasa a la siguiente postura: neutral, Agua, Piedra y Fuego. Cambias entre las posturas de Agua (velocidad), Piedra (defensa) y Fuego (daño). Cada una potencia una pasiva y debilita otra."),
-    "deflect": ("Desvío de Proyectiles", "Automático, con tiempo de recarga. Reduces el daño de un proyectil en un valor igual a tu Nivel Total. Si lo dejas en cero, lo devuelves."),
+    "stances": ("Posturas Elementales", "Cada pulsación pasa a la siguiente postura (Agua, Piedra, Fuego). Solo acumulas cargas de la postura activa: Fuego con cada golpe desarmado (más daño), Piedra al recibir golpes (más armadura) y Agua al correr, esquivar o desviar (más velocidad y salto). Al llegar al máximo, o con Shift + golpe (o agachado + esta tecla) desde 10 cargas, tu siguiente golpe desarmado gasta todas: Golpe Ígneo, aturdimiento o Contracorriente. Al cambiar de postura descargas las de la anterior en un efecto de área. Las cargas se pierden poco a poco si dejas de ganarlas y al ponerte armadura."),
+    "deflect": ("Desvío de Proyectiles", "Automático, con tiempo de recarga. Reduces el daño de un proyectil en un valor igual a tu Nivel Total. Si lo dejas en cero, lo devuelves. Da cargas: +1 en Fuego, +3 en Agua y +1 en Piedra."),
     "light_step": ("Paso Ligero", "No recibes daño por caída y caminas sobre el agua. En Postura de Fuego también caminas sobre la lava."),
     "wind_dash": ("Impulso de Viento", "Un impulso horizontal en el aire, con cargas que se recuperan solas."),
 }
@@ -71,7 +81,7 @@ CLASS_DESC = {
     "barbarian": "Guerrero sin armadura con armas pesadas. Cuanta menos vida tiene, más daño hace, y sus críticos son los más fuertes. Llevar cualquier pieza de armadura apaga su defensa natural.",
     "rogue": "Asesino ágil con armas ligeras. Se vuelve invisible, golpea por sorpresa con críticos seguros y se mueve muy rápido. Muy frágil si lo atrapan.",
     "ranger": "Tirador con arco. Daño constante a distancia, flechas rápidas y de largo alcance, y buena movilidad. Puede llevar armadura sin penalización.",
-    "monk": "Luchador desarmado y sin armadura. Muy móvil, cambia de postura para ganar velocidad, defensa o daño según el momento. Llevar armadura apaga sus pasivas.",
+    "monk": "Luchador desarmado y sin armadura. Su nivel le da una base de daño y defensa; el resto lo gana en combate acumulando cargas de Fuego, Piedra o Agua. Llevar armadura apaga sus pasivas y borra las cargas.",
 }
 
 BRANCH_DESC = {
@@ -90,9 +100,9 @@ BRANCH_DESC = {
     ("ranger", "aim"): "Más daño con arcos y ballestas, y zoom al agacharte con el arco en la mano o al tensarlo.",
     ("ranger", "cadence"): "Tensas el arco más rápido.",
     ("ranger", "range"): "Tus proyectiles vuelan más rápido y llegan más lejos. No aumenta el daño.",
-    ("monk", "fist"): "Aumenta el daño de tus golpes con la mano vacía.",
-    ("monk", "wind"): "Sin armadura, te mueves más rápido y saltas más alto.",
-    ("monk", "skin"): "Sin armadura, ganas armadura y dureza.",
+    ("monk", "fist"): "Potencia las cargas de Fuego: más daño por carga y una onda de descarga más fuerte.",
+    ("monk", "wind"): "Potencia las cargas de Agua: más velocidad y salto por carga y una descarga más fuerte.",
+    ("monk", "skin"): "Potencia las cargas de Piedra: más armadura y dureza por carga y más absorción al descargar.",
     ("mage", "summoning"): "Tus invocaciones tienen más vida y hacen más daño.",
     ("mage", "fluidity"): "Te mueves más rápido; con la rama llena, lanzar conjuros no te ralentiza.",
     ("paladin", "banner"): "Aura a tu alrededor: tú y tus aliados ganáis armadura y los efectos negativos os duran menos. No se suma a la de otro Paladín.",
@@ -103,8 +113,8 @@ BRANCH_DESC = {
     ("rogue", "acrobatics"): "La esquiva de Epic Fight gasta menos estamina y su invulnerabilidad dura más.",
     ("ranger", "special_arrows"): "Los efectos de tus flechas con poción duran más y son más fuertes.",
     ("ranger", "retreat"): "Con la rama llena, tras recibir un golpe cuerpo a cuerpo corres más rápido unos segundos.",
-    ("monk", "stance_mastery"): "Aumenta los bonus de cada postura; las penalizaciones no cambian.",
-    ("monk", "meditation"): "Agachado y quieto unos segundos, te curas poco a poco hasta un límite de vida. Recibir daño la interrumpe.",
+    ("monk", "stance_mastery"): "Más cargas máximas en todas las posturas: +2 con 5 puntos y +4 con 10.",
+    ("monk", "meditation"): "Agachado y quieto unos segundos, te curas poco a poco hasta un límite de vida. Recibir daño la interrumpe. Al dejar de meditar ganas 4 cargas de tu postura que no se pierden durante 10 s.",
 }
 
 EXTRA_BRANCH_NAMES = {
@@ -120,6 +130,7 @@ TRAIT_DESC = {
     "mage": "Rasgo de clase: menos vida máxima.",
     "paladin": "Rasgo de clase: más vida máxima y algo menos de velocidad.",
     "rogue": "Rasgo de clase: menos vida máxima.",
+    "monk": "Cuerpo Marcial: sin armadura, daño desarmado, armadura y dureza que crecen con tus puntos de clase base (completos con 30). Fuego resta un 25 % a esta armadura y Agua un 25 % a este daño.",
 }
 
 # Perks de rama (regla 11). Los números se ven en la pestaña "Datos exactos" y al pasar el ratón.
@@ -174,14 +185,14 @@ PERK_TEXT = {
     ("ranger", "special_arrows", "sticky_arrow"): ("Flecha Pegajosa", "El impacto ralentiza al objetivo, pero tus flechas vuelan algo más despacio."),
     ("ranger", "retreat", "evasive_leap"): ("Salto Evasivo", "Cada cierto tiempo, el primer golpe cuerpo a cuerpo te hace saltar hacia atrás sin recibir daño."),
     ("ranger", "retreat", "hunter_trap"): ("Trampa de Cazador", "Tras recibir un golpe cuerpo a cuerpo dejas una trampa que ralentiza mucho a quien la pise."),
-    ("monk", "fist", "flow"): ("Flujo", "Cambias de postura más a menudo y la anterior sigue a medio efecto un momento. Algo menos de daño desarmado."),
-    ("monk", "fist", "elemental_wave"): ("Onda Elemental", "Al cambiar de postura lanzas una onda con un efecto según la postura nueva. Cambias de postura más despacio."),
+    ("monk", "fist", "steady_flame"): ("Llama Constante", "Las cargas de Fuego se pierden la mitad de rápido, pero cada una da un 20 % menos de daño."),
+    ("monk", "fist", "early_ignition"): ("Ignición Temprana", "Puedes lanzar el Golpe Ígneo desde 6 cargas, pero hace +4 % de daño por carga en vez de +5 %."),
     ("monk", "wind", "running_momentum"): ("Impulso de Carrera", "Tras correr un momento, tu siguiente golpe desarmado hace más daño y empuja más."),
     ("monk", "wind", "light_feet"): ("Pies Ligeros", "Ignoras telarañas, arena de almas, miel, nieve en polvo y la ralentización al comer o usar objetos. Algo menos de velocidad."),
     ("monk", "skin", "spirit_skin"): ("Piel Espiritual", "Menos armadura y dureza, pero recibes mucho menos daño mágico y elemental."),
-    ("monk", "skin", "inner_calm"): ("Calma Interior", "Sin recibir daño acumulas una reserva que absorbe el siguiente golpe."),
-    ("monk", "stance_mastery", "dominant_stance"): ("Postura Dominante", "Eliges una postura favorita mucho más fuerte; las otras dos se debilitan."),
-    ("monk", "stance_mastery", "hybrid_stance"): ("Postura Híbrida", "La postura actual y la anterior se aplican a la vez a medio efecto. Cambias de postura más despacio."),
+    ("monk", "skin", "stone_echo"): ("Eco de Piedra", "La absorción de la descarga de Piedra se duplica, pero solo ganas cargas de Piedra con golpes de 4 o más de daño."),
+    ("monk", "stance_mastery", "dominant_stance"): ("Postura Dominante", "Agachado + tecla de posturas fija tu postura favorita: +3 cargas máximas en ella y −3 en las otras dos."),
+    ("monk", "stance_mastery", "continuous_flow"): ("Flujo Continuo", "Al cambiar de postura conservas el 30 % de las cargas en la nueva y descargas solo el resto. Cambias de postura 1 s más despacio."),
     ("monk", "meditation", "deep_trance"): ("Trance Profundo", "Te curas el doble de rápido meditando y hasta el 80 % de tu vida, pero tardas más en empezar."),
     ("monk", "meditation", "clear_mind"): ("Mente Clara", "Al meditar purgas un efecto negativo cada 5 s."),
 }
@@ -219,7 +230,7 @@ MECHANIC_NAMES = {
     "summon_bonus": "Invocaciones reforzadas", "cast_no_slow": "Sin ralentización al lanzar", "banner_aura": "Aura de Estandarte",
     "smite": "Castigo", "charge_upgrade": "Embestida mejorada", "hardened": "Curtido", "toxin": "Toxina",
     "acrobatics": "Esquiva de Epic Fight", "potion_arrows": "Flechas con poción", "retreat": "Retirada",
-    "stance_mastery": "Bonus de posturas", "meditation": "Meditación", "distance_power": "Poder según la distancia",
+    "stance_mastery": "Cargas máximas extra", "meditation": "Meditación", "distance_power": "Poder según la distancia",
     "blood_magic": "Magia de Sangre", "summon_count": "Invocaciones por conjuro", "cast_speed_burst": "Paso Arcano",
     "feather_fall": "Caída de Pluma", "effect_immunity": "Inmunidad a efectos", "shield_counter": "Contragolpe de Escudo",
     "shockwave": "Onda de Choque", "war_banner": "Estandarte de Guerra", "life_banner": "Estandarte de Vida",
@@ -231,9 +242,11 @@ MECHANIC_NAMES = {
     "mobile_shooter": "Tirador Móvil", "draw_no_slow": "Tensar sin ralentización", "quick_counter": "Contraataque Veloz",
     "piercing": "Perforante", "hunters_mark": "Marca de Cazador", "explosive_arrow": "Flecha Explosiva",
     "sticky_arrow": "Flecha Pegajosa", "evasive_leap": "Salto Evasivo", "hunter_trap": "Trampa de Cazador",
-    "flow": "Flujo", "elemental_wave": "Onda Elemental", "running_momentum": "Impulso de Carrera",
-    "light_feet": "Pies Ligeros", "spirit_skin": "Piel Espiritual", "inner_calm": "Calma Interior",
-    "dominant_stance": "Postura Dominante", "hybrid_stance": "Postura Híbrida", "meditation_variant": "Meditación (perk)",
+    "steady_flame": "Llama Constante", "early_ignition": "Ignición Temprana", "running_momentum": "Impulso de Carrera",
+    "light_feet": "Pies Ligeros", "spirit_skin": "Piel Espiritual", "stone_echo": "Eco de Piedra",
+    "dominant_stance": "Postura Dominante", "continuous_flow": "Flujo Continuo", "meditation_variant": "Meditación (perk)",
+    "fire_potency": "Potencia de las cargas de Fuego", "water_potency": "Potencia de las cargas de Agua",
+    "stone_potency": "Potencia de las cargas de Piedra",
 }
 
 DISCIPLINE_NAMES = {"magic": "Magia", "bow": "Arco", "heavy": "Armas pesadas", "light": "Armas ligeras",
@@ -241,6 +254,12 @@ DISCIPLINE_NAMES = {"magic": "Magia", "bow": "Arco", "heavy": "Armas pesadas", "
 
 # Nombre legible de cada parámetro numérico. "%": se muestra como porcentaje. "s": segundos.
 PARAMS = {
+    "potency": "Potencia extra|%", "extra_charges": "Cargas máximas extra", "end_charges": "Cargas al terminar",
+    "hold_seconds": "Tiempo sin perderlas|s", "decay_slowdown": "Pérdida de cargas más lenta|%", "buff_change": "Cambio del bonus por carga|%",
+    "threshold": "Umbral de cargas", "ignite_bonus_per_charge": "Daño extra por carga del Golpe Ígneo|%",
+    "absorb_factor": "Multiplicador de absorción", "hit_threshold": "Daño mínimo para ganar carga",
+    "favorite_charges": "Cargas en la favorita", "others_charges": "Cargas en las demás", "keep_fraction": "Cargas conservadas|%",
+    "max_charges": "Cargas máximas", "finisher_threshold": "Umbral del efecto propio", "burn_cap_seconds": "Tope de quemadura|s",
     "charges": "Cargas", "max_mana_cost": "Coste máximo de maná", "recharge_seconds": "Recarga por carga|s",
     "icd_seconds": "Tiempo mínimo entre usos|s", "radius": "Radio (bloques)", "cooldown_seconds": "Cooldown|s",
     "slow_seconds": "Duración de la lentitud|s", "damage_reduction": "Reducción de daño recibido|%",
@@ -381,6 +400,7 @@ UI = {
     "key.rpgclasses.ability_3": "Habilidad 3",
     "msg.rpgclasses.stance": "Postura: %s",
     "msg.rpgclasses.stance_favorite": "Postura favorita: %s",
+    "msg.rpgclasses.monk_armed": "Efecto propio preparado: tu siguiente golpe desarmado gasta las cargas",
     "msg.rpgclasses.shadow_step_blocked": "No hay sitio para teletransportarte hacia ahí.",
     "hud.rpgclasses.stealth": "Sigilo",
     "entity.rpgclasses.decoy": "Señuelo",

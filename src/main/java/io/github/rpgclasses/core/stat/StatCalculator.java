@@ -39,11 +39,22 @@ public final class StatCalculator {
      * @param factors multiplicadores sobre el bonus total de un atributo (id -> factor), p. ej. las posturas del Monje.
      *                Se aplican antes de los topes globales.
      */
-    public record Context(boolean wearingArmor, Map<String, Double> factors) {
+    /**
+     * @param traitFactors multiplicadores sobre los rasgos base de un atributo (coste fijo de las posturas del Monje).
+     * @param extra        modificadores añadidos antes de los topes (bonus de las cargas de postura del Monje).
+     */
+    public record Context(boolean wearingArmor, Map<String, Double> factors, Map<String, Double> traitFactors, Map<Key, Double> extra) {
         public Context(boolean wearingArmor) {
             this(wearingArmor, Map.of());
         }
+
+        public Context(boolean wearingArmor, Map<String, Double> factors) {
+            this(wearingArmor, factors, Map.of(), Map.of());
+        }
     }
+
+    /** Rasgos con {@code "scale": "base_points"} crecen de 0 al valor completo con los puntos de clase base (tope 30). */
+    public static final String SCALE_BASE_POINTS = "base_points";
 
     /**
      * Suma de todos los modificadores de atributo de la clase, la subclase, los rasgos base y los perks,
@@ -59,6 +70,7 @@ public final class StatCalculator {
         Map<Key, Double> totals = new LinkedHashMap<>();
         if (c != null && c.id().equals(s.classId)) addClassTotals(totals, s, c, sub, adaptable(s, race), ctx);
         for (EffectDef e : raceEffects(s, race)) addAttributeEffect(totals, e, s.raceRank + 1, RACE_RANKS, ctx);
+        ctx.extra().forEach((k, v) -> totals.merge(k, v, Double::sum));
         // Topes globales (regla 7): solo cuentan los bonus del mod.
         totals.computeIfPresent(new Key(MOVEMENT_SPEED, "multiply_base"), (k, v) -> StatMath.capSpeedBonus(v));
         totals.computeIfPresent(new Key(JUMP_BONUS, "add"), (k, v) -> StatMath.capJumpBonus(v));
@@ -83,7 +95,18 @@ public final class StatCalculator {
         // Rasgos base (regla 12) y perks (regla 11): enteros desde el primer momento.
         // Humano (Adaptable): las penalizaciones de los rasgos base se reducen en el porcentaje del rango.
         Map<Key, Double> traits = new LinkedHashMap<>();
-        for (EffectDef e : c.traits()) addAttributeEffect(traits, e, 1, 1, ctx);
+        int base = Math.min(ProgressionRules.BASE_MAX, s.basePoints());
+        for (EffectDef e : c.traits()) {
+            boolean scaled = e.params().has("scale") && SCALE_BASE_POINTS.equals(e.params().get("scale").getAsString());
+            if (scaled) {
+                if (base > 0) addAttributeEffect(traits, e, base, ProgressionRules.BASE_MAX, ctx);
+            } else {
+                addAttributeEffect(traits, e, 1, 1, ctx);
+            }
+        }
+        if (!ctx.traitFactors().isEmpty()) {
+            traits.replaceAll((key, value) -> value * ctx.traitFactors().getOrDefault(key.attribute(), 1.0));
+        }
         traits.forEach((k, v) -> totals.merge(k, v < 0 ? v * (1 - Math.max(0, Math.min(1, adaptable))) : v, Double::sum));
         for (PerkDef p : chosenPerks(s, c)) {
             for (EffectDef e : p.effects()) addAttributeEffect(totals, e, 1, 1, ctx);

@@ -17,7 +17,7 @@ import net.minecraftforge.network.simple.SimpleChannel;
 
 public final class Net {
     /** Cliente y servidor con versiones de protocolo distintas no se conectan. Subir al cambiar cualquier paquete. */
-    private static final String PROTOCOL = "10";
+    private static final String PROTOCOL = "11";
 
     public static final SimpleChannel CHANNEL = NetworkRegistry.newSimpleChannel(
             RpgClasses.id("main"), () -> PROTOCOL, PROTOCOL::equals, PROTOCOL::equals);
@@ -69,6 +69,9 @@ public final class Net {
         CHANNEL.messageBuilder(Packets.BondBookAction.class, id++, NetworkDirection.PLAY_TO_SERVER)
                 .encoder(Packets.BondBookAction::encode).decoder(Packets.BondBookAction::decode)
                 .consumerMainThread(Packets.BondBookAction::handle).add();
+        CHANNEL.messageBuilder(Packets.MonkChargesSync.class, id++, NetworkDirection.PLAY_TO_CLIENT)
+                .encoder(Packets.MonkChargesSync::encode).decoder(Packets.MonkChargesSync::decode)
+                .consumerMainThread(Packets.MonkChargesSync::handle).add();
     }
 
     public static void toPlayer(ServerPlayer player, Object message) {

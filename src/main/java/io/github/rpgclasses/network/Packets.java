@@ -269,6 +269,26 @@ public final class Packets {
         }
     }
 
+    /** Cargas de postura de un Monje (para él: barra sobre la vida; para todos: efecto en los puños). */
+    public record MonkChargesSync(int entityId, int stance, int charges, int max, int threshold, boolean armed) {
+        public void encode(FriendlyByteBuf buf) {
+            buf.writeVarInt(entityId);
+            buf.writeByte(stance);
+            buf.writeVarInt(charges);
+            buf.writeVarInt(max);
+            buf.writeVarInt(threshold);
+            buf.writeBoolean(armed);
+        }
+
+        public static MonkChargesSync decode(FriendlyByteBuf buf) {
+            return new MonkChargesSync(buf.readVarInt(), buf.readByte(), buf.readVarInt(), buf.readVarInt(), buf.readVarInt(), buf.readBoolean());
+        }
+
+        public void handle(Supplier<NetworkEvent.Context> ctx) {
+            DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> io.github.rpgclasses.client.MonkChargeFx.receive(this));
+        }
+    }
+
     /** Una mascota en el Libro de Vínculos: vinculada (con estadísticas si está cargada) o cercana sin vincular. */
     public record BookEntry(java.util.UUID id, String name, String type, boolean loaded, float health, float maxHealth,
                             double attack, double speed, boolean boosted) {

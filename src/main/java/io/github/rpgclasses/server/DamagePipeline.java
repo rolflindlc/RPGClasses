@@ -176,7 +176,7 @@ public final class DamagePipeline {
                 double monk = MonkPerks.unarmedFactor(attacker, target);
                 if (monk != 1) {
                     damage *= monk;
-                    log.append(String.format(Locale.ROOT, " | flujo/impulso x%.2f", monk));
+                    log.append(String.format(Locale.ROOT, " | cargas/impulso x%.2f", monk));
                 }
             } else if (weapon.discipline() != null) {
                 double wall = StatCalculator.wall(s, classDef, subDef, StatEngine.race(s), weapon.discipline());
@@ -262,6 +262,11 @@ public final class DamagePipeline {
             if (pierce != 1) {
                 damage *= pierce;
                 log.append(String.format(Locale.ROOT, " | estocada x%.2f", pierce));
+            }
+            double ignite = io.github.rpgclasses.content.MonkCharges.armorIgnoreFactor(attacker, target, source, damage);
+            if (ignite != 1) {
+                damage *= ignite;
+                log.append(String.format(Locale.ROOT, " | golpe ígneo (armadura) x%.2f", ignite));
             }
         }
         float result = StatMath.sanitizeDamage(damage);

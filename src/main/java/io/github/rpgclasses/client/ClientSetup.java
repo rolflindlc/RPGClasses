@@ -60,6 +60,10 @@ public final class ClientSetup {
         modBus.addListener((RegisterGuiOverlaysEvent event) -> event.registerAboveAll("abilities", AbilityHud::render));
         modBus.addListener((RegisterGuiOverlaysEvent event) -> event.registerAboveAll("coin_flip", CoinFlipFx::renderHud));
         modBus.addListener((RegisterGuiOverlaysEvent event) -> event.registerAboveAll("wolf_jump", WolfJumpGauge::renderHud));
+        // Cargas del Monje: encima de la armadura (y de la vida), reservando su altura en el lado izquierdo.
+        modBus.addListener((RegisterGuiOverlaysEvent event) -> event.registerAbove(
+                net.minecraftforge.client.gui.overlay.VanillaGuiOverlay.ARMOR_LEVEL.id(), "monk_charges", MonkChargeFx::renderHud));
+        MinecraftForge.EVENT_BUS.addListener(MonkChargeFx::onClientTick);
         MinecraftForge.EVENT_BUS.addListener(CoinFlipFx::onRenderPlayer);
         MinecraftForge.EVENT_BUS.addListener(ClientSetup::onTooltip);
         MinecraftForge.EVENT_BUS.addListener(CoinFlipFx::onMovementInput);

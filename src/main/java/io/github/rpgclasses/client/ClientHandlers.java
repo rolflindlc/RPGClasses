@@ -117,6 +117,7 @@ public final class ClientHandlers {
         ALLIES = java.util.List.of();
         ALLIED_BY = java.util.List.of();
         CoinFlipFx.reset();
+        MonkChargeFx.reset();
         LOCAL_DATA.load(new net.minecraft.nbt.CompoundTag());
     }
 

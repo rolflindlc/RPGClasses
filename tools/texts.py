@@ -200,8 +200,8 @@ PERK_TEXT = {
 
 SUBCLASS_DESC = {
     "chaotic_evoker": "Conjuros más grandes y Magia Salvaje: al gastar maná puedes desatar una réplica gratuita de otro conjuro en todas direcciones.",
-    "elementalist": "Tus conjuros de cualquier escuela acumulan cargas en los enemigos; al llenarse detonan según la escuela: fuego explota, hielo congela, rayo salta en arcos, sangre roba vida, sagrada castiga y cura al grupo, ender teletransporta, invocación alza colmillos, naturaleza enraíza y envenena, eldritch debilita y ciega, y agua (con T.O Magic 'n Extras) lanza una ola que empuja y moja.",
-    "battle_mage": "Mago de primera línea que alterna espada y hechizo. Cada conjuro imbuye tu arma con su escuela (fuego quema, hielo ralentiza, rayo salta, sangre cura, naturaleza envenena, sagrada castiga a no-muertos, ender te lleva a su espalda, invocación alza colmillos, eldritch debilita y agua empuja); cada 3 golpes seguidos tu siguiente conjuro cuesta menos maná. No te interrumpen al lanzar, pierdes los muros de armas cuerpo a cuerpo y el maná que gastas te da un escudo.",
+    "elementalist": "Tus conjuros acumulan cargas en los enemigos; al llenarse detonan según la escuela: fuego explota, hielo congela, rayo salta en arcos, sangre roba vida, ender teletransporta, invocación alza colmillos, naturaleza enraíza y envenena, eldritch deja la Marca del Vacío (guarda el daño que recibe y luego implosiona), y agua (con T.O Magic 'n Extras) lanza una ola que empuja y moja.",
+    "battle_mage": "Mago de primera línea que alterna espada y hechizo. Cada conjuro imbuye tu arma con su escuela (fuego quema, hielo ralentiza, rayo salta, sangre cura, naturaleza envenena, ender te lleva a su espalda, invocación alza colmillos, eldritch suelta una onda sónica en línea y agua empuja); cada 3 golpes seguidos tu siguiente conjuro cuesta menos maná. No te interrumpen al lanzar, pierdes los muros de armas cuerpo a cuerpo y el maná que gastas te da un escudo.",
     "blessed_guardian": "Protector sanador. Recibes más curación y tu Baluarte cura al grupo con el daño que mitigas.",
     "unyielding_bastion": "Inamovible. Inmune al empuje, resistes las ráfagas de golpes y tu Baluarte te limpia de efectos negativos.",
     "charging_juggernaut": "Una montaña de vida. Tu Baluarte se convierte en una carga imparable que arrolla a los enemigos.",
@@ -331,13 +331,15 @@ PARAMS = {
     "switch_cooldown_change": "Cooldown de cambio extra|s", "heal_per_second_fixed": "Curación por segundo",
     "purge_interval_seconds": "Purga un efecto cada|s", "heal_factor": "Curación x",
     "wave_radius": "Radio de la onda (bloques)",
-    "blood_heal": "Sangre: el extra te cura|%", "holy_fraction": "Sagrada: daño del Juicio|%", "undead_factor": "Sagrada: daño a no-muertos x",
-    "holy_heal": "Sagrada: curación a ti y aliados|%", "holy_radius": "Sagrada: radio de la curación (bloques)",
-    "ender_fraction": "Ender: daño|%", "ender_range": "Ender: distancia del teletransporte (bloques)", "fangs": "Invocación: colmillos",
+    "blood_heal": "Sangre: el extra te cura|%", "ender_fraction": "Ender: daño|%", "ender_range": "Ender: distancia del teletransporte (bloques)", "fangs": "Invocación: colmillos",
     "poison_seconds": "Naturaleza: veneno|s",
-    "poison_level": "Naturaleza: nivel del veneno", "eldritch_fraction": "Eldritch: daño|%", "eldritch_seconds": "Eldritch: debilidad y oscuridad|s",
-    "wave_fraction": "Agua: daño de la ola|%", "wet_seconds": "Agua: Mojado|s", "glow_seconds": "Sagrada: marca|s",
-    "weakness_seconds": "Eldritch: debilidad y oscuridad|s", "push": "Agua: empuje",
+    "poison_level": "Naturaleza: nivel del veneno", "void_seconds": "Eldritch: duración de la Marca|s", "void_store": "Eldritch: daño recibido que guarda la Marca|%",
+    "void_radius": "Eldritch: radio de la implosión (bloques)", "void_pull": "Eldritch: atracción",
+    "void_boss_factor": "Eldritch: implosión contra jefes|%", "void_area_fraction": "Eldritch: implosión a los demás|%",
+    "void_initial": "Eldritch: daño inicial guardado|%", "sonic_length": "Eldritch: alcance de la onda (bloques)",
+    "sonic_fraction": "Eldritch: daño de la onda (del extra)|%",
+    "wave_fraction": "Agua: daño de la ola|%", "wet_seconds": "Agua: Mojado|s",
+    "push": "Agua: empuje",
 }
 
 UI = {
@@ -449,7 +451,7 @@ UI = {
     "message.rpgclasses.element_detonate": "¡Detonación de %s!",
     "element.rpgclasses.fire": "Fuego", "element.rpgclasses.ice": "Hielo",
     "element.rpgclasses.lightning": "Rayo", "element.rpgclasses.blood": "Sangre",
-    "element.rpgclasses.holy": "Sagrada", "element.rpgclasses.ender": "Ender", "element.rpgclasses.evocation": "Invocación",
+    "element.rpgclasses.ender": "Ender", "element.rpgclasses.evocation": "Invocación",
     "element.rpgclasses.nature": "Naturaleza", "element.rpgclasses.eldritch": "Eldritch", "element.rpgclasses.aqua": "Agua",
     "message.rpgclasses.free_cast_used": "Conjuro gratuito (ranura %s): quedan %s/%s cargas",
     "message.rpgclasses.free_cast_locked": "Aún no tienes la ranura de Conjuro Gratuito %s",

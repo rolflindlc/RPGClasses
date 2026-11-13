@@ -45,10 +45,9 @@
       "arc_fraction": 0.5,
       "blood_heal": 0.25,
       "poison_seconds": 3,
-      "undead_factor": 2,
-      "glow_seconds": 5,
       "fangs": 3,
-      "weakness_seconds": 3,
+      "sonic_length": 6,
+      "sonic_fraction": 1.0,
       "push": 0.8
     },
     {

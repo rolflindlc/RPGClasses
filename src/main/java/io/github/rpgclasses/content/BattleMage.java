@@ -23,8 +23,9 @@ import java.util.UUID;
  * Mago de Batalla (rev. 2.14): alterna espada y hechizo.
  * <ul>
  *   <li><b>Filo Imbuido:</b> cada conjuro carga el arma con su escuela; el siguiente golpe cuerpo a cuerpo (en unos
- *       segundos) hace más daño y aplica un efecto de esa escuela: fuego quema, hielo ralentiza, rayo salta a otro
- *       enemigo, sangre cura, naturaleza envenena.</li>
+ *       segundos) hace más daño y aplica un efecto de esa escuela (las 10, ver {@link Schools}): fuego quema,
+ *       hielo ralentiza, rayo salta, sangre cura, naturaleza envenena, sagrada castiga a no-muertos, ender te pone a
+ *       su espalda, invocación alza colmillos, eldritch debilita y ciega, agua empuja y moja.</li>
  *   <li><b>Eco Marcial:</b> cada 3 golpes cuerpo a cuerpo seguidos, el siguiente conjuro cuesta menos maná.</li>
  * </ul>
  * El lado de Iron's (al lanzar) está en {@code IronsCompat}; aquí no hay dependencias de Iron's.
@@ -102,14 +103,15 @@ public final class BattleMage {
             factor = 1 + fraction;
             double extra = damage * fraction;
             ServerLevel level = (ServerLevel) p.level();
-            switch (school.substring(school.indexOf(':') + 1)) {
-                case "fire" -> MonkCharges.addBurn(target, imbued.number("burn_seconds", 3));
-                case "ice" -> {
+            Schools.School kind = Schools.of(school);
+            if (kind != null) switch (kind) {
+                case FIRE -> MonkCharges.addBurn(target, imbued.number("burn_seconds", 3));
+                case ICE -> {
                     int t = (int) Math.round(imbued.number("slow_seconds", 2) * 20);
                     target.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, t, 1), p);
                     target.setTicksFrozen(Math.max(target.getTicksFrozen(), target.getTicksRequiredToFreeze() + t));
                 }
-                case "lightning" -> {
+                case LIGHTNING -> {
                     double range = imbued.number("arc_range", 4);
                     LivingEntity next = null;
                     for (LivingEntity e : level.getEntitiesOfClass(LivingEntity.class, target.getBoundingBox().inflate(range),
@@ -121,9 +123,44 @@ public final class BattleMage {
                         ClassFx.line(target, next, ParticleTypes.ELECTRIC_SPARK, 10);
                     }
                 }
-                case "blood" -> p.heal((float) (extra * imbued.number("blood_heal", 0.25)));
-                case "nature" -> target.addEffect(new MobEffectInstance(MobEffects.POISON, 60, 0), p);
-                default -> { }
+                case BLOOD -> p.heal((float) (extra * imbued.number("blood_heal", 0.25)));
+                case NATURE -> target.addEffect(new MobEffectInstance(MobEffects.POISON,
+                        (int) Math.round(imbued.number("poison_seconds", 3) * 20), 1), p);
+                // Rev. 2.15: las otras cinco escuelas.
+                case HOLY -> {
+                    // Sagrada: el extra se duplica contra no-muertos y el objetivo queda marcado (brillo).
+                    if (target.getMobType() == net.minecraft.world.entity.MobType.UNDEAD) factor += fraction * (imbued.number("undead_factor", 2) - 1);
+                    target.addEffect(new MobEffectInstance(MobEffects.GLOWING, (int) Math.round(imbued.number("glow_seconds", 5) * 20), 0), p);
+                }
+                case ENDER -> {
+                    // Ender: apareces a la espalda del objetivo.
+                    net.minecraft.world.phys.Vec3 back = target.position().subtract(target.getLookAngle().multiply(1, 0, 1).normalize()
+                            .scale(target.getBbWidth() / 2 + 1.0));
+                    double ox = p.getX(), oy = p.getY(), oz = p.getZ();
+                    if (level.noCollision(p, p.getBoundingBox().move(back.subtract(p.position())))) {
+                        p.teleportTo(back.x, back.y, back.z);
+                        p.lookAt(net.minecraft.commands.arguments.EntityAnchorArgument.Anchor.EYES, target.getEyePosition());
+                        level.sendParticles(ParticleTypes.PORTAL, ox, oy + 1, oz, 20, 0.3, 0.5, 0.3, 0.2);
+                        level.playSound(null, ox, oy, oz, SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 0.7f, 1.3f);
+                    }
+                }
+                case EVOCATION -> Schools.fangs(p, target, (int) Math.round(imbued.number("fangs", 3)), 1.2);
+                case ELDRITCH -> {
+                    int t = (int) Math.round(imbued.number("weakness_seconds", 3) * 20);
+                    target.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, t, 0), p);
+                    target.addEffect(new MobEffectInstance(MobEffects.DARKNESS, t, 0), p);
+                }
+                case AQUA -> {
+                    // Agua (T.O Magic 'n Extras): empuje, lentitud y Mojado de T.O.
+                    net.minecraft.world.phys.Vec3 dir = target.position().subtract(p.position()).multiply(1, 0, 1).normalize();
+                    double push = imbued.number("push", 0.8);
+                    target.push(dir.x * push, 0.2, dir.z * push);
+                    target.hurtMarked = true;
+                    int t = (int) Math.round(imbued.number("slow_seconds", 2) * 20);
+                    target.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, t, 0), p);
+                    Schools.applyWet(target, p, t * 2, 0);
+                    level.playSound(null, target.blockPosition(), SoundEvents.GENERIC_SPLASH, SoundSource.PLAYERS, 0.8f, 1.2f);
+                }
             }
             ClassFx.burst(target, particle(school), 14, 0.15);
             level.playSound(null, target.blockPosition(), SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.PLAYERS, 0.8f, 1.6f);
@@ -132,16 +169,7 @@ public final class BattleMage {
     }
 
     private static ParticleOptions particle(String school) {
-        return switch (school.substring(school.indexOf(':') + 1)) {
-            case "fire" -> ParticleTypes.FLAME;
-            case "ice" -> ParticleTypes.SNOWFLAKE;
-            case "lightning" -> ParticleTypes.ELECTRIC_SPARK;
-            case "blood" -> ClassFx.BLOOD;
-            case "nature" -> ParticleTypes.HAPPY_VILLAGER;
-            case "ender" -> ParticleTypes.PORTAL;
-            case "holy" -> ParticleTypes.END_ROD;
-            default -> ParticleTypes.ENCHANT;
-        };
+        return Schools.particle(Schools.of(school));
     }
 
     @SubscribeEvent

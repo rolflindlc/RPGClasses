@@ -58,7 +58,23 @@
       "arc_targets": 3,
       "arc_range": 6,
       "arc_fraction": 0.5,
-      "leech_fraction": 0.4
+      "leech_fraction": 0.4,
+      "holy_fraction": 0.4,
+      "undead_factor": 2,
+      "holy_heal": 0.25,
+      "holy_radius": 5,
+      "ender_fraction": 0.4,
+      "ender_range": 8,
+      "fangs": 6,
+      "root_seconds": 3,
+      "boss_root_seconds": 1.5,
+      "poison_seconds": 5,
+      "poison_level": 2,
+      "eldritch_fraction": 0.5,
+      "eldritch_seconds": 4,
+      "wave_radius": 3,
+      "wave_fraction": 0.4,
+      "wet_seconds": 6
     }
   ],
   "milestones": []

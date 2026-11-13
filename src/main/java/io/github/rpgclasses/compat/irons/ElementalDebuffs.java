@@ -16,6 +16,9 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.Tags;
 
+import io.github.rpgclasses.content.Schools;
+import io.github.rpgclasses.content.Schools.School;
+
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.List;
@@ -25,7 +28,7 @@ import java.util.UUID;
 /**
  * Elementalista: Debuffs Elementales (mecánica {@code elemental_debuffs}).
  *
- * <p>Cada golpe de conjuro de Fuego, Hielo, Rayo o Sangre tiene una probabilidad (40–75 %) de poner una carga
+ * <p>Cada golpe de conjuro de cualquiera de las 10 escuelas (rev. 2.15) tiene una probabilidad (40–75 %) de poner una carga
  * de ese elemento en el objetivo. Las cargas duran {@code duration_seconds} desde la primera (desde
  * {@code refresh_from_level} cada carga nueva reinicia el tiempo). Al llegar al máximo, detonan y se vacían:
  * <ul>
@@ -33,11 +36,17 @@ import java.util.UUID;
  *   <li>Hielo: congelación (lentitud extrema, sin saltar); más corta contra jefes.</li>
  *   <li>Rayo: arcos a enemigos cercanos.</li>
  *   <li>Sangre: daño extra que cura al lanzador.</li>
+ *   <li>Sagrada: daño (doble a no-muertos) que cura al lanzador y a sus aliados.</li>
+ *   <li>Ender: daño y teletransporte aleatorio del objetivo (no a jefes).</li>
+ *   <li>Invocación: anillo de colmillos de evocador.</li>
+ *   <li>Naturaleza: raíces (lentitud extrema) y veneno fuerte.</li>
+ *   <li>Eldritch: daño, debilidad, oscuridad y ceguera.</li>
+ *   <li>Agua (solo con T.O Magic 'n Extras): ola que empuja, ralentiza y aplica Mojado.</li>
  * </ul>
  * El daño secundario es mágico de vanilla, así que no vuelve a poner cargas.
  */
 final class ElementalDebuffs {
-    enum Element { FIRE, ICE, LIGHTNING, BLOOD }
+    /** Rev. 2.15: las 10 escuelas (ver {@link Schools}); Agua solo aparece con T.O Magic 'n Extras. */
 
     private static final class Stacks {
         int count;
@@ -45,18 +54,12 @@ final class ElementalDebuffs {
     }
 
     /** Objetivo → lanzador → cargas por elemento (cada Elementalista lleva sus propias cargas). */
-    private static final Map<UUID, Map<UUID, EnumMap<Element, Stacks>>> STACKS = new HashMap<>();
+    private static final Map<UUID, Map<UUID, EnumMap<School, Stacks>>> STACKS = new HashMap<>();
 
     private ElementalDebuffs() {}
 
-    static Element element(DamageSource source) {
-        return source.typeHolder().unwrapKey().map(k -> switch (k.location().toString()) {
-            case "irons_spellbooks:fire_magic" -> Element.FIRE;
-            case "irons_spellbooks:ice_magic" -> Element.ICE;
-            case "irons_spellbooks:lightning_magic" -> Element.LIGHTNING;
-            case "irons_spellbooks:blood_magic" -> Element.BLOOD;
-            default -> null;
-        }).orElse(null);
+    static School element(DamageSource source) {
+        return source.typeHolder().unwrapKey().map(k -> Schools.ofDamageType(k.location())).orElse(null);
     }
 
     /** Llamado con el daño final de un golpe de conjuro del jugador. */
@@ -64,7 +67,7 @@ final class ElementalDebuffs {
         if (amount <= 0 || target == player || !target.isAlive()) return;
         ActiveMechanic mech = MechanicService.find(player, "elemental_debuffs");
         if (mech == null) return;
-        Element element = element(source);
+        School element = element(source);
         if (element == null || player.getRandom().nextDouble() >= mech.number("chance", 0.4)) return;
 
         int max = Math.max(1, (int) Math.round(mech.number("max_stacks", 3)));
@@ -72,7 +75,7 @@ final class ElementalDebuffs {
         // Rev. 2.7f: cada carga nueva reinicia el tiempo (antes solo desde el nivel 8; en las pruebas no daba tiempo a detonar).
         boolean refresh = mech.level() >= mech.number("refresh_from_level", 1);
         Stacks s = STACKS.computeIfAbsent(target.getUUID(), id -> new HashMap<>())
-                .computeIfAbsent(player.getUUID(), id -> new EnumMap<>(Element.class))
+                .computeIfAbsent(player.getUUID(), id -> new EnumMap<>(School.class))
                 .computeIfAbsent(element, e -> new Stacks());
         if (s.count > 0 && tick > s.expires) s.count = 0;
         if (s.count == 0 || refresh) s.expires = tick + duration;
@@ -85,14 +88,14 @@ final class ElementalDebuffs {
             s.count = 0;
             detonate(player, target, element, amount, mech);
             player.displayClientMessage(Component.translatable("message.rpgclasses.element_detonate",
-                    Component.translatable("element.rpgclasses." + element.name().toLowerCase(java.util.Locale.ROOT))), true);
+                    Component.translatable("element.rpgclasses." + element.key())), true);
         } else {
             player.displayClientMessage(Component.translatable("message.rpgclasses.element_stack",
-                    Component.translatable("element.rpgclasses." + element.name().toLowerCase(java.util.Locale.ROOT)), s.count, max), true);
+                    Component.translatable("element.rpgclasses." + element.key()), s.count, max), true);
         }
     }
 
-    private static void detonate(ServerPlayer player, LivingEntity target, Element element, float hit, ActiveMechanic mech) {
+    private static void detonate(ServerPlayer player, LivingEntity target, School element, float hit, ActiveMechanic mech) {
         if (!(target.level() instanceof ServerLevel level)) return;
         DamageSource magic = player.damageSources().indirectMagic(player, player);
         boolean boss = target.getType().is(Tags.EntityTypes.BOSSES);
@@ -145,6 +148,73 @@ final class ElementalDebuffs {
                 level.sendParticles(ParticleTypes.DAMAGE_INDICATOR, target.getX(), target.getY() + 1, target.getZ(), 10, 0.3, 0.4, 0.3, 0.1);
                 level.sendParticles(ParticleTypes.HEART, player.getX(), player.getY() + 2, player.getZ(), 3, 0.3, 0.2, 0.3, 0.02);
             }
+            case HOLY -> {
+                // Juicio: daño (doble a no-muertos) y cura al lanzador y a sus aliados cercanos.
+                float damage = (float) (hit * mech.number("holy_fraction", 0.4)
+                        * (target.getMobType() == net.minecraft.world.entity.MobType.UNDEAD ? mech.number("undead_factor", 2) : 1));
+                target.invulnerableTime = 0;
+                target.hurt(magic, damage);
+                float heal = (float) (hit * mech.number("holy_heal", 0.25));
+                double r = mech.number("holy_radius", 5);
+                for (LivingEntity e : level.getEntitiesOfClass(LivingEntity.class, player.getBoundingBox().inflate(r),
+                        e -> e == player || io.github.rpgclasses.server.Allies.isAlly(player, e))) {
+                    e.heal(heal);
+                    level.sendParticles(ParticleTypes.HEART, e.getX(), e.getY() + e.getBbHeight() + 0.3, e.getZ(), 2, 0.3, 0.2, 0.3, 0.02);
+                }
+                level.sendParticles(ParticleTypes.END_ROD, target.getX(), target.getY() + 1, target.getZ(), 30, 0.4, 0.8, 0.4, 0.05);
+                level.playSound(null, target.getX(), target.getY(), target.getZ(), SoundEvents.BEACON_ACTIVATE, SoundSource.PLAYERS, 0.8f, 1.6f);
+            }
+            case ENDER -> {
+                // Desplazamiento: daño y el objetivo salta a un sitio cercano al azar (los jefes no se mueven).
+                target.invulnerableTime = 0;
+                target.hurt(magic, (float) (hit * mech.number("ender_fraction", 0.4)));
+                level.sendParticles(ParticleTypes.PORTAL, target.getX(), target.getY() + 1, target.getZ(), 40, 0.4, 0.8, 0.4, 0.3);
+                if (!boss) Schools.blink(target, mech.number("ender_range", 8));
+            }
+            case EVOCATION -> {
+                // Colmillos: anillo de colmillos de evocador alrededor del objetivo.
+                Schools.fangs(player, target, (int) Math.round(mech.number("fangs", 6)), 1.5);
+                level.playSound(null, target.getX(), target.getY(), target.getZ(), SoundEvents.EVOKER_CAST_SPELL, SoundSource.PLAYERS, 0.8f, 1f);
+            }
+            case NATURE -> {
+                // Enredo: veneno fuerte y raíces (lentitud extrema); más corto contra jefes.
+                int ticks = (int) Math.round(mech.number(boss ? "boss_root_seconds" : "root_seconds", boss ? 1.5 : 3) * 20);
+                target.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, ticks, 4, false, true), player);
+                target.addEffect(new MobEffectInstance(MobEffects.POISON, (int) Math.round(mech.number("poison_seconds", 5) * 20),
+                        (int) Math.round(mech.number("poison_level", 2)) - 1, false, true), player);
+                level.sendParticles(ParticleTypes.SPORE_BLOSSOM_AIR, target.getX(), target.getY() + 0.5, target.getZ(), 30, 0.5, 0.5, 0.5, 0.02);
+                level.sendParticles(ParticleTypes.HAPPY_VILLAGER, target.getX(), target.getY() + 0.2, target.getZ(), 15, 0.6, 0.1, 0.6, 0);
+                level.playSound(null, target.getX(), target.getY(), target.getZ(), SoundEvents.AZALEA_LEAVES_BREAK, SoundSource.PLAYERS, 1f, 0.7f);
+            }
+            case ELDRITCH -> {
+                // Desgarro: daño y debilidad + oscuridad (ceguera a no jugadores).
+                target.invulnerableTime = 0;
+                target.hurt(magic, (float) (hit * mech.number("eldritch_fraction", 0.5)));
+                int ticks = (int) Math.round(mech.number("eldritch_seconds", 4) * 20);
+                target.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, ticks, 1, false, true), player);
+                target.addEffect(new MobEffectInstance(MobEffects.DARKNESS, ticks, 0, false, true), player);
+                target.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, ticks / 2, 0, false, true), player);
+                level.sendParticles(ParticleTypes.SCULK_SOUL, target.getX(), target.getY() + 1, target.getZ(), 20, 0.4, 0.6, 0.4, 0.03);
+                level.playSound(null, target.getX(), target.getY(), target.getZ(), SoundEvents.WARDEN_HEARTBEAT, SoundSource.PLAYERS, 1f, 0.8f);
+            }
+            case AQUA -> {
+                // Marea (T.O Magic 'n Extras): ola que empuja a los enemigos cercanos, los ralentiza y los moja.
+                double radius = mech.number("wave_radius", 3);
+                float damage = (float) (hit * mech.number("wave_fraction", 0.4));
+                int ticks = (int) Math.round(mech.number("wet_seconds", 6) * 20);
+                for (LivingEntity e : enemiesAround(player, target.position(), radius)) {
+                    e.hurt(magic, damage);
+                    Vec3 dir = e.position().subtract(player.position()).multiply(1, 0, 1).normalize();
+                    e.push(dir.x * 1.0, 0.3, dir.z * 1.0);
+                    e.hurtMarked = true;
+                    e.clearFire();
+                    e.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, ticks / 2, 1, false, true), player);
+                    Schools.applyWet(e, player, ticks, 1);
+                }
+                level.sendParticles(ParticleTypes.SPLASH, target.getX(), target.getY() + 0.5, target.getZ(), 60, radius / 2, 0.3, radius / 2, 0.2);
+                level.sendParticles(ParticleTypes.BUBBLE_POP, target.getX(), target.getY() + 0.5, target.getZ(), 30, radius / 2, 0.5, radius / 2, 0.05);
+                level.playSound(null, target.getX(), target.getY(), target.getZ(), SoundEvents.GENERIC_SPLASH, SoundSource.PLAYERS, 1f, 0.8f);
+            }
         }
     }
 
@@ -184,12 +254,13 @@ final class ElementalDebuffs {
         }
     }
 
-    private static ParticleOptions particle(Element element) {
+    private static ParticleOptions particle(School element) {
         return switch (element) {
             case FIRE -> ParticleTypes.SMALL_FLAME;
             case ICE -> ParticleTypes.SNOWFLAKE;
             case LIGHTNING -> ParticleTypes.ELECTRIC_SPARK;
             case BLOOD -> ParticleTypes.DAMAGE_INDICATOR;
+            default -> Schools.particle(element);
         };
     }
 

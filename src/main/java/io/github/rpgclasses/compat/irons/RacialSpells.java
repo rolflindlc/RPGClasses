@@ -23,8 +23,8 @@ import java.util.UUID;
 /**
  * Razas × Iron's Spells.
  * <ul>
- *   <li>Infernal: conjuros raciales de fuego siempre disponibles en la rueda (no ocupan ranura de libro) y a los
- *       que no afecta el muro de Magia. Usan el maná y el enfriamiento normales de Iron's.</li>
+ *   <li>Infernal: conjuros raciales de fuego siempre disponibles en la rueda (no ocupan ranura de libro). Sufren el
+ *       muro de Magia de la clase (rev. 2.12) y usan el maná y el enfriamiento normales de Iron's.</li>
  *   <li>No-muerto: los conjuros de curación no le curan.</li>
  * </ul>
  */

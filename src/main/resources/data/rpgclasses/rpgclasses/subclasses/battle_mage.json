@@ -43,7 +43,13 @@
       "slow_seconds": 2,
       "arc_range": 4,
       "arc_fraction": 0.5,
-      "blood_heal": 0.25
+      "blood_heal": 0.25,
+      "poison_seconds": 3,
+      "undead_factor": 2,
+      "glow_seconds": 5,
+      "fangs": 3,
+      "weakness_seconds": 3,
+      "push": 0.8
     },
     {
       "type": "rpgclasses:mechanic",

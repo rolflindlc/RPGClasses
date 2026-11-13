@@ -1,6 +1,6 @@
 # Documento de Diseño v2: Mod de Clases y Árboles de Habilidades para Minecraft Java
 
-Versión 2 del diseño (revisión 2.9, en desarrollo). Plataforma prevista: Forge 1.20.1 con Iron's Spells and Spellbooks, Epic Fight, Mowzie's Mobs y Cataclysm. Servidor principalmente PvE con algo de PvP. Objetivo del mod: sistema de clases balanceadas y programado de forma estructurada y orientada a la expansibilidad (clases futuras previstas: Alquimista, Nigromante, Druida).
+Versión 2 del diseño (revisión 2.11, en desarrollo). Plataforma prevista: Forge 1.20.1 con Iron's Spells and Spellbooks, Epic Fight, Mowzie's Mobs y Cataclysm. Servidor principalmente PvE con algo de PvP. Objetivo del mod: sistema de clases balanceadas y programado de forma estructurada y orientada a la expansibilidad (clases futuras previstas: Alquimista, Nigromante, Druida).
 
 Los valores marcados con **[MEDIR]** son objetivos de diseño que deben calibrarse en el juego real antes de darlos por cerrados.
 
@@ -406,6 +406,7 @@ Notas de los perks:
 * **Vínculo Salvaje:** +35% de vida máxima, +35% de daño y +25% de velocidad para mascotas domesticadas (lobos, gatos, loros, etc.). Las invocaciones no cuentan. El bonus aplica a un **máximo de 8 mascotas**.
 * **Salvaguarda de Bestias:** si una mascota va a recibir daño letal, queda a 1 HP, se teletransporta al punto de reaparición del Ranger y se sienta. **Cooldown de 5 min por mascota**; permanece sin órdenes 60 s.
   * Rev. 2.7e: **Vínculo Salvaje** cuenta las 8 mascotas más cercanas (64 bloques); el bonus se quita al alejarse o perder la subclase. Sin cama/ancla, la mascota va al spawn del mundo. "Sin órdenes" = no se puede levantar ni montar durante 60 s. Si el Ranger está desconectado, la Salvaguarda no actúa.
+  * Rev. 2.11: **Libro de Vínculos.** Objeto propio del Maestro de Bestias (receta libro + hueso + correa), que forma parte de su kit al coger la subclase y se retira al perderla. Muestra cada mascota vinculada con imagen (huevo de aparición de su especie), nombre y estadísticas. **Máximo 8 vínculos**; vincular o romper exige estar a **16 bloques o menos**; las mascotas no cargadas no se pueden romper desde el libro. Permite elegir adónde se teletransporta la mascota al morir (la Salvaguarda lo usa): **3 puntos guardados + el punto de aparición**.
 
 **2. Explorador Ágil**
 * **Caminante de la Naturaleza:** **+10%** de velocidad adicional (sujeta al tope global). *(Antes +15% y bonus de Suerte; la Suerte se ha retirado.)*

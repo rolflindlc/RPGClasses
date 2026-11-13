@@ -1,10 +1,25 @@
 # RPG Classes (Forge 1.20.1)
 
-Mod de clases, ramas y subclases definido por datapack. Diseño funcional en
-`documento_de_diseno_de_clases_v2.md` (rev. 2.6) y arquitectura en el documento
+Mod de clases, ramas, subclases y razas definido por datapack. Diseño funcional en
+`documento_de_diseno_de_clases_v2.md` (rev. 2.11), razas y su estado en
+`documento_de_razas_implementacion.md`, y arquitectura en el documento
 "Arquitectura técnica del mod de clases".
 
-## Estado: fase 4 en curso
+## Estado actual (2026-11-13)
+
+Además de lo descrito abajo, ya están en el código, sin probar en el juego:
+
+- **Razas:** 8 razas × 3 subrazas con ritos, Altar de Raza y jefes de rito (`documento_de_razas_implementacion.md`).
+- **Aliados:** sistema de aliados y enemigos (tecla J).
+- **Libro de Vínculos** del Maestro de Bestias.
+- **Interfaz:** retratos de clases, subclases, razas y subrazas, iconos de estados, y texturas propias de
+  panel, cabecera y tarjetas (`python3 -I tools/art/make_ui.py src/main/resources`; el origen de los
+  retratos está en `tools/art/`).
+- Red: protocolo **10**; 14 mixins.
+
+El resto de este apartado es el historial de las fases iniciales.
+
+## Fase 4 en curso (historial)
 
 Hecho:
 

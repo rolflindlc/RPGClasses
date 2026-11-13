@@ -1,6 +1,6 @@
 # Razas: estado de implementación (fases R1 y R2)
 
-Acompaña a *Documento de Diseño: Razas* (anexo, rev. 0.5). Describe qué hay programado en el mod, cómo probarlo y qué falta. Fecha: 2026-11-12.
+Acompaña a *Documento de Diseño: Razas* (anexo, rev. 0.6). Describe qué hay programado en el mod, cómo probarlo y qué falta. Fecha: 2026-11-13 (10.º relevo).
 
 **Cambio de diseño de esta fase (decidido por el usuario):** la invisibilidad **ya no se revela por cercanía a otro jugador**, ni la del Sigilo del Pícaro (documento v2, rev. 2.8) ni la de la Nube de Humo del Elfo Oscuro. Esto sustituye a la propuesta del anexo ("en PvP se revela a menos de 1 bloque"). El revelado "al hacer daño" de la Nube tampoco está programado: mientras dura, la nube vuelve a ocultar a quien esté dentro.
 
@@ -13,7 +13,9 @@ Acompaña a *Documento de Diseño: Razas* (anexo, rev. 0.5). Describe qué hay p
 * **Altar de Raza:** receta `vela · libro · vela / oro · diamante · oro / 3 ladrillos de piedra`. Aparece en la pestaña de bloques funcionales.
 * **Jefes de rito:** uno al azar del tag `rpgclasses:rite_bosses` (jefes medianos de Cataclysm y Mowzie's si están instalados); si no hay ninguno, un devastador o un evocador con el doble de vida. Solo cuentan para quien los invoca, que debe hacerles al menos el 25 % del daño. Desaparecen si su dueño muere, se desconecta, se aleja más de 64 bloques durante 30 s o pasan 10 minutos; 1 minuto de espera entre invocaciones.
 * **Topes y suelos:** la vida y la velocidad raciales suman con las de clase (tope +100 %); suelos de −50 % de vida (10 HP) y −25 % de velocidad.
-* **Tamaño** (Orco +10 %, Enano −25 %, Goblin −50 %): implementación propia, sin librería. Cambia modelo, hitbox y altura de ojos.
+* **Tamaño** (Orco +10 %, Enano −25 %, Goblin −50 %): implementación propia, sin librería. Cambia modelo, hitbox (el mixin `PlayerSizeMixin` escala `getDimensions` en **todas las poses**, para que quepan huecos de 1 bloque y las paredes no den problemas) y altura de ojos.
+* **Interfaz:** los menús de clase y raza usan **retratos** (tus iconos a resolución completa y con fondo) para clases, subclases, razas y subrazas, y **texturas propias** de panel, cabecera y botones (`textures/gui/ui/`, generadas con `tools/art/make_ui.py`; se pueden sustituir por otras). Los estados (efectos) tienen su icono en `textures/mob_effect/`.
+* **Cambio de raza:** solo por administrador (`/clases raza quitar|set`); el jugador no puede cambiarla.
 * **Supervivencia:** habilidades de clase → Última Resistencia del Orco → Tótem.
 
 ### Comandos y teclas
@@ -25,6 +27,7 @@ Acompaña a *Documento de Diseño: Razas* (anexo, rev. 0.5). Describe qué hay p
 | Admin: fijar raza | `/clases raza set <jugador> <raza> <subraza> [rango]` |
 | Admin: fijar rango | `/clases raza rango <jugador> <0-3>` |
 | Admin: quitar raza | `/clases raza quitar <jugador>` (vuelve a salir la pantalla) |
+| Libro de Vínculos (Maestro de Bestias) | objeto propio (no tiene tecla): receta libro + hueso + correa; el kit lo da al coger la subclase |
 | Habilidades raciales | teclas **V** y **B**; agachado + V es una tercera ranura |
 
 Ids de raza: `rpgclasses:human`, `orc`, `dwarf`, `elf`, `goblin`, `triton`, `infernal`, `undead`.
@@ -37,10 +40,10 @@ Ids de raza: `rpgclasses:human`, `orc`, `dwarf`, `elf`, `goblin`, `triton`, `inf
 | **Orco** | +10 % tamaño y vida, Última Resistencia, +25 % hambre | Pétreo (`stoneskin`), Devorador (`devourer`), Caudillo (`warlord`, V) | — |
 | **Enano** | −25 % tamaño, −10 % velocidad, Minero, Fortuna racial | Profundidades (`deep`, V desde R1), Herrero (`smith`), Demoledor (`demolisher`: TNT inofensiva y +25 % de radio, Vetas, Túnel) | — |
 | **Elfo** | Atraviesa y trepa hojas; sin carne ni pescado | Oscuro (`dark`, V desde R1), Arcano (`arcane`), Silvano (`sylvan`) | — |
-| **Goblin** | −50 % tamaño, −25 % vida, Suerte +1, Saqueo racial | Jinete de Lobo (`wolf_rider`), Ladrón (`thief`), Artificiero (`trapper`, V) | — |
-| **Tritón** | Respira y pica bajo el agua, +50 % nado, visión subacuática, +30 % daño de fuego | Pescador (`fisher`), Moldeador (`shaper`: V, B y agachado + V), Abisal (`abyssal`) | — |
-| **Infernal** | Inmune al fuego, conjuros raciales (con Iron's), golems hostiles, aldeanos +50 % | Nativo (`native`, V en R3), Fundidor (`smelter`, V en R3), Pirómano (`pyromaniac`, con Iron's) | — |
-| **No-muerto** | Sol, respiración, hambre fija, regeneración con corte, sin curación de pociones ni conjuros | Vampiro (`vampire`), Esqueleto (`skeleton`), Espectro (`specter`, V desde R1) | — |
+| **Goblin** | −50 % tamaño, −25 % vida, Suerte +1, Saqueo racial | Jinete de Lobo (`wolf_rider`), Ladrón (`thief`, Mano Larga con 2 s de enfriamiento), Artificiero (`trapper`, V: Cepo) | — |
+| **Tritón** | Respira y pica bajo el agua, +50 % nado, visión subacuática, +30 % daño de fuego | Pescador (`fisher`), Moldeador (`shaper`: V, B y agachado + V), Abisal (`abyssal`) | Moldeador: sustituir sus habilidades por conjuros de *T.O Magic 'n Extras* (R0 Hydroshot nv1, R1 Overflow nv3, R2 Jetstream nv1, R3 Tidal Grasp nv1); faltan los ids |
+| **Infernal** | Inmune al fuego, conjuros raciales (con Iron's: Fire Bolt, **Magma Bomb** y **Raise Hell**), golems hostiles, aldeanos +50 % | Nativo (`native`, V en R3), Fundidor (`smelter`, V en R3), Pirómano (`pyromaniac`, con Iron's) | — |
+| **No-muerto** | Sol, respiración, hambre fija, regeneración que **tarda el doble en empezar** (pausa de 6 s; Esqueleto 6/6/6/3 s), sin curación de pociones ni conjuros | Vampiro (`vampire`), Esqueleto (`skeleton`), Espectro (`specter`, V desde R1) | — |
 
 **Fase R2 (hecha):** las **24 subrazas** con todos sus rasgos y sus **72 ritos**.
 
@@ -62,29 +65,38 @@ Ids de raza: `rpgclasses:human`, `orc`, `dwarf`, `elf`, `goblin`, `triton`, `inf
 * **Herrero:** la durabilidad extra va marcada en el objeto (se ve en la descripción) y viaja con él. Cuenta lo que fabricas (mesa y herrería) y lo que reparas o combinas en el yunque; Irrompibilidad +1 solo en lo fabricado. El descuento del yunque (−50 %) es de niveles y no salva el "Demasiado caro".
 * **Demoledor:** su TNT se repite con radio 5 (vanilla 4): también alcanza un poco más a las entidades. Túnel: agachado, solo en bloques del tag `rpgclasses:dwarf_mineable`, frente a la cara que miras; +0,1 de agotamiento por bloque extra.
 * **Elfo Arcano:** en la mesa se devuelve el porcentaje de la experiencia gastada; en el yunque se reducen los niveles. No se suma al descuento del Herrero (cuenta el mayor).
-* **Jinete de Lobo:** clic derecho con la mano vacía en tu lobo adulto para montarlo; agachado conserva el "sentar" de vanilla. El lobo se mueve con la velocidad del lobo (sin tope del jugador) y salta con la tecla de salto. R1: +25 % de vida a tus lobos cercanos (48 bloques). R2: el lobo **montado** muerde a lo que golpeas (1 s entre mordiscos); sin montar ya lo hacen los lobos vanilla.
+* **Jinete de Lobo:** clic derecho con la mano vacía en tu lobo adulto para montarlo; agachado conserva el "sentar" de vanilla. El lobo se mueve con la velocidad del lobo (sin tope del jugador). **Salto cargado como el del caballo:** mantén saltar hasta 1 s (mínimo 35 %), con factor de salto 1,6 y una barra propia (`WolfJumpGauge`) en lugar de la de vanilla. R1: +25 % de vida a tus lobos cercanos (48 bloques). R2: el lobo **montado** muerde a lo que golpeas (1 s entre mordiscos); sin montar ya lo hacen los lobos vanilla.
 * **Pescador:** cada espera hasta que pica un pez se acorta un 40 %.
-* **Moldeador:** las 2 cargas de Ola tienen enfriamientos independientes.
+* **Moldeador:** las 2 cargas de Ola tienen enfriamientos independientes. **Pendiente de cambio** (decidido): sus habilidades pasarán a ser conjuros de *T.O Magic 'n Extras*; faltan los ids exactos (F3+H sobre el pergamino).
+* **Artificiero (Cepo):** **sin tiempo máximo** (no caduca) y más visible: partículas verdes solo para su dueño cada 4 ticks. Daño **2/4/6/8** por rango 0–3, tratado como vida (HP) y como daño de jugador.
+* **Ladrón (Mano Larga):** 2 s de enfriamiento.
 * **Nativo:** 25 % de que un trueque con un piglin salga doble (cuenta el Nativo a 10 bloques o menos del piglin).
 * **Fundidor:** +50 % de velocidad de cocción en hornos, altos hornos y ahumadores a 8 bloques, sin gastar más combustible; dos fundidores no lo duplican.
 * **Ritos, interpretaciones:** "enemigo" = mob hostil, jefe de rito o jugador enemigo; "bajo tierra" = sin cielo encima; luz medida en el enemigo; "sobre lava" = en lava o encima de ella; el arma "fabricada/encantada por ti" va marcada en el objeto (solo desde que eres Herrero o Arcano). Muro Armadura = llevar 3+ piezas; muro Escudos = 10 bloqueos en los últimos 30 s (o en el combate contra el jefe). "Mapa completamente explorado" = 90 % pintado. "Equipo de mob" (Ladrón 3) = equipo robado o soltado por mobs que mataste siendo Ladrón (Manos Vacías llega en el Rango 3, después de este rito). Las 16 TNT del Demoledor deben fabricarse mientras haces ese rito. Abisal 3: también vale matar a cualquier guardián ancestral.
-* **Pirómano:** solo los conjuros raciales (ranura racial de la rueda). Los charcos de llamas y de lava son **zonas de efecto** (prenden a los enemigos; la lava además da Lentitud II, menos a jefes), **sin colocar bloques** de fuego ni de lava para no quemar construcciones.
+* **Infernal (conjuros raciales):** la racial que era bola de fuego pasa a **Magma Bomb** y la que era Magma Bomb pasa a **Raise Hell**.
+* **Pirómano:** solo los conjuros raciales (ranura racial de la rueda). Los charcos de llamas (R2) y de lava (R3) ahora salen de la **Bomba de magma**; Raise Hell no deja charco. Son **zonas de efecto** (prenden a los enemigos; la lava además da Lentitud II, menos a jefes), **sin colocar bloques** de fuego ni de lava para no quemar construcciones.
+* **Libro de Vínculos (Maestro de Bestias):** objeto propio con la imagen (huevo de aparición de la especie), el nombre y las estadísticas de cada mascota vinculada, y permite elegir a dónde se teletransportan al morir (**3 puntos guardados + punto de aparición**; la Salvaguarda lo usa). Máximo **8 vínculos**; radio de **16 bloques** para vincular o romper; receta libro + hueso + correa. Entra en el kit de la subclase (se da al elegirla y se retira al perderla). Los vínculos antiguos migran al verse. Las mascotas no cargadas no se pueden romper desde el libro.
 
 ## 3. Qué falta
 
 1. Tamaño con **Epic Fight**: el modelo de Epic Fight puede no escalarse **[MEDIR]**.
+   Goblin montado en lobo no puede atacar con Epic Fight (pedir log).
 2. Calibrar cantidades de ritos y valores **[MEDIR]**.
 3. Integrar el anexo en el documento v2 y actualizar el documento de arquitectura.
+4. Moldeador: conjuros de *T.O Magic 'n Extras* (ids pendientes).
+5. Traducción `en_us` (los textos nuevos solo están en `es_es`), README y publicación en CurseForge.
+6. HUD de Conjuros Gratuitos y enfriamientos raciales; cooldown del escudo por muro (aparcado); ballestas en Conservación.
+7. Opcional: texturas propias para los botones estándar de los menús (hoy solo usan las propias los paneles, las cabeceras y las tarjetas con retrato).
 
 ## 4. Qué probar
 
 Nada de esto se ha probado en el juego. Perfil: Forge 1.20.1 (47.4.x) + Iron's Spells 3.16.3 + Epic Fight 20.15.x + el jar del último run verde; Cataclysm o Mowzie's opcionales (jefes de rito). Varias pruebas necesitan un segundo jugador (LAN). Si algo falla: `/clases debug volcar`, `logs/rpgclasses-debug.log` y, si hay, el crash-report.
 
-**A. Arranque.** El juego abre y entra al mundo sin errores de Mixin en el log (hay 13 mixins). Servidor y cliente con el mismo jar (protocolo de red 9).
+**A. Arranque.** El juego abre y entra al mundo sin errores de Mixin en el log (hay 14 mixins). Servidor y cliente con el mismo jar (protocolo de red 10).
 
 **B. Elección.** Mundo nuevo: Raza → Subraza → Clase. Personaje que ya tenía clase: le pide la raza. Las 24 subrazas se pueden elegir.
 
-**C. Razas (tronco).** Tamaño de Goblin, Enano y Orco (hitbox, cámara, huecos de 1 bloque, con y sin Epic Fight). Elfo en copas de árbol (atravesar, subir, bajar, sin expulsión por "volar"). No-muerto: sol, hambre fija, regeneración que se corta, poción de curación que no cura. Humano: elegir muro y verlo en `/clases debug stats`. Orco: Última Resistencia con 1 s de inmortalidad. Infernal: conjuros raciales en la rueda de Iron's.
+**C. Razas (tronco).** Tamaño de Goblin, Enano y Orco (hitbox, cámara, huecos de 1 bloque, con y sin Epic Fight). Elfo en copas de árbol (atravesar, subir, bajar, sin expulsión por "volar"). No-muerto: sol, hambre fija, regeneración que se corta, poción de curación que no cura. Humano: elegir muro y verlo en `/clases debug stats`. Orco: Última Resistencia con 1 s de inmortalidad. Infernal: conjuros raciales en la rueda de Iron's (Magma Bomb, Raise Hell). Goblin: tamaño por paredes y huecos de 1 bloque. No-muerto: la regeneración tarda el doble en empezar.
 
 **D. Subrazas** (subir rango con `/clases raza rango <jugador> <0-3>`; habilidades con V, B y agachado + V). Las de la fase R1 y además:
 1. Herrero: fabricar y reparar (durabilidad en la descripción), yunque a mitad, Irrompibilidad +1 en Rango 3.
@@ -93,7 +105,9 @@ Nada de esto se ha probado en el juego. Perfil: Forge 1.20.1 (47.4.x) + Iron's S
 4. Jinete de Lobo: montar (clic derecho con mano vacía), moverse, saltar, bajarse agachado; vida extra (R1), mordisco (R2), regeneración (R3). Probar también con Epic Fight.
 5. Pescador: picos más rápidos. Moldeador: 2 cargas de Ola en Rango 3.
 6. Nativo: trueques dobles. Fundidor: hornos más rápidos cerca.
-7. Pirómano (con Iron's): Disparo de fuego racial que atraviesa; charco de llamas (R2) y de lava (R3).
+7. Pirómano (con Iron's): Disparo de fuego racial que atraviesa; charco de llamas (R2) y de lava (R3) desde la Bomba de magma.
+8. Artificiero: el Cepo no caduca, se ve con partículas verdes solo para su dueño y daña 2/4/6/8 por rango. Ladrón: Mano Larga cada 2 s.
+9. Jinete de Lobo: salto cargado con barra propia (mantener saltar hasta 1 s).
 
 **E. Ritos.**
 1. Fabricar el Altar de Raza; clic derecho muestra el rito; `/raza ritos` también.
@@ -107,3 +121,9 @@ Nada de esto se ha probado en el juego. Perfil: Forge 1.20.1 (47.4.x) + Iron's S
 **G. Apuesta con la Muerte** (Bárbaro Indestructible): moneda girando sobre la cabeza (en primera persona, arriba en la pantalla), inmóvil e inmortal mientras gira, cara ganadora en grande; anj = 1 s inmortal; calavera = muere (o le salva el Orco o el Tótem).
 
 **H. Clases sin probar de antes.** Cambios 2.7f y 2.7g, Estandarte, subclases del Pícaro, Ranger y Monje, compatibilidad con Epic Fight, Sigilo del Pícaro en PvP (ya no se revela por cercanía).
+
+**I. Libro de Vínculos y menús.**
+1. Maestro de Bestias: al coger la subclase aparece el libro en el kit (se retira al perderla). Receta libro + hueso + correa.
+2. Vincular y romper a menos de 16 bloques; máximo 8; el libro muestra imagen, nombre y estadísticas; elegir destino al morir (3 puntos + aparición).
+3. Menús de clase y raza: rejilla de tarjetas con retrato, cabecera con retrato grande (compacta a 24 px si la pantalla mide menos de 330 de alto), pestañas de subraza y botones de subclase con retrato; paneles, cabeceras y tarjetas con las texturas nuevas. Comprobar legibilidad en tamaños de interfaz 1 a 4.
+4. Iconos de estados (efectos) en la barra y en el inventario.

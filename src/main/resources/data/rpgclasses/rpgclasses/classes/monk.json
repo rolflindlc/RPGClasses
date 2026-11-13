@@ -18,6 +18,30 @@
   "school_walls": {
     "irons_spellbooks:holy": 1.0
   },
+  "traits": [
+    {
+      "type": "rpgclasses:attribute",
+      "condition": "rpgclasses:no_armor",
+      "modifiers": [
+        {
+          "attribute": "rpgclasses:unarmed_damage",
+          "to": 4.0,
+          "operation": "add"
+        },
+        {
+          "attribute": "minecraft:generic.armor",
+          "to": 10,
+          "operation": "add"
+        },
+        {
+          "attribute": "minecraft:generic.armor_toughness",
+          "to": 4,
+          "operation": "add"
+        }
+      ],
+      "scale": "base_points"
+    }
+  ],
   "armor_rule": "disables_unarmored_passives",
   "branches": [
     {
@@ -25,39 +49,33 @@
       "max_points": 10,
       "effects": [
         {
-          "type": "rpgclasses:attribute",
-          "modifiers": [
-            {
-              "attribute": "rpgclasses:unarmed_damage",
-              "to": 6.0,
-              "operation": "add"
-            }
-          ]
+          "type": "rpgclasses:mechanic",
+          "id": "rpgclasses:fire_potency",
+          "potency": {
+            "to": 0.3333333333333333
+          }
         }
       ],
       "perks": [
         {
-          "id": "flow",
+          "id": "steady_flame",
           "effects": [
             {
               "type": "rpgclasses:mechanic",
-              "id": "rpgclasses:flow",
-              "switch_cooldown_seconds": 3,
-              "linger_seconds": 3,
-              "linger_factor": 0.5,
-              "unarmed_damage_change": -0.05
+              "id": "rpgclasses:steady_flame",
+              "decay_slowdown": 0.5,
+              "buff_change": -0.2
             }
           ]
         },
         {
-          "id": "elemental_wave",
+          "id": "early_ignition",
           "effects": [
             {
               "type": "rpgclasses:mechanic",
-              "id": "rpgclasses:elemental_wave",
-              "radius": 3,
-              "damage_fraction": 0.75,
-              "switch_cooldown_seconds": 7
+              "id": "rpgclasses:early_ignition",
+              "threshold": 6,
+              "ignite_bonus_per_charge": 0.04
             }
           ]
         }
@@ -68,20 +86,11 @@
       "max_points": 10,
       "effects": [
         {
-          "type": "rpgclasses:attribute",
-          "condition": "rpgclasses:no_armor",
-          "modifiers": [
-            {
-              "attribute": "minecraft:generic.movement_speed",
-              "to": 0.35,
-              "operation": "multiply_base"
-            },
-            {
-              "attribute": "rpgclasses:jump_bonus",
-              "to": 0.35,
-              "operation": "add"
-            }
-          ]
+          "type": "rpgclasses:mechanic",
+          "id": "rpgclasses:water_potency",
+          "potency": {
+            "to": 0.3333333333333333
+          }
         }
       ],
       "perks": [
@@ -123,20 +132,11 @@
       "max_points": 10,
       "effects": [
         {
-          "type": "rpgclasses:attribute",
-          "condition": "rpgclasses:no_armor",
-          "modifiers": [
-            {
-              "attribute": "minecraft:generic.armor",
-              "to": 16,
-              "operation": "add"
-            },
-            {
-              "attribute": "minecraft:generic.armor_toughness",
-              "to": 6,
-              "operation": "add"
-            }
-          ]
+          "type": "rpgclasses:mechanic",
+          "id": "rpgclasses:stone_potency",
+          "potency": {
+            "to": 0.3333333333333333
+          }
         }
       ],
       "perks": [
@@ -168,13 +168,13 @@
           ]
         },
         {
-          "id": "inner_calm",
+          "id": "stone_echo",
           "effects": [
             {
               "type": "rpgclasses:mechanic",
-              "id": "rpgclasses:inner_calm",
-              "absorb_per_second": 0.5,
-              "absorb_max": 5
+              "id": "rpgclasses:stone_echo",
+              "absorb_factor": 2,
+              "hit_threshold": 4
             }
           ]
         }
@@ -187,8 +187,19 @@
         {
           "type": "rpgclasses:mechanic",
           "id": "rpgclasses:stance_mastery",
-          "stance_bonus": {
-            "to": 0.2
+          "extra_charges": {
+            "values": [
+              0,
+              0,
+              0,
+              0,
+              2,
+              2,
+              2,
+              2,
+              2,
+              4
+            ]
           }
         }
       ],
@@ -199,19 +210,19 @@
             {
               "type": "rpgclasses:mechanic",
               "id": "rpgclasses:dominant_stance",
-              "favorite_bonus": 0.5,
-              "others_bonus": -0.25
+              "favorite_charges": 3,
+              "others_charges": -3
             }
           ]
         },
         {
-          "id": "hybrid_stance",
+          "id": "continuous_flow",
           "effects": [
             {
               "type": "rpgclasses:mechanic",
-              "id": "rpgclasses:hybrid_stance",
-              "stance_factor": 0.5,
-              "switch_cooldown_change": 2
+              "id": "rpgclasses:continuous_flow",
+              "keep_fraction": 0.3,
+              "switch_cooldown_change": 1
             }
           ]
         }
@@ -228,7 +239,9 @@
           "heal_per_second": {
             "to": 0.5
           },
-          "health_limit": 0.6
+          "health_limit": 0.6,
+          "end_charges": 4,
+          "hold_seconds": 10
         }
       ],
       "perks": [

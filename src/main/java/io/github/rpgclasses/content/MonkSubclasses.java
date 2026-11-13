@@ -92,9 +92,9 @@ public final class MonkSubclasses {
         ActiveMechanic fist = MechanicService.find(attacker, DISABLING_FIST);
         if (fist != null && target.isAlive()) {
             long now = target.level().getGameTime();
-            String key = TAG_FIST_UNTIL + attacker.getUUID();
-            if (target.getPersistentData().getLong(key) <= now && attacker.getRandom().nextDouble() < fist.number("chance", 0.1)) {
-                target.getPersistentData().putLong(key, now + (long) (fist.number("icd_seconds", 6) * 20));
+            // Regla 6 (rev. 2.9): comparte el registro de aturdimientos del Monje con Piedra.
+            if (attacker.getRandom().nextDouble() < fist.number("chance", 0.1)
+                    && MonkCharges.tryStun(attacker, target, (int) Math.round(fist.number("icd_seconds", 6) * 20))) {
                 int ticks = (int) Math.round(fist.number("duration_seconds", 1.5) * 20);
                 target.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, ticks, 1), attacker);
                 target.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, ticks, 0), attacker);
@@ -104,7 +104,7 @@ public final class MonkSubclasses {
 
         ActiveMechanic manifest = MechanicService.find(attacker, MANIFEST);
         if (manifest != null && "fire".equals(stance(attacker)) && target.isAlive()) {
-            target.setSecondsOnFire((int) Math.round(manifest.number("ignite_seconds", 6)));
+            MonkCharges.addBurn(target, manifest.number("ignite_seconds", 6)); // regla 7: se suma a la quemadura
         }
     }
 

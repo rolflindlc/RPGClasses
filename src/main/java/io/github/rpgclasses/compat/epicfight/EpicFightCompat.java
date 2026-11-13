@@ -141,6 +141,7 @@ public final class EpicFightCompat {
             if (cutZone(sp)) return; // Voltereta Larga: ese golpe entra, no cuenta como esquiva
             DebugLog.event(sp, "esquiva", "con éxito contra {} de {}", event.getDamageSource().getMsgId(),
                     DebugLog.describe(event.getDamageSource().getEntity()));
+            io.github.rpgclasses.content.MonkCharges.onDodge(sp); // Agua: +3 cargas
             ActiveMechanic counter = mechanic(sp, DODGE_COUNTER);
             if (counter == null) return;
             int window = (int) Math.round(counter.number("window_seconds", 3) * 20);

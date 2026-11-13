@@ -63,9 +63,10 @@ classes = {
    subs=["beast_master","agile_scout","sniper"]),
  "monk": dict(icon="minecraft:leather", roles=["melee","movilidad"], kit=None, crit=0.0, armor_rule=True,
    walls=dict(magic=.7, bow=.3, heavy=.35, light=.4, shield=1.0),
-   branches=[("fist",[attr([(R("unarmed_damage"), to(6.0))])]),
-             ("wind",[attr([(MC+"movement_speed", to(.35,"multiply_base")), (R("jump_bonus"), to(.35))], NOARM)]),
-             ("skin",[attr([(MC+"armor", to(16)), (MC+"armor_toughness", to(6))], NOARM)])],
+   # Rev. 2.9: las ramas ya no dan stats planos; potencian las cargas de Fuego, Agua y Piedra (+33 % con 10 puntos).
+   branches=[("fist",[mech("fire_potency", potency={"to":1/3})]),
+             ("wind",[mech("water_potency", potency={"to":1/3})]),
+             ("skin",[mech("stone_potency", potency={"to":1/3})])],
    milestones=[ms(5,"stances"), ms(15,"deflect"), ms(30,"light_step")],
    subs=["breeze_master","heavy_palm","triworld_guardian"]),
 }
@@ -76,6 +77,8 @@ TRAITS = {
  "mage": [attr([(MC+"max_health", mb(-.2))])],
  "paladin": [attr([(MC+"max_health", mb(.2)), (MC+"movement_speed", mb(-.1))])],
  "rogue": [attr([(MC+"max_health", mb(-.15))])],
+ # Cuerpo Marcial (rev. 2.9): suelo que crece con los puntos de clase base (máximo con 30).
+ "monk": [dict(attr([(R("unarmed_damage"), to(4.0)), (MC+"armor", to(10)), (MC+"armor_toughness", to(4))], NOARM), scale="base_points")],
 }
 EXTRA_BRANCHES = {
  "mage": [("summoning",[mech("summon_bonus", summon_health={"to":.4}, summon_damage={"to":.4})]),
@@ -88,8 +91,8 @@ EXTRA_BRANCHES = {
            ("acrobatics",[mech("acrobatics", stamina_cost={"to":-.3}, dodge_invulnerability={"to":.25})])],
  "ranger": [("special_arrows",[mech("potion_arrows", potion_bonus={"to":.25})]),
             ("retreat",[mech("retreat", speed_bonus=.25, duration_seconds=2, icd_seconds=5, min_points=10)])],
- "monk": [("stance_mastery",[mech("stance_mastery", stance_bonus={"to":.2})]),
-          ("meditation",[mech("meditation", delay_seconds=2, heal_per_second={"to":.5}, health_limit=.6)])],
+ "monk": [("stance_mastery",[mech("stance_mastery", extra_charges={"values":[0,0,0,0,2,2,2,2,2,4]})]),
+          ("meditation",[mech("meditation", delay_seconds=2, heal_per_second={"to":.5}, health_limit=.6, end_charges=4, hold_seconds=10)])],
 }
 SLOWS = ["minecraft:slowness","minecraft:weakness","minecraft:blindness","minecraft:mining_fatigue","minecraft:nausea","minecraft:darkness"]
 PERKS = {
@@ -143,14 +146,14 @@ PERKS = {
                                ("sticky_arrow",[mech("sticky_arrow", slowness_seconds=2), attr([(R("projectile_velocity"), to(-.1))])])],
  ("ranger","retreat"): [("evasive_leap",[mech("evasive_leap", leap_blocks=4, icd_seconds=12)]),
                         ("hunter_trap",[mech("hunter_trap", duration_seconds=3, slowness_level=2, icd_seconds=12)])],
- ("monk","fist"): [("flow",[mech("flow", switch_cooldown_seconds=3, linger_seconds=3, linger_factor=.5, unarmed_damage_change=-.05)]),
-                   ("elemental_wave",[mech("elemental_wave", radius=3, damage_fraction=.75, switch_cooldown_seconds=7)])],
+ ("monk","fist"): [("steady_flame",[mech("steady_flame", decay_slowdown=.5, buff_change=-.2)]),
+                   ("early_ignition",[mech("early_ignition", threshold=6, ignite_bonus_per_charge=.04)])],
  ("monk","wind"): [("running_momentum",[mech("running_momentum", sprint_seconds=2, damage_bonus=.3, knockback_bonus=.5)]),
                    ("light_feet",[mech("light_feet"), attr([(MC+"movement_speed", mb(-.1))])])],
  ("monk","skin"): [("spirit_skin",[attr([(MC+"armor", to(-2)), (MC+"armor_toughness", to(-1))], NOARM), mech("spirit_skin", magic_reduction=.3, combined_cap=.85)]),
-                   ("inner_calm",[mech("inner_calm", absorb_per_second=.5, absorb_max=5)])],
- ("monk","stance_mastery"): [("dominant_stance",[mech("dominant_stance", favorite_bonus=.5, others_bonus=-.25)]),
-                             ("hybrid_stance",[mech("hybrid_stance", stance_factor=.5, switch_cooldown_change=2)])],
+                   ("stone_echo",[mech("stone_echo", absorb_factor=2, hit_threshold=4)])],
+ ("monk","stance_mastery"): [("dominant_stance",[mech("dominant_stance", favorite_charges=3, others_charges=-3)]),
+                             ("continuous_flow",[mech("continuous_flow", keep_fraction=.3, switch_cooldown_change=1)])],
  ("monk","meditation"): [("deep_trance",[mech("meditation_variant", heal_per_second_fixed=1, delay_seconds=4, health_limit=.8)]),
                          ("clear_mind",[mech("meditation_variant", purge_interval_seconds=5)])],
 }

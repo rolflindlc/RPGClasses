@@ -11,11 +11,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Retratos de 36x36 de clases, subclases, razas y subrazas ({@code textures/gui/portrait/<tipo>/<id>.png}).
+ * Retratos (236x236, se muestran a 36 px de interfaz) de clases, subclases, razas y subrazas ({@code textures/gui/portrait/<tipo>/<id>.png}).
  * Si una definición (p. ej. de un datapack) no tiene retrato, se dibuja su icono de objeto.
  */
 public final class Portraits {
+    /** Tamaño en la interfaz (píxeles de GUI). */
     public static final int TEX = 36;
+    /** Resolución de la textura: los iconos de Daniel a tamaño completo, con su fondo (filtrado suave por .mcmeta). */
+    public static final int RES = 236;
     private static final Map<ResourceLocation, Boolean> EXISTS = new HashMap<>();
 
     private Portraits() {}
@@ -63,7 +66,7 @@ public final class Portraits {
      */
     public static void draw(GuiGraphics g, ResourceLocation tex, String fallbackItem, int x, int y, int size) {
         if (exists(tex)) {
-            g.blit(tex, x, y, size, size, 0, 0, TEX, TEX, TEX, TEX);
+            g.blit(tex, x, y, size, size, 0, 0, RES, RES, RES, RES);
             return;
         }
         g.fill(x, y, x + size, y + size, 0xFF2A2A30);

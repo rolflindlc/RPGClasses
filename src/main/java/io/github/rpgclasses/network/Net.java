@@ -45,12 +45,6 @@ public final class Net {
         CHANNEL.messageBuilder(Packets.ArrowVelocity.class, id++, NetworkDirection.PLAY_TO_CLIENT)
                 .encoder(Packets.ArrowVelocity::encode).decoder(Packets.ArrowVelocity::decode)
                 .consumerMainThread(Packets.ArrowVelocity::handle).add();
-        CHANNEL.messageBuilder(Packets.BondPrompt.class, id++, NetworkDirection.PLAY_TO_CLIENT)
-                .encoder(Packets.BondPrompt::encode).decoder(Packets.BondPrompt::decode)
-                .consumerMainThread(Packets.BondPrompt::handle).add();
-        CHANNEL.messageBuilder(Packets.BondAnswer.class, id++, NetworkDirection.PLAY_TO_SERVER)
-                .encoder(Packets.BondAnswer::encode).decoder(Packets.BondAnswer::decode)
-                .consumerMainThread(Packets.BondAnswer::handle).add();
         CHANNEL.messageBuilder(Packets.UseRaceAbility.class, id++, NetworkDirection.PLAY_TO_SERVER)
                 .encoder(Packets.UseRaceAbility::encode).decoder(Packets.UseRaceAbility::decode)
                 .consumerMainThread(Packets.UseRaceAbility::handle).add();

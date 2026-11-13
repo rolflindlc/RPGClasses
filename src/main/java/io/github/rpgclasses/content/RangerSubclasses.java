@@ -70,10 +70,6 @@ public final class RangerSubclasses {
     private static final String TAG_IDLE_UNTIL = "rpgclasses.safeguard_idle";
     private static final int PERIOD_TICKS = 20;
     public static final String TAG_BONDED = "rpgclasses.bonded";
-    /** Preguntas de vínculo pendientes: Ranger → (id de entidad, tick límite). */
-    private static final Map<UUID, long[]> PROMPTS = new HashMap<>();
-    /** Animales recién domesticados: se pregunta en el tick siguiente, cuando ya tienen dueño. */
-    private static final List<Object[]> TAMED = new ArrayList<>();
 
     /** Mascotas con bonus, por Ranger (para quitarlo cuando dejan de estar entre las 8 o el Ranger lo pierde). */
     private static final Map<UUID, Set<UUID>> BOOSTED = new HashMap<>();
@@ -87,13 +83,6 @@ public final class RangerSubclasses {
     public void onServerTick(TickEvent.ServerTickEvent event) {
         if (event.phase != TickEvent.Phase.END) return;
         MinecraftServer server = event.getServer();
-        if (!TAMED.isEmpty()) {
-            List<Object[]> todo = new ArrayList<>(TAMED);
-            TAMED.clear();
-            for (Object[] t : todo) {
-                if (t[0] instanceof ServerPlayer ranger && t[1] instanceof LivingEntity pet && ownedBy(pet, ranger)) prompt(ranger, pet);
-            }
-        }
         if (!RESCUES.isEmpty()) {
             List<Rescue> todo = new ArrayList<>(RESCUES);
             RESCUES.clear();
@@ -180,7 +169,7 @@ public final class RangerSubclasses {
     }
 
     /**
-     * Vincula una mascota del Ranger. Lo usan el animal recién domesticado (pregunta) y el Libro de Vínculos.
+     * Vincula una mascota del Ranger. Solo se llama desde el Libro de Vínculos (rev. 2.18: ya no hay vínculo por domesticar ni agachado + mano vacía).
      * @return false si no es posible (no es Maestro de Bestias, no es suya, ya vinculada o libro lleno).
      */
     public static boolean bond(ServerPlayer ranger, LivingEntity pet) {
@@ -204,46 +193,6 @@ public final class RangerSubclasses {
         unboost(pet);
         BondBook.removeBond(ranger, pet.getUUID());
         ranger.displayClientMessage(Component.translatable("message.rpgclasses.bond_broken", pet.getName()), true);
-    }
-
-    @SubscribeEvent
-    public void onTame(net.minecraftforge.event.entity.living.AnimalTameEvent event) {
-        if (event.getTamer() instanceof ServerPlayer ranger && !(ranger instanceof FakePlayer) && isBeastMaster(ranger)) {
-            TAMED.add(new Object[]{ranger, event.getAnimal()});
-        }
-    }
-
-    private static void prompt(ServerPlayer ranger, LivingEntity pet) {
-        PROMPTS.put(ranger.getUUID(), new long[]{pet.getId(), ranger.serverLevel().getGameTime() + 20 * 60});
-        io.github.rpgclasses.network.Net.toPlayer(ranger, new io.github.rpgclasses.network.Packets.BondPrompt(pet.getId(), pet.getName().getString()));
-    }
-
-    /** Respuesta del cliente a la pregunta de vínculo. */
-    public static void answerBond(ServerPlayer ranger, int entityId, boolean accept) {
-        long[] pending = PROMPTS.remove(ranger.getUUID());
-        if (pending == null || pending[0] != entityId || ranger.serverLevel().getGameTime() > pending[1] || !accept) return;
-        if (ranger.serverLevel().getEntity(entityId) instanceof LivingEntity pet) bond(ranger, pet);
-    }
-
-    /** Agachado y con la mano vacía sobre una mascota propia: vincularse (pregunta) o romper el vínculo. */
-    @SubscribeEvent(priority = EventPriority.HIGH)
-    public void onBondInteract(PlayerInteractEvent.EntityInteract event) {
-        if (event.getLevel().isClientSide() || !(event.getEntity() instanceof ServerPlayer ranger) || !ranger.isShiftKeyDown()) return;
-        if (!ranger.getItemInHand(event.getHand()).isEmpty() || event.getHand() != net.minecraft.world.InteractionHand.MAIN_HAND) return;
-        Entity pet = event.getTarget();
-        if (!ownedBy(pet, ranger) || !isBeastMaster(ranger)) return;
-        event.setCanceled(true);
-        event.setCancellationResult(net.minecraft.world.InteractionResult.SUCCESS);
-        if (isPetOf(pet, ranger)) {
-            if (pet instanceof LivingEntity living) {
-                unbond(ranger, living);
-            } else {
-                pet.getPersistentData().remove(TAG_BONDED);
-                BondBook.removeBond(ranger, pet.getUUID());
-            }
-        } else if (pet instanceof LivingEntity living) {
-            prompt(ranger, living);
-        }
     }
 
     // --- Salvaguarda de Bestias ---

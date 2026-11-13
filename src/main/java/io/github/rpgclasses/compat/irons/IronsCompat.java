@@ -1,6 +1,7 @@
 package io.github.rpgclasses.compat.irons;
 
 import io.github.rpgclasses.RpgClasses;
+import io.github.rpgclasses.content.ChaosMagic;
 import io.github.rpgclasses.content.RogueAbilities;
 import io.github.rpgclasses.core.stat.StatCalculator.ActiveMechanic;
 import io.github.rpgclasses.registry.ModEffects;
@@ -72,7 +73,7 @@ import java.util.UUID;
  *   <li>Pícaro: lanzar desde Sigilo gasta barra; Hoja Arcana: Emboscada Arcana (arcane_ambush).</li>
  *   <li>Mago: Conjuros Gratuitos por Cargas ({@link FreeCasts}), kit con libro, Escudo Arcano y
  *       Concentración Inquebrantable (Mago de Batalla).</li>
- *   <li>Evocador Caótico: Magia Salvaje (wild_magic). Elementalista: {@link ElementalDebuffs}.</li>
+ *   <li>Evocador Caótico: Magia Caótica (wild_magic, {@link ChaosMagic}). Elementalista: {@link ElementalDebuffs}.</li>
  * </ul>
  * Fluidez (cast_no_slow) no necesita eventos: es un modificador de casting_movespeed en {@link StatEngine}.
  */
@@ -82,19 +83,8 @@ public final class IronsCompat {
     private static final String CD_ARCANE_STEP = "rpgclasses:arcane_step";
     private static final String CD_AMBUSH = "rpgclasses:arcane_ambush";
     private static final String CD_WILD = "rpgclasses:wild_magic";
-    /** Entidades creadas por una réplica de Magia Salvaje: guardan el multiplicador de daño. */
+    /** Entidades creadas por una extra de la Magia Caótica: guardan el multiplicador de daño. */
     private static final String TAG_REPLICA = "rpgclasses:replica";
-    /**
-     * Conjuros ofensivos que no muestran "Daño" en su descripción (control, área, zonas). El resto se detecta
-     * por la línea de daño de {@link AbstractSpell#getUniqueInfo}.
-     */
-    private static final Set<String> EXTRA_OFFENSIVE = Set.of(
-            "irons_spellbooks:wall_of_fire", "irons_spellbooks:heat_surge", "irons_spellbooks:ice_tomb",
-            "irons_spellbooks:frostwave", "irons_spellbooks:frostbite", "irons_spellbooks:snowball",
-            "irons_spellbooks:blizzard", "irons_spellbooks:earthquake", "irons_spellbooks:acid_orb",
-            "irons_spellbooks:blight", "irons_spellbooks:root", "irons_spellbooks:heartstop",
-            "irons_spellbooks:black_hole", "irons_spellbooks:gravity_fissure", "irons_spellbooks:slow",
-            "irons_spellbooks:arcane_shackle");
     private static final String TAG_SUMMON_DONE = "rpgclasses:summon_done";
     private static final String TAG_SUMMON_DAMAGE = "rpgclasses:summon_damage";
     private static final String TAG_CLONE_OF = "rpgclasses:clone_of";
@@ -115,7 +105,7 @@ public final class IronsCompat {
     private static final List<Entity[]> NEW_SUMMONS = new ArrayList<>();
     /** Conjuro Gratuito aceptado por Iron's, pendiente de lanzarse (se cobra la carga al lanzar). */
     private static final Map<UUID, FreeCast> FREE_PENDING = new HashMap<>();
-    /** Maná de Magia de Sangre del conjuro en curso: no cuenta como gastado (Escudo Arcano, Magia Salvaje). */
+    /** Maná de Magia de Sangre del conjuro en curso: no cuenta como gastado (Escudo Arcano, Magia Caótica). */
     private static final Map<UUID, Float> BLOOD_MANA = new HashMap<>();
     /** Escudo Arcano: absorción propia de cada jugador (aparte de la de manzanas, etc.). */
     private static final Map<UUID, Shield> SHIELDS = new HashMap<>();
@@ -123,7 +113,7 @@ public final class IronsCompat {
     private static final Map<UUID, Ambush> AMBUSHES = new HashMap<>();
     /** Invocaciones extra de Legión → su original (desaparecen con ella). */
     private static final Map<UUID, Clone> CLONES = new HashMap<>();
-    /** Magia Salvaje que ha saltado este tick: se lanza al final del tick, después del conjuro original. */
+    /** Magia Caótica que ha saltado este tick: se lanza al final del tick, después del conjuro original. */
     private static final List<WildProc> WILD_PENDING = new ArrayList<>();
     /** Réplica en curso (jugador y multiplicador de daño); null fuera de ella. Las réplicas no encadenan. */
     private static UUID replicating;
@@ -135,13 +125,14 @@ public final class IronsCompat {
     private static final class Shield { float own; long lastSpend; }
     private record Ambush(String spellId, long expires) {}
     private record Clone(ServerLevel level, UUID original) {}
-    private record WildProc(UUID player, String castSpellId) {}
+    private record WildProc(UUID player, String castSpellId, int spellLevel) {}
 
     public static void init() {
         MinecraftForge.EVENT_BUS.register(new IronsCompat());
         KitService.spellInscriber = IronsCompat::inscribe;
         MinecraftForge.EVENT_BUS.register(new RacialSpells());
         MinecraftForge.EVENT_BUS.register(new Pyromaniac());
+        installChaosHooks();
         RpgClasses.LOGGER.info("[rpgclasses] Iron's Spells detectado: puente activado");
     }
 
@@ -329,102 +320,91 @@ public final class IronsCompat {
             st.lastSpend = tick;
         }
 
-        // Magia Salvaje: probabilidad según el maná gastado de verdad (las cargas y la sangre no cuentan).
+        // Magia Caótica (Evocador Caótico): probabilidad según el maná gastado de verdad (las cargas y la sangre no
+        // cuentan, pero siempre queda la probabilidad mínima).
         ActiveMechanic wild = MechanicService.find(player, "wild_magic");
-        if (wild != null && spent > 0 && replicating == null && AbilityService.remainingTicks(player, CD_WILD) <= 0) {
+        if (wild != null && replicating == null && AbilityService.remainingTicks(player, CD_WILD) <= 0) {
             double chance = Math.min(wild.number("chance_cap", 0.5),
-                    Math.max(wild.number("min_chance", 0), spent * wild.number("chance_per_mana", 0.0033)));
+                    Math.max(wild.number("min_chance", 0.15), spent * wild.number("chance_per_mana", 0.0033)));
             boolean proc = player.getRandom().nextDouble() < chance;
-            io.github.rpgclasses.server.DebugLog.event(player, "Magia Salvaje", "tirada {}%: {}", chance * 100, proc ? "SALTA" : "no");
+            io.github.rpgclasses.server.DebugLog.event(player, "Magia Caótica", "tirada {}%: {}", chance * 100, proc ? "SALTA" : "no");
             if (proc) {
                 AbilityService.setCooldown(player, CD_WILD, (int) Math.round(wild.number("icd_ticks", 30)));
-                WILD_PENDING.add(new WildProc(player.getUUID(), event.getSpellId()));
+                WILD_PENDING.add(new WildProc(player.getUUID(), event.getSpellId(), event.getSpellLevel()));
             }
         }
     }
 
-    // ---------------------------------------------------------------- Magia Salvaje
+    // ---------------------------------------------------------------- Magia Caótica (puente con Iron's)
+
+    /** Conjuros vistosos que puede lanzar el efecto "conjuro aleatorio". Los que no existan en tu versión se ignoran. */
+    private static final List<String> SHOWY = List.of(
+            "irons_spellbooks:fireball", "irons_spellbooks:firebolt", "irons_spellbooks:magma_bomb",
+            "irons_spellbooks:lightning_bolt", "irons_spellbooks:lightning_lance", "irons_spellbooks:icicle",
+            "irons_spellbooks:frostwave", "irons_spellbooks:fang_strike", "irons_spellbooks:shockwave",
+            "irons_spellbooks:starfall", "irons_spellbooks:wisp", "irons_spellbooks:acid_orb",
+            "irons_spellbooks:chain_creeper", "irons_spellbooks:magic_missile", "irons_spellbooks:firecracker");
+
+    /** Fracción del daño que hacen los conjuros extra lanzados por la Magia Caótica (no se encadenan). */
+    private static final double CHAOS_CAST_DAMAGE = 0.75;
+
+    private static void installChaosHooks() {
+        ChaosMagic.hooks = new ChaosMagic.Hooks() {
+            @Override
+            public boolean recast(ServerPlayer player, String spellId, int spellLevel) {
+                AbstractSpell spell = SpellRegistry.getSpell(new net.minecraft.resources.ResourceLocation(spellId));
+                return chaosCast(player, spell, spellLevel);
+            }
+
+            @Override
+            public boolean castShowy(ServerPlayer player, int spellLevel) {
+                List<String> options = new ArrayList<>(SHOWY);
+                java.util.Collections.shuffle(options, new java.util.Random(player.getRandom().nextLong()));
+                for (String id : options) { // el primero que exista y se pueda lanzar
+                    AbstractSpell spell = SpellRegistry.getSpell(new net.minecraft.resources.ResourceLocation(id));
+                    if (chaosCast(player, spell, Math.max(2, Math.min(spellLevel, 6)))) return true;
+                }
+                return false;
+            }
+
+            @Override
+            public void addMana(ServerPlayer player, double fractionOfMax) {
+                MagicData magic = MagicData.getPlayerMagicData(player);
+                double max = player.getAttributeValue(io.redspace.ironsspellbooks.api.registry.AttributeRegistry.MAX_MANA.get());
+                magic.setMana((float) Math.max(0, Math.min(max, magic.getMana() + max * fractionOfMax)));
+            }
+        };
+    }
 
     /**
-     * Lanza otro conjuro ofensivo equipado (al azar, no legendario, no canalizado continuo ni con relanzamientos)
-     * en {@code directions} direcciones horizontales, sin maná ni cooldown, con un tercio del daño.
-     * Se usa un MagicData temporal para no pisar el estado de lanzamiento real del jugador.
+     * Lanza un conjuro extra sin maná ni cooldown, hacia donde mira el mago y con {@link #CHAOS_CAST_DAMAGE} del
+     * daño. Se usa un MagicData temporal para no pisar el estado de lanzamiento real. No lanza continuos, legendarios,
+     * invocaciones ni conjuros con relanzamiento, ni escuelas vetadas para su clase.
      */
-    private static void wildMagic(ServerPlayer player, String castSpellId) {
-        ActiveMechanic wild = MechanicService.find(player, "wild_magic");
-        if (wild == null || !player.isAlive() || !(player.level() instanceof ServerLevel level)) return;
-        List<SpellData> options = new ArrayList<>();
-        try {
-            for (SpellSelectionManager.SelectionOption o : new SpellSelectionManager(player).getAllSpells()) {
-                SpellData d = o.spellData;
-                AbstractSpell s = d == null ? null : d.getSpell();
-                if (s == null || "irons_spellbooks:none".equals(s.getSpellId())) continue;
-                if (options.stream().anyMatch(x -> x.getSpell() == s)) continue;
-                if (s.getRarity(d.getLevel()) == SpellRarity.LEGENDARY || s.getCastType() == CastType.CONTINUOUS
-                        || s.getRecastCount(d.getLevel(), player) > 0 || isSummonSpell(s.getSpellId())) continue;
-                if (StatEngine.schoolWall(player, s.getSchoolType().getId().toString()) >= 1.0) continue;
-                if (isOffensive(s, d.getLevel(), player)) options.add(d);
-            }
-        } catch (RuntimeException e) {
-            RpgClasses.LOGGER.warn("[rpgclasses] Magia Salvaje: no se pudieron leer los conjuros equipados", e);
-            return;
-        }
-        if (options.isEmpty()) {
-            io.github.rpgclasses.server.DebugLog.event(player, "Magia Salvaje", "{} no tiene conjuros ofensivos válidos para replicar", player.getGameProfile().getName());
-            return;
-        }
-        // Se prefiere otro conjuro distinto del lanzado; si solo está ese, se replica el mismo (rev. 2.7f).
-        List<SpellData> others = options.stream().filter(d -> !d.getSpell().getSpellId().equals(castSpellId)).toList();
-        List<SpellData> pool = others.isEmpty() ? options : others;
-        SpellData pick = pool.get(player.getRandom().nextInt(pool.size()));
-        AbstractSpell spell = pick.getSpell();
-        int directions = Math.max(1, (int) Math.round(wild.number("directions", 8)));
-        float yaw = player.getYRot(), pitch = player.getXRot(), head = player.getYHeadRot(), body = player.yBodyRot;
+    private static boolean chaosCast(ServerPlayer player, AbstractSpell spell, int spellLevel) {
+        if (spell == null || "irons_spellbooks:none".equals(spell.getSpellId()) || !player.isAlive()
+                || !(player.level() instanceof ServerLevel level)) return false;
+        int lvl = Math.max(1, spellLevel);
+        if (spell.getRarity(lvl) == SpellRarity.LEGENDARY || spell.getCastType() == CastType.CONTINUOUS
+                || spell.getRecastCount(lvl, player) > 0 || isSummonSpell(spell.getSpellId())
+                || StatEngine.schoolWall(player, spell.getSchoolType().getId().toString()) >= 1.0) return false;
         replicating = player.getUUID();
-        replicaFactor = wild.number("replica_damage", 0.33);
-        int cast = 0;
+        replicaFactor = CHAOS_CAST_DAMAGE;
         try {
-            for (int i = 0; i < directions; i++) {
-                float dir = yaw + i * 360f / directions;
-                player.setYRot(dir);
-                player.setYHeadRot(dir);
-                player.yBodyRot = dir;
-                player.setXRot(0);
-                MagicData temp = new MagicData(player);
-                if (spell.checkPreCastConditions(level, pick.getLevel(), player, temp)) {
-                    spell.onCast(level, pick.getLevel(), player, CastSource.COMMAND, temp);
-                    cast++;
-                }
+            MagicData temp = new MagicData(player);
+            if (!spell.checkPreCastConditions(level, lvl, player, temp)) {
+                io.github.rpgclasses.server.DebugLog.event(player, "Magia Caótica", "{} no pasó las comprobaciones previas", spell.getSpellId());
+                return false;
             }
+            spell.onCast(level, lvl, player, CastSource.COMMAND, temp);
+            io.github.rpgclasses.server.DebugLog.event(player, "Magia Caótica", "lanzado {} (nivel {})", spell.getSpellId(), lvl);
+            return true;
         } catch (RuntimeException e) {
-            RpgClasses.LOGGER.warn("[rpgclasses] Magia Salvaje: fallo al replicar {}", spell.getSpellId(), e);
+            RpgClasses.LOGGER.warn("[rpgclasses] Magia Caótica: fallo al lanzar {}", spell.getSpellId(), e);
+            return false;
         } finally {
-            player.setYRot(yaw);
-            player.setYHeadRot(head);
-            player.yBodyRot = body;
-            player.setXRot(pitch);
             replicating = null;
         }
-        io.github.rpgclasses.server.DebugLog.event(player, "Magia Salvaje", "{} replica {} en {} direcciones ({} lanzadas)",
-                player.getGameProfile().getName(), spell.getSpellId(), directions, cast);
-        if (cast > 0) {
-            level.sendParticles(net.minecraft.core.particles.ParticleTypes.WITCH,
-                    player.getX(), player.getY() + 1, player.getZ(), 30, 0.8, 0.5, 0.8, 0.05);
-            player.displayClientMessage(Component.translatable("message.rpgclasses.wild_magic", spell.getDisplayName(player)), true);
-        }
-    }
-
-    private static boolean isOffensive(AbstractSpell spell, int spellLevel, ServerPlayer player) {
-        if (EXTRA_OFFENSIVE.contains(spell.getSpellId())) return true;
-        try {
-            for (MutableComponent line : spell.getUniqueInfo(spellLevel, player)) {
-                for (Component part : line.toFlatList()) {
-                    if (part.getContents() instanceof TranslatableContents t && t.getKey().contains("damage")) return true;
-                }
-            }
-        } catch (RuntimeException ignored) {
-        }
-        return false;
     }
 
     private static void decayShields(net.minecraft.server.MinecraftServer server) {
@@ -520,7 +500,7 @@ public final class IronsCompat {
             if (e != null && e.getPersistentData().getBoolean(TAG_SUMMON_DONE)) return;
         }
 
-        // Réplicas de Magia Salvaje: daño reducido (daño directo durante la réplica o de lo que creó).
+        // Conjuros extra de la Magia Caótica: daño reducido (daño directo durante la réplica o de lo que creó).
         if (direct != null && direct.getPersistentData().contains(TAG_REPLICA)) {
             event.setAmount((float) (event.getAmount() * direct.getPersistentData().getDouble(TAG_REPLICA)));
             return;
@@ -539,6 +519,13 @@ public final class IronsCompat {
             double nearBonus = power.number("near_bonus", 0), farBonus = power.number("far_bonus", 0);
             double t = Math.max(0, Math.min(1, (player.distanceTo(event.getEntity()) - near) / Math.max(0.01, far - near)));
             factor *= 1 + nearBonus + (farBonus - nearBonus) * t;
+        }
+
+        // Evocador Caótico: todo su daño mágico es impredecible (variance_min–variance_max, de media algo mayor que 1).
+        ActiveMechanic chaos = MechanicService.find(player, "wild_magic");
+        if (chaos != null) {
+            double lo = chaos.number("variance_min", 0.75), hi = chaos.number("variance_max", 1.5);
+            factor *= lo + player.getRandom().nextDouble() * Math.max(0, hi - lo);
         }
 
         Ambush ambush = AMBUSHES.get(player.getUUID());
@@ -610,7 +597,7 @@ public final class IronsCompat {
             WILD_PENDING.clear();
             for (WildProc w : procs) {
                 ServerPlayer p = event.getServer().getPlayerList().getPlayer(w.player());
-                if (p != null) wildMagic(p, w.castSpellId());
+                if (p != null) ChaosMagic.roll(p, w.castSpellId(), w.spellLevel());
             }
         }
         if (tick % 20 == 0) {

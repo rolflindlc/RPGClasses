@@ -254,14 +254,16 @@ public final class DamagePipeline {
                     classDef.critChanceBonus() + ModAttributes.value(attacker, ModAttributes.CRIT_CHANCE), false);
             // Pícaro: todo golpe desde invisibilidad es crítico seguro y suma su bonus de Backstab.
             boolean backstab = RogueAbilities.isStealthed(attacker);
-            if (backstab || attacker.getRandom().nextDouble() < chance) {
+            // Paso de Sombra: crítico seguro contra el objetivo marcado.
+            boolean marked = !backstab && melee && RogueAbilities.hasShadowMark(attacker, target);
+            if (backstab || marked || attacker.getRandom().nextDouble() < chance) {
                 double critBonus = ModAttributes.value(attacker, ModAttributes.CRIT_DAMAGE)
                         + (backstab ? ModAttributes.value(attacker, ModAttributes.BACKSTAB_CRIT_DAMAGE) : 0);
                 double multiplier = StatMath.critMultiplier(critBonus);
                 damage *= multiplier;
                 attacker.crit(target);
-                log.append(String.format(Locale.ROOT, backstab ? " | CRÍTICO SEGURO (sigilo) x%.2f" : " | CRÍTICO (%.0f%%) x%.2f",
-                        backstab ? new Object[] {multiplier} : new Object[] {chance * 100, multiplier}));
+                log.append(String.format(Locale.ROOT, backstab ? " | CRÍTICO SEGURO (sigilo) x%.2f" : marked ? " | CRÍTICO SEGURO (paso de sombra) x%.2f" : " | CRÍTICO (%.0f%%) x%.2f",
+                        backstab || marked ? new Object[] {multiplier} : new Object[] {chance * 100, multiplier}));
             } else {
                 log.append(String.format(Locale.ROOT, " | sin crítico (%.0f%%)", chance * 100));
             }

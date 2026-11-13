@@ -19,10 +19,10 @@
       "type": "rpgclasses:mechanic",
       "id": "rpgclasses:wild_magic",
       "chance_per_mana": 0.0033,
-      "min_chance": 0.1,
+      "min_chance": 0.15,
       "chance_cap": 0.5,
-      "replica_damage": 0.33,
-      "directions": 8,
+      "variance_min": 0.75,
+      "variance_max": 1.5,
       "icd_ticks": 30
     }
   ],

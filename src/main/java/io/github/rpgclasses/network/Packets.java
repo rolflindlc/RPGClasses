@@ -166,39 +166,6 @@ public final class Packets {
         }
     }
 
-    /** Servidor -> cliente: Maestro de Bestias acaba de domesticar un animal; ¿vincularse con él? */
-    public record BondPrompt(int entityId, String name) {
-        public void encode(FriendlyByteBuf buf) {
-            buf.writeVarInt(entityId);
-            buf.writeUtf(name, 256);
-        }
-
-        public static BondPrompt decode(FriendlyByteBuf buf) {
-            return new BondPrompt(buf.readVarInt(), buf.readUtf(256));
-        }
-
-        public void handle(Supplier<NetworkEvent.Context> ctx) {
-            DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> ClientHandlers.onBondPrompt(this));
-        }
-    }
-
-    /** Cliente -> servidor: respuesta al vínculo. */
-    public record BondAnswer(int entityId, boolean accept) {
-        public void encode(FriendlyByteBuf buf) {
-            buf.writeVarInt(entityId);
-            buf.writeBoolean(accept);
-        }
-
-        public static BondAnswer decode(FriendlyByteBuf buf) {
-            return new BondAnswer(buf.readVarInt(), buf.readBoolean());
-        }
-
-        public void handle(Supplier<NetworkEvent.Context> ctx) {
-            ServerPlayer player = ctx.get().getSender();
-            if (player != null) io.github.rpgclasses.content.RangerSubclasses.answerBond(player, entityId, accept);
-        }
-    }
-
     /** Servidor -> cliente: aliados del jugador y quién le tiene como aliado. */
     public record SyncAllies(java.util.List<Entry> allies, java.util.List<Entry> alliedBy) {
         public record Entry(java.util.UUID id, String name) {}

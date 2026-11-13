@@ -163,7 +163,7 @@ for cid, c in classes.items():
 
 subs = {
  "chaotic_evoker": ("mage","minecraft:fire_charge",[attr([(R("spell_size"), to(.3))]),
-     mech("wild_magic", chance_per_mana=.0033, min_chance=.1, chance_cap=.5, replica_damage=.33, directions=8, icd_ticks=30)], []),
+     mech("wild_magic", chance_per_mana=.0033, min_chance=.15, chance_cap=.5, variance_min=.75, variance_max=1.5, icd_ticks=30)], []),
  "elementalist": ("mage","minecraft:blue_ice",[attr([(IR+"cooldown_reduction", to(.10,"multiply_base"))]),
      mech("elemental_debuffs", chance={"from":.4,"to":.75}, max_stacks={"values":[3,3,3,4,4,4,4,5,5,5]},
           duration_seconds={"values":[4,4,4,6,6,6,6,8,8,8]},

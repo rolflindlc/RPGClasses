@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "minecraft:item/book_normal"
+    "layer0": "rpgclasses:item/bond_book"
   }
 }

@@ -41,8 +41,8 @@ Ids de raza: `rpgclasses:human`, `orc`, `dwarf`, `elf`, `goblin`, `triton`, `inf
 | **Enano** | −25 % tamaño, −10 % velocidad, Minero, Fortuna racial | Profundidades (`deep`, V desde R1), Herrero (`smith`), Demoledor (`demolisher`: TNT inofensiva y +25 % de radio, Vetas, Túnel) | — |
 | **Elfo** | Atraviesa y trepa hojas; sin carne ni pescado | Oscuro (`dark`, V desde R1), Arcano (`arcane`), Silvano (`sylvan`) | — |
 | **Goblin** | −50 % tamaño, −25 % vida, Suerte +1, Saqueo racial | Jinete de Lobo (`wolf_rider`), Ladrón (`thief`, Mano Larga con 2 s de enfriamiento), Artificiero (`trapper`, V: Cepo) | — |
-| **Tritón** | Respira y pica bajo el agua, +50 % nado, visión subacuática, +30 % daño de fuego | Pescador (`fisher`), Moldeador (`shaper`: V, B y agachado + V), Abisal (`abyssal`) | Moldeador: sustituir sus habilidades por conjuros de *T.O Magic 'n Extras* (R0 Hydroshot nv1, R1 Overflow nv3, R2 Jetstream nv1, R3 Tidal Grasp nv1); faltan los ids |
-| **Infernal** | Inmune al fuego, conjuros raciales con muro de Magia (con Iron's: Fire Bolt, **Magma Bomb** y **Raise Hell**), golems hostiles, aldeanos +50 % | Nativo (`native`, V en R3), Fundidor (`smelter`, V en R3), Pirómano (`pyromaniac`, con Iron's) | — |
+| **Tritón** | Respira y pica bajo el agua, +50 % nado, visión subacuática, +30 % daño de fuego, *Debilidad I* en el Nether | Pescador (`fisher`), Moldeador (`shaper`: V, B y agachado + V), Abisal (`abyssal`) | Moldeador: sustituir sus habilidades por conjuros de *T.O Magic 'n Extras* (R0 Hydroshot nv1, R1 Overflow nv3, R2 Jetstream nv1, R3 Tidal Grasp nv1); faltan los ids |
+| **Infernal** | Inmune al fuego; +30 % daño de frío y de agua; el agua le quema (1 HP cada 2 s); conjuros raciales con muro de Magia (con Iron's: Fire Bolt, **Magma Bomb** y **Raise Hell**), golems hostiles, aldeanos +50 % | Nativo (`native`, V en R3), Fundidor (`smelter`, V en R3), Pirómano (`pyromaniac`, con Iron's) | — |
 | **No-muerto** | Sol, respiración, hambre fija, regeneración que **tarda el doble en empezar** (pausa de 6 s; Esqueleto 6/6/6/3 s), sin curación de pociones ni conjuros | Vampiro (`vampire`), Esqueleto (`skeleton`), Espectro (`specter`, V desde R1) | — |
 
 **Fase R2 (hecha):** las **24 subrazas** con todos sus rasgos y sus **72 ritos**.
@@ -157,3 +157,8 @@ Nada de esto se ha probado en el juego. Perfil: Forge 1.20.1 (47.4.x) + Iron's S
 1. Elementalista: carga hasta detonar con conjuros de ender (el objetivo se teletransporta), invocación (anillo de colmillos), naturaleza (raíces y veneno), eldritch (Marca del Vacío: anillo de almas 4 s; pegarle entre varios y ver que la implosión atrae y hace más daño cuanto más recibió; también si muere antes) y, con T.O Magic 'n Extras, agua (ola que empuja y moja). El aviso de cargas muestra el nombre de la escuela.
 2. Mago de Batalla: conjuro + golpe con ender (apareces a la espalda), invocación (colmillos), eldritch (onda sónica en línea que atraviesa a varios enemigos alineados) y agua.
 3. Arrancar sin T.O Magic 'n Extras: sin errores en el registro y las demás escuelas igual.
+
+**O. Debilidades raciales (rev. 2.17).**
+1. Infernal: meterse en agua (o columnas de burbujas) quema 1 HP cada 2 s, con vapor y siseo; la lluvia no. Mensaje de muerte propio.
+2. Infernal: congelación (nieve polvo) y conjuros de hielo hacen +30 %; con T.O Magic 'n Extras, también los de agua.
+3. Tritón: al entrar al Nether recibe *Debilidad I* (sin icono), que se quita a los 3 s de salir.

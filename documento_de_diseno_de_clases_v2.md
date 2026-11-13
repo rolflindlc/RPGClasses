@@ -366,7 +366,7 @@ Notas de los perks:
 
 **2. Ilusionista de Sombras**
 * **Invisibilidad Absoluta:** el rango de detección de mobs baja hasta el −75% total (nivel 10).
-* **Señuelo:** al hacerse invisible, crea un clon que absorbe el agro y huye. Desaparece en humo al terminar la invisibilidad. **Cooldown 25 s.**
+* **Señuelo:** al hacerse invisible, crea un clon que absorbe el agro y huye. Desaparece en humo al terminar la invisibilidad. **Cooldown 10 s** (rev. 2.7f).
 
 **3. Hoja Arcana**
 * **Pasivas mágicas:** +15% CDR, +15% Spell Power, +15% de regeneración de maná y +150 de maná máximo.

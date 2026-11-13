@@ -43,6 +43,7 @@ public final class Toxins {
         int durationTicks = (int) Math.round(duration * 20);
         int intervalTicks = (int) Math.round(interval * 20);
         if (!target.addEffect(new MobEffectInstance(ModEffects.TOXIN.get(), durationTicks + 1, 0), attacker)) return;
+        ClassFx.burst(target, ClassFx.TOXIC, 10, 0.02);
         if (slowness > 0) target.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, durationTicks, slowness - 1), attacker);
         CompoundTag dose = new CompoundTag();
         dose.putFloat("damage", (float) damage);
@@ -81,5 +82,6 @@ public final class Toxins {
         entity.hurt(new DamageSource(entity.level().registryAccess().registryOrThrow(Registries.DAMAGE_TYPE)
                 .getHolderOrThrow(TOXIN_DAMAGE)), dose.getFloat("damage"));
         entity.invulnerableTime = invulnerable;
+        ClassFx.burst(entity, ClassFx.TOXIC, 6, 0.01); // gotas verdes en cada tic de la Toxina
     }
 }

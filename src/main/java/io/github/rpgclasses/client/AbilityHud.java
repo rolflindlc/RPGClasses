@@ -34,6 +34,7 @@ public final class AbilityHud {
         if (mc.player == null || mc.options.hideGui || mc.level == null) return;
         renderStealthBar(g, mc, screenWidth, screenHeight);
         List<String> actives = localActives();
+        int freeRows = renderFreeCasts(g, mc, screenWidth, screenHeight - 4 - Math.min(actives.size(), ClientSetup.ABILITY_KEYS.length) * ROW_HEIGHT);
         if (actives.isEmpty()) return;
 
         long now = mc.level.getGameTime();
@@ -59,6 +60,44 @@ public final class AbilityHud {
             g.drawString(mc.font, text, x, y, remaining > 0 ? 0xFF8888 : 0xFFFFFF);
             y += ROW_HEIGHT;
         }
+    }
+
+    /**
+     * Conjuros Gratuitos del Mago: una fila por ranura desbloqueada y con conjuro fijado, encima de la lista de
+     * habilidades: puntos llenos = cargas disponibles. Devuelve las filas dibujadas.
+     */
+    private static int renderFreeCasts(GuiGraphics g, Minecraft mc, int screenWidth, int bottom) {
+        ProgressState s = ClientHandlers.LOCAL_DATA.state;
+        ClassDef classDef = DefinitionStore.CLIENT.classDef(s.classId);
+        if (classDef == null) return 0;
+        java.util.Set<String> unlocked = UnlockResolver.unlocked(s, classDef, DefinitionStore.CLIENT.subclassDef(s.subclassId));
+        int rows = 0;
+        int y = bottom - ROW_HEIGHT;
+        for (int slot = 3; slot >= 1; slot--) {
+            String id = Ids.NS + ":free_cast_slot_" + slot;
+            String spell = ClientHandlers.LOCAL_DATA.texts.get("free_cast_spell_" + slot);
+            if (!unlocked.contains(id) || spell == null) continue;
+            var def = DefinitionStore.CLIENT.abilityDef(id);
+            int max = def == null || !def.params().has("charges") ? slot : def.params().get("charges").getAsInt();
+            int left = Math.max(0, max - ClientHandlers.LOCAL_DATA.counters.getOrDefault("free_cast_used_" + slot, 0));
+            net.minecraft.resources.ResourceLocation rl = net.minecraft.resources.ResourceLocation.tryParse(spell);
+            String spellName = rl == null ? spell : Component.translatable("spell." + rl.getNamespace() + "." + rl.getPath()).getString();
+            String text = Component.translatable("hud.rpgclasses.free_cast", slot, spellName).getString();
+            int dots = max * 7;
+            int width = mc.font.width(text) + 6 + dots;
+            int x = screenWidth - width - 6;
+            g.fill(x - 3, y - 2, screenWidth - 3, y + ROW_HEIGHT - 3, 0x80000000);
+            g.drawString(mc.font, text, x, y, left > 0 ? 0xFFB070FF : 0xFF888888);
+            int dx = x + mc.font.width(text) + 6;
+            for (int i = 0; i < max; i++) {
+                int c = i < left ? 0xFFB070FF : 0xFF404040;
+                g.fill(dx + i * 7, y + 1, dx + i * 7 + 5, y + 6, 0xFF000000);
+                g.fill(dx + i * 7 + 1, y + 2, dx + i * 7 + 4, y + 5, c);
+            }
+            y -= ROW_HEIGHT;
+            rows++;
+        }
+        return rows;
     }
 
     /** Barra de Sigilo del Pícaro, sobre la barra de objetos. */

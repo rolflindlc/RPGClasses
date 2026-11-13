@@ -140,7 +140,10 @@ public final class SubraceTraits {
         }
         // No-muerto Vampiro: Sed.
         double killHeal = Races.number(p, "race_thirst", "kill_heal", 0);
-        if (killHeal > 0) thirstHeal(p, killHeal);
+        if (killHeal > 0) {
+            thirstHeal(p, killHeal);
+            io.github.rpgclasses.content.ClassFx.burst(p, io.github.rpgclasses.content.ClassFx.BLOOD, 12, 0.05);
+        }
     }
 
     @SubscribeEvent
@@ -157,10 +160,39 @@ public final class SubraceTraits {
         escort(p, victim);
 
         double lifesteal = Races.number(p, "race_thirst", "lifesteal", 0);
-        if (lifesteal > 0) thirstHeal(p, event.getAmount() * lifesteal);
+        if (lifesteal > 0) {
+            thirstHeal(p, event.getAmount() * lifesteal);
+            if (p.getRandom().nextInt(3) == 0) io.github.rpgclasses.content.ClassFx.line(victim, p, io.github.rpgclasses.content.ClassFx.BLOOD, 6);
+        }
+
+        // Infernal Fundidor (R2): los golpes cuerpo a cuerpo prenden al objetivo.
+        double burn = Races.number(p, "race_searing_strikes", "burn_seconds", 0);
+        if (burn > 0 && source.getDirectEntity() == p && !victim.fireImmune()) {
+            victim.setRemainingFireTicks(Math.max(victim.getRemainingFireTicks(), (int) Math.round(burn * 20)));
+        }
 
         ActiveMechanic hand = Races.find(p, "race_long_hand");
         if (hand != null && source.getDirectEntity() == p) steal(p, victim, source, hand);
+    }
+
+    /** Tritón Pescador (R2): el tridente hace más daño, cuerpo a cuerpo o lanzado. */
+    @SubscribeEvent
+    public void onTridentHit(LivingHurtEvent event) {
+        if (!(event.getSource().getEntity() instanceof ServerPlayer p) || p instanceof FakePlayer) return;
+        double bonus = Races.number(p, "race_trident_mastery", "damage_bonus", 0);
+        if (bonus <= 0) return;
+        var direct = event.getSource().getDirectEntity();
+        boolean trident = direct instanceof net.minecraft.world.entity.projectile.ThrownTrident
+                || (direct == p && p.getMainHandItem().is(net.minecraft.world.item.Items.TRIDENT));
+        if (trident) event.setAmount((float) (event.getAmount() * (1 + bonus)));
+    }
+
+    /** Humano Autodidacta (R2): más experiencia de los enemigos derrotados. */
+    @SubscribeEvent
+    public void onExperience(net.minecraftforge.event.entity.living.LivingExperienceDropEvent event) {
+        if (!(event.getAttackingPlayer() instanceof ServerPlayer p) || p instanceof FakePlayer) return;
+        double bonus = Races.number(p, "race_scholar", "xp_bonus", 0);
+        if (bonus > 0) event.setDroppedExperience((int) Math.round(event.getDroppedExperience() * (1 + bonus)));
     }
 
     @SubscribeEvent

@@ -23,7 +23,7 @@
     {
       "type": "rpgclasses:mechanic",
       "id": "rpgclasses:disabling_fist",
-      "chance": 0.1,
+      "chance": 0.15,
       "icd_seconds": 6,
       "duration_seconds": 1.5
     }

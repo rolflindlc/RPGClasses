@@ -25,7 +25,7 @@
       "id": "rpgclasses:arcane_shield",
       "mana_fraction": {
         "from": 0.03,
-        "to": 0.1
+        "to": 0.12
       },
       "cap_health_fraction": 0.5,
       "decay_delay_seconds": 6,

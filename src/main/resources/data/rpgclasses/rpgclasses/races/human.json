@@ -164,6 +164,12 @@
         {
           "type": "rpgclasses:mechanic",
           "id": "rpgclasses:race_flexible_respec"
+        },
+        {
+          "type": "rpgclasses:mechanic",
+          "id": "rpgclasses:race_scholar",
+          "min_rank": 2,
+          "xp_bonus": 0.15
         }
       ],
       "rites": [

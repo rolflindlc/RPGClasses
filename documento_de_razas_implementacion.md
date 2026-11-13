@@ -1,6 +1,6 @@
 # Razas: estado de implementación (fases R1 y R2)
 
-Acompaña a *Documento de Diseño: Razas* (anexo, rev. 0.6). Describe qué hay programado en el mod, cómo probarlo y qué falta. Fecha: 2026-11-13 (10.º relevo).
+Acompaña a *Documento de Diseño: Razas* (anexo, rev. 0.6). Describe qué hay programado en el mod, cómo probarlo y qué falta. Fecha: 2026-11-13 (10.º relevo, con los ajustes de balance del diseño v2 rev. 2.13).
 
 **Cambio de diseño de esta fase (decidido por el usuario):** la invisibilidad **ya no se revela por cercanía a otro jugador**, ni la del Sigilo del Pícaro (documento v2, rev. 2.8) ni la de la Nube de Humo del Elfo Oscuro. Esto sustituye a la propuesta del anexo ("en PvP se revela a menos de 1 bloque"). El revelado "al hacer daño" de la Nube tampoco está programado: mientras dura, la nube vuelve a ocultar a quien esté dentro.
 
@@ -42,7 +42,7 @@ Ids de raza: `rpgclasses:human`, `orc`, `dwarf`, `elf`, `goblin`, `triton`, `inf
 | **Elfo** | Atraviesa y trepa hojas; sin carne ni pescado | Oscuro (`dark`, V desde R1), Arcano (`arcane`), Silvano (`sylvan`) | — |
 | **Goblin** | −50 % tamaño, −25 % vida, Suerte +1, Saqueo racial | Jinete de Lobo (`wolf_rider`), Ladrón (`thief`, Mano Larga con 2 s de enfriamiento), Artificiero (`trapper`, V: Cepo) | — |
 | **Tritón** | Respira y pica bajo el agua, +50 % nado, visión subacuática, +30 % daño de fuego | Pescador (`fisher`), Moldeador (`shaper`: V, B y agachado + V), Abisal (`abyssal`) | Moldeador: sustituir sus habilidades por conjuros de *T.O Magic 'n Extras* (R0 Hydroshot nv1, R1 Overflow nv3, R2 Jetstream nv1, R3 Tidal Grasp nv1); faltan los ids |
-| **Infernal** | Inmune al fuego, conjuros raciales (con Iron's: Fire Bolt, **Magma Bomb** y **Raise Hell**), golems hostiles, aldeanos +50 % | Nativo (`native`, V en R3), Fundidor (`smelter`, V en R3), Pirómano (`pyromaniac`, con Iron's) | — |
+| **Infernal** | Inmune al fuego, conjuros raciales con muro de Magia (con Iron's: Fire Bolt, **Magma Bomb** y **Raise Hell**), golems hostiles, aldeanos +50 % | Nativo (`native`, V en R3), Fundidor (`smelter`, V en R3), Pirómano (`pyromaniac`, con Iron's) | — |
 | **No-muerto** | Sol, respiración, hambre fija, regeneración que **tarda el doble en empezar** (pausa de 6 s; Esqueleto 6/6/6/3 s), sin curación de pociones ni conjuros | Vampiro (`vampire`), Esqueleto (`skeleton`), Espectro (`specter`, V desde R1) | — |
 
 **Fase R2 (hecha):** las **24 subrazas** con todos sus rasgos y sus **72 ritos**.
@@ -60,7 +60,7 @@ Ids de raza: `rpgclasses:human`, `orc`, `dwarf`, `elf`, `goblin`, `triton`, `inf
 * **Mano Larga:** solo golpes cuerpo a cuerpo; no roba a mobs de spawner ni a jefes; el objeto robado solo lo puede recoger el Goblin.
 * **Espectro:** la caída lenta se desactiva al agacharse.
 * **Sol del No-muerto:** 1 HP por segundo con un tipo de daño propio que ignora la armadura.
-* **Conjuros raciales:** aparecen al final de la rueda de Iron's; gastan maná y enfriamiento normales. El muro de Magia se compensa en el daño.
+* **Conjuros raciales:** aparecen al final de la rueda de Iron's; gastan maná y enfriamiento normales. **Desde la rev. 2.13 sufren el muro de Magia de la clase** (decisión del usuario), igual que los del Moldeador cuando estén (escuela de **agua** de *T.O Magic 'n Extras*).
 * **Infernal y aldeanos:** el recargo se aplica a aldeanos, no al comerciante errante.
 * **Herrero:** la durabilidad extra va marcada en el objeto (se ve en la descripción) y viaja con él. Cuenta lo que fabricas (mesa y herrería) y lo que reparas o combinas en el yunque; Irrompibilidad +1 solo en lo fabricado. El descuento del yunque (−50 %) es de niveles y no salva el "Demasiado caro".
 * **Demoledor:** su TNT se repite con radio 5 (vanilla 4): también alcanza un poco más a las entidades. Túnel: agachado, solo en bloques del tag `rpgclasses:dwarf_mineable`, frente a la cara que miras; +0,1 de agotamiento por bloque extra.
@@ -73,6 +73,8 @@ Ids de raza: `rpgclasses:human`, `orc`, `dwarf`, `elf`, `goblin`, `triton`, `inf
 * **Nativo:** 25 % de que un trueque con un piglin salga doble (cuenta el Nativo a 10 bloques o menos del piglin).
 * **Fundidor:** +50 % de velocidad de cocción en hornos, altos hornos y ahumadores a 8 bloques, sin gastar más combustible; dos fundidores no lo duplican.
 * **Ritos, interpretaciones:** "enemigo" = mob hostil, jefe de rito o jugador enemigo; "bajo tierra" = sin cielo encima; luz medida en el enemigo; "sobre lava" = en lava o encima de ella; el arma "fabricada/encantada por ti" va marcada en el objeto (solo desde que eres Herrero o Arcano). Muro Armadura = llevar 3+ piezas; muro Escudos = 10 bloqueos en los últimos 30 s (o en el combate contra el jefe). "Mapa completamente explorado" = 90 % pintado. "Equipo de mob" (Ladrón 3) = equipo robado o soltado por mobs que mataste siendo Ladrón (Manos Vacías llega en el Rango 3, después de este rito). Las 16 TNT del Demoledor deben fabricarse mientras haces ese rito. Abisal 3: también vale matar a cualquier guardián ancestral.
+* **Rasgo de combate de las subrazas de oficio (Rango 2, rev. 2.13):** Autodidacta +15 % de experiencia de los enemigos; Herrero +0,5 de dureza por pieza de armadura fabricada por él; Silvano Regeneración I en biomas de bosque; Pescador +25 % de daño con tridente (cuerpo a cuerpo o lanzado); Fundidor prende 2 s con los golpes cuerpo a cuerpo.
+* **Visuales de razas (rev. 2.13):** chispas de piedra en los golpes que amortigua Piel Gruesa (Orco Pétreo) y rastro de sangre en la Sed del Vampiro.
 * **Infernal (conjuros raciales):** la racial que era bola de fuego pasa a **Magma Bomb** y la que era Magma Bomb pasa a **Raise Hell**.
 * **Pirómano:** solo los conjuros raciales (ranura racial de la rueda). Los charcos de llamas (R2) y de lava (R3) ahora salen de la **Bomba de magma**; Raise Hell no deja charco. Son **zonas de efecto** (prenden a los enemigos; la lava además da Lentitud II, menos a jefes), **sin colocar bloques** de fuego ni de lava para no quemar construcciones.
 * **Libro de Vínculos (Maestro de Bestias):** objeto propio con la imagen (huevo de aparición de la especie), el nombre y las estadísticas de cada mascota vinculada, y permite elegir a dónde se teletransportan al morir (**3 puntos guardados + punto de aparición**; la Salvaguarda lo usa). Máximo **8 vínculos**; radio de **16 bloques** para vincular o romper; receta libro + hueso + correa. Entra en el kit de la subclase (se da al elegirla y se retira al perderla). Los vínculos antiguos migran al verse. Las mascotas no cargadas no se pueden romper desde el libro.
@@ -138,3 +140,11 @@ Nada de esto se ha probado en el juego. Perfil: Forge 1.20.1 (47.4.x) + Iron's S
 5. Descarga al cambiar: onda de fuego, absorción de Piedra (amarillo en la vida, se va a los 5 s), lentitud y empuje de Agua.
 6. Puños: partículas de fuego, agua o piedra en las manos vacías, más fuertes cuantas más cargas; las ve también otro jugador.
 7. Perks nuevos (Llama Constante, Ignición Temprana, Eco de Piedra, Postura Dominante, Flujo Continuo) y Meditación (4 cargas al terminar). Un Monje que tuviera Flujo, Onda Elemental, Híbrida o Calma Interior debe elegir perk de nuevo.
+
+**L. Balance y visuales (diseño v2, rev. 2.13).**
+1. Explorador Ágil +5 % de velocidad; mascotas del Maestro de Bestias +30 %; Puño de Inhabilitación 15 %; Escudo Arcano hasta 12 %.
+2. Visuales: Provocación (anillos y mobs brillando), Baluarte (escudo girando), anillo dorado del Estandarte, aura roja de Furia Berserker, estela de Embestida, Sed de Sangre, gotas verdes de la Toxina, Piel Gruesa y Sed del Vampiro.
+3. Mago: filas "Gratis N" con puntos de carga encima de la lista de habilidades (abajo a la derecha) al fijar conjuros gratuitos.
+4. Infernal: con un Bárbaro o un Monje, sus conjuros raciales hacen menos daño por el muro de Magia.
+5. Subrazas de oficio en Rango 2: experiencia extra (Autodidacta), dureza con armadura propia (Herrero), regeneración en bosque (Silvano), tridente (Pescador) y golpes que queman (Fundidor).
+

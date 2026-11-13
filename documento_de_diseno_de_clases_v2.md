@@ -4,6 +4,14 @@ Versión 2 del diseño (revisión 2.11, en desarrollo). Plataforma prevista: For
 
 Los valores marcados con **[MEDIR]** son objetivos de diseño que deben calibrarse en el juego real antes de darlos por cerrados.
 
+**Cambios de las revisiones 2.9 a 2.11:**
+* **Rework del Monje por cargas de postura (2.9):** el crecimiento plano de daño y armadura del Monje se sustituye por **cargas de postura** (sección 8). El nivel da un **suelo** (*Cuerpo Marcial*, ≈ ⅔ del daño y la armadura anteriores) y el resto se gana en combate acumulando cargas en la postura activa. Las ramas Puño, Piel y Viento **potencian las cargas** de Fuego, Piedra y Agua. Perks nuevos: Llama Constante e Ignición Temprana (Puño), Eco de Piedra (Piel), Postura Dominante y Flujo Continuo (Maestría); desaparecen Flujo, Onda Elemental, Postura Híbrida y Calma Interior. Sustituye al rework de la 2.8 (*Cuerpo Marcial* a medias con las ramas), que no llegó a programarse. **Programado en la 2.11.**
+* **Aliados (regla 15, 2.9):** cada jugador elige a sus aliados; el resto son enemigos.
+* **Pícaro (2.8):** la invisibilidad ya no se revela por cercanía en PvP.
+* **Apuesta con la Muerte (2.10):** moneda con anj y calavera, sin cooldown (sección 5).
+* **Libro de Vínculos (2.11):** objeto del Maestro de Bestias (sección 7).
+* **Interfaz del Monje (2.11):** cargas como símbolos encima de la barra de vida y efecto del elemento en los puños.
+
 **Historial resumido (revisiones 2.2 a 2.6):** 2.2–2.3: Mago reducido, Juggernaut a +60% de vida, nueva disciplina Escudos (afín del Paladín y del Bárbaro), presupuesto de muro variable, Ranger afín a Armadura. 2.4: nerfs al Monje (Piel 16/6, Viento +40%) y al Explorador Ágil. 2.5: subclase desde 15 puntos de base (tope ⌊(base−10)/2⌋), muros solo con puntos de base, hitos de subclase latentes. 2.6: pasivas dobles al máximo con 10 puntos, críticos propios (regla 9), armas sin clasificar = ligeras, supervivencia antes del Tótem (regla 10), Nivel Total incluye subclase, reinicios ilimitados con −33% de XP (regla 6).
 
 **Cambios de la revisión 2.7:**
@@ -78,7 +86,7 @@ Los valores marcados con **[MEDIR]** son objetivos de diseño que deben calibrar
    * Los perks cuentan para los topes globales (regla 7).
 
 12. **Rasgos base de clase.**
-    * Algunas clases tienen un modificador de atributos fijo, ligado a su identidad: **Mago −20% de vida máxima** (16 HP); **Paladín +20% de vida máxima** (24 HP) **y −10% de velocidad de movimiento**; **Pícaro −15% de vida máxima** (17 HP).
+    * Algunas clases tienen un modificador de atributos fijo, ligado a su identidad: **Mago −20% de vida máxima** (16 HP); **Paladín +20% de vida máxima** (24 HP) **y −10% de velocidad de movimiento**; **Pícaro −15% de vida máxima** (17 HP). El **Monje** tiene el rasgo *Cuerpo Marcial* (sección 8), que a diferencia de los demás **escala con los puntos de clase base**.
     * Se aplican **completos desde que se elige la clase** (a diferencia de los muros, que escalan con los puntos). Propuesta; ver pendientes.
     * Son aditivos con los demás bonos de vida de la clase, la subclase y los perks, y cuentan para el tope global de la regla 7.
 
@@ -420,60 +428,109 @@ Notas de los perks:
 ## 🥋 8. Monje
 
 ### Equipamiento inicial
-* Sin loot inicial. Llevar cualquier pieza de armadura desactiva sus pasivas desarmadas.
+* Sin loot inicial. Llevar cualquier pieza de armadura desactiva sus pasivas desarmadas (también *Cuerpo Marcial*) y **borra todas sus cargas**; mientras la lleve no acumula cargas.
+
+### Rasgo base de clase: Cuerpo Marcial (rev. 2.9)
+* Da un **suelo** que crece de forma lineal con los puntos de **clase base** (los de subclase no cuentan) y llega al máximo con 30: **armadura 10 / dureza 4** y un bonus de daño desarmado equivalente a **⅔ del que daba el rasgo con las ramas llenas hasta la rev. 2.8** (≈ 72% del DPS objetivo) **[MEDIR]**.
+* El resto del poder del Monje se gana con las **cargas de postura** (ver abajo). Las ramas Puño, Piel y Viento **ya no dan stats planos**: potencian las cargas de Fuego, Piedra y Agua.
+* **Objetivo de diseño [MEDIR]:** con Fuego a 10 cargas y la rama Puño llena, el DPS desarmado equivale al de una espada de diamante en Epic Fight; daño por golpe = DPS objetivo ÷ golpes por segundo medidos con el moveset de puños.
+
+### Cargas de postura (rev. 2.9)
+**Posturas de Combate Elemental (Nivel Total 5).** Siempre hay una postura activa: al desbloquearlas se elige una. Cambio libre con **2 s de cooldown** (3 s con *Flujo Continuo*).
+
+**Reglas generales:**
+1. **Contador de cargas.** Solo se acumulan cargas de la postura activa. Máximo **10** (+2 con 5 puntos de Maestría de Postura y +4 con 10; *Postura Dominante* lo modifica).
+2. **Efecto propio.** Se dispara en el siguiente golpe desarmado en dos casos: al llegar al **máximo** de cargas, o antes con **Shift + golpe desarmado** teniendo **≥10 cargas** (también con una tecla de habilidad, y sobre agua o lava el golpe no hunde al Monje). Gasta **todas** las cargas y su fuerza es **cargas gastadas ÷ 10**.
+3. **Descarga.** Al cambiar de postura se gastan todas las cargas de la que se deja, con un efecto de esa postura proporcional a las cargas. Con 0 cargas no pasa nada.
+4. **Decaimiento.** Cada postura pierde cargas de forma progresiva cuando deja de recibirlas (ver tabla).
+5. **Desvío de proyectiles (Nivel Total 15)** da cargas: **+1 en Fuego, +3 en Agua y +1 en Piedra**.
+6. **Aturdimientos compartidos.** Un aturdimiento del Monje (Piedra o *Puño de Inhabilitación* de Palma Pesada) solo se aplica si han pasado al menos **su propio ICD** (8 s Piedra, 6 s Palma Pesada) desde el último aturdimiento del Monje al mismo objetivo, sea cual sea su origen.
+7. **Quemaduras acumulables.** Las quemaduras del Monje (*Golpe Ígneo*, *Manifiesto* de Guardián Trimundial) **suman su duración** a la que el objetivo ya tenga, con un tope de **15 s [MEDIR]**.
+8. **Umbrales de daño.** Los umbrales de daño recibido (≥2 HP en Piedra, ≥4 HP con *Eco de Piedra*) se miden **antes de la armadura**.
+
+| | **Fuego: Combo** | **Piedra: Temple** | **Agua: Fluir** |
+| ----- | ----- | ----- | ----- |
+| **Ganas carga con** | Cada golpe desarmado encadenado | Cada golpe recibido de ≥2 HP (ICD 0,5 s) | Esquivar o desviar un proyectil (+3) y cada 2 s de sprint (+1) |
+| **Cada carga da** | +3% de daño (máx. +30% con 10) | +0,75 de armadura y +0,25 de dureza | +2,5% de velocidad y salto (máx. +25% con 10, sujeto a los topes globales) |
+| **Coste fijo** | Armadura y dureza del suelo −25% | −15% de velocidad de movimiento y −30% de salto **[MEDIR]** | Daño del suelo −25% |
+| **Decaimiento** | Tras 1,5 s sin golpear, pierdes 1 carga cada 0,5 s | Tras 3 s sin recibir golpes, pierdes 1 carga cada 2 s | Pierdes 1 carga por segundo sin moverte |
+| **Efecto propio** | **Golpe Ígneo** (un objetivo): +5% de daño extra y 5% de armadura del objetivo ignorada por carga gastada (10 cargas: +50% y 50%; tope del 80% de armadura ignorada) e incendia 4 s | **Aturdimiento** de 0,15 s por carga (1,5 s con 10; la mitad en jefes; ICD 8 s por objetivo) | **Contracorriente:** tu siguiente golpe aplica *Lentitud II* durante 0,2 s por carga y te da una **esquiva garantizada** del siguiente golpe recibido durante 0,3 s por carga (sin empuje) |
+| **Descarga al cambiar** | Onda de fuego en 3 bloques: 5% de un golpe por carga | Absorción de 0,5 HP por carga durante 5 s (sin tope) | Área de 3 bloques: *Lentitud I* durante cargas ÷ 2 s y empuje de cargas ÷ 2 bloques |
+
+* **Tope de armadura de Piedra:** la armadura total no pasa de **20** ni la dureza de **8**. Las cargas que ya no puedan sumar armadura por el tope dan **+10% de resistencia al empuje** cada una (máx. 100%).
+* **Fuego:** el Golpe Ígneo (un objetivo, rompe armadura) y la descarga (área, a cualquier número de cargas) están pensados para no pisarse; con 10 cargas se decide entre rematar a un objetivo o soltar la onda al cambiar.
+* **Piedra:** el aturdimiento y la absorción no dependen de la armadura, así que las cargas por encima del tope siguen siendo útiles.
+* **Interfaz (rev. 2.11):** las cargas se ven como una fila de símbolos de **fuego, agua o piedra encima de la barra de vida** (llenos hasta las cargas actuales, vacíos hasta el máximo; laten al llegar al umbral y brillan con el efecto preparado). Los **puños** del Monje muestran partículas del elemento, más densas y vivas cuantas más cargas tiene; los demás jugadores también las ven.
 
 ### Ramas
 | Rama | Pasiva y máximo |
 | ----- | ----- |
-| **Puño** | Daño desarmado. **[MEDIR]** En el nivel 30 el DPS desarmado equivale al de una espada de diamante en Epic Fight; daño por golpe = DPS objetivo ÷ golpes por segundo medidos con el moveset de puños |
-| **Viento** | Velocidad de movimiento y salto hasta **+35%** sin armadura *(antes +40%)* |
-| **Piel** | Armadura y dureza sin armadura, hasta **16 / 6** (por debajo de diamante completo, 20 / 8) |
-| **Maestría de Postura** *(rama extra)* | Los bonus de cada postura suben un 20% (2% por punto); las penalizaciones no |
-| **Meditación** *(rama extra)* | Agachado y quieto 2 s, curas 0,5 HP/s hasta el 60% de tu vida. Recibir daño la interrumpe |
+| **Puño** | Potencia las cargas de **Fuego**: +33% al buff de daño por carga (de 3% a 4%) y +33% a la potencia de la onda de descarga |
+| **Viento** | Potencia las cargas de **Agua**: +33% al buff de velocidad y salto por carga (de 2,5% a 3,33%) y +33% a la *Lentitud* y al empuje de la descarga. Ya no da un bonus plano de velocidad |
+| **Piel** | Potencia las cargas de **Piedra**: +33% al buff de armadura y dureza por carga (de 0,75 / 0,25 a 1 / 0,33) y +33% a la absorción de la descarga |
+| **Maestría de Postura** *(rama extra)* | Cargas máximas de todas las posturas: +2 con 5 puntos y +4 con 10 |
+| **Meditación** *(rama extra)* | Agachado y quieto 2 s, curas 0,5 HP/s hasta el 60% de tu vida. Recibir daño la interrumpe. Al dejar de meditar, recibes **4 cargas** de la postura actual que no decaen durante 10 s |
 
 ### Perks de rama (1 de 2 al llenar la rama)
 | Rama | Opción A | Opción B |
 | ----- | ----- | ----- |
-| **Puño** | **Flujo:** el cooldown de cambio de postura baja a 3 s y la postura anterior sigue 3 s a mitad de efecto. −5% de daño desarmado. | **Onda Elemental:** al cambiar de postura, onda de 3 bloques que hace el 75% de un golpe desarmado y aplica un efecto según la postura nueva (Fuego: incendia 3 s; Agua: empuje de 3 bloques y Lentitud I 2 s; Piedra: Debilidad I 2 s). El cooldown de cambio de postura sube a 7 s. |
+| **Puño** | **Llama Constante:** el decaimiento de las cargas de Fuego es un 50% más lento, pero el buff de daño por carga baja un 20%. | **Ignición Temprana:** el umbral del Shift + golpe en Fuego baja de 10 a **6 cargas**, pero el daño extra del *Golpe Ígneo* es de +4% por carga (en vez de +5%). Sigue disparándose solo al llegar al máximo. |
 | **Viento** | **Impulso de Carrera:** tras 2 s de sprint, el siguiente golpe desarmado hace +30% de daño y +50% de empuje. | **Pies Ligeros:** ignora telarañas, arena de almas, miel, nieve en polvo y la ralentización al comer o usar objetos. −10% de velocidad de movimiento. |
-| **Piel** | **Piel Espiritual:** −2 de armadura y −1 de dureza, y −30% de daño mágico y elemental recibido (multiplicativo con otras fuentes, con tope del 85% de reducción combinada). | **Calma Interior:** reserva de absorción que acumula 0,5 HP por segundo sin recibir daño (máx. 5 HP a los 10 s). Al recibir un golpe absorbe hasta lo acumulado y gasta solo lo absorbido. |
-| **Maestría de Postura** | **Postura Dominante:** eliges una postura favorita con +50% de bonus. Las otras dos tienen −25%. | **Postura Híbrida:** aplican a la vez las dos últimas posturas (la actual y la anterior), cada una al 50%. El cooldown de cambio de postura sube +2 s. |
-| **Meditación** | **Trance Profundo:** curas 1 HP/s, pero tardas 4 s quieto en empezar. | **Mente Clara:** purgas un efecto negativo cada 5 s mientras meditas, pero curas la mitad. |
+| **Piel** | **Piel Espiritual:** −2 de armadura y −1 de dureza, y −30% de daño mágico y elemental recibido (multiplicativo con otras fuentes, con tope del 85% de reducción combinada). | **Eco de Piedra:** la absorción de la descarga de Temple se duplica, pero Temple solo gana carga con golpes recibidos de ≥4 HP (antes de armadura). |
+| **Maestría de Postura** | **Postura Dominante:** eliges una postura favorita con **+3 cargas máximas**; las otras dos tienen **−3**. Con la rama llena: favorita 17, otras 11. | **Flujo Continuo:** al cambiar de postura conservas el 30% de las cargas (redondeo hacia abajo) como cargas de la nueva postura, y la descarga gasta solo el resto. El cooldown de cambio sube +1 s. |
+| **Meditación** | **Trance Profundo:** curas 1 HP/s hasta el **80%** de tu vida, pero tardas 4 s quieto en empezar. | **Mente Clara:** purgas un efecto negativo cada 5 s mientras meditas (la curación no se reduce). |
 
 Notas de los perks:
-* **Maestría de Postura + Flujo:** con *Postura Híbrida* y *Flujo* a la vez, durante los 3 s de efecto de Flujo tras un cambio aplican **las tres posturas** a la vez (sus bonus y penalizaciones se suman); pasado ese tiempo, quedan solo las dos últimas al 50%. Con las cifras actuales la suma es ≈ +25% de velocidad/salto, 0% de daño y −8% de armadura: ventana de transición, sin abuso. Sin Flujo, Híbrida mantiene las dos últimas al 50% de forma permanente. Con ambos el cooldown de cambio es de 5 s (4 − 1 de Flujo + 2 de Híbrida). Con *Onda Elemental* no hay conflicto (son opciones distintas de la misma rama). Con *Postura Dominante*, los bonus de la favorita (+50%) se suman al +20% de la pasiva.
-* **Meditación:** vale sobre todo fuera de combate (el contenido es PvE); la curación se mide al 60% de vida máxima. Con *Mente Clara* purga también *Veneno* y *Wither*.
-* **Viento:** ninguna opción sube velocidad ni salto, por lo que no chocan con los topes globales.
+* **Postura Dominante:** el umbral de 10 cargas del efecto propio es fijo, así que las tres posturas lo alcanzan (las no favoritas tienen máximo 11) y la favorita pega más fuerte, porque la fuerza es cargas ÷ 10 (con 17 cargas, 170%). Con *Eco de Piedra*, una favorita de 17 cargas podría absorber ≈ 17 HP **[MEDIR]**.
+* **Ignición Temprana:** con 6 cargas el *Golpe Ígneo* hace +24% de daño extra, así que da un finalizador más frecuente pero más flojo. No es compatible con *Llama Constante* (misma rama).
+* **Flujo Continuo:** las cargas conservadas cuentan como cargas de la nueva postura y están sujetas a su decaimiento y a su máximo.
+* **Meditación:** vale sobre todo fuera de combate (el contenido es PvE). Con *Mente Clara* purga también *Veneno* y *Wither*.
+* **Viento:** *Impulso de Carrera* y *Pies Ligeros* no suben velocidad ni salto, por lo que no chocan con los topes globales.
 * **Piel Espiritual:** el equilibrio está en que ≈40% del daño recibido sea mágico o elemental; con Iron's y los jefes de Cataclysm se cumple en buena parte del contenido. Contra daño físico la vida efectiva baja ≈15%; contra magia sube ≈43%.
-* **Calma Interior:** vale ≈+10% de vida efectiva en intercambios de ataca y huye y casi nada en combate continuo.
+
+### Implementación (rev. 2.11, decisiones pendientes de confirmar)
+* **Tecla del efecto propio:** agachado + tecla de posturas prepara el efecto para el siguiente golpe si tienes el umbral; Shift + golpe también funciona. Sin umbral y con *Postura Dominante*, agachado + tecla fija la postura actual como favorita.
+* **Ciclo de posturas:** Agua → Piedra → Fuego. Hasta la primera pulsación no hay postura (solo el suelo).
+* **Llama Constante:** "50% más lento" = los tiempos de espera y de pérdida de Fuego se duplican.
+* **Descarga de Piedra:** la absorción que quede a los 5 s se retira. **Contracorriente:** la esquiva garantizada solo evita golpes de una criatura (no el entorno).
+* **Hundirse en agua o lava con Shift** (Paso Ligero): sin cambios todavía; pendiente de probar con Epic Fight.
+* Los perks quitados (*Flujo*, *Onda Elemental*, *Postura Híbrida*, *Calma Interior*) dejan la rama llena sin perk: se vuelve a elegir uno nuevo.
 
 ### Activas
-* **Posturas de Combate Elemental (Nivel Total 5):** cambio libre entre posturas, con **4 s de cooldown** al cambiar (3 s con *Flujo*, 7 s con *Onda Elemental*). Los modificadores se aplican al **bonus de la pasiva**:
-  * **Agua:** bonus de velocidad y salto ×2 (+100%); bonus de daño desarmado −50%.
-  * **Piedra:** bonus de armadura **+25%** (hasta 20 / 7,5 con *Piel* al máximo); bonus de velocidad y salto −75%.
-  * **Fuego:** bonus de daño desarmado +50%; bonus de armadura y dureza −33%.
-* **Desvío y Reflejo de Proyectiles (Nivel Total 15):** cooldown 5 s. Reduce el daño de un proyectil en un valor igual al Nivel Total de Clase. Si lo reduce a 0, lo devuelve a su origen.
+* **Posturas de Combate Elemental (Nivel Total 5):** ver *Cargas de postura*.
+* **Desvío y Reflejo de Proyectiles (Nivel Total 15):** cooldown 5 s. Reduce el daño de un proyectil en un valor igual al Nivel Total de Clase. Si lo reduce a 0, lo devuelve a su origen. Da cargas de postura (regla 5).
 * **Paso Ligero y Marcha Elemental (Nivel Total 30):** inmunidad al daño por caída y caminar sobre el **agua** sin hundirse. Caminar sobre la **lava** sin daño solo es posible en **Postura del Fuego**.
-  * Rev. 2.7e: agacharse permite hundirse en el agua; sobre la lava (en Postura del Fuego) se anulan el daño de lava y la quemadura.
+  * Rev. 2.7e: agacharse permite hundirse en el agua; sobre la lava (en Postura del Fuego) se anulan el daño de lava y la quemadura. Rev. 2.9: el golpe con Shift del efecto propio no hunde al Monje.
 
 ### Subclases
 
 **1. Maestro de la Brisa**
-* **Cefiro Marcial:** bonus de velocidad hasta +80% y de salto hasta +120% (sujetos a los topes globales).
+* **Cefiro Marcial:** bonus de velocidad hasta +80% y de salto hasta +120% (sujetos a los topes globales). Como Viento ya no da bonus plano, el tope global se alcanza menos que antes.
 * **Impulso de Viento** (sustituye al doble salto): dash aéreo horizontal con **1 carga y 10 s de recarga**.
   * Rev. 2.7e: es una **activa** (tecla de habilidad); solo funciona en el aire. Impulso ≈ 6 bloques **[MEDIR]**.
 
 **2. Palma Pesada**
 * **Fuerza de Choque:** empuje de los golpes desarmados hasta +100% y alcance de ataque hasta **+50%** al nivel 10.
-* **Puño de Inhabilitación:** 10% por golpe, **ICD de 6 s por objetivo**. Aplica *Lentitud II* y *Ceguera* durante 1,5 s, más aturdimiento de Epic Fight.
+* **Puño de Inhabilitación:** 10% por golpe, **ICD de 6 s por objetivo**. Aplica *Lentitud II* y *Ceguera* durante 1,5 s, más aturdimiento de Epic Fight. Comparte el registro de aturdimientos del Monje (regla 6).
   * Rev. 2.7e: sin Epic Fight, el aturdimiento es el del mod (lentitud y debilidad fuertes). La rama **Fuerza de Choque** ya multiplica el empuje de los golpes desarmados.
 
 **3. Guardián Trimundial**
 * **Afinidad Corporal de Postura:** Fuego: hasta 75% de reducción de daño por fuego y lava. Agua: 33% de reducción de daño de proyectiles. Piedra: 20% de reducción de daño cuerpo a cuerpo.
-* **Manifiesto de los Elementos:** Fuego: los golpes desarmados incendian al objetivo 6 s. Agua: nado +100% y *Respiración Acuática*. Piedra: inmunidad a *Veneno*, *Wither* y *Hambre*, y refleja el 15% del daño físico recibido.
-  * Rev. 2.7e: todo depende de la **postura actual** (no de la anterior con Híbrida). El reflejo es daño de espinas y solo se aplica a golpes cuerpo a cuerpo y proyectiles.
+* **Manifiesto de los Elementos:** Fuego: los golpes desarmados incendian al objetivo 6 s (la quemadura se suma a la del *Golpe Ígneo*, regla 7). Agua: nado +100% y *Respiración Acuática*. Piedra: inmunidad a *Veneno*, *Wither* y *Hambre*, y refleja el 15% del daño físico recibido.
+  * Rev. 2.7e: todo depende de la **postura actual**. El reflejo es daño de espinas y solo se aplica a golpes cuerpo a cuerpo y proyectiles.
 
 ## 📋 9. Pendiente de medición o decisión
+
+* **Rework del Monje (2.9):**
+  * Medir los **golpes por segundo** de los puños de Epic Fight y, con ellos, los tiempos de decaimiento y el tiempo hasta 10 cargas (objetivo: ≈ 4 s en Fuego).
+  * Comprobar el **suelo** (daño ≈ 72% del DPS objetivo, armadura 10 / dureza 4) y que un Monje sin cargas es jugable.
+  * **Fuego con Maestría o Dominante:** con 14–17 cargas el buff llegaría a +56–68% de daño con Puño llena; valorar un tope.
+  * **Velocidad:** sin cargas de Agua el Monje ya no tiene bonus de velocidad (−35% frente a la 2.8). Piedra queda con −15% de velocidad y −30% de salto **[MEDIR]**.
+  * **Farmeo de cargas fuera de combate (decisión del usuario: sin restricción):** correr da cargas de Agua y golpear a cualquier entidad da cargas de Fuego. Vigilar si se abusa.
+  * **Absorción de Piedra sin tope:** hasta 8,5 HP con 17 cargas y ≈ 17 HP con *Eco de Piedra*.
+  * **Shift + golpe:** comprobar el uso de Shift en Epic Fight y el hundimiento en agua y lava.
+  * **Aturdimiento compartido** y **tope de quemadura de 15 s**.
+  * La sección 10 usa cargas medias y máximas como estimación; recalcular con datos medidos.
 
 * Calibrar en el juego: DPS desarmado del Monje con los puños de Epic Fight, y el CDR total real (clase + equipo + perks) frente a posibles topes de Iron's (el Mago con Cadencia Arcana y Elementalista llegaría a −60%).
 * Confirmar las listas de armas pesadas y ligeras con las categorías reales de Epic Fight y sus mods de armas.
@@ -487,8 +544,7 @@ Notas de los perks:
   * Furia del Bárbaro: implementar "curación" escalando la cantidad curada (incluye regeneración natural, que consume el doble de comida por vida recuperada).
   * Filo y Viento del Pícaro: medir los marcos de invulnerabilidad de Epic Fight y comprobar la compatibilidad del esquive del perk con el esquive propio de Epic Fight.
   * Tirador Ágil (Ranger): medir cómo trata Epic Fight el movimiento al apuntar, y revisar la interacción con la reducción de velocidad de carga del Francotirador. Contraataque Veloz: decidir si la flecha instantánea cuenta como arco tensado al máximo a efectos de crítico.
-  * Onda Elemental y Flujo (Monje): medir la frecuencia real de cambio de postura con los cooldowns de 7 s y 3 s.
-* **Desbalances residuales (ver sección 10):** tras la 2.7c el Monje (+6%) es la clase más alta y el Mago (−5%) la más baja. Entre las subclases, Explorador Ágil (+10%) y Maestro de Bestias (+9%) arriba; Mago de Batalla (−9%) y Hoja Arcana (−6%) abajo. Rebalancear con datos medidos.
+* **Desbalances residuales (ver sección 10):** tras la 2.9 el Monje (−1% con cargas medias, +13% con cargas máximas) queda cerca de la media; Ranger (+4%) es la clase más alta y Mago (−3%) la más baja. Entre las subclases, Explorador Ágil (+12%) y Maestro de Bestias (+10%) arriba; Palma Pesada (−9%) y Mago de Batalla (−8%) abajo. Rebalancear con datos medidos.
 * **Ramas extra (regla 13):** medir en juego (Iron's: atributos de invocaciones y tiempo de lanzamiento; Epic Fight: estamina e invulnerabilidad de la esquiva, caída lenta); las 10 ramas nuevas no entran en la sección 10.
 * **Escuela sagrada (regla 14):** confirmar que el −100% fijo (sin escalado por puntos) no afecta a efectos sagrados de objetos que no usan Spell Power.
 * Clases futuras (diseño aplazado por decisión del usuario): Alquimista (efectos de poción), Nigromante (invocador) y Druida (transformación en bestias). Riesgos técnicos anotados: Druida frente a Epic Fight, pociones frente a la definición de la disciplina Arco, y solapamiento con el Mago.
@@ -500,8 +556,9 @@ Notas de los perks:
 * **Resistencia:** vida efectiva (HP) contra golpes de 15, sin encantamientos ni Resistencia, como media geométrica entre equipo de hierro (15/0) y de diamante (20/8) con los muros de armadura aplicados, multiplicada por el **factor de escudo** = 1 + 0,5 / ((1 + 2w)(1 + w)), donde w es el muro de Escudos (afín = 1,5; −100% = 1,08). Se pasa a 0–10 con 2×log₂(HP/10). Incluye Baluarte y Provocación en el Paladín.
 * **DPS:** índice sostenido (1,00 = jugador sin clase con el mismo arma o los mismos hechizos), pasado a 0–10 con 3 + 4×(índice − 1).
 * **Total:** media de las cuatro puntuaciones.
-* **Supuestos:** 30% de críticos, Bárbaro al 60% de vida, Monje en postura neutral, un escudo bloquea ≈50% del daño cuando está disponible, ritmo de 387 XP/día.
-* **Ajustes manuales acumulados sobre el modelo (sin recalcular todo; los perks y las ramas extra no se incluyen porque se diseñaron neutros):** 2.4: Monje con Piel 16/6 (resistencia 40,8) y Explorador Ágil con menos movilidad. 2.6: los críticos del Bárbaro (35%) y del Pícaro (25%) no están recalculados; las tablas usan el 30%. 2.7: vida Mago ×0,8, Paladín ×1,2 (Juggernaut ×1,125), Pícaro ×0,85; Paladín movilidad 2,5; Brutalidad (DPS Bárbaro ×0,9, de 1,95 a 1,75); Filo (DPS Pícaro ×0,78, de 1,91 a 1,49). 2.7b: Monje y subclases −0,5 de movilidad; Explorador Ágil movilidad 8 y utilidad 7; Maestro de Bestias DPS 2,14; Bárbaro y subclases +1 de utilidad; Corruptor DPS 2,00; Mago de Batalla resistencia 44,0; Hoja Arcana DPS 1,55. 2.7c (escuela sagrada): Paladín utilidad 7; Guardián Bendito utilidad 9; Mago y sus subclases −0,5 de utilidad.
+* **Supuestos:** 30% de críticos, Bárbaro al 60% de vida, un escudo bloquea ≈50% del daño cuando está disponible, ritmo de 387 XP/día. **Monje (rev. 2.9):** con Puño, Piel y Viento llenas, usando en cada criterio la postura que lo favorece (Agua para movilidad, Piedra para resistencia, Fuego para DPS) y con **cargas medias** (5 de 10) en las tablas; con cargas máximas (10) se da el resultado en la lectura.
+* **Modelo del Monje:** suelo de daño = 72% del daño de la 2.8 (15% base + 85% de bonus × ⅔). Fuego con 5 cargas: +20% de daño y +5% por el finalizador, índice 1,05 (con 10 cargas: +40%, índice 1,17). Piedra con 5 cargas (Piel llena): 15 de armadura y 5,7 de dureza, 37,5 HP efectivos (con 10 cargas: 20 / 7,3 y 60,6 HP). Movilidad: 5,5 con 5 cargas de Agua (+17% de velocidad) y 6,5 con 10 (+33%). Utilidad +0,5 por el aturdimiento, la esquiva garantizada y las cargas por desvío.
+* **Ajustes manuales acumulados sobre el modelo (sin recalcular todo; los perks y las ramas extra no se incluyen porque se diseñaron neutros):** 2.4: Monje con Piel 16/6 (resistencia 40,8) y Explorador Ágil con menos movilidad. 2.6: los críticos del Bárbaro (35%) y del Pícaro (25%) no están recalculados; las tablas usan el 30%. 2.7: vida Mago ×0,8, Paladín ×1,2 (Juggernaut ×1,125), Pícaro ×0,85; Paladín movilidad 2,5; Brutalidad (DPS Bárbaro ×0,9, de 1,95 a 1,75); Filo (DPS Pícaro ×0,78, de 1,91 a 1,49). 2.7b: Monje y subclases −0,5 de movilidad; Explorador Ágil movilidad 8 y utilidad 7; Maestro de Bestias DPS 2,14; Bárbaro y subclases +1 de utilidad; Corruptor DPS 2,00; Mago de Batalla resistencia 44,0; Hoja Arcana DPS 1,55. 2.7c (escuela sagrada): Paladín utilidad 7; Guardián Bendito utilidad 9; Mago y sus subclases −0,5 de utilidad. **2.9:** Monje y sus tres subclases recalculados con cargas de postura (ver modelo del Monje); las subclases del Monje aplican el mismo cambio de resistencia (×0,92) y de DPS (−0,12) que la clase, y la movilidad de Palma Pesada y Guardián Trimundial baja a 5,5.
 * **Límite del método:** los muros de Magia, Arco y armas solo afectan a la puntuación a través de Armadura y Escudos; los demás muros impiden híbridos, pero este modelo no los ve. Las cifras de la 2.4 y la 2.7 son ajustes manuales sobre el modelo anterior.
 
 ### Clases (nivel 30)
@@ -513,7 +570,7 @@ Notas de los perks:
 | Bárbaro | 5 | 56,5 (5,0) | 1,75 (6,0) | 4 | 5,00 |
 | Pícaro | 6 | 23,5 (2,5) | 1,49 (5,0) | 7 | 5,11 |
 | Ranger | 5 | 50,1 (4,7) | 1,61 (5,4) | 6 | 5,27 |
-| Monje | 7 | 40,8 (4,1) | 1,17 (3,7) | 7 | 5,45 |
+| Monje (cargas medias) | 5,5 | 37,5 (3,8) | 1,05 (3,2) | 7,5 | 5,00 |
 
 ### Subclases (nivel 40)
 
@@ -534,12 +591,13 @@ Notas de los perks:
 | Maestro de Bestias | 5 | 65,2 (5,4) | 2,14 (7,6) | 7 | 6,25 |
 | Explorador Ágil | 8 | 57,6 (5,0) | 1,61 (5,4) | 7 | 6,35 |
 | Francotirador | 5 | 50,1 (4,7) | 2,05 (7,2) | 5 | 5,46 |
-| Maestro de la Brisa | 8,5 | 44,9 (4,3) | 1,17 (3,7) | 7 | 5,88 |
-| Palma Pesada | 7 | 46,9 (4,5) | 1,25 (4,0) | 7 | 5,63 |
-| Guardián Trimundial | 7 | 51,0 (4,7) | 1,30 (4,2) | 8 | 5,98 |
+| Maestro de la Brisa (cargas medias) | 8 | 41,5 (4,1) | 1,05 (3,2) | 7,5 | 5,70 |
+| Palma Pesada (cargas medias) | 5,5 | 43,3 (4,2) | 1,13 (3,5) | 7,5 | 5,19 |
+| Guardián Trimundial (cargas medias) | 5,5 | 47,1 (4,5) | 1,18 (3,7) | 8,5 | 5,55 |
 
 ### Lectura
-* **Clases:** totales entre 4,88 y 5,45 (media 5,13), es decir, entre −5% y +6%. Mago (−5%) y Bárbaro (−3%) son los más bajos; Monje (+6%) el más alto; Paladín (−1%), Pícaro (0%) y Ranger (+3%) quedan cerca de la media. El muro de Magia sin sagrada sube al Paladín, y perder la sagrada baja al Mago.
-* **Subclases:** totales entre 5,25 y 6,35 (media 5,75), entre −9% y +10%. Las más altas: Explorador Ágil (+10%) y Maestro de Bestias (+9%); las más bajas: Mago de Batalla (−9%) y Hoja Arcana (−6%).
+* **Clases:** totales entre 4,88 y 5,27 (media 5,06), es decir, entre −3% y +4%. Mago (−3%) y Bárbaro (−1%) quedan en la parte baja; Ranger (+4%) es el más alto; Paladín (0%), Pícaro (+1%) y Monje (−1%) quedan cerca de la media. El muro de Magia sin sagrada sube al Paladín, y perder la sagrada baja al Mago.
+* **Monje:** depende de las cargas, así que su puntuación es un rango. Con **cargas medias** (5) el total es **5,00**; con **cargas máximas** (10) sube a **5,72** (movilidad 6,5, resistencia 60,6 HP, DPS 1,17 y utilidad 7,5), que lo sitúa en +13% de la media. Con cargas máximas, las subclases salen a 6,3 (Maestro de la Brisa), 5,9 (Palma Pesada) y 6,3 (Guardián Trimundial). Dominante y Maestría pueden empujarlo por encima de eso (ver pendientes).
+* **Subclases:** totales entre 5,19 y 6,35 (media 5,69), entre −9% y +12%. Las más altas: Explorador Ágil (+12%) y Maestro de Bestias (+10%); las más bajas: Palma Pesada (−9%) y Mago de Batalla (−8%).
 * **Maestro de Bestias:** su DPS depende de hasta 8 mascotas y varía mucho entre mobs normales y jefes; el valor mostrado es una media aproximada.
 * **Ramas extra y perks:** no entran en estas tablas. Los perks se diseñaron como laterales (≈0 en el total), con dos excepciones a vigilar al medir: Furia Desatada (Bárbaro) y Golpe a Traición (Pícaro) pueden subir el DPS en grupo.

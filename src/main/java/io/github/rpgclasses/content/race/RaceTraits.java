@@ -107,6 +107,15 @@ public final class RaceTraits {
         boolean second = p.tickCount % 20 == 0;
         FoodData food = p.getFoodData();
 
+        // Elfo Silvano (R2): Regeneración en biomas de bosque.
+        if (second) {
+            ActiveMechanic forest = Races.find(p, "race_forest_regen");
+            if (forest != null && p.level().getBiome(p.blockPosition()).is(net.minecraft.tags.BiomeTags.IS_FOREST)) {
+                p.addEffect(new net.minecraft.world.effect.MobEffectInstance(net.minecraft.world.effect.MobEffects.REGENERATION, 60,
+                        (int) forest.number("amplifier", 0), true, false, true));
+            }
+        }
+
         // Orco: +25 % de consumo de hambre (se añade un extra a cada cansancio que acumula).
         ActiveMechanic hunger = Races.find(p, "race_hunger");
         if (hunger != null) {
@@ -229,7 +238,16 @@ public final class RaceTraits {
         // Orco Pétreo: Piel Gruesa resta un valor fijo a cada golpe, sin mínimo.
         double flat = Races.number(player, "race_thick_skin", "flat_reduction", 0);
         if (flat > 0 && !source.is(DamageTypeTags.BYPASSES_INVULNERABILITY)) {
-            event.setAmount((float) Math.max(0, event.getAmount() - flat));
+            float before = event.getAmount();
+            event.setAmount((float) Math.max(0, before - flat));
+            // Chispas de piedra en los golpes que Piel Gruesa amortigua (no en el daño continuo).
+            if (source.getEntity() != null && player.level() instanceof net.minecraft.server.level.ServerLevel sl) {
+                sl.sendParticles(new net.minecraft.core.particles.BlockParticleOption(ParticleTypes.BLOCK,
+                        net.minecraft.world.level.block.Blocks.STONE.defaultBlockState()), player.getX(), player.getY() + 1.0, player.getZ(),
+                        8, 0.3, 0.4, 0.3, 0.1);
+                if (event.getAmount() <= 0) player.level().playSound(null, player.blockPosition(), SoundEvents.STONE_HIT,
+                        net.minecraft.sounds.SoundSource.PLAYERS, 0.8f, 0.7f);
+            }
         }
         if (event.getAmount() <= 0) return;
 

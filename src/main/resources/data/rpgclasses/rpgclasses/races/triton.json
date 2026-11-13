@@ -66,6 +66,12 @@
               1
             ]
           }
+        },
+        {
+          "type": "rpgclasses:mechanic",
+          "id": "rpgclasses:race_trident_mastery",
+          "min_rank": 2,
+          "damage_bonus": 0.25
         }
       ],
       "rites": [

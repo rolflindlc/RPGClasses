@@ -108,6 +108,18 @@ public final class StatEngine {
                     AttributeModifier.Operation.ADDITION, 0.8);
         }
 
+        // 6a. Enano Herrero (R2): dureza por cada pieza de armadura que fabricó él.
+        double perPiece = io.github.rpgclasses.content.race.Races.number(player, "race_forged_armor", "toughness_per_piece", 0);
+        if (perPiece > 0) {
+            int pieces = 0;
+            for (EquipmentSlot slot : ARMOR_SLOTS) {
+                ItemStack st = player.getItemBySlot(slot);
+                if (!st.isEmpty() && st.getTag() != null && st.getTag().hasUUID(io.github.rpgclasses.content.race.Rites.CRAFTER)
+                        && player.getUUID().equals(st.getTag().getUUID(io.github.rpgclasses.content.race.Rites.CRAFTER))) pieces++;
+            }
+            applyTo(player, Attributes.ARMOR_TOUGHNESS, "forged_armor", AttributeModifier.Operation.ADDITION, pieces * perPiece);
+        }
+
         // 6. Cargas de Piedra del Monje: armadura con tope 20 / 8 sobre lo ya calculado.
         io.github.rpgclasses.content.MonkCharges.applyStoneArmor(player);
 

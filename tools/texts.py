@@ -403,6 +403,7 @@ UI = {
     "msg.rpgclasses.monk_armed": "Efecto propio preparado: tu siguiente golpe desarmado gasta las cargas",
     "msg.rpgclasses.shadow_step_blocked": "No hay sitio para teletransportarte hacia ahí.",
     "hud.rpgclasses.stealth": "Sigilo",
+    "hud.rpgclasses.free_cast": "Gratis %s: %s",
     "entity.rpgclasses.decoy": "Señuelo",
     "msg.rpgclasses.heavy_shot_stage": "%s: +%s%% de daño",
     "stance.rpgclasses.none": "Neutral",

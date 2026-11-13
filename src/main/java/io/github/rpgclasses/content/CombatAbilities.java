@@ -12,6 +12,7 @@ import io.github.rpgclasses.server.MechanicService;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.TagKey;
@@ -80,7 +81,11 @@ public final class CombatAbilities {
                 m -> m.isAlive() && !m.getType().is(TAUNT_IMMUNE) && !io.github.rpgclasses.server.Allies.isAlly(player, m))) {
             mob.setTarget(player);
             mob.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, slowTicks, 0));
+            mob.addEffect(new MobEffectInstance(MobEffects.GLOWING, slowTicks, 0, false, false)); // quién ha caído en la provocación
+            ClassFx.burst(mob, ParticleTypes.ANGRY_VILLAGER, 2, 0);
         }
+        // Onda de la provocación: anillos que se abren.
+        for (double r = 1.5; r <= Math.min(radius, 8); r += 1.5) ClassFx.ring(player, ParticleTypes.CRIT, r, 0.2, (int) (r * 8));
         player.addEffect(new MobEffectInstance(ModEffects.TAUNT_GUARD.get(), AbilityService.ticks(p, "reduction_seconds", 4), 0));
         sound(player, SoundEvents.RAVAGER_ROAR);
         return true;
@@ -92,6 +97,8 @@ public final class CombatAbilities {
         int ticks = (int) Math.round(seconds * 20);
         player.addEffect(new MobEffectInstance(ModEffects.BULWARK.get(), ticks, 0));
         PaladinSubclasses.onBulwark(player, ticks);
+        ClassFx.burst(player, ClassFx.SHIELD, 30, 0.05);
+        ClassFx.ring(player, ParticleTypes.END_ROD, 1.2, 1.0, 16);
         sound(player, SoundEvents.SHIELD_BLOCK);
         return true;
     }
@@ -130,7 +137,10 @@ public final class CombatAbilities {
                         && (t instanceof net.minecraft.world.entity.monster.Enemy || t instanceof net.minecraft.world.entity.player.Player
                             || (t instanceof Mob m && m.getTarget() == player)))) {
             e.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, weaknessTicks, 0), player);
+            ClassFx.burst(e, ParticleTypes.SMOKE, 6, 0.02);
         }
+        ClassFx.burst(player, ClassFx.RED, 40, 0.1);
+        ClassFx.ring(player, ClassFx.RED, radius, 0.2, 36);
         sound(player, SoundEvents.WOLF_GROWL);
         return true;
     }
@@ -157,11 +167,13 @@ public final class CombatAbilities {
                     Vec3 away = target.position().subtract(player.position());
                     if (knockback > 0 && away.horizontalDistanceSqr() > 1.0E-4) target.knockback(knockback * 0.5, -away.x, -away.z);
                 }
+                ClassFx.ring(player, ParticleTypes.EXPLOSION, radius * 0.7, 0.3, 6);
                 sound(player, SoundEvents.GENERIC_EXPLODE);
             }
             return;
         }
         Vec3 dir = charging.direction();
+        player.serverLevel().sendParticles(ParticleTypes.CLOUD, player.getX(), player.getY() + 0.2, player.getZ(), 3, 0.2, 0.1, 0.2, 0.01);
         // Carga Imparable: atraviesa (mantiene el impulso), 60 % del daño y sin aturdir.
         if (unstoppable != null) {
             Vec3 v = player.getDeltaMovement();
@@ -180,6 +192,7 @@ public final class CombatAbilities {
             // knockback() empuja en sentido contrario al vector dado: se pasa la dirección de la carga invertida.
             if (knockback > 0 && unstoppable == null) target.knockback(knockback, -dir.x, -dir.z);
             if (stunTicks > 0) stun(target, stunTicks);
+            ClassFx.burst(target, ParticleTypes.CRIT, 12, 0.2);
             if (unstoppable == null) {
                 // Rev. 2.7f: la Embestida base se frena contra el primer enemigo y rebota un poco hacia atrás.
                 double bounce = AbilityService.number(p, "bounce_strength", 0.4);
@@ -210,6 +223,8 @@ public final class CombatAbilities {
         if (AbilityService.remainingTicks(player, BLOODTHIRST) > 0) return;
         JsonObject p = AbilityService.params(BLOODTHIRST);
         player.heal((float) (player.getMaxHealth() * AbilityService.number(p, "heal_fraction", 0.1)));
+        ClassFx.line(event.getEntity(), player, ClassFx.BLOOD, 8);
+        ClassFx.burst(player, ParticleTypes.HEART, 3, 0);
         AbilityService.setCooldown(player, BLOODTHIRST, AbilityService.ticks(p, "icd_seconds", 1));
     }
 

@@ -144,6 +144,12 @@
         },
         {
           "type": "rpgclasses:mechanic",
+          "id": "rpgclasses:race_searing_strikes",
+          "min_rank": 2,
+          "burn_seconds": 2
+        },
+        {
+          "type": "rpgclasses:mechanic",
           "id": "rpgclasses:race_portable_furnace",
           "min_rank": 3,
           "max_items": 16,

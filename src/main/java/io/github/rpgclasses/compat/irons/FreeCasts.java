@@ -61,6 +61,7 @@ public final class FreeCasts {
         recharge(player, data, slot, p);
         int max = (int) AbilityService.number(p, "charges", slot);
         player.displayClientMessage(Component.translatable("message.rpgclasses.free_cast_used", slot, max - used, max), true);
+        io.github.rpgclasses.network.Net.syncPlayer(player); // la interfaz muestra las cargas
     }
 
     /** Avanza las recargas de todas las ranuras desbloqueadas. */
@@ -80,6 +81,7 @@ public final class FreeCasts {
             used--;
             data.counters.put(usedKey, used);
             data.counters.put(timerKey, 0);
+            io.github.rpgclasses.network.Net.syncPlayer(player);
         }
         if (used > 0) {
             AbilityService.setCooldown(player, rechargeKey(slot), AbilityService.ticks(p, "recharge_seconds", 120));

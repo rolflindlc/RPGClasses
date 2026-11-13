@@ -1,10 +1,11 @@
 # Documento de Diseño v2: Mod de Clases y Árboles de Habilidades para Minecraft Java
 
-Versión 2 del diseño (revisión 2.12, en desarrollo). Plataforma prevista: Forge 1.20.1 con Iron's Spells and Spellbooks, Epic Fight, Mowzie's Mobs y Cataclysm. Servidor principalmente PvE con algo de PvP. Objetivo del mod: sistema de clases balanceadas y programado de forma estructurada y orientada a la expansibilidad (clases futuras previstas: Alquimista, Nigromante, Druida).
+Versión 2 del diseño (revisión 2.13, en desarrollo). Plataforma prevista: Forge 1.20.1 con Iron's Spells and Spellbooks, Epic Fight, Mowzie's Mobs y Cataclysm. Servidor principalmente PvE con algo de PvP. Objetivo del mod: sistema de clases balanceadas y programado de forma estructurada y orientada a la expansibilidad (clases futuras previstas: Alquimista, Nigromante, Druida).
 
 Los valores marcados con **[MEDIR]** son objetivos de diseño que deben calibrarse en el juego real antes de darlos por cerrados.
 
-**Cambios de las revisiones 2.9 a 2.12:**
+**Cambios de las revisiones 2.9 a 2.13:**
+* **Balance y visuales (2.13):** Explorador Ágil +10% → **+5%** de velocidad; Maestro de Bestias +35% → **+30%** de vida y daño de mascotas; Palma Pesada: Puño de Inhabilitación 10% → **15%**; Mago de Batalla: Escudo Arcano 10% → **12%** del maná gastado. Efectos visuales nuevos: Provocación (onda y brillo en los mobs provocados), Baluarte (escudo de partículas mientras dura), Estandarte (anillo dorado en el borde del aura), Furia Berserker (aura roja), Embestida (estela y golpe), Sed de Sangre (sangre hacia el Bárbaro), Toxina (gotas verdes) y barra de cargas de **Conjuros Gratuitos** del Mago en la interfaz. La sección 10 no está recalculada con estos ajustes.
 * **Aturdimiento de Epic Fight (2.12):** todos los aturdimientos de las clases (*Embestida* y *Carga Demoledora* del Bárbaro, *Puño de Inhabilitación* de Palma Pesada y el efecto propio de Piedra del Monje) aplican el **estado de aturdimiento real de Epic Fight** (aturdimiento corto, alargado a la duración de la habilidad). Sin Epic Fight, o en criaturas sin animación de aturdimiento, se usa el simulado (lentitud y debilidad fuertes). El tag `rpgclasses:stun_immune` sigue haciendo inmune. No cambian la congelación del Elementalista ni el Cepo del Goblin (no son aturdimientos).
 * **Rework del Monje por cargas de postura (2.9):** el crecimiento plano de daño y armadura del Monje se sustituye por **cargas de postura** (sección 8). El nivel da un **suelo** (*Cuerpo Marcial*, ≈ ⅔ del daño y la armadura anteriores) y el resto se gana en combate acumulando cargas en la postura activa. Las ramas Puño, Piel y Viento **potencian las cargas** de Fuego, Piedra y Agua. Perks nuevos: Llama Constante e Ignición Temprana (Puño), Eco de Piedra (Piel), Postura Dominante y Flujo Continuo (Maestría); desaparecen Flujo, Onda Elemental, Postura Híbrida y Calma Interior. Sustituye al rework de la 2.8 (*Cuerpo Marcial* a medias con las ramas), que no llegó a programarse. **Programado en la 2.11.**
 * **Aliados (regla 15, 2.9):** cada jugador elige a sus aliados; el resto son enemigos.
@@ -201,7 +202,7 @@ Notas de los perks:
 **3. Mago de Batalla**
 * **Concentración Inquebrantable:** los conjuros con tiempo de lanzamiento no se interrumpen ni sufren knockback al recibir daño.
 * **Armonía Marcial:** reduce los muros de **Armas pesadas y ligeras** un 10% por nivel de subclase (se anulan al nivel 10). Es la pasiva que mitiga muros en esta subclase.
-* **Escudo Arcano:** absorción igual al 3% (nivel 1) a 10% (nivel 10) del maná gastado, con **tope del 50% de la vida máxima**. Tras 6 s sin gastar maná, pierde el **10% del máximo del escudo por segundo**.
+* **Escudo Arcano:** absorción igual al 3% (nivel 1) a 12% (nivel 10, rev. 2.13; antes 10%) del maná gastado, con **tope del 50% de la vida máxima**. Tras 6 s sin gastar maná, pierde el **10% del máximo del escudo por segundo**.
 
 ## 🛡️ 4. Paladín
 
@@ -412,13 +413,13 @@ Notas de los perks:
 ### Subclases
 
 **1. Maestro de Bestias**
-* **Vínculo Salvaje:** +35% de vida máxima, +35% de daño y +25% de velocidad para mascotas domesticadas (lobos, gatos, loros, etc.). Las invocaciones no cuentan. El bonus aplica a un **máximo de 8 mascotas**.
+* **Vínculo Salvaje:** +30% de vida máxima, +30% de daño (rev. 2.13; antes +35%) y +25% de velocidad para mascotas domesticadas (lobos, gatos, loros, etc.). Las invocaciones no cuentan. El bonus aplica a un **máximo de 8 mascotas**.
 * **Salvaguarda de Bestias:** si una mascota va a recibir daño letal, queda a 1 HP, se teletransporta al punto de reaparición del Ranger y se sienta. **Cooldown de 5 min por mascota**; permanece sin órdenes 60 s.
   * Rev. 2.7e: **Vínculo Salvaje** cuenta las 8 mascotas más cercanas (64 bloques); el bonus se quita al alejarse o perder la subclase. Sin cama/ancla, la mascota va al spawn del mundo. "Sin órdenes" = no se puede levantar ni montar durante 60 s. Si el Ranger está desconectado, la Salvaguarda no actúa.
   * Rev. 2.11: **Libro de Vínculos.** Objeto propio del Maestro de Bestias (receta libro + hueso + correa), que forma parte de su kit al coger la subclase y se retira al perderla. Muestra cada mascota vinculada con imagen (huevo de aparición de su especie), nombre y estadísticas. **Máximo 8 vínculos**; vincular o romper exige estar a **16 bloques o menos**; las mascotas no cargadas no se pueden romper desde el libro. Permite elegir adónde se teletransporta la mascota al morir (la Salvaguarda lo usa): **3 puntos guardados + el punto de aparición**.
 
 **2. Explorador Ágil**
-* **Caminante de la Naturaleza:** **+10%** de velocidad adicional (sujeta al tope global). *(Antes +15% y bonus de Suerte; la Suerte se ha retirado.)*
+* **Caminante de la Naturaleza:** **+5%** de velocidad adicional (sujeta al tope global). *(Antes +15% con Suerte y +10% hasta la rev. 2.13.)*
 * **Triple Salto y Escalada de Paredes:** tercer salto y escalada al agacharse junto a una pared. Si tensa un arco o ballesta estando adherido a la pared, se suelta.
   * Rev. 2.7e: adherido no cae; subes con **saltar** o **avanzar**. Agacharse en el suelo frente a la pared y avanzar también trepa.
 
@@ -512,7 +513,7 @@ Notas de los perks:
 
 **2. Palma Pesada**
 * **Fuerza de Choque:** empuje de los golpes desarmados hasta +100% y alcance de ataque hasta **+50%** al nivel 10.
-* **Puño de Inhabilitación:** 10% por golpe, **ICD de 6 s por objetivo**. Aplica *Lentitud II* y *Ceguera* durante 1,5 s, más aturdimiento de Epic Fight. Comparte el registro de aturdimientos del Monje (regla 6).
+* **Puño de Inhabilitación:** 15% por golpe (rev. 2.13; antes 10%), **ICD de 6 s por objetivo**. Aplica *Lentitud II* y *Ceguera* durante 1,5 s, más aturdimiento de Epic Fight. Comparte el registro de aturdimientos del Monje (regla 6).
   * Rev. 2.7e / 2.12: con Epic Fight el aturdimiento es el suyo; sin él, el del mod (lentitud y debilidad fuertes). La rama **Fuerza de Choque** ya multiplica el empuje de los golpes desarmados.
 
 **3. Guardián Trimundial**

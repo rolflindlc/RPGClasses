@@ -21,7 +21,7 @@ RACES = {
  "human": ("minecraft:player_head", [mech("adaptable", wall_reduction=V(.10, .20, .35, .50))], [
     ("polyvalent", "minecraft:crafting_table", True, [mech("second_wall", factor=.5)]),
     ("specialist", "minecraft:diamond_sword", True, [mech("wall_mastery", factor=1.5)]),
-    ("autodidact", "minecraft:writable_book", True, [mech("flexible_respec")])]),
+    ("autodidact", "minecraft:writable_book", True, [mech("flexible_respec"), mech("scholar", 2, xp_bonus=.15)])]),
  "orc": ("minecraft:iron_axe", [
     attr((R("scale"), .10, "add"), (MC + "max_health", .10, "multiply_base")),
     mech("last_stand", invulnerable_seconds=1), mech("hunger", exhaustion=.25)], [
@@ -39,7 +39,7 @@ RACES = {
         mech("stone_sense", 1, radius=V(8, 8, 12, 16), duration_seconds=V(5, 5, 8, 8), cooldown_seconds=V(30, 30, 30, 20))]),
     ("smith", "minecraft:anvil", True, [
         mech("forged", durability=V(.20, .20, .40, .40), unbreaking=V(0, 0, 0, 1)),
-        mech("anvil_discount", 1, discount=.50)]),
+        mech("anvil_discount", 1, discount=.50), mech("forged_armor", 2, toughness_per_piece=.5)]),
     ("demolisher", "minecraft:tnt", True, [
         mech("blast_proof", tnt_radius=.25), mech("vein_miner", 1, max_blocks=V(8, 8, 16, 16)),
         mech("tunnel", 3, size=3, exhaustion_per_block=.1)])]),
@@ -52,7 +52,7 @@ RACES = {
         mech("arcane", enchant_bonus=V(.10, .20, .30, .30), xp_discount=V(.10, .20, .30, .30), fusion=V(0, 0, 0, 1), fusion_cost_levels=30)]),
     ("sylvan", "minecraft:wheat", True, [
         mech("harvest", bonus=V(.25, .25, .25, .50)), mech("plant_food", 1, bonus=.25),
-        mech("green_touch", 2, cooldown_seconds=V(5, 5, 5, 2))])]),
+        mech("green_touch", 2, cooldown_seconds=V(5, 5, 5, 2)), mech("forest_regen", 2, amplifier=0)])]),
  "goblin": ("minecraft:gold_nugget", [
     attr((R("scale"), -.50, "add"), (MC + "max_health", -.25, "multiply_base"), (MC + "luck", 1, "add")),
     mech("looting", level=V(1, 1, 2, 2))], [
@@ -69,7 +69,7 @@ RACES = {
     attr(("forge:swim_speed", .50, "multiply_base")),
     mech("water_breathing"), mech("aquatic", fire_damage=.30)], [
     ("fisher", "minecraft:fishing_rod", True, [
-        mech("fisher", luck=1, lure_speed=.40, extra_catch=V(0, .25, .25, .50), treasure_chance=V(0, 0, .05, .05), xp_bonus=V(0, 0, 0, 1))]),
+        mech("fisher", luck=1, lure_speed=.40, extra_catch=V(0, .25, .25, .50), treasure_chance=V(0, 0, .05, .05), xp_bonus=V(0, 0, 0, 1)), mech("trident_mastery", 2, damage_bonus=.25)]),
     ("shaper", "minecraft:water_bucket", True, [
         mech("tame_water", duration_seconds=30, cooldown_seconds=5),
         mech("wave", 1, cooldown_seconds=V(15, 15, 15, 10), charges=V(1, 1, 1, 2), strength=1.5, range=6),
@@ -83,7 +83,7 @@ RACES = {
     ("native", "minecraft:gold_ingot", True, [
         mech("nether_native"), mech("wither_immune", 1), mech("barter", 2, extra_chance=.25), mech("nether_compass", 3, cooldown_seconds=600)]),
     ("smelter", "minecraft:blast_furnace", True, [
-        mech("lava_walk"), mech("forge_heat", 1, radius=8, furnace_speed=.50), mech("auto_smelt", 2), mech("portable_furnace", 3, max_items=16, cooldown_seconds=20)]),
+        mech("lava_walk"), mech("forge_heat", 1, radius=8, furnace_speed=.50), mech("auto_smelt", 2), mech("searing_strikes", 2, burn_seconds=2), mech("portable_furnace", 3, max_items=16, cooldown_seconds=20)]),
     ("pyromaniac", "minecraft:fire_charge", True, [
         mech("piercing_fire", pierce=V(1, 2, 2, 2)),
         mech("flame_pool", 2, duration_seconds=4, radius=2.5, burn_seconds=3),
@@ -107,7 +107,7 @@ RACE_TEXT = {  # id: (nombre, descripción)
  "elf": ("Elfo", "Atraviesa las hojas y trepa por ellas como si fueran andamios (saltar sube, agacharse baja). No puede comer carne ni pescado."),
  "goblin": ("Goblin", "La mitad de alto: muy difícil de golpear y cabe por huecos pequeños. Tiene Suerte y Saqueo racial (cuenta el mayor con el encantamiento). A cambio, mucha menos vida."),
  "triton": ("Tritón", "Respira bajo el agua, nada más rápido, pica sumergido a velocidad normal y ve en la oscuridad bajo el agua. El fuego le hace más daño."),
- "infernal": ("Infernal", "Inmune al fuego y la lava. Con Iron's Spells tiene conjuros de fuego raciales siempre disponibles, a los que no afecta el muro de Magia. Los golems de hierro lo atacan siempre y los aldeanos le cobran más."),
+ "infernal": ("Infernal", "Inmune al fuego y la lava. Con Iron's Spells tiene conjuros de fuego raciales siempre disponibles, que sufren el muro de Magia de tu clase como cualquier conjuro. Los golems de hierro lo atacan siempre y los aldeanos le cobran más."),
  "undead": ("No-muerto", "Respira bajo el agua, su hambre está fija y regenera vida constantemente (se corta unos segundos al recibir daño). El sol directo le daña aunque lleve casco, y ni las pociones de curación ni los conjuros le curan."),
 }
 
@@ -142,6 +142,11 @@ MECHANIC_TEXT = {  # id sin "race_": (nombre, descripción corta)
  "adaptable": ("Adaptable", "Reduce el muro elegido y los rasgos base negativos de tu clase."),
  "second_wall": ("Segundo muro", "Un segundo muro recibe parte de la reducción."),
  "wall_mastery": ("Maestría de Muro", "Multiplica la reducción del muro principal."),
+ "scholar": ("Erudito", "Desde Rango 2, los enemigos que derrotas dan un 15 % más de experiencia."),
+ "forged_armor": ("Armadura Forjada", "Desde Rango 2, cada pieza de armadura fabricada por ti que llevas da +0,5 de dureza."),
+ "forest_regen": ("Savia", "Desde Rango 2, en biomas de bosque tienes Regeneración I."),
+ "trident_mastery": ("Maestría del Tridente", "Desde Rango 2, el tridente (cuerpo a cuerpo o lanzado) hace un 25 % más de daño."),
+ "searing_strikes": ("Golpes Abrasadores", "Desde Rango 2, tus golpes cuerpo a cuerpo prenden al objetivo 2 s."),
  "flexible_respec": ("Reinicio Flexible", "La pérdida de XP al reiniciar se reduce en el porcentaje de Adaptable."),
  "last_stand": ("Última Resistencia", "Sobrevives a un golpe letal con 1 HP, 1 vez por vida. Va después de las habilidades de clase y antes del Tótem."),
  "hunger": ("Apetito de orco", "Consumes más hambre."),
@@ -210,6 +215,7 @@ MECHANIC_TEXT = {  # id sin "race_": (nombre, descripción corta)
 }
 
 RACE_PARAMS = {
+ "toughness_per_piece": "Dureza por pieza", "amplifier": "Nivel del efecto (0 = I)",
  "wall_reduction": "Reducción del muro y de los rasgos base|%", "factor": "Factor x", "invulnerable_seconds": "Invulnerable después|s", "exhaustion": "Hambre extra|%",
  "flat_reduction": "Daño restado por golpe (HP)", "food": "Hambre (puntos)", "saturation": "Saturación", "mob_factor": "Mobs que no son jefes x",
  "immunity_seconds": "Inmunidad posterior|s", "mining_speed": "Velocidad de minado extra|%", "level": "Nivel", "slowness": "Lentitud a enemigos (nivel)",

@@ -164,6 +164,12 @@
           "id": "rpgclasses:race_anvil_discount",
           "min_rank": 1,
           "discount": 0.5
+        },
+        {
+          "type": "rpgclasses:mechanic",
+          "id": "rpgclasses:race_forged_armor",
+          "min_rank": 2,
+          "toughness_per_piece": 0.5
         }
       ],
       "rites": [

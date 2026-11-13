@@ -49,20 +49,7 @@ public final class RacialSpells {
         }
     }
 
-    /** El muro de Magia no afecta a los conjuros raciales: se deshace su reducción de poder en el daño. */
-    @SubscribeEvent(priority = EventPriority.LOW)
-    public void onHurt(LivingHurtEvent event) {
-        if (!(event.getSource().getEntity() instanceof ServerPlayer player) || !IronsCompat.isSpellDamage(event.getSource())) return;
-        ActiveMechanic m = Races.find(player, "race_racial_spells");
-        String spellId = m == null ? null : IronsCompat.spellId(event.getSource());
-        if (spellId == null) return;
-        for (String[] entry : SPELLS) {
-            if (!spellId.equals(IronsCompat.IRONS + ":" + entry[1]) || m.number(entry[0], 0) <= 0) continue;
-            double wall = StatEngine.wall(player, Ids.MAGIC);
-            if (wall > 0 && wall < 1) event.setAmount((float) (event.getAmount() / (1 - wall)));
-            return;
-        }
-    }
+    // Rev. 2.12: los conjuros raciales sufren el muro de Magia de la clase como cualquier otro conjuro (sin compensación).
 
     @SubscribeEvent
     public void onSpellHeal(SpellHealEvent event) {

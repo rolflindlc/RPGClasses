@@ -171,7 +171,7 @@ subs = {
           arc_targets=3, arc_range=6, arc_fraction=.5, leech_fraction=.4)], []),
  "battle_mage": ("mage","minecraft:iron_chestplate",[mech("unbreakable_concentration"),
      mech("wall_mitigation", disciplines=[R("heavy"),R("light")], mitigation={"to":1.0}),
-     mech("arcane_shield", mana_fraction={"from":.03,"to":.10}, cap_health_fraction=.5, decay_delay_seconds=6, decay_per_second=.1)], []),
+     mech("arcane_shield", mana_fraction={"from":.03,"to":.12}, cap_health_fraction=.5, decay_delay_seconds=6, decay_per_second=.1)], []),
  "blessed_guardian": ("paladin","minecraft:golden_apple",[attr([(R("healing_received"), to(.5))])],
      [ms(5,"healing_bulwark",True,"bulwark")]),
  "unyielding_bastion": ("paladin","minecraft:obsidian",[attr([(MC+"knockback_resistance", to(1.0))]),
@@ -194,10 +194,10 @@ subs = {
      mech("wall_mitigation", disciplines=[R("magic")], mitigation={"to":1.0}),
      mech("arcane_ambush", damage_bonus=.6, icd_seconds=8, stealth_cost=.4)], []),
  "beast_master": ("ranger","minecraft:bone",[
-     mech("wild_bond", health=.35, damage=.35, speed=.25, max_pets=8),
+     mech("wild_bond", health=.30, damage=.30, speed=.25, max_pets=8),
      mech("beast_safeguard", cooldown_seconds=300, idle_seconds=60)], []),
  "agile_scout": ("ranger","minecraft:feather",[
-     attr([(MC+"movement_speed", to(.10,"multiply_base"))])],
+     attr([(MC+"movement_speed", to(.05,"multiply_base"))])],
      [ms(1,"triple_jump",True,"double_jump"), ms(1,"wall_climb",True)]),
  "sniper": ("ranger","minecraft:spyglass",[
      attr([(R("projectile_velocity"), to(2.0)), (R("bow_damage"), to(.45))]),
@@ -206,7 +206,7 @@ subs = {
      attr([(MC+"movement_speed", to(.4,"multiply_base")), (R("jump_bonus"), to(.8))], NOARM)], [ms(1,"wind_dash",True)]),
  "heavy_palm": ("monk","minecraft:piston",[
      attr([(R("unarmed_knockback"), to(1.0)), ("forge:entity_reach", to(.5,"multiply_base"))]),
-     mech("disabling_fist", chance=.1, icd_seconds=6, duration_seconds=1.5)], []),
+     mech("disabling_fist", chance=.15, icd_seconds=6, duration_seconds=1.5)], []),
  "triworld_guardian": ("monk","minecraft:heart_of_the_sea",[
      mech("stance_affinity", fire_damage_reduction={"to":.75}, projectile_reduction=.33, melee_reduction=.2),
      mech("elemental_manifest", ignite_seconds=6, swim_bonus=1.0, reflect_fraction=.15)], []),

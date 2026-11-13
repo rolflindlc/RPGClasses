@@ -242,6 +242,12 @@
               2
             ]
           }
+        },
+        {
+          "type": "rpgclasses:mechanic",
+          "id": "rpgclasses:race_forest_regen",
+          "min_rank": 2,
+          "amplifier": 0
         }
       ],
       "rites": [

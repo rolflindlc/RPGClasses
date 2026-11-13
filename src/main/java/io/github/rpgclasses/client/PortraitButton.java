@@ -44,8 +44,7 @@ public final class PortraitButton extends Button {
         int x = getX(), y = getY(), w = getWidth(), h = getHeight();
         boolean selected = !active && selectedWhenInactive;
         boolean hovered = active && isHoveredOrFocused();
-        g.fill(x, y, x + w, y + h, selected ? 0xC0403818 : hovered ? 0xC0303040 : 0xA0141418);
-        UiStyle.frame(g, x, y, x + w, y + h, selected ? UiStyle.GOLD : hovered ? 0xFFFFFFFF : 0xFF3A3A44);
+        UiStyle.nine(g, selected ? UiStyle.BUTTON_SELECTED : hovered ? UiStyle.BUTTON_HOVER : UiStyle.BUTTON, x, y, w, h, 20, 20, 3);
         int text = selected ? 0xFFFFE08A : !active ? 0xFF777777 : 0xFFFFFFFF;
         if (layout == Layout.VERTICAL) {
             int size = Math.min(Portraits.TEX, Math.min(w - 4, h - (showName ? 14 : 4)));

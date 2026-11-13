@@ -92,7 +92,7 @@ Ids de raza: `rpgclasses:human`, `orc`, `dwarf`, `elf`, `goblin`, `triton`, `inf
 
 Nada de esto se ha probado en el juego. Perfil: Forge 1.20.1 (47.4.x) + Iron's Spells 3.16.3 + Epic Fight 20.15.x + el jar del último run verde; Cataclysm o Mowzie's opcionales (jefes de rito). Varias pruebas necesitan un segundo jugador (LAN). Si algo falla: `/clases debug volcar`, `logs/rpgclasses-debug.log` y, si hay, el crash-report.
 
-**A. Arranque.** El juego abre y entra al mundo sin errores de Mixin en el log (hay 14 mixins). Servidor y cliente con el mismo jar (protocolo de red 10).
+**A. Arranque.** El juego abre y entra al mundo sin errores de Mixin en el log (hay 14 mixins). Servidor y cliente con el mismo jar (protocolo de red 11).
 
 **B. Elección.** Mundo nuevo: Raza → Subraza → Clase. Personaje que ya tenía clase: le pide la raza. Las 24 subrazas se pueden elegir.
 
@@ -127,3 +127,12 @@ Nada de esto se ha probado en el juego. Perfil: Forge 1.20.1 (47.4.x) + Iron's S
 2. Vincular y romper a menos de 16 bloques; máximo 8; el libro muestra imagen, nombre y estadísticas; elegir destino al morir (3 puntos + aparición).
 3. Menús de clase y raza: rejilla de tarjetas con retrato, cabecera con retrato grande (compacta a 24 px si la pantalla mide menos de 330 de alto), pestañas de subraza y botones de subclase con retrato; paneles, cabeceras y tarjetas con las texturas nuevas. Comprobar legibilidad en tamaños de interfaz 1 a 4.
 4. Iconos de estados (efectos) en la barra y en el inventario.
+
+**J. Monje rev. 2.9 (cargas de postura).** Protocolo de red 11.
+1. Suelo (*Cuerpo Marcial*): con `/clases debug stats`, armadura 10 / dureza 4 y +4 de daño desarmado con 30 puntos de base (la mitad con 15); nada con armadura puesta.
+2. Tecla de posturas: Agua → Piedra → Fuego, 2 s de espera. Fila de símbolos encima de la vida (y de la armadura), vacíos hasta el máximo.
+3. Ganar cargas: Fuego golpeando; Piedra recibiendo golpes de 2+; Agua corriendo (cada 2 s), esquivando con Epic Fight (+3) o desviando (+3). Comprobar que se pierden al parar.
+4. Efecto propio: al llegar al máximo o con Shift + golpe (o agachado + tecla de posturas) desde 10 cargas. Golpe Ígneo (más daño, rompe armadura, quema), aturdimiento (Piedra) y Contracorriente (lentitud y esquiva del siguiente golpe).
+5. Descarga al cambiar: onda de fuego, absorción de Piedra (amarillo en la vida, se va a los 5 s), lentitud y empuje de Agua.
+6. Puños: partículas de fuego, agua o piedra en las manos vacías, más fuertes cuantas más cargas; las ve también otro jugador.
+7. Perks nuevos (Llama Constante, Ignición Temprana, Eco de Piedra, Postura Dominante, Flujo Continuo) y Meditación (4 cargas al terminar). Un Monje que tuviera Flujo, Onda Elemental, Híbrida o Calma Interior debe elegir perk de nuevo.

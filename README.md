@@ -1,7 +1,7 @@
 # RPG Classes (Forge 1.20.1)
 
 Mod de clases, ramas, subclases y razas definido por datapack. Diseño funcional en
-`documento_de_diseno_de_clases_v2.md` (rev. 2.11), razas y su estado en
+`documento_de_diseno_de_clases_v2.md` (rev. 2.11, con el Monje 2.9), razas y su estado en
 `documento_de_razas_implementacion.md`, y arquitectura en el documento
 "Arquitectura técnica del mod de clases".
 
@@ -15,7 +15,9 @@ Además de lo descrito abajo, ya están en el código, sin probar en el juego:
 - **Interfaz:** retratos de clases, subclases, razas y subrazas, iconos de estados, y texturas propias de
   panel, cabecera y tarjetas (`python3 -I tools/art/make_ui.py src/main/resources`; el origen de los
   retratos está en `tools/art/`).
-- Red: protocolo **10**; 14 mixins.
+- **Monje rev. 2.9:** cargas de postura, con barra de símbolos sobre la vida y efecto en los puños
+  (`python3 -I tools/art/make_charges.py src/main/resources` genera los iconos).
+- Red: protocolo **11**; 14 mixins.
 
 El resto de este apartado es el historial de las fases iniciales.
 

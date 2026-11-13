@@ -28,7 +28,7 @@ import java.util.UUID;
 /**
  * Elementalista: Debuffs Elementales (mecánica {@code elemental_debuffs}).
  *
- * <p>Cada golpe de conjuro de cualquiera de las 10 escuelas (rev. 2.15) tiene una probabilidad (40–75 %) de poner una carga
+ * <p>Cada golpe de conjuro de cualquier escuela salvo la sagrada (exclusiva del Paladín) tiene una probabilidad (40–75 %) de poner una carga
  * de ese elemento en el objetivo. Las cargas duran {@code duration_seconds} desde la primera (desde
  * {@code refresh_from_level} cada carga nueva reinicia el tiempo). Al llegar al máximo, detonan y se vacían:
  * <ul>
@@ -36,11 +36,10 @@ import java.util.UUID;
  *   <li>Hielo: congelación (lentitud extrema, sin saltar); más corta contra jefes.</li>
  *   <li>Rayo: arcos a enemigos cercanos.</li>
  *   <li>Sangre: daño extra que cura al lanzador.</li>
- *   <li>Sagrada: daño (doble a no-muertos) que cura al lanzador y a sus aliados.</li>
  *   <li>Ender: daño y teletransporte aleatorio del objetivo (no a jefes).</li>
  *   <li>Invocación: anillo de colmillos de evocador.</li>
  *   <li>Naturaleza: raíces (lentitud extrema) y veneno fuerte.</li>
- *   <li>Eldritch: daño, debilidad, oscuridad y ceguera.</li>
+ *   <li>Eldritch: Marca del Vacío; guarda parte del daño que recibe el objetivo y al terminar implosiona.</li>
  *   <li>Agua (solo con T.O Magic 'n Extras): ola que empuja, ralentiza y aplica Mojado.</li>
  * </ul>
  * El daño secundario es mágico de vanilla, así que no vuelve a poner cargas.
@@ -68,7 +67,8 @@ final class ElementalDebuffs {
         ActiveMechanic mech = MechanicService.find(player, "elemental_debuffs");
         if (mech == null) return;
         School element = element(source);
-        if (element == null || player.getRandom().nextDouble() >= mech.number("chance", 0.4)) return;
+        // La sagrada es exclusiva del Paladín (regla 14): no carga.
+        if (element == null || element == School.HOLY || player.getRandom().nextDouble() >= mech.number("chance", 0.4)) return;
 
         int max = Math.max(1, (int) Math.round(mech.number("max_stacks", 3)));
         long duration = Math.round(mech.number("duration_seconds", 4) * 20);
@@ -148,22 +148,6 @@ final class ElementalDebuffs {
                 level.sendParticles(ParticleTypes.DAMAGE_INDICATOR, target.getX(), target.getY() + 1, target.getZ(), 10, 0.3, 0.4, 0.3, 0.1);
                 level.sendParticles(ParticleTypes.HEART, player.getX(), player.getY() + 2, player.getZ(), 3, 0.3, 0.2, 0.3, 0.02);
             }
-            case HOLY -> {
-                // Juicio: daño (doble a no-muertos) y cura al lanzador y a sus aliados cercanos.
-                float damage = (float) (hit * mech.number("holy_fraction", 0.4)
-                        * (target.getMobType() == net.minecraft.world.entity.MobType.UNDEAD ? mech.number("undead_factor", 2) : 1));
-                target.invulnerableTime = 0;
-                target.hurt(magic, damage);
-                float heal = (float) (hit * mech.number("holy_heal", 0.25));
-                double r = mech.number("holy_radius", 5);
-                for (LivingEntity e : level.getEntitiesOfClass(LivingEntity.class, player.getBoundingBox().inflate(r),
-                        e -> e == player || io.github.rpgclasses.server.Allies.isAlly(player, e))) {
-                    e.heal(heal);
-                    level.sendParticles(ParticleTypes.HEART, e.getX(), e.getY() + e.getBbHeight() + 0.3, e.getZ(), 2, 0.3, 0.2, 0.3, 0.02);
-                }
-                level.sendParticles(ParticleTypes.END_ROD, target.getX(), target.getY() + 1, target.getZ(), 30, 0.4, 0.8, 0.4, 0.05);
-                level.playSound(null, target.getX(), target.getY(), target.getZ(), SoundEvents.BEACON_ACTIVATE, SoundSource.PLAYERS, 0.8f, 1.6f);
-            }
             case ENDER -> {
                 // Desplazamiento: daño y el objetivo salta a un sitio cercano al azar (los jefes no se mueven).
                 target.invulnerableTime = 0;
@@ -187,15 +171,11 @@ final class ElementalDebuffs {
                 level.playSound(null, target.getX(), target.getY(), target.getZ(), SoundEvents.AZALEA_LEAVES_BREAK, SoundSource.PLAYERS, 1f, 0.7f);
             }
             case ELDRITCH -> {
-                // Desgarro: daño y debilidad + oscuridad (ceguera a no jugadores).
-                target.invulnerableTime = 0;
-                target.hurt(magic, (float) (hit * mech.number("eldritch_fraction", 0.5)));
-                int ticks = (int) Math.round(mech.number("eldritch_seconds", 4) * 20);
-                target.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, ticks, 1, false, true), player);
-                target.addEffect(new MobEffectInstance(MobEffects.DARKNESS, ticks, 0, false, true), player);
-                target.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, ticks / 2, 0, false, true), player);
-                level.sendParticles(ParticleTypes.SCULK_SOUL, target.getX(), target.getY() + 1, target.getZ(), 20, 0.4, 0.6, 0.4, 0.03);
-                level.playSound(null, target.getX(), target.getY(), target.getZ(), SoundEvents.WARDEN_HEARTBEAT, SoundSource.PLAYERS, 1f, 0.8f);
+                // Marca del Vacío (rev. 2.16): guarda daño y al terminar implosiona (ver VoidMark).
+                io.github.rpgclasses.content.VoidMark.mark(player, target, mech.number("void_seconds", 4),
+                        mech.number("void_store", 0.3), mech.number("void_radius", 4), mech.number("void_pull", 0.9),
+                        mech.number("void_boss_factor", 0.5), mech.number("void_area_fraction", 0.5),
+                        hit * mech.number("void_initial", 0.25));
             }
             case AQUA -> {
                 // Marea (T.O Magic 'n Extras): ola que empuja a los enemigos cercanos, los ralentiza y los moja.

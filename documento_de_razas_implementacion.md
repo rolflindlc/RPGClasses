@@ -148,3 +148,8 @@ Nada de esto se ha probado en el juego. Perfil: Forge 1.20.1 (47.4.x) + Iron's S
 4. Infernal: con un Bárbaro o un Monje, sus conjuros raciales hacen menos daño por el muro de Magia.
 5. Subrazas de oficio en Rango 2: experiencia extra (Autodidacta), dureza con armadura propia (Herrero), regeneración en bosque (Silvano), tridente (Pescador) y golpes que queman (Fundidor).
 
+**M. Subclases nuevas (diseño v2, rev. 2.14).**
+1. Mago de Batalla: lanza un conjuro y golpea en menos de 5 s (fuego quema, hielo ralentiza, rayo salta, sangre cura); tras 3 golpes seguidos sale el aviso "Eco Marcial" y el siguiente conjuro cuesta menos.
+2. Palma Pesada: agachado con la mano vacía 1 s (suena), golpe fuerte; lanzar enemigos contra una pared u otro enemigo los aturde (explosión de partículas y yunque).
+3. Juggernaut: estela de viento al embestir; atravesar hojas, cristal, puertas y vallas rompiéndolos (cada uno con su sonido) y recibir algo de daño. No debe romper nada en zonas protegidas ni en aventura.
+

@@ -272,6 +272,14 @@ public final class IronsCompat {
             }
         }
 
+        // Mago de Batalla: Filo Imbuido (el arma toma la escuela del conjuro) y Eco Marcial (conjuro más barato).
+        AbstractSpell cast = SpellRegistry.getSpell(new net.minecraft.resources.ResourceLocation(spellId));
+        if (cast != null && !"irons_spellbooks:none".equals(cast.getSpellId())) {
+            io.github.rpgclasses.content.BattleMage.onSpellCast(player, cast.getSchoolType().getId().toString());
+        }
+        double echo = io.github.rpgclasses.content.BattleMage.manaFactor(player);
+        if (echo != 1 && event.getCastSource().consumesMana()) event.setManaCost((int) Math.round(event.getManaCost() * echo));
+
         // Paso Arcano: velocidad tras lanzar (ICD).
         ActiveMechanic step = MechanicService.find(player, "cast_speed_burst");
         if (step != null && AbilityService.remainingTicks(player, CD_ARCANE_STEP) <= 0) {

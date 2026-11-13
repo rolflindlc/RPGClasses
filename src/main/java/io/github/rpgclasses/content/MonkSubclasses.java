@@ -11,6 +11,8 @@ import io.github.rpgclasses.server.MechanicService;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.core.particles.ParticleTypes;
+import io.github.rpgclasses.content.race.Races;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.tags.FluidTags;
@@ -84,28 +86,107 @@ public final class MonkSubclasses {
 
     // --- Golpes desarmados ---
 
-    /** Llamado por DamagePipeline tras un golpe desarmado del Monje. */
-    public static void onUnarmedHit(ServerPlayer attacker, LivingEntity target) {
+    public static final String CHARGED_PALM = "charged_palm";
+    public static final String IMPACT = "palm_impact";
+
+    /** Palma Pesada: ticks seguidos agachado (carga del Golpe Cargado). */
+    private static final Map<UUID, Integer> CROUCH = new HashMap<>();
+    /** Objetivos lanzados por la Palma: pueden chocar contra un bloque u otro enemigo durante un momento. */
+    private record Thrown(UUID attacker, long until, double hit) {}
+    private static final Map<Integer, Thrown> THROWN = new HashMap<>();
+
+    /**
+     * Llamado por DamagePipeline tras un golpe desarmado del Monje. Devuelve el factor de daño (Golpe Cargado de
+     * Palma Pesada) y prepara el empuje y el Impacto.
+     */
+    public static double onUnarmedHit(ServerPlayer attacker, LivingEntity target, double hit) {
+        double factor = 1;
         double knock = ModAttributes.value(attacker, ModAttributes.UNARMED_KNOCKBACK);
+
+        // Golpe Cargado: agachado, la palma se carga hasta 1 s; más daño y empuje, y a carga completa rompe la guardia.
+        ActiveMechanic charged = MechanicService.find(attacker, CHARGED_PALM);
+        if (charged != null && attacker.isShiftKeyDown()) {
+            double f = Math.min(1, CROUCH.getOrDefault(attacker.getUUID(), 0) / (charged.number("charge_seconds", 1) * 20));
+            CROUCH.put(attacker.getUUID(), 0);
+            if (f > 0.1) {
+                factor *= 1 + f * charged.number("damage_bonus", 0.5);
+                knock = (1 + knock) * (1 + f * charged.number("knockback_bonus", 1.0)) - 1;
+                ClassFx.burst(target, ParticleTypes.CLOUD, (int) (6 + 14 * f), 0.15);
+                attacker.level().playSound(null, target.blockPosition(), SoundEvents.PLAYER_ATTACK_STRONG, SoundSource.PLAYERS, 1f, 0.6f);
+                if (f >= 1 && target instanceof Player blocker && blocker.isBlocking()) {
+                    blocker.disableShield(true); // rompe la guardia
+                }
+            }
+        }
         if (knock > 0) KNOCKBACK.put(target.getId(), 1 + knock);
 
-        ActiveMechanic fist = MechanicService.find(attacker, DISABLING_FIST);
-        if (fist != null && target.isAlive()) {
-            long now = target.level().getGameTime();
-            // Regla 6 (rev. 2.9): comparte el registro de aturdimientos del Monje con Piedra.
-            if (attacker.getRandom().nextDouble() < fist.number("chance", 0.1)
-                    && MonkCharges.tryStun(attacker, target, (int) Math.round(fist.number("icd_seconds", 6) * 20))) {
-                int ticks = (int) Math.round(fist.number("duration_seconds", 1.5) * 20);
-                target.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, ticks, 1), attacker);
-                target.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, ticks, 0), attacker);
-                CombatAbilities.stun(target, ticks);
-            }
+        // Impacto: el objetivo lanzado que choca contra un bloque o un enemigo recibe daño y queda aturdido.
+        ActiveMechanic impact = MechanicService.find(attacker, IMPACT);
+        if (impact != null && target.isAlive() && !Races.isBoss(target)) {
+            THROWN.put(target.getId(), new Thrown(attacker.getUUID(),
+                    attacker.level().getGameTime() + Math.round(impact.number("window_seconds", 1) * 20), hit * factor));
         }
 
         ActiveMechanic manifest = MechanicService.find(attacker, MANIFEST);
         if (manifest != null && "fire".equals(stance(attacker)) && target.isAlive()) {
             MonkCharges.addBurn(target, manifest.number("ignite_seconds", 6)); // regla 7: se suma a la quemadura
         }
+        return factor;
+    }
+
+    /** Cada tic: los objetivos lanzados que chocan contra un bloque u otro enemigo sufren el Impacto. */
+    @SubscribeEvent
+    public void onServerTick(TickEvent.ServerTickEvent event) {
+        if (event.phase != TickEvent.Phase.END || THROWN.isEmpty()) return;
+        var server = event.getServer();
+        var it = THROWN.entrySet().iterator();
+        while (it.hasNext()) {
+            var e = it.next();
+            Thrown t = e.getValue();
+            ServerPlayer attacker = server.getPlayerList().getPlayer(t.attacker());
+            if (attacker == null || attacker.level().getGameTime() > t.until()) {
+                it.remove();
+                continue;
+            }
+            if (!(attacker.level().getEntity(e.getKey()) instanceof LivingEntity target) || !target.isAlive()) {
+                it.remove();
+                continue;
+            }
+            LivingEntity other = null;
+            for (LivingEntity o : attacker.level().getEntitiesOfClass(LivingEntity.class, target.getBoundingBox().inflate(0.2),
+                    o -> o != target && o != attacker && CombatAbilities.canHit(attacker, o))) {
+                other = o;
+                break;
+            }
+            if (!target.horizontalCollision && other == null) continue;
+            it.remove();
+            impact(attacker, target, t.hit());
+            if (other != null) impact(attacker, other, t.hit());
+        }
+    }
+
+    private static void impact(ServerPlayer attacker, LivingEntity target, double hit) {
+        ActiveMechanic m = MechanicService.find(attacker, IMPACT);
+        if (m == null) return;
+        float damage = (float) (m.number("flat_damage", 2) + hit * m.number("damage_fraction", 0.4));
+        target.invulnerableTime = 0;
+        target.hurt(attacker.damageSources().flyIntoWall(), damage);
+        // Puño de Inhabilitación: ahora sale con cada Impacto (comparte el registro de aturdimientos, regla 6).
+        ActiveMechanic fist = MechanicService.find(attacker, DISABLING_FIST);
+        int ticks = (int) Math.round((fist != null ? fist.number("duration_seconds", 1.5) : m.number("stun_seconds", 1)) * 20);
+        int icd = (int) Math.round((fist != null ? fist.number("icd_seconds", 6) : 6) * 20);
+        if (MonkCharges.tryStun(attacker, target, icd)) {
+            if (fist != null) {
+                target.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, ticks, 1), attacker);
+                target.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, ticks, 0), attacker);
+            }
+            CombatAbilities.stun(target, ticks);
+        }
+        if (attacker.level() instanceof net.minecraft.server.level.ServerLevel level) {
+            level.sendParticles(ParticleTypes.EXPLOSION, target.getX(), target.getY() + target.getBbHeight() * 0.5, target.getZ(), 1, 0, 0, 0, 0);
+            level.sendParticles(ParticleTypes.CRIT, target.getX(), target.getY() + target.getBbHeight() * 0.5, target.getZ(), 15, 0.4, 0.4, 0.4, 0.3);
+        }
+        attacker.level().playSound(null, target.blockPosition(), SoundEvents.ANVIL_LAND, SoundSource.PLAYERS, 0.6f, 0.7f);
     }
 
     @SubscribeEvent
@@ -164,6 +245,13 @@ public final class MonkSubclasses {
     @SubscribeEvent
     public void onPlayerTick(TickEvent.PlayerTickEvent event) {
         if (event.phase != TickEvent.Phase.END || !(event.player instanceof ServerPlayer player) || player instanceof FakePlayer) return;
+        // Golpe Cargado: cuenta el tiempo agachado (con la mano vacía).
+        if (player.isShiftKeyDown() && player.getMainHandItem().isEmpty() && MechanicService.has(player, CHARGED_PALM)) {
+            int c = CROUCH.merge(player.getUUID(), 1, Integer::sum);
+            if (c == 20) player.level().playSound(null, player.blockPosition(), SoundEvents.EXPERIENCE_ORB_PICKUP, SoundSource.PLAYERS, 0.5f, 0.6f);
+        } else {
+            CROUCH.remove(player.getUUID());
+        }
         if (player.server.getTickCount() % 20 != 0) return;
         ActiveMechanic manifest = MechanicService.find(player, MANIFEST);
         String stance = manifest == null ? "none" : stance(player);

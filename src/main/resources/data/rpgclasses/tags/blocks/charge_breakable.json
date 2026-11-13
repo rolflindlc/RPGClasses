@@ -1,0 +1,28 @@
+{
+  "replace": false,
+  "values": [
+    "#minecraft:leaves",
+    "#minecraft:impermeable",
+    "#minecraft:wooden_doors",
+    "#minecraft:wooden_fences",
+    "#minecraft:fence_gates",
+    "#minecraft:wooden_trapdoors",
+    "#minecraft:flower_pots",
+    "minecraft:glass_pane",
+    "minecraft:white_stained_glass_pane",
+    {
+      "id": "#forge:glass_panes",
+      "required": false
+    },
+    {
+      "id": "#forge:glass",
+      "required": false
+    },
+    "minecraft:cobweb",
+    "minecraft:hay_block",
+    "minecraft:scaffolding",
+    "minecraft:ladder",
+    "minecraft:bamboo",
+    "minecraft:sugar_cane"
+  ]
+}

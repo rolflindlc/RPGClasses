@@ -1,10 +1,11 @@
 # Documento de Diseño v2: Mod de Clases y Árboles de Habilidades para Minecraft Java
 
-Versión 2 del diseño (revisión 2.13, en desarrollo). Plataforma prevista: Forge 1.20.1 con Iron's Spells and Spellbooks, Epic Fight, Mowzie's Mobs y Cataclysm. Servidor principalmente PvE con algo de PvP. Objetivo del mod: sistema de clases balanceadas y programado de forma estructurada y orientada a la expansibilidad (clases futuras previstas: Alquimista, Nigromante, Druida).
+Versión 2 del diseño (revisión 2.14, en desarrollo). Plataforma prevista: Forge 1.20.1 con Iron's Spells and Spellbooks, Epic Fight, Mowzie's Mobs y Cataclysm. Servidor principalmente PvE con algo de PvP. Objetivo del mod: sistema de clases balanceadas y programado de forma estructurada y orientada a la expansibilidad (clases futuras previstas: Alquimista, Nigromante, Druida).
 
 Los valores marcados con **[MEDIR]** son objetivos de diseño que deben calibrarse en el juego real antes de darlos por cerrados.
 
-**Cambios de las revisiones 2.9 a 2.13:**
+**Cambios de las revisiones 2.9 a 2.14:**
+* **Mecánicas nuevas (2.14):** *Mago de Batalla* gana **Filo Imbuido** y **Eco Marcial**; *Palma Pesada* gana **Golpe Cargado** e **Impacto** (el Puño de Inhabilitación sale con cada Impacto en vez de por probabilidad); *Baluarte de Embestida* deja una **estela de viento** y **rompe bloques débiles** con daño al Paladín según su dureza (ver cada subclase).
 * **Balance y visuales (2.13):** Explorador Ágil +10% → **+5%** de velocidad; Maestro de Bestias +35% → **+30%** de vida y daño de mascotas; Palma Pesada: Puño de Inhabilitación 10% → **15%**; Mago de Batalla: Escudo Arcano 10% → **12%** del maná gastado. Efectos visuales nuevos: Provocación (onda y brillo en los mobs provocados), Baluarte (escudo de partículas mientras dura), Estandarte (anillo dorado en el borde del aura), Furia Berserker (aura roja), Embestida (estela y golpe), Sed de Sangre (sangre hacia el Bárbaro), Toxina (gotas verdes) y barra de cargas de **Conjuros Gratuitos** del Mago en la interfaz. La sección 10 no está recalculada con estos ajustes.
 * **Aturdimiento de Epic Fight (2.12):** todos los aturdimientos de las clases (*Embestida* y *Carga Demoledora* del Bárbaro, *Puño de Inhabilitación* de Palma Pesada y el efecto propio de Piedra del Monje) aplican el **estado de aturdimiento real de Epic Fight** (aturdimiento corto, alargado a la duración de la habilidad). Sin Epic Fight, o en criaturas sin animación de aturdimiento, se usa el simulado (lentitud y debilidad fuertes). El tag `rpgclasses:stun_immune` sigue haciendo inmune. No cambian la congelación del Elementalista ni el Cepo del Goblin (no son aturdimientos).
 * **Rework del Monje por cargas de postura (2.9):** el crecimiento plano de daño y armadura del Monje se sustituye por **cargas de postura** (sección 8). El nivel da un **suelo** (*Cuerpo Marcial*, ≈ ⅔ del daño y la armadura anteriores) y el resto se gana en combate acumulando cargas en la postura activa. Las ramas Puño, Piel y Viento **potencian las cargas** de Fuego, Piedra y Agua. Perks nuevos: Llama Constante e Ignición Temprana (Puño), Eco de Piedra (Piel), Postura Dominante y Flujo Continuo (Maestría); desaparecen Flujo, Onda Elemental, Postura Híbrida y Calma Interior. Sustituye al rework de la 2.8 (*Cuerpo Marcial* a medias con las ramas), que no llegó a programarse. **Programado en la 2.11.**
@@ -203,6 +204,8 @@ Notas de los perks:
 * **Concentración Inquebrantable:** los conjuros con tiempo de lanzamiento no se interrumpen ni sufren knockback al recibir daño.
 * **Armonía Marcial:** reduce los muros de **Armas pesadas y ligeras** un 10% por nivel de subclase (se anulan al nivel 10). Es la pasiva que mitiga muros en esta subclase.
 * **Escudo Arcano:** absorción igual al 3% (nivel 1) a 12% (nivel 10, rev. 2.13; antes 10%) del maná gastado, con **tope del 50% de la vida máxima**. Tras 6 s sin gastar maná, pierde el **10% del máximo del escudo por segundo**.
+* **Filo Imbuido (rev. 2.14):** cada conjuro imbuye el arma con su escuela durante **5 s**. El siguiente golpe cuerpo a cuerpo hace **+15% (nivel 1) a +35% (nivel 10)** de daño y aplica un efecto: **fuego** quema 3 s (se suma a la quemadura), **hielo** *Lentitud II* 2 s y congela, **rayo** salta al enemigo más cercano en 4 bloques con el 50% del golpe, **sangre** cura el 25% del daño extra, **naturaleza** *Veneno I* 3 s; las demás escuelas solo suman el daño. **[MEDIR]**
+* **Eco Marcial (rev. 2.14):** cada **3 golpes cuerpo a cuerpo seguidos** (sin pasar más de 4 s entre ellos), el siguiente conjuro cuesta **−30% de maná**. No se acumula.
 
 ## 🛡️ 4. Paladín
 
@@ -257,6 +260,7 @@ Notas de los perks:
 * **Vigor Colosal:** +6% de vida máxima por nivel de subclase (**+60% al nivel 10**). Sumado al +20% de vida de la clase, el total es **+80% (36 HP)**. Con el perk *Cuerpo Colosal* llegaría a +100% (40 HP), que es el tope global.
 * **Baluarte de Embestida (hito de subclase 5):** *Velocidad III*, sprint forzado y daño de contacto con knockback de área.
   * Rev. 2.7e: el Paladín corre hacia delante sin parar (gira con la cámara). Al tocar a un enemigo, **3 de daño** y empuje a todos los enemigos en **2,5 bloques**; cada enemigo, como mucho una vez cada 0,5 s. **[MEDIR]**
+  * Rev. 2.14: deja una **estela de viento** detrás mientras dura. Al chocar contra **bloques débiles** (tag `rpgclasses:charge_breakable`: hojas, cristal y paneles, puertas, vallas, puertas de valla y trampillas de madera, macetas, telarañas, heno, andamios, escaleras de mano, bambú, caña) los **rompe** (sueltan su objeto) con el sonido propio de cada bloque, hasta 6 por tic. Cada bloque le hace **0,5 + 0,5 × dureza** de daño (hojas ≈ 0,6; cristal ≈ 0,65; valla ≈ 1,5; puerta de madera ≈ 2). Respeta las protecciones de terreno y el modo aventura. **[MEDIR]**
 
 ## 🪓 5. Bárbaro
 
@@ -513,7 +517,9 @@ Notas de los perks:
 
 **2. Palma Pesada**
 * **Fuerza de Choque:** empuje de los golpes desarmados hasta +100% y alcance de ataque hasta **+50%** al nivel 10.
-* **Puño de Inhabilitación:** 15% por golpe (rev. 2.13; antes 10%), **ICD de 6 s por objetivo**. Aplica *Lentitud II* y *Ceguera* durante 1,5 s, más aturdimiento de Epic Fight. Comparte el registro de aturdimientos del Monje (regla 6).
+* **Golpe Cargado (rev. 2.14):** agachado y con la mano vacía, la palma se carga hasta **1 s** (suena al completarse). El golpe agachado hace **+20% (nivel 1) a +50% (nivel 10)** de daño y **hasta +100% de empuje** según la carga; con la carga completa **rompe la guardia** (desactiva el escudo de un jugador). Compatible con el Shift + golpe de las cargas del Monje.
+* **Impacto (rev. 2.14):** durante **1 s** tras un golpe, si el enemigo lanzado **choca contra un bloque o contra otro enemigo**, recibe **2 + 20–40% del golpe** de daño (el otro enemigo también) y queda aturdido. No afecta a jefes.
+* **Puño de Inhabilitación:** desde la rev. 2.14 se aplica **con cada Impacto** (antes 15% por golpe), **ICD de 6 s por objetivo**. Aplica *Lentitud II* y *Ceguera* durante 1,5 s, más aturdimiento de Epic Fight. Comparte el registro de aturdimientos del Monje (regla 6).
   * Rev. 2.7e / 2.12: con Epic Fight el aturdimiento es el suyo; sin él, el del mod (lentitud y debilidad fuertes). La rama **Fuerza de Choque** ya multiplica el empuje de los golpes desarmados.
 
 **3. Guardián Trimundial**

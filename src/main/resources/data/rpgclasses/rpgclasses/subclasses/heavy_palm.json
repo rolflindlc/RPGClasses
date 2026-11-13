@@ -22,8 +22,28 @@
     },
     {
       "type": "rpgclasses:mechanic",
+      "id": "rpgclasses:charged_palm",
+      "charge_seconds": 1,
+      "damage_bonus": {
+        "from": 0.2,
+        "to": 0.5
+      },
+      "knockback_bonus": 1.0
+    },
+    {
+      "type": "rpgclasses:mechanic",
+      "id": "rpgclasses:palm_impact",
+      "window_seconds": 1,
+      "flat_damage": 2,
+      "damage_fraction": {
+        "from": 0.2,
+        "to": 0.4
+      },
+      "stun_seconds": 1
+    },
+    {
+      "type": "rpgclasses:mechanic",
       "id": "rpgclasses:disabling_fist",
-      "chance": 0.15,
       "icd_seconds": 6,
       "duration_seconds": 1.5
     }

@@ -145,6 +145,8 @@ public final class PaladinSubclasses {
         double strength = AbilityService.number(p, "knockback_strength", 1.0);
         long icd = (long) AbilityService.number(p, "hit_icd_ticks", 10);
         long now = player.level().getGameTime();
+        chargeWind(player, now);
+        smashBlocks(player, p);
 
         List<LivingEntity> touched = player.level().getEntitiesOfClass(LivingEntity.class, player.getBoundingBox().inflate(0.6),
                 e -> CombatAbilities.canHit(player, e));
@@ -165,6 +167,69 @@ public final class PaladinSubclasses {
             player.level().playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.PLAYER_ATTACK_KNOCKBACK,
                     SoundSource.PLAYERS, 1.0f, 0.8f);
             hits.values().removeIf(t -> now - t > 200);
+        }
+    }
+
+    /** Bloques débiles que el Juggernaut rompe al embestir (hojas, cristal, puertas y vallas de madera...). Por datapack. */
+    public static final net.minecraft.tags.TagKey<net.minecraft.world.level.block.Block> CHARGE_BREAKABLE =
+            net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.BLOCK, io.github.rpgclasses.RpgClasses.id("charge_breakable"));
+
+    /** Estela de viento detrás del Paladín mientras embiste. */
+    private static void chargeWind(ServerPlayer player, long now) {
+        Vec3 look = player.getLookAngle();
+        Vec3 dir = new Vec3(look.x, 0, look.z);
+        if (dir.lengthSqr() < 1.0E-4) return;
+        dir = dir.normalize();
+        net.minecraft.server.level.ServerLevel level = player.serverLevel();
+        for (int i = 0; i < 3; i++) {
+            Vec3 at = player.position().subtract(dir.scale(0.6 + i * 0.5)).add(0, 0.3 + player.getRandom().nextDouble() * 1.4, 0);
+            level.sendParticles(net.minecraft.core.particles.ParticleTypes.CLOUD, at.x, at.y, at.z, 1, 0.15, 0.1, 0.15, 0.02);
+        }
+        level.sendParticles(net.minecraft.core.particles.ParticleTypes.SWEEP_ATTACK, player.getX() - dir.x, player.getY() + 1.0,
+                player.getZ() - dir.z, 1, 0.1, 0.2, 0.1, 0);
+        if (now % 8 == 0) {
+            player.level().playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.ENDER_DRAGON_FLAP,
+                    SoundSource.PLAYERS, 0.35f, 1.6f);
+        }
+    }
+
+    /**
+     * Al chocar contra bloques débiles (tag {@code rpgclasses:charge_breakable}) los rompe: suena el sonido de rotura de
+     * cada bloque y el Paladín recibe daño según la dureza y el número de bloques. Respeta protecciones (evento de
+     * rotura de Forge) y los permisos de construir.
+     */
+    private static void smashBlocks(ServerPlayer player, JsonObject p) {
+        if (!player.mayBuild()) return;
+        Vec3 look = player.getLookAngle();
+        Vec3 dir = new Vec3(look.x, 0, look.z);
+        if (dir.lengthSqr() < 1.0E-4) return;
+        dir = dir.normalize();
+        net.minecraft.server.level.ServerLevel level = player.serverLevel();
+        net.minecraft.world.phys.AABB box = player.getBoundingBox().move(dir.scale(0.45)).inflate(0.05, -0.05, 0.05);
+        int max = (int) AbilityService.number(p, "smash_max_blocks", 6);
+        double base = AbilityService.number(p, "smash_base_damage", 0.5);
+        double perHardness = AbilityService.number(p, "smash_damage_per_hardness", 0.5);
+        double damage = 0;
+        int broken = 0;
+        for (net.minecraft.core.BlockPos pos : net.minecraft.core.BlockPos.betweenClosed(
+                net.minecraft.util.Mth.floor(box.minX), net.minecraft.util.Mth.floor(box.minY), net.minecraft.util.Mth.floor(box.minZ),
+                net.minecraft.util.Mth.floor(box.maxX), net.minecraft.util.Mth.floor(box.maxY), net.minecraft.util.Mth.floor(box.maxZ))) {
+            if (broken >= max) break;
+            net.minecraft.world.level.block.state.BlockState state = level.getBlockState(pos);
+            if (state.isAir() || !state.is(CHARGE_BREAKABLE)) continue;
+            net.minecraft.core.BlockPos at = pos.immutable();
+            if (!level.mayInteract(player, at)) continue;
+            if (net.minecraftforge.common.ForgeHooks.onBlockBreakEvent(level, player.gameMode.getGameModeForPlayer(), player, at) == -1) continue;
+            float hardness = Math.max(0, state.getDestroySpeed(level, at));
+            damage += base + hardness * perHardness;
+            net.minecraft.world.level.block.SoundType sound = state.getSoundType(level, at, player);
+            level.playSound(null, at, sound.getBreakSound(), SoundSource.BLOCKS, sound.getVolume() + 0.6f, sound.getPitch() * 0.85f);
+            level.destroyBlock(at, true, player);
+            broken++;
+        }
+        if (broken > 0 && damage > 0) {
+            player.hurt(player.damageSources().flyIntoWall(), (float) damage);
+            io.github.rpgclasses.server.DebugLog.event(player, "Embestida", "rompe {} bloques y recibe {} de daño", broken, damage);
         }
     }
 

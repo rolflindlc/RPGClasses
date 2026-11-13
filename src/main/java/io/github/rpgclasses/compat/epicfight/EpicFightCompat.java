@@ -64,6 +64,8 @@ public final class EpicFightCompat {
     private static final Map<UUID, Long> EXTRA_UNTIL = new HashMap<>();
 
     public static void init() {
+        // Aturdimientos de las habilidades del mod: el estado de aturdimiento real de Epic Fight.
+        io.github.rpgclasses.content.CombatAbilities.epicFightStun = EpicFightCompat::applyStun;
         MinecraftForge.EVENT_BUS.register(new EpicFightCompat());
         RpgClasses.LOGGER.info("[rpgclasses] Epic Fight detectado: Acrobacia, Contraataque y Voltereta Larga activos");
     }
@@ -147,6 +149,24 @@ public final class EpicFightCompat {
             int window = (int) Math.round(counter.number("window_seconds", 3) * 20);
             RoguePerks.armDodgeCounter(sp, counter.number("damage_bonus", 0.3), window);
         });
+    }
+
+    /**
+     * Aturdimiento de Epic Fight durante {@code ticks}: SHORT alarga su animación al tiempo pedido (LONG tiene
+     * duración fija). Falla si la criatura no tiene parche o no tiene animación de aturdimiento.
+     */
+    private static boolean applyStun(net.minecraft.world.entity.LivingEntity target, int ticks) {
+        try {
+            yesman.epicfight.world.capabilities.entitypatch.LivingEntityPatch<?> patch =
+                    EpicFightCapabilities.getEntityPatch(target, yesman.epicfight.world.capabilities.entitypatch.LivingEntityPatch.class);
+            if (patch == null) return false;
+            boolean ok = patch.applyStun(yesman.epicfight.world.damagesource.StunType.SHORT, ticks / 20.0F);
+            DebugLog.event(null, "aturdimiento", "Epic Fight {} {} s: {}", DebugLog.describe(target), ticks / 20.0F, ok ? "aplicado" : "sin animación");
+            return ok;
+        } catch (RuntimeException | LinkageError e) {
+            RpgClasses.LOGGER.warn("[rpgclasses] Aturdimiento de Epic Fight no disponible: {}", e.toString());
+            return false;
+        }
     }
 
     /** Voltereta Larga: Epic Fight escala la distancia de la esquiva con velocidad actual / velocidad base. */

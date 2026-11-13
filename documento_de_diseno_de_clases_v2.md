@@ -1,10 +1,11 @@
 # Documento de Diseño v2: Mod de Clases y Árboles de Habilidades para Minecraft Java
 
-Versión 2 del diseño (revisión 2.11, en desarrollo). Plataforma prevista: Forge 1.20.1 con Iron's Spells and Spellbooks, Epic Fight, Mowzie's Mobs y Cataclysm. Servidor principalmente PvE con algo de PvP. Objetivo del mod: sistema de clases balanceadas y programado de forma estructurada y orientada a la expansibilidad (clases futuras previstas: Alquimista, Nigromante, Druida).
+Versión 2 del diseño (revisión 2.12, en desarrollo). Plataforma prevista: Forge 1.20.1 con Iron's Spells and Spellbooks, Epic Fight, Mowzie's Mobs y Cataclysm. Servidor principalmente PvE con algo de PvP. Objetivo del mod: sistema de clases balanceadas y programado de forma estructurada y orientada a la expansibilidad (clases futuras previstas: Alquimista, Nigromante, Druida).
 
 Los valores marcados con **[MEDIR]** son objetivos de diseño que deben calibrarse en el juego real antes de darlos por cerrados.
 
-**Cambios de las revisiones 2.9 a 2.11:**
+**Cambios de las revisiones 2.9 a 2.12:**
+* **Aturdimiento de Epic Fight (2.12):** todos los aturdimientos de las clases (*Embestida* y *Carga Demoledora* del Bárbaro, *Puño de Inhabilitación* de Palma Pesada y el efecto propio de Piedra del Monje) aplican el **estado de aturdimiento real de Epic Fight** (aturdimiento corto, alargado a la duración de la habilidad). Sin Epic Fight, o en criaturas sin animación de aturdimiento, se usa el simulado (lentitud y debilidad fuertes). El tag `rpgclasses:stun_immune` sigue haciendo inmune. No cambian la congelación del Elementalista ni el Cepo del Goblin (no son aturdimientos).
 * **Rework del Monje por cargas de postura (2.9):** el crecimiento plano de daño y armadura del Monje se sustituye por **cargas de postura** (sección 8). El nivel da un **suelo** (*Cuerpo Marcial*, ≈ ⅔ del daño y la armadura anteriores) y el resto se gana en combate acumulando cargas en la postura activa. Las ramas Puño, Piel y Viento **potencian las cargas** de Fuego, Piedra y Agua. Perks nuevos: Llama Constante e Ignición Temprana (Puño), Eco de Piedra (Piel), Postura Dominante y Flujo Continuo (Maestría); desaparecen Flujo, Onda Elemental, Postura Híbrida y Calma Interior. Sustituye al rework de la 2.8 (*Cuerpo Marcial* a medias con las ramas), que no llegó a programarse. **Programado en la 2.11.**
 * **Aliados (regla 15, 2.9):** cada jugador elige a sus aliados; el resto son enemigos.
 * **Pícaro (2.8):** la invisibilidad ya no se revela por cercanía en PvP.
@@ -512,7 +513,7 @@ Notas de los perks:
 **2. Palma Pesada**
 * **Fuerza de Choque:** empuje de los golpes desarmados hasta +100% y alcance de ataque hasta **+50%** al nivel 10.
 * **Puño de Inhabilitación:** 10% por golpe, **ICD de 6 s por objetivo**. Aplica *Lentitud II* y *Ceguera* durante 1,5 s, más aturdimiento de Epic Fight. Comparte el registro de aturdimientos del Monje (regla 6).
-  * Rev. 2.7e: sin Epic Fight, el aturdimiento es el del mod (lentitud y debilidad fuertes). La rama **Fuerza de Choque** ya multiplica el empuje de los golpes desarmados.
+  * Rev. 2.7e / 2.12: con Epic Fight el aturdimiento es el suyo; sin él, el del mod (lentitud y debilidad fuertes). La rama **Fuerza de Choque** ya multiplica el empuje de los golpes desarmados.
 
 **3. Guardián Trimundial**
 * **Afinidad Corporal de Postura:** Fuego: hasta 75% de reducción de daño por fuego y lava. Agua: 33% de reducción de daño de proyectiles. Piedra: 20% de reducción de daño cuerpo a cuerpo.

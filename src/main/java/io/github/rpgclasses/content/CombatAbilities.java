@@ -221,14 +221,21 @@ public final class CombatAbilities {
     // --- Utilidades ---
 
     /**
-     * Aturdimiento sin Epic Fight: casi inmóvil y sin fuerza durante unos instantes.
-     * El puente de Epic Fight lo sustituirá por su aturdimiento real.
+     * Aturdimiento real de Epic Fight (lo pone EpicFightCompat si el mod está instalado). Devuelve false si la
+     * criatura no tiene parche de Epic Fight o animación de aturdimiento: entonces se usa el simulado.
+     */
+    public static java.util.function.BiPredicate<LivingEntity, Integer> epicFightStun;
+
+    /**
+     * Aturdimiento de las habilidades (Embestida, Puño de Inhabilitación, Piedra del Monje): con Epic Fight, su
+     * estado de aturdimiento real; sin él, casi inmóvil y sin fuerza durante unos instantes.
      */
     public static void stun(LivingEntity target, int ticks) {
-        if (target.getType().is(STUN_IMMUNE)) return;
+        if (target.getType().is(STUN_IMMUNE) || ticks <= 0) return;
+        if (target instanceof Mob mob) mob.getNavigation().stop();
+        if (epicFightStun != null && epicFightStun.test(target, ticks)) return;
         target.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, ticks, 6));
         target.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, ticks, 2));
-        if (target instanceof Mob mob) mob.getNavigation().stop();
     }
 
     /** 0 sin subclase, 1 con la subclase al nivel 10. */

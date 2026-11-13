@@ -128,6 +128,8 @@ Nada de esto se ha probado en el juego. Perfil: Forge 1.20.1 (47.4.x) + Iron's S
 3. Menús de clase y raza: rejilla de tarjetas con retrato, cabecera con retrato grande (compacta a 24 px si la pantalla mide menos de 330 de alto), pestañas de subraza y botones de subclase con retrato; paneles, cabeceras y tarjetas con las texturas nuevas. Comprobar legibilidad en tamaños de interfaz 1 a 4.
 4. Iconos de estados (efectos) en la barra y en el inventario.
 
+**K. Aturdimiento de Epic Fight (diseño v2, rev. 2.12).** Con Epic Fight, Embestida (y Carga Demoledora), Puño de Inhabilitación y el efecto de Piedra del Monje ponen al objetivo en el aturdimiento real de Epic Fight (animación de golpe y sin poder actuar) durante el tiempo de la habilidad; sin Epic Fight, lentitud y debilidad fuertes. En `logs/rpgclasses-debug.log` sale "aturdimiento … aplicado" o "sin animación" (entonces usa el simulado).
+
 **J. Monje rev. 2.9 (cargas de postura).** Protocolo de red 11.
 1. Suelo (*Cuerpo Marcial*): con `/clases debug stats`, armadura 10 / dureza 4 y +4 de daño desarmado con 30 puntos de base (la mitad con 15); nada con armadura puesta.
 2. Tecla de posturas: Agua → Piedra → Fuego, 2 s de espera. Fila de símbolos encima de la vida (y de la armadura), vacíos hasta el máximo.

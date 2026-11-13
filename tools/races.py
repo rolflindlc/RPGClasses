@@ -67,7 +67,7 @@ RACES = {
              boss_root_seconds=V(1, 1, 2, 2), trap_damage=V(2, 4, 6, 8), pvp_factor=.5)])]),
  "triton": ("minecraft:trident", [
     attr(("forge:swim_speed", .50, "multiply_base")),
-    mech("water_breathing"), mech("aquatic", fire_damage=.30)], [
+    mech("water_breathing"), mech("aquatic", fire_damage=.30), mech("nether_weakness", level=1)], [
     ("fisher", "minecraft:fishing_rod", True, [
         mech("fisher", luck=1, lure_speed=.40, extra_catch=V(0, .25, .25, .50), treasure_chance=V(0, 0, .05, .05), xp_bonus=V(0, 0, 0, 1)), mech("trident_mastery", 2, damage_bonus=.25)]),
     ("shaper", "minecraft:water_bucket", True, [
@@ -77,7 +77,7 @@ RACES = {
     ("abyssal", "minecraft:prismarine_shard", True, [
         mech("sea_friend"), mech("abyss_immunity", 1), mech("camouflage", 2), mech("escort", 3, radius=16)])]),
  "infernal": ("minecraft:blaze_powder", [
-    mech("fire_immune"),
+    mech("fire_immune"), mech("cold_frailty", cold_damage=.30, water_damage=.30), mech("water_scald", scald_damage=1, interval_seconds=2),
     mech("racial_spells", fire_bolt=V(1, 2, 2, 2), magma_bomb=V(0, 0, 1, 1), raise_hell=V(0, 0, 0, 1)),
     mech("outcast", price_increase=.50, golem_radius=16)], [
     ("native", "minecraft:gold_ingot", True, [
@@ -106,8 +106,8 @@ RACE_TEXT = {  # id: (nombre, descripción)
  "dwarf": ("Enano", "Pequeño y lento, pero minero nato: rompe piedra y minerales más rápido y tiene Fortuna racial en minerales (no se suma al encantamiento: cuenta el mayor)."),
  "elf": ("Elfo", "Atraviesa las hojas y trepa por ellas como si fueran andamios (saltar sube, agacharse baja). No puede comer carne ni pescado."),
  "goblin": ("Goblin", "La mitad de alto: muy difícil de golpear y cabe por huecos pequeños. Tiene Suerte y Saqueo racial (cuenta el mayor con el encantamiento). A cambio, mucha menos vida."),
- "triton": ("Tritón", "Respira bajo el agua, nada más rápido, pica sumergido a velocidad normal y ve en la oscuridad bajo el agua. El fuego le hace más daño."),
- "infernal": ("Infernal", "Inmune al fuego y la lava. Con Iron's Spells tiene conjuros de fuego raciales siempre disponibles, que sufren el muro de Magia de tu clase como cualquier conjuro. Los golems de hierro lo atacan siempre y los aldeanos le cobran más."),
+ "triton": ("Tritón", "Respira bajo el agua, nada más rápido, pica sumergido a velocidad normal y ve en la oscuridad bajo el agua. El fuego le hace más daño y en el Nether tiene Debilidad."),
+ "infernal": ("Infernal", "Inmune al fuego y la lava, pero el frío y el agua le hacen más daño y meterse en el agua le quema poco a poco. Con Iron's Spells tiene conjuros de fuego raciales siempre disponibles, que sufren el muro de Magia de tu clase como cualquier conjuro. Los golems de hierro lo atacan siempre y los aldeanos le cobran más."),
  "undead": ("No-muerto", "Respira bajo el agua, su hambre está fija y regenera vida constantemente (se corta unos segundos al recibir daño). El sol directo le daña aunque lleve casco, y ni las pociones de curación ni los conjuros le curan."),
 }
 
@@ -175,6 +175,9 @@ MECHANIC_TEXT = {  # id sin "race_": (nombre, descripción corta)
  "snare": ("Cepo", "Trampa que no caduca: al primer enemigo que la pisa le hace daño y lo inmoviliza. Solo la ves tú."),
  "water_breathing": ("Respiración Acuática", "No consumes aire bajo el agua."),
  "aquatic": ("Criatura del agua", "Picas sumergido a velocidad normal y ves bajo el agua. El fuego te daña más."),
+ "nether_weakness": ("Lejos del mar", "En el Nether tienes Debilidad."),
+ "cold_frailty": ("Sangre ígnea", "El frío (congelación y conjuros de hielo) y el agua (conjuros de agua de T.O Magic 'n Extras) te hacen más daño."),
+ "water_scald": ("Llama que se apaga", "Mientras estás en el agua te quemas poco a poco."),
  "fisher": ("Pesca Experta", "Mejoras al pescar."),
  "tame_water": ("Agua Dócil", "Crea una fuente de agua temporal donde apuntas."),
  "wave": ("Ola", "Empuja a los enemigos que tienes delante, sin daño."),
@@ -224,7 +227,8 @@ RACE_PARAMS = {
  "steals_per_mob": "Robos por mob", "equip_share_mob": "Manos Vacías: robos de equipo a mobs|%",
  "equip_share_player": "Manos Vacías: robos de equipo a jugadores|%", "player_cooldown_seconds": "Enfriamiento por jugador|s",
  "traps": "Trampas a la vez", "root_seconds": "Inmovilización|s", "boss_root_seconds": "Inmovilización a jefes|s",
- "trap_damage": "Daño del Cepo|HP", "jump_factor": "Fuerza del salto x", "pvp_factor": "Contra jugadores x", "fire_damage": "Daño de fuego recibido extra|%",
+ "trap_damage": "Daño del Cepo|HP", "jump_factor": "Fuerza del salto x", "pvp_factor": "Contra jugadores x", "fire_damage": "Daño de fuego recibido extra|%", "cold_damage": "Daño de frío recibido extra|%",
+ "water_damage": "Daño de agua recibido extra|%", "scald_damage": "Daño del agua|HP",
  "luck": "Suerte del Mar racial", "extra_catch": "Red: captura extra|%", "treasure_chance": "Tesoro extra|%", "xp_bonus": "XP de pesca extra|%",
  "strength": "Fuerza del empuje", "range": "Alcance (bloques)", "fire_bolt": "Disparo de fuego (nivel)", "magma_bomb": "Bomba de magma (nivel)",
  "raise_hell": "Infierno que resurge (nivel)", "price_increase": "Precio de los aldeanos|+%", "golem_radius": "Radio de golems (bloques)",
@@ -279,6 +283,7 @@ RACE_UI = {
  "message.rpgclasses.furnace_no_fuel": "Horno Portátil: no tienes combustible suficiente",
  "tooltip.rpgclasses.forged": "Forja Enana: +%s%% de durabilidad",
  "death.attack.rpgclasses.sunlight": "%1$s se consumió bajo el sol",
+ "death.attack.rpgclasses.scald": "%1$s se apagó en el agua",
 }
 
 def build(dump, base):

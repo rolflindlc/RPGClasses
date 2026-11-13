@@ -27,6 +27,11 @@
       "type": "rpgclasses:mechanic",
       "id": "rpgclasses:race_aquatic",
       "fire_damage": 0.3
+    },
+    {
+      "type": "rpgclasses:mechanic",
+      "id": "rpgclasses:race_nether_weakness",
+      "level": 1
     }
   ],
   "subraces": [

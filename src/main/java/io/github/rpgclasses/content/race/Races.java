@@ -31,6 +31,7 @@ public final class Races {
     public static final TagKey<EntityType<?>> BOSSES = TagKey.create(Registries.ENTITY_TYPE,
             new net.minecraft.resources.ResourceLocation("forge", "bosses"));
     public static final ResourceKey<DamageType> SUNLIGHT = ResourceKey.create(Registries.DAMAGE_TYPE, RpgClasses.id("sunlight"));
+    public static final ResourceKey<DamageType> SCALD = ResourceKey.create(Registries.DAMAGE_TYPE, RpgClasses.id("scald"));
 
     /** En el cliente, las mecánicas del jugador local (lo instala ClientSetup). */
     public static BiFunction<Player, String, ActiveMechanic> clientLookup = (player, id) -> null;
@@ -62,6 +63,11 @@ public final class Races {
 
     public static DamageSource sunlight(LivingEntity e) {
         return new DamageSource(e.level().registryAccess().registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(SUNLIGHT));
+    }
+
+    /** Infernal en el agua (rev. 2.17). */
+    public static DamageSource scald(LivingEntity e) {
+        return new DamageSource(e.level().registryAccess().registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(SCALD));
     }
 
     /** Efecto de fondo: sin partículas ni icono (los rasgos raciales no llenan la pantalla de efectos). */

@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "rpgclasses:barbarian_dragon_fire_leggings",
+    "rpgclasses:barbarian_dragon_ice_leggings",
+    "rpgclasses:barbarian_dragon_lightning_leggings"
+  ]
+}

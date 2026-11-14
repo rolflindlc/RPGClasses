@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "rpgclasses:traveler_belt",
+    "rpgclasses:war_drum",
+    "rpgclasses:trophy_skull",
+    "rpgclasses:temple_bell",
+    "rpgclasses:trinket_pouch"
+  ]
+}

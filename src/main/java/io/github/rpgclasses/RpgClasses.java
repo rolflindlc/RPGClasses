@@ -112,6 +112,11 @@ public class RpgClasses {
         MinecraftForge.EVENT_BUS.register(new RoguePerks());
         MinecraftForge.EVENT_BUS.register(new io.github.rpgclasses.gear.GearEvents());
         MinecraftForge.EVENT_BUS.register(io.github.rpgclasses.gear.SetEffects.listener());
+        MinecraftForge.EVENT_BUS.register(new io.github.rpgclasses.gear.CurioEffects());
+        // Puente con Curios (nudilleras y curios): solo si el mod está instalado.
+        if (net.minecraftforge.fml.ModList.get().isLoaded("curios")) {
+            io.github.rpgclasses.compat.curios.CuriosCompat.init();
+        }
         MinecraftForge.EVENT_BUS.register(new MonkPerks());
         MinecraftForge.EVENT_BUS.register(new MonkSubclasses());
         MinecraftForge.EVENT_BUS.register(new MovementPerks());
@@ -127,6 +132,9 @@ public class RpgClasses {
 
     private void commonSetup(FMLCommonSetupEvent event) {
         event.enqueueWork(Net::register);
+        if (net.minecraftforge.fml.ModList.get().isLoaded("curios")) {
+            event.enqueueWork(io.github.rpgclasses.compat.curios.CuriosCompat::registerCurios);
+        }
     }
 
     public static ResourceLocation id(String path) {

@@ -1,0 +1,15 @@
+{
+  "replace": false,
+  "values": [
+    "rpgclasses:wisp_lantern",
+    "rpgclasses:pixie_bell",
+    "rpgclasses:cyclops_horn",
+    "rpgclasses:gorgon_eye",
+    "rpgclasses:archmage_prism",
+    "rpgclasses:loaded_dice",
+    "rpgclasses:hippogryph_feather",
+    "rpgclasses:guild_insignia",
+    "rpgclasses:evergreen_leaf",
+    "rpgclasses:magma_heart"
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "iceandfire"
+    }
+  ],
+  "type": "minecraft:smithing_transform",
+  "template": {
+    "item": "rpgclasses:draconic_forge_template"
+  },
+  "base": {
+    "tag": "rpgclasses:gear/barbarian_dragon_helmet"
+  },
+  "addition": {
+    "tag": "rpgclasses:iceandfire/dragonsteel_lightning"
+  },
+  "result": {
+    "item": "rpgclasses:barbarian_dragonsteel_lightning_helmet"
+  }
+}

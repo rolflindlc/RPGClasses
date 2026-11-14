@@ -1,0 +1,15 @@
+{
+  "replace": false,
+  "values": [
+    "rpgclasses:knuckles_wood",
+    "rpgclasses:knuckles_stone",
+    "rpgclasses:knuckles_iron",
+    "rpgclasses:knuckles_gold",
+    "rpgclasses:knuckles_diamond",
+    "rpgclasses:knuckles_netherite",
+    "rpgclasses:knuckles_dragonbone",
+    "rpgclasses:knuckles_dragonsteel_fire",
+    "rpgclasses:knuckles_dragonsteel_ice",
+    "rpgclasses:knuckles_dragonsteel_lightning"
+  ]
+}

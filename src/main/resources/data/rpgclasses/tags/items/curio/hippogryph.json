@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "iceandfire:hippogryph_talon",
+      "required": false
+    },
+    "minecraft:phantom_membrane"
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "iceandfire:lightning_dragon_heart",
+      "required": false
+    },
+    "minecraft:trident"
+  ]
+}

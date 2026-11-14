@@ -335,6 +335,11 @@ for key in allies.UI: assert key not in lang, key
 lang.update(allies.UI)
 for key in bonds.UI: assert key not in lang, key
 lang.update(bonds.UI)
+# Equipo de Clase (rev. 2.20): recetas, tags, modelos, tipos de daño y textos.
+import gear
+gear_lang = gear.build(dump, out)
+for key in gear_lang: assert key not in lang, key
+lang.update(gear_lang)
 # Unidades de los parámetros, para que el cliente sepa formatearlos: "%" porcentaje, "s" segundos.
 dump(os.path.join(out, "assets", NS, "rpgclasses_param_units.json"),
      {k: v.split("|")[1] for k, v in sorted(texts.PARAMS.items()) if "|" in v})

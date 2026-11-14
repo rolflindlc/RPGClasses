@@ -29,6 +29,7 @@ public final class ModGear {
 
     public static final Map<GearClass, Map<ArmorTier, Map<ArmorItem.Type, RegistryObject<Item>>>> ARMOR = new EnumMap<>(GearClass.class);
     public static final Map<WeaponKind, Map<WeaponTier, RegistryObject<Item>>> WEAPONS = new EnumMap<>(WeaponKind.class);
+    public static final Map<Curio, RegistryObject<Item>> CURIOS = new EnumMap<>(Curio.class);
     private static final List<RegistryObject<Item>> ORDER = new ArrayList<>();
 
     /** Correa Curtida: arneses del Bárbaro y nudilleras. */
@@ -65,6 +66,17 @@ public final class ModGear {
                 ORDER.add(ro);
             }
             WEAPONS.put(kind, byTier);
+        }
+        for (Curio curio : Curio.values()) {
+            Rarity rarity = switch (curio.rarity) {
+                case COMMON -> Rarity.COMMON;
+                case RARE -> Rarity.UNCOMMON;
+                case EPIC -> Rarity.RARE;
+                case RELIC -> Rarity.EPIC;
+            };
+            RegistryObject<Item> ro = ITEMS.register(curio.id, () -> new CurioItem(curio, new Item.Properties().rarity(rarity)));
+            CURIOS.put(curio, ro);
+            ORDER.add(ro);
         }
     }
 

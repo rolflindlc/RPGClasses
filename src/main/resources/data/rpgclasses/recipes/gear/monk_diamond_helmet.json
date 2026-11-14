@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    "CCC",
+    "M M"
+  ],
+  "key": {
+    "M": {
+      "item": "minecraft:diamond"
+    },
+    "C": {
+      "item": "rpgclasses:martial_cloth"
+    }
+  },
+  "result": {
+    "item": "rpgclasses:monk_diamond_helmet",
+    "count": 1
+  }
+}

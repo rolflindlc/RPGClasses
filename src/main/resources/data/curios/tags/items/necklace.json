@@ -1,0 +1,14 @@
+{
+  "replace": false,
+  "values": [
+    "rpgclasses:last_breath_compass",
+    "rpgclasses:hermit_medallion",
+    "rpgclasses:serpent_pendant",
+    "rpgclasses:arcane_hourglass",
+    "rpgclasses:oath_reliquary",
+    "rpgclasses:fang_collar",
+    "rpgclasses:stance_rosary",
+    "rpgclasses:troll_earring",
+    "rpgclasses:tide_conch"
+  ]
+}

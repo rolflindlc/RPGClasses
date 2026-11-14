@@ -57,6 +57,8 @@ repositories {
         name = "Modrinth"; url = "https://api.modrinth.com/maven"
         content { includeGroup "maven.modrinth" }
     }
+    // Curios (nudilleras y curios del Equipo de Clase, solo para compilar el puente compat/curios)
+    maven { name = "Curios"; url = "https://maven.theillusivec4.top/" }
 }
 
 dependencies {
@@ -65,6 +67,7 @@ dependencies {
     // Dependencias opcionales: el mod funciona sin ellas, solo se compila contra ellas.
     compileOnly fg.deobf("io.redspace:irons_spellbooks:${irons_spells_version}:api")
     compileOnly fg.deobf("maven.modrinth:epic-fight:${epicfight_version}")
+    compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:${curios_version}:api")
 
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 

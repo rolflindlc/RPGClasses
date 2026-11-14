@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "iceandfire:gorgon_head",
+      "required": false
+    },
+    "minecraft:wither_skeleton_skull"
+  ]
+}

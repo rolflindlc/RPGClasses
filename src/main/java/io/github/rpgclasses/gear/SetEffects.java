@@ -155,6 +155,7 @@ public final class SetEffects {
 
     /** Sello de Postura (netherita): la descarga con ≥5 cargas deja un sello que la repite al 30 % a los 3 s. */
     public static void onMonkDischarge(ServerPlayer p, int stance, int charges) {
+        CurioEffects.onMonkDischarge(p, charges);
         if (charges < 5 || !has(p, GearClass.MONK, ArmorTier.NETHERITE)) return;
         state(p).seals.add(new Seal(p.position(), stance, (int) Math.max(1, Math.round(charges * 0.3)), p.level().getGameTime() + 60));
     }
@@ -197,6 +198,7 @@ public final class SetEffects {
 
     /** Corazón de Brasas (netherita) y Rugido de Dragón (escamas): al usar Embestida o Furia Berserker. */
     public static void onBarbarianAbility(ServerPlayer p, boolean berserker) {
+        if (berserker) CurioEffects.onBerserker(p);
         ArmorTier t = active(p, GearClass.BARBARIAN);
         if (t == null) return;
         ServerLevel level = (ServerLevel) p.level();

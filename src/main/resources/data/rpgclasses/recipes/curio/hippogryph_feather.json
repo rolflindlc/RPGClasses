@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "minecraft:feather"
+    },
+    {
+      "item": "minecraft:feather"
+    },
+    {
+      "item": "minecraft:feather"
+    },
+    {
+      "tag": "rpgclasses:curio/hippogryph"
+    }
+  ],
+  "result": {
+    "item": "rpgclasses:hippogryph_feather"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    "C C",
+    "MCM",
+    "CCC"
+  ],
+  "key": {
+    "M": {
+      "item": "minecraft:diamond"
+    },
+    "C": {
+      "item": "rpgclasses:martial_cloth"
+    }
+  },
+  "result": {
+    "item": "rpgclasses:monk_diamond_chestplate",
+    "count": 1
+  }
+}

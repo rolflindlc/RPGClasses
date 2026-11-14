@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "#minecraft:is_freezing",
+    "rpgclasses:dragon_frost",
+    {
+      "id": "iceandfire:dragon_ice",
+      "required": false
+    }
+  ]
+}

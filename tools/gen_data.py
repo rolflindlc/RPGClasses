@@ -91,7 +91,7 @@ EXTRA_BRANCHES = {
            ("acrobatics",[mech("acrobatics", stamina_cost={"to":-.3}, dodge_invulnerability={"to":.25})])],
  "ranger": [("special_arrows",[mech("potion_arrows", potion_bonus={"to":.25})]),
             ("retreat",[mech("retreat", speed_bonus=.25, duration_seconds=2, icd_seconds=5, min_points=10)])],
- "monk": [("stance_mastery",[mech("stance_mastery", extra_charges={"values":[0,0,0,0,2,2,2,2,2,4]})]),
+ "monk": [("stance_mastery",[mech("stance_mastery", efficacy={"values":[0,0,0,0,.2,.2,.2,.2,.2,.4]})]),
           ("meditation",[mech("meditation", delay_seconds=2, heal_per_second={"to":.5}, health_limit=.6, end_charges=4, hold_seconds=10)])],
 }
 SLOWS = ["minecraft:slowness","minecraft:weakness","minecraft:blindness","minecraft:mining_fatigue","minecraft:nausea","minecraft:darkness"]
@@ -152,7 +152,7 @@ PERKS = {
                    ("light_feet",[mech("light_feet"), attr([(MC+"movement_speed", mb(-.1))])])],
  ("monk","skin"): [("spirit_skin",[attr([(MC+"armor", to(-2)), (MC+"armor_toughness", to(-1))], NOARM), mech("spirit_skin", magic_reduction=.3, combined_cap=.85)]),
                    ("stone_echo",[mech("stone_echo", absorb_factor=2, hit_threshold=4)])],
- ("monk","stance_mastery"): [("dominant_stance",[mech("dominant_stance", favorite_charges=3, others_charges=-3)]),
+ ("monk","stance_mastery"): [("dominant_stance",[mech("dominant_stance", favorite_efficacy=.3, others_efficacy=-.3)]),
                              ("continuous_flow",[mech("continuous_flow", keep_fraction=.3, switch_cooldown_change=1)])],
  ("monk","meditation"): [("deep_trance",[mech("meditation_variant", heal_per_second_fixed=1, delay_seconds=4, health_limit=.8)]),
                          ("clear_mind",[mech("meditation_variant", purge_interval_seconds=5)])],

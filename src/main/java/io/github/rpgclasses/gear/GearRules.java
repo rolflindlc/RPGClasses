@@ -69,21 +69,19 @@ public final class GearRules {
 
     /**
      * Factor de daño de un arma marcial para el Monje: su golpe pasa a valer el daño desarmado (1 + desarmado + bonus
-     * de tier) y se ajusta a la velocidad del arma, para que su DPS sea {@code monkDps} veces el de los puños.
+     * de tier) por el factor de golpe del arma (nunchaku 0,7; sai 1; bo 1,35). Rev. 2.21: sin compensar la velocidad
+     * de ataque, porque con Epic Fight el ritmo lo marcan las animaciones (la compensación daba ×3 con el nunchaku).
      */
     public static double monkMartialFactor(ServerPlayer player, MartialWeaponItem weapon) {
         double weaponBase = player.getAttributeValue(Attributes.ATTACK_DAMAGE);
         if (weaponBase <= 0) return 1;
         double monkBase = 1 + ModAttributes.value(player, ModAttributes.UNARMED_DAMAGE) + weapon.tier.monkBonus;
-        double speed = Math.max(0.1, player.getAttributeValue(Attributes.ATTACK_SPEED));
-        return monkBase * weapon.kind.monkDps * (WeaponKind.FIST_SPEED / speed) / weaponBase;
+        return monkBase * weapon.kind.damageFactor / weaponBase;
     }
 
-    /** Cargas de Fuego por golpe con un arma marcial: compensa que el arma pega menos veces que los puños (tope 3). */
+    /** Cargas de Fuego por golpe: 1, también con armas marciales (rev. 2.21). */
     public static double chargesPerHit(ServerPlayer player) {
-        if (!(player.getMainHandItem().getItem() instanceof MartialWeaponItem)) return 1;
-        double speed = Math.max(0.1, player.getAttributeValue(Attributes.ATTACK_SPEED));
-        return Math.max(1, Math.min(3, WeaponKind.FIST_SPEED / speed));
+        return 1;
     }
 
     private GearRules() {}

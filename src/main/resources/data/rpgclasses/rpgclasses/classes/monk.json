@@ -187,18 +187,18 @@
         {
           "type": "rpgclasses:mechanic",
           "id": "rpgclasses:stance_mastery",
-          "extra_charges": {
+          "efficacy": {
             "values": [
               0,
               0,
               0,
               0,
-              2,
-              2,
-              2,
-              2,
-              2,
-              4
+              0.2,
+              0.2,
+              0.2,
+              0.2,
+              0.2,
+              0.4
             ]
           }
         }
@@ -210,8 +210,8 @@
             {
               "type": "rpgclasses:mechanic",
               "id": "rpgclasses:dominant_stance",
-              "favorite_charges": 3,
-              "others_charges": -3
+              "favorite_efficacy": 0.3,
+              "others_efficacy": -0.3
             }
           ]
         },

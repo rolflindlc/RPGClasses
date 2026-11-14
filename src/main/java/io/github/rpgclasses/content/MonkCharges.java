@@ -132,17 +132,27 @@ public final class MonkCharges {
         return st == null ? 0 : st.charges;
     }
 
-    /** Máximo de cargas de una postura: 10, +2/+4 con Maestría, ±3 con Postura Dominante. */
+    /**
+     * Máximo de cargas de una postura: 10 (rev. 2.21: Maestría de Postura y Postura Dominante ya no lo cambian;
+     * dan eficacia a la descarga y al efecto propio, ver {@link #efficacy}).
+     */
     public static int maxCharges(ServerPlayer player, int stance) {
-        int max = (int) Math.round(num("max_charges", 10));
-        max += (int) Math.round(MechanicService.number(player, MASTERY, "extra_charges", 0));
+        return Math.max(1, (int) Math.round(num("max_charges", 10)));
+    }
+
+    /**
+     * Eficacia de la descarga al cambiar de postura y del efecto propio (rev. 2.21): Maestría de Postura +20 % con
+     * 5 puntos y +40 % con 10; Postura Dominante +30 % en la favorita y −30 % en las otras. No toca el buff por carga.
+     */
+    public static double efficacy(ServerPlayer player, int stance) {
+        double e = 1 + MechanicService.number(player, MASTERY, "efficacy", 0);
         ActiveMechanic dominant = MechanicService.find(player, DOMINANT);
         PlayerClassData data = PlayerClassDataProvider.get(player);
         int favorite = data == null ? 0 : data.counters.getOrDefault(MonkAbilities.FAVORITE_COUNTER, 0);
         if (dominant != null && favorite >= WATER && favorite <= FIRE) {
-            max += (int) Math.round(stance == favorite ? dominant.number("favorite_charges", 3) : dominant.number("others_charges", -3));
+            e += stance == favorite ? dominant.number("favorite_efficacy", 0.3) : dominant.number("others_efficacy", -0.3);
         }
-        return Math.max(1, max);
+        return Math.max(0.1, e);
     }
 
     /** Cargas necesarias para disparar el efecto propio antes de llegar al máximo (Ignición Temprana: 6 en Fuego). */
@@ -280,7 +290,7 @@ public final class MonkCharges {
 
     /** Descarga al cambiar de postura: el efecto de la postura que dejas, proporcional a las cargas gastadas. */
     private static void discharge(ServerPlayer player, State st, int stance, int n) {
-        double scale = 1 + potency(player, stance);
+        double scale = (1 + potency(player, stance)) * efficacy(player, stance);
         double radius = num("discharge_radius", 3);
         ServerLevel level = (ServerLevel) player.level();
         switch (stance) {
@@ -341,7 +351,7 @@ public final class MonkCharges {
         boolean fire = n > 0 && (n >= max || (n >= threshold(attacker, stance) && (st.armed || attacker.isShiftKeyDown())));
         if (fire) {
             // Nudilleras de dragonsteel: efectos propios un 20 % más fuertes (rev. 2.20).
-            double boost = io.github.rpgclasses.gear.GearEvents.finisherStrength(attacker);
+            double boost = io.github.rpgclasses.gear.GearEvents.finisherStrength(attacker) * efficacy(attacker, stance);
             double strength = n / 10.0 * boost;
             switch (stance) {
                 case FIRE -> {

@@ -81,10 +81,10 @@ ABILITY_TEXT = {
 CLASS_DESC = {
     "mage": "Lanzador de conjuros de Iron's Spells. Mucho daño y utilidad a distancia a cambio de muy poca resistencia. Sus ramas aumentan el poder de hechizo, el maná y la velocidad de reutilización.",
     "paladin": "El tanque del grupo. Aguanta más que nadie con armadura y escudo, atrae a los enemigos y protege a sus aliados. Hace poco daño por sí solo.",
-    "barbarian": "Guerrero sin armadura con armas pesadas. Cuanta menos vida tiene, más daño hace, y sus críticos son los más fuertes. Llevar cualquier pieza de armadura apaga su defensa natural.",
+    "barbarian": "Guerrero sin armadura con armas pesadas. Cuanta menos vida tiene, más daño hace, y sus críticos son los más fuertes. Llevar cualquier pieza de armadura apaga su defensa natural, salvo los arneses bárbaros (su equipo de clase).",
     "rogue": "Asesino ágil con armas ligeras. Se vuelve invisible, golpea por sorpresa con críticos seguros y se mueve muy rápido. Muy frágil si lo atrapan.",
     "ranger": "Tirador con arco. Daño constante a distancia, flechas rápidas y de largo alcance, y buena movilidad. Puede llevar armadura sin penalización.",
-    "monk": "Luchador desarmado y sin armadura. Su nivel le da una base de daño y defensa; el resto lo gana en combate acumulando cargas de Fuego, Piedra o Agua. Llevar armadura apaga sus pasivas y borra las cargas.",
+    "monk": "Luchador desarmado y sin armadura. Su nivel le da una base de daño y defensa; el resto lo gana en combate acumulando cargas de Fuego, Piedra o Agua. Llevar armadura apaga sus pasivas y borra las cargas, salvo las vestiduras de monje (su equipo de clase). Nunchaku, sai, bo y nudilleras cuentan como desarmado.",
 }
 
 BRANCH_DESC = {
@@ -133,7 +133,7 @@ TRAIT_DESC = {
     "mage": "Rasgo de clase: menos vida máxima.",
     "paladin": "Rasgo de clase: más vida máxima y algo menos de velocidad.",
     "rogue": "Rasgo de clase: menos vida máxima.",
-    "monk": "Cuerpo Marcial: sin armadura, daño desarmado, armadura y dureza que crecen con tus puntos de clase base (completos con 30). Fuego resta un 25 % a esta armadura y Agua un 25 % a este daño.",
+    "monk": "Cuerpo Marcial: sin armadura (las vestiduras de monje no cuentan), daño desarmado, armadura y dureza que crecen con tus puntos de clase base (completos con 30). Fuego resta un 25 % a esta armadura y Agua un 25 % a este daño.",
 }
 
 # Perks de rama (regla 11). Los números se ven en la pestaña "Datos exactos" y al pasar el ratón.
@@ -376,7 +376,7 @@ UI = {
     "ui.rpgclasses.walls_header": "Muros de disciplina",
     "ui.rpgclasses.walls_note": "El muro crece con tus puntos de clase base y llega a su máximo con 30. Con %s puntos tendrías %s.",
     "ui.rpgclasses.wall_line": "%s: -%s al máximo",
-    "ui.rpgclasses.armor_rule": 'Llevar cualquier pieza de armadura desactiva tus pasivas "sin armadura".',
+    "ui.rpgclasses.armor_rule": 'Llevar cualquier pieza de armadura desactiva tus pasivas "sin armadura", salvo el equipo de tu clase (arneses bárbaros o vestiduras de monje).',
     "ui.rpgclasses.branches_header": "Ramas (10 puntos cada una; cada punto sube todas sus pasivas). Puedes usar 3 de las 5: al poner puntos en tres, las otras dos se bloquean hasta reiniciar la clase.",
     "ui.rpgclasses.perks_line": "Perk al llenarla (eliges uno, gratis, hasta reiniciar la clase):",
     "ui.rpgclasses.perk_option": "%s: %s",

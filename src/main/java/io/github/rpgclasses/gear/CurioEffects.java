@@ -291,11 +291,14 @@ public final class CurioEffects {
         }
     }
 
-    /** Pluma de Fénix: tras las defensas de clase y de raza, un golpe letal te hace renacer en llamas (20 min). */
+    /**
+     * Pluma de Fénix: tras las defensas de clase y de raza (y tras la armadura), un golpe letal te hace renacer en
+     * llamas (20 min). Va antes que el Tótem, que vanilla comprueba después de este evento.
+     */
     @SubscribeEvent(priority = EventPriority.LOWEST)
-    public void onLethal(LivingHurtEvent event) {
+    public void onLethal(net.minecraftforge.event.entity.living.LivingDamageEvent event) {
         if (!(event.getEntity() instanceof ServerPlayer p) || event.isCanceled()) return;
-        if (event.getAmount() < p.getHealth() + p.getAbsorptionAmount() || !has(p, Curio.PHOENIX_FEATHER)) return;
+        if (event.getAmount() < p.getHealth() || !has(p, Curio.PHOENIX_FEATHER)) return; // la absorción ya está descontada
         if (event.getSource().is(DamageTypeTags.BYPASSES_INVULNERABILITY)) return;
         CompoundTag tag = p.getPersistentData();
         long now = p.level().getGameTime();

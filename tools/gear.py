@@ -201,7 +201,12 @@ def tags():
 
 DAMAGE_TYPES = ["martial", "dragon_flame", "dragon_frost", "dragon_spark"]
 # Capacidades de Epic Fight (primera versión: movesets existentes; animaciones propias en una fase posterior).
-EF_TYPE = {"nunchaku": "epicfight:dagger", "sai": "epicfight:dagger", "bo": "epicfight:spear"}
+EF_TYPE = {
+ "nunchaku": {"type": "epicfight:fist", "attributes": {"common": {"armor_negation": 0.0, "impact": 0.6, "max_strikes": 1}}},
+ "sai": {"type": "epicfight:dagger", "attributes": {"common": {"armor_negation": 10.0, "impact": 0.8, "max_strikes": 1}}},
+ "bo": {"type": "epicfight:spear", "attributes": {"one_hand": {"armor_negation": 0.0, "impact": 1.6, "max_strikes": 2},
+                                                  "two_hand": {"armor_negation": 0.0, "impact": 1.4, "max_strikes": 3}}},
+}
 
 def build(dump, out_dir):
     data = os.path.join(out_dir, "data")
@@ -223,7 +228,7 @@ def build(dump, out_dir):
     dump(no_proc, cur)
     for k, ef in EF_TYPE.items():
         for t in WEAPON_TIERS:
-            dump(os.path.join(data, NS, "capabilities", "weapons", f"{k}_{t}.json"), {"type": ef})
+            dump(os.path.join(data, NS, "capabilities", "weapons", f"{k}_{t}.json"), ef)
     # Modelos de objeto.
     names = ["cured_strap", "martial_cloth", "draconic_forge_template"]
     names += [f"{c}_{t}_{p}" for c in CLASSES for t in ARMOR_TIERS for p in PIECES]

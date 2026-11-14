@@ -92,7 +92,7 @@ public final class MonkChargeFx {
             if (p.position().distanceToSqr(cam) > 48 * 48) continue;
             double f = Mth.clamp(e.charges() / (double) Math.max(1, e.max()), 0, 1);
             boolean firstPerson = p == mc.player && mc.options.getCameraType().isFirstPerson();
-            if (p.getMainHandItem().isEmpty()) spawn(mc, p, e, f, p.getMainArm(), firstPerson);
+            if (p.getMainHandItem().isEmpty() || io.github.rpgclasses.gear.GearRules.isMartial(p.getMainHandItem())) spawn(mc, p, e, f, p.getMainArm(), firstPerson);
             if (p.getOffhandItem().isEmpty()) spawn(mc, p, e, f, p.getMainArm().getOpposite(), firstPerson);
         }
     }

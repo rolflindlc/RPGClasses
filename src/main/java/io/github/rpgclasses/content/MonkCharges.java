@@ -95,6 +95,8 @@ public final class MonkCharges {
         boolean sentArmed;
         /** Golpe Ígneo en curso: fracción de armadura que ignora este golpe. */
         double pendingArmorIgnore;
+        /** Fracción de carga de Fuego acumulada con armas marciales lentas (rev. 2.20). */
+        double fireFraction;
     }
 
     private static final Map<UUID, State> STATES = new HashMap<>();
@@ -259,7 +261,7 @@ public final class MonkCharges {
         data.counters.put(MonkAbilities.STANCE_COUNTER, next);
         long now = player.server.getTickCount();
         st.stance = next;
-        st.charges = Math.min(kept, maxCharges(player, next));
+        st.charges = Math.min(kept + io.github.rpgclasses.gear.SetEffects.stanceEntryCharges(player, kept), maxCharges(player, next));
         st.armed = false;
         st.lastGain = now;
         st.lastDecay = now;
@@ -314,6 +316,7 @@ public final class MonkCharges {
             }
             default -> { }
         }
+        io.github.rpgclasses.gear.SetEffects.onMonkDischarge(player, stance, n);
     }
 
     // ------------------------------------------------------------------ golpe desarmado (DamagePipeline)
@@ -337,19 +340,21 @@ public final class MonkCharges {
         int max = maxCharges(attacker, stance);
         boolean fire = n > 0 && (n >= max || (n >= threshold(attacker, stance) && (st.armed || attacker.isShiftKeyDown())));
         if (fire) {
-            double strength = n / 10.0;
+            // Nudilleras de dragonsteel: efectos propios un 20 % más fuertes (rev. 2.20).
+            double boost = io.github.rpgclasses.gear.GearEvents.finisherStrength(attacker);
+            double strength = n / 10.0 * boost;
             switch (stance) {
                 case FIRE -> {
                     double perCharge = MechanicService.number(attacker, EARLY_IGNITION, "ignite_bonus_per_charge",
                             num("fire_strike_bonus_per_charge", 0.05));
-                    factor *= 1 + n * perCharge;
+                    factor *= 1 + n * perCharge * boost;
                     st.pendingArmorIgnore = Math.min(num("fire_armor_ignore_cap", 0.8), n * num("fire_armor_ignore_per_charge", 0.05));
                     addBurn(target, num("fire_strike_burn_seconds", 4));
                     burst((ServerLevel) attacker.level(), target, ParticleTypes.FLAME, 10 + n * 2);
                     sound(attacker, SoundEvents.FIRECHARGE_USE, 1.2f);
                 }
                 case STONE -> {
-                    int ticks = (int) Math.round(n * num("stone_stun_per_charge", 0.15) * 20 * (Races.isBoss(target) ? 0.5 : 1));
+                    int ticks = (int) Math.round(n * boost * num("stone_stun_per_charge", 0.15) * 20 * (Races.isBoss(target) ? 0.5 : 1));
                     if (ticks > 0 && tryStun(attacker, target, (int) Math.round(num("stone_stun_icd_seconds", 8) * 20))) {
                         CombatAbilities.stun(target, ticks);
                     }
@@ -357,7 +362,7 @@ public final class MonkCharges {
                     sound(attacker, SoundEvents.ANVIL_LAND, 0.6f);
                 }
                 case WATER -> {
-                    int slow = (int) Math.round(n * num("water_slow_per_charge", 0.2) * 20);
+                    int slow = (int) Math.round(n * boost * num("water_slow_per_charge", 0.2) * 20);
                     if (slow > 0) target.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, slow, 1), attacker);
                     st.dodgeUntil = now + Math.round(n * num("water_dodge_window_per_charge", 0.3) * 20);
                     burst((ServerLevel) attacker.level(), target, ParticleTypes.SPLASH, 12 + n * 3);
@@ -367,11 +372,16 @@ public final class MonkCharges {
             }
             io.github.rpgclasses.server.DebugLog.event(attacker, "cargas", "efecto propio de {} con {} cargas (fuerza {})",
                     MonkAbilities.STANCE_NAMES[stance], n, strength);
+            io.github.rpgclasses.gear.SetEffects.onMonkFinisher(attacker, target, stance, n);
             st.charges = 0;
             st.armed = false;
             changed(attacker, st, stance);
         } else if (stance == FIRE) {
-            gain(attacker, st, 1);
+            // Rev. 2.20: un arma marcial lenta da más cargas por golpe para ganar las mismas por segundo que los puños.
+            st.fireFraction += io.github.rpgclasses.gear.GearRules.chargesPerHit(attacker);
+            int whole = (int) Math.floor(st.fireFraction + 1.0E-9);
+            st.fireFraction -= whole;
+            if (whole > 0) gain(attacker, st, whole);
         }
         return factor;
     }
@@ -423,12 +433,23 @@ public final class MonkCharges {
             case STONE -> num("deflect_stone_charges", 1);
             default -> 0;
         });
+        if (amount > 0) amount += io.github.rpgclasses.gear.SetEffects.deflectBonus(monk);
         if (amount > 0) gain(monk, state(monk), amount);
     }
 
     /** Esquiva con éxito de Epic Fight: +3 cargas de Agua. */
     public static void onDodge(ServerPlayer monk) {
         if (active(monk) && stance(monk) == WATER) gain(monk, state(monk), (int) Math.round(num("water_dodge_charges", 3)));
+    }
+
+    /** Cargas de la postura activa ganadas por el equipo (parry del sai, efectos de set). */
+    public static void grant(ServerPlayer monk, int amount) {
+        if (active(monk) && amount > 0) gain(monk, state(monk), amount);
+    }
+
+    /** Fuerza de las cargas actuales (0 sin postura). La usan los efectos de set del Monje. */
+    public static int activeStance(ServerPlayer monk) {
+        return active(monk) ? stance(monk) : NONE;
     }
 
     /** Meditación: al terminar, cargas de la postura actual que no decaen durante un tiempo. */
@@ -447,6 +468,7 @@ public final class MonkCharges {
         st.lastGain = now;
         st.lastDecay = now;
         changed(player, st, stance);
+        io.github.rpgclasses.gear.SetEffects.onMonkGain(player, st.charges, threshold(player, stance));
     }
 
     private static void clamp(ServerPlayer player, State st) {
@@ -466,7 +488,8 @@ public final class MonkCharges {
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public void onHurt(LivingHurtEvent event) {
         if (!(event.getEntity() instanceof ServerPlayer player) || !active(player) || stance(player) != STONE) return;
-        double threshold = MechanicService.number(player, STONE_ECHO, "hit_threshold", num("stone_hit_threshold", 2));
+        double threshold = io.github.rpgclasses.gear.SetEffects.stoneThreshold(player,
+                MechanicService.number(player, STONE_ECHO, "hit_threshold", num("stone_hit_threshold", 2)));
         if (event.getAmount() < threshold) return;
         State st = state(player);
         long now = player.server.getTickCount();
@@ -560,21 +583,22 @@ public final class MonkCharges {
     }
 
     private static void decay(ServerPlayer player, State st, int stance, long now, boolean moved) {
+        double gear = io.github.rpgclasses.gear.SetEffects.monkDecayFactor(player, stance); // equipo de clase (rev. 2.20)
         switch (stance) {
             case FIRE -> {
-                double slow = 1 / Math.max(0.1, 1 - MechanicService.number(player, STEADY_FLAME, "decay_slowdown", 0));
+                double slow = gear / Math.max(0.1, 1 - MechanicService.number(player, STEADY_FLAME, "decay_slowdown", 0));
                 double delay = num("fire_decay_delay_seconds", 1.5) * 20 * slow;
                 double interval = num("fire_decay_interval_seconds", 0.5) * 20 * slow;
                 if (now - st.lastGain >= delay && now - st.lastDecay >= interval) lose(player, st, stance, now);
             }
             case STONE -> {
-                double delay = num("stone_decay_delay_seconds", 3) * 20;
-                double interval = num("stone_decay_interval_seconds", 2) * 20;
+                double delay = num("stone_decay_delay_seconds", 5) * 20 * gear;
+                double interval = num("stone_decay_interval_seconds", 5) * 20 * gear;
                 if (now - st.lastStoneGain >= delay && now - st.lastDecay >= interval && now - st.lastGain >= delay) lose(player, st, stance, now);
             }
             case WATER -> {
                 st.stillTicks = moved ? 0 : st.stillTicks + 1;
-                if (st.stillTicks >= num("water_decay_interval_seconds", 1) * 20) {
+                if (st.stillTicks >= num("water_decay_interval_seconds", 1.5) * 20 * gear) {
                     st.stillTicks = 0;
                     lose(player, st, stance, now);
                 }

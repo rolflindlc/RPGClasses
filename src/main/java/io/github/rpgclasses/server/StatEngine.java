@@ -160,11 +160,15 @@ public final class StatEngine {
         return new ResourceLocation(school.getNamespace(), school.getPath() + "_spell_power");
     }
 
-    /** "Sin armadura" = ninguna pieza en las ranuras de armadura que aporte armadura (élitros o calabazas no cuentan). */
+    /**
+     * "Sin armadura" = ninguna pieza en las ranuras de armadura que aporte armadura (élitros o calabazas no cuentan).
+     * Las piezas del equipo de clase de la propia clase (tag class_armor/&lt;clase&gt;) no cuentan (rev. 2.20).
+     */
     public static boolean isWearingArmor(ServerPlayer player) {
         for (EquipmentSlot slot : ARMOR_SLOTS) {
             ItemStack stack = player.getItemBySlot(slot);
-            if (!stack.isEmpty() && stack.getAttributeModifiers(slot).containsKey(Attributes.ARMOR)) return true;
+            if (!stack.isEmpty() && stack.getAttributeModifiers(slot).containsKey(Attributes.ARMOR)
+                    && !io.github.rpgclasses.gear.GearRules.exempt(player, stack)) return true;
         }
         return false;
     }

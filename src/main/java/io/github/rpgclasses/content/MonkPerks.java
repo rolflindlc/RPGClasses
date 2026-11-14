@@ -131,6 +131,7 @@ public final class MonkPerks {
         double perSecond = m.number("heal_per_second", 0.5);
         if (variant != null && variant.params().has("heal_per_second_fixed")) perSecond = variant.number("heal_per_second_fixed", 1);
         if (variant != null) perSecond *= variant.number("heal_factor", 1);
+        perSecond *= io.github.rpgclasses.gear.SetEffects.meditationFactor(player); // Peregrinaje (rev. 2.20)
         if (now - st.lastHealTick >= 20) {
             st.lastHealTick = now;
             double limitFraction = variant != null && variant.params().has("health_limit") ? variant.number("health_limit", 0.8) : m.number("health_limit", 0.6);

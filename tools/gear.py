@@ -73,7 +73,7 @@ WEAPON_TEXT = {
 }
 
 def lang():
-    out = {"itemGroup.rpgclasses.class_gear": "RPG Classes: Equipo de Clase",
+    out = {"itemGroup.rpgclasses.class_gear": "RPG Classes",
            "item.rpgclasses.cured_strap": "Correa curtida",
            "item.rpgclasses.martial_cloth": "Tela marcial",
            "item.rpgclasses.draconic_forge_template": "Plantilla de forja dracónica",
@@ -202,7 +202,7 @@ def tags():
 DAMAGE_TYPES = ["martial", "dragon_flame", "dragon_frost", "dragon_spark"]
 # Capacidades de Epic Fight (primera versión: movesets existentes; animaciones propias en una fase posterior).
 EF_TYPE = {
- "nunchaku": {"type": "epicfight:fist", "attributes": {"common": {"armor_negation": 0.0, "impact": 0.6, "max_strikes": 1}}},
+ "nunchaku": {"type": "epicfight:dagger", "attributes": {"common": {"armor_negation": 0.0, "impact": 0.6, "max_strikes": 1}}},
  "sai": {"type": "epicfight:dagger", "attributes": {"common": {"armor_negation": 10.0, "impact": 0.8, "max_strikes": 1}}},
  "bo": {"type": "epicfight:spear", "attributes": {"one_hand": {"armor_negation": 0.0, "impact": 1.6, "max_strikes": 2},
                                                   "two_hand": {"armor_negation": 0.0, "impact": 1.4, "max_strikes": 3}}},

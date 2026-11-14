@@ -80,10 +80,14 @@ public final class ModGear {
         }
     }
 
+    /** Pestaña de creativo con todos los objetos del mod: primero los demás registros (altar, libro...) y luego el equipo. */
     public static final RegistryObject<CreativeModeTab> TAB = TABS.register("class_gear", () -> CreativeModeTab.builder()
             .title(Component.translatable("itemGroup.rpgclasses.class_gear"))
             .icon(() -> new ItemStack(ARMOR.get(GearClass.MONK).get(ArmorTier.DRAGONSTEEL_FIRE).get(ArmorItem.Type.CHESTPLATE).get()))
-            .displayItems((params, out) -> ORDER.forEach(ro -> out.accept(ro.get())))
+            .displayItems((params, out) -> {
+                io.github.rpgclasses.registry.ModBlocks.ITEMS.getEntries().forEach(ro -> out.accept(ro.get()));
+                ORDER.forEach(ro -> out.accept(ro.get()));
+            })
             .build());
 
     private static Item.Properties props(boolean fireResistant, boolean epic) {

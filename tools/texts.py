@@ -116,7 +116,7 @@ BRANCH_DESC = {
     ("rogue", "acrobatics"): "La esquiva de Epic Fight gasta menos estamina y su invulnerabilidad dura más.",
     ("ranger", "special_arrows"): "Los efectos de tus flechas con poción duran más y son más fuertes.",
     ("ranger", "retreat"): "Con la rama llena, tras recibir un golpe cuerpo a cuerpo corres más rápido unos segundos.",
-    ("monk", "stance_mastery"): "Más cargas máximas en todas las posturas: +2 con 5 puntos y +4 con 10.",
+    ("monk", "stance_mastery"): "Tus descargas al cambiar de postura y tus efectos propios son más fuertes: +20 % con 5 puntos y +40 % con 10 (las cargas máximas siguen siendo 10).",
     ("monk", "meditation"): "Agachado y quieto unos segundos, te curas poco a poco hasta un límite de vida. Recibir daño la interrumpe. Al dejar de meditar ganas 4 cargas de tu postura que no se pierden durante 10 s.",
 }
 
@@ -194,7 +194,7 @@ PERK_TEXT = {
     ("monk", "wind", "light_feet"): ("Pies Ligeros", "Ignoras telarañas, arena de almas, miel, nieve en polvo y la ralentización al comer o usar objetos. Algo menos de velocidad."),
     ("monk", "skin", "spirit_skin"): ("Piel Espiritual", "Menos armadura y dureza, pero recibes mucho menos daño mágico y elemental."),
     ("monk", "skin", "stone_echo"): ("Eco de Piedra", "La absorción de la descarga de Piedra se duplica, pero solo ganas cargas de Piedra con golpes de 4 o más de daño."),
-    ("monk", "stance_mastery", "dominant_stance"): ("Postura Dominante", "Agachado + tecla de posturas fija tu postura favorita: +3 cargas máximas en ella y −3 en las otras dos."),
+    ("monk", "stance_mastery", "dominant_stance"): ("Postura Dominante", "Agachado + tecla de posturas fija tu postura favorita: su descarga y su efecto propio son un 30 % más fuertes, y los de las otras dos, un 30 % más débiles."),
     ("monk", "stance_mastery", "continuous_flow"): ("Flujo Continuo", "Al cambiar de postura conservas el 30 % de las cargas en la nueva y descargas solo el resto. Cambias de postura 1 s más despacio."),
     ("monk", "meditation", "deep_trance"): ("Trance Profundo", "Te curas el doble de rápido meditando y hasta el 80 % de tu vida, pero tardas más en empezar."),
     ("monk", "meditation", "clear_mind"): ("Mente Clara", "Al meditar purgas un efecto negativo cada 5 s."),
@@ -234,7 +234,7 @@ MECHANIC_NAMES = {
     "summon_bonus": "Invocaciones reforzadas", "cast_no_slow": "Sin ralentización al lanzar", "banner_aura": "Aura de Estandarte",
     "smite": "Castigo", "charge_upgrade": "Embestida mejorada", "hardened": "Curtido", "toxin": "Toxina",
     "acrobatics": "Esquiva de Epic Fight", "potion_arrows": "Flechas con poción", "retreat": "Retirada",
-    "stance_mastery": "Cargas máximas extra", "meditation": "Meditación", "distance_power": "Poder según la distancia",
+    "stance_mastery": "Eficacia de descargas y efectos propios", "meditation": "Meditación", "distance_power": "Poder según la distancia",
     "blood_magic": "Magia de Sangre", "summon_count": "Invocaciones por conjuro", "cast_speed_burst": "Paso Arcano",
     "feather_fall": "Caída de Pluma", "effect_immunity": "Inmunidad a efectos", "shield_counter": "Contragolpe de Escudo",
     "shockwave": "Onda de Choque", "war_banner": "Estandarte de Guerra", "life_banner": "Estandarte de Vida",

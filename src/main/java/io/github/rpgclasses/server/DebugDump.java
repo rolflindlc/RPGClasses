@@ -89,6 +89,23 @@ public final class DebugDump {
         if (last != null) out.add("último golpe: " + last);
 
         out.add("");
+        out.add("--- Movimiento (por qué no se puede correr) ---");
+        out.add("hambre " + player.getFoodData().getFoodLevel() + "/20 (hace falta más de 6 para correr), saturación "
+                + DebugLog.num(player.getFoodData().getSaturationLevel()) + " | corriendo " + player.isSprinting()
+                + " | en agua " + player.isInWater() + " (bajo el agua " + player.isUnderWater() + ") | en el suelo "
+                + player.onGround() + " | agachado " + player.isShiftKeyDown() + " | usando objeto " + player.isUsingItem()
+                + " | ceguera " + player.hasEffect(net.minecraft.world.effect.MobEffects.BLINDNESS));
+        var speedAttr = player.getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.MOVEMENT_SPEED);
+        if (speedAttr != null) {
+            out.add("velocidad " + DebugLog.num(speedAttr.getValue()) + " (base " + DebugLog.num(speedAttr.getBaseValue()) + ")");
+            for (var m : speedAttr.getModifiers()) {
+                out.add("  modificador " + m.getName() + " " + m.getOperation() + " " + DebugLog.num(m.getAmount()));
+            }
+        }
+        out.add("Monje: postura " + io.github.rpgclasses.content.MonkCharges.activeStance(player) + ", cargas "
+                + io.github.rpgclasses.content.MonkCharges.charges(player));
+
+        out.add("");
         out.add("--- Efectos ---");
         for (MobEffectInstance e : player.getActiveEffects()) {
             out.add(String.valueOf(net.minecraftforge.registries.ForgeRegistries.MOB_EFFECTS.getKey(e.getEffect()))

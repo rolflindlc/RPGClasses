@@ -8,6 +8,10 @@
     "rpgclasses:arrow_blast",
     "rpgclasses:plague",
     "rpgclasses:sunlight",
-    "rpgclasses:scald"
+    "rpgclasses:scald",
+    "rpgclasses:martial",
+    "rpgclasses:dragon_flame",
+    "rpgclasses:dragon_frost",
+    "rpgclasses:dragon_spark"
   ]
 }

@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    "P P",
+    " B ",
+    "P P"
+  ],
+  "key": {
+    "P": {
+      "tag": "rpgclasses:curio/pixie_dust"
+    },
+    "B": {
+      "item": "minecraft:bell"
+    }
+  },
+  "result": {
+    "item": "rpgclasses:pixie_bell",
+    "count": 1
+  }
+}

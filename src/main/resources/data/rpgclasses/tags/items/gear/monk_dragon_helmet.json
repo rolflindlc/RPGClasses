@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "rpgclasses:monk_dragon_fire_helmet",
+    "rpgclasses:monk_dragon_ice_helmet",
+    "rpgclasses:monk_dragon_lightning_helmet"
+  ]
+}

@@ -160,6 +160,7 @@ public final class MonkPerks {
     private static void endMeditation(ServerPlayer player, State st, ActiveMechanic m) {
         if (!st.meditating) return;
         st.meditating = false;
+        io.github.rpgclasses.gear.CurioEffects.onMeditationEnd(player); // Campana del Templo (rev. 2.20)
         if (m != null) MonkCharges.grantHeld(player, (int) Math.round(m.number("end_charges", 4)), m.number("hold_seconds", 10));
     }
 

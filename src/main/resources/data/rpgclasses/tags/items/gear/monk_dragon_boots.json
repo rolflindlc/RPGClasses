@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "rpgclasses:monk_dragon_fire_boots",
+    "rpgclasses:monk_dragon_ice_boots",
+    "rpgclasses:monk_dragon_lightning_boots"
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    "C C",
+    "M M"
+  ],
+  "key": {
+    "M": {
+      "item": "minecraft:diamond"
+    },
+    "C": {
+      "item": "rpgclasses:cured_strap"
+    }
+  },
+  "result": {
+    "item": "rpgclasses:barbarian_diamond_boots",
+    "count": 1
+  }
+}

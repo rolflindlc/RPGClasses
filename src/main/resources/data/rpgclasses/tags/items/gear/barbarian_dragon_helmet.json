@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "rpgclasses:barbarian_dragon_fire_helmet",
+    "rpgclasses:barbarian_dragon_ice_helmet",
+    "rpgclasses:barbarian_dragon_lightning_helmet"
+  ]
+}

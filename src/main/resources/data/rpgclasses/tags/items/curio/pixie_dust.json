@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "iceandfire:pixie_dust",
+      "required": false
+    },
+    "minecraft:glowstone_dust"
+  ]
+}

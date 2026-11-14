@@ -304,6 +304,7 @@ public final class RaceTraits {
             sl.sendParticles(ParticleTypes.ANGRY_VILLAGER, player.getX(), player.getY() + 1, player.getZ(), 12, 0.4, 0.5, 0.4, 0);
         }
         player.displayClientMessage(Component.translatable("message.rpgclasses.last_stand"), true);
+        io.github.rpgclasses.gear.CurioEffects.onLastStand(player); // Pendiente de Hueso de Trol (rev. 2.20)
         DebugLog.event(player, "raza", "Última Resistencia: sobrevive con 1 HP");
     }
 

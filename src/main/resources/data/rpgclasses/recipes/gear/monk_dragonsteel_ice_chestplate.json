@@ -1,0 +1,21 @@
+{
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "iceandfire"
+    }
+  ],
+  "type": "minecraft:smithing_transform",
+  "template": {
+    "item": "rpgclasses:draconic_forge_template"
+  },
+  "base": {
+    "tag": "rpgclasses:gear/monk_dragon_chestplate"
+  },
+  "addition": {
+    "tag": "rpgclasses:iceandfire/dragonsteel_ice"
+  },
+  "result": {
+    "item": "rpgclasses:monk_dragonsteel_ice_chestplate"
+  }
+}

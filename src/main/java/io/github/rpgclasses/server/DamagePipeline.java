@@ -272,7 +272,7 @@ public final class DamagePipeline {
                 double critBonus = ModAttributes.value(attacker, ModAttributes.CRIT_DAMAGE)
                         + (backstab ? ModAttributes.value(attacker, ModAttributes.BACKSTAB_CRIT_DAMAGE) : 0);
                 double multiplier = StatMath.critMultiplier(critBonus);
-                damage *= multiplier;
+                damage *= multiplier * io.github.rpgclasses.gear.CurioEffects.critRoll(attacker, multiplier);
                 attacker.crit(target);
                 io.github.rpgclasses.gear.SetEffects.onCrit(attacker, target, damage, melee);
                 log.append(String.format(Locale.ROOT, backstab ? " | CRÍTICO SEGURO (sigilo) x%.2f" : marked ? " | CRÍTICO SEGURO (paso de sombra) x%.2f" : " | CRÍTICO (%.0f%%) x%.2f",

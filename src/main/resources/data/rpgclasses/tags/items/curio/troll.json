@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "iceandfire:troll_tusk",
+      "required": false
+    },
+    "minecraft:bone_block"
+  ]
+}

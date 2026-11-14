@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    "CMC",
+    "C C",
+    "M M"
+  ],
+  "key": {
+    "M": {
+      "item": "minecraft:leather"
+    },
+    "C": {
+      "item": "rpgclasses:cured_strap"
+    }
+  },
+  "result": {
+    "item": "rpgclasses:barbarian_leather_leggings",
+    "count": 1
+  }
+}

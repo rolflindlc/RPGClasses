@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "#minecraft:is_fire",
+    "rpgclasses:dragon_flame",
+    {
+      "id": "iceandfire:dragon_fire",
+      "required": false
+    }
+  ]
+}

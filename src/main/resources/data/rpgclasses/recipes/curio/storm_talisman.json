@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    "CRC",
+    "RTR",
+    "CRC"
+  ],
+  "key": {
+    "C": {
+      "item": "minecraft:copper_ingot"
+    },
+    "R": {
+      "item": "minecraft:lightning_rod"
+    },
+    "T": {
+      "tag": "rpgclasses:curio/storm"
+    }
+  },
+  "result": {
+    "item": "rpgclasses:storm_talisman",
+    "count": 1
+  }
+}

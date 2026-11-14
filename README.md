@@ -5,7 +5,13 @@ Mod de clases, ramas, subclases y razas definido por datapack. Diseño funcional
 `documento_de_razas_implementacion.md`, y arquitectura en el documento
 "Arquitectura técnica del mod de clases".
 
-## Estado actual (2026-11-13)
+## Estado actual (2026-11-14)
+
+**Rev. 2.20 (sin probar en el juego):** rebalance del Monje (cargas sin techo de armadura: con 0 cargas por debajo
+de la media, con 5 en la media y con 10 por encima) y **Equipo de Clase**: armaduras de Bárbaro y Monje de todos
+los tiers (hasta dragonsteel de Ice and Fire), armas marciales del Monje (nudilleras, nunchaku, sai y bo), efectos
+de set completo solo para su clase y 32 curios (generales, de clase y de raza). Ice and Fire y Curios son opcionales.
+Detalle en `documento_equipo_de_clase.md`; texturas provisionales con `python3 -I tools/art/make_gear.py src/main/resources`.
 
 Además de lo descrito abajo, ya están en el código, sin probar en el juego:
 

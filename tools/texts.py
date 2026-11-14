@@ -21,7 +21,7 @@ ABILITIES = {
     "berserker_rage": dict(duration_seconds=10, attack_speed=0.3, damage_bonus=0.25, damage_taken=0.2, cooldown_seconds=60, weakness_radius=6, weakness_seconds=6),
     # Pícaro
     "stealth": dict(passive=True, drain_per_second=0.10, regen_per_second=0.08, action_cost=0.4, lockout_until=0.5),
-    "shadow_step": dict(distance=10, cooldown_seconds=20, mark_seconds=5, behind_distance=1.4),
+    "shadow_step": dict(distance=10, cooldown_seconds=20, mark_seconds=8, behind_distance=1.4),
     "decoy": dict(passive=True, cooldown_seconds=10),
     # Ranger
     "ammo_conservation": dict(passive=True, chance=0.33),
@@ -62,7 +62,7 @@ ABILITY_TEXT = {
     "charge": ("Embestida", "Cargas en línea recta y chocas con el primer enemigo: recibe un daño bajo, sale empujado y queda aturdido, y tú rebotas."),
     "berserker_rage": ("Furia Berserker", "Durante unos segundos atacas más rápido y más fuerte, pero también recibes más daño. Al activarla debilitas a los enemigos cercanos."),
     "stealth": ("Sigilo", "Al agacharte te vuelves invisible de verdad mientras te quede barra de Sigilo. Atacar o lanzar un hechizo gasta buena parte de la barra."),
-    "shadow_step": ("Paso de Sombra", "Te teletransportas a la espalda del enemigo al que miras (hasta 10 bloques). Durante 5 s tus golpes a ese enemigo son críticos seguros y, si lo matas en ese tiempo, la habilidad se recarga al instante."),
+    "shadow_step": ("Paso de Sombra", "Te teletransportas a la espalda del enemigo al que miras (hasta 10 bloques). Durante 8 s tus golpes a ese enemigo son críticos seguros y, si lo matas en ese tiempo, la habilidad se recarga al instante."),
     "decoy": ("Señuelo", "Al hacerte invisible dejas un clon con tu equipo que atrae a los enemigos y huye."),
     "ammo_conservation": ("Conservación de Munición", "Cada disparo tiene una probabilidad de no gastar munición."),
     "double_jump": ("Doble Salto", "Pulsa saltar otra vez en el aire para dar un segundo salto."),
@@ -413,6 +413,7 @@ UI = {
     "msg.rpgclasses.stance_favorite": "Postura favorita: %s",
     "msg.rpgclasses.martial_echo": "Eco Marcial: tu siguiente conjuro cuesta menos maná",
     "msg.rpgclasses.monk_armed": "Efecto propio preparado: tu siguiente golpe desarmado gasta las cargas",
+    "msg.rpgclasses.shadow_step_ready": "¡Paso de Sombra recargado!",
     "msg.rpgclasses.shadow_step_blocked": "No hay ningún enemigo a la vista o no hay sitio a su espalda.",
     "hud.rpgclasses.stealth": "Sigilo",
     "hud.rpgclasses.free_cast": "Gratis %s: %s",

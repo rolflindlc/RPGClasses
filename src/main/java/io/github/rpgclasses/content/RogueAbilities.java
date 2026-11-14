@@ -302,16 +302,31 @@ public final class RogueAbilities {
     /** Si matas al objetivo marcado dentro de la ventana, Paso de Sombra se recarga al instante. */
     @SubscribeEvent
     public void onMarkedKill(net.minecraftforge.event.entity.living.LivingDeathEvent event) {
-        if (!(event.getSource().getEntity() instanceof ServerPlayer player) || player instanceof FakePlayer) return;
+        LivingEntity dead = event.getEntity();
+        // Quién mató: el atacante directo, o (con Epic Fight, flechas, fuego...) quien tenía el crédito de la muerte.
+        ServerPlayer player = null;
+        if (event.getSource().getEntity() instanceof ServerPlayer sp) player = sp;
+        else if (dead.getKillCredit() instanceof ServerPlayer sp) player = sp;
+        if (player == null || player instanceof FakePlayer) return;
         Mark m = MARKS.get(player.getUUID());
-        if (m == null || !m.target.equals(event.getEntity().getUUID())) return;
+        if (m == null) return;
+        if (!m.target.equals(dead.getUUID())) {
+            io.github.rpgclasses.server.DebugLog.event(player, "habilidad", "Paso de Sombra: murió {} pero no es el marcado", io.github.rpgclasses.server.DebugLog.describe(dead));
+            return;
+        }
         MARKS.remove(player.getUUID());
-        if (player.level().getGameTime() > m.until) return;
+        long now = player.level().getGameTime();
+        if (now > m.until) {
+            io.github.rpgclasses.server.DebugLog.event(player, "habilidad", "Paso de Sombra: el objetivo murió fuera de la ventana ({} ticks tarde)", now - m.until);
+            return;
+        }
         AbilityService.clearCooldown(player, SHADOW_STEP);
         Net.syncPlayer(player);
+        io.github.rpgclasses.server.DebugLog.event(player, "habilidad", "Paso de Sombra recargado al matar a {}", io.github.rpgclasses.server.DebugLog.describe(dead));
         ServerLevel level = player.serverLevel();
         level.sendParticles(ParticleTypes.SOUL_FIRE_FLAME, player.getX(), player.getY() + 1, player.getZ(), 20, 0.3, 0.5, 0.3, 0.05);
         level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.AMETHYST_BLOCK_CHIME, SoundSource.PLAYERS, 1.0f, 1.6f);
+        player.displayClientMessage(Component.translatable("msg.rpgclasses.shadow_step_ready"), true);
     }
 
     // --- Señuelo ---

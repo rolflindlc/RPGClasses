@@ -63,10 +63,10 @@ classes = {
    subs=["beast_master","agile_scout","sniper"]),
  "monk": dict(icon="minecraft:leather", roles=["melee","movilidad"], kit=None, crit=0.0, armor_rule=True,
    walls=dict(magic=.7, bow=.3, heavy=.35, light=.4, shield=1.0),
-   # Rev. 2.9: las ramas ya no dan stats planos; potencian las cargas de Fuego, Agua y Piedra (+33 % con 10 puntos).
-   branches=[("fist",[mech("fire_potency", potency={"to":1/3})]),
-             ("wind",[mech("water_potency", potency={"to":1/3})]),
-             ("skin",[mech("stone_potency", potency={"to":1/3})])],
+   # Rev. 2.9: las ramas ya no dan stats planos; potencian las cargas de Fuego, Agua y Piedra (rev. 2.20: +25 % con 10 puntos).
+   branches=[("fist",[mech("fire_potency", potency={"to":.25})]),
+             ("wind",[mech("water_potency", potency={"to":.25})]),
+             ("skin",[mech("stone_potency", potency={"to":.25})])],
    milestones=[ms(5,"stances"), ms(15,"deflect"), ms(30,"light_step")],
    subs=["breeze_master","heavy_palm","triworld_guardian"]),
 }
@@ -78,7 +78,7 @@ TRAITS = {
  "paladin": [attr([(MC+"max_health", mb(.2)), (MC+"movement_speed", mb(-.1))])],
  "rogue": [attr([(MC+"max_health", mb(-.15))])],
  # Cuerpo Marcial (rev. 2.9): suelo que crece con los puntos de clase base (máximo con 30).
- "monk": [dict(attr([(R("unarmed_damage"), to(4.0)), (MC+"armor", to(10)), (MC+"armor_toughness", to(4))], NOARM), scale="base_points")],
+ "monk": [dict(attr([(R("unarmed_damage"), to(4.0)), (MC+"armor", to(13)), (MC+"armor_toughness", to(4))], NOARM), scale="base_points")],
 }
 EXTRA_BRANCHES = {
  "mage": [("summoning",[mech("summon_bonus", summon_health={"to":.4}, summon_damage={"to":.4})]),

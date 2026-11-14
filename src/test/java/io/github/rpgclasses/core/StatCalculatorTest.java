@@ -102,14 +102,14 @@ public class StatCalculatorTest {
 
     @Test
     public void monkMartialBodyScalesWithBasePointsAndStances() {
-        // Cuerpo Marcial: 10 / 4 de armadura y dureza y +4 de daño desarmado con 30 puntos; a mitad con 15.
+        // Cuerpo Marcial: 13 / 4 de armadura y dureza y +4 de daño desarmado con 30 puntos; a mitad con 15.
         ProgressState full = player("monk", 10, null, 0);
         Map<Key, Double> t = totals(full, NO_ARMOR);
-        assertEquals(10.0, t.get(new Key("minecraft:generic.armor", "add")), EPS);
+        assertEquals(13.0, t.get(new Key("minecraft:generic.armor", "add")), EPS);
         assertEquals(4.0, t.get(new Key("minecraft:generic.armor_toughness", "add")), EPS);
         assertEquals(4.0, t.get(new Key("rpgclasses:unarmed_damage", "add")), EPS);
         Map<Key, Double> half = totals(player("monk", 5, null, 0), NO_ARMOR);
-        assertEquals(5.0, half.get(new Key("minecraft:generic.armor", "add")), EPS);
+        assertEquals(6.5, half.get(new Key("minecraft:generic.armor", "add")), EPS);
         // Con armadura no hay suelo.
         assertNull(totals(full, ARMORED).get(new Key("minecraft:generic.armor", "add")));
 
@@ -117,7 +117,7 @@ public class StatCalculatorTest {
         ClassDef c = STORE.classDef(full.classId);
         Map<Key, Double> fire = StatCalculator.attributeTotals(full, c, null, new Context(false, Map.of(),
                 Map.of("minecraft:generic.armor", 0.75, "minecraft:generic.armor_toughness", 0.75), Map.of()));
-        assertEquals(7.5, fire.get(new Key("minecraft:generic.armor", "add")), EPS);
+        assertEquals(9.75, fire.get(new Key("minecraft:generic.armor", "add")), EPS);
         ProgressState breeze = player("monk", 10, "breeze_master", 10);
         Map<Key, Double> water = StatCalculator.attributeTotals(breeze, c, STORE.subclassDef(breeze.subclassId),
                 new Context(false, Map.of(), Map.of("rpgclasses:unarmed_damage", 0.75),

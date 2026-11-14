@@ -30,7 +30,7 @@
         },
         {
           "attribute": "minecraft:generic.armor",
-          "to": 10,
+          "to": 13,
           "operation": "add"
         },
         {
@@ -52,7 +52,7 @@
           "type": "rpgclasses:mechanic",
           "id": "rpgclasses:fire_potency",
           "potency": {
-            "to": 0.3333333333333333
+            "to": 0.25
           }
         }
       ],
@@ -89,7 +89,7 @@
           "type": "rpgclasses:mechanic",
           "id": "rpgclasses:water_potency",
           "potency": {
-            "to": 0.3333333333333333
+            "to": 0.25
           }
         }
       ],
@@ -135,7 +135,7 @@
           "type": "rpgclasses:mechanic",
           "id": "rpgclasses:stone_potency",
           "potency": {
-            "to": 0.3333333333333333
+            "to": 0.25
           }
         }
       ],

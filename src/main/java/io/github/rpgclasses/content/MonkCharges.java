@@ -46,12 +46,15 @@ import java.util.Map;
 import java.util.UUID;
 
 /**
- * Cargas de postura del Monje (rev. 2.9). Solo se acumulan cargas de la postura activa:
+ * Cargas de postura del Monje (rev. 2.9; números de la rev. 2.20: con 0 cargas por debajo de la media de las clases,
+ * con 5 en la media y con 10 por encima). Solo se acumulan cargas de la postura activa:
  * <ul>
- *   <li><b>Fuego (Combo):</b> cada golpe desarmado; +3 % de daño por carga. Efecto: Golpe Ígneo. Descarga: onda de fuego.</li>
- *   <li><b>Piedra (Temple):</b> cada golpe recibido de ≥2 HP antes de armadura (ICD 0,5 s); +0,75 de armadura y +0,25 de
- *       dureza por carga (tope 20 / 8; lo que sobra da resistencia al empuje). Efecto: aturdimiento. Descarga: absorción.</li>
- *   <li><b>Agua (Fluir):</b> esquivar o desviar (+3) y cada 2 s corriendo (+1); +2,5 % de velocidad y salto por carga.
+ *   <li><b>Fuego (Combo):</b> cada golpe desarmado (o con arma marcial); +8 % de daño por carga. Efecto: Golpe Ígneo.
+ *       Descarga: onda de fuego.</li>
+ *   <li><b>Piedra (Temple):</b> cada golpe recibido de ≥2 HP antes de armadura (ICD 0,5 s); +1,4 de armadura y +0,8 de
+ *       dureza por carga, sin más techo que el máximo vanilla (30 / 20; lo que no cabe da resistencia al empuje).
+ *       Efecto: aturdimiento. Descarga: absorción.</li>
+ *   <li><b>Agua (Fluir):</b> esquivar o desviar (+3) y cada 2 s corriendo (+1); +3 % de velocidad y salto por carga.
  *       Efecto: Contracorriente (lentitud y esquiva garantizada). Descarga: lentitud y empuje en área.</li>
  * </ul>
  * El efecto propio se dispara en el siguiente golpe desarmado al llegar al máximo, o antes con Shift + golpe (o la
@@ -197,7 +200,7 @@ public final class MonkCharges {
         return out;
     }
 
-    /** Armadura y dureza de las cargas de Piedra, con tope 20 / 8; lo que no cabe da resistencia al empuje. Paso final del recálculo. */
+    /** Armadura y dureza de las cargas de Piedra hasta el máximo vanilla (30 / 20); lo que no cabe da resistencia al empuje. Paso final del recálculo. */
     public static void applyStoneArmor(ServerPlayer player) {
         if (stance(player) != STONE || StatEngine.isWearingArmor(player)) return;
         int n = charges(player);
@@ -205,8 +208,8 @@ public final class MonkCharges {
         double scale = 1 + potency(player, STONE);
         double perArmor = num("stone_armor_per_charge", 0.75) * scale;
         double perTough = num("stone_toughness_per_charge", 0.25) * scale;
-        double armorRoom = Math.max(0, num("stone_armor_cap", 20) - player.getAttributeValue(Attributes.ARMOR));
-        double toughRoom = Math.max(0, num("stone_toughness_cap", 8) - player.getAttributeValue(Attributes.ARMOR_TOUGHNESS));
+        double armorRoom = Math.max(0, num("stone_armor_cap", 30) - player.getAttributeValue(Attributes.ARMOR));
+        double toughRoom = Math.max(0, num("stone_toughness_cap", 20) - player.getAttributeValue(Attributes.ARMOR_TOUGHNESS));
         double armor = Math.min(n * perArmor, armorRoom);
         double tough = Math.min(n * perTough, toughRoom);
         StatEngine.applyModifier(player, Attributes.ARMOR, "stone_charges", AttributeModifier.Operation.ADDITION, armor);

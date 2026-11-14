@@ -20,6 +20,8 @@ Anexo del *Documento de Diseño v2* (clases) y del anexo de *Razas*. Sustituye a
 | Decaimiento de Agua | 1 por segundo quieto | **1 cada 1,5 s** quieto |
 | Absorción de la descarga de Piedra | 0,5 HP por carga | **2 HP por carga** (rev. 2.17) |
 
+* **Rev. 2.21 (decisión del usuario):** *Maestría de Postura* ya no sube las cargas máximas (siempre 10): da **+20 % (5 puntos) / +40 % (10 puntos) de eficacia** a la descarga al cambiar de postura y al efecto propio. Para no romper el umbral de 10, *Postura Dominante* pasa a **+30 % de eficacia en la favorita y −30 % en las otras** (antes ±3 cargas máximas). El buff por carga no cambia.
+* **Rev. 2.21, armas marciales del Monje:** sin compensar la velocidad de ataque (con Epic Fight el ritmo lo marcan las animaciones y el nunchaku de madera llegaba a ×3). El golpe vale el desarmado por el factor del arma (nunchaku 0,7; sai 1; bo 1,35) y da 1 carga. El nunchaku usa el moveset de daga **[MEDIR]**.
 * Con Piel llena y 10 cargas de Piedra: 30,5 / 14 (la armadura se recorta a 30). Las cargas que no caben dan resistencia al empuje, como antes.
 * Fuego con Puño llena y 10 cargas: ≈ 144 % del DPS objetivo. Con *Postura Dominante* o *Maestría* (14–17 cargas) puede pasar de ×1,9: **vigilar [MEDIR]**.
 * Los números están en `tools/texts.py` (habilidad `stances`) y se cambian por datapack.

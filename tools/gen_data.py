@@ -345,5 +345,20 @@ dump(os.path.join(out, "assets", NS, "rpgclasses_param_units.json"),
      {k: v.split("|")[1] for k, v in sorted(texts.PARAMS.items()) if "|" in v})
 attr_names = {"crit_damage":"Daño crítico","backstab_crit_damage":"Daño crítico desde invisibilidad","jump_bonus":"Altura de salto","unarmed_damage":"Daño desarmado","unarmed_knockback":"Empuje desarmado","bow_damage":"Daño con arco","draw_speed":"Velocidad de carga del arco","projectile_velocity":"Velocidad de proyectiles","zoom":"Zoom","mob_detection":"Detección por mobs","debuff_resistance":"Resistencia a efectos negativos","knockback_dealt":"Empuje infligido","healing_received":"Curación recibida","sneak_speed":"Velocidad agachado","spell_size":"Tamaño de conjuros","crit_chance":"Probabilidad de crítico"}
 for k, v in attr_names.items(): lang[f"attribute.{NS}.{k}"] = v
-for locale in ("es_es", "en_us"):  # en_us: copia provisional hasta traducir
+# Idiomas. El texto fuente está en español (es_es y las variantes hispanas, que Minecraft NO
+# enlaza entre sí: sin copia, un jugador en es_mx vería inglés). en_us sale de tools/i18n/en_*.json
+# (clave -> inglés) y sirve además de respaldo para cualquier idioma sin traducción.
+import glob as _glob
+en = {}
+for f in sorted(_glob.glob(os.path.join(os.path.dirname(os.path.abspath(__file__)), "i18n", "en_*.json"))):
+    with open(f, encoding="utf-8") as fh: en.update(json.load(fh))
+missing = sorted(set(lang) - set(en)); extra = sorted(set(en) - set(lang))
+assert not missing, f"faltan traducciones al inglés: {missing[:10]} ({len(missing)})"
+assert not extra, f"traducciones inglesas de claves que ya no existen: {extra[:10]} ({len(extra)})"
+import re as _re
+_ph = lambda t: sorted(_re.findall(r"%(?:\d\$)?[sdf%]", t))
+bad = [k for k in lang if _ph(lang[k]) != _ph(en[k])]
+assert not bad, f"marcadores %s distintos entre es y en: {bad[:10]}"
+for locale in ("es_es", "es_mx", "es_ar", "es_cl", "es_uy", "es_ve"):
     dump(os.path.join(out, "assets", NS, "lang", locale + ".json"), dict(sorted(lang.items())))
+dump(os.path.join(out, "assets", NS, "lang", "en_us.json"), dict(sorted(en.items())))

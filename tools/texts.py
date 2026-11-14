@@ -32,15 +32,17 @@ ABILITIES = {
     "lethal_shot": dict(passive=True, thresholds_seconds=[1, 2, 3, 6], damage_bonuses=[0.25, 0.5, 1.0, 1.5]),
     # Monje
     # Rev. 2.9: cargas de postura (MonkCharges). Las ramas Puño, Viento y Piel potencian cada postura.
+    # Rev. 2.20: sin techo de armadura (solo el máximo vanilla 30/20). Objetivo: con 0 cargas por debajo de la media de
+    # las clases, con 5 en la media y con 10 por encima, en el aspecto de cada postura (daño, armadura o movilidad).
     "stances": dict(switch_cooldown_seconds=2, max_charges=10, finisher_threshold=10, discharge_radius=3, burn_cap_seconds=15,
-                    fire_buff_per_charge=0.03, fire_decay_delay_seconds=1.5, fire_decay_interval_seconds=0.5,
+                    fire_buff_per_charge=0.08, fire_decay_delay_seconds=2.5, fire_decay_interval_seconds=0.75,
                     fire_strike_bonus_per_charge=0.05, fire_armor_ignore_per_charge=0.05, fire_armor_ignore_cap=0.8,
                     fire_strike_burn_seconds=4, fire_wave_per_charge=0.05, fire_floor_armor_cost=0.25,
-                    stone_hit_threshold=2, stone_hit_icd_seconds=0.5, stone_armor_per_charge=0.75, stone_toughness_per_charge=0.25,
-                    stone_armor_cap=20, stone_toughness_cap=8, stone_knockback_per_charge=0.1, stone_speed_cost=-0.15,
-                    stone_jump_cost=-0.3, stone_decay_delay_seconds=3, stone_decay_interval_seconds=2,
-                    stone_stun_per_charge=0.15, stone_stun_icd_seconds=8, stone_absorb_per_charge=0.5, stone_absorb_seconds=5,
-                    water_buff_per_charge=0.025, water_sprint_seconds=2, water_dodge_charges=3, water_decay_interval_seconds=1,
+                    stone_hit_threshold=2, stone_hit_icd_seconds=0.5, stone_armor_per_charge=1.4, stone_toughness_per_charge=0.8,
+                    stone_armor_cap=30, stone_toughness_cap=20, stone_knockback_per_charge=0.1, stone_speed_cost=-0.15,
+                    stone_jump_cost=-0.3, stone_decay_delay_seconds=5, stone_decay_interval_seconds=5,
+                    stone_stun_per_charge=0.15, stone_stun_icd_seconds=8, stone_absorb_per_charge=2, stone_absorb_seconds=5,
+                    water_buff_per_charge=0.03, water_sprint_seconds=2, water_dodge_charges=3, water_decay_interval_seconds=1.5,
                     water_slow_per_charge=0.2, water_dodge_window_per_charge=0.3, water_floor_damage_cost=0.25,
                     deflect_fire_charges=1, deflect_water_charges=3, deflect_stone_charges=1),
     "deflect": dict(passive=True, cooldown_seconds=5),

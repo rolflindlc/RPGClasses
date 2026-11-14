@@ -120,7 +120,7 @@ public final class StatEngine {
             applyTo(player, Attributes.ARMOR_TOUGHNESS, "forged_armor", AttributeModifier.Operation.ADDITION, pieces * perPiece);
         }
 
-        // 6. Cargas de Piedra del Monje: armadura con tope 20 / 8 sobre lo ya calculado.
+        // 6. Cargas de Piedra del Monje: armadura hasta el máximo vanilla (30 / 20) sobre lo ya calculado.
         io.github.rpgclasses.content.MonkCharges.applyStoneArmor(player);
 
         clampHealth(player);

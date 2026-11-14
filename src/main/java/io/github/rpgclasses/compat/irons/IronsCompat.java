@@ -307,6 +307,27 @@ public final class IronsCompat {
                 event.getSpellId(), event.getManaCost(), event.getCastSource(),
                 free != null && free.spellId().equals(event.getSpellId()) ? ", Conjuro Gratuito (ranura " + free.slot() + ")" : "",
                 blood > 0 ? ", " + blood + " de maná pagado con vida (Magia de Sangre)" : "");
+        // Magia Caótica (Evocador Caótico): se tira ANTES de descartar fuentes que no gastan maná (pergaminos, varitas)
+        // y el modo creativo, porque el efecto no depende de gastar maná: sin maná gastado queda la probabilidad mínima.
+        boolean pays = event.getCastSource().consumesMana() && !player.isCreative();
+        float spentChaos = pays ? Math.max(0, event.getManaCost() - blood) : 0;
+        ActiveMechanic wild = MechanicService.find(player, "wild_magic");
+        if (wild != null) {
+            if (replicating != null) {
+                io.github.rpgclasses.server.DebugLog.event(player, "Magia Caótica", "sin tirada: es un conjuro extra de la propia Magia Caótica");
+            } else if (AbilityService.remainingTicks(player, CD_WILD) > 0) {
+                io.github.rpgclasses.server.DebugLog.event(player, "Magia Caótica", "sin tirada: en enfriamiento ({} ticks)", AbilityService.remainingTicks(player, CD_WILD));
+            } else {
+                double chance = Math.min(wild.number("chance_cap", 0.5),
+                        Math.max(wild.number("min_chance", 0.15), spentChaos * wild.number("chance_per_mana", 0.0033)));
+                boolean proc = player.getRandom().nextDouble() < chance;
+                io.github.rpgclasses.server.DebugLog.event(player, "Magia Caótica", "tirada {}% (maná {}, fuente {}): {}", chance * 100, spentChaos, event.getCastSource(), proc ? "SALTA" : "no");
+                if (proc) {
+                    AbilityService.setCooldown(player, CD_WILD, (int) Math.round(wild.number("icd_ticks", 30)));
+                    WILD_PENDING.add(new WildProc(player.getUUID(), event.getSpellId(), event.getSpellLevel()));
+                }
+            }
+        }
         if (!event.getCastSource().consumesMana() || player.isCreative()) return;
         float spent = Math.max(0, event.getManaCost() - blood);
         ActiveMechanic shield = MechanicService.find(player, "arcane_shield");
@@ -320,19 +341,6 @@ public final class IronsCompat {
             st.lastSpend = tick;
         }
 
-        // Magia Caótica (Evocador Caótico): probabilidad según el maná gastado de verdad (las cargas y la sangre no
-        // cuentan, pero siempre queda la probabilidad mínima).
-        ActiveMechanic wild = MechanicService.find(player, "wild_magic");
-        if (wild != null && replicating == null && AbilityService.remainingTicks(player, CD_WILD) <= 0) {
-            double chance = Math.min(wild.number("chance_cap", 0.5),
-                    Math.max(wild.number("min_chance", 0.15), spent * wild.number("chance_per_mana", 0.0033)));
-            boolean proc = player.getRandom().nextDouble() < chance;
-            io.github.rpgclasses.server.DebugLog.event(player, "Magia Caótica", "tirada {}%: {}", chance * 100, proc ? "SALTA" : "no");
-            if (proc) {
-                AbilityService.setCooldown(player, CD_WILD, (int) Math.round(wild.number("icd_ticks", 30)));
-                WILD_PENDING.add(new WildProc(player.getUUID(), event.getSpellId(), event.getSpellLevel()));
-            }
-        }
     }
 
     // ---------------------------------------------------------------- Magia Caótica (puente con Iron's)

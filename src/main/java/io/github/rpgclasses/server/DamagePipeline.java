@@ -168,8 +168,20 @@ public final class DamagePipeline {
             canCrit = tag.getBoolean(TAG_CAN_CRIT);
         } else if (direct == attacker) {
             WeaponClassifier.Classification weapon = WeaponClassifier.classify(attacker.getMainHandItem());
-            if (weapon.unarmed()) {
-                double flat = ModAttributes.value(attacker, ModAttributes.UNARMED_DAMAGE);
+            boolean isMonk = io.github.rpgclasses.gear.GearClass.MONK.is(attacker);
+            if (weapon.martial() && isMonk && attacker.getMainHandItem().getItem() instanceof io.github.rpgclasses.gear.MartialWeaponItem martial) {
+                // Rev. 2.20: para el Monje, el arma marcial cuenta como desarmado (cargas, perks y subclase).
+                double f = io.github.rpgclasses.gear.GearRules.monkMartialFactor(attacker, martial);
+                damage *= f;
+                log.append(String.format(Locale.ROOT, " | arma marcial del Monje x%.2f", f));
+                double charges = MonkPerks.unarmedFactor(attacker, target);
+                if (charges != 1) {
+                    damage *= charges;
+                    log.append(String.format(Locale.ROOT, " | cargas/impulso x%.2f", charges));
+                }
+            } else if (weapon.unarmed()) {
+                double flat = ModAttributes.value(attacker, ModAttributes.UNARMED_DAMAGE)
+                        + io.github.rpgclasses.gear.GearRules.knucklesBonus(attacker, isMonk);
                 damage += flat;
                 log.append(String.format(Locale.ROOT, " | desarmado +%.2f", flat));
                 double palm = MonkSubclasses.onUnarmedHit(attacker, target, damage);
@@ -262,6 +274,7 @@ public final class DamagePipeline {
                 double multiplier = StatMath.critMultiplier(critBonus);
                 damage *= multiplier;
                 attacker.crit(target);
+                io.github.rpgclasses.gear.SetEffects.onCrit(attacker, target, damage, melee);
                 log.append(String.format(Locale.ROOT, backstab ? " | CRÍTICO SEGURO (sigilo) x%.2f" : marked ? " | CRÍTICO SEGURO (paso de sombra) x%.2f" : " | CRÍTICO (%.0f%%) x%.2f",
                         backstab || marked ? new Object[] {multiplier} : new Object[] {chance * 100, multiplier}));
             } else {

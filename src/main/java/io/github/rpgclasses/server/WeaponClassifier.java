@@ -32,14 +32,24 @@ public final class WeaponClassifier {
      * @param discipline id de disciplina, o null si no es un arma.
      * @param unarmed true solo con la mano vacía: es lo único que recibe los bonus de desarmado.
      */
-    public record Classification(String discipline, String rule, boolean unarmed) {
+    /**
+     * @param martial arma marcial (tag rpgclasses:martial_weapons): ligera para todas las clases, desarmado para el Monje.
+     */
+    public record Classification(String discipline, String rule, boolean unarmed, boolean martial) {
         Classification(String discipline, String rule) {
-            this(discipline, rule, false);
+            this(discipline, rule, false, false);
+        }
+
+        Classification(String discipline, String rule, boolean unarmed) {
+            this(discipline, rule, unarmed, false);
         }
     }
 
     public static Classification classify(ItemStack stack) {
         if (stack.isEmpty()) return new Classification(null, "mano vacía (desarmado)", true);
+        if (stack.is(io.github.rpgclasses.gear.GearRules.MARTIAL)) {
+            return new Classification(Ids.LIGHT, "arma marcial (desarmado para el Monje)", false, true);
+        }
         if (stack.is(TAG_HEAVY)) return new Classification(Ids.HEAVY, "tag discipline/heavy");
         if (stack.is(TAG_LIGHT)) return new Classification(Ids.LIGHT, "tag discipline/light");
         if (stack.is(TAG_BOW)) return new Classification(Ids.BOW, "tag discipline/bow");

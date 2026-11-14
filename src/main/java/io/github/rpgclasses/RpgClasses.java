@@ -62,6 +62,8 @@ public class RpgClasses {
         ModEntities.ENTITIES.register(modBus);
         io.github.rpgclasses.registry.ModBlocks.BLOCKS.register(modBus);
         io.github.rpgclasses.registry.ModBlocks.ITEMS.register(modBus);
+        io.github.rpgclasses.gear.ModGear.ITEMS.register(modBus);
+        io.github.rpgclasses.gear.ModGear.TABS.register(modBus);
         modBus.addListener(io.github.rpgclasses.registry.ModBlocks::onCreativeTab);
         modBus.addListener(ModEntities::onAttributes);
         modBus.addListener(ModAttributes::onAttributeModification);
@@ -108,6 +110,8 @@ public class RpgClasses {
         MinecraftForge.EVENT_BUS.register(new RangerSubclasses());
         MinecraftForge.EVENT_BUS.register(new io.github.rpgclasses.content.BondBook());
         MinecraftForge.EVENT_BUS.register(new RoguePerks());
+        MinecraftForge.EVENT_BUS.register(new io.github.rpgclasses.gear.GearEvents());
+        MinecraftForge.EVENT_BUS.register(io.github.rpgclasses.gear.SetEffects.listener());
         MinecraftForge.EVENT_BUS.register(new MonkPerks());
         MinecraftForge.EVENT_BUS.register(new MonkSubclasses());
         MinecraftForge.EVENT_BUS.register(new MovementPerks());

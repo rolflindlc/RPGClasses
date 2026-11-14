@@ -124,6 +124,7 @@ public final class CombatAbilities {
         player.hurtMarked = true; // envía la velocidad al cliente
         CHARGING.put(player.getUUID(), new Charging(player.server.getTickCount() + CHARGE_WINDOW_TICKS, flat.normalize(), speed, new HashSet<>()));
         sound(player, SoundEvents.PLAYER_ATTACK_SWEEP);
+        io.github.rpgclasses.gear.SetEffects.onBarbarianAbility(player, false);
         return true;
     }
 
@@ -142,6 +143,7 @@ public final class CombatAbilities {
         ClassFx.burst(player, ClassFx.RED, 40, 0.1);
         ClassFx.ring(player, ClassFx.RED, radius, 0.2, 36);
         sound(player, SoundEvents.WOLF_GROWL);
+        io.github.rpgclasses.gear.SetEffects.onBarbarianAbility(player, true);
         return true;
     }
 

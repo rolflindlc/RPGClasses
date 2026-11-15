@@ -213,7 +213,7 @@ SUBCLASS_DESC = {
     "shadow_walker": "Te mueves agachado tan rápido como andando y te teletransportas a corta distancia.",
     "shadow_illusionist": "Aún más difícil de detectar, y al volverte invisible dejas un señuelo que distrae a los enemigos.",
     "arcane_blade": "Pícaro que también lanza hechizos: pierde el muro de Magia, gana maná y poder, y su primer hechizo desde invisibilidad golpea más fuerte.",
-    "beast_master": "Tus mascotas vinculadas son más fuertes, rápidas y resistentes, y se salvan de la muerte volviendo a tu punto de aparición. Los vínculos se hacen y se rompen solo con el Libro de Vínculos.",
+    "beast_master": "Tus mascotas vinculadas son más fuertes, rápidas y resistentes, y se salvan de la muerte volviendo a tu punto de aparición, donde pierden sus efectos de poción no permanentes, se apagan si ardían y son invulnerables 5 s. Los vínculos se hacen y se rompen solo con el Libro de Vínculos.",
     "agile_scout": "Explorador veloz: más velocidad, triple salto y escalada de paredes.",
     "sniper": "Flechas rapidísimas y mucho más daño por disparo, a cambio de tensar el arco más despacio.",
     "breeze_master": "El más rápido y el que más alto salta, con un impulso aéreo.",

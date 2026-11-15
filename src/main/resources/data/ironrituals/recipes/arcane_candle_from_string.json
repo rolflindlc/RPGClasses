@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "EEE",
+    "ESE",
+    "EEE"
+  ],
+  "key": {
+    "E": {
+      "item": "irons_spellbooks:arcane_essence"
+    },
+    "S": {
+      "item": "minecraft:string"
+    }
+  },
+  "result": {
+    "item": "ironrituals:arcane_candle",
+    "count": 4
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "values": [
+    "minecraft:ender_dragon",
+    "minecraft:wither",
+    "minecraft:warden",
+    {
+      "id": "irons_spellbooks:dead_king",
+      "required": false
+    },
+    {
+      "id": "irons_spellbooks:fire_boss",
+      "required": false
+    }
+  ]
+}

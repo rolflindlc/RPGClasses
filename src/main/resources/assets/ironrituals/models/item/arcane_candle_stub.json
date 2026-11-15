@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "ironrituals:item/arcane_candle_stub"
+  }
+}

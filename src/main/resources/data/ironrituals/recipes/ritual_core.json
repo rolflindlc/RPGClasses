@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    " B ",
+    "CTC",
+    "EEE"
+  ],
+  "key": {
+    "B": {
+      "item": "minecraft:writable_book"
+    },
+    "C": {
+      "item": "ironrituals:arcane_candle"
+    },
+    "T": {
+      "item": "minecraft:enchanting_table"
+    },
+    "E": {
+      "item": "irons_spellbooks:arcane_essence"
+    }
+  },
+  "result": {
+    "item": "ironrituals:ritual_core"
+  }
+}

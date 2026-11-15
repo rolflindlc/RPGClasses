@@ -1,0 +1,77 @@
+modLoader="javafml"
+loaderVersion="[47,)"
+license="All Rights Reserved"
+
+[[mods]]
+modId="${mod_id}"
+version="${mod_version}"
+displayName="${mod_name}"
+authors="${mod_authors}"
+description='''Conjuros rituales para Iron's Spells 'n Spellbooks: círculos de velas arcanas, grimorios enigmáticos y magia de gran escala.'''
+
+[[dependencies.${mod_id}]]
+    modId="forge"
+    mandatory=true
+    versionRange="${forge_version_range}"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.${mod_id}]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="${minecraft_version_range}"
+    ordering="NONE"
+    side="BOTH"
+
+# ISS fijado a 3.15.x-3.16.x: su API cambia entre versiones.
+[[dependencies.${mod_id}]]
+    modId="irons_spellbooks"
+    mandatory=true
+    versionRange="${irons_spells_version_range}"
+    ordering="AFTER"
+    side="BOTH"
+
+# Dependencias de ISS que este mod también usa directamente (se declaran aunque ISS ya las exija).
+[[dependencies.${mod_id}]]
+    modId="irons_lib"
+    mandatory=true
+    versionRange="[1.20.1-2,1.20.1-3)"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.${mod_id}]]
+    modId="geckolib"
+    mandatory=true
+    versionRange="[1.20.1:4.8.2,)"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.${mod_id}]]
+    modId="curios"
+    mandatory=true
+    versionRange="[5.14.1+1.20.1,)"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.${mod_id}]]
+    modId="playeranimator"
+    mandatory=true
+    versionRange="[1.0.2-rc1+1.20,)"
+    ordering="NONE"
+    side="BOTH"
+
+# Caelus (vuelo del Fénix). Pasa a mandatory=true en la fase 6, cuando el código lo use.
+[[dependencies.${mod_id}]]
+    modId="caelus"
+    mandatory=false
+    versionRange="[3.2,)"
+    ordering="NONE"
+    side="BOTH"
+
+# Mod de Razas y Clases: integración opcional, nunca dependencia dura.
+[[dependencies.${mod_id}]]
+    modId="rpgclasses"
+    mandatory=false
+    versionRange="[0,)"
+    ordering="NONE"
+    side="BOTH"

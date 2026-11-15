@@ -1,0 +1,16 @@
+{
+  "parent": "minecraft:item/handheld",
+  "loader": "forge:item_layers",
+  "textures": {
+    "layer0": "ironrituals:item/ritual_dagger",
+    "layer1": "ironrituals:item/ritual_dagger_soul_glow"
+  },
+  "emissive_layers": [
+    1
+  ],
+  "render_types": {
+    "minecraft:translucent": [
+      1
+    ]
+  }
+}

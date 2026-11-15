@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "lit=false": {
+      "model": "ironrituals:block/arcane_candle_stub"
+    },
+    "lit=true": {
+      "model": "ironrituals:block/arcane_candle_stub_lit"
+    }
+  }
+}

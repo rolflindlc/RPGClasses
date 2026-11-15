@@ -1,0 +1,14 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "ironrituals:item/ritual_dagger"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "ironrituals:soul": 1
+      },
+      "model": "ironrituals:item/ritual_dagger_soul"
+    }
+  ]
+}

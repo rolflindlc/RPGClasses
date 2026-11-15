@@ -73,7 +73,7 @@ tasks.register('issProbe') {
             def json = new groovy.json.JsonSlurper().parse(zf.getInputStream(lang))
             out.append("=== items/entities ===\n")
             json.keySet().findAll { it.startsWith('item.irons_spellbooks.') || it.startsWith('entity.irons_spellbooks.') }
-                    .findAll { !it.substring(it.indexOf('.', 5) + 1).contains('.') }
+                    .findAll { it.split('\\.').length == 3 }
                     .sort().each { out.append(it).append(" = ").append(json[it]).append('\n') }
         }
         out.append("=== loot tables (chests) ===\n")

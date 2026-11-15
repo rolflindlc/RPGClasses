@@ -17,7 +17,8 @@
       "type": "rpgclasses:mechanic",
       "id": "rpgclasses:beast_safeguard",
       "cooldown_seconds": 300,
-      "idle_seconds": 60
+      "idle_seconds": 60,
+      "invulnerable_seconds": 5
     }
   ],
   "milestones": []

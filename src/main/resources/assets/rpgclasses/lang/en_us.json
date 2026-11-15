@@ -1539,7 +1539,7 @@
   "subclass.rpgclasses.arcane_blade.name": "Arcane Blade",
   "subclass.rpgclasses.battle_mage.desc": "A front-line Mage who alternates sword and spell. Each spell imbues your weapon with its school (fire burns, ice slows, lightning jumps, blood heals, nature poisons, ender takes you behind the target, evocation raises fangs, eldritch releases a sonic wave in a line and water pushes); every 3 consecutive hits your next spell costs less mana. You aren't interrupted when casting, you lose the melee weapon walls and the mana you spend gives you a shield.",
   "subclass.rpgclasses.battle_mage.name": "Battle Mage",
-  "subclass.rpgclasses.beast_master.desc": "Your bonded pets are stronger, faster and tougher, and escape death by returning to your spawn point. Bonds are made and broken only with the Book of Bonds.",
+  "subclass.rpgclasses.beast_master.desc": "Your bonded pets are stronger, faster and tougher, and escape death by returning to your spawn point, where they lose their non-permanent potion effects, are extinguished if burning and are invulnerable for 5 s. Bonds are made and broken only with the Book of Bonds.",
   "subclass.rpgclasses.beast_master.name": "Beast Master",
   "subclass.rpgclasses.blessed_guardian.desc": "Healing protector. You receive more healing and your Bulwark heals the group with the damage you mitigate.",
   "subclass.rpgclasses.blessed_guardian.name": "Blessed Guardian",

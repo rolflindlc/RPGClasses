@@ -30,6 +30,7 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.common.util.ITeleporter;
 import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -68,6 +69,7 @@ public final class RangerSubclasses {
     private static final String NAME = "rpgclasses_ability:wild_bond";
     private static final String TAG_SAFEGUARD_UNTIL = "rpgclasses.safeguard_until";
     private static final String TAG_IDLE_UNTIL = "rpgclasses.safeguard_idle";
+    private static final String TAG_INVULN_UNTIL = "rpgclasses.safeguard_invuln";
     private static final int PERIOD_TICKS = 20;
     public static final String TAG_BONDED = "rpgclasses.bonded";
 
@@ -218,6 +220,8 @@ public final class RangerSubclasses {
         LivingEntity pet = r.pet();
         if (!pet.isAlive()) return;
         ServerPlayer ranger = server.getPlayerList().getPlayer(r.owner());
+        ActiveMechanic safeguard = ranger != null ? MechanicService.find(ranger, SAFEGUARD) : null;
+        double invulnerableSeconds = safeguard != null ? safeguard.number("invulnerable_seconds", 5) : 5;
         // Destino elegido en el Libro de Vínculos; si no hay ninguno, el punto de aparición.
         BondBook.Point choice = ranger != null ? BondBook.destination(ranger) : null;
         ResourceKey<Level> dim = choice != null ? choice.dim() : ranger != null ? ranger.getRespawnDimension() : Level.OVERWORLD;
@@ -235,6 +239,7 @@ public final class RangerSubclasses {
         if (at == null) {
             // Ningún sitio donde quepa: se queda donde está, a 1 HP y sentada.
             if (pet instanceof TamableAnimal tame) tame.setOrderedToSit(true);
+            recover(pet, invulnerableSeconds);
             return;
         }
         final Vec3 target = at;
@@ -263,6 +268,33 @@ public final class RangerSubclasses {
             tame.setTarget(null);
         }
         if (moved instanceof net.minecraft.world.entity.Mob mob) mob.getNavigation().stop();
+        recover(moved, invulnerableSeconds);
+    }
+
+    /**
+     * Al ser salvada: quita todos los efectos de poción que no sean permanentes (los buenos también), apaga el fuego
+     * y da unos segundos de invulnerabilidad (la marca se comprueba en {@link #onPetAttacked}).
+     */
+    private static void recover(Entity pet, double invulnerableSeconds) {
+        if (pet instanceof LivingEntity living) {
+            for (net.minecraft.world.effect.MobEffectInstance e : new ArrayList<>(living.getActiveEffects())) {
+                if (!e.isInfiniteDuration()) living.removeEffect(e.getEffect());
+            }
+        }
+        pet.clearFire();
+        pet.getPersistentData().putLong(TAG_INVULN_UNTIL,
+                pet.level().getGameTime() + (long) (invulnerableSeconds * 20));
+    }
+
+    @SubscribeEvent(priority = EventPriority.HIGHEST)
+    public void onPetAttacked(LivingAttackEvent event) {
+        LivingEntity pet = event.getEntity();
+        if (pet.level().isClientSide()) return;
+        long until = pet.getPersistentData().getLong(TAG_INVULN_UNTIL);
+        if (until <= pet.level().getGameTime()) return;
+        if (event.getSource().is(DamageTypeTags.BYPASSES_INVULNERABILITY)) return;
+        event.setCanceled(true);
+        pet.clearFire();
     }
 
     /**

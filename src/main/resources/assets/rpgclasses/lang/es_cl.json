@@ -1539,7 +1539,7 @@
   "subclass.rpgclasses.arcane_blade.name": "Hoja Arcana",
   "subclass.rpgclasses.battle_mage.desc": "Mago de primera línea que alterna espada y hechizo. Cada conjuro imbuye tu arma con su escuela (fuego quema, hielo ralentiza, rayo salta, sangre cura, naturaleza envenena, ender te lleva a su espalda, invocación alza colmillos, eldritch suelta una onda sónica en línea y agua empuja); cada 3 golpes seguidos tu siguiente conjuro cuesta menos maná. No te interrumpen al lanzar, pierdes los muros de armas cuerpo a cuerpo y el maná que gastas te da un escudo.",
   "subclass.rpgclasses.battle_mage.name": "Mago de Batalla",
-  "subclass.rpgclasses.beast_master.desc": "Tus mascotas vinculadas son más fuertes, rápidas y resistentes, y se salvan de la muerte volviendo a tu punto de aparición. Los vínculos se hacen y se rompen solo con el Libro de Vínculos.",
+  "subclass.rpgclasses.beast_master.desc": "Tus mascotas vinculadas son más fuertes, rápidas y resistentes, y se salvan de la muerte volviendo a tu punto de aparición, donde pierden sus efectos de poción no permanentes, se apagan si ardían y son invulnerables 5 s. Los vínculos se hacen y se rompen solo con el Libro de Vínculos.",
   "subclass.rpgclasses.beast_master.name": "Maestro de Bestias",
   "subclass.rpgclasses.blessed_guardian.desc": "Protector sanador. Recibes más curación y tu Baluarte cura al grupo con el daño que mitigas.",
   "subclass.rpgclasses.blessed_guardian.name": "Guardián Bendito",

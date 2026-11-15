@@ -204,7 +204,7 @@ subs = {
      mech("arcane_ambush", damage_bonus=.6, icd_seconds=8, stealth_cost=.4)], []),
  "beast_master": ("ranger","minecraft:bone",[
      mech("wild_bond", health=.30, damage=.30, speed=.25, max_pets=8),
-     mech("beast_safeguard", cooldown_seconds=300, idle_seconds=60)], []),
+     mech("beast_safeguard", cooldown_seconds=300, idle_seconds=60, invulnerable_seconds=5)], []),
  "agile_scout": ("ranger","minecraft:feather",[
      attr([(MC+"movement_speed", to(.05,"multiply_base"))])],
      [ms(1,"triple_jump",True,"double_jump"), ms(1,"wall_climb",True)]),

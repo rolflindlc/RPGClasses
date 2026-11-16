@@ -32,7 +32,7 @@ classes = {
              ("reserve",[attr([(IR+"max_mana", to(300)), (IR+"mana_regen", RESERVE_REGEN)])]),
              ("cadence",[attr([(IR+"cooldown_reduction", to(.25,"multiply_base"))])])],
    milestones=[ms(5,"free_cast_slot_1"), ms(15,"free_cast_slot_2"), ms(30,"free_cast_slot_3")],
-   subs=["chaotic_evoker","elementalist","battle_mage"]),
+   subs=["chronomancer","elementalist","battle_mage"]),
  "paladin": dict(icon="minecraft:shield", roles=["tanque","apoyo"], kit="paladin", crit=0.0,
    walls=dict(magic=.75, bow=.75),
    branches=[("cuirass",[{"type":R("equipped_armor_multiplier"),"armor":{"to":.25},"toughness":{"to":.4}}]),
@@ -162,8 +162,9 @@ for cid, c in classes.items():
     for b, _ in c["branches"]: assert (cid, b) in PERKS, (cid, b)
 
 subs = {
- "chaotic_evoker": ("mage","minecraft:fire_charge",[attr([(R("spell_size"), to(.3))]),
-     mech("wild_magic", chance_per_mana=.0033, min_chance=.15, chance_cap=.5, variance_min=.75, variance_max=1.5, icd_ticks=30)], []),
+ # Cronomante (sustituye al Evocador Caótico): conjuros más rápidos de lanzar, Retroceso y Parada Temporal.
+ "chronomancer": ("mage","minecraft:clock",[attr([(IR+"cast_time_reduction", to(.15,"multiply_base"))])],
+     [ms(1,"time_rewind",True), ms(1,"time_stop",True)]),
  "elementalist": ("mage","minecraft:blue_ice",[attr([(IR+"cooldown_reduction", to(.10,"multiply_base"))]),
      mech("elemental_debuffs", chance={"from":.4,"to":.75}, max_stacks={"values":[3,3,3,4,4,4,4,5,5,5]},
           duration_seconds={"values":[4,4,4,6,6,6,6,8,8,8]},
@@ -261,7 +262,7 @@ for sid, (parent, icon, effects, miles) in subs.items():
 
 names = {
  "class": {"mage":"Mago","paladin":"Paladín","barbarian":"Bárbaro","rogue":"Pícaro","ranger":"Ranger","monk":"Monje"},
- "subclass": {"chaotic_evoker":"Evocador Caótico","elementalist":"Elementalista","battle_mage":"Mago de Batalla",
+ "subclass": {"chronomancer":"Cronomante","elementalist":"Elementalista","battle_mage":"Mago de Batalla",
    "blessed_guardian":"Guardián Bendito","unyielding_bastion":"Bastión Inflexible","charging_juggernaut":"Juggernaut de Carga",
    "indestructible":"Indestructible","suicidal_berserker":"Berserker Suicida","plague_corruptor":"Corruptor de Plagas",
    "shadow_walker":"Caminante de Sombras","shadow_illusionist":"Ilusionista de Sombras","arcane_blade":"Hoja Arcana",

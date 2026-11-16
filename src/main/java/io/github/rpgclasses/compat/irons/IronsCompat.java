@@ -1,7 +1,6 @@
 package io.github.rpgclasses.compat.irons;
 
 import io.github.rpgclasses.RpgClasses;
-import io.github.rpgclasses.content.ChaosMagic;
 import io.github.rpgclasses.content.RogueAbilities;
 import io.github.rpgclasses.core.stat.StatCalculator.ActiveMechanic;
 import io.github.rpgclasses.registry.ModEffects;
@@ -25,7 +24,6 @@ import io.redspace.ironsspellbooks.api.spells.ISpellContainer;
 import io.redspace.ironsspellbooks.api.spells.ISpellContainerMutable;
 import io.redspace.ironsspellbooks.api.spells.CastSource;
 import io.redspace.ironsspellbooks.api.spells.SpellData;
-import io.redspace.ironsspellbooks.api.spells.SpellRarity;
 import io.redspace.ironsspellbooks.api.magic.SpellSelectionManager;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.contents.TranslatableContents;
@@ -73,7 +71,8 @@ import java.util.UUID;
  *   <li>Pícaro: lanzar desde Sigilo gasta barra; Hoja Arcana: Emboscada Arcana (arcane_ambush).</li>
  *   <li>Mago: Conjuros Gratuitos por Cargas ({@link FreeCasts}), kit con libro, Escudo Arcano y
  *       Concentración Inquebrantable (Mago de Batalla).</li>
- *   <li>Evocador Caótico: Magia Caótica (wild_magic, {@link ChaosMagic}). Elementalista: {@link ElementalDebuffs}.</li>
+ *   <li>Cronomante: maná y recargas para el Retroceso Temporal y la Parada Temporal ({@link io.github.rpgclasses.content.Chronomancy}).
+ *       Elementalista: {@link ElementalDebuffs}.</li>
  * </ul>
  * Fluidez (cast_no_slow) no necesita eventos: es un modificador de casting_movespeed en {@link StatEngine}.
  */
@@ -82,9 +81,6 @@ public final class IronsCompat {
 
     private static final String CD_ARCANE_STEP = "rpgclasses:arcane_step";
     private static final String CD_AMBUSH = "rpgclasses:arcane_ambush";
-    private static final String CD_WILD = "rpgclasses:wild_magic";
-    /** Entidades creadas por una extra de la Magia Caótica: guardan el multiplicador de daño. */
-    private static final String TAG_REPLICA = "rpgclasses:replica";
     private static final String TAG_SUMMON_DONE = "rpgclasses:summon_done";
     private static final String TAG_SUMMON_DAMAGE = "rpgclasses:summon_damage";
     private static final String TAG_CLONE_OF = "rpgclasses:clone_of";
@@ -105,7 +101,7 @@ public final class IronsCompat {
     private static final List<Entity[]> NEW_SUMMONS = new ArrayList<>();
     /** Conjuro Gratuito aceptado por Iron's, pendiente de lanzarse (se cobra la carga al lanzar). */
     private static final Map<UUID, FreeCast> FREE_PENDING = new HashMap<>();
-    /** Maná de Magia de Sangre del conjuro en curso: no cuenta como gastado (Escudo Arcano, Magia Caótica). */
+    /** Maná de Magia de Sangre del conjuro en curso: no cuenta como gastado (Escudo Arcano). */
     private static final Map<UUID, Float> BLOOD_MANA = new HashMap<>();
     /** Escudo Arcano: absorción propia de cada jugador (aparte de la de manzanas, etc.). */
     private static final Map<UUID, Shield> SHIELDS = new HashMap<>();
@@ -113,11 +109,6 @@ public final class IronsCompat {
     private static final Map<UUID, Ambush> AMBUSHES = new HashMap<>();
     /** Invocaciones extra de Legión → su original (desaparecen con ella). */
     private static final Map<UUID, Clone> CLONES = new HashMap<>();
-    /** Magia Caótica que ha saltado este tick: se lanza al final del tick, después del conjuro original. */
-    private static final List<WildProc> WILD_PENDING = new ArrayList<>();
-    /** Réplica en curso (jugador y multiplicador de daño); null fuera de ella. Las réplicas no encadenan. */
-    private static UUID replicating;
-    private static double replicaFactor = 1;
 
     /** Maná adelantado para pasar la comprobación de Iron's: con vida (Magia de Sangre) o por una carga gratuita (slot > 0). */
     private record Loan(long tick, String spellId, float mana, float health, int slot) {}
@@ -125,14 +116,13 @@ public final class IronsCompat {
     private static final class Shield { float own; long lastSpend; }
     private record Ambush(String spellId, long expires) {}
     private record Clone(ServerLevel level, UUID original) {}
-    private record WildProc(UUID player, String castSpellId, int spellLevel) {}
 
     public static void init() {
         MinecraftForge.EVENT_BUS.register(new IronsCompat());
         KitService.spellInscriber = IronsCompat::inscribe;
         MinecraftForge.EVENT_BUS.register(new RacialSpells());
         MinecraftForge.EVENT_BUS.register(new Pyromaniac());
-        installChaosHooks();
+        installChronoBridge();
         // Aliento del Dracónido (adenda de razas 0.7): gasta maná de Iron's.
         io.github.rpgclasses.content.race.DraconicBreath.manaBridge = (player, cost) -> {
             MagicData magic = MagicData.getPlayerMagicData(player);
@@ -150,6 +140,7 @@ public final class IronsCompat {
     public void onPreCast(SpellPreCastEvent event) {
         if (!(event.getEntity() instanceof ServerPlayer player)) return;
         if (io.github.rpgclasses.content.DeathGamble.flipping(player) // Apuesta con la Muerte: no puede hacer nada
+                || io.github.rpgclasses.content.Chronomancy.isFrozen(player) // Parada Temporal: paralizado
                 || io.github.rpgclasses.content.race.SlimeForms.blocksActions(player)) { // Enjambre dividido: sin conjuros
             event.setCanceled(true);
             return;
@@ -316,27 +307,8 @@ public final class IronsCompat {
                 event.getSpellId(), event.getManaCost(), event.getCastSource(),
                 free != null && free.spellId().equals(event.getSpellId()) ? ", Conjuro Gratuito (ranura " + free.slot() + ")" : "",
                 blood > 0 ? ", " + blood + " de maná pagado con vida (Magia de Sangre)" : "");
-        // Magia Caótica (Evocador Caótico): se tira ANTES de descartar fuentes que no gastan maná (pergaminos, varitas)
-        // y el modo creativo, porque el efecto no depende de gastar maná: sin maná gastado queda la probabilidad mínima.
-        boolean pays = event.getCastSource().consumesMana() && !player.isCreative();
-        float spentChaos = pays ? Math.max(0, event.getManaCost() - blood) : 0;
-        ActiveMechanic wild = MechanicService.find(player, "wild_magic");
-        if (wild != null) {
-            if (replicating != null) {
-                io.github.rpgclasses.server.DebugLog.event(player, "Magia Caótica", "sin tirada: es un conjuro extra de la propia Magia Caótica");
-            } else if (AbilityService.remainingTicks(player, CD_WILD) > 0) {
-                io.github.rpgclasses.server.DebugLog.event(player, "Magia Caótica", "sin tirada: en enfriamiento ({} ticks)", AbilityService.remainingTicks(player, CD_WILD));
-            } else {
-                double chance = Math.min(wild.number("chance_cap", 0.5),
-                        Math.max(wild.number("min_chance", 0.15), spentChaos * wild.number("chance_per_mana", 0.0033)));
-                boolean proc = player.getRandom().nextDouble() < chance;
-                io.github.rpgclasses.server.DebugLog.event(player, "Magia Caótica", "tirada {}% (maná {}, fuente {}): {}", chance * 100, spentChaos, event.getCastSource(), proc ? "SALTA" : "no");
-                if (proc) {
-                    AbilityService.setCooldown(player, CD_WILD, (int) Math.round(wild.number("icd_ticks", 30)));
-                    WILD_PENDING.add(new WildProc(player.getUUID(), event.getSpellId(), event.getSpellLevel()));
-                }
-            }
-        }
+        // Cronomante: el Retroceso Temporal (niveles altos) devuelve parte de la recarga de lo lanzado en su ventana.
+        io.github.rpgclasses.content.Chronomancy.recordCast(player, event.getSpellId());
         if (!event.getCastSource().consumesMana() || player.isCreative()) return;
         float spent = Math.max(0, event.getManaCost() - blood);
         ActiveMechanic shield = MechanicService.find(player, "arcane_shield");
@@ -352,76 +324,44 @@ public final class IronsCompat {
 
     }
 
-    // ---------------------------------------------------------------- Magia Caótica (puente con Iron's)
+    // ---------------------------------------------------------------- Cronomante (puente con Iron's)
 
-    /** Conjuros vistosos que puede lanzar el efecto "conjuro aleatorio". Los que no existan en tu versión se ignoran. */
-    private static final List<String> SHOWY = List.of(
-            "irons_spellbooks:fireball", "irons_spellbooks:firebolt", "irons_spellbooks:magma_bomb",
-            "irons_spellbooks:lightning_bolt", "irons_spellbooks:lightning_lance", "irons_spellbooks:icicle",
-            "irons_spellbooks:frostwave", "irons_spellbooks:fang_strike", "irons_spellbooks:shockwave",
-            "irons_spellbooks:starfall", "irons_spellbooks:wisp", "irons_spellbooks:acid_orb",
-            "irons_spellbooks:chain_creeper", "irons_spellbooks:magic_missile", "irons_spellbooks:firecracker");
-
-    /** Fracción del daño que hacen los conjuros extra lanzados por la Magia Caótica (no se encadenan). */
-    private static final double CHAOS_CAST_DAMAGE = 0.75;
-
-    private static void installChaosHooks() {
-        ChaosMagic.hooks = new ChaosMagic.Hooks() {
+    private static void installChronoBridge() {
+        io.github.rpgclasses.content.Chronomancy.mana = new io.github.rpgclasses.content.Chronomancy.ManaBridge() {
             @Override
-            public boolean recast(ServerPlayer player, String spellId, int spellLevel) {
-                AbstractSpell spell = SpellRegistry.getSpell(new net.minecraft.resources.ResourceLocation(spellId));
-                return chaosCast(player, spell, spellLevel);
+            public float mana(ServerPlayer player) {
+                return MagicData.getPlayerMagicData(player).getMana();
             }
 
             @Override
-            public boolean castShowy(ServerPlayer player, int spellLevel) {
-                List<String> options = new ArrayList<>(SHOWY);
-                java.util.Collections.shuffle(options, new java.util.Random(player.getRandom().nextLong()));
-                for (String id : options) { // el primero que exista y se pueda lanzar
-                    AbstractSpell spell = SpellRegistry.getSpell(new net.minecraft.resources.ResourceLocation(id));
-                    if (chaosCast(player, spell, Math.max(2, Math.min(spellLevel, 6)))) return true;
-                }
-                return false;
+            public float maxMana(ServerPlayer player) {
+                return (float) player.getAttributeValue(io.redspace.ironsspellbooks.api.registry.AttributeRegistry.MAX_MANA.get());
             }
 
             @Override
-            public void addMana(ServerPlayer player, double fractionOfMax) {
+            public void setMana(ServerPlayer player, float mana) {
                 MagicData magic = MagicData.getPlayerMagicData(player);
-                double max = player.getAttributeValue(io.redspace.ironsspellbooks.api.registry.AttributeRegistry.MAX_MANA.get());
-                magic.setMana((float) Math.max(0, Math.min(max, magic.getMana() + max * fractionOfMax)));
+                magic.setMana(Math.max(0, Math.min(maxMana(player), mana)));
+                // Como hace el comando de maná de Iron's: la barra del cliente se actualiza al momento.
+                io.redspace.ironsspellbooks.setup.PacketDistributor.sendToPlayer(player,
+                        new io.redspace.ironsspellbooks.network.SyncManaPacket(magic));
+            }
+
+            @Override
+            public void refundCooldowns(ServerPlayer player, java.util.Collection<String> spellIds, double fraction) {
+                var cooldowns = MagicData.getPlayerMagicData(player).getPlayerCooldowns();
+                boolean changed = false;
+                for (String id : spellIds) {
+                    var c = cooldowns.getSpellCooldowns().get(id);
+                    if (c == null || c.getCooldownRemaining() <= 0) continue;
+                    int amount = (int) Math.floor(c.getCooldownRemaining() * fraction);
+                    if (amount <= 0) continue;
+                    cooldowns.decrementCooldown(c, amount);
+                    changed = true;
+                }
+                if (changed) cooldowns.syncToPlayer(player);
             }
         };
-    }
-
-    /**
-     * Lanza un conjuro extra sin maná ni cooldown, hacia donde mira el mago y con {@link #CHAOS_CAST_DAMAGE} del
-     * daño. Se usa un MagicData temporal para no pisar el estado de lanzamiento real. No lanza continuos, legendarios,
-     * invocaciones ni conjuros con relanzamiento, ni escuelas vetadas para su clase.
-     */
-    private static boolean chaosCast(ServerPlayer player, AbstractSpell spell, int spellLevel) {
-        if (spell == null || "irons_spellbooks:none".equals(spell.getSpellId()) || !player.isAlive()
-                || !(player.level() instanceof ServerLevel level)) return false;
-        int lvl = Math.max(1, spellLevel);
-        if (spell.getRarity(lvl) == SpellRarity.LEGENDARY || spell.getCastType() == CastType.CONTINUOUS
-                || spell.getRecastCount(lvl, player) > 0 || isSummonSpell(spell.getSpellId())
-                || StatEngine.schoolWall(player, spell.getSchoolType().getId().toString()) >= 1.0) return false;
-        replicating = player.getUUID();
-        replicaFactor = CHAOS_CAST_DAMAGE;
-        try {
-            MagicData temp = new MagicData(player);
-            if (!spell.checkPreCastConditions(level, lvl, player, temp)) {
-                io.github.rpgclasses.server.DebugLog.event(player, "Magia Caótica", "{} no pasó las comprobaciones previas", spell.getSpellId());
-                return false;
-            }
-            spell.onCast(level, lvl, player, CastSource.COMMAND, temp);
-            io.github.rpgclasses.server.DebugLog.event(player, "Magia Caótica", "lanzado {} (nivel {})", spell.getSpellId(), lvl);
-            return true;
-        } catch (RuntimeException e) {
-            RpgClasses.LOGGER.warn("[rpgclasses] Magia Caótica: fallo al lanzar {}", spell.getSpellId(), e);
-            return false;
-        } finally {
-            replicating = null;
-        }
     }
 
     private static void decayShields(net.minecraft.server.MinecraftServer server) {
@@ -517,16 +457,6 @@ public final class IronsCompat {
             if (e != null && e.getPersistentData().getBoolean(TAG_SUMMON_DONE)) return;
         }
 
-        // Conjuros extra de la Magia Caótica: daño reducido (daño directo durante la réplica o de lo que creó).
-        if (direct != null && direct.getPersistentData().contains(TAG_REPLICA)) {
-            event.setAmount((float) (event.getAmount() * direct.getPersistentData().getDouble(TAG_REPLICA)));
-            return;
-        }
-        if (replicating != null && attacker.getUUID().equals(replicating)) {
-            event.setAmount((float) (event.getAmount() * replicaFactor));
-            return;
-        }
-
         if (!(attacker instanceof ServerPlayer player) || !isSpellDamage(source)) return;
         double factor = 1;
 
@@ -536,13 +466,6 @@ public final class IronsCompat {
             double nearBonus = power.number("near_bonus", 0), farBonus = power.number("far_bonus", 0);
             double t = Math.max(0, Math.min(1, (player.distanceTo(event.getEntity()) - near) / Math.max(0.01, far - near)));
             factor *= 1 + nearBonus + (farBonus - nearBonus) * t;
-        }
-
-        // Evocador Caótico: todo su daño mágico es impredecible (variance_min–variance_max, de media algo mayor que 1).
-        ActiveMechanic chaos = MechanicService.find(player, "wild_magic");
-        if (chaos != null) {
-            double lo = chaos.number("variance_min", 0.75), hi = chaos.number("variance_max", 1.5);
-            factor *= lo + player.getRandom().nextDouble() * Math.max(0, hi - lo);
         }
 
         Ambush ambush = AMBUSHES.get(player.getUUID());
@@ -583,9 +506,6 @@ public final class IronsCompat {
 
     @SubscribeEvent
     public void onJoin(EntityJoinLevelEvent event) {
-        if (replicating != null && !(event.getEntity() instanceof net.minecraft.world.entity.player.Player)) {
-            event.getEntity().getPersistentData().putDouble(TAG_REPLICA, replicaFactor);
-        }
         if (event.getLevel() instanceof ServerLevel level && event.getEntity().getPersistentData().hasUUID(TAG_CLONE_OF)) {
             CLONES.put(event.getEntity().getUUID(), new Clone(level, event.getEntity().getPersistentData().getUUID(TAG_CLONE_OF)));
         }
@@ -609,14 +529,6 @@ public final class IronsCompat {
             }
         }
         if (!NEW_SUMMONS.isEmpty()) processNewSummons();
-        if (!WILD_PENDING.isEmpty()) {
-            List<WildProc> procs = new ArrayList<>(WILD_PENDING);
-            WILD_PENDING.clear();
-            for (WildProc w : procs) {
-                ServerPlayer p = event.getServer().getPlayerList().getPlayer(w.player());
-                if (p != null) ChaosMagic.roll(p, w.castSpellId(), w.spellLevel());
-            }
-        }
         if (tick % 20 == 0) {
             decayShields(event.getServer());
             FREE_PENDING.values().removeIf(f -> tick > f.expires());

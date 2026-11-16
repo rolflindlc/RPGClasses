@@ -79,14 +79,6 @@ public final class ModEffects {
                     .addAttributeModifier(Attributes.MOVEMENT_SPEED, "b51e7d2a-4c3f-4e8a-9a61-0f2d7c9e5a18", 0.30,
                             AttributeModifier.Operation.MULTIPLY_TOTAL));
 
-    /** Gallina (Magia Caótica del Evocador Caótico): el vuelo lo da content.ChaosMagic; el cliente dibuja una gallina. */
-    public static final RegistryObject<MobEffect> CHICKEN =
-            EFFECTS.register("chicken", () -> new StateEffect(MobEffectCategory.BENEFICIAL, 0xF2EBD8));
-
-    /** Conejo (Magia Caótica): solo puede correr y saltar; lo aplica content.ChaosMagic y el cliente dibuja un conejo. */
-    public static final RegistryObject<MobEffect> RABBIT =
-            EFFECTS.register("rabbit", () -> new StateEffect(MobEffectCategory.NEUTRAL, 0xB98C5E));
-
     /** Efecto normal (curable con leche) sin lógica propia. */
     public static class CurableEffect extends MobEffect {
         public CurableEffect(MobEffectCategory category, int color) {

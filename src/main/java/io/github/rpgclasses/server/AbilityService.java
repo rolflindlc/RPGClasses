@@ -68,6 +68,32 @@ public final class AbilityService {
         return (int) Math.round(number(params, secondsKey, fallbackSeconds) * 20);
     }
 
+    /**
+     * Como {@link #number(JsonObject, String, double)}, pero el parámetro también puede ser un valor por nivel de
+     * subclase ({@code {"values": [...]}} o {@code {"from", "to"}}, 10 niveles), que se evalúa con el nivel de
+     * subclase del jugador (mínimo 1).
+     */
+    public static double levelNumber(ServerPlayer player, JsonObject params, String key, double fallback) {
+        if (!params.has(key)) return fallback;
+        com.google.gson.JsonElement v = params.get(key);
+        if (v.isJsonPrimitive()) return v.getAsDouble();
+        if (!v.isJsonObject()) return fallback;
+        try {
+            return io.github.rpgclasses.core.value.LevelValue.fromJson(v.getAsJsonObject(), 10).at(Math.max(1, subclassLevel(player)));
+        } catch (RuntimeException e) {
+            return fallback;
+        }
+    }
+
+    public static int levelTicks(ServerPlayer player, JsonObject params, String secondsKey, double fallbackSeconds) {
+        return (int) Math.round(levelNumber(player, params, secondsKey, fallbackSeconds) * 20);
+    }
+
+    public static int subclassLevel(ServerPlayer player) {
+        PlayerClassData data = PlayerClassDataProvider.get(player);
+        return data == null ? 0 : data.state.subclassLevel;
+    }
+
     // --- Cooldowns (guardados con el jugador: reconectar no los reinicia) ---
 
     public static long remainingTicks(ServerPlayer player, String key) {
@@ -128,9 +154,9 @@ public final class AbilityService {
         }
         {
             double factor = COOLDOWN_MODIFIERS.containsKey(id) ? Math.max(0, COOLDOWN_MODIFIERS.get(id).applyAsDouble(player)) : 1;
-            setCooldown(player, id, (int) Math.round(ticks(params, "cooldown_seconds", 0) * factor));
+            setCooldown(player, id, (int) Math.round(levelTicks(player, params, "cooldown_seconds", 0) * factor));
             DebugLog.event(player, "habilidad", "{} usada; enfriamiento {} s (factor {})", id,
-                    ticks(params, "cooldown_seconds", 0) * factor / 20.0, factor);
+                    levelTicks(player, params, "cooldown_seconds", 0) * factor / 20.0, factor);
             player.displayClientMessage(Component.translatable("msg.rpgclasses.ability_used", name), true);
             Net.syncPlayer(player);
         }

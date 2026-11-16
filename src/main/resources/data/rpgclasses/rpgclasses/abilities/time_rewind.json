@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "cooldown_seconds": {
+    "values": [
+      60,
+      60,
+      60,
+      50,
+      50,
+      50,
+      50,
+      35,
+      35,
+      35
+    ]
+  },
+  "window_seconds": {
+    "values": [
+      3,
+      3,
+      3,
+      5,
+      5,
+      5,
+      5,
+      8,
+      8,
+      8
+    ]
+  },
+  "health_restore": {
+    "values": [
+      0.5,
+      0.5,
+      0.5,
+      0.75,
+      0.75,
+      0.75,
+      0.75,
+      1,
+      1,
+      1
+    ]
+  },
+  "mana_restore": {
+    "values": [
+      0.25,
+      0.25,
+      0.25,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.75,
+      0.75,
+      0.75
+    ]
+  },
+  "cleanse_from_level": 4,
+  "spell_cooldown_from_level": 8,
+  "spell_cooldown_refund": 0.5,
+  "sample_interval_seconds": 0.5,
+  "max_jump_blocks": 64,
+  "safe_search_blocks": 3
+}

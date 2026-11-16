@@ -31,7 +31,7 @@ def crop(box, side):
     return im.crop((cx - side // 2, cy - side // 2, cx - side // 2 + side, cy - side // 2 + side))
 
 PORTRAITS = [
-    "class/mage", "subclass/battle_mage", "subclass/chaotic_evoker", "subclass/elementalist",
+    "class/mage", "subclass/battle_mage", None, "subclass/elementalist",  # None: Evocador Caótico (retirado; el Cronomante tiene retrato propio)
     "class/paladin", "subclass/blessed_guardian", "subclass/charging_juggernaut", "subclass/unyielding_bastion",
     "class/barbarian", "subclass/indestructible", "subclass/plague_corruptor", "subclass/suicidal_berserker",
     "class/rogue", "subclass/arcane_blade", "subclass/shadow_illusionist", "subclass/shadow_walker",
@@ -52,6 +52,7 @@ EFFECTS = ["bulwark", "charging_bulwark", "immortal_fury", "plague", "taunt_guar
 portrait_cells = [c for row in cells[:7] for c in row]
 assert len(portrait_cells) == 56 and len(cells[7]) == 14
 for name, box in zip(PORTRAITS, portrait_cells):
+    if name is None: continue
     p = os.path.join(outdir, 'gui', 'portrait', name + '.png'); os.makedirs(os.path.dirname(p), exist_ok=True)
     crop(box, 236).save(p)
     with open(p + '.mcmeta', 'w') as f:

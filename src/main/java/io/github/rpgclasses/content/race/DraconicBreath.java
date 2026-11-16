@@ -51,7 +51,7 @@ import java.util.function.ToDoubleBiFunction;
 /**
  * Aliento del Dracónido (adenda 0.7, sección 5): cono canalizado de su elemento con la tecla racial 1.
  * Gasta maná de Iron's mientras dura (si Iron's está instalado) y sufre el muro de Magia de la clase como un conjuro.
- * No es un conjuro de Iron's, así que no cuenta para las cargas del Elementalista ni para la Magia Caótica.
+ * No es un conjuro de Iron's, así que no cuenta para las cargas del Elementalista.
  * Volver a pulsar la tecla lo corta antes de tiempo.
  */
 public final class DraconicBreath {

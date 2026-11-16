@@ -338,7 +338,7 @@
     }
   ],
   "subclasses": [
-    "rpgclasses:chaotic_evoker",
+    "rpgclasses:chronomancer",
     "rpgclasses:elementalist",
     "rpgclasses:battle_mage"
   ]

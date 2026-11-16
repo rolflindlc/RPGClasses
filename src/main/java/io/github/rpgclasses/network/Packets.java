@@ -111,6 +111,7 @@ public final class Packets {
         public void handle(Supplier<NetworkEvent.Context> ctx) {
             ServerPlayer sender = ctx.get().getSender();
             if (sender != null && !io.github.rpgclasses.content.DeathGamble.flipping(sender)
+                    && !io.github.rpgclasses.content.Chronomancy.isFrozen(sender)
                     && !io.github.rpgclasses.content.race.SlimeForms.blocksActions(sender)) AbilityService.use(sender, slot);
         }
     }
@@ -127,7 +128,8 @@ public final class Packets {
 
         public void handle(Supplier<NetworkEvent.Context> ctx) {
             ServerPlayer sender = ctx.get().getSender();
-            if (sender != null && !io.github.rpgclasses.content.DeathGamble.flipping(sender)) {
+            if (sender != null && !io.github.rpgclasses.content.DeathGamble.flipping(sender)
+                    && !io.github.rpgclasses.content.Chronomancy.isFrozen(sender)) {
                 io.github.rpgclasses.content.race.RaceAbilities.use(sender, slot);
             }
         }
@@ -155,6 +157,41 @@ public final class Packets {
         public void handle(Supplier<NetworkEvent.Context> ctx) {
             ServerPlayer sender = ctx.get().getSender();
             if (sender != null) io.github.rpgclasses.content.race.SlimeTraits.onMotion(sender, kind, value, entity);
+        }
+    }
+
+    /** Servidor -> clientes cercanos: esfera de la Parada Temporal (id, centro, radio y duración; ticks 0 = se acaba ya). */
+    public record TimeSphere(int id, double x, double y, double z, float radius, int ticks) {
+        public void encode(FriendlyByteBuf buf) {
+            buf.writeVarInt(id);
+            buf.writeDouble(x);
+            buf.writeDouble(y);
+            buf.writeDouble(z);
+            buf.writeFloat(radius);
+            buf.writeVarInt(ticks);
+        }
+
+        public static TimeSphere decode(FriendlyByteBuf buf) {
+            return new TimeSphere(buf.readVarInt(), buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readFloat(), buf.readVarInt());
+        }
+
+        public void handle(Supplier<NetworkEvent.Context> ctx) {
+            DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> io.github.rpgclasses.client.ChronoFx.onSphere(this));
+        }
+    }
+
+    /** Servidor -> jugador paralizado por una Parada Temporal: ticks que le quedan (0 = se acaba ya). */
+    public record TimeFrozen(int ticks) {
+        public void encode(FriendlyByteBuf buf) {
+            buf.writeVarInt(ticks);
+        }
+
+        public static TimeFrozen decode(FriendlyByteBuf buf) {
+            return new TimeFrozen(buf.readVarInt());
+        }
+
+        public void handle(Supplier<NetworkEvent.Context> ctx) {
+            DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> io.github.rpgclasses.client.ChronoFx.onFrozen(ticks));
         }
     }
 

@@ -60,6 +60,7 @@ public class RpgClasses {
         MonkAbilities.register();
         MonkSubclasses.register();
         RogueAbilities.register();
+        io.github.rpgclasses.content.Chronomancy.register();
         ModEntities.ENTITIES.register(modBus);
         io.github.rpgclasses.registry.ModMenus.MENUS.register(modBus);
         io.github.rpgclasses.registry.ModBlocks.BLOCKS.register(modBus);
@@ -86,7 +87,7 @@ public class RpgClasses {
         MinecraftForge.EVENT_BUS.register(new io.github.rpgclasses.content.ClassFx());
         MinecraftForge.EVENT_BUS.register(new io.github.rpgclasses.content.BattleMage());
         MinecraftForge.EVENT_BUS.register(new io.github.rpgclasses.content.VoidMark());
-        MinecraftForge.EVENT_BUS.register(new io.github.rpgclasses.content.ChaosMagic());
+        MinecraftForge.EVENT_BUS.register(new io.github.rpgclasses.content.Chronomancy());
         MinecraftForge.EVENT_BUS.register(new RogueAbilities());
         MinecraftForge.EVENT_BUS.register(new ShieldWall());
         MinecraftForge.EVENT_BUS.register(MechanicService.listener());

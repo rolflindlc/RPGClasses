@@ -315,9 +315,7 @@ public final class ColossusForms {
 
     /** Zonas protegidas: spawn, permisos de construcción y mods de parcelas (evento de rotura cancelado). */
     private static boolean allowed(ServerPlayer p, BlockPos pos) {
-        ServerLevel level = p.serverLevel();
-        return level.mayInteract(p, pos)
-                && net.minecraftforge.common.ForgeHooks.onBlockBreakEvent(level, p.gameMode.getGameModeForPlayer(), p, pos) != -1;
+        return BodyTraits.mayBreak(p, pos);
     }
 
     // ------------------------------------------------------------------ muerte y salida

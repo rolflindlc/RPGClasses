@@ -116,9 +116,22 @@ public final class RaceTraits {
         float s = scale(player) + (isCentaur(player) ? 100f : 0f); // el cambio de cuerpo también refresca la hitbox
         Float last = LAST_SCALE.put(player, s);
         if (last == null ? s != 1f : last != s) player.refreshDimensions();
+        else if (player.tickCount % 10 == 0 && s != 1f && staleHitbox(player)) {
+            // Red de seguridad: la hitbox guardada no coincide con la de su tamaño y pose (p. ej. el tamaño llegó del
+            // servidor antes que la raza, o al revés). Con la hitbox vieja el juego decide mal las poses junto a las
+            // paredes (no cabe de pie y queda atascado, sin saltar ni subir escalones) y la cámara no se ajusta
+            // hasta agacharse. Se rehace.
+            player.refreshDimensions();
+        }
         if (player instanceof ServerPlayer sp && !(sp instanceof FakePlayer) && sp.isAlive()) {
             DebugLog.guard(sp, "raza", () -> serverTick(sp));
         }
+    }
+
+    /** La hitbox actual no es la que corresponde a su pose con el tamaño de ahora. */
+    private static boolean staleHitbox(Player player) {
+        net.minecraft.world.entity.EntityDimensions want = player.getDimensions(player.getPose());
+        return Math.abs(want.width - player.getBbWidth()) > 1.0E-3f || Math.abs(want.height - player.getBbHeight()) > 1.0E-3f;
     }
 
     // ------------------------------------------------------------------ tick de servidor

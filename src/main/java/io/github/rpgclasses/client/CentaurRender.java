@@ -92,7 +92,8 @@ public final class CentaurRender {
         return hidingLegs;
     }
 
-    private static boolean drawsBody(AbstractClientPlayer p) {
+    /** El cuerpo de caballo se dibuja para este jugador (y por tanto sus piernas humanas no). */
+    public static boolean drawsBody(AbstractClientPlayer p) {
         if (!RaceTraits.isCentaur(p) || p.isSpectator()) return false;
         Pose pose = p.getPose();
         return pose == Pose.STANDING || pose == Pose.CROUCHING;
@@ -141,7 +142,7 @@ public final class CentaurRender {
         hidingLegs = true;
         double yaw = Math.toRadians(bodyYaw);
         ps.pushPose();
-        ps.translate(-Math.sin(yaw) * HUMAN_FORWARD, HUMAN_UP - (p.isCrouching() ? 0.12f : 0f), Math.cos(yaw) * HUMAN_FORWARD);
+        ps.translate(-Math.sin(yaw) * HUMAN_FORWARD, HUMAN_UP, Math.cos(yaw) * HUMAN_FORWARD);
         ps.scale(HUMAN_SCALE, HUMAN_SCALE, HUMAN_SCALE);
         pushed = true;
     }

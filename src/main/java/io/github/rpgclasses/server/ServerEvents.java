@@ -38,7 +38,8 @@ public final class ServerEvents {
             PlayerClassData to = PlayerClassDataProvider.get(event.getEntity());
             if (from != null && to != null) {
                 to.state.copyFrom(from.state);
-                to.cooldowns.putAll(from.cooldowns);
+                // Al morir se reinician todos los enfriamientos de raza y clase; regresar del End no.
+                if (!event.isWasDeath()) to.cooldowns.putAll(from.cooldowns);
                 to.counters.putAll(from.counters);
                 to.texts.putAll(from.texts);
             }
@@ -84,6 +85,10 @@ public final class ServerEvents {
         sync(event.getEntity());
         // Tras morir se reaparece con la vida máxima real (incluidos los bonus de clase).
         if (!event.isEndConquered()) event.getEntity().setHealth(event.getEntity().getMaxHealth());
+        // Los enfriamientos se reiniciaron en onClone: el cliente debe enterarse.
+        if (!event.isEndConquered() && event.getEntity() instanceof ServerPlayer sp && !(sp instanceof FakePlayer)) {
+            io.github.rpgclasses.network.Net.syncPlayer(sp);
+        }
     }
 
     @SubscribeEvent

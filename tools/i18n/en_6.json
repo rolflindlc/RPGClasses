@@ -80,6 +80,7 @@
 "mechanic.rpgclasses.race_war_gallop.desc": "Melee damage based on your speed; ramming slows you down less.",
 "mechanic.rpgclasses.race_war_gallop.name": "War Gallop",
 "message.rpgclasses.breath_no_mana": "Not enough mana for your breath",
+"message.rpgclasses.belt_full": "Your belt has no room for more blocks",
 "param.rpgclasses.absorption": "Second health bar",
 "param.rpgclasses.accel_seconds": "Time to top speed",
 "param.rpgclasses.air_control": "Air control",

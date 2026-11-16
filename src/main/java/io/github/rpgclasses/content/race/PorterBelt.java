@@ -41,7 +41,8 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.GameRules;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.event.entity.living.LivingDropsEvent;
+import net.minecraftforge.event.entity.living.LivingDeathEvent;
+import net.minecraftforge.event.entity.player.PlayerContainerEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
@@ -77,6 +78,13 @@ public final class PorterBelt {
     enum Kind { CHEST, BARREL, ENDER, FURNACE, BLAST, SMOKER, CRAFTING, ENCHANTING, ANVIL, LOOM, STONECUTTER, GRINDSTONE, SMITHING, CARTOGRAPHY }
 
     private static final Map<UUID, Belt> BELTS = new HashMap<>();
+    /** Menú de un bloque abierto desde el cinturón: al cerrarlo (Esc) se vuelve al menú del cinturón. */
+    private record Back(net.minecraft.world.inventory.AbstractContainerMenu menu, UUID owner, boolean manage) {}
+    private static final Map<UUID, Back> BACK = new HashMap<>();
+    /** Volver al cinturón en el próximo tick (no se puede abrir un menú mientras se cierra el otro). */
+    private static final Map<UUID, Back> REOPEN = new HashMap<>();
+    /** Tick de juego hasta el que se ignora el clic derecho (el gesto de guardar en el cinturón ya lo gastó). */
+    private static final Map<UUID, Long> SUPPRESS_USE = new HashMap<>();
 
     public PorterBelt() {
         Rites.BELT_ITEMS = PorterBelt::used;
@@ -450,7 +458,9 @@ public final class PorterBelt {
             }, title);
         };
         if (provider == null) return;
+        boolean manage = viewer.getUUID().equals(ownerId);
         viewer.openMenu(provider);
+        if (viewer.containerMenu != viewer.inventoryMenu) BACK.put(viewer.getUUID(), new Back(viewer.containerMenu, ownerId, manage));
         DebugLog.event(viewer, "raza", "Cinturón de {}: abre {}", owner.getGameProfile().getName(), k);
     }
 
@@ -467,10 +477,83 @@ public final class PorterBelt {
         event.setCancellationResult(net.minecraft.world.InteractionResult.SUCCESS);
     }
 
+    /** Esc (o cerrar) en el menú de un bloque del cinturón: se vuelve al menú del cinturón. */
+    @SubscribeEvent
+    public void onContainerClose(PlayerContainerEvent.Close event) {
+        if (!(event.getEntity() instanceof ServerPlayer p) || p instanceof FakePlayer) return;
+        Back back = BACK.get(p.getUUID());
+        if (back == null || back.menu() != event.getContainer()) return;
+        BACK.remove(p.getUUID());
+        REOPEN.put(p.getUUID(), back);
+    }
+
     @SubscribeEvent
     public void onTick(TickEvent.PlayerTickEvent event) {
         if (event.phase != TickEvent.Phase.END || !(event.player instanceof ServerPlayer p) || p instanceof FakePlayer) return;
+        Back back = REOPEN.remove(p.getUUID());
+        if (back != null && p.isAlive() && p.containerMenu == p.inventoryMenu && canUse(p, back.owner())) {
+            ServerPlayer owner = p.server.getPlayerList().getPlayer(back.owner());
+            if (owner != null) openBelt(p, owner, back.manage());
+        }
         DebugLog.guard(p, "cinturón", () -> tick(p));
+    }
+
+    /** Ctrl + Mayús + clic derecho con un bloque admitido en la mano: lo guarda en el cinturón (lo manda el cliente). */
+    public static void insertHeld(ServerPlayer p) {
+        int cap = capacity(p);
+        if (cap <= 0 || p.isSpectator()) return;
+        ItemStack hand = p.getMainHandItem();
+        if (!allowed(hand)) return;
+        SUPPRESS_USE.put(p.getUUID(), p.level().getGameTime() + 4);
+        Belt b = belt(p);
+        int used = 0;
+        for (int i = 0; i < cap; i++) used += cost(b.blocks.getItem(i));
+        if (used >= cap) {
+            p.displayClientMessage(Component.translatable("message.rpgclasses.belt_full"), true);
+            return;
+        }
+        boolean chest = kindOf(hand) == Kind.CHEST;
+        int target = -1;
+        for (int i = 0; i < cap && target < 0; i++) {
+            ItemStack in = b.blocks.getItem(i);
+            if (chest && kindOf(in) == Kind.CHEST && in.getCount() < 2 && ItemStack.isSameItemSameTags(in, hand)) target = i;
+        }
+        for (int i = 0; i < cap && target < 0; i++) if (b.blocks.getItem(i).isEmpty()) target = i;
+        if (target < 0) {
+            p.displayClientMessage(Component.translatable("message.rpgclasses.belt_full"), true);
+            return;
+        }
+        ItemStack in = b.blocks.getItem(target);
+        b.blocks.setItem(target, in.isEmpty() ? hand.copyWithCount(1) : in.copyWithCount(in.getCount() + 1));
+        hand.shrink(1);
+        p.level().playSound(null, p.blockPosition(), SoundEvents.ARMOR_EQUIP_LEATHER, SoundSource.PLAYERS, 0.8f, 1.2f);
+    }
+
+    @SubscribeEvent(priority = EventPriority.HIGHEST)
+    public void onUseBlock(PlayerInteractEvent.RightClickBlock event) {
+        if (suppressed(event.getEntity())) {
+            event.setCanceled(true);
+            event.setCancellationResult(net.minecraft.world.InteractionResult.SUCCESS);
+        }
+    }
+
+    @SubscribeEvent(priority = EventPriority.HIGHEST)
+    public void onUseItem(PlayerInteractEvent.RightClickItem event) {
+        if (suppressed(event.getEntity())) {
+            event.setCanceled(true);
+            event.setCancellationResult(net.minecraft.world.InteractionResult.SUCCESS);
+        }
+    }
+
+    private static boolean suppressed(Player p) {
+        if (p.level().isClientSide()) return false;
+        Long until = SUPPRESS_USE.get(p.getUUID());
+        if (until == null) return false;
+        if (p.level().getGameTime() > until) {
+            SUPPRESS_USE.remove(p.getUUID());
+            return false;
+        }
+        return true;
     }
 
     private static void tick(ServerPlayer p) {
@@ -556,20 +639,24 @@ public final class PorterBelt {
         }
     }
 
-    /** Al morir caen los bloques del cinturón y lo que contienen (salvo con keepInventory). */
-    @SubscribeEvent(priority = EventPriority.HIGH)
-    public void onDrops(LivingDropsEvent event) {
+    /** Al morir caen al suelo los bloques del cinturón y lo que contienen (salvo con keepInventory). */
+    @SubscribeEvent(priority = EventPriority.LOWEST)
+    public void onDeath(LivingDeathEvent event) {
         if (!(event.getEntity() instanceof ServerPlayer p) || p instanceof FakePlayer) return;
         if (p.level().getGameRules().getBoolean(GameRules.RULE_KEEPINVENTORY)) return;
         Belt b = BELTS.containsKey(p.getUUID()) || p.getPersistentData().getCompound(Player.PERSISTED_NBT_TAG).contains(TAG) ? belt(p) : null;
         if (b == null || b.isEmpty()) return;
+        BACK.remove(p.getUUID());
         for (ItemStack st : b.takeAll()) {
-            ItemEntity item = new ItemEntity(p.level(), p.getX(), p.getEyeY() - 0.3, p.getZ(), st);
+            ItemEntity item = new ItemEntity(p.level(), p.getX(), p.getY() + 0.5, p.getZ(), st);
+            item.setDeltaMovement((p.getRandom().nextDouble() - 0.5) * 0.2, 0.2, (p.getRandom().nextDouble() - 0.5) * 0.2);
             item.setDefaultPickUpDelay();
-            event.getDrops().add(item);
+            p.level().addFreshEntity(item);
         }
         save(p, b);
-        DebugLog.event(p, "raza", "Cinturón: cae al morir");
+        io.github.rpgclasses.network.Net.CHANNEL.send(net.minecraftforge.network.PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> p),
+                new io.github.rpgclasses.network.Packets.BeltVisual(p.getId(), List.of()));
+        DebugLog.event(p, "raza", "Cinturón: cae al suelo al morir");
     }
 
     @SubscribeEvent

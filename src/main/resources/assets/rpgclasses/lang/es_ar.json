@@ -834,6 +834,7 @@
   "mechanic.rpgclasses.water_potency.name": "Potencia de las cargas de Agua",
   "mechanic.rpgclasses.wild_bond.name": "Vínculo Salvaje",
   "mechanic.rpgclasses.wild_magic.name": "Magia Caótica",
+  "message.rpgclasses.belt_full": "No te caben más bloques en el cinturón",
   "message.rpgclasses.bond_broken": "Has roto el vínculo con %s",
   "message.rpgclasses.bond_made": "Vínculo Salvaje con %s",
   "message.rpgclasses.breath_no_mana": "No tienes maná para el aliento",

@@ -101,7 +101,17 @@ public class DecoyEntity extends PathfinderMob {
         if (level().isClientSide) return;
         hop();
         ServerPlayer owner = getOwnerUuid().map(id -> level().getServer().getPlayerList().getPlayer(id)).orElse(null);
-        if (owner == null || tickCount > MAX_LIFETIME_TICKS || !RogueAbilities.isStealthed(owner)) vanish();
+        if (shouldVanish(owner)) vanish();
+    }
+
+    /** El Señuelo desaparece si su dueño se va, deja el sigilo o pasa el tiempo máximo (las subclases lo cambian). */
+    protected boolean shouldVanish(ServerPlayer owner) {
+        return owner == null || tickCount > MAX_LIFETIME_TICKS || !RogueAbilities.isStealthed(owner);
+    }
+
+    /** Enemigos de los que huye (los mobs hostiles; las subclases añaden más). */
+    protected boolean fleesFrom(net.minecraft.world.entity.LivingEntity e) {
+        return e instanceof Monster && e.isAlive();
     }
 
     /**
@@ -109,7 +119,8 @@ public class DecoyEntity extends PathfinderMob {
      * cada pocos ticks; si no, anda con normalidad. El salto sobre desniveles lo hace además el control de movimiento.
      */
     private void hop() {
-        boolean fleeing = !level().getEntitiesOfClass(Monster.class, getBoundingBox().inflate(14.0), m -> m.isAlive()).isEmpty();
+        boolean fleeing = !level().getEntitiesOfClass(net.minecraft.world.entity.LivingEntity.class, getBoundingBox().inflate(14.0),
+                e -> e != this && fleesFrom(e)).isEmpty();
         boolean moving = getDeltaMovement().horizontalDistanceSqr() > 0.0004;
         setSprinting(fleeing && moving);
         if (hopCooldown > 0) hopCooldown--;

@@ -334,13 +334,13 @@ RACES.update({
  "slime": ("minecraft:slime_block", [
     attr((MC + "max_health", -.15, "multiply_base"), (R("jump_bonus"), 1.0, "add")),
     mech("bouncy", bounce=1.0), mech("soft_body", knockback_taken=.50)], [
-    ("swarm", "minecraft:slime_ball", False, [
+    ("swarm", "minecraft:slime_ball", True, [
         mech("swarm", slimes_per_heart=V(1, 1, 1, 2), duration_seconds=V(10, 15, 20, 30), cooldown_seconds=V(60, 50, 40, 30),
              touch_damage=V(1, 1.5, 1.5, 1), slime_speed=V(0, 0, .25, .25), max_slimes=25, leash=32)]),
     ("spring", "minecraft:piston", True, [
         mech("spring", charge_seconds=V(3, 5, 6.5, 8), power=V(1, 1.5, 2, 3), cooldown_seconds=V(10, 8, 6, 5),
              min_charge_seconds=.5, bounces=3)]),
-    ("mitotic", "minecraft:magma_cream", False, [
+    ("mitotic", "minecraft:magma_cream", True, [
         attr((MC + "max_health", -.15, "multiply_base")),
         mech("mitosis", merge_health=V(0, .20, .30, .50), cooldown_seconds=V(300, 240, 180, 120), merge_seconds=V(3, 3, 2, 2))]),
     ("viscous", "minecraft:honey_block", True, [
@@ -454,6 +454,11 @@ MECHANIC_TEXT.update({
 RACE_UI.update({
  "message.rpgclasses.titan_no_room": "No hay sitio para crecer: hace falta espacio libre del doble de tu tamaño",
  "container.rpgclasses.belt": "Cinturón de %s",
+ "message.rpgclasses.mitosis_split": "¡Mitosis! Te divides en dos copias: agáchate junto a la otra para fusionaros",
+ "message.rpgclasses.mitosis_merged": "Te fusionas con tu copia",
+ "message.rpgclasses.mitosis_copy_lost": "Has perdido una copia: recuperarás tu tamaño al acabar el enfriamiento de la división",
+ "entity.rpgclasses.swarm_slime": "Slime del Enjambre",
+ "entity.rpgclasses.mitosis_copy": "Copia mitótica",
  "ui.rpgclasses.belt.open": "Abrir",
  "ui.rpgclasses.belt.capacity": "Huecos: %s/%s",
 })

@@ -91,7 +91,8 @@ public final class RaceAbilities {
             new Entry("race_ethereal", 0, RaceAbilities::ethereal),
             new Entry("race_breath", 0, DraconicBreath::start),
             new Entry("race_grow", 0, ColossusForms::grow),
-            new Entry("race_belt", 0, PorterBelt::openOwn));
+            new Entry("race_belt", 0, PorterBelt::openOwn),
+            new Entry("race_swarm", 0, SlimeForms::split));
 
     /** Formas con duración (Titán, Enjambre): su enfriamiento empieza al terminar la forma. */
     private static final Set<String> FORMS = Set.of("race_grow", "race_swarm");
@@ -119,6 +120,11 @@ public final class RaceAbilities {
         // Dracónido: volver a pulsar mientras canaliza el aliento lo corta.
         if (slot % 2 == 0 && DraconicBreath.isChanneling(player)) {
             DraconicBreath.stop(player);
+            return;
+        }
+        // Enjambre: dividido, la tecla une a los slimes; nada más se puede usar.
+        if (SlimeForms.isSwarming(player)) {
+            if (slot % 2 == 0) SlimeForms.merge(player);
             return;
         }
         // Titán: volver a pulsar termina la forma (y empieza el enfriamiento).

@@ -2,5 +2,12 @@
 "message.rpgclasses.titan_no_room": "No room to grow: you need free space twice your size",
 "container.rpgclasses.belt": "%s's belt",
 "ui.rpgclasses.belt.open": "Open",
-"ui.rpgclasses.belt.capacity": "Slots: %s/%s"
+"ui.rpgclasses.belt.capacity": "Slots: %s/%s",
+"message.rpgclasses.mitosis_split": "Mitosis! You split into two copies: crouch next to the other one to merge",
+"message.rpgclasses.mitosis_merged": "You merge with your copy",
+"message.rpgclasses.mitosis_copy_lost": "You lost a copy: you will regain your size when the split cooldown ends",
+"entity.rpgclasses.swarm_slime": "Swarm Slime",
+"entity.rpgclasses.mitosis_copy": "Mitotic Copy",
+"death.attack.rpgclasses.swarm": "%1$s was engulfed by %2$s's swarm",
+"death.attack.rpgclasses.swarm.player": "%1$s was engulfed by %2$s's swarm"
 }

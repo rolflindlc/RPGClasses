@@ -53,6 +53,9 @@ public final class BeltLayer {
         if (!(event.getEntity() instanceof AbstractClientPlayer player)) return;
         List<ItemStack> blocks = BELTS.get(player.getId());
         if (blocks == null || blocks.isEmpty() || player.isInvisible() || player.isSpectator()) return;
+        // Solo de pie o agachado (nadando, durmiendo o planeando con élitros la cintura no está ahí).
+        var pose = player.getPose();
+        if (pose != net.minecraft.world.entity.Pose.STANDING && pose != net.minecraft.world.entity.Pose.CROUCHING) return;
         Minecraft mc = Minecraft.getInstance();
         PoseStack ps = event.getPoseStack();
         float bodyYaw = Mth.rotLerp(event.getPartialTick(), player.yBodyRotO, player.yBodyRot);
@@ -63,7 +66,7 @@ public final class BeltLayer {
             float[] spot = SPOTS[i];
             ps.pushPose();
             ps.mulPose(Axis.YP.rotationDegrees(180.0f - bodyYaw));
-            ps.scale(-s, -s, s);
+            ps.scale(-s * 0.9375f, -s * 0.9375f, s * 0.9375f); // como PlayerRenderer.scale
             ps.translate(0.0f, -1.501f, 0.0f);
             ps.translate(spot[0], WAIST_Y + crouch, spot[1]);
             ps.mulPose(Axis.YP.rotationDegrees(spot[2]));
@@ -86,17 +89,13 @@ public final class BeltLayer {
     private static void tryInsert(PlayerInteractEvent event, net.minecraft.world.entity.player.Player p, InteractionHand hand) {
         if (!(p instanceof LocalPlayer lp) || hand != InteractionHand.MAIN_HAND || !p.level().isClientSide()) return;
         if (!Screen.hasControlDown() || !lp.isShiftKeyDown() || !Races.has(lp, "race_belt") || !PorterBelt.allowed(lp.getMainHandItem())) return;
-        if (!BELT_GESTURE_SENT.add(lp.tickCount)) return;
-        io.github.rpgclasses.network.Net.CHANNEL.sendToServer(new io.github.rpgclasses.network.Packets.BeltInsert());
         event.setCanceled(true);
+        event.setCancellationResult(net.minecraft.world.InteractionResult.SUCCESS);
+        // Un clic puede lanzar el evento de bloque y el de objeto en el mismo tick: solo se manda un paquete.
+        if (lp.tickCount == lastGestureTick) return;
+        lastGestureTick = lp.tickCount;
+        io.github.rpgclasses.network.Net.CHANNEL.sendToServer(new io.github.rpgclasses.network.Packets.BeltInsert());
     }
 
-    /** Un clic puede disparar varios eventos en el mismo tick: solo se manda un paquete. */
-    private static final java.util.Set<Integer> BELT_GESTURE_SENT = new java.util.LinkedHashSet<>() {
-        @Override
-        public boolean add(Integer tick) {
-            if (size() > 8) clear();
-            return super.add(tick);
-        }
-    };
+    private static int lastGestureTick = Integer.MIN_VALUE;
 }

@@ -101,6 +101,8 @@ Las armas de dragonsteel aplican su elemento en cada golpe (fuego quema, hielo r
 
 ## 7. Curios (32)
 
+> **Desactivados en la versión de salida.** Con `Curio.ENABLED = false` (Java) y `CURIOS_ENABLED = False` (`tools/gear.py`) no se registran los objetos, no hay recetas ni ranuras salvo la de manos (nudilleras) y sus efectos no se escuchan. El código y los textos se conservan: para recuperarlos basta poner los dos interruptores a verdadero y regenerar los datos.
+
 Rarezas: Común, Raro, Épico y Reliquia (**máx. 1 Reliquia equipada**). Los curios de clase o raza solo se equipan con esa clase o raza, y sus efectos se apagan si dejas de cumplirla. Todos se fabrican; los de jefe usan su material (Ice and Fire, Cataclysm, Iron's) con una alternativa vanilla cara en el tag `rpgclasses:curio/*`.
 
 | Grupo | Curios |

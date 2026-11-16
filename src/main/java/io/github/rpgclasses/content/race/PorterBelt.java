@@ -647,6 +647,7 @@ public final class PorterBelt {
         Belt b = BELTS.containsKey(p.getUUID()) || p.getPersistentData().getCompound(Player.PERSISTED_NBT_TAG).contains(TAG) ? belt(p) : null;
         if (b == null || b.isEmpty()) return;
         BACK.remove(p.getUUID());
+        REOPEN.remove(p.getUUID());
         for (ItemStack st : b.takeAll()) {
             ItemEntity item = new ItemEntity(p.level(), p.getX(), p.getY() + 0.5, p.getZ(), st);
             item.setDeltaMovement((p.getRandom().nextDouble() - 0.5) * 0.2, 0.2, (p.getRandom().nextDouble() - 0.5) * 0.2);
@@ -662,6 +663,9 @@ public final class PorterBelt {
     @SubscribeEvent
     public void onLogout(PlayerEvent.PlayerLoggedOutEvent event) {
         if (!(event.getEntity() instanceof ServerPlayer p)) return;
+        BACK.remove(p.getUUID());
+        REOPEN.remove(p.getUUID());
+        SUPPRESS_USE.remove(p.getUUID());
         Belt b = BELTS.remove(p.getUUID());
         if (b != null) save(p, b);
     }

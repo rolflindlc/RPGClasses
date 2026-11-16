@@ -156,6 +156,14 @@ public final class RaceBodyClient {
             if (hx) vx = -v.x * k;
             if (hz) vz = -v.z * k;
             if (hy) vy = -v.y * k;
+        } else {
+            // Respaldo: el choque ya pasó en este tick (vanilla anula la componente que choca); se refleja la de antes.
+            Vec3 pv = prevVel;
+            if (p.horizontalCollision) {
+                if (Math.abs(pv.x) > 0.05 && Math.abs(v.x) < Math.abs(pv.x) * 0.5) vx = -pv.x * k;
+                if (Math.abs(pv.z) > 0.05 && Math.abs(v.z) < Math.abs(pv.z) * 0.5) vz = -pv.z * k;
+            }
+            if (p.verticalCollision && Math.abs(pv.y) > 0.1 && Math.abs(v.y) < Math.abs(pv.y) * 0.5) vy = -pv.y * k;
         }
         // El rozamiento del aire resta velocidad horizontal cada tick: se repone hasta la velocidad del lanzamiento.
         double hs = Math.sqrt(vx * vx + vz * vz);

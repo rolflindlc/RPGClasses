@@ -54,10 +54,9 @@ public final class ClientHandlers {
         String raceBefore = LOCAL_DATA.state.raceId + "/" + LOCAL_DATA.state.raceRank;
         LOCAL_DATA.load(msg.data());
         dataReceived = true;
-        if (!raceBefore.equals(LOCAL_DATA.state.raceId + "/" + LOCAL_DATA.state.raceRank)) {
-            refreshIronsSpellWheel();
-            RaceBodyClient.refreshBodySoon();
-        }
+        if (!raceBefore.equals(LOCAL_DATA.state.raceId + "/" + LOCAL_DATA.state.raceRank)) refreshIronsSpellWheel();
+        // Tamaño de raza, clase o forma: la hitbox y la altura de ojos (cámara) se ajustan ya, no al agacharse.
+        RaceBodyClient.refreshBodySoon();
         if (Minecraft.getInstance().screen instanceof RaceScreen rs) rs.onDataChanged();
         if (LOCAL_DATA.state.classId != null) {
             needsSelection = false;

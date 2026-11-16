@@ -34,7 +34,9 @@ public final class AbilityHud {
         if (mc.player == null || mc.options.hideGui || mc.level == null) return;
         renderStealthBar(g, mc, screenWidth, screenHeight);
         List<String> actives = localActives();
-        int freeRows = renderFreeCasts(g, mc, screenWidth, screenHeight - 4 - Math.min(actives.size(), ClientSetup.ABILITY_KEYS.length) * ROW_HEIGHT);
+        int classRows = Math.min(actives.size(), ClientSetup.ABILITY_KEYS.length);
+        int freeRows = renderFreeCasts(g, mc, screenWidth, screenHeight - 4 - classRows * ROW_HEIGHT);
+        renderRacial(g, mc, screenWidth, screenHeight - 4 - (classRows + freeRows) * ROW_HEIGHT);
         if (actives.isEmpty()) return;
 
         long now = mc.level.getGameTime();
@@ -98,6 +100,36 @@ public final class AbilityHud {
             rows++;
         }
         return rows;
+    }
+
+    /** Habilidades raciales con tecla: mecánica y ranura (0 = V, 1 = B, 2 = agachado + V, 3 = agachado + B). */
+    private static final String[][] RACIAL_KEYS = {
+            {"race_warcry", "0"}, {"race_stone_sense", "0"}, {"race_smoke_cloud", "0"}, {"race_snare", "0"},
+            {"race_tame_water", "0"}, {"race_wave", "1"}, {"race_water_wall", "2"}, {"race_nether_compass", "0"},
+            {"race_portable_furnace", "0"}, {"race_ethereal", "0"}, {"race_breath", "0"}, {"race_grow", "0"},
+            {"race_swarm", "0"}, {"race_belt", "0"},
+            // Sin tecla propia, pero con enfriamiento (solo se muestran mientras se enfrían).
+            {"race_spring", "-1"}, {"race_mitosis", "-1"}};
+
+    /** Habilidades raciales: una fila por cada una (encima de las de clase), con su tecla y su enfriamiento. */
+    private static void renderRacial(GuiGraphics g, Minecraft mc, int screenWidth, int bottom) {
+        long now = mc.level.getGameTime();
+        int y = bottom - ROW_HEIGHT;
+        for (int i = RACIAL_KEYS.length - 1; i >= 0; i--) {
+            String key = Ids.NS + ":" + RACIAL_KEYS[i][0];
+            if (!ClientSetup.hasLocalMechanic(key)) continue;
+            int slot = Integer.parseInt(RACIAL_KEYS[i][1]);
+            long remaining = ClientHandlers.LOCAL_DATA.cooldowns.getOrDefault(key, 0L) - now;
+            if (slot < 0 && remaining <= 0) continue;
+            String keyText = slot < 0 ? "" : "[" + (slot >= 2 ? "⇧" : "")
+                    + ClientSetup.RACE_KEYS[slot % 2].getTranslatedKeyMessage().getString() + "] ";
+            String text = keyText + Component.translatable(Ids.langKey("mechanic", key, "name")).getString()
+                    + (remaining > 0 ? String.format(Locale.ROOT, "  %.0f s", Math.ceil(remaining / 20.0)) : "");
+            int x = screenWidth - mc.font.width(text) - 6;
+            g.fill(x - 3, y - 2, screenWidth - 3, y + ROW_HEIGHT - 3, 0x80000000);
+            g.drawString(mc.font, text, x, y, remaining > 0 ? 0xFF8888 : 0xFFE6C35A);
+            y -= ROW_HEIGHT;
+        }
     }
 
     /** Barra de Sigilo del Pícaro, sobre la barra de objetos. */

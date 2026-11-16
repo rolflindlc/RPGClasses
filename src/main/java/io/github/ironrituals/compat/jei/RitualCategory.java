@@ -27,11 +27,9 @@ public class RitualCategory implements IRecipeCategory<RitualJeiEntry> {
     public static final RecipeType<RitualJeiEntry> TYPE = RecipeType.create(IronRituals.MOD_ID, "ritual", RitualJeiEntry.class);
     private static final int W = 160, H = 76;
 
-    private final IDrawable background;
     private final IDrawable icon;
 
     public RitualCategory(IGuiHelper gui) {
-        this.background = gui.createBlankDrawable(W, H);
         this.icon = gui.createDrawableItemStack(new ItemStack(ModItems.RITUAL_CORE.get()));
     }
 
@@ -46,8 +44,13 @@ public class RitualCategory implements IRecipeCategory<RitualJeiEntry> {
     }
 
     @Override
-    public IDrawable getBackground() {
-        return background;
+    public int getWidth() {
+        return W;
+    }
+
+    @Override
+    public int getHeight() {
+        return H;
     }
 
     @Override
@@ -67,7 +70,7 @@ public class RitualCategory implements IRecipeCategory<RitualJeiEntry> {
             IRecipeSlotBuilder slot = builder.addSlot(RecipeIngredientRole.INPUT, x, y).addItemStacks(stacks);
             if (c.isSoul()) {
                 Component soul = c.soul().describe().copy().withStyle(ChatFormatting.RED);
-                slot.addTooltipCallback((view, tooltip) -> tooltip.add(soul));
+                slot.addRichTooltipCallback((view, tooltip) -> tooltip.add(soul));
             }
         }
     }

@@ -236,18 +236,23 @@ public final class BodyTraits {
         int size = areaSize(p);
         if (size <= 1) return;
         BlockPos origin = event.getPosition().get();
-        float own = event.getState().getDestroyProgress(p, p.level(), origin);
-        if (own <= 0) return;
-        float slowest = own;
+        // getDestroyProgress vuelve a lanzar este mismo evento: la guarda va ANTES de calcular nada, o se encadena
+        // sin fin hasta un StackOverflow (crash del Coloso al mirar o picar un bloque con Jade).
+        boolean before = AREA_BREAKING.get();
         AREA_BREAKING.set(true);
+        float own;
+        float slowest;
         try {
+            own = event.getState().getDestroyProgress(p, p.level(), origin);
+            if (own <= 0) return;
+            slowest = own;
             for (BlockPos q : areaFor(p, origin, size)) {
                 BlockState st = p.level().getBlockState(q);
                 if (!breakable(p, q, st)) continue;
                 slowest = Math.min(slowest, st.getDestroyProgress(p, p.level(), q));
             }
         } finally {
-            AREA_BREAKING.set(false);
+            AREA_BREAKING.set(before);
         }
         if (slowest < own) event.setNewSpeed(event.getNewSpeed() * slowest / own);
     }

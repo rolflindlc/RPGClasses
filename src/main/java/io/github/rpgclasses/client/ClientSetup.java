@@ -349,6 +349,7 @@ public final class ClientSetup {
     public static void initEpicFight() {
         io.github.rpgclasses.compat.epicfight.EpicFightCompat.clientMechanic = (player, id) ->
                 player == Minecraft.getInstance().player ? localMechanic(id) : null;
+        CentaurEpicFight.init();
     }
 
     /** La mecánica del jugador local con ese id completo, o null. */

@@ -333,16 +333,16 @@ def resist(element, fire=False):
 RACES.update({
  "slime": ("minecraft:slime_block", [
     attr((MC + "max_health", -.15, "multiply_base"), (R("jump_bonus"), 1.0, "add")),
-    mech("bouncy", bounce=1.0), mech("soft_body", knockback_taken=.50)], [
+    mech("bouncy", bounce=.8, bounce_min_fall=3), mech("soft_body", knockback_taken=.50)], [
     ("swarm", "minecraft:slime_ball", True, [
         mech("swarm", slimes_per_heart=V(1, 1, 1, 2), duration_seconds=V(10, 15, 20, 30), cooldown_seconds=V(60, 50, 40, 30),
              touch_damage=V(1, 1.5, 1.5, 1), slime_speed=V(0, 0, .25, .25), max_slimes=25, leash=32)]),
     ("spring", "minecraft:piston", True, [
         mech("spring", charge_seconds=V(3, 5, 6.5, 8), power=V(1, 1.5, 2, 3), cooldown_seconds=V(10, 8, 6, 5),
-             min_charge_seconds=.5, bounces=3)]),
+             min_charge_seconds=.5, wall_bounce=1.05)]),
     ("mitotic", "minecraft:magma_cream", True, [
         attr((MC + "max_health", -.15, "multiply_base")),
-        mech("mitosis", merge_health=V(0, .20, .30, .50), cooldown_seconds=V(300, 240, 180, 120), merge_seconds=V(3, 3, 2, 2))]),
+        mech("mitosis", merge_health=V(0, .20, .30, .50), cooldown_seconds=V(75, 60, 45, 30), merge_seconds=V(3, 3, 2, 2))]),
     ("viscous", "minecraft:honey_block", True, [
         mech("sticky", grip_seconds=V(4, 6, 8, 12), release_damage=6), mech("honey_slide", slide_speed=.05),
         mech("slowing_hits", amplifier=V(0, 0, 1, 1), slow_seconds=V(2, 3, 3, 4))])]),
@@ -356,7 +356,7 @@ RACES.update({
         attr((MC + "movement_speed", -.10, "multiply_base")),
         mech("belt", slots=V(3, 4, 5, 6), passengers=V(1, 1, 2, 2), passenger_penalty=V(.05, .05, .05, 0))]),
     ("titan", "minecraft:obsidian", True, [
-        mech("grow", duration_seconds=V(30, 42, 51, 60), cooldown_seconds=V(225, 200, 175, 150), absorption=V(.50, .70, .85, 1.0),
+        mech("grow", duration_seconds=V(30, 42, 51, 60), cooldown_seconds=V(135, 120, 105, 90), absorption=V(.50, .70, .85, 1.0),
              shake_radius=24, size=3, fall_height=12)])]),
  "draconid": ("minecraft:dragon_head", [
     mech("hunger", exhaustion=.25),
@@ -398,7 +398,7 @@ RACE_TEXT.update({
 
 SUBRACE_TEXT.update({
  ("slime", "swarm"): ("Enjambre", "Tecla racial 1: te divides en un slime pequeño por corazón (máx. 25) que solo hacen daño por contacto. Cada golpe mata a un slime sin que el daño sobrante pase a otro. Al curarte dividido, aparecen slimes nuevos. Vuelve a pulsar para unirte."),
- ("slime", "spring"): ("Resorte", "Agachado, cargas un salto; al saltar sales disparado hacia donde miras (como con Impulso), sin daño de impacto y rebotando contra suelo y paredes."),
+ ("slime", "spring"): ("Resorte", "Agachado, cargas un salto; al saltar sales disparado hacia donde miras (como con Impulso), sin daño de impacto y rebotando sin parar contra suelo, techo y paredes mientras dura la carga (agacharse lo corta)."),
  ("slime", "mitotic"): ("Mitótico", "Aún menos vida, pero al recibir un golpe letal de un enemigo te divides en dos copias de la mitad de tamaño. Agachado junto a tu copia os fusionáis."),
  ("slime", "viscous"): ("Viscoso", "Agachado contra una pared o una entidad te quedas pegado. Te deslizas despacio por las paredes como por la miel y tus golpes dan Lentitud."),
  ("colossus", "porter"): ("Porteador", "Llevas un cinturón de cofres, hornos y mesas que usas mientras caminas (tecla racial 1; tus aliados lo abren agachados con clic derecho sobre ti), y tus aliados pueden montarse encima de ti. Algo más lento, y más con pasajeros."),
@@ -415,7 +415,7 @@ SUBRACE_TEXT.update({
 })
 
 MECHANIC_TEXT.update({
- "bouncy": ("Cuerpo Elástico", "Sin daño de caída; rebotas al caer sobre cualquier bloque (agacharse lo evita)."),
+ "bouncy": ("Cuerpo Elástico", "Sin daño de caída; rebotas al caer al menos 3 bloques y pierdes altura en cada rebote (agacharse lo evita)."),
  "soft_body": ("Cuerpo Blando", "Recibes más retroceso de los golpes."),
  "swarm": ("Enjambre", "Te divides en slimes pequeños que te siguen; si mueren todos, mueres."),
  "spring": ("Salto Resorte", "Salto cargado agachado que te dispara hacia donde miras."),
@@ -467,7 +467,7 @@ RACE_PARAMS.update({
  "bounce": "Rebote x", "mana_per_second": "Maná por segundo", "knockback_taken": "Retroceso recibido|+%", "slimes_per_heart": "Slimes por corazón",
  "touch_damage": "Daño por contacto|HP", "slime_speed": "Velocidad de los slimes|+%", "max_slimes": "Slimes máximos",
  "leash": "Distancia máxima (bloques)", "charge_seconds": "Carga máxima|s", "power": "Potencia (Impulso)",
- "min_charge_seconds": "Carga mínima|s", "bounces": "Rebotes", "merge_health": "Vida tras fusionar|%",
+ "min_charge_seconds": "Carga mínima|s", "wall_bounce": "Rebote en pared y suelo x", "bounce_min_fall": "Caída mínima para rebotar (bloques)", "merge_health": "Vida tras fusionar|%",
  "merge_seconds": "Tiempo de fusión|s", "grip_seconds": "Adherencia|s", "release_damage": "Te sueltas con un golpe de (HP)",
  "slide_speed": "Deslizamiento (bloques/tick)", "fall_height": "Caída sin daño (bloques)",
  "slots": "Huecos del cinturón", "passengers": "Pasajeros", "speed_penalty": "Velocidad|−%", "passenger_penalty": "Velocidad por pasajero|−%",

@@ -32,7 +32,8 @@
     {
       "type": "rpgclasses:mechanic",
       "id": "rpgclasses:race_bouncy",
-      "bounce": 1.0
+      "bounce": 0.8,
+      "bounce_min_fall": 3
     },
     {
       "type": "rpgclasses:mechanic",
@@ -183,7 +184,7 @@
             ]
           },
           "min_charge_seconds": 0.5,
-          "bounces": 3
+          "wall_bounce": 1.05
         }
       ],
       "rites": [
@@ -282,10 +283,10 @@
           },
           "cooldown_seconds": {
             "values": [
-              300,
-              240,
-              180,
-              120
+              75,
+              60,
+              45,
+              30
             ]
           },
           "merge_seconds": {

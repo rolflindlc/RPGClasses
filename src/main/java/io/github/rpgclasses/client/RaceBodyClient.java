@@ -16,7 +16,7 @@ import net.minecraftforge.event.TickEvent;
 /**
  * Movimiento de las razas de la adenda 0.7 que decide el cliente (el movimiento del jugador es suyo):
  * <ul>
- *   <li>Slime: rebote al caer sobre cualquier bloque (agachado no rebota).</li>
+ *   <li>Slime: rebote al caer desde 3+ bloques (pierde altura en cada rebote; agachado no rebota). Resorte: bola que rebota en paredes y suelo mientras dura la carga.</li>
  *   <li>Coloso: no nada; se hunde y camina por el fondo, y puede salir saltando de agua poco profunda.</li>
  *   <li>Centauro: salto cargado como el del caballo (mantener saltar y soltar; un toque es un salto normal), con barra.</li>
  * </ul>
@@ -32,9 +32,15 @@ public final class RaceBodyClient {
     private static int shallowJumpCooldown;
     // Slime Resorte
     private static int springHeld;
-    private static int springBouncesLeft;
-    private static double springBounceFactor;
+    /** Ticks que le quedan al modo pelota tras el lanzamiento (dura lo que duró la carga; mínimo 2 s). */
     private static int springTicks;
+    private static double springWallFactor = 1.05;
+    private static double springMaxSpeed;
+    private static double springHSpeed;
+    /** Velocidad al final del tick anterior: el choque anula la componente contra la que se choca, así que se refleja la de antes. */
+    private static Vec3 prevVel = Vec3.ZERO;
+    /** Slime: altura más alta de la caída en curso (para exigir una caída mínima antes de rebotar). */
+    private static double fallPeakY = Double.NaN;
     // Slime Viscoso
     private static double grip = -1;
     private static boolean stuck;
@@ -58,7 +64,8 @@ public final class RaceBodyClient {
         boolean jump = mc.options.keyJump.isDown() && mc.screen == null;
         springBounce(p);
         sticky(p, jump);
-        if (!stuck) bounce(p);
+        if (!stuck && springTicks <= 0) bounce(p);
+        else if (springTicks > 0) { airVy = 0; fallPeakY = Double.NaN; }
         heavy(p, jump);
         glide(p, jump);
         jumpWasDown = jump;
@@ -94,9 +101,12 @@ public final class RaceBodyClient {
             p.push(dir.x, dir.y, dir.z);
             p.startAutoSpinAttack(20);
             p.resetFallDistance();
-            springBouncesLeft = (int) Races.number(p, "race_spring", "bounces", 3);
-            springBounceFactor = 0.3 + 0.7 * Math.min(1, power / 3.0);
-            springTicks = 60;
+            springTicks = Math.max(40, springHeld);
+            springWallFactor = Races.number(p, "race_spring", "wall_bounce", 1.05);
+            springMaxSpeed = dir.length();
+            double h = Math.sqrt(dir.x * dir.x + dir.z * dir.z);
+            springHSpeed = Math.max(h, 0.4 * springMaxSpeed);
+            prevVel = dir;
             io.github.rpgclasses.network.Net.CHANNEL.sendToServer(new io.github.rpgclasses.network.Packets.RaceMotion(
                     io.github.rpgclasses.network.Packets.RaceMotion.SPRING, springHeld, -1));
             event.getInput().jumping = false;
@@ -105,28 +115,49 @@ public final class RaceBodyClient {
         springHeld = 0;
     }
 
-    /** Tras un lanzamiento, rebota contra las paredes (y el suelo) con fuerza según la potencia; agachado no. */
+    /**
+     * Tras un lanzamiento el Resorte es una pelota mientras dura la carga: rebota contra suelo, techo y paredes sin
+     * gastarse (los choques no la desactivan; solo agacharse o acabar el tiempo) y mantiene la velocidad horizontal.
+     */
     private static void springBounce(LocalPlayer p) {
-        if (springTicks <= 0) return;
-        springTicks--;
-        if (p.isShiftKeyDown() || springBouncesLeft <= 0) {
-            springTicks = 0;
+        Vec3 v = p.getDeltaMovement();
+        if (springTicks <= 0) {
+            prevVel = v;
             return;
         }
-        Vec3 v = p.getDeltaMovement();
-        if (p.horizontalCollision) {
-            double vx = v.x, vz = v.z;
-            // Se invierte la componente que ha chocado (la mayor de las dos si no se sabe cuál).
-            if (Math.abs(vx) >= Math.abs(vz)) vx = -vx; else vz = -vz;
-            p.setDeltaMovement(vx * springBounceFactor, Math.max(v.y, 0.2), vz * springBounceFactor);
-            p.hasImpulse = true;
-            springBouncesLeft--;
-        } else if (p.onGround() && airVy < -MIN_BOUNCE) {
-            p.setDeltaMovement(v.x, -airVy * springBounceFactor, v.z);
-            p.hasImpulse = true;
-            springBouncesLeft--;
-            airVy = 0;
+        springTicks--;
+        if (p.isShiftKeyDown() || p.isInWaterOrBubble() || p.isInLava()) {
+            springTicks = 0;
+            prevVel = v;
+            return;
         }
+        Vec3 pv = prevVel;
+        double k = springWallFactor, vx = v.x, vy = v.y, vz = v.z;
+        if (p.horizontalCollision) {
+            boolean cx = Math.abs(pv.x) > 0.05 && Math.abs(vx) < Math.abs(pv.x) * 0.5;
+            boolean cz = Math.abs(pv.z) > 0.05 && Math.abs(vz) < Math.abs(pv.z) * 0.5;
+            if (!cx && !cz) {          // no se sabe contra qué eje: se invierte el dominante
+                if (Math.abs(pv.x) >= Math.abs(pv.z)) cx = true; else cz = true;
+            }
+            if (cx) vx = -pv.x * k;
+            if (cz) vz = -pv.z * k;
+        }
+        if (p.verticalCollision && Math.abs(pv.y) > 0.1) vy = -pv.y * k;   // suelo o techo
+        // El rozamiento del aire resta velocidad horizontal cada tick: se repone hasta la velocidad del lanzamiento.
+        double hs = Math.sqrt(vx * vx + vz * vz);
+        if (hs > 0.01 && hs < springHSpeed) {
+            vx *= springHSpeed / hs;
+            vz *= springHSpeed / hs;
+        }
+        double cap = Math.max(springMaxSpeed, 1.5);
+        vy = Math.max(-cap, Math.min(cap, vy));
+        Vec3 out = new Vec3(vx, vy, vz);
+        if (out.distanceToSqr(v) > 1.0E-6) {
+            p.setDeltaMovement(out);
+            p.hasImpulse = true;
+        }
+        p.resetFallDistance();
+        prevVel = out;
     }
 
     // ------------------------------------------------------------------ Slime Viscoso
@@ -213,23 +244,32 @@ public final class RaceBodyClient {
         }
     }
 
-    /** Slime: al tocar suelo tras caer, sale rebotado con la velocidad que traía (como un bloque de slime). */
+    /**
+     * Slime: al tocar suelo tras una caída de al menos {@code bounce_min_fall} bloques sale rebotado con la velocidad
+     * que traía por el factor de rebote (menor que 1), de modo que pierde altura en cada rebote y deja de rebotar
+     * cuando la caída siguiente ya no llega al mínimo.
+     */
     private static void bounce(LocalPlayer p) {
         double factor = Races.number(p, "race_bouncy", "bounce", 0);
         if (factor <= 0) {
             airVy = 0;
+            fallPeakY = Double.NaN;
             return;
         }
         if (!p.onGround()) {
             airVy = p.getDeltaMovement().y;
+            fallPeakY = Double.isNaN(fallPeakY) ? p.getY() : Math.max(fallPeakY, p.getY());
             return;
         }
-        if (airVy < -MIN_BOUNCE && !p.isShiftKeyDown() && !p.isInWaterOrBubble() && !p.isInLava() && !p.isFallFlying()) {
+        double minFall = Races.number(p, "race_bouncy", "bounce_min_fall", 3);
+        double drop = Double.isNaN(fallPeakY) ? 0 : fallPeakY - p.getY();
+        if (airVy < -MIN_BOUNCE && drop >= minFall && !p.isShiftKeyDown() && !p.isInWaterOrBubble() && !p.isInLava() && !p.isFallFlying()) {
             Vec3 v = p.getDeltaMovement();
             p.setDeltaMovement(v.x, -airVy * factor, v.z);
             p.hasImpulse = true;
         }
         airVy = 0;
+        fallPeakY = Double.NaN;
     }
 
     /** Coloso: en el agua no nada; se hunde aunque mantenga saltar. */

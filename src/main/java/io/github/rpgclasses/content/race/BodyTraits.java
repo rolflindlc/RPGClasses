@@ -62,6 +62,15 @@ public final class BodyTraits {
     /** Fracción de la velocidad racial máxima del Centauro (0–1), por jugador (servidor). */
     private static final Map<UUID, Double> GALLOP = new HashMap<>();
     private static final Map<UUID, Vec3> LAST_DIR = new HashMap<>();
+    /**
+     * Última posición vista de cada Centauro. En el servidor el movimiento del jugador llega por paquetes entre ticks
+     * (xo/zo ya valen la posición actual en el tick y getDeltaMovement no lo refleja): se compara con la anterior.
+     */
+    private static final Map<UUID, Vec3> LAST_POS = new HashMap<>();
+    /** Tick en que se movió por última vez (los paquetes de movimiento no llegan siempre cada tick). */
+    private static final Map<UUID, Long> LAST_MOVED = new HashMap<>();
+    /** Guerrero: tick de su último ataque al galope (el ataque vanilla corta la carrera; aquí se mantiene). */
+    private static final Map<UUID, Long> WAR_ATTACK = new HashMap<>();
     /** Embestida: último golpe a cada víctima (para no golpearla cada tick). */
     private static final Map<UUID, Map<UUID, Long>> RAM_HITS = new HashMap<>();
     private static final ThreadLocal<Boolean> AREA_BREAKING = ThreadLocal.withInitial(() -> false);
@@ -71,6 +80,17 @@ public final class BodyTraits {
     /** Fracción de la velocidad máxima racial del Centauro (0 si no lo es). La usan el Guerrero y los ritos. */
     public static double gallop(Player p) {
         return GALLOP.getOrDefault(p.getUUID(), 0.0);
+    }
+
+    /**
+     * En el cliente (jugador local): la fracción se deduce del modificador de velocidad del galope, que está
+     * sincronizado (sin contar la reducción por pasajeros ni el límite técnico).
+     */
+    public static double clientGallop(Player p) {
+        AttributeInstance speed = p.getAttribute(Attributes.MOVEMENT_SPEED);
+        AttributeModifier m = speed == null ? null : speed.getModifier(CENTAUR_SPEED);
+        double max = Races.number(p, "race_centaur", "max_speed", 0.4);
+        return m == null || max <= 0 ? 0 : Math.min(1, m.getAmount() / max);
     }
 
     /** Pasajeros que admite el jugador (Centauro o Porteador); 0 si ninguno. */
@@ -273,12 +293,22 @@ public final class BodyTraits {
             return;
         }
         UUID id = p.getUUID();
+        long now = p.level().getGameTime();
         double frac = GALLOP.getOrDefault(id, 0.0);
-        Vec3 move = p.position().subtract(p.xo, p.yo, p.zo);
-        Vec3 flat = new Vec3(move.x, 0, move.z);
+        Vec3 pos = p.position();
+        Vec3 prevPos = LAST_POS.put(id, pos);
+        Vec3 flat = prevPos == null ? Vec3.ZERO : new Vec3(pos.x - prevPos.x, 0, pos.z - prevPos.z);
+        if (flat.lengthSqr() > 4) flat = Vec3.ZERO; // teletransporte
+        if (flat.lengthSqr() > 0.0025) LAST_MOVED.put(id, now);
         double accelTicks = Math.max(1, c.number("accel_seconds", 5) * 20);
-        boolean running = p.isSprinting() && flat.lengthSqr() > 0.0025 && !p.isPassenger() && !p.isFallFlying() && !p.isInWater();
-        if (running) {
+        // Guerrero: atacar al galope no corta la carrera (vanilla deja de correr al golpear corriendo).
+        boolean warAttack = now - WAR_ATTACK.getOrDefault(id, Long.MIN_VALUE / 2) <= 3;
+        if (warAttack && !p.isSprinting() && !p.isShiftKeyDown()) p.setSprinting(true);
+        boolean sprinting = p.isSprinting() || warAttack;
+        boolean blocked = p.isPassenger() || p.isFallFlying() || p.isInWater();
+        if (sprinting && !blocked && flat.lengthSqr() <= 0.0025 && now - LAST_MOVED.getOrDefault(id, 0L) <= 3) {
+            // Sin paquete de movimiento en este tick: se mantiene la velocidad acumulada.
+        } else if (sprinting && !blocked && flat.lengthSqr() > 0.0025) {
             Vec3 dir = flat.normalize();
             Vec3 last = LAST_DIR.put(id, dir);
             // Un giro brusco (más de ~25° en un tick) reduce la velocidad acumulada.
@@ -286,9 +316,9 @@ public final class BodyTraits {
             else frac = Math.min(1, frac + 1 / accelTicks);
         } else {
             LAST_DIR.remove(id);
-            frac = Math.max(0, frac - (p.isSprinting() ? 0.02 : 0.1));
+            frac = Math.max(0, frac - (sprinting ? 0.02 : 0.1));
         }
-        frac = ram(p, c, frac);
+        frac = ram(p, c, frac, flat);
         GALLOP.put(id, frac);
 
         // Velocidad racial: fuera del tope global (adenda 0.7, regla 8), con límite técnico y pasajeros que frenan.
@@ -307,11 +337,10 @@ public final class BodyTraits {
     }
 
     /** Embestida: al chocar con algo a ≥40 % de la velocidad máxima le hace daño y lo empuja; pierde velocidad. */
-    private static double ram(ServerPlayer p, ActiveMechanic c, double frac) {
+    private static double ram(ServerPlayer p, ActiveMechanic c, double frac, Vec3 moved) {
         double threshold = c.number("ram_threshold", 0.4);
         if (frac < threshold || p.isSpectator()) return frac;
-        Vec3 look = new Vec3(p.getDeltaMovement().x, 0, p.getDeltaMovement().z);
-        Vec3 dir = look.lengthSqr() > 1e-6 ? look.normalize() : Vec3.directionFromRotation(0, p.getYRot());
+        Vec3 dir = moved.lengthSqr() > 1e-6 ? moved.normalize() : Vec3.directionFromRotation(0, p.getYRot());
         var box = p.getBoundingBox().inflate(0.25).expandTowards(dir.scale(0.4));
         long now = p.level().getGameTime();
         Map<UUID, Long> hits = RAM_HITS.computeIfAbsent(p.getUUID(), k -> new HashMap<>());
@@ -336,11 +365,23 @@ public final class BodyTraits {
         return frac;
     }
 
+    /** Guerrero: un ataque al galope (≥40 %) no le hace dejar de correr. */
+    @SubscribeEvent(priority = EventPriority.LOW)
+    public void onAttack(net.minecraftforge.event.entity.player.AttackEntityEvent event) {
+        if (event.isCanceled() || !(event.getEntity() instanceof ServerPlayer p) || p instanceof FakePlayer) return;
+        if (Races.has(p, "race_war_gallop") && gallop(p) >= Races.number(p, "race_centaur", "ram_threshold", 0.4) && p.isSprinting()) {
+            WAR_ATTACK.put(p.getUUID(), p.level().getGameTime());
+        }
+    }
+
     @SubscribeEvent
     public void onLogout(PlayerEvent.PlayerLoggedOutEvent event) {
         UUID id = event.getEntity().getUUID();
         GALLOP.remove(id);
         LAST_DIR.remove(id);
         RAM_HITS.remove(id);
+        LAST_POS.remove(id);
+        LAST_MOVED.remove(id);
+        WAR_ATTACK.remove(id);
     }
 }

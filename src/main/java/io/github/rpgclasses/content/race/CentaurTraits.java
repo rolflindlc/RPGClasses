@@ -68,7 +68,8 @@ public final class CentaurTraits {
             }
             return;
         }
-        if (!GLIDING.contains(id) && p.getDeltaMovement().y < 0 && p.fallDistance >= g.number("min_fall", 8)) {
+        // La distancia de caída la calcula el servidor con el movimiento que llega del cliente (solo crece al caer).
+        if (!GLIDING.contains(id) && p.fallDistance >= g.number("min_fall", 8)) {
             GLIDING.add(id);
             if (p.fallDistance >= 8) Rites.count(p, "glide_8", 1);
             Rites.count(p, "glide", 1);

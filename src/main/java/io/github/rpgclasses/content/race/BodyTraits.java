@@ -53,6 +53,7 @@ import java.util.UUID;
  */
 public final class BodyTraits {
     public static final TagKey<Block> TRAMPLABLE = TagKey.create(Registries.BLOCK, RpgClasses.id("colossus_tramplable"));
+    private static final UUID CENTAUR_STEP = UUID.fromString("6f3c2a1e-5b7d-4c11-9a0e-2f6d7c8b9e02");
     private static final UUID CENTAUR_SPEED = UUID.fromString("6f3c2a1e-5b7d-4c11-9a0e-2f6d7c8b9e01");
     private static final double VANILLA_SAFE_FALL = 3.0;
     private static final double VANILLA_JUMP_HEIGHT = 1.25;
@@ -312,6 +313,7 @@ public final class BodyTraits {
         AttributeInstance speed = p.getAttribute(Attributes.MOVEMENT_SPEED);
         if (c == null) {
             if (GALLOP.remove(p.getUUID()) != null && speed != null) speed.removeModifier(CENTAUR_SPEED);
+            setGallopStep(p, false);
             return;
         }
         UUID id = p.getUUID();
@@ -342,6 +344,7 @@ public final class BodyTraits {
         }
         frac = ram(p, c, frac, flat);
         GALLOP.put(id, frac);
+        setGallopStep(p, frac >= c.number("ram_threshold", 0.4));
 
         // Velocidad racial: fuera del tope global (adenda 0.7, regla 8), con límite técnico y pasajeros que frenan.
         if (speed == null) return;
@@ -356,6 +359,16 @@ public final class BodyTraits {
         if (bonus > 0) {
             speed.addTransientModifier(new AttributeModifier(CENTAUR_SPEED, "rpgclasses centaur gallop", bonus, AttributeModifier.Operation.MULTIPLY_TOTAL));
         }
+    }
+
+    /** Centauro: +1 bloque de altura de paso mientras galopa a ≥40 % de su velocidad máxima. */
+    private static void setGallopStep(ServerPlayer p, boolean on) {
+        AttributeInstance step = p.getAttribute(net.minecraftforge.common.ForgeMod.STEP_HEIGHT_ADDITION.get());
+        if (step == null) return;
+        boolean has = step.getModifier(CENTAUR_STEP) != null;
+        if (on == has) return;
+        if (on) step.addTransientModifier(new AttributeModifier(CENTAUR_STEP, "rpgclasses centaur step", 1.0, AttributeModifier.Operation.ADDITION));
+        else step.removeModifier(CENTAUR_STEP);
     }
 
     /** Embestida: al chocar con algo a ≥40 % de la velocidad máxima le hace daño y lo empuja; pierde velocidad. */

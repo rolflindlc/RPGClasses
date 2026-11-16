@@ -37,6 +37,7 @@ repositories {
     mavenCentral()
     maven { name = "Iron's Maven - Release"; url = "https://code.redspace.io/releases" }
     maven { name = "Curios"; url = "https://maven.theillusivec4.top/" }
+    maven { name = "JEI"; url = "https://maven.blamejared.com/" }
 }
 
 configurations {
@@ -49,6 +50,8 @@ dependencies {
 
     compileOnly fg.deobf("io.redspace:irons_spellbooks:${irons_spells_version}:api")
     compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:${curios_version}:api")
+    compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}-common-api:${jei_version}")
+    compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge-api:${jei_version}")
 
     issProbe "io.redspace:irons_spellbooks:${irons_spells_version}"
 

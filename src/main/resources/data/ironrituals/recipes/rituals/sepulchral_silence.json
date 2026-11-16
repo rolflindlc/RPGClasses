@@ -1,0 +1,36 @@
+{
+  "type": "ironrituals:ritual",
+  "ritual": "ironrituals:sepulchral_silence",
+  "school": "irons_spellbooks:eldritch",
+  "min_circle": 2,
+  "rarity": "uncommon",
+  "extendable": false,
+  "tiers": [
+    {
+      "level": 2,
+      "mana": 150,
+      "components": [
+        {
+          "tag": "minecraft:wool",
+          "count": 4
+        },
+        {
+          "item": "minecraft:sculk_sensor",
+          "count": 3
+        },
+        {
+          "item": "irons_spellbooks:arcane_essence",
+          "count": 10
+        },
+        {
+          "item": "minecraft:echo_shard",
+          "count": 2
+        }
+      ],
+      "duration_seconds": 300,
+      "params": {
+        "radius": 12
+      }
+    }
+  ]
+}

@@ -1,0 +1,88 @@
+{
+  "type": "ironrituals:ritual",
+  "ritual": "ironrituals:sentinel",
+  "school": "irons_spellbooks:eldritch",
+  "min_circle": 1,
+  "rarity": "common",
+  "extendable": true,
+  "tiers": [
+    {
+      "level": 1,
+      "mana": 100,
+      "components": [
+        {
+          "item": "minecraft:ender_eye",
+          "count": 3
+        },
+        {
+          "item": "minecraft:echo_shard",
+          "count": 3
+        },
+        {
+          "item": "minecraft:sculk_sensor",
+          "count": 1
+        },
+        {
+          "item": "irons_spellbooks:arcane_essence",
+          "count": 10
+        }
+      ],
+      "duration_seconds": 3600,
+      "params": {
+        "radius": 20
+      }
+    },
+    {
+      "level": 2,
+      "mana": 150,
+      "components": [
+        {
+          "item": "minecraft:ender_eye",
+          "count": 6
+        },
+        {
+          "item": "minecraft:echo_shard",
+          "count": 6
+        },
+        {
+          "item": "minecraft:sculk_sensor",
+          "count": 2
+        },
+        {
+          "item": "irons_spellbooks:arcane_essence",
+          "count": 20
+        }
+      ],
+      "duration_seconds": 3600,
+      "params": {
+        "radius": 40
+      }
+    },
+    {
+      "level": 3,
+      "mana": 200,
+      "components": [
+        {
+          "item": "minecraft:ender_eye",
+          "count": 9
+        },
+        {
+          "item": "minecraft:echo_shard",
+          "count": 9
+        },
+        {
+          "item": "minecraft:sculk_sensor",
+          "count": 3
+        },
+        {
+          "item": "irons_spellbooks:arcane_essence",
+          "count": 30
+        }
+      ],
+      "duration_seconds": 3600,
+      "params": {
+        "radius": 60
+      }
+    }
+  ]
+}

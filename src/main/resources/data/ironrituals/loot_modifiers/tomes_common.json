@@ -1,0 +1,48 @@
+{
+  "type": "ironrituals:add_ritual_tome",
+  "conditions": [
+    {
+      "condition": "minecraft:alternative",
+      "terms": [
+        {
+          "condition": "forge:loot_table_id",
+          "loot_table_id": "irons_spellbooks:chests/mangrove_hut"
+        },
+        {
+          "condition": "forge:loot_table_id",
+          "loot_table_id": "irons_spellbooks:chests/priest_house"
+        },
+        {
+          "condition": "forge:loot_table_id",
+          "loot_table_id": "irons_spellbooks:chests/evoker_fort"
+        },
+        {
+          "condition": "forge:loot_table_id",
+          "loot_table_id": "irons_spellbooks:chests/evoker_fort/guard_tower"
+        },
+        {
+          "condition": "forge:loot_table_id",
+          "loot_table_id": "irons_spellbooks:chests/mountain_tower/mountain_tower"
+        },
+        {
+          "condition": "forge:loot_table_id",
+          "loot_table_id": "irons_spellbooks:chests/pyromancer_tower/pyromancer_supplies"
+        },
+        {
+          "condition": "forge:loot_table_id",
+          "loot_table_id": "irons_spellbooks:chests/catacombs/crypt_loot"
+        },
+        {
+          "condition": "forge:loot_table_id",
+          "loot_table_id": "irons_spellbooks:chests/magic_bookshelf_loot"
+        },
+        {
+          "condition": "forge:loot_table_id",
+          "loot_table_id": "irons_spellbooks:chests/citadel/citadel_bookshelf"
+        }
+      ]
+    }
+  ],
+  "rarity": "common",
+  "chance": 0.25
+}

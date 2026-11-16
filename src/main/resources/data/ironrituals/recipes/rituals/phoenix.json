@@ -1,0 +1,51 @@
+{
+  "type": "ironrituals:ritual",
+  "ritual": "ironrituals:phoenix",
+  "school": "irons_spellbooks:fire",
+  "min_circle": 2,
+  "rarity": "rare",
+  "extendable": false,
+  "tiers": [
+    {
+      "level": 2,
+      "mana": 300,
+      "components": [
+        {
+          "item": "minecraft:totem_of_undying",
+          "count": 1
+        },
+        {
+          "item": "minecraft:feather",
+          "count": 5
+        },
+        {
+          "item": "minecraft:blaze_rod",
+          "count": 2
+        },
+        {
+          "item": "irons_spellbooks:cinder_essence",
+          "count": 1
+        },
+        {
+          "item": "irons_spellbooks:divine_pearl",
+          "count": 1
+        }
+      ]
+    }
+  ],
+  "catalysts": [
+    {
+      "id": "fire_wave",
+      "components": [
+        {
+          "item": "minecraft:fire_charge",
+          "count": 1
+        },
+        {
+          "item": "minecraft:blaze_rod",
+          "count": 1
+        }
+      ]
+    }
+  ]
+}

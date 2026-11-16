@@ -1,0 +1,36 @@
+{
+  "type": "ironrituals:ritual",
+  "ritual": "ironrituals:silent_echo",
+  "school": "irons_spellbooks:eldritch",
+  "min_circle": 2,
+  "rarity": "uncommon",
+  "extendable": false,
+  "tiers": [
+    {
+      "level": 2,
+      "mana": 150,
+      "components": [
+        {
+          "soul": {
+            "any": true
+          }
+        },
+        {
+          "item": "minecraft:echo_shard",
+          "count": 1
+        }
+      ]
+    }
+  ],
+  "catalysts": [
+    {
+      "id": "leash",
+      "components": [
+        {
+          "item": "minecraft:lead",
+          "count": 1
+        }
+      ]
+    }
+  ]
+}

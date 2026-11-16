@@ -10,6 +10,8 @@ import random
 
 from PIL import Image
 
+import rituals_data
+
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "main", "resources")
 MOD = "ironrituals"
 ISS = "irons_spellbooks"
@@ -302,14 +304,47 @@ LANG = {
     "message.ironrituals.core.not_yours": ("Este núcleo pertenece a %s", "This core belongs to %s"),
     "message.ironrituals.core.occupied": ("El núcleo ya tiene un grimorio", "The core already holds a tome"),
     "message.ironrituals.core.no_book": ("Coloca un grimorio de ritual en el núcleo", "Place a ritual tome in the core"),
-    "message.ironrituals.core.header": ("— %s —", "— %s —"),
     "message.ironrituals.core.circle_level": ("Círculo arcano válido: nivel %s", "Valid arcane circle: level %s"),
     "message.ironrituals.core.circle_none": ("No hay un círculo arcano válido", "There is no valid arcane circle"),
     "message.ironrituals.core.next_ring": ("Anillo del nivel %s: faltan %s velas y %s están apagadas (marcadas en rojo y amarillo)",
                                             "Level %s ring: %s candles missing and %s unlit (marked red and yellow)"),
     "message.ironrituals.core.components": ("Componentes en el área:", "Components in the area:"),
     "message.ironrituals.core.no_components": ("No hay componentes en el área central", "There are no components in the central area"),
-    "message.ironrituals.core.engine_pending": ("(La canalización de rituales llega en la próxima versión)", "(Ritual channeling arrives in the next version)"),
+    # Motor de rituales
+    "message.ironrituals.ritual.busy": ("El núcleo ya está canalizando un ritual", "The core is already channeling a ritual"),
+    "message.ironrituals.ritual.unknown": ("Las páginas de este grimorio están en blanco: no hay ningún ritual con ese nombre", "This tome's pages are blank: no ritual has that name"),
+    "message.ironrituals.ritual.not_implemented": ("Este ritual aún no se puede canalizar (llegará en una próxima fase)", "This ritual cannot be channeled yet (coming in a later phase)"),
+    "message.ironrituals.ritual.suppressed": ("Un Campo de Supresión ahoga la magia de este lugar", "A Suppression Field smothers the magic of this place"),
+    "message.ironrituals.ritual.circle_too_small": ("Este ritual necesita un círculo de nivel %s como mínimo", "This ritual needs at least a level %s circle"),
+    "message.ironrituals.ritual.missing_components": ("Faltan componentes en el área central", "Components are missing in the central area"),
+    "message.ironrituals.ritual.extend_missing": ("Para prorrogar el ritual entrega los componentes de su nivel (%s)", "To extend the ritual, offer the components of its level (%s)"),
+    "message.ironrituals.ritual.extended": ("Ritual prorrogado: quedan %s", "Ritual extended: %s remaining"),
+    "message.ironrituals.ritual.started": ("Canalizando %s (nivel %s, %s de maná). No te alejes del núcleo.", "Channeling %s (level %s, %s mana). Stay close to the core."),
+    "message.ironrituals.ritual.bar": ("Canalizando: %s", "Channeling: %s"),
+    "message.ironrituals.ritual.completed": ("%s se ha completado", "%s is complete"),
+    "message.ironrituals.ritual.error": ("El ritual ha fallado de forma inesperada (revisa el log del servidor)", "The ritual failed unexpectedly (check the server log)"),
+    "message.ironrituals.interrupt.cancelled": ("Has cancelado el ritual; los componentes vuelven al suelo", "You cancelled the ritual; the components fall back to the ground"),
+    "message.ironrituals.interrupt.caster_gone": ("El ritual se ha interrumpido: el lanzador ya no está", "The ritual was interrupted: the caster is gone"),
+    "message.ironrituals.interrupt.too_far": ("El ritual se ha interrumpido: te has alejado demasiado del núcleo", "The ritual was interrupted: you moved too far from the core"),
+    "message.ironrituals.interrupt.candle": ("El ritual se ha interrumpido: una vela del círculo se ha apagado o roto", "The ritual was interrupted: a circle candle went out or broke"),
+    "message.ironrituals.interrupt.no_mana": ("El ritual se ha interrumpido: te has quedado sin maná", "The ritual was interrupted: you ran out of mana"),
+    "message.ironrituals.interrupt.core_broken": ("El ritual se ha interrumpido: el núcleo se ha roto", "The ritual was interrupted: the core was broken"),
+    "message.ironrituals.interrupt.suppressed": ("El ritual se ha interrumpido: un Campo de Supresión lo ha sofocado", "The ritual was interrupted: a Suppression Field smothered it"),
+    "ritual.ironrituals.deluge.no_weather": ("Aquí no hay cielo al que pedir lluvia", "There is no sky here to ask for rain"),
+    # Almas
+    "soul.ironrituals.of": ("Daga con alma de %s", "Dagger with the soul of %s"),
+    "soul.ironrituals.any": ("Daga con el alma de cualquier criatura", "Dagger with the soul of any creature"),
+    "soul.ironrituals.player": ("un jugador", "a player"),
+    "soul.ironrituals.tamable": ("una criatura domesticable", "a tamable creature"),
+    "soul.ironrituals.or": (" o ", " or "),
+    # Grimorio y JEI
+    "gui.ironrituals.tome.meta": ("Escuela: %s · Círculo mínimo %s", "School: %s · Minimum circle %s"),
+    "gui.ironrituals.tome.level": ("Nivel %s · %s de maná", "Level %s · %s mana"),
+    "gui.ironrituals.tome.secrets": ("Notas al margen", "Margin notes"),
+    "gui.ironrituals.tome.blank": ("Las páginas siguientes están en blanco.", "The following pages are blank."),
+    "jei.ironrituals.ritual": ("Ritual arcano", "Arcane ritual"),
+    "jei.ironrituals.details": ("Círculo %s · %s maná · %s", "Circle %s · %s mana · %s"),
+    "jei.ironrituals.secrets": ("Algunos secretos solo los revela el grimorio…", "Some secrets only the tome reveals…"),
 }
 
 
@@ -320,6 +355,10 @@ def gen_lang():
     for rid, ns, ne, hs, he in RITUALS:
         es[f"ritual.{MOD}.{rid}"], en[f"ritual.{MOD}.{rid}"] = ns, ne
         es[f"ritual.{MOD}.{rid}.hint"], en[f"ritual.{MOD}.{rid}.hint"] = f"«{hs}»", f"\"{he}\""
+    for rid, (le, ln) in rituals_data.LORE.items():
+        es[f"ritual.{MOD}.{rid}.lore"], en[f"ritual.{MOD}.{rid}.lore"] = le, ln
+    for (rid, cid), (he, hn) in rituals_data.CATALYST_HINTS.items():
+        es[f"ritual.{MOD}.{rid}.catalyst.{cid}"], en[f"ritual.{MOD}.{rid}.catalyst.{cid}"] = he, hn
     write(f"{ASSETS}/lang/es_es.json", es)
     write(f"{ASSETS}/lang/en_us.json", en)
 
@@ -462,6 +501,31 @@ def tex_tome():
     png(f"{ASSETS}/textures/item/ritual_tome.png", img)
 
 
+# --------------------------------------------------------------------------- rituales y botín
+
+def gen_rituals():
+    out = f"{DATA}/{MOD}/recipes/rituals"
+    for rid, d in rituals_data.RITUALS.items():
+        write(f"{out}/{rid}.json", rituals_data.recipe_json(rid, d))
+
+
+def gen_loot():
+    entries = []
+    for rarity, (chance, tables) in rituals_data.LOOT.items():
+        name = f"tomes_{rarity}"
+        entries.append(f"{MOD}:{name}")
+        write(f"{DATA}/{MOD}/loot_modifiers/{name}.json", {
+            "type": f"{MOD}:add_ritual_tome",
+            "conditions": [{
+                "condition": "minecraft:alternative",
+                "terms": [{"condition": "forge:loot_table_id", "loot_table_id": f"{ISS}:{t}"} for t in tables],
+            }],
+            "rarity": rarity,
+            "chance": chance,
+        })
+    write(f"{DATA}/forge/loot_modifiers/global_loot_modifiers.json", {"replace": False, "entries": entries})
+
+
 def main():
     write(os.path.join(ROOT, "pack.mcmeta"), {"pack": {"description": "Iron Rituals resources", "pack_format": 15}})
     gen_candles()
@@ -470,6 +534,8 @@ def main():
     gen_recipes()
     gen_tags()
     gen_lang()
+    gen_rituals()
+    gen_loot()
     tex_candle_block()
     tex_candle_items()
     tex_core()

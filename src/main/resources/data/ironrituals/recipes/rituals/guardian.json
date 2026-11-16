@@ -1,0 +1,81 @@
+{
+  "type": "ironrituals:ritual",
+  "ritual": "ironrituals:guardian",
+  "school": "irons_spellbooks:evocation",
+  "min_circle": 1,
+  "rarity": "uncommon",
+  "extendable": false,
+  "tiers": [
+    {
+      "level": 1,
+      "mana": 200,
+      "components": [
+        {
+          "item": "irons_spellbooks:arcane_essence",
+          "count": 10
+        },
+        {
+          "item": "minecraft:iron_block",
+          "count": 2
+        },
+        {
+          "item": "minecraft:emerald",
+          "count": 1
+        }
+      ],
+      "params": {
+        "guardians": 1
+      }
+    },
+    {
+      "level": 2,
+      "mana": 300,
+      "components": [
+        {
+          "item": "irons_spellbooks:arcane_essence",
+          "count": 20
+        },
+        {
+          "item": "minecraft:iron_block",
+          "count": 4
+        },
+        {
+          "item": "minecraft:emerald",
+          "count": 2
+        },
+        {
+          "item": "irons_spellbooks:mithril_ingot",
+          "count": 1
+        }
+      ],
+      "params": {
+        "guardians": 2
+      }
+    },
+    {
+      "level": 3,
+      "mana": 400,
+      "components": [
+        {
+          "item": "irons_spellbooks:arcane_essence",
+          "count": 30
+        },
+        {
+          "item": "minecraft:iron_block",
+          "count": 6
+        },
+        {
+          "item": "minecraft:emerald",
+          "count": 4
+        },
+        {
+          "item": "irons_spellbooks:mithril_ingot",
+          "count": 2
+        }
+      ],
+      "params": {
+        "guardians": 3
+      }
+    }
+  ]
+}

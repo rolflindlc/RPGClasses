@@ -1,0 +1,100 @@
+{
+  "type": "ironrituals:ritual",
+  "ritual": "ironrituals:dome",
+  "school": "irons_spellbooks:holy",
+  "min_circle": 1,
+  "rarity": "common",
+  "extendable": true,
+  "tiers": [
+    {
+      "level": 1,
+      "mana": 100,
+      "components": [
+        {
+          "item": "irons_spellbooks:arcane_essence",
+          "count": 5
+        },
+        {
+          "item": "minecraft:obsidian",
+          "count": 10
+        },
+        {
+          "item": "minecraft:glass",
+          "count": 10
+        }
+      ],
+      "duration_seconds": 3600,
+      "params": {
+        "radius": 7
+      }
+    },
+    {
+      "level": 2,
+      "mana": 200,
+      "components": [
+        {
+          "item": "irons_spellbooks:arcane_ingot",
+          "count": 2
+        },
+        {
+          "item": "minecraft:obsidian",
+          "count": 15
+        },
+        {
+          "item": "minecraft:glass",
+          "count": 20
+        }
+      ],
+      "duration_seconds": 3600,
+      "params": {
+        "radius": 15
+      }
+    },
+    {
+      "level": 3,
+      "mana": 300,
+      "components": [
+        {
+          "item": "irons_spellbooks:mithril_ingot",
+          "count": 2
+        },
+        {
+          "item": "irons_spellbooks:arcane_ingot",
+          "count": 4
+        },
+        {
+          "item": "minecraft:obsidian",
+          "count": 30
+        },
+        {
+          "item": "minecraft:glass",
+          "count": 30
+        }
+      ],
+      "duration_seconds": 3600,
+      "params": {
+        "radius": 23
+      }
+    }
+  ],
+  "catalysts": [
+    {
+      "id": "blaze",
+      "components": [
+        {
+          "item": "minecraft:blaze_powder",
+          "count": 4
+        }
+      ]
+    },
+    {
+      "id": "ender_seal",
+      "components": [
+        {
+          "item": "minecraft:ender_eye",
+          "count": 1
+        }
+      ]
+    }
+  ]
+}

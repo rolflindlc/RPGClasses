@@ -1,0 +1,99 @@
+{
+  "type": "ironrituals:ritual",
+  "ritual": "ironrituals:prison",
+  "school": "irons_spellbooks:ender",
+  "min_circle": 1,
+  "rarity": "uncommon",
+  "extendable": false,
+  "tiers": [
+    {
+      "level": 1,
+      "mana": 100,
+      "components": [
+        {
+          "item": "irons_spellbooks:arcane_essence",
+          "count": 5
+        },
+        {
+          "item": "minecraft:obsidian",
+          "count": 10
+        },
+        {
+          "item": "minecraft:iron_bars",
+          "count": 10
+        }
+      ],
+      "duration_seconds": 60,
+      "params": {
+        "radius": 20
+      }
+    },
+    {
+      "level": 2,
+      "mana": 200,
+      "components": [
+        {
+          "item": "irons_spellbooks:arcane_essence",
+          "count": 15
+        },
+        {
+          "item": "minecraft:obsidian",
+          "count": 15
+        },
+        {
+          "item": "minecraft:iron_bars",
+          "count": 20
+        }
+      ],
+      "duration_seconds": 180,
+      "params": {
+        "radius": 35
+      }
+    },
+    {
+      "level": 3,
+      "mana": 300,
+      "components": [
+        {
+          "item": "irons_spellbooks:arcane_essence",
+          "count": 25
+        },
+        {
+          "item": "minecraft:obsidian",
+          "count": 30
+        },
+        {
+          "item": "minecraft:iron_bars",
+          "count": 30
+        }
+      ],
+      "duration_seconds": 300,
+      "params": {
+        "radius": 50
+      }
+    }
+  ],
+  "catalysts": [
+    {
+      "id": "one_way",
+      "components": [
+        {
+          "item": "minecraft:phantom_membrane",
+          "count": 5
+        }
+      ]
+    },
+    {
+      "id": "contract",
+      "components": [
+        {
+          "soul": {
+            "entities": [
+              "minecraft:pufferfish"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

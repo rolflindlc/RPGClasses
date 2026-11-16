@@ -1,0 +1,33 @@
+{
+  "type": "ironrituals:ritual",
+  "ritual": "ironrituals:temporal_paradox",
+  "school": "irons_spellbooks:ender",
+  "min_circle": 3,
+  "rarity": "rare",
+  "extendable": false,
+  "tiers": [
+    {
+      "level": 3,
+      "mana": 300,
+      "components": [
+        {
+          "item": "minecraft:clock",
+          "count": 1
+        },
+        {
+          "item": "minecraft:echo_shard",
+          "count": 4
+        },
+        {
+          "item": "minecraft:ender_pearl",
+          "count": 3
+        },
+        {
+          "item": "irons_spellbooks:arcane_essence",
+          "count": 10
+        }
+      ],
+      "duration_seconds": 600
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "type": "ironrituals:add_ritual_tome",
+  "conditions": [
+    {
+      "condition": "minecraft:alternative",
+      "terms": [
+        {
+          "condition": "forge:loot_table_id",
+          "loot_table_id": "irons_spellbooks:chests/catacombs/dead_king_vault"
+        },
+        {
+          "condition": "forge:loot_table_id",
+          "loot_table_id": "irons_spellbooks:chests/citadel/citadel_vault"
+        },
+        {
+          "condition": "forge:loot_table_id",
+          "loot_table_id": "irons_spellbooks:chests/citadel/spawner_reward"
+        },
+        {
+          "condition": "forge:loot_table_id",
+          "loot_table_id": "irons_spellbooks:chests/ice_spider_den/spawner_reward"
+        },
+        {
+          "condition": "forge:loot_table_id",
+          "loot_table_id": "irons_spellbooks:chests/trial_chambers/additional_ominous_vault_loot"
+        }
+      ]
+    }
+  ],
+  "rarity": "rare",
+  "chance": 0.35
+}

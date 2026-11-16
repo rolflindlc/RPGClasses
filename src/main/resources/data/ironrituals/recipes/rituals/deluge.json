@@ -1,0 +1,40 @@
+{
+  "type": "ironrituals:ritual",
+  "ritual": "ironrituals:deluge",
+  "school": "irons_spellbooks:lightning",
+  "min_circle": 1,
+  "rarity": "common",
+  "extendable": false,
+  "tiers": [
+    {
+      "level": 1,
+      "mana": 100,
+      "components": [
+        {
+          "item": "minecraft:water_bucket",
+          "count": 5
+        },
+        {
+          "item": "minecraft:lily_pad",
+          "count": 10
+        },
+        {
+          "item": "minecraft:ghast_tear",
+          "count": 1
+        }
+      ],
+      "duration_seconds": 600
+    }
+  ],
+  "catalysts": [
+    {
+      "id": "storm",
+      "components": [
+        {
+          "item": "irons_spellbooks:lightning_bottle",
+          "count": 1
+        }
+      ]
+    }
+  ]
+}

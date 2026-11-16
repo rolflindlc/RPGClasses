@@ -1,0 +1,87 @@
+{
+  "type": "ironrituals:ritual",
+  "ritual": "ironrituals:arcane_spring",
+  "school": "irons_spellbooks:ender",
+  "min_circle": 1,
+  "rarity": "common",
+  "extendable": true,
+  "tiers": [
+    {
+      "level": 1,
+      "mana": 100,
+      "components": [
+        {
+          "item": "irons_spellbooks:arcane_essence",
+          "count": 10
+        },
+        {
+          "item": "minecraft:amethyst_shard",
+          "count": 3
+        },
+        {
+          "item": "minecraft:ender_pearl",
+          "count": 1
+        }
+      ],
+      "duration_seconds": 1800,
+      "params": {
+        "radius": 8,
+        "regen_multiplier": 1.5
+      }
+    },
+    {
+      "level": 2,
+      "mana": 150,
+      "components": [
+        {
+          "item": "irons_spellbooks:arcane_essence",
+          "count": 20
+        },
+        {
+          "item": "minecraft:amethyst_shard",
+          "count": 6
+        },
+        {
+          "item": "minecraft:ender_pearl",
+          "count": 2
+        },
+        {
+          "item": "irons_spellbooks:arcane_ingot",
+          "count": 1
+        }
+      ],
+      "duration_seconds": 1800,
+      "params": {
+        "radius": 12,
+        "regen_multiplier": 2.0
+      }
+    },
+    {
+      "level": 3,
+      "mana": 200,
+      "components": [
+        {
+          "item": "irons_spellbooks:arcane_essence",
+          "count": 30
+        },
+        {
+          "item": "minecraft:amethyst_shard",
+          "count": 12
+        },
+        {
+          "item": "minecraft:ender_pearl",
+          "count": 4
+        },
+        {
+          "item": "irons_spellbooks:mithril_ingot",
+          "count": 1
+        }
+      ],
+      "duration_seconds": 1800,
+      "params": {
+        "radius": 16,
+        "regen_multiplier": 3.0
+      }
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "type": "ironrituals:ritual",
+  "ritual": "ironrituals:soul_anchor",
+  "school": "irons_spellbooks:holy",
+  "min_circle": 2,
+  "rarity": "uncommon",
+  "extendable": false,
+  "tiers": [
+    {
+      "level": 2,
+      "mana": 250,
+      "components": [
+        {
+          "item": "irons_spellbooks:divine_pearl",
+          "count": 2
+        },
+        {
+          "item": "irons_spellbooks:arcane_essence",
+          "count": 20
+        },
+        {
+          "item": "minecraft:diamond_block",
+          "count": 1
+        }
+      ]
+    }
+  ]
+}

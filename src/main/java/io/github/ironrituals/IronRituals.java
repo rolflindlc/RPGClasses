@@ -6,6 +6,7 @@ import io.github.ironrituals.registry.ModBlockEntities;
 import io.github.ironrituals.registry.ModBlocks;
 import io.github.ironrituals.registry.ModCreativeTabs;
 import io.github.ironrituals.registry.ModItems;
+import io.github.ironrituals.registry.ModLoot;
 import io.github.ironrituals.registry.ModRecipes;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -27,6 +28,7 @@ public final class IronRituals {
         ModCreativeTabs.TABS.register(modBus);
         ModRecipes.TYPES.register(modBus);
         ModRecipes.SERIALIZERS.register(modBus);
+        ModLoot.MODIFIERS.register(modBus);
         context.registerConfig(ModConfig.Type.SERVER, ServerConfig.SPEC);
     }
 

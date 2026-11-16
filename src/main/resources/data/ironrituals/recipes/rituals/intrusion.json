@@ -1,0 +1,29 @@
+{
+  "type": "ironrituals:ritual",
+  "ritual": "ironrituals:intrusion",
+  "school": "irons_spellbooks:ender",
+  "min_circle": 2,
+  "rarity": "uncommon",
+  "extendable": false,
+  "tiers": [
+    {
+      "level": 2,
+      "mana": 200,
+      "components": [
+        {
+          "soul": {
+            "player": true
+          }
+        },
+        {
+          "item": "minecraft:ender_pearl",
+          "count": 1
+        },
+        {
+          "tag": "minecraft:doors",
+          "count": 1
+        }
+      ]
+    }
+  ]
+}

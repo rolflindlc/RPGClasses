@@ -1,0 +1,114 @@
+{
+  "type": "ironrituals:ritual",
+  "ritual": "ironrituals:arcane_suppression",
+  "school": "irons_spellbooks:eldritch",
+  "min_circle": 1,
+  "rarity": "rare",
+  "extendable": true,
+  "tiers": [
+    {
+      "level": 1,
+      "mana": 150,
+      "components": [
+        {
+          "item": "minecraft:gold_block",
+          "count": 4
+        },
+        {
+          "item": "minecraft:book",
+          "count": 5
+        },
+        {
+          "item": "minecraft:sponge",
+          "count": 5
+        },
+        {
+          "item": "minecraft:echo_shard",
+          "count": 8
+        }
+      ],
+      "duration_seconds": 1800,
+      "params": {
+        "radius": 21
+      }
+    },
+    {
+      "level": 2,
+      "mana": 300,
+      "components": [
+        {
+          "item": "minecraft:gold_block",
+          "count": 8
+        },
+        {
+          "item": "minecraft:book",
+          "count": 10
+        },
+        {
+          "item": "minecraft:sponge",
+          "count": 10
+        },
+        {
+          "item": "minecraft:echo_shard",
+          "count": 16
+        },
+        {
+          "item": "irons_spellbooks:mithril_ingot",
+          "count": 2
+        }
+      ],
+      "duration_seconds": 3600,
+      "params": {
+        "radius": 45
+      }
+    },
+    {
+      "level": 3,
+      "mana": 450,
+      "components": [
+        {
+          "item": "minecraft:gold_block",
+          "count": 16
+        },
+        {
+          "item": "minecraft:book",
+          "count": 20
+        },
+        {
+          "item": "minecraft:sponge",
+          "count": 20
+        },
+        {
+          "item": "minecraft:echo_shard",
+          "count": 32
+        },
+        {
+          "item": "irons_spellbooks:mithril_ingot",
+          "count": 4
+        }
+      ],
+      "duration_seconds": 7200,
+      "params": {
+        "radius": 69
+      }
+    }
+  ],
+  "catalysts": [
+    {
+      "id": "siphon",
+      "components": [
+        {
+          "ingredient": [
+            {
+              "item": "minecraft:dragon_breath"
+            },
+            {
+              "item": "minecraft:soul_lantern"
+            }
+          ],
+          "count": 1
+        }
+      ]
+    }
+  ]
+}

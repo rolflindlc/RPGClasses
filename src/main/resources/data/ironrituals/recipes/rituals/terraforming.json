@@ -1,0 +1,97 @@
+{
+  "type": "ironrituals:ritual",
+  "ritual": "ironrituals:terraforming",
+  "school": "irons_spellbooks:nature",
+  "min_circle": 1,
+  "rarity": "uncommon",
+  "extendable": false,
+  "tiers": [
+    {
+      "level": 1,
+      "mana": 150,
+      "components": [
+        {
+          "item": "irons_spellbooks:arcane_essence",
+          "count": 20
+        }
+      ],
+      "params": {
+        "radius": 8
+      }
+    },
+    {
+      "level": 2,
+      "mana": 250,
+      "components": [
+        {
+          "item": "irons_spellbooks:arcane_essence",
+          "count": 40
+        }
+      ],
+      "params": {
+        "radius": 16
+      }
+    },
+    {
+      "level": 3,
+      "mana": 350,
+      "components": [
+        {
+          "item": "irons_spellbooks:arcane_essence",
+          "count": 80
+        }
+      ],
+      "params": {
+        "radius": 24
+      }
+    }
+  ],
+  "catalysts": [
+    {
+      "id": "profane",
+      "components": [
+        {
+          "item": "minecraft:blackstone",
+          "count": 16
+        },
+        {
+          "item": "minecraft:mycelium",
+          "count": 4
+        }
+      ],
+      "group": "biome"
+    },
+    {
+      "id": "frost",
+      "components": [
+        {
+          "item": "minecraft:packed_ice",
+          "count": 8
+        },
+        {
+          "item": "irons_spellbooks:frozen_bone",
+          "count": 4
+        }
+      ],
+      "group": "biome"
+    },
+    {
+      "id": "oasis",
+      "components": [
+        {
+          "item": "minecraft:bone_meal",
+          "count": 16
+        },
+        {
+          "item": "minecraft:water_bucket",
+          "count": 1
+        },
+        {
+          "tag": "forge:seeds",
+          "count": 4
+        }
+      ],
+      "group": "biome"
+    }
+  ]
+}

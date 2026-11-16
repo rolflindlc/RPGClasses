@@ -1,0 +1,41 @@
+{
+  "type": "ironrituals:ritual",
+  "ritual": "ironrituals:scapegoat",
+  "school": "irons_spellbooks:blood",
+  "min_circle": 2,
+  "rarity": "uncommon",
+  "extendable": false,
+  "tiers": [
+    {
+      "level": 2,
+      "mana": 200,
+      "components": [
+        {
+          "item": "irons_spellbooks:blood_vial",
+          "count": 4
+        },
+        {
+          "item": "minecraft:lead",
+          "count": 1
+        },
+        {
+          "item": "irons_spellbooks:arcane_essence",
+          "count": 10
+        }
+      ],
+      "duration_seconds": 180
+    }
+  ],
+  "catalysts": [
+    {
+      "id": "player_link",
+      "components": [
+        {
+          "soul": {
+            "player": true
+          }
+        }
+      ]
+    }
+  ]
+}

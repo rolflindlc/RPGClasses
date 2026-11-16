@@ -1,0 +1,84 @@
+{
+  "type": "ironrituals:ritual",
+  "ritual": "ironrituals:sanctuary",
+  "school": "irons_spellbooks:holy",
+  "min_circle": 1,
+  "rarity": "uncommon",
+  "extendable": true,
+  "tiers": [
+    {
+      "level": 1,
+      "mana": 150,
+      "components": [
+        {
+          "item": "irons_spellbooks:divine_pearl",
+          "count": 2
+        },
+        {
+          "item": "irons_spellbooks:arcane_essence",
+          "count": 10
+        },
+        {
+          "item": "minecraft:gold_ingot",
+          "count": 5
+        }
+      ],
+      "duration_seconds": 3600,
+      "params": {
+        "radius": 10
+      }
+    },
+    {
+      "level": 2,
+      "mana": 250,
+      "components": [
+        {
+          "item": "irons_spellbooks:divine_pearl",
+          "count": 4
+        },
+        {
+          "item": "irons_spellbooks:arcane_essence",
+          "count": 20
+        },
+        {
+          "item": "minecraft:gold_ingot",
+          "count": 10
+        },
+        {
+          "item": "irons_spellbooks:mithril_ingot",
+          "count": 1
+        }
+      ],
+      "duration_seconds": 3600,
+      "params": {
+        "radius": 20
+      }
+    },
+    {
+      "level": 3,
+      "mana": 350,
+      "components": [
+        {
+          "item": "irons_spellbooks:divine_pearl",
+          "count": 6
+        },
+        {
+          "item": "irons_spellbooks:arcane_essence",
+          "count": 30
+        },
+        {
+          "item": "minecraft:gold_ingot",
+          "count": 20
+        },
+        {
+          "item": "irons_spellbooks:mithril_ingot",
+          "count": 3
+        }
+      ],
+      "duration_seconds": 3600,
+      "params": {
+        "radius": 30
+      }
+    }
+  ]
+}

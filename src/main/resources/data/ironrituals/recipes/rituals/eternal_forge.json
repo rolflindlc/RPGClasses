@@ -1,0 +1,72 @@
+{
+  "type": "ironrituals:ritual",
+  "ritual": "ironrituals:eternal_forge",
+  "school": "irons_spellbooks:fire",
+  "min_circle": 1,
+  "rarity": "uncommon",
+  "extendable": false,
+  "tiers": [
+    {
+      "level": 1,
+      "mana": 150,
+      "components": [
+        {
+          "item": "irons_spellbooks:arcane_essence",
+          "count": 32
+        },
+        {
+          "item": "minecraft:diamond",
+          "count": 5
+        }
+      ],
+      "params": {
+        "max_durability": 500
+      }
+    },
+    {
+      "level": 2,
+      "mana": 250,
+      "components": [
+        {
+          "item": "irons_spellbooks:arcane_essence",
+          "count": 64
+        },
+        {
+          "item": "irons_spellbooks:mithril_ingot",
+          "count": 2
+        }
+      ],
+      "params": {
+        "max_durability": 1600
+      }
+    },
+    {
+      "level": 3,
+      "mana": 400,
+      "components": [
+        {
+          "item": "irons_spellbooks:arcane_essence",
+          "count": 128
+        },
+        {
+          "item": "irons_spellbooks:divine_soulshard",
+          "count": 1
+        }
+      ],
+      "params": {
+        "max_durability": 2147483647
+      }
+    }
+  ],
+  "catalysts": [
+    {
+      "id": "fireproof",
+      "components": [
+        {
+          "item": "minecraft:crying_obsidian",
+          "count": 1
+        }
+      ]
+    }
+  ]
+}

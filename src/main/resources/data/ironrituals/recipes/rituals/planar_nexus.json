@@ -1,0 +1,36 @@
+{
+  "type": "ironrituals:ritual",
+  "ritual": "ironrituals:planar_nexus",
+  "school": "irons_spellbooks:ender",
+  "min_circle": 3,
+  "rarity": "rare",
+  "extendable": false,
+  "tiers": [
+    {
+      "level": 3,
+      "mana": 300,
+      "components": [
+        {
+          "item": "minecraft:ender_pearl",
+          "count": 8
+        },
+        {
+          "item": "irons_spellbooks:arcane_ingot",
+          "count": 2
+        },
+        {
+          "item": "minecraft:grass_block",
+          "count": 3
+        },
+        {
+          "item": "minecraft:netherrack",
+          "count": 3
+        },
+        {
+          "item": "minecraft:end_stone",
+          "count": 3
+        }
+      ]
+    }
+  ]
+}

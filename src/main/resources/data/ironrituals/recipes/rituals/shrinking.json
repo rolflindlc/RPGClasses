@@ -1,0 +1,86 @@
+{
+  "type": "ironrituals:ritual",
+  "ritual": "ironrituals:shrinking",
+  "school": "irons_spellbooks:nature",
+  "min_circle": 1,
+  "rarity": "common",
+  "extendable": false,
+  "tiers": [
+    {
+      "level": 1,
+      "mana": 100,
+      "components": [
+        {
+          "item": "minecraft:poisonous_potato",
+          "count": 1
+        },
+        {
+          "item": "minecraft:brown_mushroom",
+          "count": 3
+        },
+        {
+          "item": "irons_spellbooks:arcane_essence",
+          "count": 5
+        }
+      ],
+      "duration_seconds": 300
+    },
+    {
+      "level": 2,
+      "mana": 150,
+      "components": [
+        {
+          "item": "minecraft:poisonous_potato",
+          "count": 2
+        },
+        {
+          "item": "minecraft:brown_mushroom",
+          "count": 6
+        },
+        {
+          "item": "irons_spellbooks:arcane_essence",
+          "count": 10
+        },
+        {
+          "item": "minecraft:phantom_membrane",
+          "count": 2
+        }
+      ],
+      "duration_seconds": 900
+    },
+    {
+      "level": 3,
+      "mana": 200,
+      "components": [
+        {
+          "item": "minecraft:poisonous_potato",
+          "count": 3
+        },
+        {
+          "item": "minecraft:brown_mushroom",
+          "count": 12
+        },
+        {
+          "item": "irons_spellbooks:arcane_essence",
+          "count": 20
+        },
+        {
+          "item": "minecraft:phantom_membrane",
+          "count": 4
+        }
+      ],
+      "duration_seconds": 1800
+    }
+  ],
+  "catalysts": [
+    {
+      "id": "climb",
+      "components": [
+        {
+          "item": "minecraft:rabbit_foot",
+          "count": 1
+        }
+      ]
+    }
+  ]
+}

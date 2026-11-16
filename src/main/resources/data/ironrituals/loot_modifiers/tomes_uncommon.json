@@ -1,0 +1,44 @@
+{
+  "type": "ironrituals:add_ritual_tome",
+  "conditions": [
+    {
+      "condition": "minecraft:alternative",
+      "terms": [
+        {
+          "condition": "forge:loot_table_id",
+          "loot_table_id": "irons_spellbooks:chests/catacombs/coffin_loot"
+        },
+        {
+          "condition": "forge:loot_table_id",
+          "loot_table_id": "irons_spellbooks:chests/catacombs/hidden_trough_treasure"
+        },
+        {
+          "condition": "forge:loot_table_id",
+          "loot_table_id": "irons_spellbooks:chests/citadel/rampart_chest"
+        },
+        {
+          "condition": "forge:loot_table_id",
+          "loot_table_id": "irons_spellbooks:chests/ice_spider_den/dungeon"
+        },
+        {
+          "condition": "forge:loot_table_id",
+          "loot_table_id": "irons_spellbooks:chests/impaled_icebreaker/captain_quarters"
+        },
+        {
+          "condition": "forge:loot_table_id",
+          "loot_table_id": "irons_spellbooks:chests/battleground/burial_loot"
+        },
+        {
+          "condition": "forge:loot_table_id",
+          "loot_table_id": "irons_spellbooks:chests/generic_magic_treasure"
+        },
+        {
+          "condition": "forge:loot_table_id",
+          "loot_table_id": "irons_spellbooks:chests/citadel/citadel_tomes"
+        }
+      ]
+    }
+  ],
+  "rarity": "uncommon",
+  "chance": 0.2
+}

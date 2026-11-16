@@ -1,0 +1,87 @@
+{
+  "type": "ironrituals:ritual",
+  "ritual": "ironrituals:inverted_gravity",
+  "school": "irons_spellbooks:ender",
+  "min_circle": 1,
+  "rarity": "uncommon",
+  "extendable": false,
+  "tiers": [
+    {
+      "level": 1,
+      "mana": 150,
+      "components": [
+        {
+          "item": "irons_spellbooks:arcane_essence",
+          "count": 10
+        },
+        {
+          "item": "minecraft:shulker_shell",
+          "count": 2
+        },
+        {
+          "item": "minecraft:ender_pearl",
+          "count": 2
+        }
+      ],
+      "duration_seconds": 300,
+      "params": {
+        "radius": 10
+      }
+    },
+    {
+      "level": 2,
+      "mana": 250,
+      "components": [
+        {
+          "item": "irons_spellbooks:arcane_essence",
+          "count": 20
+        },
+        {
+          "item": "minecraft:shulker_shell",
+          "count": 4
+        },
+        {
+          "item": "minecraft:ender_pearl",
+          "count": 4
+        }
+      ],
+      "duration_seconds": 300,
+      "params": {
+        "radius": 20
+      }
+    },
+    {
+      "level": 3,
+      "mana": 350,
+      "components": [
+        {
+          "item": "irons_spellbooks:arcane_essence",
+          "count": 30
+        },
+        {
+          "item": "minecraft:shulker_shell",
+          "count": 6
+        },
+        {
+          "item": "minecraft:ender_pearl",
+          "count": 6
+        }
+      ],
+      "duration_seconds": 300,
+      "params": {
+        "radius": 30
+      }
+    }
+  ],
+  "catalysts": [
+    {
+      "id": "crushing",
+      "components": [
+        {
+          "tag": "minecraft:anvil",
+          "count": 1
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "type": "ironrituals:ritual",
+  "ritual": "ironrituals:night",
+  "school": "irons_spellbooks:blood",
+  "min_circle": 1,
+  "rarity": "common",
+  "extendable": false,
+  "tiers": [
+    {
+      "level": 1,
+      "mana": 100,
+      "components": [
+        {
+          "item": "irons_spellbooks:blood_vial",
+          "count": 4
+        },
+        {
+          "tag": "minecraft:beds",
+          "count": 1
+        }
+      ],
+      "duration_seconds": 900,
+      "params": {
+        "target_time": 13000
+      }
+    }
+  ],
+  "catalysts": [
+    {
+      "id": "freeze_clock",
+      "components": [
+        {
+          "item": "minecraft:clock",
+          "count": 1
+        },
+        {
+          "item": "minecraft:amethyst_shard",
+          "count": 4
+        }
+      ]
+    }
+  ]
+}

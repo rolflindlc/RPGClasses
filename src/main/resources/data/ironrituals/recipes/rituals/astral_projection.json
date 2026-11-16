@@ -1,0 +1,51 @@
+{
+  "type": "ironrituals:ritual",
+  "ritual": "ironrituals:astral_projection",
+  "school": "irons_spellbooks:eldritch",
+  "min_circle": 2,
+  "rarity": "uncommon",
+  "extendable": false,
+  "tiers": [
+    {
+      "level": 2,
+      "mana": 200,
+      "components": [
+        {
+          "item": "minecraft:ender_eye",
+          "count": 3
+        },
+        {
+          "item": "minecraft:echo_shard",
+          "count": 5
+        },
+        {
+          "item": "irons_spellbooks:arcane_essence",
+          "count": 15
+        },
+        {
+          "ingredient": [
+            {
+              "type": "forge:partial_nbt",
+              "item": "minecraft:potion",
+              "nbt": {
+                "Potion": "minecraft:night_vision"
+              }
+            },
+            {
+              "type": "forge:partial_nbt",
+              "item": "minecraft:potion",
+              "nbt": {
+                "Potion": "minecraft:long_night_vision"
+              }
+            }
+          ],
+          "count": 1
+        }
+      ],
+      "duration_seconds": 60,
+      "params": {
+        "radius": 120
+      }
+    }
+  ]
+}

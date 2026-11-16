@@ -1,0 +1,36 @@
+{
+  "type": "ironrituals:ritual",
+  "ritual": "ironrituals:metamorphosis",
+  "school": "irons_spellbooks:blood",
+  "min_circle": 3,
+  "rarity": "rare",
+  "extendable": false,
+  "tiers": [
+    {
+      "level": 3,
+      "mana": 400,
+      "components": [
+        {
+          "soul": {
+            "entities": [
+              "minecraft:villager"
+            ],
+            "player": true
+          }
+        },
+        {
+          "item": "irons_spellbooks:blood_vial",
+          "count": 8
+        },
+        {
+          "item": "irons_spellbooks:arcane_essence",
+          "count": 16
+        },
+        {
+          "item": "minecraft:leather",
+          "count": 16
+        }
+      ]
+    }
+  ]
+}

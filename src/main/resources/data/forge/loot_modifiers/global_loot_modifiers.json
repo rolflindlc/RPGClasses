@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "entries": [
+    "ironrituals:tomes_common",
+    "ironrituals:tomes_uncommon",
+    "ironrituals:tomes_rare"
+  ]
+}

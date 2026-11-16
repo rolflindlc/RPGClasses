@@ -1,0 +1,132 @@
+{
+  "type": "ironrituals:ritual",
+  "ritual": "ironrituals:time_distortion",
+  "school": "irons_spellbooks:ender",
+  "min_circle": 1,
+  "rarity": "rare",
+  "extendable": false,
+  "tiers": [
+    {
+      "level": 1,
+      "mana": 200,
+      "components": [
+        {
+          "item": "minecraft:clock",
+          "count": 1
+        },
+        {
+          "item": "irons_spellbooks:arcane_essence",
+          "count": 8
+        },
+        {
+          "item": "minecraft:echo_shard",
+          "count": 2
+        },
+        {
+          "item": "minecraft:amethyst_shard",
+          "count": 4
+        }
+      ],
+      "duration_seconds": 120,
+      "params": {
+        "radius": 15,
+        "vmin": 0.25
+      }
+    },
+    {
+      "level": 2,
+      "mana": 300,
+      "components": [
+        {
+          "item": "minecraft:clock",
+          "count": 2
+        },
+        {
+          "item": "irons_spellbooks:arcane_essence",
+          "count": 16
+        },
+        {
+          "item": "minecraft:echo_shard",
+          "count": 4
+        },
+        {
+          "item": "minecraft:amethyst_shard",
+          "count": 8
+        },
+        {
+          "item": "irons_spellbooks:arcane_ingot",
+          "count": 1
+        }
+      ],
+      "duration_seconds": 300,
+      "params": {
+        "radius": 30,
+        "vmin": 0.15
+      }
+    },
+    {
+      "level": 3,
+      "mana": 400,
+      "components": [
+        {
+          "item": "minecraft:clock",
+          "count": 3
+        },
+        {
+          "item": "irons_spellbooks:arcane_essence",
+          "count": 32
+        },
+        {
+          "item": "minecraft:echo_shard",
+          "count": 8
+        },
+        {
+          "item": "minecraft:amethyst_shard",
+          "count": 16
+        },
+        {
+          "item": "irons_spellbooks:mithril_ingot",
+          "count": 1
+        }
+      ],
+      "duration_seconds": 600,
+      "params": {
+        "radius": 45,
+        "vmin": 0.05
+      }
+    }
+  ],
+  "catalysts": [
+    {
+      "id": "haste",
+      "components": [
+        {
+          "ingredient": [
+            {
+              "type": "forge:partial_nbt",
+              "item": "minecraft:potion",
+              "nbt": {
+                "Potion": "minecraft:swiftness"
+              }
+            },
+            {
+              "type": "forge:partial_nbt",
+              "item": "minecraft:potion",
+              "nbt": {
+                "Potion": "minecraft:long_swiftness"
+              }
+            },
+            {
+              "type": "forge:partial_nbt",
+              "item": "minecraft:potion",
+              "nbt": {
+                "Potion": "minecraft:strong_swiftness"
+              }
+            }
+          ],
+          "count": 1
+        }
+      ]
+    }
+  ]
+}

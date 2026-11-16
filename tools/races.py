@@ -337,13 +337,13 @@ RACES.update({
     ("swarm", "minecraft:slime_ball", False, [
         mech("swarm", slimes_per_heart=V(1, 1, 1, 2), duration_seconds=V(10, 15, 20, 30), cooldown_seconds=V(60, 50, 40, 30),
              touch_damage=V(1, 1.5, 1.5, 1), slime_speed=V(0, 0, .25, .25), max_slimes=25, leash=32)]),
-    ("spring", "minecraft:piston", False, [
+    ("spring", "minecraft:piston", True, [
         mech("spring", charge_seconds=V(3, 5, 6.5, 8), power=V(1, 1.5, 2, 3), cooldown_seconds=V(10, 8, 6, 5),
              min_charge_seconds=.5, bounces=3)]),
     ("mitotic", "minecraft:magma_cream", False, [
         attr((MC + "max_health", -.15, "multiply_base")),
         mech("mitosis", merge_health=V(0, .20, .30, .50), cooldown_seconds=V(300, 240, 180, 120), merge_seconds=V(3, 3, 2, 2))]),
-    ("viscous", "minecraft:honey_block", False, [
+    ("viscous", "minecraft:honey_block", True, [
         mech("sticky", grip_seconds=V(4, 6, 8, 12), release_damage=6), mech("honey_slide", slide_speed=.05),
         mech("slowing_hits", amplifier=V(0, 0, 1, 1), slow_seconds=V(2, 3, 3, 4))])]),
  "colossus": ("minecraft:iron_block", [
@@ -379,12 +379,12 @@ RACES.update({
          ram_knockback=V(4, 5, 6, 7), ram_threshold=.40, ram_speed_loss=.75, jump_charge_seconds=V(1, .9, .75, .6),
          passengers=V(1, 1, 2, 2), passenger_penalty=.10, speed_limit=3.0, fall_height=6),
     mech("no_mount")], [
-    ("pegasus", "minecraft:feather", False, [
+    ("pegasus", "minecraft:feather", True, [
         mech("glide", min_fall=V(8, 6, 4, 3), air_control=V(0, 0, 1, 1), flap_cooldown_seconds=V(0, 0, 0, 20))]),
-    ("unicorn", "minecraft:amethyst_shard", False, [
+    ("unicorn", "minecraft:amethyst_shard", True, [
         mech("mana_aura", radius=V(8, 10, 12, 16), mana_regen=.50), mech("blessed", healing=.50),
         mech("horn", ram_bonus=V(.25, .33, .40, .50))]),
-    ("warrior", "minecraft:iron_horse_armor", False, [
+    ("warrior", "minecraft:iron_horse_armor", True, [
         mech("war_gallop", damage_bonus=V(.20, .30, .40, .50), ram_speed_loss=V(.60, .50, .40, .30))])]),
 })
 

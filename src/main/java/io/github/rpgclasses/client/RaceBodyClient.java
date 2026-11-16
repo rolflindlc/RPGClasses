@@ -7,6 +7,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.tags.FluidTags;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.client.event.MovementInputUpdateEvent;
 import net.minecraftforge.client.gui.overlay.ForgeGui;
@@ -29,6 +30,20 @@ public final class RaceBodyClient {
     private static double airVy;
     private static int jumpHeld;
     private static int shallowJumpCooldown;
+    // Slime Resorte
+    private static int springHeld;
+    private static int springBouncesLeft;
+    private static double springBounceFactor;
+    private static int springTicks;
+    // Slime Viscoso
+    private static double grip = -1;
+    private static boolean stuck;
+    private static int stuckEntity = -1;
+    private static Vec3 stuckOffset = Vec3.ZERO;
+    private static float lastHealth;
+    // Centauro Pegaso
+    private static long flapReadyAt;
+    private static boolean jumpWasDown;
 
     private RaceBodyClient() {}
 
@@ -40,8 +55,162 @@ public final class RaceBodyClient {
             airVy = 0;
             return;
         }
-        bounce(p);
-        heavy(p, mc.options.keyJump.isDown() && mc.screen == null);
+        boolean jump = mc.options.keyJump.isDown() && mc.screen == null;
+        springBounce(p);
+        sticky(p, jump);
+        if (!stuck) bounce(p);
+        heavy(p, jump);
+        glide(p, jump);
+        jumpWasDown = jump;
+        lastHealth = p.getHealth();
+    }
+
+    // ------------------------------------------------------------------ Slime Resorte
+
+    private static long cooldownLeft(LocalPlayer p, String key) {
+        return ClientHandlers.LOCAL_DATA.cooldowns.getOrDefault(key, 0L) - p.level().getGameTime();
+    }
+
+    /** Agachado en el suelo se carga; se pierde al dejar de agacharse sin saltar. */
+    private static void springCharge(LocalPlayer p, MovementInputUpdateEvent event) {
+        double maxSeconds = Races.number(p, "race_spring", "charge_seconds", 0);
+        if (maxSeconds <= 0) {
+            springHeld = 0;
+            return;
+        }
+        int max = (int) Math.round(maxSeconds * 20);
+        boolean sneaking = event.getInput().shiftKeyDown;
+        if (sneaking && p.onGround() && !event.getInput().jumping) {
+            if (cooldownLeft(p, "rpgclasses:race_spring") <= 0) springHeld = Math.min(max, springHeld + 1);
+            return;
+        }
+        int min = (int) Math.round(Races.number(p, "race_spring", "min_charge_seconds", 0.5) * 20);
+        if (event.getInput().jumping && sneaking && p.onGround() && springHeld >= min) {
+            double maxPower = Races.number(p, "race_spring", "power", 1);
+            double power = maxPower * (0.3 + 0.7 * springHeld / (double) max);
+            // Como el Impulso del tridente: 3 × (1 + nivel) / 4 bloques por tick hacia donde mira.
+            Vec3 dir = p.getLookAngle().normalize().scale(3.0 * (1 + power) / 4.0);
+            if (p.onGround()) p.move(net.minecraft.world.entity.MoverType.SELF, new Vec3(0, 1.2, 0));
+            p.push(dir.x, dir.y, dir.z);
+            p.startAutoSpinAttack(20);
+            p.resetFallDistance();
+            springBouncesLeft = (int) Races.number(p, "race_spring", "bounces", 3);
+            springBounceFactor = 0.3 + 0.7 * Math.min(1, power / 3.0);
+            springTicks = 60;
+            io.github.rpgclasses.network.Net.CHANNEL.sendToServer(new io.github.rpgclasses.network.Packets.RaceMotion(
+                    io.github.rpgclasses.network.Packets.RaceMotion.SPRING, springHeld, -1));
+            event.getInput().jumping = false;
+            event.getInput().shiftKeyDown = false;
+        }
+        springHeld = 0;
+    }
+
+    /** Tras un lanzamiento, rebota contra las paredes (y el suelo) con fuerza según la potencia; agachado no. */
+    private static void springBounce(LocalPlayer p) {
+        if (springTicks <= 0) return;
+        springTicks--;
+        if (p.isShiftKeyDown() || springBouncesLeft <= 0) {
+            springTicks = 0;
+            return;
+        }
+        Vec3 v = p.getDeltaMovement();
+        if (p.horizontalCollision) {
+            double vx = v.x, vz = v.z;
+            // Se invierte la componente que ha chocado (la mayor de las dos si no se sabe cuál).
+            if (Math.abs(vx) >= Math.abs(vz)) vx = -vx; else vz = -vz;
+            p.setDeltaMovement(vx * springBounceFactor, Math.max(v.y, 0.2), vz * springBounceFactor);
+            p.hasImpulse = true;
+            springBouncesLeft--;
+        } else if (p.onGround() && airVy < -MIN_BOUNCE) {
+            p.setDeltaMovement(v.x, -airVy * springBounceFactor, v.z);
+            p.hasImpulse = true;
+            springBouncesLeft--;
+            airVy = 0;
+        }
+    }
+
+    // ------------------------------------------------------------------ Slime Viscoso
+
+    private static void setStuck(boolean value, int entity) {
+        if (stuck == value && stuckEntity == entity) return;
+        stuck = value;
+        stuckEntity = entity;
+        io.github.rpgclasses.network.Net.CHANNEL.sendToServer(new io.github.rpgclasses.network.Packets.RaceMotion(
+                value ? io.github.rpgclasses.network.Packets.RaceMotion.STICK : io.github.rpgclasses.network.Packets.RaceMotion.UNSTICK, 0, entity));
+    }
+
+    private static void sticky(LocalPlayer p, boolean jump) {
+        double gripSeconds = Races.number(p, "race_sticky", "grip_seconds", 0);
+        if (gripSeconds <= 0) {
+            if (stuck) setStuck(false, -1);
+            grip = -1;
+            return;
+        }
+        double max = gripSeconds * 20;
+        if (grip < 0) grip = max;
+        if (!stuck && p.onGround()) grip = Math.min(max, grip + max / 40);
+        // Pared de miel: en el aire, contra una pared se cae despacio.
+        double slide = Races.number(p, "race_honey_slide", "slide_speed", 0);
+        Vec3 v = p.getDeltaMovement();
+        if (!stuck && slide > 0 && !p.onGround() && p.horizontalCollision && v.y < -slide) {
+            p.setDeltaMovement(v.x, -slide, v.z);
+            p.resetFallDistance();
+        }
+        boolean sneaking = p.isShiftKeyDown();
+        float lost = lastHealth - p.getHealth();
+        if (stuck) {
+            Entity target = stuckEntity >= 0 ? p.level().getEntity(stuckEntity) : null;
+            boolean release = !sneaking || grip <= 0 || lost >= Races.number(p, "race_sticky", "release_damage", 6)
+                    || (stuckEntity >= 0 && (target == null || !target.isAlive()));
+            if (release) {
+                setStuck(false, -1);
+                return;
+            }
+            grip--;
+            if (target != null) {
+                Vec3 at = target.position().add(stuckOffset);
+                p.setDeltaMovement(at.subtract(p.position()));
+            } else {
+                p.setDeltaMovement(0, jump ? 0.15 : 0, 0);
+            }
+            p.resetFallDistance();
+            return;
+        }
+        if (!sneaking || grip <= 0 || p.onGround()) return;
+        if (p.horizontalCollision) {
+            stuckOffset = Vec3.ZERO;
+            setStuck(true, -1);
+            return;
+        }
+        for (Entity e : p.level().getEntities(p, p.getBoundingBox().inflate(0.15), e -> e instanceof net.minecraft.world.entity.LivingEntity && e.isAlive())) {
+            stuckOffset = p.position().subtract(e.position());
+            setStuck(true, e.getId());
+            return;
+        }
+    }
+
+    // ------------------------------------------------------------------ Centauro Pegaso
+
+    /** Mientras planea (caída lenta oculta del servidor): control en el aire (Rango 2) y aleteo (Rango 3). */
+    private static void glide(LocalPlayer p, boolean jump) {
+        var slow = p.getEffect(net.minecraft.world.effect.MobEffects.SLOW_FALLING);
+        if (slow == null || !slow.isAmbient() || p.onGround() || !Races.has(p, "race_glide")) return;
+        if (Races.number(p, "race_glide", "air_control", 0) > 0) {
+            Vec3 look = Vec3.directionFromRotation(0, p.getYRot());
+            float forward = p.input.forwardImpulse;
+            Vec3 v = p.getDeltaMovement();
+            p.setDeltaMovement(v.x + look.x * 0.02 * forward, v.y, v.z + look.z * 0.02 * forward);
+        }
+        double flap = Races.number(p, "race_glide", "flap_cooldown_seconds", 0);
+        long now = p.level().getGameTime();
+        if (flap > 0 && jump && !jumpWasDown && now >= flapReadyAt) {
+            Vec3 v = p.getDeltaMovement();
+            p.setDeltaMovement(v.x, 0.6, v.z);
+            p.hasImpulse = true;
+            flapReadyAt = now + Math.round(flap * 20);
+            p.level().playLocalSound(p.getX(), p.getY(), p.getZ(), net.minecraft.sounds.SoundEvents.ENDER_DRAGON_FLAP,
+                    net.minecraft.sounds.SoundSource.PLAYERS, 0.6f, 1.4f, false);
+        }
     }
 
     /** Slime: al tocar suelo tras caer, sale rebotado con la velocidad que traía (como un bloque de slime). */
@@ -107,6 +276,7 @@ public final class RaceBodyClient {
     public static void onMovementInput(MovementInputUpdateEvent event) {
         Minecraft mc = Minecraft.getInstance();
         if (!(event.getEntity() instanceof LocalPlayer p) || p != mc.player) return;
+        springCharge(p, event);
         if (!RaceTraits.isCentaur(p) || p.isPassenger() || p.getAbilities().flying || p.isInWater() || p.isInLava()) {
             jumpHeld = 0;
             return;
@@ -136,12 +306,19 @@ public final class RaceBodyClient {
     /** Barra de carga en el sitio de la barra de experiencia (como la del caballo). */
     public static void renderHud(ForgeGui gui, GuiGraphics g, float partialTick, int width, int height) {
         Minecraft mc = Minecraft.getInstance();
-        if (mc.player == null || mc.options.hideGui || jumpHeld <= TAP_TICKS) return;
-        float fraction = chargeFraction(mc.player);
+        if (mc.player == null || mc.options.hideGui) return;
         int x = width / 2 - 91;
         int y = height - 29;
+        if (jumpHeld > TAP_TICKS) bar(g, x, y, chargeFraction(mc.player), 0xFFE0C040);
+        double maxSpring = Races.number(mc.player, "race_spring", "charge_seconds", 0) * 20;
+        if (springHeld > 0 && maxSpring > 0) bar(g, x, y, (float) Math.min(1, springHeld / maxSpring), 0xFF7CDB5A);
+        double maxGrip = Races.number(mc.player, "race_sticky", "grip_seconds", 0) * 20;
+        if (maxGrip > 0 && grip >= 0 && (stuck || grip < maxGrip)) bar(g, x, y - 6, (float) (grip / maxGrip), 0xFFD8A030);
+    }
+
+    private static void bar(GuiGraphics g, int x, int y, float fraction, int color) {
         g.fill(x, y, x + 182, y + 5, 0xFF000000);
         g.fill(x + 1, y + 1, x + 181, y + 4, 0xFF303030);
-        g.fill(x + 1, y + 1, x + 1 + (int) (180 * fraction), y + 4, fraction >= 1f ? 0xFF55FF55 : 0xFFE0C040);
+        g.fill(x + 1, y + 1, x + 1 + (int) (180 * fraction), y + 4, fraction >= 1f ? 0xFF55FF55 : color);
     }
 }

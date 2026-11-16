@@ -153,7 +153,7 @@
       "display": {
         "icon": "minecraft:piston"
       },
-      "available": false,
+      "available": true,
       "effects": [
         {
           "type": "rpgclasses:mechanic",
@@ -347,7 +347,7 @@
       "display": {
         "icon": "minecraft:honey_block"
       },
-      "available": false,
+      "available": true,
       "effects": [
         {
           "type": "rpgclasses:mechanic",

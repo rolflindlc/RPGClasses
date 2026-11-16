@@ -53,6 +53,7 @@ public final class RacialSpells {
 
     @SubscribeEvent
     public void onSpellHeal(SpellHealEvent event) {
+        if (event.getTargetEntity() != null) io.github.rpgclasses.content.race.HealSources.spellHeal(event.getTargetEntity());
         if (event.getTargetEntity() instanceof ServerPlayer target && Races.has(target, "race_lifeless")) {
             SPELL_HEAL_TICK.put(target.getUUID(), target.level().getGameTime());
         }

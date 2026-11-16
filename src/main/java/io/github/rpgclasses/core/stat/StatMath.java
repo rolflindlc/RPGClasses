@@ -4,8 +4,8 @@ package io.github.rpgclasses.core.stat;
 public final class StatMath {
     public static final double SPEED_BONUS_CAP = 1.0;
     public static final double JUMP_BONUS_CAP = 1.5;
-    /** Regla 7: suma de bonos porcentuales de vida máxima (los penalizadores restan). */
-    public static final double MAX_HEALTH_PCT_CAP = 1.0;
+    /** Regla 7: la vida máxima ya no tiene tope (adenda de razas 0.7, decisión del usuario); solo el suelo. */
+    public static final double MAX_HEALTH_PCT_CAP = Double.POSITIVE_INFINITY;
     /** Suelos (anexo de razas, regla 8): vida mínima 10 HP (−50 % de 20) y velocidad total mínima −25 %. */
     public static final double MAX_HEALTH_PCT_FLOOR = -0.5;
     public static final double SPEED_PENALTY_FLOOR = -0.25;

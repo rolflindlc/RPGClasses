@@ -30,7 +30,8 @@ public final class PortraitButton extends Button {
         this.fallbackItem = fallbackItem;
         this.layout = layout;
         this.showName = showName;
-        if (!showName || layout == Layout.VERTICAL) setTooltip(Tooltip.create(name));
+        // Siempre con ayuda: con 6 subrazas (Dracónido) las pestañas son estrechas y el nombre se corta.
+        setTooltip(Tooltip.create(name));
     }
 
     public PortraitButton unavailable() {

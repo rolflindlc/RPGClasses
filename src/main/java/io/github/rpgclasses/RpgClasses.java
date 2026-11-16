@@ -127,6 +127,9 @@ public class RpgClasses {
         MinecraftForge.EVENT_BUS.register(new io.github.rpgclasses.content.race.RaceAbilities());
         MinecraftForge.EVENT_BUS.register(new io.github.rpgclasses.content.race.CraftTraits());
         MinecraftForge.EVENT_BUS.register(new io.github.rpgclasses.content.race.WolfRider());
+        // Adenda de razas 0.7: Slime, Coloso, Dracónido y Centauro.
+        MinecraftForge.EVENT_BUS.register(new io.github.rpgclasses.content.race.BodyTraits());
+        MinecraftForge.EVENT_BUS.register(new io.github.rpgclasses.content.race.DraconicTraits());
         MinecraftForge.EVENT_BUS.register(io.github.rpgclasses.content.race.Rites.listener());
     }
 

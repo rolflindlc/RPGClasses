@@ -80,10 +80,30 @@ public final class RaceTraits {
         return (float) Math.max(0.1, 1 + ModAttributes.value(player, ModAttributes.SCALE));
     }
 
+    /** Centauro (adenda 0.7): hitbox de caballo, 1,4 de ancho. */
+    public static final float CENTAUR_WIDTH = 1.4f;
+
+    public static boolean isCentaur(Player player) {
+        return player.isAddedToWorld() && ModAttributes.value(player, ModAttributes.BODY) == ModAttributes.BODY_CENTAUR;
+    }
+
+    public static float centaurHeight(net.minecraft.world.entity.Pose pose) {
+        return switch (pose) {
+            case CROUCHING -> 1.45f;
+            case SWIMMING, FALL_FLYING, SPIN_ATTACK -> 1.0f;
+            default -> 1.6f;
+        };
+    }
+
     /** La hitbox ya viene escalada de {@code PlayerSizeMixin}; aquí solo se escala la altura de los ojos. */
     @SubscribeEvent
     public void onSize(EntityEvent.Size event) {
         if (!(event.getEntity() instanceof Player player)) return;
+        if (event.getPose() != net.minecraft.world.entity.Pose.SLEEPING && isCentaur(player)) {
+            // El torso humano sobresale algo por encima de la hitbox (ojos a 1,5).
+            event.setNewEyeHeight(centaurHeight(event.getPose()) * 0.94f);
+            return;
+        }
         float s = scale(player);
         if (s == 1f) return;
         event.setNewEyeHeight(event.getNewEyeHeight() * s);
@@ -93,7 +113,7 @@ public final class RaceTraits {
     public void onPlayerTick(TickEvent.PlayerTickEvent event) {
         if (event.phase != TickEvent.Phase.END) return;
         Player player = event.player;
-        float s = scale(player);
+        float s = scale(player) + (isCentaur(player) ? 100f : 0f); // el cambio de cuerpo también refresca la hitbox
         Float last = LAST_SCALE.put(player, s);
         if (last == null ? s != 1f : last != s) player.refreshDimensions();
         if (player instanceof ServerPlayer sp && !(sp instanceof FakePlayer) && sp.isAlive()) {

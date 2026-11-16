@@ -47,6 +47,9 @@ public final class ModAttributes {
     public static final RegistryObject<Attribute> SCALE = register("scale", 0, -0.9, 10);
     /** Elfo: mayor que 0 = atraviesa y trepa hojas (se usa como bandera sincronizada). */
     public static final RegistryObject<Attribute> LEAF_WALKER = register("leaf_walker", 0, 0, 1);
+    /** Forma del cuerpo (adenda de razas 0.7): 0 = humana, 1 = Centauro (hitbox de caballo). Sincronizado. */
+    public static final RegistryObject<Attribute> BODY = register("body", 0, 0, 10);
+    public static final int BODY_CENTAUR = 1;
 
     private static RegistryObject<Attribute> register(String name, double def, double min, double max) {
         return ATTRIBUTES.register(name,

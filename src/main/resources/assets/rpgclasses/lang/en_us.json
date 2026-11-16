@@ -834,6 +834,7 @@
   "mechanic.rpgclasses.water_potency.name": "Water Charge Potency",
   "mechanic.rpgclasses.wild_bond.name": "Wild Bond",
   "mechanic.rpgclasses.wild_magic.name": "Chaos Magic",
+  "message.rpgclasses.belt_full": "Your belt has no room for more blocks",
   "message.rpgclasses.bond_broken": "You have broken the bond with %s",
   "message.rpgclasses.bond_made": "Wild Bond with %s",
   "message.rpgclasses.breath_no_mana": "Not enough mana for your breath",

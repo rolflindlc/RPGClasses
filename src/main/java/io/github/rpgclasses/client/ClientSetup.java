@@ -75,12 +75,11 @@ public final class ClientSetup {
                 });
         modBus.addListener((EntityRenderersEvent.AddLayers event) -> {
             CentaurRender.reset();
-            // Porteador: los bloques del cinturón en la cintura.
-            for (String skin : event.getSkins()) {
-                net.minecraft.client.renderer.entity.player.PlayerRenderer renderer = event.getSkin(skin);
-                if (renderer != null) renderer.addLayer(new BeltLayer(renderer));
-            }
         });
+        // Porteador: los bloques del cinturón en la cintura (al pintar al jugador: también con Epic Fight) y guardar con Ctrl+Mayús+clic.
+        MinecraftForge.EVENT_BUS.addListener(BeltLayer::onRenderPre);
+        MinecraftForge.EVENT_BUS.addListener(net.minecraftforge.eventbus.api.EventPriority.HIGHEST, BeltLayer::onUseBlock);
+        MinecraftForge.EVENT_BUS.addListener(net.minecraftforge.eventbus.api.EventPriority.HIGHEST, BeltLayer::onUseItem);
         MinecraftForge.EVENT_BUS.addListener(net.minecraftforge.eventbus.api.EventPriority.LOW, CentaurRender::onRenderPre);
         MinecraftForge.EVENT_BUS.addListener(CentaurRender::onRenderPost);
         MinecraftForge.EVENT_BUS.addListener(ShakeFx::onClientTick);

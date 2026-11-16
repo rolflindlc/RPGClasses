@@ -194,6 +194,20 @@ public final class Packets {
         }
     }
 
+    /** Cliente -> servidor: Ctrl + Mayús + clic derecho con un bloque en la mano: guardarlo en el cinturón del Porteador. */
+    public record BeltInsert() {
+        public void encode(FriendlyByteBuf buf) {}
+
+        public static BeltInsert decode(FriendlyByteBuf buf) {
+            return new BeltInsert();
+        }
+
+        public void handle(Supplier<NetworkEvent.Context> ctx) {
+            ServerPlayer sender = ctx.get().getSender();
+            if (sender != null) io.github.rpgclasses.content.race.PorterBelt.insertHeld(sender);
+        }
+    }
+
     public record AirJump() {
         public void encode(FriendlyByteBuf buf) {}
 

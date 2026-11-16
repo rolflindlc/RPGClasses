@@ -23,7 +23,8 @@
   ],
   "client": [
     "client.CameraZoomMixin",
-    "client.ArmorLegsMixin"
+    "client.ArmorLegsMixin",
+    "client.LocalPlayerPushMixin"
   ],
   "injectors": {
     "defaultRequire": 1

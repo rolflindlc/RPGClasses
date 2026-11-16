@@ -273,6 +273,7 @@ RACE_UI = {
  "msg.rpgclasses.result.wall_invalid": "Ese muro no se puede elegir (tu clase no lo tiene o ya lo elegiste).",
  "msg.rpgclasses.result.wall_slots_full": "Ya has elegido tus muros. Cambian al reiniciar la clase.",
  "message.rpgclasses.breath_no_mana": "No tienes maná para el aliento",
+ "message.rpgclasses.belt_full": "No te caben más bloques en el cinturón",
  "effect.rpgclasses.corrosion": "Corrosión",
  "message.rpgclasses.last_stand": "¡Última Resistencia! Sobrevives con medio corazón",
  "message.rpgclasses.elf_no_meat": "Los elfos no comen carne ni pescado",

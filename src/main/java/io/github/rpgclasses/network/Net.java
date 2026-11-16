@@ -75,6 +75,9 @@ public final class Net {
         CHANNEL.messageBuilder(Packets.BeltVisual.class, id++, NetworkDirection.PLAY_TO_CLIENT)
                 .encoder(Packets.BeltVisual::encode).decoder(Packets.BeltVisual::decode)
                 .consumerMainThread(Packets.BeltVisual::handle).add();
+        CHANNEL.messageBuilder(Packets.BeltInsert.class, id++, NetworkDirection.PLAY_TO_SERVER)
+                .encoder(Packets.BeltInsert::encode).decoder(Packets.BeltInsert::decode)
+                .consumerMainThread(Packets.BeltInsert::handle).add();
     }
 
     public static void toPlayer(ServerPlayer player, Object message) {

@@ -53,10 +53,22 @@ public final class RaceBodyClient {
 
     private RaceBodyClient() {}
 
+    /** Ticks que quedan de refrescar la hitbox y la altura de ojos tras elegir o cambiar de raza. */
+    private static int refreshTicks;
+
+    /** Al cambiar la raza (y su tamaño) la cámara se ajusta enseguida, no al agacharse por primera vez. */
+    public static void refreshBodySoon() {
+        refreshTicks = 20;
+    }
+
     public static void onClientTick(TickEvent.ClientTickEvent event) {
         if (event.phase != TickEvent.Phase.END) return;
         Minecraft mc = Minecraft.getInstance();
         LocalPlayer p = mc.player;
+        if (p != null && refreshTicks > 0) {
+            refreshTicks--;
+            p.refreshDimensions();
+        }
         if (p == null || mc.level == null || p.isSpectator() || p.getAbilities().flying || p.isPassenger()) {
             airVy = 0;
             return;

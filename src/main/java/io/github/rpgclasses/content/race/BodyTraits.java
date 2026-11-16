@@ -361,13 +361,13 @@ public final class BodyTraits {
         }
     }
 
-    /** Centauro: +1 bloque de altura de paso mientras galopa a ≥40 % de su velocidad máxima. */
+    /** Centauro: +0,75 bloques de altura de paso mientras galopa a ≥40 % de su velocidad máxima. */
     private static void setGallopStep(ServerPlayer p, boolean on) {
         AttributeInstance step = p.getAttribute(net.minecraftforge.common.ForgeMod.STEP_HEIGHT_ADDITION.get());
         if (step == null) return;
         boolean has = step.getModifier(CENTAUR_STEP) != null;
         if (on == has) return;
-        if (on) step.addTransientModifier(new AttributeModifier(CENTAUR_STEP, "rpgclasses centaur step", 1.0, AttributeModifier.Operation.ADDITION));
+        if (on) step.addTransientModifier(new AttributeModifier(CENTAUR_STEP, "rpgclasses centaur step", 0.75, AttributeModifier.Operation.ADDITION));
         else step.removeModifier(CENTAUR_STEP);
     }
 

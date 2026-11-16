@@ -209,7 +209,7 @@ public final class RangerSubclasses {
         ActiveMechanic m = MechanicService.find(ranger, SAFEGUARD);
         if (m == null || !isPetOf(pet, ranger)) return;
         long now = pet.level().getGameTime();
-        if (pet.getPersistentData().getLong(TAG_SAFEGUARD_UNTIL) > now) return;
+        if (pet.getPersistentData().getLong(TAG_SAFEGUARD_UNTIL) > now && !CreativeAmuletItem.carried(ranger)) return;
         pet.getPersistentData().putLong(TAG_SAFEGUARD_UNTIL, now + (long) (m.number("cooldown_seconds", 300) * 20));
         pet.getPersistentData().putLong(TAG_IDLE_UNTIL, now + (long) (m.number("idle_seconds", 60) * 20));
         event.setAmount(Math.max(0, pet.getHealth() - 1));

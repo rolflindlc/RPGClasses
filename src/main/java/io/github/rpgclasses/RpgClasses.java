@@ -88,6 +88,7 @@ public class RpgClasses {
         MinecraftForge.EVENT_BUS.register(new io.github.rpgclasses.content.BattleMage());
         MinecraftForge.EVENT_BUS.register(new io.github.rpgclasses.content.VoidMark());
         MinecraftForge.EVENT_BUS.register(new io.github.rpgclasses.content.Chronomancy());
+        MinecraftForge.EVENT_BUS.register(new io.github.rpgclasses.content.CreativeAmuletItem.Events());
         MinecraftForge.EVENT_BUS.register(new RogueAbilities());
         MinecraftForge.EVENT_BUS.register(new ShieldWall());
         MinecraftForge.EVENT_BUS.register(MechanicService.listener());

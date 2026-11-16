@@ -29,9 +29,16 @@ public final class ModBlocks {
     public static final RegistryObject<Item> BOND_BOOK = ITEMS.register("bond_book",
             () -> new BondBookItem(new Item.Properties()));
 
+    /** Amuleto del Creativo (pruebas): sin enfriamientos de clase ni de raza mientras se lleve. Sin receta. */
+    public static final RegistryObject<Item> CREATIVE_AMULET = ITEMS.register("creative_amulet",
+            () -> new io.github.rpgclasses.content.CreativeAmuletItem(new Item.Properties()));
+
     public static void onCreativeTab(BuildCreativeModeTabContentsEvent event) {
         if (event.getTabKey() == CreativeModeTabs.FUNCTIONAL_BLOCKS) event.accept(RACE_ALTAR_ITEM);
-        if (event.getTabKey() == CreativeModeTabs.TOOLS_AND_UTILITIES) event.accept(BOND_BOOK);
+        if (event.getTabKey() == CreativeModeTabs.TOOLS_AND_UTILITIES) {
+            event.accept(BOND_BOOK);
+            event.accept(CREATIVE_AMULET);
+        }
     }
 
     private ModBlocks() {}

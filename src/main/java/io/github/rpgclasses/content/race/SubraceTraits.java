@@ -236,7 +236,8 @@ public final class SubraceTraits {
     private static void steal(ServerPlayer thief, LivingEntity victim, DamageSource source, ActiveMechanic m) {
         RandomSource rnd = thief.getRandom();
         long now = thief.level().getGameTime();
-        if (now < THIEF_COOLDOWN.getOrDefault(thief.getUUID(), 0L)) return;
+        if (now < THIEF_COOLDOWN.getOrDefault(thief.getUUID(), 0L)
+                && !io.github.rpgclasses.content.CreativeAmuletItem.carried(thief)) return;
         ItemStack stolen = ItemStack.EMPTY;
         if (victim instanceof ServerPlayer target) {
             String key = thief.getUUID() + ">" + target.getUUID();

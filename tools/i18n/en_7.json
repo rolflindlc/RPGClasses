@@ -8,6 +8,7 @@
 "death.attack.rpgclasses.swarm.player": "%1$s was engulfed by %2$s's swarm",
 "entity.rpgclasses.mitosis_copy": "Mitotic Copy",
 "entity.rpgclasses.swarm_slime": "Swarm Slime",
+"item.rpgclasses.creative_amulet": "Creative Amulet",
 "message.rpgclasses.mitosis_copy_lost": "You lost a copy: you will regain your size when the split cooldown ends",
 "message.rpgclasses.mitosis_merged": "You merge with your copy",
 "message.rpgclasses.mitosis_split": "Mitosis! You split into two copies: crouch next to the other one to merge",
@@ -26,6 +27,7 @@
 "param.rpgclasses.spell_cooldown_refund": "Spell cooldown recovered",
 "subclass.rpgclasses.chronomancer.desc": "Mage of time. You cast spells faster and master two abilities: Time Rewind, which takes you back to where you were a few seconds ago recovering health and mana, and Time Stop, a sphere that freezes enemies and projectiles for an instant.",
 "subclass.rpgclasses.chronomancer.name": "Chronomancer",
+"tooltip.rpgclasses.creative_amulet": "Testing: while it is in your inventory, every class and race cooldown is 0.",
 "ui.rpgclasses.belt.capacity": "Slots: %s/%s",
 "ui.rpgclasses.belt.open": "Open"
 }

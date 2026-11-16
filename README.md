@@ -68,6 +68,11 @@ Al entrar sin clase se abre la pantalla de selección.
 
 Para tener XP de prueba: `/xp add @s 9000 points`.
 
+**Amuleto del Creativo** (pestaña Herramientas y utilidades del creativo, o `/give @s rpgclasses:creative_amulet`):
+mientras esté en cualquier hueco del inventario, todos los enfriamientos de clase y de raza son 0 (habilidades,
+tiempos mínimos entre usos de pasivas y perks, recargas de cargas, Salvaguarda de Bestias y robo del Goblin Ladrón).
+No tiene receta; funciona en cualquier modo de juego para poder probar en supervivencia.
+
 ## Probar el Cronomante
 
 `/clase elegir rpgclasses:mage`, sube la base a 15 puntos y `/clase subclase rpgclasses:chronomancer`; ambas

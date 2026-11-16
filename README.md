@@ -1,67 +1,38 @@
 # RPG Classes (Forge 1.20.1)
 
 Mod de clases, ramas, subclases y razas definido por datapack. Diseño funcional en
-`documento_de_diseno_de_clases_v2.md` (rev. 2.11, con el Monje 2.9), razas y su estado en
+`documento_de_diseno_de_clases_v2.md`, razas y su estado en
 `documento_de_razas_implementacion.md`, y arquitectura en el documento
 "Arquitectura técnica del mod de clases".
 
-## Estado actual (2026-11-14)
+## Estado actual (2026-11-16)
 
-**Rev. 2.20 (sin probar en el juego):** rebalance del Monje (cargas sin techo de armadura: con 0 cargas por debajo
-de la media, con 5 en la media y con 10 por encima) y **Equipo de Clase**: armaduras de Bárbaro y Monje de todos
-los tiers (hasta dragonsteel de Ice and Fire), armas marciales del Monje (nudilleras, nunchaku, sai y bo), efectos
-de set completo solo para su clase y 32 curios (generales, de clase y de raza). Ice and Fire y Curios son opcionales.
-Detalle en `documento_equipo_de_clase.md`; texturas provisionales con `python3 -I tools/art/make_gear.py src/main/resources`.
+Todo lo siguiente está en el código y compila con sus pruebas, pero **no se ha probado en el juego** salvo la fase 1.
 
-Además de lo descrito abajo, ya están en el código, sin probar en el juego:
+- **Clases:** 6 clases con 5 ramas (3 usables) y perks, 18 subclases, habilidades, muros de disciplina, críticos
+  propios y topes (diseño v2, rev. 2.21). Integración con Iron's Spells y Epic Fight (opcionales).
+- **Equipo de Clase (rev. 2.20):** armaduras de Bárbaro y Monje de todos los tiers (hasta dragonsteel de Ice and Fire),
+  armas marciales del Monje, efectos de set y 32 curios (Curios opcional). Texturas provisionales
+  (`python3 -I tools/art/make_gear.py src/main/resources`). Detalle en `documento_equipo_de_clase.md`.
+- **Razas:** 12 razas, **39 subrazas** y 117 ritos, con Altar de Raza y jefes de rito; incluye las 4 razas de la
+  adenda 0.7 (Slime, Coloso, Dracónido y Centauro). Estado y pruebas en `documento_de_razas_implementacion.md`.
+- **Aliados** (tecla J), **Libro de Vínculos** del Maestro de Bestias, retratos e interfaz propia
+  (`python3 -I tools/art/make_ui.py src/main/resources`).
+- **HUD:** habilidades de clase y raciales con su tecla y enfriamiento (abajo a la derecha), conjuros gratuitos del
+  Mago, barras de sigilo, salto cargado, adherencia y fusión.
+- **Configuración:** de servidor (`rpgclasses-server.toml`: coste de XP, respec, aliados, depuración) y de cliente
+  (`rpgclasses-client.toml`: intensidad del temblor del Titán).
+- Red: protocolo **14** (servidor y cliente con el mismo jar). 17 mixins (2 solo de cliente).
+- Depuración: `/clases debug volcar` escribe un informe en `logs/`; `logs/rpgclasses-debug.log` lleva el registro.
 
-- **Razas:** 8 razas × 3 subrazas con ritos, Altar de Raza y jefes de rito (`documento_de_razas_implementacion.md`).
-- **Aliados:** sistema de aliados y enemigos (tecla J).
-- **Libro de Vínculos** del Maestro de Bestias.
-- **Interfaz:** retratos de clases, subclases, razas y subrazas, iconos de estados, y texturas propias de
-  panel, cabecera y tarjetas (`python3 -I tools/art/make_ui.py src/main/resources`; el origen de los
-  retratos está en `tools/art/`).
-- **Monje rev. 2.9:** cargas de postura, con barra de símbolos sobre la vida y efecto en los puños
-  (`python3 -I tools/art/make_charges.py src/main/resources` genera los iconos).
-- Red: protocolo **11**; 14 mixins.
+### Pendiente
 
-El resto de este apartado es el historial de las fases iniciales.
-
-## Fase 4 en curso (historial)
-
-Hecho:
-
-- **Fase 1, núcleo:** progresión con XP, ramas, subclase, respec ilimitado (pierde el 33% de la XP),
-  datos del jugador que sobreviven a la muerte, carga del datapack con `/reload`, red y comandos.
-- **Fase 2, estadísticas y daño:**
-  - Pasivas de atributo de ramas y subclases aplicadas en el juego (armadura, velocidad, vida, salto...).
-  - Pasivas "sin armadura" de Bárbaro y Monje; Coraza del Paladín; topes globales de velocidad y salto.
-  - Muros de Armadura, armas pesadas, ligeras, arco y Escudos (desgaste y cooldown al ser desactivado
-    por un hacha); muro de Magia si Iron's Spells está instalado.
-  - Críticos propios (30% base, Bárbaro 35%, Pícaro 25%) y Furia de Heridas.
-  - `/clases debug item` y `/clases debug stats`.
-
-- **Fase 3 (en curso), interfaz:**
-  - Pantalla de selección al entrar sin clase, con cuatro pestañas por clase: resumen, ramas y
-    habilidades, subclases y datos exactos. No se cierra hasta elegir (Esc abre el menú de pausa).
-  - La tecla K abre la misma pantalla; en tu clase, la pestaña Progreso permite gastar puntos,
-    elegir subclase y reiniciar con botones.
-  - Los "datos exactos" se generan de los JSON del datapack, incluidas las habilidades
-    (`abilities/*.json`), así que siguen cualquier cambio de balance tras `/reload`.
-
-- **Fase 4 (en curso), habilidades:**
-  - Framework: habilidades desbloqueadas calculadas del progreso, cooldowns guardados con el jugador,
-    teclas Z / X / C (configurables) y lista con cooldown en la esquina inferior derecha.
-  - Equipo inicial irrompible al elegir clase; se retira del inventario al reiniciarla.
-  - Paladín: Provocación, Guardia Firme y Baluarte. Bárbaro: Sed de Sangre, Embestida y Furia Berserker.
-  - Ranger: Conservación de Munición, Doble Salto, Disparo Pesado, zoom, velocidad de carga y de proyectil.
-  - Monje: Posturas Elementales, Desvío de Proyectiles y Paso Ligero (sin daño por caída).
-
-Aún sin efecto en el juego: habilidades de Mago y Pícaro, mecánicas de subclase, caminar sobre
-agua y lava del Monje, ballestas en Conservación de Munición, integración con Iron's Spells y
-Epic Fight y resistencia a debuffs.
-
-Problema conocido: el muro de Escudos aumenta el desgaste, pero el cooldown alargado no se aplica.
+- Probar en el juego y calibrar los valores marcados **[MEDIR]** en los documentos de diseño.
+- Ids que hay que leer en el pack: conjuros de agua de T.O Magic 'n Extras (Moldeador), efecto Mojado y dragones de
+  Ice and Fire.
+- Enfriamiento del escudo por el muro de Escudos (aparcado): hoy solo aumenta el desgaste.
+- Animaciones propias de nunchaku y bo; curios por subclase y por subraza (sin diseñar).
+- Integrar los anexos (razas, adenda 0.7, equipo) en el documento de diseño v2. Publicación en CurseForge.
 
 Los textos y los JSON se generan con `python3 tools/gen_data.py src/main/resources`
 (números de habilidades y textos en `tools/texts.py`).

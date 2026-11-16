@@ -86,8 +86,8 @@ Ids de raza: `rpgclasses:human`, `orc`, `dwarf`, `elf`, `goblin`, `triton`, `inf
 2. Calibrar cantidades de ritos y valores **[MEDIR]**.
 3. Integrar el anexo en el documento v2 y actualizar el documento de arquitectura.
 4. Moldeador: conjuros de *T.O Magic 'n Extras* (ids pendientes).
-5. Traducción `en_us` (los textos nuevos solo están en `es_es`), README y publicación en CurseForge.
-6. HUD de Conjuros Gratuitos y enfriamientos raciales; cooldown del escudo por muro (aparcado); ballestas en Conservación.
+5. Publicación en CurseForge (la traducción `en_us` y el README ya están al día).
+6. Cooldown del escudo por muro (aparcado). *Hecho el 2026-11-16:* HUD de enfriamientos raciales (filas doradas encima de las habilidades de clase, con su tecla) y ballestas en Conservación de Munición (la munición se devuelve al cargar la ballesta; esa flecha no se puede recoger).
 7. Opcional: texturas propias para los botones estándar de los menús (hoy solo usan las propias los paneles, las cabeceras y las tarjetas con retrato).
 
 ## 4. Qué probar
@@ -165,7 +165,7 @@ Nada de esto se ha probado en el juego. Perfil: Forge 1.20.1 (47.4.x) + Iron's S
 
 ## 5. Fase R3: razas de la adenda 0.7 (Slime, Coloso, Dracónido y Centauro)
 
-Fecha: 2026-11-16 (R3a y R3b; R3c el mismo día). Protocolo de red **13** (servidor y cliente con el mismo jar). Ids: `rpgclasses:slime`, `colossus`, `draconid`, `centaur`. **Las 15 subrazas están disponibles** (39 en total).
+Fecha: 2026-11-16 (R3a y R3b; R3c el mismo día). Protocolo de red **14** (servidor y cliente con el mismo jar). Ids: `rpgclasses:slime`, `colossus`, `draconid`, `centaur`. **Las 15 subrazas están disponibles** (39 en total).
 
 ### 5.1 Qué hay hecho
 
@@ -200,25 +200,25 @@ Fecha: 2026-11-16 (R3a y R3b; R3c el mismo día). Protocolo de red **13** (servi
 * **Enjambre (R3c):** el número de slimes redondea hacia arriba (con 5,5 HP, 3 slimes) y la vida se reparte por igual. El enfriamiento empieza al uniros. Los slimes atacan a mobs hostiles, jefes, jugadores enemigos y a quien os ataque a ti o a tus aliados (a 8 bloques del slime y 16 de ti). La regeneración natural cura 1 HP a un slime dañado cada 4 s con la comida casi llena. Al salir o cambiar de dimensión os unís. Dividido tampoco haces daño de otras formas (Epic Fight, proyectiles ya lanzados, efectos).
 * **Mitótico (R3c):** "enemigo" = mob hostil, jefe, jugador enemigo o un mob que te tenía como objetivo. Si tu copia muere (o se queda atrás al cambiar de dimensión), recuperas tu tamaño al acabar el enfriamiento de la división, sin curarte. Vida tras fusionar en Rango 0: 1 HP.
 * **Guerrero (R3c):** con Epic Fight se restauran las teclas de movimiento si una animación de ataque las bloquea estando al ≥40 % [MEDIR: depende de cómo bloquee Epic Fight el movimiento].
+* **Choques que se solapan:** si la embestida del Centauro y la *Embestida* del Bárbaro o el Baluarte del Juggernaut alcanzan al mismo objetivo con menos de 8 ticks de diferencia, el segundo solo añade lo que supera al primero (si no lo supera, ni daña ni empuja).
 * **Correcciones (R3c):** el galope del Centauro no medía bien el movimiento en el servidor (no habría acelerado nunca); ahora compara con la posición anterior. El planeo del Pegaso ya no depende de la velocidad vertical del servidor (no es fiable), solo de la distancia de caída. Un Coloso Juggernaut que atraviesa hojas o cristal con la Embestida ya no rompe además un cubo de 2×2×2 alrededor de cada bloque (lo mismo con los pasos del Titán).
 
 ### 5.3 Qué falta
 
-1. **Porteador:** ver los bloques del cinturón sobre su cuerpo (hoy solo están en su menú).
+1. **Porteador:** ajustar en el juego dónde se ven los bloques del cinturón en la cintura **[MEDIR]**.
 2. **Centauro:** ajustar en el juego las medidas del cuerpo de caballo, del torso y de los pasajeros sobre el lomo **[MEDIR]**.
-3. Que la embestida del Centauro no se sume a la *Embestida* del Bárbaro o el Juggernaut (contar solo la más fuerte).
-4. Comprobar los ids de los dragones de Ice and Fire y del efecto Mojado de T.O Magic 'n Extras, y calibrar todo lo marcado **[MEDIR]** en la adenda.
-5. Integrar la adenda 0.7 en el anexo de razas y en el documento v2 (reglas 7, 8 y 10 y sección 10).
+3. Comprobar los ids de los dragones de Ice and Fire y del efecto Mojado de T.O Magic 'n Extras, y calibrar todo lo marcado **[MEDIR]** en la adenda.
+4. Integrar la adenda 0.7 en el anexo de razas y en el documento v2 (reglas 7, 8 y 10 y sección 10).
 
 ### 5.4 Qué probar
 
-0. **Arranque:** sin errores de Mixin (17: 15 comunes y 2 de cliente, `CameraZoomMixin` y `ArmorLegsMixin`). Servidor y cliente con el mismo jar (protocolo 13). Con `/clases raza set <jugador> <raza> <subraza> [rango]` se prueba cada subraza.
+0. **Arranque:** sin errores de Mixin (17: 15 comunes y 2 de cliente, `CameraZoomMixin` y `ArmorLegsMixin`). Servidor y cliente con el mismo jar (protocolo 14). Con `/clases raza set <jugador> <raza> <subraza> [rango]` se prueba cada subraza.
 1. **Elección:** las 4 razas nuevas en la pantalla, con 6 pestañas en el Dracónido (el nombre completo sale al pasar el ratón). Ninguna subraza en gris.
 2. **Slime:** caer desde lo alto sin daño y rebotar; agachado no rebota; salto de 2,5 bloques. **Resorte** y **Viscoso** como arriba.
 3. **Enjambre** (`slime swarm`): V con poca y mucha vida (número de slimes, 25 como mucho); que te sigan y ataquen a un zombi; que un golpe fuerte mate a un solo slime; que al morir el tuyo pases a otro; que no puedas usar objetos, comer, abrir puertas ni lanzar conjuros; una poción de curación crea slimes; V de nuevo os une con la vida sumada; en Rango 3, un slime por medio corazón. Otro jugador te ve como un slime. Ritos: derrotas por contacto y el jefe con 6 slimes vivos.
 4. **Mitótico** (`slime mitotic`): que un zombi te "mate" y te dividas (mitad de tamaño, vida llena, copia con tu aspecto que huye); que el vacío o `/kill` no te dividan; que al morir la que controlas pases a la copia; fusionarte agachado junto a ella (barra) con la vida del Rango; el enfriamiento (no se divide dos veces seguidas). Rito Dos en Uno.
 5. **Coloso** (`colossus porter`): tamaño, romper 2×2×2 de pie y 1 agachado, cofres que no se rompen, agua (se hunde), cultivos pisados, no poder montar barcas ni caballos, caer 6 bloques sin daño, cámara en tercera persona.
-6. **Porteador:** V abre el cinturón; poner cofres (dos en un hueco = cofre grande), un horno con algo que cocinar y caminar (sigue cocinando), una mesa de crafteo y un yunque; Abrir cada uno; que un aliado agachado con clic derecho lo abra y uno que no es aliado no; morir y ver que cae todo; salir y entrar y que se conserve; con pasajeros, más lento.
+6. **Porteador:** V abre el cinturón; poner cofres (dos en un hueco = cofre grande), un horno con algo que cocinar y caminar (sigue cocinando), una mesa de crafteo y un yunque; Abrir cada uno; que un aliado agachado con clic derecho lo abra y uno que no es aliado no; morir y ver que cae todo; salir y entrar y que se conserve; con pasajeros, más lento. Otro jugador ve los bloques en tu cintura.
 7. **Titán** (`colossus titan`): V para crecer (no deja si hay techo), la barra amarilla extra que se pierde al terminar, romper 3×3×3, alcance largo, subir escalones de 2 bloques, caer 12 sin daño, hojas que se rompen y césped que se vuelve tierra (no en el spawn protegido), el temblor en otro jugador cercano y la opción `titanShake`, y que el enfriamiento empiece al acabar (V de nuevo lo termina antes).
 8. **Dracónido:** cada aliento con la tecla V (y cortarlo con V), el maná que baja, el muro de Magia con un Bárbaro, la Corrosión en el inventario del objetivo, resistencias (fuego, nieve polvo, rayo, veneno, ahogarse).
 9. **Centauro:** el cuerpo de caballo (patas al andar, cola, pelaje distinto en otro jugador, sin grebas ni botas a la vista, con y sin Epic Fight); correr en recto y ver que acelera (antes de esta fase no lo hacía); embestir a un zombi; salto cargado con barra; que un aliado se monte (clic derecho) y que con 2 pasajeros vayan uno detrás de otro; huecos de 1 bloque. **Guerrero:** golpear corriendo al galope sin perder la carrera, con y sin Epic Fight.

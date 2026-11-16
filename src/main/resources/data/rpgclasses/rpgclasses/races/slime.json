@@ -46,7 +46,7 @@
       "display": {
         "icon": "minecraft:slime_ball"
       },
-      "available": false,
+      "available": true,
       "effects": [
         {
           "type": "rpgclasses:mechanic",
@@ -252,7 +252,7 @@
       "display": {
         "icon": "minecraft:magma_cream"
       },
-      "available": false,
+      "available": true,
       "effects": [
         {
           "type": "rpgclasses:attribute",

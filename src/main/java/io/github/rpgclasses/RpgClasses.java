@@ -137,6 +137,7 @@ public class RpgClasses {
         MinecraftForge.EVENT_BUS.register(new io.github.rpgclasses.content.race.CentaurTraits());
         MinecraftForge.EVENT_BUS.register(new io.github.rpgclasses.content.race.ColossusForms());
         MinecraftForge.EVENT_BUS.register(new io.github.rpgclasses.content.race.PorterBelt());
+        MinecraftForge.EVENT_BUS.register(new io.github.rpgclasses.content.race.SlimeForms());
         MinecraftForge.EVENT_BUS.register(io.github.rpgclasses.content.race.Rites.listener());
     }
 

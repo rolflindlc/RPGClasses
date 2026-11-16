@@ -82,8 +82,16 @@ public final class ClientSetup {
         MinecraftForge.EVENT_BUS.addListener(ClientSetup::onRenderPlayer);
         MinecraftForge.EVENT_BUS.addListener(ChickenFx::onRenderPlayer);
         MinecraftForge.EVENT_BUS.addListener(RabbitFx::onRenderPlayer);
-        modBus.addListener((EntityRenderersEvent.RegisterRenderers event) ->
-                event.registerEntityRenderer(ModEntities.DECOY.get(), DecoyRenderer::new));
+        modBus.addListener((EntityRenderersEvent.RegisterRenderers event) -> {
+            event.registerEntityRenderer(ModEntities.DECOY.get(), DecoyRenderer::new);
+            event.registerEntityRenderer(ModEntities.SWARM_SLIME.get(), SwarmSlimeRenderer::new);
+            event.registerEntityRenderer(ModEntities.MITOSIS_COPY.get(), DecoyRenderer::new);
+        });
+        // Formas del Slime (adenda 0.7): el Enjambre se dibuja como un slime; barra de fusión del Mitótico.
+        MinecraftForge.EVENT_BUS.addListener(net.minecraftforge.eventbus.api.EventPriority.HIGH, SlimeFormsClient::onRenderPlayer);
+        MinecraftForge.EVENT_BUS.addListener(SlimeFormsClient::onRenderHand);
+        MinecraftForge.EVENT_BUS.addListener(SlimeFormsClient::onClientTick);
+        modBus.addListener((RegisterGuiOverlaysEvent event) -> event.registerAboveAll("mitosis_merge", SlimeFormsClient::renderHud));
         MinecraftForge.EVENT_BUS.addListener((ClientPlayerNetworkEvent.LoggingOut event) -> ClientHandlers.reset());
     }
 

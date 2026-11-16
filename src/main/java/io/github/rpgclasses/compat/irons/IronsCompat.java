@@ -149,7 +149,8 @@ public final class IronsCompat {
     @SubscribeEvent(priority = EventPriority.HIGH)
     public void onPreCast(SpellPreCastEvent event) {
         if (!(event.getEntity() instanceof ServerPlayer player)) return;
-        if (io.github.rpgclasses.content.DeathGamble.flipping(player)) { // Apuesta con la Muerte: no puede hacer nada
+        if (io.github.rpgclasses.content.DeathGamble.flipping(player) // Apuesta con la Muerte: no puede hacer nada
+                || io.github.rpgclasses.content.race.SlimeForms.blocksActions(player)) { // Enjambre dividido: sin conjuros
             event.setCanceled(true);
             return;
         }

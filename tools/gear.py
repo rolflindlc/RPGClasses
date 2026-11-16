@@ -106,7 +106,9 @@ def lang():
            "death.attack.rpgclasses.breath_acid": "%1$s se disolvió en el aliento de %2$s",
            "death.attack.rpgclasses.breath_acid.player": "%1$s se disolvió en el aliento de %2$s",
            "death.attack.rpgclasses.breath_water": "%1$s se ahogó en el aliento de %2$s",
-           "death.attack.rpgclasses.breath_water.player": "%1$s se ahogó en el aliento de %2$s"}
+           "death.attack.rpgclasses.breath_water.player": "%1$s se ahogó en el aliento de %2$s",
+           "death.attack.rpgclasses.swarm": "%1$s fue engullido por el enjambre de %2$s",
+           "death.attack.rpgclasses.swarm.player": "%1$s fue engullido por el enjambre de %2$s"}
     for c in CLASSES:
         for t in ARMOR_TIERS:
             for p in PIECES:
@@ -213,7 +215,9 @@ def tags():
 
 DAMAGE_TYPES = ["martial", "dragon_flame", "dragon_frost", "dragon_spark",
                 # Aliento del Dracónido (adenda de razas 0.7)
-                "breath_fire", "breath_ice", "breath_lightning", "breath_poison", "breath_acid", "breath_water"]
+                "breath_fire", "breath_ice", "breath_lightning", "breath_poison", "breath_acid", "breath_water",
+                # Contacto del Slime Enjambre (adenda de razas 0.7)
+                "swarm"]
 # Capacidades de Epic Fight (primera versión: movesets existentes; animaciones propias en una fase posterior).
 EF_TYPE = {
  "nunchaku": {"type": "epicfight:dagger", "attributes": {"common": {"armor_negation": 0.0, "impact": 0.6, "max_strikes": 1}}},

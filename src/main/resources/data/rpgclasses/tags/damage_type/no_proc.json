@@ -18,6 +18,7 @@
     "rpgclasses:breath_lightning",
     "rpgclasses:breath_poison",
     "rpgclasses:breath_acid",
-    "rpgclasses:breath_water"
+    "rpgclasses:breath_water",
+    "rpgclasses:swarm"
   ]
 }

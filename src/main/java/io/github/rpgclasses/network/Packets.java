@@ -110,7 +110,8 @@ public final class Packets {
 
         public void handle(Supplier<NetworkEvent.Context> ctx) {
             ServerPlayer sender = ctx.get().getSender();
-            if (sender != null && !io.github.rpgclasses.content.DeathGamble.flipping(sender)) AbilityService.use(sender, slot);
+            if (sender != null && !io.github.rpgclasses.content.DeathGamble.flipping(sender)
+                    && !io.github.rpgclasses.content.race.SlimeForms.blocksActions(sender)) AbilityService.use(sender, slot);
         }
     }
 

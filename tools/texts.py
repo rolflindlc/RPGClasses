@@ -66,7 +66,7 @@ ABILITY_TEXT = {
     "stealth": ("Sigilo", "Al agacharte te vuelves invisible de verdad mientras te quede barra de Sigilo. Atacar o lanzar un hechizo gasta buena parte de la barra."),
     "shadow_step": ("Paso de Sombra", "Te teletransportas a la espalda del enemigo al que miras (hasta 10 bloques). Durante 8 s tus golpes a ese enemigo son críticos seguros y, si lo matas en ese tiempo, la habilidad se recarga al instante."),
     "decoy": ("Señuelo", "Al hacerte invisible dejas un clon con tu equipo que atrae a los enemigos y huye."),
-    "ammo_conservation": ("Conservación de Munición", "Cada disparo tiene una probabilidad de no gastar munición."),
+    "ammo_conservation": ("Conservación de Munición", "Cada disparo con arco o ballesta tiene una probabilidad de no gastar munición."),
     "double_jump": ("Doble Salto", "Pulsa saltar otra vez en el aire para dar un segundo salto."),
     "heavy_shot": ("Disparo Pesado", "Mantener el arco tensado al máximo aumenta el daño del disparo por tramos de tiempo."),
     "triple_jump": ("Triple Salto", "Añade un tercer salto en el aire."),

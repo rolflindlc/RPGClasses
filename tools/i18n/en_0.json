@@ -1,5 +1,5 @@
 {
-"ability.rpgclasses.ammo_conservation.desc": "Each shot has a chance not to consume ammo.",
+"ability.rpgclasses.ammo_conservation.desc": "Each bow or crossbow shot has a chance not to consume ammo.",
 "ability.rpgclasses.ammo_conservation.name": "Ammo Conservation",
 "ability.rpgclasses.berserker_rage.desc": "For a few seconds you attack faster and harder, but also take more damage. Activating it weakens nearby enemies.",
 "ability.rpgclasses.berserker_rage.name": "Berserker Rage",

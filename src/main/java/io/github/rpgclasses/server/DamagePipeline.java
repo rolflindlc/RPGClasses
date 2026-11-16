@@ -131,7 +131,7 @@ public final class DamagePipeline {
                 if (velocity > 0) FAST_ARROWS.add(arrow);
             }
             // Una flecha que no gastó munición no se puede recoger (evita duplicarlas).
-            if (shot[1] > 0) arrow.pickup = AbstractArrow.Pickup.CREATIVE_ONLY;
+            if (shot[1] > 0 || RangerAbilities.takeCrossbowConserved(shooter)) arrow.pickup = AbstractArrow.Pickup.CREATIVE_ONLY;
             // Solo las flechas con el arco tensado al máximo pueden ser críticas; el crítico vanilla se desactiva.
             tag.putBoolean(TAG_CAN_CRIT, arrow.isCritArrow());
             arrow.setCritArrow(false);

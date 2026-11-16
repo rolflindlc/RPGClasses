@@ -370,7 +370,10 @@ public final class BodyTraits {
             float damage = (float) (c.number("ram_damage", 6) * scale * (1 + bonus));
             double push = c.number("ram_knockback", 4) * scale * 0.25 * (Races.isBoss(e) ? 0.5 : 1);
             hits.put(e.getUUID(), now);
-            Rites.dealing("ram", () -> e.hurt(p.damageSources().playerAttack(p), damage));
+            // Con la Embestida del Bárbaro o el Baluarte del Juggernaut a la vez: cuenta solo el choque más fuerte.
+            float dealt = io.github.rpgclasses.content.RamOverlap.share(p, e, damage, io.github.rpgclasses.content.RamOverlap.CENTAUR);
+            if (dealt <= 0) continue;
+            Rites.dealing("ram", () -> e.hurt(p.damageSources().playerAttack(p), dealt));
             e.knockback(push, -dir.x, -dir.z);
             e.hurtMarked = true;
             p.level().playSound(null, e.blockPosition(), SoundEvents.HORSE_LAND, SoundSource.PLAYERS, 1f, 0.8f);

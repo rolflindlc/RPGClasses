@@ -87,7 +87,7 @@
       "display": {
         "icon": "minecraft:feather"
       },
-      "available": false,
+      "available": true,
       "effects": [
         {
           "type": "rpgclasses:mechanic",
@@ -181,7 +181,7 @@
       "display": {
         "icon": "minecraft:amethyst_shard"
       },
-      "available": false,
+      "available": true,
       "effects": [
         {
           "type": "rpgclasses:mechanic",
@@ -277,7 +277,7 @@
       "display": {
         "icon": "minecraft:iron_horse_armor"
       },
-      "available": false,
+      "available": true,
       "effects": [
         {
           "type": "rpgclasses:mechanic",

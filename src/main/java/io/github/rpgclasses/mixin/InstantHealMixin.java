@@ -16,11 +16,30 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class InstantHealMixin {
     @Inject(method = "applyInstantenousEffect", at = @At("HEAD"), cancellable = true)
     private void rpgclasses$noInstantHeal(Entity source, Entity indirectSource, LivingEntity target, int amplifier, double health, CallbackInfo ci) {
-        if ((Object) this == MobEffects.HEAL && target instanceof ServerPlayer player && Races.has(player, "race_lifeless")) ci.cancel();
+        if ((Object) this == MobEffects.HEAL && target instanceof ServerPlayer player && Races.has(player, "race_lifeless")) {
+            ci.cancel();
+            return;
+        }
+        if ((Object) this == MobEffects.HEAL) io.github.rpgclasses.content.race.HealSources.potionStart();
+    }
+
+    @Inject(method = "applyInstantenousEffect", at = @At("RETURN"))
+    private void rpgclasses$instantHealEnd(Entity source, Entity indirectSource, LivingEntity target, int amplifier, double health, CallbackInfo ci) {
+        io.github.rpgclasses.content.race.HealSources.potionEnd();
     }
 
     @Inject(method = "applyEffectTick", at = @At("HEAD"), cancellable = true)
     private void rpgclasses$noHealTick(LivingEntity target, int amplifier, CallbackInfo ci) {
-        if ((Object) this == MobEffects.HEAL && target instanceof ServerPlayer player && Races.has(player, "race_lifeless")) ci.cancel();
+        if ((Object) this == MobEffects.HEAL && target instanceof ServerPlayer player && Races.has(player, "race_lifeless")) {
+            ci.cancel();
+            return;
+        }
+        // Adenda 0.7 (Unicornio, Enjambre): la curación de Curación instantánea y Regeneración cuenta como "de poción".
+        if ((Object) this == MobEffects.HEAL || (Object) this == MobEffects.REGENERATION) io.github.rpgclasses.content.race.HealSources.potionStart();
+    }
+
+    @Inject(method = "applyEffectTick", at = @At("RETURN"))
+    private void rpgclasses$healTickEnd(LivingEntity target, int amplifier, CallbackInfo ci) {
+        io.github.rpgclasses.content.race.HealSources.potionEnd();
     }
 }

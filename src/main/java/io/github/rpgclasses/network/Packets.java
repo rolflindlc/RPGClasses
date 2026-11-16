@@ -133,6 +133,30 @@ public final class Packets {
     }
 
     /** Cliente -> servidor: el jugador ha hecho un salto aéreo (ya ejecutado en su cliente). */
+    /**
+     * Cliente -> servidor: movimientos raciales que decide el cliente (adenda 0.7).
+     * kind 0 = lanzamiento del Slime Resorte (value = ticks de carga); 1 = Viscoso se pega (entity = id o -1 si es
+     * una pared); 2 = Viscoso se suelta.
+     */
+    public record RaceMotion(int kind, int value, int entity) {
+        public static final int SPRING = 0, STICK = 1, UNSTICK = 2;
+
+        public void encode(FriendlyByteBuf buf) {
+            buf.writeByte(kind);
+            buf.writeVarInt(value);
+            buf.writeVarInt(entity);
+        }
+
+        public static RaceMotion decode(FriendlyByteBuf buf) {
+            return new RaceMotion(buf.readByte(), buf.readVarInt(), buf.readVarInt());
+        }
+
+        public void handle(Supplier<NetworkEvent.Context> ctx) {
+            ServerPlayer sender = ctx.get().getSender();
+            if (sender != null) io.github.rpgclasses.content.race.SlimeTraits.onMotion(sender, kind, value, entity);
+        }
+    }
+
     public record AirJump() {
         public void encode(FriendlyByteBuf buf) {}
 

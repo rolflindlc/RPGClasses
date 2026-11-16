@@ -131,6 +131,8 @@ public class RpgClasses {
         MinecraftForge.EVENT_BUS.register(new io.github.rpgclasses.content.race.BodyTraits());
         MinecraftForge.EVENT_BUS.register(new io.github.rpgclasses.content.race.DraconicTraits());
         MinecraftForge.EVENT_BUS.register(new io.github.rpgclasses.content.race.DraconicBreath());
+        MinecraftForge.EVENT_BUS.register(new io.github.rpgclasses.content.race.SlimeTraits());
+        MinecraftForge.EVENT_BUS.register(new io.github.rpgclasses.content.race.CentaurTraits());
         MinecraftForge.EVENT_BUS.register(io.github.rpgclasses.content.race.Rites.listener());
     }
 

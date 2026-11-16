@@ -190,7 +190,10 @@ public final class CombatAbilities {
         for (LivingEntity target : player.level().getEntitiesOfClass(LivingEntity.class, player.getBoundingBox().inflate(0.8),
                 e -> canHit(player, e))) {
             if (!charging.alreadyHit().add(target.getId())) continue;
-            if (hitDamage > 0) target.hurt(chargeDamage(player), hitDamage);
+            // Con la embestida del Centauro o el Baluarte del Juggernaut a la vez: cuenta solo el choque más fuerte.
+            float dealt = RamOverlap.share(player, target, Math.max(hitDamage, 0.01f), RamOverlap.BARBARIAN);
+            if (dealt <= 0) continue;
+            if (hitDamage > 0) target.hurt(chargeDamage(player), Math.min(hitDamage, dealt));
             // knockback() empuja en sentido contrario al vector dado: se pasa la dirección de la carga invertida.
             if (knockback > 0 && unstoppable == null) target.knockback(knockback, -dir.x, -dir.z);
             if (stunTicks > 0) stun(target, stunTicks);

@@ -98,11 +98,50 @@ public final class RangerAbilities {
         return p == null ? new double[] {0, 0} : new double[] {p.damageBonus(), p.ammoConserved() ? 1 : 0};
     }
 
+    // --- Conservación de Munición con ballesta: la munición se gasta al cargarla, no al disparar ---
+
+    private static final String CONSERVED_TAG = "rpgclasses.conserved_shot";
+    private record CrossbowLoad(ItemStack crossbow, ItemStack ammo) {}
+    private static final Map<UUID, CrossbowLoad> CROSSBOW_LOADS = new HashMap<>();
+
+    /** Al soltar una ballesta sin cargar se recuerda qué munición iba a gastar. */
+    @SubscribeEvent
+    public void onUseStop(net.minecraftforge.event.entity.living.LivingEntityUseItemEvent.Stop event) {
+        if (!(event.getEntity() instanceof ServerPlayer player) || player instanceof FakePlayer || player.getAbilities().instabuild) return;
+        ItemStack crossbow = event.getItem();
+        if (!(crossbow.getItem() instanceof net.minecraft.world.item.CrossbowItem) || net.minecraft.world.item.CrossbowItem.isCharged(crossbow)) return;
+        if (!AbilityService.unlocked(player).contains(AMMO_CONSERVATION)) return;
+        ItemStack ammo = player.getProjectile(crossbow);
+        if (!ammo.isEmpty()) CROSSBOW_LOADS.put(player.getUUID(), new CrossbowLoad(crossbow, ammo.copyWithCount(1)));
+    }
+
+    /** Si la ballesta ha quedado cargada, con la probabilidad de la habilidad se devuelve la munición gastada. */
+    private static void crossbowLoaded(ServerPlayer player) {
+        CrossbowLoad load = CROSSBOW_LOADS.remove(player.getUUID());
+        if (load == null || !net.minecraft.world.item.CrossbowItem.isCharged(load.crossbow())) return;
+        double chance = AbilityService.number(AbilityService.params(AMMO_CONSERVATION), "chance", 0.33);
+        if (player.getRandom().nextDouble() >= chance) return;
+        player.getInventory().placeItemBackInInventory(load.ammo());
+        load.crossbow().getOrCreateTag().putBoolean(CONSERVED_TAG, true);
+    }
+
+    /** Lo llama DamagePipeline al aparecer una flecha: true si sale de una ballesta cuya munición se conservó. */
+    public static boolean takeCrossbowConserved(ServerPlayer shooter) {
+        for (ItemStack hand : new ItemStack[] {shooter.getMainHandItem(), shooter.getOffhandItem()}) {
+            if (hand.getItem() instanceof net.minecraft.world.item.CrossbowItem && hand.hasTag() && hand.getTag().getBoolean(CONSERVED_TAG)) {
+                hand.getTag().remove(CONSERVED_TAG);
+                return true;
+            }
+        }
+        return false;
+    }
+
     /** Aviso (sonido, partículas y texto) al alcanzar cada tramo de Disparo Pesado; reinicio de los saltos aéreos. */
     @SubscribeEvent
     public void onPlayerTick(TickEvent.PlayerTickEvent event) {
         if (event.phase != TickEvent.Phase.END || !(event.player instanceof ServerPlayer player)) return;
         if (player.onGround() || player.isInWater() || player.onClimbable()) AIR_JUMPS_USED.remove(player.getUUID());
+        if (!CROSSBOW_LOADS.isEmpty()) crossbowLoaded(player);
 
         if (!player.isUsingItem() || !(player.getUseItem().getItem() instanceof BowItem)) {
             FULL_DRAW.remove(player.getUUID());
@@ -166,6 +205,7 @@ public final class RangerAbilities {
     @SubscribeEvent
     public void onLogout(PlayerEvent.PlayerLoggedOutEvent event) {
         PENDING.remove(event.getEntity().getUUID());
+        CROSSBOW_LOADS.remove(event.getEntity().getUUID());
         AIR_JUMPS_USED.remove(event.getEntity().getUUID());
         FULL_DRAW.remove(event.getEntity().getUUID());
     }

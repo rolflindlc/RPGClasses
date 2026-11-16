@@ -158,8 +158,12 @@ public final class PaladinSubclasses {
             Long last = hits.get(target.getId());
             if (last != null && now - last < icd) continue;
             hits.put(target.getId(), now);
+            // Con la embestida del Centauro o la Embestida del Bárbaro a la vez: cuenta solo el choque más fuerte.
+            float dealt = io.github.rpgclasses.content.RamOverlap.share(player, target, Math.max(damage, 0.01f),
+                    io.github.rpgclasses.content.RamOverlap.JUGGERNAUT);
+            if (dealt <= 0) continue;
             any = true;
-            if (damage > 0) target.hurt(CombatAbilities.chargeDamage(player), damage);
+            if (damage > 0) target.hurt(CombatAbilities.chargeDamage(player), Math.min(damage, dealt));
             Vec3 away = target.position().subtract(player.position());
             if (strength > 0 && away.horizontalDistanceSqr() > 1.0E-4) target.knockback(strength, -away.x, -away.z);
         }

@@ -1,5 +1,5 @@
 {
-  "ability.rpgclasses.ammo_conservation.desc": "Cada disparo tiene una probabilidad de no gastar munición.",
+  "ability.rpgclasses.ammo_conservation.desc": "Cada disparo con arco o ballesta tiene una probabilidad de no gastar munición.",
   "ability.rpgclasses.ammo_conservation.name": "Conservación de Munición",
   "ability.rpgclasses.berserker_rage.desc": "Durante unos segundos atacas más rápido y más fuerte, pero también recibes más daño. Al activarla debilitas a los enemigos cercanos.",
   "ability.rpgclasses.berserker_rage.name": "Furia Berserker",

@@ -89,7 +89,11 @@ public final class RaceAbilities {
             new Entry("race_nether_compass", 0, RaceAbilities::netherCompass),
             new Entry("race_portable_furnace", 0, RaceAbilities::portableFurnace),
             new Entry("race_ethereal", 0, RaceAbilities::ethereal),
-            new Entry("race_breath", 0, DraconicBreath::start));
+            new Entry("race_breath", 0, DraconicBreath::start),
+            new Entry("race_grow", 0, ColossusForms::grow));
+
+    /** Formas con duración (Titán, Enjambre): su enfriamiento empieza al terminar la forma. */
+    private static final Set<String> FORMS = Set.of("race_grow", "race_swarm");
 
     private static final TagKey<Structure> COMPASS_TARGETS = TagKey.create(Registries.STRUCTURE, RpgClasses.id("nether_compass"));
     private static final String TEMP_TAG = "rpgclasses.temp";
@@ -114,6 +118,11 @@ public final class RaceAbilities {
         // Dracónido: volver a pulsar mientras canaliza el aliento lo corta.
         if (slot % 2 == 0 && DraconicBreath.isChanneling(player)) {
             DraconicBreath.stop(player);
+            return;
+        }
+        // Titán: volver a pulsar termina la forma (y empieza el enfriamiento).
+        if (slot % 2 == 0 && ColossusForms.isGrown(player)) {
+            ColossusForms.shrink(player);
             return;
         }
         Entry entry = entryFor(player, slot);
@@ -154,7 +163,8 @@ public final class RaceAbilities {
         if (!used) return;
         Rites.onAbilityUsed(player, entry.mechanic());
         // Las canalizaciones (aliento) empiezan su enfriamiento al terminar la canalización máxima.
-        double cooldown = m.number("cooldown_seconds", 0) + m.number("channel_seconds", 0);
+        double cooldown = m.number("cooldown_seconds", 0) + m.number("channel_seconds", 0)
+                + (FORMS.contains(entry.mechanic()) ? m.number("duration_seconds", 0) : 0);
         AbilityService.setCooldown(player, key, (int) Math.round(cooldown * 20));
         player.displayClientMessage(Component.translatable("msg.rpgclasses.ability_used", name), true);
         io.github.rpgclasses.network.Net.syncPlayer(player);

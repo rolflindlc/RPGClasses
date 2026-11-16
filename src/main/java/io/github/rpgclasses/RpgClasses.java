@@ -51,6 +51,7 @@ public class RpgClasses {
     public RpgClasses() {
         IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
         ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, ServerConfig.SPEC);
+        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, io.github.rpgclasses.config.ClientConfig.SPEC);
         modBus.addListener(this::commonSetup);
         modBus.addListener(PlayerClassDataProvider::registerCapability);
         ModAttributes.ATTRIBUTES.register(modBus);
@@ -133,6 +134,7 @@ public class RpgClasses {
         MinecraftForge.EVENT_BUS.register(new io.github.rpgclasses.content.race.DraconicBreath());
         MinecraftForge.EVENT_BUS.register(new io.github.rpgclasses.content.race.SlimeTraits());
         MinecraftForge.EVENT_BUS.register(new io.github.rpgclasses.content.race.CentaurTraits());
+        MinecraftForge.EVENT_BUS.register(new io.github.rpgclasses.content.race.ColossusForms());
         MinecraftForge.EVENT_BUS.register(io.github.rpgclasses.content.race.Rites.listener());
     }
 

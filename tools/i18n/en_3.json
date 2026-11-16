@@ -226,7 +226,7 @@
 "param.rpgclasses.saturation": "Saturation",
 "param.rpgclasses.scald_damage": "Water damage",
 "param.rpgclasses.second_damage": "Damage to the second",
-"param.rpgclasses.size": "Tunnel (side)",
+"param.rpgclasses.size": "Breaking area side (blocks)",
 "param.rpgclasses.slow_seconds": "Slowness duration",
 "param.rpgclasses.slowness": "Slowness to enemies (level)",
 "param.rpgclasses.slowness_level": "Slowness level",

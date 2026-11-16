@@ -21,6 +21,9 @@
     "PlayerSizeMixin",
     "WolfRideMixin"
   ],
+  "client": [
+    "client.CameraZoomMixin"
+  ],
   "injectors": {
     "defaultRequire": 1
   }

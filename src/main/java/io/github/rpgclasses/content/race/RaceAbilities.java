@@ -90,7 +90,8 @@ public final class RaceAbilities {
             new Entry("race_portable_furnace", 0, RaceAbilities::portableFurnace),
             new Entry("race_ethereal", 0, RaceAbilities::ethereal),
             new Entry("race_breath", 0, DraconicBreath::start),
-            new Entry("race_grow", 0, ColossusForms::grow));
+            new Entry("race_grow", 0, ColossusForms::grow),
+            new Entry("race_belt", 0, PorterBelt::openOwn));
 
     /** Formas con duración (Titán, Enjambre): su enfriamiento empieza al terminar la forma. */
     private static final Set<String> FORMS = Set.of("race_grow", "race_swarm");

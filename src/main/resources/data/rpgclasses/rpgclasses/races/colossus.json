@@ -113,8 +113,23 @@
       "display": {
         "icon": "minecraft:chest"
       },
-      "available": false,
+      "available": true,
       "effects": [
+        {
+          "type": "rpgclasses:attribute",
+          "modifiers": [
+            {
+              "attribute": "minecraft:generic.movement_speed",
+              "operation": "multiply_base",
+              "values": [
+                -0.1,
+                -0.1,
+                -0.1,
+                -0.1
+              ]
+            }
+          ]
+        },
         {
           "type": "rpgclasses:mechanic",
           "id": "rpgclasses:race_belt",
@@ -134,7 +149,6 @@
               2
             ]
           },
-          "speed_penalty": 0.1,
           "passenger_penalty": {
             "values": [
               0.05,

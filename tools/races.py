@@ -352,8 +352,9 @@ RACES.update({
          (FS + "block_reach", 1.5, "add"), (FS + "entity_reach", 1.5, "add")),
     mech("hunger", exhaustion=.50), mech("area_break", size=2), mech("heavy"), mech("trample"), mech("no_mount"),
     mech("giant_fall", fall_height=6)], [
-    ("porter", "minecraft:chest", False, [
-        mech("belt", slots=V(3, 4, 5, 6), passengers=V(1, 1, 2, 2), speed_penalty=.10, passenger_penalty=V(.05, .05, .05, 0))]),
+    ("porter", "minecraft:chest", True, [
+        attr((MC + "movement_speed", -.10, "multiply_base")),
+        mech("belt", slots=V(3, 4, 5, 6), passengers=V(1, 1, 2, 2), passenger_penalty=V(.05, .05, .05, 0))]),
     ("titan", "minecraft:obsidian", True, [
         mech("grow", duration_seconds=V(30, 42, 51, 60), cooldown_seconds=V(225, 200, 175, 150), absorption=V(.50, .70, .85, 1.0),
              shake_radius=24, size=3, fall_height=12)])]),
@@ -400,7 +401,7 @@ SUBRACE_TEXT.update({
  ("slime", "spring"): ("Resorte", "Agachado, cargas un salto; al saltar sales disparado hacia donde miras (como con Impulso), sin daño de impacto y rebotando contra suelo y paredes."),
  ("slime", "mitotic"): ("Mitótico", "Aún menos vida, pero al recibir un golpe letal de un enemigo te divides en dos copias de la mitad de tamaño. Agachado junto a tu copia os fusionáis."),
  ("slime", "viscous"): ("Viscoso", "Agachado contra una pared o una entidad te quedas pegado. Te deslizas despacio por las paredes como por la miel y tus golpes dan Lentitud."),
- ("colossus", "porter"): ("Porteador", "Llevas un cinturón de cofres, hornos y mesas que usas mientras caminas, y tus aliados pueden montarse encima de ti."),
+ ("colossus", "porter"): ("Porteador", "Llevas un cinturón de cofres, hornos y mesas que usas mientras caminas (tecla racial 1; tus aliados lo abren agachados con clic derecho sobre ti), y tus aliados pueden montarse encima de ti. Algo más lento, y más con pasajeros."),
  ("colossus", "titan"): ("Titán", "Crecer (tecla racial 1): duplicas otra vez tu tamaño con una segunda barra de vida, rompes en 3×3×3 y la tierra tiembla a cada paso."),
  ("draconid", "fire"): ("de Fuego", "Resistes el fuego y tu aliento prende a los enemigos. Los dragones de fuego salvajes no te atacan si no los provocas."),
  ("draconid", "ice"): ("de Hielo", "Resistes el hielo y la congelación y tu aliento ralentiza. Los dragones de hielo salvajes no te atacan si no los provocas."),
@@ -452,6 +453,9 @@ MECHANIC_TEXT.update({
 # Fase R3c: textos nuevos de las habilidades de las subrazas complejas.
 RACE_UI.update({
  "message.rpgclasses.titan_no_room": "No hay sitio para crecer: hace falta espacio libre del doble de tu tamaño",
+ "container.rpgclasses.belt": "Cinturón de %s",
+ "ui.rpgclasses.belt.open": "Abrir",
+ "ui.rpgclasses.belt.capacity": "Huecos: %s/%s",
 })
 
 RACE_PARAMS.update({

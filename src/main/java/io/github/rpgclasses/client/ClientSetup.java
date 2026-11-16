@@ -64,6 +64,8 @@ public final class ClientSetup {
         MinecraftForge.EVENT_BUS.addListener(RaceBodyClient::onClientTick);
         MinecraftForge.EVENT_BUS.addListener(RaceBodyClient::onMovementInput);
         MinecraftForge.EVENT_BUS.addListener(ShakeFx::onClientTick);
+        modBus.addListener((net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent event) -> event.enqueueWork(() ->
+                net.minecraft.client.gui.screens.MenuScreens.register(io.github.rpgclasses.registry.ModMenus.BELT.get(), BeltScreen::new)));
         MinecraftForge.EVENT_BUS.addListener(ShakeFx::onCamera);
         // Cargas del Monje: encima de la armadura (y de la vida), reservando su altura en el lado izquierdo.
         modBus.addListener((RegisterGuiOverlaysEvent event) -> event.registerAbove(

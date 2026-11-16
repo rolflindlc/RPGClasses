@@ -1,6 +1,6 @@
 # Razas: estado de implementación (fases R1, R2 y R3)
 
-Acompaña a *Documento de Diseño: Razas* (anexo, rev. 0.6). Describe qué hay programado en el mod, cómo probarlo y qué falta. Fecha: 2026-11-13 (10.º relevo, con los ajustes de balance del diseño v2 rev. 2.13).
+Acompaña a *Documento de Diseño: Razas* (anexo, rev. 0.6, y adenda rev. 0.7). Describe qué hay programado en el mod, cómo probarlo y qué falta. Fecha: 2026-11-13 (10.º relevo, con los ajustes de balance del diseño v2 rev. 2.13); la sección 5 (razas de la adenda 0.7) es del 2026-11-16.
 
 **Cambio de diseño de esta fase (decidido por el usuario):** la invisibilidad **ya no se revela por cercanía a otro jugador**, ni la del Sigilo del Pícaro (documento v2, rev. 2.8) ni la de la Nube de Humo del Elfo Oscuro. Esto sustituye a la propuesta del anexo ("en PvP se revela a menos de 1 bloque"). El revelado "al hacer daño" de la Nube tampoco está programado: mientras dura, la nube vuelve a ocultar a quien esté dentro.
 

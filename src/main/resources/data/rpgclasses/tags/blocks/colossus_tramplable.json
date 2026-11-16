@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "#minecraft:crops",
+    "minecraft:sweet_berry_bush",
+    "minecraft:nether_wart",
+    "minecraft:cocoa",
+    "minecraft:pitcher_crop",
+    "minecraft:torchflower_crop"
+  ]
+}

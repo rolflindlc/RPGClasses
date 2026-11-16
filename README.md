@@ -12,7 +12,7 @@ Todo lo siguiente está en el código y compila con sus pruebas, pero **no se ha
 - **Clases:** 6 clases con 5 ramas (3 usables) y perks, 18 subclases, habilidades, muros de disciplina, críticos
   propios y topes (diseño v2, rev. 2.21). Integración con Iron's Spells y Epic Fight (opcionales).
 - **Equipo de Clase (rev. 2.20):** armaduras de Bárbaro y Monje de todos los tiers (hasta dragonsteel de Ice and Fire),
-  armas marciales del Monje, efectos de set y 32 curios (Curios opcional). Texturas provisionales
+  armas marciales del Monje, efectos de set y nudilleras en la ranura de manos de Curios (opcional); los 32 curios están **desactivados** en la versión de salida (`Curio.ENABLED` y `CURIOS_ENABLED` en `tools/gear.py`). Texturas provisionales
   (`python3 -I tools/art/make_gear.py src/main/resources`). Detalle en `documento_equipo_de_clase.md`.
 - **Razas:** 12 razas, **39 subrazas** y 117 ritos, con Altar de Raza y jefes de rito; incluye las 4 razas de la
   adenda 0.7 (Slime, Coloso, Dracónido y Centauro). Estado y pruebas en `documento_de_razas_implementacion.md`.

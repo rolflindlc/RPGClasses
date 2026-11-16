@@ -11,6 +11,12 @@ import net.minecraft.world.entity.player.Player;
  * en {@link CurioEffects} y solo funcionan si la restricción se sigue cumpliendo (p. ej., tras reiniciar la clase).
  */
 public enum Curio {
+    /*
+     * Desactivados en la versión de salida: con ENABLED = false no se registran los objetos, no se escuchan sus
+     * efectos y el generador de datos (tools/gear.py, CURIOS_ENABLED) no crea sus recetas, modelos ni ranuras.
+     * Para recuperarlos: true aquí y en tools/gear.py, y volver a generar los datos.
+     */
+
     // --- generales
     WISP_LANTERN("wisp_lantern", "charm", Rarity.RARE, null, null),
     LAST_BREATH_COMPASS("last_breath_compass", "necklace", Rarity.COMMON, null, null),
@@ -46,6 +52,9 @@ public enum Curio {
     TIDE_CONCH("tide_conch", "necklace", Rarity.RARE, Kind.RACE, "triton"),
     MAGMA_HEART("magma_heart", "charm", Rarity.EPIC, Kind.RACE, "infernal"),
     MIDNIGHT_VEIL("midnight_veil", "head", Rarity.RARE, Kind.RACE, "undead");
+
+    /** Interruptor de la sección de curios (amuletos, anillos, colgantes...). Ver el comentario del principio. */
+    public static final boolean ENABLED = false;
 
     public enum Rarity { COMMON, RARE, EPIC, RELIC }
 

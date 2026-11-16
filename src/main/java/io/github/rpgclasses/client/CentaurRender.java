@@ -42,7 +42,8 @@ public final class CentaurRender {
     private static final float[][] LEG_POS = {{4f, 14f, 7f}, {-4f, 14f, 7f}, {4f, 14f, -12f}, {-4f, 14f, -12f}};
     private static ModelPart[] legArmor, bootArmor;
     private static ItemStack stashedLegs = ItemStack.EMPTY, stashedFeet = ItemStack.EMPTY;
-    private static boolean stashed;
+    /** Jugador al que se le quitaron las grebas y botas para dibujarlas en las patas (se le devuelven en Post). */
+    private static AbstractClientPlayer stashedFor;
     private static final String[] COATS = {"white", "creamy", "chestnut", "brown", "black", "gray", "darkbrown"};
 
     /** Escala del cuerpo de caballo (un caballo vanilla se dibuja a 1,1). */
@@ -77,7 +78,7 @@ public final class CentaurRender {
         return LayerDefinition.create(mesh, 64, 64);
     }
 
-    /** Capa de las grebas y botas: cuatro patas con la UV de la pierna humana (0,17) y distinta hinchazón. */
+    /** Capa de las grebas y botas: cuatro patas con la UV de la pierna humana (0,16) y distinta hinchazón. */
     public static LayerDefinition createArmorLayer() {
         MeshDefinition mesh = new MeshDefinition();
         PartDefinition root = mesh.getRoot();
@@ -86,10 +87,10 @@ public final class CentaurRender {
             boolean left = i % 2 == 0;
             float x0 = left ? -3.0f : -1.0f;
             float z0 = i < 2 ? -1.0f : -1.9f;
-            root.addOrReplaceChild("legs_" + LEG_NAMES[i], CubeListBuilder.create().texOffs(0, 17).mirror(left)
+            root.addOrReplaceChild("legs_" + LEG_NAMES[i], CubeListBuilder.create().texOffs(0, 16).mirror(left)
                     .addBox(x0, -1.01f, z0, 4.0f, 11.0f, 4.0f, new CubeDeformation(0.25f)),
                     PartPose.offset(o[0], o[1], o[2]));
-            root.addOrReplaceChild("feet_" + LEG_NAMES[i], CubeListBuilder.create().texOffs(0, 17).mirror(left)
+            root.addOrReplaceChild("feet_" + LEG_NAMES[i], CubeListBuilder.create().texOffs(0, 16).mirror(left)
                     .addBox(x0, -1.01f, z0, 4.0f, 11.0f, 4.0f, new CubeDeformation(0.4f)),
                     PartPose.offset(o[0], o[1], o[2]));
         }
@@ -179,11 +180,11 @@ public final class CentaurRender {
         model.leftPants.visible = false;
         model.rightPants.visible = false;
         hidingLegs = true;
-        restoreArmor(p);
+        restoreArmor();
         stashedLegs = p.getItemBySlot(EquipmentSlot.LEGS);
         stashedFeet = p.getItemBySlot(EquipmentSlot.FEET);
         if (!stashedLegs.isEmpty() || !stashedFeet.isEmpty()) {
-            stashed = true;
+            stashedFor = p;
             p.setItemSlot(EquipmentSlot.LEGS, ItemStack.EMPTY);
             p.setItemSlot(EquipmentSlot.FEET, ItemStack.EMPTY);
         }
@@ -194,9 +195,11 @@ public final class CentaurRender {
         pushed = true;
     }
 
-    private static void restoreArmor(AbstractClientPlayer p) {
-        if (!stashed) return;
-        stashed = false;
+    /** Devuelve las grebas y botas al jugador al que se le quitaron (aunque otro render se haya cortado a medias). */
+    private static void restoreArmor() {
+        AbstractClientPlayer p = stashedFor;
+        if (p == null) return;
+        stashedFor = null;
         p.setItemSlot(EquipmentSlot.LEGS, stashedLegs);
         p.setItemSlot(EquipmentSlot.FEET, stashedFeet);
         stashedLegs = stashedFeet = ItemStack.EMPTY;
@@ -237,7 +240,7 @@ public final class CentaurRender {
     }
 
     public static void onRenderPost(RenderPlayerEvent.Post event) {
-        if (event.getEntity() instanceof AbstractClientPlayer p) restoreArmor(p);
+        restoreArmor();
         hidingLegs = false;
         if (!pushed) return;
         pushed = false;

@@ -15,9 +15,18 @@ import yesman.epicfight.client.mesh.HumanoidMesh;
 final class CentaurEpicFight {
     private CentaurEpicFight() {}
 
+    /** Si la versión de Epic Fight instalada no tiene estos eventos, se avisa en el registro y no se rompe nada. */
     static void init() {
-        MinecraftForge.EVENT_BUS.addListener(CentaurEpicFight::onPrepareModel);
-        MinecraftForge.EVENT_BUS.addListener(CentaurEpicFight::onMotion);
+        try {
+            MinecraftForge.EVENT_BUS.addListener(CentaurEpicFight::onPrepareModel);
+        } catch (LinkageError | RuntimeException e) {
+            io.github.rpgclasses.RpgClasses.LOGGER.warn("[rpgclasses] Epic Fight: sin PrepareModelEvent, el Centauro puede mostrar piernas ({})", e.toString());
+        }
+        try {
+            MinecraftForge.EVENT_BUS.addListener(CentaurEpicFight::onMotion);
+        } catch (LinkageError | RuntimeException e) {
+            io.github.rpgclasses.RpgClasses.LOGGER.warn("[rpgclasses] Epic Fight: sin UpdatePlayerMotionEvent, el Centauro se inclina al agacharse ({})", e.toString());
+        }
     }
 
     private static AbstractClientPlayer centaur(Object original) {
@@ -35,7 +44,8 @@ final class CentaurEpicFight {
     }
 
     private static void onMotion(UpdatePlayerMotionEvent.BaseLayer event) {
-        if (event.getMotion() != LivingMotions.SNEAK) return;
+        // SNEAK es agachado andando y KNEEL agachado quieto: las dos echan el torso hacia atrás.
+        if (event.getMotion() != LivingMotions.SNEAK && event.getMotion() != LivingMotions.KNEEL) return;
         AbstractClientPlayer p = centaur(event.getPlayerPatch().getOriginal());
         if (p == null) return;
         double dx = p.getX() - p.xo, dz = p.getZ() - p.zo;

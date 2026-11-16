@@ -350,9 +350,27 @@ def curio_recipes():
      "midnight_veil": sl("midnight_veil", [I("minecraft:black_wool"), I("minecraft:black_wool"), I("minecraft:phantom_membrane"), I("minecraft:string")]),
     }
 
+# Curios desactivados en la versión de salida (gear/Curio.java, ENABLED): solo queda la ranura de manos para las
+# nudilleras. Los textos se siguen generando (no molestan) para no tener que tocar las traducciones.
+CURIOS_ENABLED = False
+
+
 def build_curios(dump, out_dir):
     data = os.path.join(out_dir, "data")
     assets = os.path.join(out_dir, "assets", NS)
+    if not CURIOS_ENABLED:
+        dump(os.path.join(data, "curios", "tags", "items", "hands.json"),
+             {"replace": False, "values": [r(f"knuckles_{t}") for t in WEAPON_TIERS]})
+        dump(os.path.join(data, NS, "curios", "entities", "player.json"), {"entities": ["player"], "slots": ["hands"]})
+        lang = {}
+        for cid, slot, name, desc in CURIOS:
+            lang[f"item.{NS}.{cid}"] = name
+            lang[f"curio.{NS}.{cid}.desc"] = desc
+        lang.update({f"curio.{NS}.rarity.common": "Común", f"curio.{NS}.rarity.rare": "Raro", f"curio.{NS}.rarity.epic": "Épico",
+            f"curio.{NS}.rarity.relic": "Reliquia", f"curio.{NS}.requires_class": "Solo %s",
+            f"curio.{NS}.requires_race": "Solo raza %s", f"curio.{NS}.relic_rule": "Solo puedes llevar una Reliquia a la vez.",
+            f"curio.{NS}.trophy_skull.taken": "El cráneo guarda el trofeo de %s"})
+        return lang
     recs = curio_recipes()
     assert set(recs) == {c[0] for c in CURIOS}
     for name, recipe in recs.items():

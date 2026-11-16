@@ -351,7 +351,11 @@ public final class ClientSetup {
     public static void initEpicFight() {
         io.github.rpgclasses.compat.epicfight.EpicFightCompat.clientMechanic = (player, id) ->
                 player == Minecraft.getInstance().player ? localMechanic(id) : null;
-        CentaurEpicFight.init();
+        try {
+            CentaurEpicFight.init();
+        } catch (LinkageError e) {
+            io.github.rpgclasses.RpgClasses.LOGGER.warn("[rpgclasses] Epic Fight: ajustes del Centauro no disponibles en esta versión ({})", e.toString());
+        }
     }
 
     /** La mecánica del jugador local con ese id completo, o null. */

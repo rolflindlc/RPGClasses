@@ -114,7 +114,7 @@ public class RpgClasses {
         MinecraftForge.EVENT_BUS.register(new RoguePerks());
         MinecraftForge.EVENT_BUS.register(new io.github.rpgclasses.gear.GearEvents());
         MinecraftForge.EVENT_BUS.register(io.github.rpgclasses.gear.SetEffects.listener());
-        MinecraftForge.EVENT_BUS.register(new io.github.rpgclasses.gear.CurioEffects());
+        if (io.github.rpgclasses.gear.Curio.ENABLED) MinecraftForge.EVENT_BUS.register(new io.github.rpgclasses.gear.CurioEffects());
         // Puente con Curios (nudilleras y curios): solo si el mod está instalado.
         if (net.minecraftforge.fml.ModList.get().isLoaded("curios")) {
             io.github.rpgclasses.compat.curios.CuriosCompat.init();

@@ -67,7 +67,7 @@ public final class ModGear {
             }
             WEAPONS.put(kind, byTier);
         }
-        for (Curio curio : Curio.values()) {
+        for (Curio curio : Curio.ENABLED ? Curio.values() : new Curio[0]) {
             Rarity rarity = switch (curio.rarity) {
                 case COMMON -> Rarity.COMMON;
                 case RARE -> Rarity.UNCOMMON;

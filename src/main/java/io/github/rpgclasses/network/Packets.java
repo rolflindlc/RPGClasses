@@ -173,6 +173,27 @@ public final class Packets {
         }
     }
 
+    /** Servidor -> cliente: bloques del cinturón del Porteador que se dibujan sobre su cuerpo (6 como mucho). */
+    public record BeltVisual(int entityId, java.util.List<net.minecraft.world.item.ItemStack> blocks) {
+        public void encode(FriendlyByteBuf buf) {
+            buf.writeVarInt(entityId);
+            buf.writeVarInt(Math.min(6, blocks.size()));
+            for (int i = 0; i < Math.min(6, blocks.size()); i++) buf.writeItem(blocks.get(i));
+        }
+
+        public static BeltVisual decode(FriendlyByteBuf buf) {
+            int id = buf.readVarInt();
+            int n = Math.min(6, buf.readVarInt());
+            java.util.List<net.minecraft.world.item.ItemStack> list = new java.util.ArrayList<>();
+            for (int i = 0; i < n; i++) list.add(buf.readItem());
+            return new BeltVisual(id, list);
+        }
+
+        public void handle(Supplier<NetworkEvent.Context> ctx) {
+            DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> io.github.rpgclasses.client.BeltLayer.receive(entityId, blocks));
+        }
+    }
+
     public record AirJump() {
         public void encode(FriendlyByteBuf buf) {}
 

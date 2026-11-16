@@ -155,6 +155,8 @@ public final class PorterBelt {
         final String[] signature = new String[MAX_SLOTS];
         ServerPlayer ownerRef;
         boolean dirty;
+        /** Hay que enviar a los clientes los bloques que se ven en el cuerpo. */
+        boolean visualDirty = true;
         private boolean loading;
 
         Belt(UUID owner) {
@@ -164,6 +166,7 @@ public final class PorterBelt {
 
         private void onBlocksChanged() {
             dirty = true;
+            visualDirty = true;
             if (!loading) reconcile();
         }
 
@@ -253,6 +256,7 @@ public final class PorterBelt {
                 loading = false;
             }
             dirty = true;
+            visualDirty = true;
             return out;
         }
 
@@ -489,6 +493,11 @@ public final class PorterBelt {
                 }
             }
         }
+        if (b.visualDirty) {
+            b.visualDirty = false;
+            io.github.rpgclasses.network.Net.CHANNEL.send(net.minecraftforge.network.PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> p),
+                    visual(p, b));
+        }
         if (p.tickCount % 20 == 0) {
             // Bloques en huecos que ya no tiene (cambio de subraza o de Rango por un administrador): vuelven a él.
             for (int i = 0; i < MAX_SLOTS; i++) {
@@ -498,10 +507,13 @@ public final class PorterBelt {
                 b.signature[i] = "";
                 p.getInventory().placeItemBackInInventory(block);
                 b.markDirty();
+                b.visualDirty = true;
             }
             if (cap <= 0 && b.isEmpty()) {
                 // Ya no es Porteador y no queda nada: se borra el cinturón guardado.
                 BELTS.remove(p.getUUID());
+                io.github.rpgclasses.network.Net.CHANNEL.send(net.minecraftforge.network.PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> p),
+                        new io.github.rpgclasses.network.Packets.BeltVisual(p.getId(), List.of()));
                 CompoundTag root = p.getPersistentData().getCompound(Player.PERSISTED_NBT_TAG);
                 root.remove(TAG);
                 p.getPersistentData().put(Player.PERSISTED_NBT_TAG, root);
@@ -509,6 +521,25 @@ public final class PorterBelt {
             }
             if (b.dirty) save(p, b);
         }
+    }
+
+    /** Los bloques del cinturón que se dibujan en el cuerpo (los huecos que tiene, en orden). */
+    private static io.github.rpgclasses.network.Packets.BeltVisual visual(ServerPlayer p, Belt b) {
+        List<ItemStack> shown = new ArrayList<>();
+        int cap = capacity(p);
+        for (int i = 0; i < Math.min(cap, MAX_SLOTS); i++) {
+            ItemStack st = b.blocks.getItem(i);
+            if (!st.isEmpty()) shown.add(st.copyWithCount(1));
+        }
+        return new io.github.rpgclasses.network.Packets.BeltVisual(p.getId(), shown);
+    }
+
+    /** Quien empieza a ver a un Porteador recibe sus bloques del cinturón. */
+    @SubscribeEvent
+    public void onStartTracking(PlayerEvent.StartTracking event) {
+        if (!(event.getTarget() instanceof ServerPlayer owner) || !(event.getEntity() instanceof ServerPlayer viewer)) return;
+        Belt b = BELTS.get(owner.getUUID());
+        if (b != null && !b.isEmpty()) io.github.rpgclasses.network.Net.toPlayer(viewer, visual(owner, b));
     }
 
     /** −5 % de velocidad por pasajero (hasta el Rango 2). */
@@ -556,6 +587,7 @@ public final class PorterBelt {
         if (b != null && event.getEntity() instanceof ServerPlayer p) {
             save(p, b);
             b.ownerRef = p;
+            b.visualDirty = true;
             BELTS.put(p.getUUID(), b);
         }
     }

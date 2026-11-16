@@ -70,7 +70,14 @@ public final class ClientSetup {
         // Centauro: cuerpo de caballo.
         modBus.addListener((EntityRenderersEvent.RegisterLayerDefinitions event) ->
                 event.registerLayerDefinition(CentaurRender.LAYER, CentaurRender::createLayer));
-        modBus.addListener((EntityRenderersEvent.AddLayers event) -> CentaurRender.reset());
+        modBus.addListener((EntityRenderersEvent.AddLayers event) -> {
+            CentaurRender.reset();
+            // Porteador: los bloques del cinturón en la cintura.
+            for (String skin : event.getSkins()) {
+                net.minecraft.client.renderer.entity.player.PlayerRenderer renderer = event.getSkin(skin);
+                if (renderer != null) renderer.addLayer(new BeltLayer(renderer));
+            }
+        });
         MinecraftForge.EVENT_BUS.addListener(net.minecraftforge.eventbus.api.EventPriority.LOW, CentaurRender::onRenderPre);
         MinecraftForge.EVENT_BUS.addListener(CentaurRender::onRenderPost);
         MinecraftForge.EVENT_BUS.addListener(ShakeFx::onClientTick);
@@ -102,7 +109,10 @@ public final class ClientSetup {
         MinecraftForge.EVENT_BUS.addListener(SlimeFormsClient::onRenderHand);
         MinecraftForge.EVENT_BUS.addListener(SlimeFormsClient::onClientTick);
         modBus.addListener((RegisterGuiOverlaysEvent event) -> event.registerAboveAll("mitosis_merge", SlimeFormsClient::renderHud));
-        MinecraftForge.EVENT_BUS.addListener((ClientPlayerNetworkEvent.LoggingOut event) -> ClientHandlers.reset());
+        MinecraftForge.EVENT_BUS.addListener((ClientPlayerNetworkEvent.LoggingOut event) -> {
+            ClientHandlers.reset();
+            BeltLayer.reset();
+        });
     }
 
     /**

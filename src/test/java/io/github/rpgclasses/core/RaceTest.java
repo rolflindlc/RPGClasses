@@ -92,6 +92,15 @@ public class RaceTest {
         assertEquals(2, RACES.race("rpgclasses:colossus").subraces().size());
         assertEquals(6, RACES.race("rpgclasses:draconid").subraces().size());
         assertEquals(3, RACES.race("rpgclasses:centaur").subraces().size());
+        // Fase R3c: las 39 subrazas están programadas y se pueden elegir.
+        int subraces = 0;
+        for (String id : RACES.ids()) {
+            for (var sub : RACES.race(id).subraces()) {
+                assertTrue(id + "/" + sub.id() + " no disponible", sub.available());
+                subraces++;
+            }
+        }
+        assertEquals(39, subraces);
     }
 
     @Test

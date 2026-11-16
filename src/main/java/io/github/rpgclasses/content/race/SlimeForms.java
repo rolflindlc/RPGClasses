@@ -211,6 +211,8 @@ public final class SlimeForms {
         if (slime == null) return;
         double a = p.getRandom().nextDouble() * Math.PI * 2, r = 0.4 + p.getRandom().nextDouble() * 1.1;
         slime.moveTo(p.getX() + Math.cos(a) * r, p.getY() + 0.1, p.getZ() + Math.sin(a) * r, p.getRandom().nextFloat() * 360f, 0);
+        // Sin sitio alrededor (un túnel estrecho): sale donde está el jugador.
+        if (!p.serverLevel().noCollision(slime)) slime.moveTo(p.getX(), p.getY(), p.getZ(), slime.getYRot(), 0);
         slime.setOwner(p.getUUID());
         AttributeInstance max = slime.getAttribute(Attributes.MAX_HEALTH);
         if (max != null) max.setBaseValue(Math.max(1, health));

@@ -145,39 +145,39 @@
       "effects": [
         {
           "type": "rpgclasses:mechanic",
-          "id": "rpgclasses:race_tame_water",
-          "duration_seconds": 30,
-          "cooldown_seconds": 5
-        },
-        {
-          "type": "rpgclasses:mechanic",
-          "id": "rpgclasses:race_wave",
-          "min_rank": 1,
-          "cooldown_seconds": {
-            "values": [
-              15,
-              15,
-              15,
-              10
-            ]
-          },
-          "charges": {
+          "id": "rpgclasses:race_aqua_spells",
+          "hydroshot": {
             "values": [
               1,
               1,
               1,
-              2
+              1
             ]
           },
-          "strength": 1.5,
-          "range": 6
-        },
-        {
-          "type": "rpgclasses:mechanic",
-          "id": "rpgclasses:race_water_wall",
-          "min_rank": 2,
-          "duration_seconds": 8,
-          "cooldown_seconds": 20
+          "overflow": {
+            "values": [
+              0,
+              3,
+              3,
+              3
+            ]
+          },
+          "jet_stream": {
+            "values": [
+              0,
+              0,
+              1,
+              1
+            ]
+          },
+          "tidal_grasp": {
+            "values": [
+              0,
+              0,
+              0,
+              1
+            ]
+          }
         }
       ],
       "rites": [
@@ -224,7 +224,7 @@
           "objectives": [
             {
               "type": "boss",
-              "ability": "race_wave,race_water_wall",
+              "ability": "race_aqua_spells",
               "uses": 3
             }
           ]

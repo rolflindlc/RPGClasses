@@ -311,10 +311,15 @@ public final class Rites {
     }
 
     private static final Set<String> RACIAL_SPELLS = Set.of("irons_spellbooks:firebolt", "irons_spellbooks:magma_bomb", "irons_spellbooks:raise_hell");
+    /** Conjuros de agua del Moldeador (T.O Magic 'n Extras). */
+    private static final Set<String> AQUA_SPELLS = Set.of("traveloptics:hydroshot", "traveloptics:overflow",
+            "traveloptics:jet_steam", "traveloptics:jet_stream", "traveloptics:jetstream", "traveloptics:tidal_grasp");
 
     private static boolean racialSpell(ServerPlayer p, DamageSource s) {
         String id = spellId(s);
-        return id != null && RACIAL_SPELLS.contains(id) && Races.has(p, "race_racial_spells");
+        if (id == null) return false;
+        return (RACIAL_SPELLS.contains(id) && Races.has(p, "race_racial_spells"))
+                || (AQUA_SPELLS.contains(id) && Races.has(p, "race_aqua_spells"));
     }
 
     /** Estilo de combate del daño: magia, arco, pesada, ligera o "unarmed"; null si no es de ningún estilo. */

@@ -23,29 +23,62 @@ import java.util.UUID;
 /**
  * Razas × Iron's Spells.
  * <ul>
- *   <li>Infernal: conjuros raciales de fuego siempre disponibles en la rueda (no ocupan ranura de libro). Sufren el
- *       muro de Magia de la clase (rev. 2.12) y usan el maná y el enfriamiento normales de Iron's.</li>
+ *   <li>Infernal (fuego, Iron's) y Tritón Moldeador (agua, T.O Magic 'n Extras): conjuros raciales siempre disponibles
+ *       en la rueda (no ocupan ranura de libro). Sufren el muro de Magia de la clase (rev. 2.12) y usan el maná y el
+ *       enfriamiento normales de Iron's. Los que no existan en el pack (p. ej. sin T.O) simplemente no aparecen.</li>
  *   <li>No-muerto: los conjuros de curación no le curan.</li>
  * </ul>
  */
 public final class RacialSpells {
-    /** parámetro de la mecánica (nivel por rango) → conjuro de Iron's. */
-    private static final String[][] SPELLS = {{"fire_bolt", "firebolt"}, {"magma_bomb", "magma_bomb"}, {"raise_hell", "raise_hell"}};
+    /**
+     * Mecánica → (parámetro con el nivel por rango → ids posibles del conjuro; se usa el primero que exista).
+     * Jetstream lleva alternativas por si el id cambia entre versiones de T.O.
+     */
+    private static final Map<String, String[][]> SPELLS = Map.of(
+            "race_racial_spells", new String[][]{
+                    {"fire_bolt", "irons_spellbooks:firebolt"}, {"magma_bomb", "irons_spellbooks:magma_bomb"},
+                    {"raise_hell", "irons_spellbooks:raise_hell"}},
+            "race_aqua_spells", new String[][]{
+                    {"hydroshot", "traveloptics:hydroshot"}, {"overflow", "traveloptics:overflow"},
+                    {"jet_stream", "traveloptics:jet_steam", "traveloptics:jet_stream", "traveloptics:jetstream"},
+                    {"tidal_grasp", "traveloptics:tidal_grasp"}});
+    /** Conjuros de agua del Moldeador (para el rito Marea Viva). */
+    public static final java.util.Set<String> AQUA_IDS = java.util.Set.of("traveloptics:hydroshot", "traveloptics:overflow",
+            "traveloptics:jet_steam", "traveloptics:jet_stream", "traveloptics:jetstream", "traveloptics:tidal_grasp");
     static final String SLOT = "rpgclasses_racial";
 
     private static final Map<UUID, Long> SPELL_HEAL_TICK = new HashMap<>();
 
     @SubscribeEvent
     public void onSpellSelection(SpellSelectionManager.SpellSelectionEvent event) {
-        ActiveMechanic m = Races.find(event.getEntity(), "race_racial_spells");
-        if (m == null) return;
         int index = 0;
-        for (String[] entry : SPELLS) {
-            int level = (int) m.number(entry[0], 0);
-            if (level <= 0) continue;
-            AbstractSpell spell = SpellRegistry.getSpell(new ResourceLocation(IronsCompat.IRONS, entry[1]));
-            if (spell == null || "irons_spellbooks:none".equals(spell.getSpellId())) continue;
-            event.addSelectionOption(new SpellData(spell, level, true), SLOT, index++);
+        for (Map.Entry<String, String[][]> group : SPELLS.entrySet()) {
+            ActiveMechanic m = Races.find(event.getEntity(), group.getKey());
+            if (m == null) continue;
+            for (String[] entry : group.getValue()) {
+                int level = (int) m.number(entry[0], 0);
+                if (level <= 0) continue;
+                AbstractSpell spell = firstExisting(entry);
+                if (spell != null) event.addSelectionOption(new SpellData(spell, level, true), SLOT, index++);
+            }
+        }
+    }
+
+    private static AbstractSpell firstExisting(String[] entry) {
+        for (int i = 1; i < entry.length; i++) {
+            ResourceLocation id = ResourceLocation.tryParse(entry[i]);
+            if (id == null) continue;
+            AbstractSpell spell = SpellRegistry.getSpell(id);
+            if (spell != null && !"irons_spellbooks:none".equals(spell.getSpellId())) return spell;
+        }
+        return null;
+    }
+
+    /** Moldeador: cada conjuro de agua racial lanzado cuenta para el rito Marea Viva (como una habilidad racial). */
+    @SubscribeEvent
+    public void onCast(io.redspace.ironsspellbooks.api.events.SpellOnCastEvent event) {
+        if (event.getEntity() instanceof ServerPlayer p && AQUA_IDS.contains(event.getSpellId()) && Races.has(p, "race_aqua_spells")) {
+            io.github.rpgclasses.content.race.Rites.onAbilityUsed(p, "race_aqua_spells");
         }
     }
 

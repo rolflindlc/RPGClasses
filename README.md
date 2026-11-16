@@ -30,8 +30,7 @@ Todo lo siguiente está en el código y compila con sus pruebas, pero **no se ha
 ### Pendiente
 
 - Probar en el juego y calibrar los valores marcados **[MEDIR]** en los documentos de diseño.
-- Ids que hay que leer en el pack: conjuros de agua de T.O Magic 'n Extras (Moldeador) y dragones de Ice and Fire.
-  Mojado ya está fijado: `traveloptics:wet`.
+- Ids del pack: todos fijados (Mojado `traveloptics:wet`, conjuros del Moldeador, dragones y criaturas de Ice and Fire).
 - Enfriamiento del escudo por el muro de Escudos (aparcado): hoy solo aumenta el desgaste.
 - Animaciones propias de nunchaku y bo; curios por subclase y por subraza (sin diseñar).
 - Integrar los anexos (razas, adenda 0.7, equipo) en el documento de diseño v2. Publicación en CurseForge.

@@ -105,7 +105,7 @@ public final class AbilityHud {
     /** Habilidades raciales con tecla: mecánica y ranura (0 = V, 1 = B, 2 = agachado + V, 3 = agachado + B). */
     private static final String[][] RACIAL_KEYS = {
             {"race_warcry", "0"}, {"race_stone_sense", "0"}, {"race_smoke_cloud", "0"}, {"race_snare", "0"},
-            {"race_tame_water", "0"}, {"race_wave", "1"}, {"race_water_wall", "2"}, {"race_nether_compass", "0"},
+            {"race_nether_compass", "0"},
             {"race_portable_furnace", "0"}, {"race_ethereal", "0"}, {"race_breath", "0"}, {"race_grow", "0"},
             {"race_swarm", "0"}, {"race_belt", "0"},
             // Sin tecla propia, pero con enfriamiento (solo se muestran mientras se enfrían).

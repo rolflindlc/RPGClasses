@@ -167,8 +167,8 @@ RITES = {
        kill(30, "Enemigos derrotados en el agua", target="enemy", target_in_water=True)),
   rite("reef", "craft", "Arrecife", "Ofrece 4 esponjas, 8 bloques de coral y 3 cubos de agua.",
        offer("Esponjas, coral y agua", it("minecraft:sponge", 4), it("#minecraft:coral_blocks", 8), it("minecraft:water_bucket", 3))),
-  rite("spring_tide", "ritual", "Marea Viva", "Derrota a un jefe de rito usando Ola o Muro de Agua al menos 3 veces.",
-       boss("Jefe derrotado con 3 olas o muros", ability="race_wave,race_water_wall", uses=3))],
+  rite("spring_tide", "ritual", "Marea Viva", "Derrota a un jefe de rito lanzando tus conjuros de agua raciales al menos 3 veces.",
+       boss("Jefe derrotado con 3 conjuros de agua raciales", ability="race_aqua_spells", uses=3))],
  ("triton", "abyssal"): [
   rite("depth_hunt", "feat", "Caza en las Profundidades", "Derrota 30 enemigos mientras estás sumergido.",
        kill(30, "Enemigos derrotados sumergido", target="enemy", submerged=True)),
@@ -387,6 +387,10 @@ ENTITY_TAGS.update({
  "dragons/fire": opt(["iceandfire:fire_dragon"]),
  "dragons/ice": opt(["iceandfire:ice_dragon"]),
  "dragons/lightning": opt(["iceandfire:lightning_dragon"]),
+ # Subrazas sin dragón propio: otras criaturas de Ice and Fire de su elemento.
+ "dragons/water": opt(["iceandfire:sea_serpent"]),
+ "dragons/poison": opt(["iceandfire:gorgon"]),
+ "dragons/acid": opt(["iceandfire:hydra"]),
 })
 # Elementos sin etiqueta propia en el equipo: el código añade además el Veneno (daño mágico con el efecto activo),
 # el ahogamiento y las escuelas de Iron's / T.O Magic 'n Extras.

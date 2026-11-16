@@ -83,9 +83,6 @@ public final class RaceAbilities {
             new Entry("race_stone_sense", 0, RaceAbilities::stoneSense),
             new Entry("race_smoke_cloud", 0, RaceAbilities::smokeCloud),
             new Entry("race_snare", 0, RaceAbilities::snare),
-            new Entry("race_tame_water", 0, RaceAbilities::tameWater),
-            new Entry("race_wave", 1, RaceAbilities::wave),
-            new Entry("race_water_wall", 2, RaceAbilities::waterWall),
             new Entry("race_nether_compass", 0, RaceAbilities::netherCompass),
             new Entry("race_portable_furnace", 0, RaceAbilities::portableFurnace),
             new Entry("race_ethereal", 0, RaceAbilities::ethereal),
@@ -343,67 +340,7 @@ public final class RaceAbilities {
         return false;
     }
 
-    // ------------------------------------------------------------------ Tritón Moldeador
-
-    private static boolean placeWater(ServerLevel level, BlockPos pos, long end) {
-        if (level.dimensionType().ultraWarm()) return false;
-        BlockState state = level.getBlockState(pos);
-        if (!(state.isAir() || state.is(BlockTags.FIRE) || (state.canBeReplaced() && state.getFluidState().isEmpty()))) return false;
-        level.setBlockAndUpdate(pos, Blocks.WATER.defaultBlockState());
-        TEMP_WATER.put(new WaterKey(level.dimension(), pos.immutable()), end);
-        return true;
-    }
-
-    private static boolean tameWater(ServerPlayer p, ActiveMechanic m) {
-        if (!(p.level() instanceof ServerLevel level)) return false;
-        Vec3 eye = p.getEyePosition();
-        BlockHitResult block = level.clip(new net.minecraft.world.level.ClipContext(eye, eye.add(p.getLookAngle().scale(5)),
-                net.minecraft.world.level.ClipContext.Block.OUTLINE, net.minecraft.world.level.ClipContext.Fluid.NONE, p));
-        if (block.getType() != HitResult.Type.BLOCK) return false;
-        boolean placed = placeWater(level, block.getBlockPos().relative(block.getDirection()),
-                now(p) + Math.round(m.number("duration_seconds", 30) * 20));
-        if (placed) sound(p, SoundEvents.BUCKET_EMPTY);
-        return placed;
-    }
-
-    private static boolean wave(ServerPlayer p, ActiveMechanic m) {
-        Vec3 look = p.getLookAngle().multiply(1, 0, 1);
-        if (look.lengthSqr() < 1.0E-4) return false;
-        Vec3 dir = look.normalize();
-        double range = m.number("range", 6), strength = m.number("strength", 1.5);
-        for (LivingEntity e : p.level().getEntitiesOfClass(LivingEntity.class, p.getBoundingBox().inflate(range),
-                e -> CombatAbilities.canHit(p, e) && e.distanceToSqr(p) <= range * range)) {
-            Vec3 to = e.position().subtract(p.position()).multiply(1, 0, 1);
-            if (to.lengthSqr() > 1.0E-4 && to.normalize().dot(dir) < 0.5) continue;
-            e.knockback(strength, -dir.x, -dir.z);
-            e.clearFire();
-        }
-        if (p.level() instanceof ServerLevel level) {
-            for (int i = 1; i <= (int) range; i++) {
-                Vec3 at = p.position().add(dir.scale(i));
-                level.sendParticles(ParticleTypes.SPLASH, at.x, at.y + 0.6, at.z, 25, 0.6, 0.4, 0.6, 0.1);
-            }
-        }
-        sound(p, SoundEvents.PLAYER_SPLASH_HIGH_SPEED);
-        return true;
-    }
-
-    private static boolean waterWall(ServerPlayer p, ActiveMechanic m) {
-        if (!(p.level() instanceof ServerLevel level)) return false;
-        Vec3 look = p.getLookAngle().multiply(1, 0, 1);
-        if (look.lengthSqr() < 1.0E-4) return false;
-        Vec3 dir = look.normalize();
-        Vec3 side = new Vec3(-dir.z, 0, dir.x);
-        Vec3 center = p.position().add(dir.scale(2.5));
-        long end = now(p) + Math.round(m.number("duration_seconds", 8) * 20);
-        boolean placed = false;
-        for (int i = -1; i <= 1; i++) {
-            BlockPos base = BlockPos.containing(center.add(side.scale(i)));
-            for (int y = 0; y < 3; y++) placed |= placeWater(level, base.above(y), end);
-        }
-        if (placed) sound(p, SoundEvents.BUCKET_EMPTY);
-        return placed;
-    }
+    // Tritón Moldeador: sus habilidades son conjuros de agua de T.O Magic 'n Extras (compat/irons/RacialSpells).
 
     // ------------------------------------------------------------------ Infernal
 

@@ -41,7 +41,7 @@ Ids de raza: `rpgclasses:human`, `orc`, `dwarf`, `elf`, `goblin`, `triton`, `inf
 | **Enano** | −25 % tamaño, −10 % velocidad, Minero, Fortuna racial | Profundidades (`deep`, V desde R1), Herrero (`smith`), Demoledor (`demolisher`: TNT inofensiva y +25 % de radio, Vetas, Túnel) | — |
 | **Elfo** | Atraviesa y trepa hojas; sin carne ni pescado | Oscuro (`dark`, V desde R1), Arcano (`arcane`), Silvano (`sylvan`) | — |
 | **Goblin** | −50 % tamaño, −25 % vida, Suerte +1, Saqueo racial | Jinete de Lobo (`wolf_rider`), Ladrón (`thief`, Mano Larga con 2 s de enfriamiento), Artificiero (`trapper`, V: Cepo) | — |
-| **Tritón** | Respira y pica bajo el agua, +50 % nado, visión subacuática, +30 % daño de fuego, *Debilidad I* en el Nether | Pescador (`fisher`), Moldeador (`shaper`: V, B y agachado + V), Abisal (`abyssal`) | Moldeador: sustituir sus habilidades por conjuros de *T.O Magic 'n Extras* (R0 Hydroshot nv1, R1 Overflow nv3, R2 Jetstream nv1, R3 Tidal Grasp nv1); faltan los ids |
+| **Tritón** | Respira y pica bajo el agua, +50 % nado, visión subacuática, +30 % daño de fuego, *Debilidad I* en el Nether | Pescador (`fisher`), Moldeador (`shaper`: conjuros de agua de *T.O Magic 'n Extras* en la rueda: R0 Hydroshot nv1, R1 Overflow nv3, R2 Jetstream nv1, R3 Tidal Grasp nv1), Abisal (`abyssal`) | — |
 | **Infernal** | Inmune al fuego; +30 % daño de frío y de agua; el agua le quema (1 HP cada 2 s); conjuros raciales con muro de Magia (con Iron's: Fire Bolt, **Magma Bomb** y **Raise Hell**), golems hostiles, aldeanos +50 % | Nativo (`native`, V en R3), Fundidor (`smelter`, V en R3), Pirómano (`pyromaniac`, con Iron's) | — |
 | **No-muerto** | Sol, respiración, hambre fija, regeneración que **tarda el doble en empezar** (pausa de 6 s; Esqueleto 6/6/6/3 s), sin curación de pociones ni conjuros | Vampiro (`vampire`), Esqueleto (`skeleton`), Espectro (`specter`, V desde R1) | — |
 
@@ -60,14 +60,15 @@ Ids de raza: `rpgclasses:human`, `orc`, `dwarf`, `elf`, `goblin`, `triton`, `inf
 * **Mano Larga:** solo golpes cuerpo a cuerpo; no roba a mobs de spawner ni a jefes; el objeto robado solo lo puede recoger el Goblin.
 * **Espectro:** la caída lenta se desactiva al agacharse.
 * **Sol del No-muerto:** 1 HP por segundo con un tipo de daño propio que ignora la armadura.
-* **Conjuros raciales:** aparecen al final de la rueda de Iron's; gastan maná y enfriamiento normales. **Desde la rev. 2.13 sufren el muro de Magia de la clase** (decisión del usuario), igual que los del Moldeador cuando estén (escuela de **agua** de *T.O Magic 'n Extras*).
+* **Conjuros raciales:** aparecen al final de la rueda de Iron's; gastan maná y enfriamiento normales. **Desde la rev. 2.13 sufren el muro de Magia de la clase** (decisión del usuario), igual que los del Moldeador (escuela de **agua** de *T.O Magic 'n Extras*; sin T.O no aparecen).
 * **Infernal y aldeanos:** el recargo se aplica a aldeanos, no al comerciante errante.
 * **Herrero:** la durabilidad extra va marcada en el objeto (se ve en la descripción) y viaja con él. Cuenta lo que fabricas (mesa y herrería) y lo que reparas o combinas en el yunque; Irrompibilidad +1 solo en lo fabricado. El descuento del yunque (−50 %) es de niveles y no salva el "Demasiado caro".
 * **Demoledor:** su TNT se repite con radio 5 (vanilla 4): también alcanza un poco más a las entidades. Túnel: agachado, solo en bloques del tag `rpgclasses:dwarf_mineable`, frente a la cara que miras; +0,1 de agotamiento por bloque extra.
 * **Elfo Arcano:** en la mesa se devuelve el porcentaje de la experiencia gastada; en el yunque se reducen los niveles. No se suma al descuento del Herrero (cuenta el mayor).
 * **Jinete de Lobo:** clic derecho con la mano vacía en tu lobo adulto para montarlo; agachado conserva el "sentar" de vanilla. El lobo se mueve con la velocidad del lobo (sin tope del jugador). **Salto cargado como el del caballo:** mantén saltar hasta 1 s (mínimo 35 %), con factor de salto 1,6 y una barra propia (`WolfJumpGauge`) en lugar de la de vanilla. R1: +25 % de vida a tus lobos cercanos (48 bloques). R2: el lobo **montado** muerde a lo que golpeas (1 s entre mordiscos); sin montar ya lo hacen los lobos vanilla.
 * **Pescador:** cada espera hasta que pica un pez se acorta un 40 %.
-* **Moldeador:** las 2 cargas de Ola tienen enfriamientos independientes. **Pendiente de cambio** (decidido): sus habilidades pasarán a ser conjuros de *T.O Magic 'n Extras*; faltan los ids exactos (F3+H sobre el pergamino).
+* **Moldeador (2026-11-17):** sus habilidades (Agua Dócil, Ola, Muro de Agua) se han sustituido por conjuros de *T.O Magic 'n Extras*: `traveloptics:hydroshot`, `traveloptics:overflow`, `traveloptics:jet_steam` (con `jet_stream`/`jetstream` de respaldo) y `traveloptics:tidal_grasp`. El rito Marea Viva cuenta 3 lanzamientos de esos conjuros durante el jefe.
+* **Neutralidad (2026-11-17):** además de los dragones de su elemento, el Dracónido de Agua es neutral con las serpientes marinas (`iceandfire:sea_serpent`), el Venenoso con las gorgonas (`iceandfire:gorgon`) y el Ácido con las hidras (`iceandfire:hydra`); se provocan igual que los dragones.
 * **Artificiero (Cepo):** **sin tiempo máximo** (no caduca) y más visible: partículas verdes solo para su dueño cada 4 ticks. Daño **2/4/6/8** por rango 0–3, tratado como vida (HP) y como daño de jugador.
 * **Ladrón (Mano Larga):** 2 s de enfriamiento.
 * **Nativo:** 25 % de que un trueque con un piglin salga doble (cuenta el Nativo a 10 bloques o menos del piglin).
@@ -85,7 +86,7 @@ Ids de raza: `rpgclasses:human`, `orc`, `dwarf`, `elf`, `goblin`, `triton`, `inf
    Goblin montado en lobo no puede atacar con Epic Fight (pedir log).
 2. Calibrar cantidades de ritos y valores **[MEDIR]**.
 3. Integrar el anexo en el documento v2 y actualizar el documento de arquitectura.
-4. Moldeador: conjuros de *T.O Magic 'n Extras* (ids pendientes).
+4. *Hecho:* Moldeador con conjuros de *T.O Magic 'n Extras*.
 5. Publicación en CurseForge (la traducción `en_us` y el README ya están al día).
 6. Cooldown del escudo por muro (aparcado). *Hecho el 2026-11-16:* HUD de enfriamientos raciales (filas doradas encima de las habilidades de clase, con su tecla) y ballestas en Conservación de Munición (la munición se devuelve al cargar la ballesta; esa flecha no se puede recoger).
 7. Opcional: texturas propias para los botones estándar de los menús (hoy solo usan las propias los paneles, las cabeceras y las tarjetas con retrato).
@@ -105,7 +106,7 @@ Nada de esto se ha probado en el juego. Perfil: Forge 1.20.1 (47.4.x) + Iron's S
 2. Demoledor: TNT propia (radio mayor, sin daño), Vetas (Rango 1), Túnel agachado (Rango 3).
 3. Elfo Arcano: experiencia devuelta al encantar en la mesa, yunque más barato, Fusión Arcana (Rango 3).
 4. Jinete de Lobo: montar (clic derecho con mano vacía), moverse, saltar, bajarse agachado; vida extra (R1), mordisco (R2), regeneración (R3). Probar también con Epic Fight.
-5. Pescador: picos más rápidos. Moldeador: 2 cargas de Ola en Rango 3.
+5. Pescador: picos más rápidos. Moldeador: los conjuros de agua aparecen en la rueda según el rango (Rango 3: los cuatro) y cuentan para Marea Viva.
 6. Nativo: trueques dobles. Fundidor: hornos más rápidos cerca.
 7. Pirómano (con Iron's): Disparo de fuego racial que atraviesa; charco de llamas (R2) y de lava (R3) desde la Bomba de magma.
 8. Artificiero: el Cepo no caduca, se ve con partículas verdes solo para su dueño y daña 2/4/6/8 por rango. Ladrón: Mano Larga cada 2 s.

@@ -287,7 +287,7 @@
 "subrace.rpgclasses.centaur.unicorn.name": "Unicorn",
 "subrace.rpgclasses.centaur.warrior.desc": "At 40% of your top speed or more you attack without slowing down (Epic Fight) and deal more melee damage the faster you go. Ramming slows you down less.",
 "subrace.rpgclasses.centaur.warrior.name": "Warrior",
-"subrace.rpgclasses.colossus.porter.desc": "You carry a belt of chests, furnaces and tables that you can use while walking, and your allies can ride on you.",
+"subrace.rpgclasses.colossus.porter.desc": "You carry a belt of chests, furnaces and tables that you can use while walking (race key 1; allies open it by sneaking and right-clicking you), and your allies can ride on you. Somewhat slower, and more so with passengers.",
 "subrace.rpgclasses.colossus.porter.name": "Porter",
 "subrace.rpgclasses.colossus.titan.desc": "Grow (racial key 1): you double your size again with a second health bar, break in 3×3×3 and the ground shakes with every step.",
 "subrace.rpgclasses.colossus.titan.name": "Titan",

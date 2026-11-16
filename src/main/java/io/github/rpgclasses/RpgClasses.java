@@ -61,6 +61,7 @@ public class RpgClasses {
         MonkSubclasses.register();
         RogueAbilities.register();
         ModEntities.ENTITIES.register(modBus);
+        io.github.rpgclasses.registry.ModMenus.MENUS.register(modBus);
         io.github.rpgclasses.registry.ModBlocks.BLOCKS.register(modBus);
         io.github.rpgclasses.registry.ModBlocks.ITEMS.register(modBus);
         io.github.rpgclasses.gear.ModGear.ITEMS.register(modBus);
@@ -135,6 +136,7 @@ public class RpgClasses {
         MinecraftForge.EVENT_BUS.register(new io.github.rpgclasses.content.race.SlimeTraits());
         MinecraftForge.EVENT_BUS.register(new io.github.rpgclasses.content.race.CentaurTraits());
         MinecraftForge.EVENT_BUS.register(new io.github.rpgclasses.content.race.ColossusForms());
+        MinecraftForge.EVENT_BUS.register(new io.github.rpgclasses.content.race.PorterBelt());
         MinecraftForge.EVENT_BUS.register(io.github.rpgclasses.content.race.Rites.listener());
     }
 

@@ -371,6 +371,11 @@ ITEM_TAGS = {
                            "minecraft:nautilus_shell", "minecraft:saddle"],
  "rite/iron_weapons": ["minecraft:iron_sword", "minecraft:iron_axe"],
 }
+# Coloso Porteador (adenda 0.7): bloques que se pueden llevar en el cinturón (el código sabe usar estos).
+ITEM_TAGS["belt_blocks"] = ["minecraft:chest", "minecraft:trapped_chest", "minecraft:barrel", "minecraft:ender_chest",
+    "minecraft:furnace", "minecraft:blast_furnace", "minecraft:smoker", "minecraft:crafting_table", "minecraft:enchanting_table",
+    "minecraft:anvil", "minecraft:chipped_anvil", "minecraft:damaged_anvil", "minecraft:loom", "minecraft:stonecutter",
+    "minecraft:grindstone", "minecraft:smithing_table", "minecraft:cartography_table"]
 BLOCK_TAGS = {
  "rite/bookshelves": ["minecraft:bookshelf", "minecraft:chiseled_bookshelf"],
  # Coloso (adenda 0.7): cultivos que rompe al pisarlos.

@@ -67,7 +67,7 @@ public final class DraconicBreath {
     private record Channel(String element, long end) {}
     private static final Map<UUID, Channel> CHANNELS = new HashMap<>();
 
-    private DraconicBreath() {}
+    public DraconicBreath() {}
 
     public static boolean isChanneling(ServerPlayer p) {
         return CHANNELS.containsKey(p.getUUID());

@@ -97,6 +97,7 @@ public final class AbilityService {
     // --- Cooldowns (guardados con el jugador: reconectar no los reinicia) ---
 
     public static long remainingTicks(ServerPlayer player, String key) {
+        if (io.github.rpgclasses.content.CreativeAmuletItem.carried(player)) return 0; // Amuleto del Creativo
         PlayerClassData data = PlayerClassDataProvider.get(player);
         if (data == null) return 0;
         return Math.max(0, data.cooldowns.getOrDefault(key, 0L) - player.level().getGameTime());
@@ -107,7 +108,7 @@ public final class AbilityService {
         if (data == null) return;
         long now = player.level().getGameTime();
         data.cooldowns.values().removeIf(end -> end <= now);
-        if (ticks > 0) data.cooldowns.put(key, now + ticks);
+        if (ticks > 0 && !io.github.rpgclasses.content.CreativeAmuletItem.carried(player)) data.cooldowns.put(key, now + ticks);
     }
 
     /** Quita el enfriamiento de una habilidad (p. ej. Paso de Sombra al matar a su objetivo). */

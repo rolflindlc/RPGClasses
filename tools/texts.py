@@ -432,6 +432,8 @@ UI = {
     "msg.rpgclasses.martial_echo": "Eco Marcial: tu siguiente conjuro cuesta menos maná",
     "msg.rpgclasses.monk_armed": "Efecto propio preparado: tu siguiente golpe desarmado gasta las cargas",
     "msg.rpgclasses.shadow_step_ready": "¡Paso de Sombra recargado!",
+    "item.rpgclasses.creative_amulet": "Amuleto del Creativo",
+    "tooltip.rpgclasses.creative_amulet": "Pruebas: mientras lo lleves en el inventario, todos los enfriamientos de clase y de raza son 0.",
     "msg.rpgclasses.time_rewind_empty": "Aún no hay nada a lo que volver.",
     "msg.rpgclasses.time_rewind_blocked": "No hay sitio seguro donde volver.",
     "msg.rpgclasses.time_stop_mana": "No tienes maná suficiente para detener el tiempo.",

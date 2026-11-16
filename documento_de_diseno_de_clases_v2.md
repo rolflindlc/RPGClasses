@@ -188,12 +188,13 @@ Notas de los perks:
 
 ### Subclases
 
-**1. Evocador Caótico**
-* **Ampliación Mágica:** +30% de tamaño de proyectiles y área al nivel 10.
-* **Erupción de Magia Salvaje:** probabilidad = **maná consumido × 0,33%, con tope del 50%**.
-  * La réplica lanza otro conjuro ofensivo equipado en **8 direcciones horizontales**, hace el 33% del daño y **no cuesta maná**.
-  * Una réplica **no puede activar otra** Magia Salvaje. **ICD global de 1,5 s.**
-  * Los conjuros legendarios **pueden activar** Magia Salvaje al lanzarse, pero **no pueden ser la réplica**.
+**1. Cronomante** (sustituye al Evocador Caótico; detalle completo en la adenda del Cronomante del proyecto)
+* **Dilatación Temporal:** −1,5% de tiempo de lanzamiento por nivel de subclase (−15% al nivel 10).
+* **Retroceso Temporal (activa, nivel 1 de subclase):** el mod guarda cada 0,5 s la posición, la vida y el maná. Al activarla vuelves al estado de hace X segundos (solo tú) y recuperas parte de lo perdido; nunca te quita vida ni maná. Anula el daño de caída. El historial se borra al cambiar de dimensión, morir o teletransportarte a más de 64 bloques. Si el sitio ya no es seguro, busca un hueco a 3 bloques o menos; si no hay, falla sin gastar recarga.
+  * Niveles 1–3: 3 s, 50% de la vida perdida, 25% del maná gastado, recarga 60 s.
+  * Niveles 4–7: 5 s, 75% y 50%, recarga 50 s; además quita los efectos negativos recibidos en la ventana.
+  * Niveles 8–10: 8 s, 100% y 75%, recarga 35 s; además los conjuros lanzados en la ventana recuperan el 50% de su recarga restante.
+* **Parada Temporal (activa, nivel 1 de subclase):** esfera fija de **10 bloques** de radio durante **0,5 s (nivel 1) a 1 s (nivel 10)**. Paraliza todo lo que no es aliado del Cronomante y está dentro o entra mientras dura, **proyectiles incluidos**; lo paralizado no puede salir. Jefes: como mucho la mitad de la duración. Coste: 20% del maná máximo; recarga 45 s → 30 s. La esfera se ve como una **cáscara gris translúcida** (compatible con shaders): desde fuera lo de dentro se ve gris y desde dentro lo de fuera. Los jugadores paralizados ven la pantalla gris, pasan a tercera persona y oyen un tictac rápido hasta que acaba. **[MEDIR]**
 
 **2. Elementalista**
 * **Sintonización Elemental:** +1% de CDR por nivel de subclase (+10% al nivel 10).
@@ -587,7 +588,7 @@ Notas de los perks:
 
 | Subclase | Movilidad | Resistencia (HP efectivos) | DPS (índice) | Utilidad | Total |
 | ----- | ----- | ----- | ----- | ----- | ----- |
-| Evocador Caótico | 3 | 26,8 (2,8) | 2,30 (8,2) | 7,5 | 5,38 |
+| Cronomante | 3,5 | 30,3 (3,2) | 2,10 (7,4) | 7,5 | 5,40 |
 | Elementalista | 3 | 28,2 (3,0) | 2,40 (8,6) | 7,5 | 5,53 |
 | Mago de Batalla | 3 | 44,0 (4,3) | 2,05 (7,2) | 6,5 | 5,25 |
 | Guardián Bendito | 2,5 | 140,9 (7,6) | 1,15 (3,6) | 9 | 5,68 |

@@ -204,7 +204,9 @@ public final class DraconicBreath {
                 Vec3 away = e.position().subtract(p.position());
                 double push = Races.number(p, "race_breath_water", "breath_push", 1.0) * 0.4 * (boss ? 0.5 : 1);
                 if (away.horizontalDistanceSqr() > 1e-6) e.knockback(push, -away.x, -away.z);
-                e.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 40, 0), p);
+                // Con T.O Magic 'n Extras, Mojado (combina con rayo y hielo); sin él, Lentitud I.
+                if (io.github.rpgclasses.content.Schools.wetEffect() != null) io.github.rpgclasses.content.Schools.applyWet(e, p, 40, 0);
+                else e.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 40, 0), p);
             }
             default -> {}
         }

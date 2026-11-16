@@ -68,13 +68,14 @@ public final class Schools {
         };
     }
 
+    /** Id del efecto "Mojado" de T.O Magic 'n Extras (leído en el pack). */
+    public static final ResourceLocation WET_ID = new ResourceLocation("traveloptics", "wet");
+
     /** Efecto "Mojado" de T.O (reduce resistencias a rayo y hielo) si está instalado; null si no. */
     public static MobEffect wetEffect() {
         if (!wetLooked) {
             wetLooked = true;
-            for (Map.Entry<net.minecraft.resources.ResourceKey<MobEffect>, MobEffect> e : ForgeRegistries.MOB_EFFECTS.getEntries()) {
-                if ("wet".equals(e.getKey().location().getPath())) { wet = e.getValue(); break; }
-            }
+            wet = ForgeRegistries.MOB_EFFECTS.containsKey(WET_ID) ? ForgeRegistries.MOB_EFFECTS.getValue(WET_ID) : null;
         }
         return wet;
     }

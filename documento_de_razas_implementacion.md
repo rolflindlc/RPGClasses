@@ -1,4 +1,4 @@
-# Razas: estado de implementación (fases R1 y R2)
+# Razas: estado de implementación (fases R1, R2 y R3)
 
 Acompaña a *Documento de Diseño: Razas* (anexo, rev. 0.6). Describe qué hay programado en el mod, cómo probarlo y qué falta. Fecha: 2026-11-13 (10.º relevo, con los ajustes de balance del diseño v2 rev. 2.13).
 
@@ -162,3 +162,47 @@ Nada de esto se ha probado en el juego. Perfil: Forge 1.20.1 (47.4.x) + Iron's S
 1. Infernal: meterse en agua (o columnas de burbujas) quema 1 HP cada 2 s, con vapor y siseo; la lluvia no. Mensaje de muerte propio.
 2. Infernal: congelación (nieve polvo) y conjuros de hielo hacen +30 %; con T.O Magic 'n Extras, también los de agua.
 3. Tritón: al entrar al Nether recibe *Debilidad I* (sin icono), que se quita a los 3 s de salir.
+
+## 5. Fase R3: razas de la adenda 0.7 (Slime, Coloso, Dracónido y Centauro)
+
+Fecha: 2026-11-16. Protocolo de red **12** (servidor y cliente con el mismo jar). Ids: `rpgclasses:slime`, `colossus`, `draconid`, `centaur`.
+
+### 5.1 Qué hay hecho
+
+* **Reglas:** sin tope de vida máxima para nadie (solo el suelo de 10 HP); una raza tiene de 2 a 6 subrazas.
+* **Datos:** las 4 razas, sus 15 subrazas y los **45 ritos** están en el datapack (`races/*.json`). Los ritos usan un objetivo nuevo, `counter` (lanzamientos, fusiones, bloques rotos…), el filtro `kill.by` (derrota con el aliento, la embestida, el enjambre…) y condiciones nuevas del jefe (`source_share`, `counts`, `min_slimes`) y del altar (`snowy`, `storm`, `deep_water`, `high`).
+* **Retratos:** plantillas grises en blanco de 236×236 en `textures/gui/portrait/race/<raza>.png` y `subrace/<raza>/<subraza>.png`, junto a las demás, para sustituirlas por los tuyos.
+* **Troncos (las 4 razas):**
+  * **Slime:** sin daño de caída, rebote al caer (agachado no), +100 % de salto, −15 % de vida, +50 % de retroceso.
+  * **Coloso:** tamaño ×2, +100 % de vida, rotura 2×2×2 (agachado 1; tarda lo del bloque más lento; nunca contenedores ni bloques con datos; respeta zonas protegidas), alcance +1,5, paso +0,6, salto +100 %, caída segura 6, detección +50 %, +50 % de hambre, se hunde y camina por el fondo (sale saltando del agua poco profunda), pisa cultivos (agachado no), no monta animales ni barcas.
+  * **Dracónido:** resistencia a su elemento (tope 80 %), +25 % de hambre, neutralidad de los dragones salvajes de Ice and Fire de su elemento (se rompe al dañarlos, abrir un contenedor a 32 bloques de ellos o romper montones de tesoro).
+  * **Centauro:** hitbox de caballo (1,4 × 1,6; ojos a 1,5), aceleración al correr en línea recta (un giro brusco la reduce), embestida desde el 40 % (pierde el 75 % de la velocidad), salto cargado como el del caballo con barra (un toque es un salto normal), caída segura 6, aliados montados (clic derecho con la mano vacía; 1 o 2 por Rango), no monta animales ni barcas.
+* **Subrazas disponibles (11 de 15):**
+  * **Dracónido (las 6):** aliento con la tecla racial 1 (volver a pulsar lo corta). Fuego prende; Hielo ralentiza; Eléctrico salta a enemigos cercanos; Venenoso envenena (no-muertos: Lentitud) e inmune a Veneno en R2; Ácido aplica **Corrosión** (efecto nuevo, −5 % de armadura y dureza por nivel) e inmune a Hambre y a la comida mala; Agua empuja, apaga el fuego, aire ×3, respira bajo el agua en R2 y nada más rápido.
+  * **Slime Resorte:** agachado en el suelo carga (barra verde); saltar con la carga te lanza con el giro del Impulso; rebota en paredes y suelo según la potencia (3 rebotes; agachado los corta).
+  * **Slime Viscoso:** agachado contra una pared o una entidad te pegas (barra naranja; saltar sube, soltar el agachado baja); en el aire te deslizas por las paredes; los golpes dan Lentitud.
+  * **Centauro Pegaso, Unicornio y Guerrero:** planeo con caída lenta (control en el aire en R2, aleteo con saltar en R3); aura de maná para aliados, +50 % de curación de pociones y conjuros y cuerno; daño cuerpo a cuerpo según la velocidad.
+
+### 5.2 Decisiones que he tomado (pendientes de tu confirmación)
+
+* **Aliento:** cono de 30° de medio ángulo, golpea cada 0,5 s, **10 de maná por segundo** (sin Iron's no gasta maná); el enfriamiento empieza al acabar la canalización máxima. Daño por tipos propios (`breath_*`); el de fuego cuenta como fuego (el Infernal es inmune).
+* **Corrosión** en jefes: la mitad. **Agua:** sin T.O Magic 'n Extras aplica Lentitud I 2 s (el efecto Mojado queda para cuando sepamos su id).
+* **Centauro:** la caída segura de 6 bloques (no estaba en la adenda) para que el salto cargado de 5,3 bloques no haga daño. Su velocidad racial va como multiplicador total aparte, limitada a 3 veces la carrera vanilla. Si el Centauro embiste a la vez que la *Embestida* del Bárbaro o el Juggernaut, por ahora cuentan las dos.
+* **Pegaso:** el planeo es la caída lenta de vanilla (oculta), activada al caer desde la altura del Rango.
+* **Unicornio:** el aura suma +50 % al atributo de regeneración de maná de Iron's de los aliados (jugadores) en el radio. La Regeneración de manzanas doradas y faros también cuenta como "poción".
+* **Viscoso:** te sueltas al perder 6 HP o más de golpe; la barra se recarga en el suelo en 2 s.
+
+### 5.3 Qué falta (fase R3c)
+
+1. **Slime Enjambre y Mitótico**, **Coloso Porteador** (cinturón de contenedores virtuales) y **Coloso Titán** (forma ×4 con temblor): aparecen como "Aún no disponible".
+2. **Modelo de caballo del Centauro** (hoy se ve como un jugador normal con la hitbox de caballo) y el **ataque sin frenarse con Epic Fight** del Guerrero (hoy solo tiene el bono de daño).
+3. Comprobar los ids de los dragones de Ice and Fire **[MEDIR]** y calibrar todo lo marcado **[MEDIR]** en la adenda.
+
+### 5.4 Qué probar
+
+1. **Elección:** las 4 razas nuevas en la pantalla, con 6 pestañas en el Dracónido (el nombre completo sale al pasar el ratón). Las subrazas sin programar aparecen en gris.
+2. **Slime:** caer desde lo alto sin daño y rebotar; agachado no rebota; salto de 2,5 bloques. **Resorte** y **Viscoso** como arriba.
+3. **Coloso** (`/clases raza set <jugador> colossus porter`): tamaño, romper 2×2×2 de pie y 1 agachado, cofres que no se rompen, agua (se hunde), cultivos pisados, no poder montar barcas ni caballos, caer 6 bloques sin daño.
+4. **Dracónido:** cada aliento con la tecla V (y cortarlo con V), el maná que baja, el muro de Magia con un Bárbaro, la Corrosión en el inventario del objetivo, resistencias (fuego, nieve polvo, rayo, veneno, ahogarse).
+5. **Centauro:** correr en recto y ver que acelera, embestir a un zombi, salto cargado con barra, que un aliado se monte (clic derecho) y que con 2 pasajeros vayan uno detrás de otro; huecos de 1 bloque.
+6. **Ritos:** `/raza ritos` en cada subraza nueva; una ofrenda y una hazaña con contador (p. ej. Resorte: lanzamientos).

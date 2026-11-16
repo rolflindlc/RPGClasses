@@ -470,9 +470,14 @@ public final class PorterBelt {
     }
 
     private static void tick(ServerPlayer p) {
+        passengerSpeed(p);
         int cap = capacity(p);
-        Belt b = cap > 0 || p.tickCount % 20 == 0 ? belt(p) : BELTS.get(p.getUUID());
-        if (b == null) return;
+        Belt b = BELTS.get(p.getUUID());
+        if (b == null) {
+            // Solo se carga si es Porteador, o (una vez por segundo) si tiene un cinturón guardado que devolver.
+            if (cap <= 0 && !(p.tickCount % 20 == 0 && p.getPersistentData().getCompound(Player.PERSISTED_NBT_TAG).contains(TAG))) return;
+            b = belt(p);
+        }
         // Hornos: cocinan con el tick del dueño (también mientras camina).
         for (Object part : b.parts) {
             if (part instanceof VirtualFurnace f) {
@@ -494,10 +499,16 @@ public final class PorterBelt {
                 p.getInventory().placeItemBackInInventory(block);
                 b.markDirty();
             }
+            if (cap <= 0 && b.isEmpty()) {
+                // Ya no es Porteador y no queda nada: se borra el cinturón guardado.
+                BELTS.remove(p.getUUID());
+                CompoundTag root = p.getPersistentData().getCompound(Player.PERSISTED_NBT_TAG);
+                root.remove(TAG);
+                p.getPersistentData().put(Player.PERSISTED_NBT_TAG, root);
+                return;
+            }
             if (b.dirty) save(p, b);
-            if (cap <= 0 && b.isEmpty()) BELTS.remove(p.getUUID());
         }
-        passengerSpeed(p);
     }
 
     /** −5 % de velocidad por pasajero (hasta el Rango 2). */

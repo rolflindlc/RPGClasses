@@ -63,6 +63,8 @@ public final class ClientSetup {
         modBus.addListener((RegisterGuiOverlaysEvent event) -> event.registerAboveAll("centaur_jump", RaceBodyClient::renderHud));
         MinecraftForge.EVENT_BUS.addListener(RaceBodyClient::onClientTick);
         MinecraftForge.EVENT_BUS.addListener(RaceBodyClient::onMovementInput);
+        MinecraftForge.EVENT_BUS.addListener(ShakeFx::onClientTick);
+        MinecraftForge.EVENT_BUS.addListener(ShakeFx::onCamera);
         // Cargas del Monje: encima de la armadura (y de la vida), reservando su altura en el lado izquierdo.
         modBus.addListener((RegisterGuiOverlaysEvent event) -> event.registerAbove(
                 net.minecraftforge.client.gui.overlay.VanillaGuiOverlay.ARMOR_LEVEL.id(), "monk_charges", MonkChargeFx::renderHud));

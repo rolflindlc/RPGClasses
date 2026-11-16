@@ -209,7 +209,7 @@
       "display": {
         "icon": "minecraft:obsidian"
       },
-      "available": false,
+      "available": true,
       "effects": [
         {
           "type": "rpgclasses:mechanic",
@@ -238,7 +238,9 @@
               1.0
             ]
           },
-          "shake_radius": 24
+          "shake_radius": 24,
+          "size": 3,
+          "fall_height": 12
         }
       ],
       "rites": [

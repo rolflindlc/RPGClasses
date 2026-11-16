@@ -157,6 +157,21 @@ public final class Packets {
         }
     }
 
+    /** Servidor -> cliente: temblor de pantalla (pisotón del Coloso Titán); strength 0–1. */
+    public record Shake(float strength) {
+        public void encode(FriendlyByteBuf buf) {
+            buf.writeFloat(strength);
+        }
+
+        public static Shake decode(FriendlyByteBuf buf) {
+            return new Shake(buf.readFloat());
+        }
+
+        public void handle(Supplier<NetworkEvent.Context> ctx) {
+            DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> io.github.rpgclasses.client.ShakeFx.add(strength));
+        }
+    }
+
     public record AirJump() {
         public void encode(FriendlyByteBuf buf) {}
 

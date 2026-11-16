@@ -144,7 +144,8 @@ public final class RaceTraits {
             float ex = Races.foodTag(food).getFloat("foodExhaustionLevel");
             Float last = LAST_EXHAUSTION.get(id);
             if (last != null && ex > last) {
-                float extra = (float) ((ex - last) * hunger.number("exhaustion", 0.25));
+                // Coloso Titán: en forma, +100 % de hambre en vez del +50 % del tronco.
+                float extra = (float) ((ex - last) * ColossusForms.hungerFactor(p, hunger.number("exhaustion", 0.25)));
                 food.addExhaustion(extra);
                 ex += extra;
             }

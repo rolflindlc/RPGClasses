@@ -236,7 +236,7 @@ RACE_PARAMS = {
  "lifesteal": "Robo de vida|%", "cap_per_second": "Tope de curación por segundo (HP)", "arrow_reduction": "Menos daño de proyectiles|%",
  "regen_pause_seconds": "Corte de la regeneración|s", "max_blocks": "Bloques conectados",
  "durability": "Durabilidad extra|%", "unbreaking": "Irrompibilidad extra", "discount": "Descuento|%", "tnt_radius": "Radio de tu TNT|+%",
- "size": "Túnel (lado)", "exhaustion_per_block": "Hambre por bloque extra", "xp_discount": "Experiencia de encantar|−%",
+ "size": "Lado del área de rotura (bloques)", "exhaustion_per_block": "Hambre por bloque extra", "xp_discount": "Experiencia de encantar|−%",
  "speed_factor": "Velocidad del lobo x", "reach": "Alcance (bloques)", "amplifier": "Nivel del efecto (0 = I)",
  "lure_speed": "Picos más rápidos|%", "extra_chance": "Probabilidad de doble|%",
  "furnace_speed": "Velocidad de los hornos|+%", "pierce": "Enemigos atravesados", "burn_seconds": "Quemadura|s",
@@ -354,9 +354,9 @@ RACES.update({
     mech("giant_fall", fall_height=6)], [
     ("porter", "minecraft:chest", False, [
         mech("belt", slots=V(3, 4, 5, 6), passengers=V(1, 1, 2, 2), speed_penalty=.10, passenger_penalty=V(.05, .05, .05, 0))]),
-    ("titan", "minecraft:obsidian", False, [
+    ("titan", "minecraft:obsidian", True, [
         mech("grow", duration_seconds=V(30, 42, 51, 60), cooldown_seconds=V(225, 200, 175, 150), absorption=V(.50, .70, .85, 1.0),
-             shake_radius=24)])]),
+             shake_radius=24, size=3, fall_height=12)])]),
  "draconid": ("minecraft:dragon_head", [
     mech("hunger", exhaustion=.25),
     mech("breath", range=V(4, 5, 6, 8), damage_per_second=V(3, 4, 5, 6.5), channel_seconds=V(2, 3, 4, 5), cooldown_seconds=V(12, 10, 10, 8),
@@ -447,6 +447,11 @@ MECHANIC_TEXT.update({
  "blessed": ("Bendecido", "Recibes más curación de pociones y conjuros."),
  "horn": ("Cuerno", "Tu embestida hace más daño."),
  "war_gallop": ("Galope de Guerra", "Daño cuerpo a cuerpo según tu velocidad; embestir te frena menos."),
+})
+
+# Fase R3c: textos nuevos de las habilidades de las subrazas complejas.
+RACE_UI.update({
+ "message.rpgclasses.titan_no_room": "No hay sitio para crecer: hace falta espacio libre del doble de tu tamaño",
 })
 
 RACE_PARAMS.update({

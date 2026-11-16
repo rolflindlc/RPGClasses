@@ -22,7 +22,9 @@ Todo lo siguiente está en el código y compila con sus pruebas, pero **no se ha
   Mago, barras de sigilo, salto cargado, adherencia y fusión.
 - **Configuración:** de servidor (`rpgclasses-server.toml`: coste de XP, respec, aliados, depuración) y de cliente
   (`rpgclasses-client.toml`: intensidad del temblor del Titán).
-- Red: protocolo **14** (servidor y cliente con el mismo jar). 17 mixins (2 solo de cliente).
+- **Cronomante** (sustituye al Evocador Caótico): Retroceso Temporal y Parada Temporal (esfera gris translúcida,
+  compatible con shaders). Pruebas en el juego: ver "Probar el Cronomante" más abajo.
+- Red: protocolo **15** (servidor y cliente con el mismo jar). 17 mixins (2 solo de cliente).
 - Depuración: `/clases debug volcar` escribe un informe en `logs/`; `logs/rpgclasses-debug.log` lleva el registro.
 
 ### Pendiente
@@ -65,6 +67,24 @@ Al entrar sin clase se abre la pantalla de selección.
 | `/clases debug stats` | Modificadores activos, muros, crítico y desglose del último golpe |
 
 Para tener XP de prueba: `/xp add @s 9000 points`.
+
+## Probar el Cronomante
+
+`/clase elegir rpgclasses:mage`, sube la base a 15 puntos y `/clase subclase rpgclasses:chronomancer`; ambas
+habilidades se tienen desde el nivel 1 de subclase (teclas Z y X). Para probar los niveles altos, sube la subclase con
+`/clase subpunto` (cada nivel exige más puntos de base).
+
+1. **Retroceso:** camina unos segundos, recibe daño y gasta maná; al pulsarlo vuelves al sitio de hace 3 s (5 s desde
+   el nivel 4 y 8 s desde el 8) con parte de la vida y el maná. Unas chispas moradas marcan dónde volverías. Probar:
+   caída desde altura (sin daño), efecto de Veneno (se quita desde el nivel 4), recarga de un conjuro (baja a la mitad
+   desde el nivel 8), volver a un sitio que ya tiene un bloque (busca hueco o falla sin gastar recarga) y cambiar de
+   dimensión (borra el historial).
+2. **Parada:** junto a zombis y esqueletos: quedan quietos (también en el aire) y sus flechas se paran en el aire y
+   siguen al terminar. Con otro jugador no aliado: pantalla gris, tercera persona, tictac y sin poder moverse ni atacar;
+   al acabar vuelve su cámara. Un aliado (tecla J) no se para. Un jefe (Mowzie's, Cataclysm) se para la mitad del tiempo.
+3. **Shaders:** con Iris/Oculus y un shaderpack, la esfera debe verse igual (es una cáscara translúcida, sin
+   postprocesado).
+4. **Seguridad:** desconectarse, morir o salir del chunk durante la parada no debe dejar nada congelado.
 
 ## Añadir una clase
 

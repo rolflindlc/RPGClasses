@@ -5,6 +5,7 @@ import io.github.ironrituals.config.ServerConfig;
 import io.github.ironrituals.registry.ModBlockEntities;
 import io.github.ironrituals.registry.ModBlocks;
 import io.github.ironrituals.registry.ModCreativeTabs;
+import io.github.ironrituals.registry.ModEffects;
 import io.github.ironrituals.registry.ModItems;
 import io.github.ironrituals.registry.ModLoot;
 import io.github.ironrituals.registry.ModRecipes;
@@ -24,6 +25,7 @@ public final class IronRituals {
         IEventBus modBus = context.getModEventBus();
         ModBlocks.BLOCKS.register(modBus);
         ModItems.ITEMS.register(modBus);
+        ModEffects.EFFECTS.register(modBus);
         ModBlockEntities.BLOCK_ENTITIES.register(modBus);
         ModCreativeTabs.TABS.register(modBus);
         ModRecipes.TYPES.register(modBus);

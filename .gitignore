@@ -1,6 +1,7 @@
-build/
-.gradle/
-run/
-out/
 *.iml
+.gradle/
 .idea/
+__pycache__/
+build/
+out/
+run/

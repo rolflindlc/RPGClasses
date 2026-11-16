@@ -147,6 +147,7 @@ def gen_items():
         "emissive_layers": [1],
         "render_types": {"minecraft:translucent": [1]},
     })
+    write(f"{ASSETS}/models/item/custody_seal.json", {"parent": "minecraft:item/generated", "textures": {"layer0": f"{MOD}:item/custody_seal"}})
     write(f"{ASSETS}/models/item/ritual_tome.json", {"parent": "minecraft:item/generated", "textures": {"layer0": f"{MOD}:item/ritual_tome"}})
 
 
@@ -331,6 +332,27 @@ LANG = {
     "message.ironrituals.interrupt.core_broken": ("El ritual se ha interrumpido: el núcleo se ha roto", "The ritual was interrupted: the core was broken"),
     "message.ironrituals.interrupt.suppressed": ("El ritual se ha interrumpido: un Campo de Supresión lo ha sofocado", "The ritual was interrupted: a Suppression Field smothered it"),
     "ritual.ironrituals.deluge.no_weather": ("Aquí no hay cielo al que pedir lluvia", "There is no sky here to ask for rain"),
+    # Fase 4
+    "ritual.ironrituals.time.no_cycle": ("En este lugar no amanece ni anochece", "Here there is neither dawn nor dusk"),
+    "ritual.ironrituals.eternal_forge.no_item": ("Deja en el área central el objeto con durabilidad que quieres forjar", "Leave the item with durability you want to forge in the central area"),
+    "ritual.ironrituals.eternal_forge.too_many": ("La forja solo acepta un objeto a la vez", "The forge accepts only one item at a time"),
+    "ritual.ironrituals.eternal_forge.refused": ("La llama rechaza %s", "The flame refuses %s"),
+    "ritual.ironrituals.eternal_forge.already": ("%s ya es eterno", "%s is already eternal"),
+    "ritual.ironrituals.eternal_forge.needs_level": ("%s necesita la Forja Eterna de nivel %s", "%s needs the level %s Eternal Forge"),
+    "ritual.ironrituals.shrinking.no_backend": ("Este ritual necesita el mod de Razas y Clases o Pehkui", "This ritual needs the Races and Classes mod or Pehkui"),
+    "ritual.ironrituals.soul_anchor.already": ("Tu alma ya está anclada", "Your soul is already anchored"),
+    "message.ironrituals.soul_anchor.bound": ("Tu alma queda anclada: lo que llevas no se perderá en tu próxima muerte", "Your soul is anchored: what you carry will not be lost on your next death"),
+    "message.ironrituals.soul_anchor.saved": ("El Ancla del Alma ha retenido tus pertenencias", "The Soul Anchor kept your belongings"),
+    "message.ironrituals.soul_anchor.pvp": ("El Ancla del Alma no resiste la mano de otro jugador", "The Soul Anchor does not withstand another player's hand"),
+    "item.ironrituals.custody_seal": ("Sello de Custodia", "Custody Seal"),
+    "tooltip.ironrituals.custody_seal": ("Agáchate y haz clic derecho sobre un contenedor o una puerta para sellarlo", "Sneak and right-click a container or door to seal it"),
+    "tooltip.ironrituals.fireproof": ("Forjado en llama eterna: no arde ni estalla", "Forged in eternal flame: it neither burns nor shatters"),
+    "message.ironrituals.seal.invalid": ("Solo se pueden sellar contenedores y puertas", "Only containers and doors can be sealed"),
+    "message.ironrituals.seal.already": ("Ya está sellado", "It is already sealed"),
+    "message.ironrituals.seal.applied": ("Sellado: solo tú y tus aliados podréis abrirlo", "Sealed: only you and your allies can open it"),
+    "message.ironrituals.seal.locked": ("Sellado por %s", "Sealed by %s"),
+    "message.ironrituals.seal.removed": ("Has retirado el sello", "You removed the seal"),
+    "effect.ironrituals.wall_climbing": ("Trepamuros", "Wall Climbing"),
     # Almas
     "soul.ironrituals.of": ("Daga con alma de %s", "Dagger with the soul of %s"),
     "soul.ironrituals.any": ("Daga con el alma de cualquier criatura", "Dagger with the soul of any creature"),
@@ -501,6 +523,42 @@ def tex_tome():
     png(f"{ASSETS}/textures/item/ritual_tome.png", img)
 
 
+def tex_custody_seal():
+    img = Image.new("RGBA", (16, 16), (0, 0, 0, 0))
+    cx, cy = 7.5, 8.5
+    for y in range(16):
+        for x in range(16):
+            d = ((x - cx) ** 2 + (y - cy) ** 2) ** 0.5
+            if d <= 6.2:
+                c = lerp((210, 60, 60, 255), (120, 20, 30, 255), d / 6.2)
+                if d > 5.2:
+                    c = (90, 14, 22, 255)
+                img.putpixel((x, y), c)
+    for (x, y) in ((7, 5), (8, 5), (6, 6), (9, 6), (6, 7), (9, 7), (5, 8), (6, 8), (7, 8), (8, 8), (9, 8), (10, 8),
+                   (5, 9), (10, 9), (5, 10), (10, 10), (5, 11), (6, 11), (7, 11), (8, 11), (9, 11), (10, 11)):
+        img.putpixel((x, y), (255, 215, 120, 255))
+    img.putpixel((7, 10), (90, 14, 22, 255))
+    img.putpixel((8, 10), (90, 14, 22, 255))
+    for x in range(6, 10):  # cinta
+        img.putpixel((x, 1), (230, 200, 140, 255))
+        img.putpixel((x, 2), (190, 160, 110, 255))
+    png(f"{ASSETS}/textures/item/custody_seal.png", img)
+
+
+def tex_effects():
+    img = Image.new("RGBA", (18, 18), (0, 0, 0, 0))
+    for y in range(2, 17):  # pared
+        for x in range(1, 6):
+            img.putpixel((x, y), (110, 100, 90, 255) if (x + y // 3) % 3 else (80, 72, 64, 255))
+    for (x, y) in ((8, 4), (9, 3), (10, 4), (7, 7), (8, 6), (9, 7), (8, 10), (9, 9), (10, 10), (7, 13), (8, 12), (9, 13)):
+        img.putpixel((x, y), (150, 200, 80, 255))  # flechas hacia arriba
+    for y in range(3, 15):
+        img.putpixel((13, y), (120, 170, 60, 255))
+    for (x, y) in ((12, 4), (14, 4), (11, 5), (15, 5)):
+        img.putpixel((x, y), (120, 170, 60, 255))
+    png(f"{ASSETS}/textures/mob_effect/wall_climbing.png", img)
+
+
 # --------------------------------------------------------------------------- rituales y botín
 
 def gen_rituals():
@@ -541,6 +599,8 @@ def main():
     tex_core()
     tex_dagger()
     tex_tome()
+    tex_custody_seal()
+    tex_effects()
     print("Recursos generados en", os.path.normpath(ROOT))
 
 

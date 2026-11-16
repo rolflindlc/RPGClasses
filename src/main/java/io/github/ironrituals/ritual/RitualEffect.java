@@ -32,4 +32,12 @@ public interface RitualEffect {
     default int tickInterval() {
         return 20;
     }
+
+    /**
+     * ¿El temporizador solo avanza con el propietario conectado? (regla general de la sección 2.5). Los efectos
+     * globales, como el reloj congelado, devuelven {@code false} para no quedarse activos mientras el dueño no está.
+     */
+    default boolean timerNeedsOwner() {
+        return true;
+    }
 }

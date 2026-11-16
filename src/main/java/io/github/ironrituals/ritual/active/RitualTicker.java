@@ -37,6 +37,7 @@ public final class RitualTicker {
 
         List<ActiveRitual> ended = new ArrayList<>();
         for (ActiveRitual r : new ArrayList<>(data.all())) {
+            if (!data.contains(r.id)) continue; // terminado por otro efecto en este mismo tick
             ServerLevel level = server.getLevel(r.dimension());
             if (level == null) {
                 ended.add(r);
@@ -49,10 +50,11 @@ public final class RitualTicker {
             }
             if (now % 20 == 0) r.paused = !r.ritual.equals(SUPPRESSION) && isSuppressed(data, r.dimension(), r.center());
 
-            boolean ownerOnline = server.getPlayerList().getPlayer(r.owner) != null;
-            if (ownerOnline && !r.paused) r.remaining--;
-
             RitualEffect effect = RitualEffects.get(r.ritual);
+            boolean ownerOnline = server.getPlayerList().getPlayer(r.owner) != null;
+            boolean needsOwner = effect == null || effect.timerNeedsOwner();
+            if ((ownerOnline || !needsOwner) && !r.paused) r.remaining--;
+
             if (effect != null && !r.paused && now % Math.max(1, effect.tickInterval()) == 0) {
                 effect.tick(r, level);
             }
@@ -62,9 +64,9 @@ public final class RitualTicker {
         if (now % 100 == 0) data.setDirty();
     }
 
-    /** Termina un ritual persistente y avisa a su efecto. */
+    /** Termina un ritual persistente y avisa a su efecto (una sola vez aunque se llame dos veces). */
     public static void end(MinecraftServer server, ActiveRitual r) {
-        RitualSavedData.get(server).remove(r.id);
+        if (RitualSavedData.get(server).remove(r.id) == null) return;
         RitualEffect effect = RitualEffects.get(r.ritual);
         ServerLevel level = server.getLevel(r.dimension());
         if (effect != null && level != null) effect.onEnd(r, level);

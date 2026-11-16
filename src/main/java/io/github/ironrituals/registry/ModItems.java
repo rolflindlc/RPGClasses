@@ -1,6 +1,7 @@
 package io.github.ironrituals.registry;
 
 import io.github.ironrituals.IronRituals;
+import io.github.ironrituals.item.CustodySealItem;
 import io.github.ironrituals.item.RitualDaggerItem;
 import io.github.ironrituals.item.RitualTomeItem;
 import net.minecraft.world.item.BlockItem;
@@ -28,6 +29,9 @@ public final class ModItems {
 
     public static final RegistryObject<Item> RITUAL_TOME = ITEMS.register("ritual_tome",
             () -> new RitualTomeItem(new Item.Properties().stacksTo(1).rarity(Rarity.RARE)));
+
+    public static final RegistryObject<Item> CUSTODY_SEAL = ITEMS.register("custody_seal",
+            () -> new CustodySealItem(new Item.Properties().stacksTo(16).rarity(Rarity.UNCOMMON)));
 
     private ModItems() {}
 }

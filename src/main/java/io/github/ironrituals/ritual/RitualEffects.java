@@ -1,7 +1,12 @@
 package io.github.ironrituals.ritual;
 
 import io.github.ironrituals.IronRituals;
+import io.github.ironrituals.ritual.effect.CustodyEffect;
 import io.github.ironrituals.ritual.effect.DelugeEffect;
+import io.github.ironrituals.ritual.effect.EternalForgeEffect;
+import io.github.ironrituals.ritual.effect.ShrinkingEffect;
+import io.github.ironrituals.ritual.effect.SoulAnchorEffect;
+import io.github.ironrituals.ritual.effect.TimeEffect;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.Nullable;
 
@@ -17,6 +22,14 @@ public final class RitualEffects {
 
     static {
         register(IronRituals.id("deluge"), new DelugeEffect());
+        // Fase 4: entorno y objeto
+        TimeEffect time = new TimeEffect();
+        register(TimeEffect.SUN, time);
+        register(TimeEffect.NIGHT, time);
+        register(IronRituals.id("eternal_forge"), new EternalForgeEffect());
+        register(ShrinkingEffect.ID, new ShrinkingEffect());
+        register(IronRituals.id("custody"), new CustodyEffect());
+        register(IronRituals.id("soul_anchor"), new SoulAnchorEffect());
     }
 
     private RitualEffects() {}

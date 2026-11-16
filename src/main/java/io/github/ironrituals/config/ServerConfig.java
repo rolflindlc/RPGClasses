@@ -19,6 +19,9 @@ public final class ServerConfig {
     public static final ForgeConfigSpec.DoubleValue DURATION_SCALE_CAP;
     public static final ForgeConfigSpec.DoubleValue TOME_LOOT_CHANCE_MULTIPLIER;
 
+    public static final ForgeConfigSpec.ConfigValue<java.util.List<? extends String>> FORGE_BLACKLIST;
+    public static final ForgeConfigSpec.BooleanValue SOUL_ANCHOR_PVP;
+
     static {
         ForgeConfigSpec.Builder b = new ForgeConfigSpec.Builder();
 
@@ -59,6 +62,16 @@ public final class ServerConfig {
         DURATION_SCALE_CAP = b
                 .comment("Tope del multiplicador de duración por poder de hechizo.")
                 .defineInRange("durationScaleCap", 1.5, 1.0, 10.0);
+        b.pop();
+
+        b.comment("Rituales concretos (sección 4)").push("effects");
+        FORGE_BLACKLIST = b
+                .comment("Ítems (ids) que la Forja Eterna se niega a volver irrompibles.")
+                .defineListAllowEmpty(java.util.List.of("eternalForgeBlacklist"), java.util.List::of,
+                        o -> o instanceof String s && net.minecraft.resources.ResourceLocation.tryParse(s) != null);
+        SOUL_ANCHOR_PVP = b
+                .comment("El Ancla del Alma también conserva el inventario si mata otro jugador.")
+                .define("soulAnchorInPvp", false);
         b.pop();
 
         b.comment("Grimorios en cofres (sección 3.D)").push("loot");

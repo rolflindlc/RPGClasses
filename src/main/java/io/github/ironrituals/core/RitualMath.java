@@ -22,4 +22,26 @@ public final class RitualMath {
     public static float manaPerTick(float total, int ticks) {
         return ticks <= 0 ? total : total / ticks;
     }
+
+    /** Ticks de un día de Minecraft. */
+    public static final long DAY_TICKS = 24000L;
+
+    /**
+     * Ticks que hay que avanzar desde {@code dayTime} hasta la próxima vez que el reloj marque {@code target}
+     * (0–23999). Siempre hacia delante; 0 si ya está en el objetivo.
+     */
+    public static long ticksUntil(long dayTime, long target) {
+        return Math.floorMod(target - dayTime, DAY_TICKS);
+    }
+
+    /**
+     * Nivel de Forja Eterna que exige un objeto según su durabilidad máxima (plan, 4.F.26): el menor nivel cuyo
+     * umbral {@code thresholds[i]} (nivel i + 1) cubre la durabilidad. Devuelve 0 si no tiene durabilidad y -1 si
+     * supera todos los umbrales.
+     */
+    public static int forgeLevel(int maxDamage, int... thresholds) {
+        if (maxDamage <= 0) return 0;
+        for (int i = 0; i < thresholds.length; i++) if (maxDamage <= thresholds[i]) return i + 1;
+        return -1;
+    }
 }

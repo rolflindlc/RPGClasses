@@ -34,6 +34,10 @@ public final class RitualSavedData extends SavedData {
         return Collections.unmodifiableCollection(rituals.values());
     }
 
+    public boolean contains(UUID id) {
+        return rituals.containsKey(id);
+    }
+
     public void add(ActiveRitual r) {
         rituals.put(r.id, r);
         setDirty();

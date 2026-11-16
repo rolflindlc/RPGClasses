@@ -22,6 +22,7 @@ public final class ModCreativeTabs {
                 out.accept(ModItems.ARCANE_CANDLE_WORN.get());
                 out.accept(ModItems.ARCANE_CANDLE_STUB.get());
                 out.accept(ModItems.RITUAL_DAGGER.get());
+                out.accept(ModItems.CUSTODY_SEAL.get());
                 for (String id : RitualIds.ALL) out.accept(RitualTomeItem.create(IronRituals.id(id)));
             })
             .build());

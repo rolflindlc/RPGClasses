@@ -294,6 +294,15 @@ public final class SlimeForms {
         s.followers.removeIf(f -> !f.isAlive());
         // La vida máxima normal puede cambiar (equipo, rango): se recalcula la de slime.
         if (p.tickCount % 20 == 0) setSwarmHealth(p, s.per);
+        // Regeneración natural (como la de vanilla con la barra de comida casi llena): cura a un slime dañado.
+        if (p.tickCount % 80 == 0 && p.getFoodData().getFoodLevel() >= 18 && p.getHealth() >= p.getMaxHealth()) {
+            for (SwarmSlime f : s.followers) {
+                if (f.getHealth() >= f.getMaxHealth()) continue;
+                f.heal(1f);
+                p.causeFoodExhaustion(6f);
+                break;
+            }
+        }
         touch(p, p, p.getBoundingBox().inflate(0.1), s.touched);
     }
 
@@ -320,9 +329,10 @@ public final class SlimeForms {
         MitosisCopy copy = ModEntities.MITOSIS_COPY.get().create(level);
         if (copy != null) {
             double a = p.getRandom().nextDouble() * Math.PI * 2;
-            copy.moveTo(p.getX() + Math.cos(a) * 0.8, p.getY(), p.getZ() + Math.sin(a) * 0.8, p.getYRot(), 0);
-            copy.setOwner(p.getUUID());
             copy.setScale(RaceTraits.scale(p));
+            copy.moveTo(p.getX() + Math.cos(a) * 0.8, p.getY(), p.getZ() + Math.sin(a) * 0.8, p.getYRot(), 0);
+            if (!level.noCollision(copy)) copy.moveTo(p.getX(), p.getY(), p.getZ(), p.getYRot(), 0);
+            copy.setOwner(p.getUUID());
             AttributeInstance max = copy.getAttribute(Attributes.MAX_HEALTH);
             if (max != null) max.setBaseValue(Math.max(1, p.getMaxHealth()));
             copy.setHealth(p.getMaxHealth());

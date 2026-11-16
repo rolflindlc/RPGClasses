@@ -63,6 +63,16 @@ public final class ClientSetup {
         modBus.addListener((RegisterGuiOverlaysEvent event) -> event.registerAboveAll("centaur_jump", RaceBodyClient::renderHud));
         MinecraftForge.EVENT_BUS.addListener(RaceBodyClient::onClientTick);
         MinecraftForge.EVENT_BUS.addListener(RaceBodyClient::onMovementInput);
+        // Centauro Guerrero: atacar al galope sin frenarse (Epic Fight y el frenazo vanilla).
+        MinecraftForge.EVENT_BUS.addListener(net.minecraftforge.eventbus.api.EventPriority.HIGHEST, RaceBodyClient::captureInput);
+        MinecraftForge.EVENT_BUS.addListener(net.minecraftforge.eventbus.api.EventPriority.LOWEST, RaceBodyClient::restoreInput);
+        MinecraftForge.EVENT_BUS.addListener(net.minecraftforge.eventbus.api.EventPriority.LOW, RaceBodyClient::onAttack);
+        // Centauro: cuerpo de caballo.
+        modBus.addListener((EntityRenderersEvent.RegisterLayerDefinitions event) ->
+                event.registerLayerDefinition(CentaurRender.LAYER, CentaurRender::createLayer));
+        modBus.addListener((EntityRenderersEvent.AddLayers event) -> CentaurRender.reset());
+        MinecraftForge.EVENT_BUS.addListener(net.minecraftforge.eventbus.api.EventPriority.LOW, CentaurRender::onRenderPre);
+        MinecraftForge.EVENT_BUS.addListener(CentaurRender::onRenderPost);
         MinecraftForge.EVENT_BUS.addListener(ShakeFx::onClientTick);
         modBus.addListener((net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent event) -> event.enqueueWork(() ->
                 net.minecraft.client.gui.screens.MenuScreens.register(io.github.rpgclasses.registry.ModMenus.BELT.get(), BeltScreen::new)));

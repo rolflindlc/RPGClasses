@@ -303,6 +303,67 @@ public final class RaceBodyClient {
         }
     }
 
+    // ------------------------------------------------------------------ Centauro Guerrero: atacar sin frenarse
+
+    private static float rawForward, rawLeft;
+    private static boolean rawUp, rawDown, rawLeftKey, rawRightKey;
+    private static Vec3 attackVelocity;
+
+    /** ¿El jugador local es un Guerrero a ≥40 % de su velocidad máxima? */
+    private static boolean warriorGalloping(LocalPlayer p) {
+        return Races.has(p, "race_war_gallop")
+                && io.github.rpgclasses.content.race.BodyTraits.clientGallop(p) >= Races.number(p, "race_centaur", "ram_threshold", 0.4);
+    }
+
+    /** Antes que los demás (prioridad máxima): lo que el jugador pulsa de verdad. */
+    public static void captureInput(MovementInputUpdateEvent event) {
+        if (event.getEntity() != Minecraft.getInstance().player) return;
+        var in = event.getInput();
+        rawForward = in.forwardImpulse;
+        rawLeft = in.leftImpulse;
+        rawUp = in.up;
+        rawDown = in.down;
+        rawLeftKey = in.left;
+        rawRightKey = in.right;
+    }
+
+    /**
+     * Después de los demás (prioridad mínima): con Epic Fight un ataque bloquea el movimiento durante la animación;
+     * el Guerrero al galope sigue moviéndose. También deshace el frenazo vanilla al golpear corriendo (×0,6 y deja de
+     * correr). La Apuesta con la Muerte sí le detiene.
+     */
+    public static void restoreInput(MovementInputUpdateEvent event) {
+        Minecraft mc = Minecraft.getInstance();
+        if (!(event.getEntity() instanceof LocalPlayer p) || p != mc.player) return;
+        if (CoinFlipFx.localFlipping() || p.isPassenger() || !warriorGalloping(p)) {
+            attackVelocity = null;
+            return;
+        }
+        var in = event.getInput();
+        if (in.forwardImpulse == 0 && in.leftImpulse == 0 && (rawForward != 0 || rawLeft != 0)) {
+            in.forwardImpulse = rawForward;
+            in.leftImpulse = rawLeft;
+            in.up = rawUp;
+            in.down = rawDown;
+            in.left = rawLeftKey;
+            in.right = rawRightKey;
+            if (!p.isSprinting() && rawForward > 0) p.setSprinting(true);
+        }
+        if (attackVelocity != null) {
+            Vec3 v = p.getDeltaMovement();
+            p.setDeltaMovement(attackVelocity.x, v.y, attackVelocity.z);
+            if (!p.isSprinting()) p.setSprinting(true);
+            attackVelocity = null;
+        }
+    }
+
+    /** Golpe del jugador local: se guarda su velocidad para deshacer el frenazo vanilla. */
+    public static void onAttack(net.minecraftforge.event.entity.player.AttackEntityEvent event) {
+        Minecraft mc = Minecraft.getInstance();
+        if (event.getEntity() != mc.player || mc.player == null || !mc.player.isSprinting() || !warriorGalloping(mc.player)) return;
+        attackVelocity = mc.player.getDeltaMovement();
+    }
+
     /** Barra de carga en el sitio de la barra de experiencia (como la del caballo). */
     public static void renderHud(ForgeGui gui, GuiGraphics g, float partialTick, int width, int height) {
         Minecraft mc = Minecraft.getInstance();

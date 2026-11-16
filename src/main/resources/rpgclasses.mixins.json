@@ -22,7 +22,8 @@
     "WolfRideMixin"
   ],
   "client": [
-    "client.CameraZoomMixin"
+    "client.CameraZoomMixin",
+    "client.ArmorLegsMixin"
   ],
   "injectors": {
     "defaultRequire": 1

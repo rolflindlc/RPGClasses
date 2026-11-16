@@ -237,9 +237,6 @@ public final class RaceBodyClient {
         // Caída lenta de verdad: la de vanilla solo reduce la gravedad y se tarda en frenar desde velocidad de caída.
         Vec3 fall = p.getDeltaMovement();
         if (fall.y < -0.15) p.setDeltaMovement(fall.x, Math.max(-0.15, fall.y * 0.6), fall.z);
-        // Caída lenta de verdad: la de vanilla solo baja la gravedad y tarda mucho en frenar desde velocidad de caída.
-        Vec3 fall = p.getDeltaMovement();
-        if (fall.y < -0.15) p.setDeltaMovement(fall.x, Math.max(-0.15, fall.y * 0.6), fall.z);
         double flap = Races.number(p, "race_glide", "flap_cooldown_seconds", 0);
         long now = p.level().getGameTime();
         if (flap > 0 && jump && !jumpWasDown && now >= flapReadyAt) {

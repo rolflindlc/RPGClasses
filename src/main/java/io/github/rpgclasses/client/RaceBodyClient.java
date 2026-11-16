@@ -23,7 +23,7 @@ import net.minecraftforge.event.TickEvent;
  */
 public final class RaceBodyClient {
     /** Altura del salto con la carga completa del Centauro, en bloques (igual en todos los Rangos). */
-    public static final double CENTAUR_FULL_JUMP = 5.3;
+    public static final double CENTAUR_FULL_JUMP = 3.55; // 5,3 − 33 %
     private static final int TAP_TICKS = 3;
     private static final double MIN_BOUNCE = 0.2;
 
@@ -131,18 +131,20 @@ public final class RaceBodyClient {
             prevVel = v;
             return;
         }
-        Vec3 pv = prevVel;
         double k = springWallFactor, vx = v.x, vy = v.y, vz = v.z;
-        if (p.horizontalCollision) {
-            boolean cx = Math.abs(pv.x) > 0.05 && Math.abs(vx) < Math.abs(pv.x) * 0.5;
-            boolean cz = Math.abs(pv.z) > 0.05 && Math.abs(vz) < Math.abs(pv.z) * 0.5;
-            if (!cx && !cz) {          // no se sabe contra qué eje: se invierte el dominante
-                if (Math.abs(pv.x) >= Math.abs(pv.z)) cx = true; else cz = true;
-            }
-            if (cx) vx = -pv.x * k;
-            if (cz) vz = -pv.z * k;
+        // Se predice el movimiento del próximo tick con la colisión de vanilla: no depende de los indicadores de
+        // choque (que el giro de Impulso no siempre deja puestos). Si hay choque se llega hasta el obstáculo y se
+        // sale rebotado con el eje que choca invertido.
+        Vec3 col = net.minecraft.world.entity.Entity.collideBoundingBox(p, v, p.getBoundingBox(), p.level(), java.util.List.of());
+        boolean hx = Math.abs(v.x) > 0.05 && Math.abs(col.x - v.x) > 1.0E-5;
+        boolean hz = Math.abs(v.z) > 0.05 && Math.abs(col.z - v.z) > 1.0E-5;
+        boolean hy = Math.abs(v.y) > 0.1 && Math.abs(col.y - v.y) > 1.0E-5;
+        if (hx || hy || hz) {
+            p.move(net.minecraft.world.entity.MoverType.SELF, col);
+            if (hx) vx = -v.x * k;
+            if (hz) vz = -v.z * k;
+            if (hy) vy = -v.y * k;
         }
-        if (p.verticalCollision && Math.abs(pv.y) > 0.1) vy = -pv.y * k;   // suelo o techo
         // El rozamiento del aire resta velocidad horizontal cada tick: se repone hasta la velocidad del lanzamiento.
         double hs = Math.sqrt(vx * vx + vz * vz);
         if (hs > 0.01 && hs < springHSpeed) {
@@ -232,6 +234,12 @@ public final class RaceBodyClient {
             Vec3 v = p.getDeltaMovement();
             p.setDeltaMovement(v.x + look.x * 0.02 * forward, v.y, v.z + look.z * 0.02 * forward);
         }
+        // Caída lenta de verdad: la de vanilla solo reduce la gravedad y se tarda en frenar desde velocidad de caída.
+        Vec3 fall = p.getDeltaMovement();
+        if (fall.y < -0.15) p.setDeltaMovement(fall.x, Math.max(-0.15, fall.y * 0.6), fall.z);
+        // Caída lenta de verdad: la de vanilla solo baja la gravedad y tarda mucho en frenar desde velocidad de caída.
+        Vec3 fall = p.getDeltaMovement();
+        if (fall.y < -0.15) p.setDeltaMovement(fall.x, Math.max(-0.15, fall.y * 0.6), fall.z);
         double flap = Races.number(p, "race_glide", "flap_cooldown_seconds", 0);
         long now = p.level().getGameTime();
         if (flap > 0 && jump && !jumpWasDown && now >= flapReadyAt) {

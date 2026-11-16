@@ -21,10 +21,10 @@
           "attribute": "rpgclasses:jump_bonus",
           "operation": "add",
           "values": [
-            1.0,
-            1.0,
-            1.0,
-            1.0
+            1.8,
+            1.8,
+            1.8,
+            1.8
           ]
         }
       ]
@@ -162,16 +162,16 @@
           "charge_seconds": {
             "values": [
               3,
-              5,
-              6.5,
-              8
+              3.6,
+              4.2,
+              4.8
             ]
           },
           "power": {
             "values": [
               1,
-              1.5,
-              2,
+              1.67,
+              2.33,
               3
             ]
           },

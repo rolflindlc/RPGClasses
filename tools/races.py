@@ -332,13 +332,13 @@ def resist(element, fire=False):
     return mech("element_resist", element=element, reduction=V(.20, .30, .40, .50) if fire else V(.30, .45, .60, .75), cap=.80)
 RACES.update({
  "slime": ("minecraft:slime_block", [
-    attr((MC + "max_health", -.15, "multiply_base"), (R("jump_bonus"), 1.0, "add")),
+    attr((MC + "max_health", -.15, "multiply_base"), (R("jump_bonus"), 1.8, "add")),
     mech("bouncy", bounce=.8, bounce_min_fall=3), mech("soft_body", knockback_taken=.50)], [
     ("swarm", "minecraft:slime_ball", True, [
         mech("swarm", slimes_per_heart=V(1, 1, 1, 2), duration_seconds=V(10, 15, 20, 30), cooldown_seconds=V(60, 50, 40, 30),
              touch_damage=V(1, 1.5, 1.5, 1), slime_speed=V(0, 0, .25, .25), max_slimes=25, leash=32)]),
     ("spring", "minecraft:piston", True, [
-        mech("spring", charge_seconds=V(3, 5, 6.5, 8), power=V(1, 1.5, 2, 3), cooldown_seconds=V(10, 8, 6, 5),
+        mech("spring", charge_seconds=V(3, 3.6, 4.2, 4.8), power=V(1, 1.67, 2.33, 3), cooldown_seconds=V(10, 8, 6, 5),
              min_charge_seconds=.5, wall_bounce=1.05)]),
     ("mitotic", "minecraft:magma_cream", True, [
         attr((MC + "max_health", -.15, "multiply_base")),
@@ -360,7 +360,7 @@ RACES.update({
              shake_radius=24, size=3, fall_height=12)])]),
  "draconid": ("minecraft:dragon_head", [
     mech("hunger", exhaustion=.25),
-    mech("breath", range=V(4, 5, 6, 8), damage_per_second=V(3, 4, 5, 6.5), channel_seconds=V(2, 3, 4, 5), cooldown_seconds=V(12, 10, 10, 8),
+    mech("breath", range=V(4, 5, 6, 8), damage_per_second=V(3, 4, 4.7, 6), channel_seconds=V(2.5, 3.5, 3.8, 4.5), cooldown_seconds=V(16, 13.3, 13.3, 10.6),
          mana_per_second=10)], [
     ("fire", "minecraft:blaze_powder", True, [resist("fire", True), mech("dragon_kin", element="fire", radius=32),
         mech("breath_fire", burn_seconds=3)]),
@@ -390,7 +390,7 @@ RACES.update({
 })
 
 RACE_TEXT.update({
- "slime": ("Slime", "No recibe daño de caída, rebota al caer sobre cualquier bloque (agacharse lo evita) y salta el doble de alto. A cambio, menos vida y sale despedido más lejos con los golpes."),
+ "slime": ("Slime", "No recibe daño de caída, rebota al caer sobre cualquier bloque (agacharse lo evita) y salta casi el triple de alto. A cambio, menos vida y sale despedido más lejos con los golpes."),
  "colossus": ("Coloso", "El doble de grande y el doble de vida (sin tope). Rompe bloques en un cubo de 2×2×2 (agachado, de uno en uno) y su alcance, paso, salto y caída segura crecen con su tamaño. A cambio: más hambre, no nada (se hunde), los mobs lo detectan desde más lejos, pisa los cultivos y no puede montar animales ni barcas."),
  "draconid": ("Dracónido", "Descendiente de dragones: resiste el daño de su elemento y escupe un aliento de ese elemento (tecla racial 1), que gasta maná y sufre el muro de Magia de tu clase. Los dragones salvajes de su elemento (Ice and Fire) no lo atacan si no los provoca. Consume más hambre."),
  "centaur": ("Centauro", "Cuerpo de caballo: acelera poco a poco al correr en línea recta y, por encima del 40 % de su velocidad máxima, embiste a lo que choca (pierde velocidad al hacerlo). Salto cargado como el del caballo (mantén saltar) y un aliado puede montarse encima. No cabe por huecos de 1 bloque y no monta animales ni barcas."),

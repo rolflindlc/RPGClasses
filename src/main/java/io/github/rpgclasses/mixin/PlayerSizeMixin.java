@@ -24,7 +24,13 @@ public abstract class PlayerSizeMixin {
     @Inject(method = "getDimensions(Lnet/minecraft/world/entity/Pose;)Lnet/minecraft/world/entity/EntityDimensions;",
             at = @At("RETURN"), cancellable = true)
     private void rpgclasses$scaleDimensions(Pose pose, CallbackInfoReturnable<EntityDimensions> cir) {
-        float s = RaceTraits.scale((Player) (Object) this);
+        Player self = (Player) (Object) this;
+        // Centauro (adenda 0.7): hitbox de caballo en todas las poses salvo dormido.
+        if (pose != Pose.SLEEPING && RaceTraits.isCentaur(self)) {
+            cir.setReturnValue(EntityDimensions.scalable(RaceTraits.CENTAUR_WIDTH, RaceTraits.centaurHeight(pose)));
+            return;
+        }
+        float s = RaceTraits.scale(self);
         if (s != 1f) cir.setReturnValue(cir.getReturnValue().scale(s));
     }
 }

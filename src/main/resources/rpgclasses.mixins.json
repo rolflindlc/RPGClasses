@@ -17,6 +17,7 @@
     "LivingEntityAccessor",
     "PiglinBarterMixin",
     "PlayerEnchantMixin",
+    "PlayerPassengerMixin",
     "PlayerSizeMixin",
     "WolfRideMixin"
   ],

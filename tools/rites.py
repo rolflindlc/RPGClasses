@@ -6,6 +6,8 @@
 #   hits_taken  count (+ projectile)     | steals / barters count
 #   offer       items: [{tag|item, count, distinct, pred}] (+ altar)          -> se hace en el altar
 #   structure   blocks: [{tag|block, count}], radius, dy                       -> se comprueba en el altar
+#   counter     key + count: lo suben las mecánicas raciales (lanzamientos, fusiones, bloques rotos…)
+#   kill.by     derrota acreditada a una fuente racial (swarm, spring, sticky, breath, ram, gallop…)
 #   boss        jefe de rito invocado en el altar (agachado + clic) con condiciones de invocación y de victoria
 NS = "rpgclasses"
 
@@ -18,6 +20,7 @@ def barters(n, text):            return dict(type="barters", count=n, _t=text)
 def offer(text, *items, **p):    return dict(type="offer", items=list(items), _t=text, **p)
 def struct(text, *blocks, **p):  return dict(type="structure", blocks=list(blocks), _t=text, **p)
 def boss(text, **p):             return dict(type="boss", _t=text, **p)
+def counter(key, n, text):       return dict(type="counter", key=key, count=n, _t=text)   # contador que suben las mecánicas
 def it(ref, n=1, distinct=0, pred=None, types=0):
     e = {"tag": ref[1:]} if ref.startswith("#") else {"item": ref}
     e["count"] = n
@@ -219,6 +222,120 @@ RITES = {
        offer("Membranas, plumas y perlas", it("minecraft:phantom_membrane", 16), it("minecraft:feather", 16), it("minecraft:ender_pearl", 4))),
   rite("ethereal_dance", "ritual", "Danza Etérea", "Derrota a un jefe de rito usando Forma Etérea al menos 3 veces en el combate.",
        boss("Jefe derrotado con 3 Formas Etéreas", ability="race_ethereal", uses=3))],
+ # ------------------------------------------------------------------ Slime (adenda 0.7)
+ ("slime", "swarm"): [
+  rite("first_division", "feat", "Primera División", "Derrota 30 enemigos con el contacto de tus slimes pequeños.",
+       kill(30, "Enemigos derrotados por tus slimes", target="enemy", by="swarm")),
+  rite("jelly_brood", "craft", "Cría de Gelatina", "Ofrece 32 bolas de slime, 4 bloques de slime y 3 pociones de curación.",
+       offer("Slime y pociones de curación", it("minecraft:slime_ball", 32), it("minecraft:slime_block", 4), it("minecraft:potion", 3, pred="potion:healing"))),
+  rite("jelly_tide", "ritual", "Marea de Gelatina", "Derrota a un jefe de rito estando dividido, con al menos 6 slimes vivos al final y al menos el 50 % del daño por contacto.",
+       boss("Jefe derrotado por el Enjambre", source="swarm", source_share=.5, min_slimes=6))],
+ ("slime", "spring"): [
+  rite("launched", "feat", "Disparado", "Haz 40 lanzamientos con al menos 2 s de carga y derrota 15 enemigos con el choque de un lanzamiento.",
+       counter("spring_launch", 40, "Lanzamientos cargados"), kill(15, "Enemigos derrotados con el choque", target="enemy", by="spring")),
+  rite("springs", "craft", "Muelles", "Ofrece 8 pistones, 4 pistones pegajosos, 16 bolas de slime y 4 bloques de slime.",
+       offer("Pistones y slime", it("minecraft:piston", 8), it("minecraft:sticky_piston", 4), it("minecraft:slime_ball", 16), it("minecraft:slime_block", 4))),
+  rite("giant_leap", "ritual", "Salto de Gigante", "Derrota a un jefe de rito golpeándolo con al menos 3 choques de lanzamiento durante el combate.",
+       boss("Jefe derrotado con 3 choques", counts={"spring_crash": 3}))],
+ ("slime", "mitotic"): [
+  rite("two_in_one", "feat", "Dos en Uno", "Divídete (por el golpe de un enemigo) y vuelve a fusionarte con tu copia 2 veces.",
+       counter("mitosis_merge", 2, "Divisiones con fusión")),
+  rite("jelly_mold", "craft", "Molde de Gelatina", "Ofrece 2 objetos iguales de cada uno de 6 tipos distintos de calidad hierro o superior.",
+       offer("6 pares de objetos de hierro o mejores", it("*", 2, types=6, pred="iron_quality"))),
+  rite("twins", "ritual", "Gemelos", "Derrota a un jefe de rito habiéndote dividido durante el combate y fusiónate con tu copia viva al final.",
+       boss("Jefe derrotado tras dividirte y fusionarte", counts={"mitosis_split": 1, "mitosis_merge": 1}))],
+ ("slime", "viscous"): [
+  rite("sticky", "feat", "Pegajoso", "Derrota 20 enemigos mientras estás pegado a una pared o a una entidad.",
+       kill(20, "Enemigos derrotados estando pegado", target="enemy", by="sticky")),
+  rite("sap_and_honey", "craft", "Savia y Miel", "Ofrece 8 bloques de miel, 16 botellas de miel, 16 bolas de slime y 8 telarañas.",
+       offer("Miel, slime y telarañas", it("minecraft:honey_block", 8), it("minecraft:honey_bottle", 16), it("minecraft:slime_ball", 16), it("minecraft:cobweb", 8))),
+  rite("tick", "ritual", "Garrapata", "Derrota a un jefe de rito habiendo estado pegado a él al menos 10 s en total y con al menos 20 golpes que apliquen Lentitud.",
+       boss("Jefe derrotado pegado a él", counts={"sticky_boss_seconds": 10, "slow_hits": 20}))],
+ # ------------------------------------------------------------------ Coloso
+ ("colossus", "porter"): [
+  rite("burden", "feat", "Carga a Cuestas", "Derrota 30 enemigos con al menos 3 huecos del cinturón ocupados.",
+       kill(30, "Enemigos derrotados con el cinturón cargado", target="enemy", belt_min=3)),
+  rite("leather_belt", "craft", "Cinturón de Cuero", "Ofrece 4 cofres, 2 hornos, 1 mesa de crafteo, 16 cueros y 16 lingotes de hierro.",
+       offer("Cofres, hornos, mesa, cuero y hierro", it("minecraft:chest", 4), it("minecraft:furnace", 2), it("minecraft:crafting_table"),
+             it("minecraft:leather", 16), it("minecraft:iron_ingot", 16))),
+  rite("caravan", "ritual", "Caravana", "Derrota a un jefe de rito con un aliado montado sobre ti que cause al menos el 25 % del daño.",
+       boss("Jefe derrotado con un pasajero", source="passenger", source_share=.25))],
+ ("colossus", "titan"): [
+  rite("heavy_steps", "feat", "Pisadas Pesadas", "Derrota 20 enemigos y rompe 200 bloques con la rotura de área (de pie).",
+       kill(20, "Enemigos derrotados", target="enemy"), counter("area_blocks", 200, "Bloques rotos en área")),
+  rite("stone_on_stone", "craft", "Piedra sobre Piedra", "Ofrece 4 bloques de hierro, 8 obsidianas, 64 adoquines y 1 yunque.",
+       offer("Hierro, obsidiana, adoquín y yunque", it("minecraft:iron_block", 4), it("minecraft:obsidian", 8), it("minecraft:cobblestone", 64), it("minecraft:anvil"))),
+  rite("titan_roar", "ritual", "Rugido de Titán", "Derrota a un jefe de rito con la forma Titán activa y causa al menos el 50 % del daño en esa forma.",
+       boss("Jefe derrotado en forma Titán", source="titan", source_share=.5))],
+ # ------------------------------------------------------------------ Dracónido
+ ("draconid", "fire"): [
+  rite("burning_breath", "feat", "Aliento Ardiente", "Derrota 30 enemigos con tu aliento.",
+       kill(30, "Enemigos derrotados con el aliento", target="enemy", by="breath")),
+  rite("embers", "craft", "Brasas", "Ofrece 8 varas de blaze, 16 carbones vegetales y 4 cubos de lava.",
+       offer("Blaze, carbón vegetal y lava", it("minecraft:blaze_rod", 8), it("minecraft:charcoal", 16), it("minecraft:lava_bucket", 4))),
+  rite("dragon_pyre", "ritual", "Hoguera del Dragón", "Con el altar en el Nether, derrota a un jefe de rito causando al menos el 50 % del daño con el aliento.",
+       boss("Jefe derrotado con el aliento (Nether)", altar="nether", source="breath", source_share=.5))],
+ ("draconid", "ice"): [
+  rite("frost_breath", "feat", "Aliento Gélido", "Derrota 30 enemigos con tu aliento.",
+       kill(30, "Enemigos derrotados con el aliento", target="enemy", by="breath")),
+  rite("frost", "craft", "Escarcha", "Ofrece 64 bloques de nieve, 16 de hielo compacto y 4 de hielo azul.",
+       offer("Nieve y hielo", it("minecraft:snow_block", 64), it("minecraft:packed_ice", 16), it("minecraft:blue_ice", 4))),
+  rite("eternal_winter", "ritual", "Invierno Eterno", "Con el altar en un bioma nevado o helado, derrota a un jefe de rito causando al menos el 50 % del daño con el aliento.",
+       boss("Jefe derrotado con el aliento (nieve)", altar="snowy", source="breath", source_share=.5))],
+ ("draconid", "lightning"): [
+  rite("storm_breath", "feat", "Aliento de Tormenta", "Derrota 30 enemigos con tu aliento (cuentan los saltos del rayo).",
+       kill(30, "Enemigos derrotados con el aliento", target="enemy", by="breath")),
+  rite("lightning_rods", "craft", "Pararrayos", "Ofrece 4 pararrayos, 32 lingotes de cobre y 16 de redstone.",
+       offer("Pararrayos, cobre y redstone", it("minecraft:lightning_rod", 4), it("minecraft:copper_ingot", 32), it("minecraft:redstone", 16))),
+  rite("ritual_storm", "ritual", "Tormenta Ritual", "Invoca un jefe de rito durante una tormenta, con el altar a cielo abierto, y derrótalo causando al menos el 50 % del daño con el aliento.",
+       boss("Jefe derrotado con el aliento (tormenta)", altar="storm", source="breath", source_share=.5))],
+ ("draconid", "poison"): [
+  rite("toxic_breath", "feat", "Aliento Tóxico", "Derrota 30 enemigos envenenados por tu aliento (no cuentan los no-muertos).",
+       kill(30, "Enemigos envenenados derrotados", target="enemy", by="breath_poison")),
+  rite("antidote", "craft", "Antídoto", "Ofrece 16 ojos de araña, 4 pociones de veneno, 8 patatas venenosas y 4 peces globo.",
+       offer("Ojos de araña, veneno, patatas y peces globo", it("minecraft:spider_eye", 16), it("minecraft:potion", 4, pred="potion:poison"),
+             it("minecraft:poisonous_potato", 8), it("minecraft:pufferfish", 4))),
+  rite("deadly_venom", "ritual", "Ponzoña Mortal", "Derrota a un jefe de rito aplicándole Veneno con tu aliento al menos 5 veces.",
+       boss("Jefe derrotado con 5 venenos", counts={"breath_poisoned": 5}))],
+ ("draconid", "acid"): [
+  rite("corrosion", "feat", "Corrosión", "Derrota 30 enemigos con armadura corroídos por tu aliento.",
+       kill(30, "Enemigos con armadura corroídos derrotados", target="enemy", by="breath_acid")),
+  rite("corrosive_alchemy", "craft", "Alquimia Corrosiva", "Ofrece 4 pociones de Daño, 16 ojos de araña y 16 bolas de slime.",
+       offer("Pociones de Daño, ojos de araña y slime", it("minecraft:potion", 4, pred="potion:harming"), it("minecraft:spider_eye", 16), it("minecraft:slime_ball", 16))),
+  rite("melt_iron", "ritual", "Fundir Hierro", "Derrota a un jefe de rito aplicándole Corrosión al menos 5 veces.",
+       boss("Jefe derrotado con 5 corrosiones", counts={"breath_corroded": 5}))],
+ ("draconid", "water"): [
+  rite("sea_breath", "feat", "Aliento del Mar", "Derrota 30 enemigos con tu aliento, 10 de ellos estando tú sumergido.",
+       kill(30, "Enemigos derrotados con el aliento", target="enemy", by="breath"),
+       kill(10, "Derrotados con el aliento estando sumergido", target="enemy", by="breath", submerged=True)),
+  rite("tide_offering", "craft", "Ofrenda de la Marea", "Ofrece 16 peces de al menos 3 tipos, 32 algas y 8 pociones de respiración acuática.",
+       offer("Peces, algas y pociones", it(T + "fish", 16, distinct=3), it("minecraft:kelp", 32), it("minecraft:potion", 8, pred="potion:water_breathing"))),
+  rite("ocean_court", "ritual", "Corte del Océano", "Con el altar bajo el agua (al menos 3 bloques de profundidad), derrota a un jefe de rito causando al menos el 50 % del daño con el aliento.",
+       boss("Jefe derrotado con el aliento (bajo el agua)", altar="deep_water", source="breath", source_share=.5))],
+ # ------------------------------------------------------------------ Centauro
+ ("centaur", "pegasus"): [
+  rite("winged_gallop", "feat", "Cabalgata Alada", "Derrota 20 enemigos con la embestida y haz 20 caídas lentas desde al menos 8 bloques.",
+       kill(20, "Enemigos derrotados con la embestida", target="enemy", by="ram"), counter("glide_8", 20, "Planeos desde 8 bloques")),
+  rite("plumage", "craft", "Plumaje", "Ofrece 64 plumas, 16 membranas de phantom y 8 cohetes de fuegos artificiales.",
+       offer("Plumas, membranas y cohetes", it("minecraft:feather", 64), it("minecraft:phantom_membrane", 16), it("minecraft:firework_rocket", 8))),
+  rite("top_of_the_world", "ritual", "Cima del Mundo", "Con el altar a una altura de 150 o más, derrota a un jefe de rito planeando al menos 3 veces durante el combate.",
+       boss("Jefe derrotado en lo alto con 3 planeos", altar="high", counts={"glide": 3}))],
+ ("centaur", "unicorn"): [
+  rite("silver_horn", "feat", "Cuerno de Plata", "Derrota 30 enemigos con la embestida.",
+       kill(30, "Enemigos derrotados con la embestida", target="enemy", by="ram")),
+  rite("lunar_offering", "craft", "Ofrenda Lunar", "Ofrece 4 manzanas doradas, 8 fragmentos de amatista, 16 lingotes de oro y 8 flores de al menos 4 tipos.",
+       offer("Manzanas doradas, amatista, oro y flores", it("minecraft:golden_apple", 4), it("minecraft:amethyst_shard", 8), it("minecraft:gold_ingot", 16),
+             it("#minecraft:small_flowers", 8, distinct=4))),
+  rite("radiant_aura", "ritual", "Aura Radiante", "Derrota a un jefe de rito con al menos 2 aliados dentro de tu aura y causando al menos el 40 % del daño con la embestida.",
+       boss("Jefe derrotado con aliados en el aura", allies=2, ally_radius=8, source="ram", source_share=.4))],
+ ("centaur", "warrior"): [
+  rite("war_charge", "feat", "Carga de Guerra", "Derrota 30 enemigos con ataques cuerpo a cuerpo a al menos el 40 % de tu velocidad máxima.",
+       kill(30, "Enemigos derrotados al galope", target="enemy", by="gallop")),
+  rite("panoply", "craft", "Panoplia", "Ofrece una armadura de hierro completa, 1 arma de hierro, 8 cueros y 16 lingotes de hierro.",
+       offer("Armadura y arma de hierro, cuero y hierro", it("minecraft:iron_helmet"), it("minecraft:iron_chestplate"), it("minecraft:iron_leggings"),
+             it("minecraft:iron_boots"), it(T + "iron_weapons"), it("minecraft:leather", 8), it("minecraft:iron_ingot", 16))),
+  rite("unbroken_gallop", "ritual", "Galope Ininterrumpido", "Derrota a un jefe de rito encadenando al menos 10 golpes cuerpo a cuerpo sin bajar del 40 % de tu velocidad.",
+       boss("Jefe derrotado con 10 golpes al galope", counts={"gallop_chain": 10}))],
 }
 
 # ------------------------------------------------------------------ etiquetas
@@ -256,6 +373,22 @@ ITEM_TAGS = {
 }
 BLOCK_TAGS = {
  "rite/bookshelves": ["minecraft:bookshelf", "minecraft:chiseled_bookshelf"],
+ # Coloso (adenda 0.7): cultivos que rompe al pisarlos.
+ "colossus_tramplable": ["#minecraft:crops", "minecraft:sweet_berry_bush", "minecraft:nether_wart", "minecraft:cocoa", "minecraft:pitcher_crop",
+                         "minecraft:torchflower_crop"],
+}
+# Dracónido (adenda 0.7): dragones de Ice and Fire de cada elemento (opcionales).
+ENTITY_TAGS.update({
+ "dragons/fire": opt(["iceandfire:fire_dragon"]),
+ "dragons/ice": opt(["iceandfire:ice_dragon"]),
+ "dragons/lightning": opt(["iceandfire:lightning_dragon"]),
+})
+# Elementos sin etiqueta propia en el equipo: el código añade además el Veneno (daño mágico con el efecto activo),
+# el ahogamiento y las escuelas de Iron's / T.O Magic 'n Extras.
+DAMAGE_TAGS = {
+ "element/poison": [],
+ "element/acid": [],
+ "element/water": ["#minecraft:is_drowning"],
 }
 
 UI = {
@@ -289,6 +422,13 @@ UI = {
  "rite.rpgclasses.place.near_lava": "a 4 bloques o menos de lava",
  "rite.rpgclasses.place.underwater": "bajo el agua",
  "rite.rpgclasses.place.forest": "en un bioma de bosque",
+ "rite.rpgclasses.place.snowy": "en un bioma nevado o helado",
+ "rite.rpgclasses.place.storm": "a cielo abierto durante una tormenta",
+ "rite.rpgclasses.place.deep_water": "bajo al menos 3 bloques de agua",
+ "rite.rpgclasses.place.high": "a una altura de 150 o más",
+ "rite.rpgclasses.fail.source_share": "poco daño con tu rasgo racial",
+ "rite.rpgclasses.fail.counts": "no cumpliste las acciones del rito durante el combate",
+ "rite.rpgclasses.fail.min_slimes": "quedaban pocos slimes",
  "rite.rpgclasses.fail.night": "no era de noche",
  "rite.rpgclasses.fail.boss_hits": "pocos golpes recibidos del jefe",
  "rite.rpgclasses.fail.projectiles": "pocos proyectiles recibidos",
@@ -339,6 +479,8 @@ def write_static(dump, resources):
         dump(os.path.join(data, NS, "tags", "items", name + ".json"), {"replace": False, "values": values})
     for name, values in BLOCK_TAGS.items():
         dump(os.path.join(data, NS, "tags", "blocks", name + ".json"), {"replace": False, "values": values})
+    for name, values in DAMAGE_TAGS.items():
+        dump(os.path.join(data, NS, "tags", "damage_type", name + ".json"), {"replace": False, "values": values})
     dump(os.path.join(data, "minecraft", "tags", "blocks", "mineable", "pickaxe.json"), {"replace": False, "values": [NS + ":race_altar"]})
     dump(os.path.join(data, NS, "loot_tables", "blocks", "race_altar.json"), {
         "type": "minecraft:block", "pools": [{"rolls": 1, "entries": [{"type": "minecraft:item", "name": NS + ":race_altar"}],

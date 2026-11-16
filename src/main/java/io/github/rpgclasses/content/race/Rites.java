@@ -120,6 +120,9 @@ public final class Rites {
         float ownerDamage, totalDamage, racialDamage, thirstHeal;
         int bossHits, projectiles, explosions, snares, blocks;
         final Map<String, Integer> abilityUses = new HashMap<>();
+        /** Adenda 0.7: daño al jefe por fuente racial (aliento, embestida, enjambre, pasajero, forma Titán…) y contadores. */
+        final Map<String, Float> sourceDamage = new HashMap<>();
+        final Map<String, Integer> counts = new HashMap<>();
         boolean dismounted, armorOff;
         long farSince = -1;
 
@@ -132,6 +135,72 @@ public final class Rites {
     }
 
     private static final Map<UUID, Fight> FIGHTS = new HashMap<>();      // jefe -> combate
+
+    // ------------------------------------------------------------------ fuentes raciales (adenda 0.7)
+
+    /** Fuente racial del daño que se está haciendo ahora mismo (ver {@link #dealing}). */
+    private static final ThreadLocal<String> SOURCE = new ThreadLocal<>();
+    /** Estados del jugador que cuentan como fuente (p. ej. "titan" mientras dura la forma, "sticky" pegado). */
+    public static final Map<String, java.util.function.Predicate<ServerPlayer>> STATE_SOURCES = new HashMap<>();
+    /** Huecos ocupados del cinturón del Porteador (lo instala el Porteador). */
+    public static java.util.function.ToIntFunction<ServerPlayer> BELT_ITEMS = p -> 0;
+    /** Slimes vivos del Enjambre (lo instala el Enjambre). */
+    public static java.util.function.ToIntFunction<ServerPlayer> swarmAlive = p -> 0;
+    private record Credit(UUID player, String source, long time) {}
+    private static final Map<UUID, Credit> CREDIT = new HashMap<>();
+    private static final int CREDIT_TICKS = 60;
+
+    /** Ejecuta un golpe atribuido a una fuente racial: cuenta para "kill.by" y para el reparto de daño del jefe. */
+    public static void dealing(String source, Runnable hit) {
+        String prev = SOURCE.get();
+        SOURCE.set(source);
+        try {
+            hit.run();
+        } finally {
+            if (prev == null) SOURCE.remove(); else SOURCE.set(prev);
+        }
+    }
+
+    /** Marca a la víctima con la fuente racial (para derrotas que llegan después, p. ej. por un efecto). */
+    public static void credit(ServerPlayer p, LivingEntity victim, String source) {
+        long now = victim.level().getGameTime();
+        if (CREDIT.size() > 512) CREDIT.values().removeIf(c -> now - c.time() > CREDIT_TICKS);
+        CREDIT.put(victim.getUUID(), new Credit(p.getUUID(), source, victim.level().getGameTime()));
+    }
+
+    /** Suma n a los objetivos "counter" con esa clave y al contador del combate contra el jefe de rito. */
+    public static void count(ServerPlayer p, String key, int n) {
+        UUID bossId = BOSS_OF.get(p.getUUID());
+        Fight f = bossId == null ? null : FIGHTS.get(bossId);
+        if (f != null) f.counts.merge(key, n, Integer::sum);
+        Current c = current(p);
+        if (c == null) return;
+        for (int i = 0; i < c.rite().objectives().size(); i++) {
+            ObjectiveDef o = c.rite().objectives().get(i);
+            if ("counter".equals(o.type()) && key.equals(str(o.params(), "key", ""))) advance(p, c, i, null, n);
+        }
+    }
+
+    /** true si el jugador está luchando contra su jefe de rito y ese es el objetivo. */
+    public static boolean isOwnBoss(ServerPlayer p, Entity e) {
+        UUID bossId = BOSS_OF.get(p.getUUID());
+        return bossId != null && bossId.equals(e.getUUID());
+    }
+
+    @SubscribeEvent(priority = EventPriority.LOWEST)
+    public void onAnyDamage(LivingDamageEvent event) {
+        String src = SOURCE.get();
+        if (src == null || event.getAmount() <= 0 || event.getEntity().level().isClientSide()) return;
+        if (event.getSource().getEntity() instanceof ServerPlayer p) credit(p, event.getEntity(), src);
+    }
+
+    private static boolean byMatches(ServerPlayer p, LivingEntity victim, String by) {
+        Credit c = CREDIT.get(victim.getUUID());
+        if (c != null && c.player().equals(p.getUUID()) && victim.level().getGameTime() - c.time() <= CREDIT_TICKS
+                && (c.source().equals(by) || c.source().startsWith(by + "_"))) return true;
+        var state = STATE_SOURCES.get(by);
+        return state != null && state.test(p);
+    }
     private static final Map<UUID, UUID> BOSS_OF = new HashMap<>();       // dueño -> jefe
     private static final Map<UUID, Long> LAST_SUMMON = new HashMap<>();
     private static final Map<UUID, Deque<Long>> SHIELD_BLOCKS = new HashMap<>();
@@ -327,6 +396,8 @@ public final class Rites {
         if (bool(f, "weapon_enchanted") && (s.getDirectEntity() != p || !hasTag(p.getMainHandItem(), ENCHANTER, p.getUUID()))) return false;
         if (bool(f, "explosion") && !s.is(DamageTypeTags.IS_EXPLOSION)) return false;
         if (bool(f, "racial_spell") && !racialSpell(p, s)) return false;
+        if (f.has("by") && !byMatches(p, victim, str(f, "by", ""))) return false;
+        if (f.has("belt_min") && BELT_ITEMS.applyAsInt(p) < f.get("belt_min").getAsInt()) return false;
         if (bool(f, "snared") && !(victim.getPersistentData().hasUUID(RaceAbilities.SNARED_BY)
                 && victim.getPersistentData().getUUID(RaceAbilities.SNARED_BY).equals(p.getUUID()))) return false;
         return true;
@@ -514,6 +585,11 @@ public final class Rites {
             case "nether" -> level.dimension() == Level.NETHER;
             case "underwater" -> level.getFluidState(pos.above()).is(FluidTags.WATER);
             case "forest" -> level.getBiome(pos).is(BiomeTags.IS_FOREST);
+            case "snowy" -> level.getBiome(pos).value().coldEnoughToSnow(pos);
+            case "storm" -> level.isThundering() && level.canSeeSky(pos.above());
+            case "high" -> pos.getY() >= 150;
+            case "deep_water" -> level.getFluidState(pos.above()).is(FluidTags.WATER) && level.getFluidState(pos.above(2)).is(FluidTags.WATER)
+                    && level.getFluidState(pos.above(3)).is(FluidTags.WATER);
             case "near_lava" -> {
                 for (BlockPos q : BlockPos.betweenClosed(pos.offset(-4, -4, -4), pos.offset(4, 4, 4))) {
                     if (level.getFluidState(q).is(FluidTags.LAVA)) yield true;
@@ -569,9 +645,25 @@ public final class Rites {
         return item != null && s.is(item);
     }
 
+    /** Herramienta, arma o armadura de hierro o mejor (cadena y oro no cuentan). */
+    private static boolean ironQuality(ItemStack s) {
+        if (s.getItem() instanceof ArmorItem a) return a.getDefense() >= ArmorMaterials.IRON.getDefenseForType(a.getType())
+                && a.getMaterial() != ArmorMaterials.GOLD && a.getMaterial() != ArmorMaterials.CHAIN;
+        if (s.getItem() instanceof net.minecraft.world.item.TieredItem t) return t.getTier().getLevel() >= 2;
+        return false;
+    }
+
     /** Predicados de ofrenda sobre una pila. */
     private static boolean matchesPred(ServerPlayer p, ItemStack s, String pred, PlayerClassData data) {
         if (pred == null) return true;
+        if (pred.startsWith("potion:")) {
+            ResourceLocation want = new ResourceLocation(pred.substring("potion:".length()));
+            ResourceLocation got = ForgeRegistries.POTIONS.getKey(PotionUtils.getPotion(s));
+            // Vale también la versión larga o fuerte (minecraft:long_poison, minecraft:strong_healing).
+            return got != null && got.getNamespace().equals(want.getNamespace())
+                    && (got.getPath().equals(want.getPath()) || got.getPath().equals("long_" + want.getPath())
+                    || got.getPath().equals("strong_" + want.getPath()));
+        }
         return switch (pred) {
             case "armor" -> s.getItem() instanceof ArmorItem;
             case "spell_item" -> {
@@ -586,6 +678,7 @@ public final class Rites {
             case "rite_drop" -> hasTag(s, RITE_DROP, p.getUUID());
             case "mob_equipment" -> s.hasTag() && s.getTag().getBoolean(MOB_EQUIP);
             case "max_level_book", "twin_books" -> maxLevelBook(s) != null;
+            case "iron_quality" -> ironQuality(s);
             case "potion_2" -> {
                 for (var e : PotionUtils.getMobEffects(s)) if (e.getAmplifier() >= 1) yield true;
                 yield false;
@@ -876,8 +969,18 @@ public final class Rites {
         float amount = Math.min(event.getAmount(), boss.getHealth());
         f.totalDamage += amount;
         DamageSource s = event.getSource();
+        // Pasajero aliado montado sobre el dueño (Porteador): su daño cuenta como "passenger".
+        if (s.getEntity() instanceof ServerPlayer rider && !rider.getUUID().equals(f.owner) && rider.getVehicle() instanceof ServerPlayer mount
+                && mount.getUUID().equals(f.owner)) f.sourceDamage.merge("passenger", amount, Float::sum);
         if (!(s.getEntity() instanceof ServerPlayer p) || !p.getUUID().equals(f.owner)) return;
         f.ownerDamage += amount;
+        String src = SOURCE.get();
+        if (src != null) {
+            f.sourceDamage.merge(src, amount, Float::sum);
+            int cut = src.indexOf('_');
+            if (cut > 0) f.sourceDamage.merge(src.substring(0, cut), amount, Float::sum);
+        }
+        for (var e : STATE_SOURCES.entrySet()) if (e.getValue().test(p)) f.sourceDamage.merge(e.getKey(), amount, Float::sum);
         String style = styleOf(s, p);
         if (style != null) f.damageByStyle.merge(style, amount, Float::sum);
         if (racialSpell(p, s)) f.racialDamage += amount;
@@ -1002,6 +1105,13 @@ public final class Rites {
                         || (a.getMaterial() != ArmorMaterials.DIAMOND && a.getMaterial() != ArmorMaterials.NETHERITE)) return "crafted_diamond";
             }
         }
+        if (o.has("source_share") && f.sourceDamage.getOrDefault(str(o, "source", ""), 0f) < f.totalDamage * num(o, "source_share", 0)) return "source_share";
+        if (o.has("counts")) {
+            for (var e : o.getAsJsonObject("counts").entrySet()) {
+                if (f.counts.getOrDefault(e.getKey(), 0) < e.getValue().getAsInt()) return "counts";
+            }
+        }
+        if (o.has("min_slimes") && swarmAlive.applyAsInt(p) < o.get("min_slimes").getAsInt()) return "min_slimes";
         if (o.has("racial_share") && f.racialDamage < f.totalDamage * num(o, "racial_share", 0)) return "racial_share";
         if (o.has("wall_share")) {
             double share = num(o, "wall_share", 0);

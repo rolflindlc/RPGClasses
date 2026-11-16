@@ -85,7 +85,7 @@ public final class Definitions {
 
     /**
      * Rito (anexo de razas, regla 5): misión que sube el rango de raza. Todos sus objetivos deben cumplirse.
-     * Tipos de objetivo: kill, kill_variety, kill_styles, hits_taken, steals, barters, offer, structure, boss.
+     * Tipos de objetivo: kill, kill_variety, kill_styles, hits_taken, steals, barters, counter, offer, structure, boss.
      */
     public record RiteDef(String id, String kind, List<ObjectiveDef> objectives) {}
 

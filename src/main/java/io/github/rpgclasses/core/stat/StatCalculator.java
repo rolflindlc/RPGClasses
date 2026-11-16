@@ -200,6 +200,12 @@ public final class StatCalculator {
             if (v.isJsonPrimitive()) return v.getAsDouble();
             return LevelValue.fromJson(v.getAsJsonObject(), maxLevel).at(level);
         }
+
+        /** Valor de texto fijo (p. ej. el elemento del Dracónido). */
+        public String text(String key, String fallback) {
+            JsonElement v = params.get(key);
+            return v != null && v.isJsonPrimitive() && v.getAsJsonPrimitive().isString() ? v.getAsString() : fallback;
+        }
     }
 
     /** Todas las mecánicas activas (tipo {@code rpgclasses:mechanic}), para que el código de content/ las lea. */

@@ -53,7 +53,8 @@ public class RaceTest {
     private static ProgressState player(String race, String subrace, int rank, String classId, int basePoints) {
         ProgressState s = new ProgressState();
         RaceDef def = RACES.race("rpgclasses:" + race);
-        assertEquals(Result.OK, ProgressionRules.checkChooseRace(s, def, subrace));
+        // Las subrazas de la adenda 0.7 aún no disponibles se asignan como haría un administrador.
+        if (def.subrace(subrace).available()) assertEquals(Result.OK, ProgressionRules.checkChooseRace(s, def, subrace));
         ProgressionRules.chooseRace(s, def, subrace);
         s.raceRank = rank;
         if (classId != null) {
@@ -80,10 +81,30 @@ public class RaceTest {
     }
 
     @Test
-    public void eightRacesWithThreeSubraces() {
+    public void twelveRacesWithTwoToSixSubraces() {
         assertTrue("Errores: " + RACES.errors(), RACES.errors().isEmpty());
-        assertEquals(8, RACES.ids().size());
-        for (String id : RACES.ids()) assertEquals(id, 3, RACES.race(id).subraces().size());
+        assertEquals(12, RACES.ids().size());
+        for (String id : RACES.ids()) {
+            int n = RACES.race(id).subraces().size();
+            assertTrue(id + ": " + n, n >= 2 && n <= 6);
+        }
+        assertEquals(4, RACES.race("rpgclasses:slime").subraces().size());
+        assertEquals(2, RACES.race("rpgclasses:colossus").subraces().size());
+        assertEquals(6, RACES.race("rpgclasses:draconid").subraces().size());
+        assertEquals(3, RACES.race("rpgclasses:centaur").subraces().size());
+    }
+
+    @Test
+    public void colossusHealthHasNoCap() {
+        // Adenda 0.7: sin tope de vida. Coloso (+100 %) + Paladín (+20 %) + Juggernaut (+60 %) = +180 %.
+        ProgressState s = player("colossus", "porter", 0, "paladin", 30);
+        s.subclassId = "rpgclasses:charging_juggernaut";
+        s.subclassLevel = 10;
+        double total = StatCalculator.attributeTotals(s, STORE.classDef(s.classId), STORE.subclassDef(s.subclassId), RACES.race(s.raceId), CTX)
+                .get(new StatCalculator.Key(StatCalculator.MAX_HEALTH, "multiply_base"));
+        assertEquals(1.80, total, 1e-9);
+        assertEquals(-0.15, health(player("slime", "spring", 0, null, 0)), 1e-9);
+        assertEquals(-0.30, health(player("slime", "mitotic", 0, null, 0)), 1e-9);
     }
 
     @Test
@@ -185,7 +206,8 @@ public class RaceTest {
     @Test
     public void everySubraceHasThreeRites() {
         int total = 0;
-        for (String race : new String[]{"human", "orc", "dwarf", "elf", "goblin", "triton", "infernal", "undead"}) {
+        for (String race : new String[]{"human", "orc", "dwarf", "elf", "goblin", "triton", "infernal", "undead",
+                "slime", "colossus", "draconid", "centaur"}) {
             for (var sub : RACES.race("rpgclasses:" + race).subraces()) {
                 assertEquals(race + "/" + sub.id(), 3, sub.rites().size());
                 assertNotNull(sub.riteFor(0));
@@ -193,7 +215,7 @@ public class RaceTest {
                 total += sub.rites().size();
             }
         }
-        assertEquals(72, total);
+        assertEquals(117, total);
     }
 
     @Test

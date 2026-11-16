@@ -106,7 +106,7 @@ public final class DefinitionParser {
     }
 
     public static final java.util.Set<String> OBJECTIVE_TYPES = java.util.Set.of(
-            "kill", "kill_variety", "kill_styles", "hits_taken", "steals", "barters", "offer", "structure", "boss");
+            "kill", "kill_variety", "kill_styles", "hits_taken", "steals", "barters", "counter", "offer", "structure", "boss");
 
     private static List<Definitions.RiteDef> rites(JsonObject s) {
         List<Definitions.RiteDef> out = new ArrayList<>();

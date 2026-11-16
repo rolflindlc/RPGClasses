@@ -342,26 +342,53 @@ public final class IronsCompat {
             public void setMana(ServerPlayer player, float mana) {
                 MagicData magic = MagicData.getPlayerMagicData(player);
                 magic.setMana(Math.max(0, Math.min(maxMana(player), mana)));
-                // Como hace el comando de maná de Iron's: la barra del cliente se actualiza al momento.
-                io.redspace.ironsspellbooks.setup.PacketDistributor.sendToPlayer(player,
-                        new io.redspace.ironsspellbooks.network.SyncManaPacket(magic));
+                syncMana(player, magic);
             }
 
             @Override
             public void refundCooldowns(ServerPlayer player, java.util.Collection<String> spellIds, double fraction) {
-                var cooldowns = MagicData.getPlayerMagicData(player).getPlayerCooldowns();
-                boolean changed = false;
-                for (String id : spellIds) {
-                    var c = cooldowns.getSpellCooldowns().get(id);
-                    if (c == null || c.getCooldownRemaining() <= 0) continue;
-                    int amount = (int) Math.floor(c.getCooldownRemaining() * fraction);
-                    if (amount <= 0) continue;
-                    cooldowns.decrementCooldown(c, amount);
-                    changed = true;
+                // PlayerCooldowns y CooldownInstance no están en la API de Iron's: por reflexión.
+                Method getCooldowns = method("io.redspace.ironsspellbooks.api.magic.MagicData", "getPlayerCooldowns");
+                if (getCooldowns == null) return;
+                try {
+                    Object cooldowns = getCooldowns.invoke(MagicData.getPlayerMagicData(player));
+                    Method all = method(PLAYER_COOLDOWNS, "getSpellCooldowns");
+                    Method remaining = method(COOLDOWN_INSTANCE, "getCooldownRemaining");
+                    Method decrement = method(COOLDOWN_INSTANCE, "decrementBy", int.class);
+                    Method sync = method(PLAYER_COOLDOWNS, "syncToPlayer", ServerPlayer.class);
+                    if (cooldowns == null || all == null || remaining == null || decrement == null) return;
+                    Map<?, ?> map = (Map<?, ?>) all.invoke(cooldowns);
+                    boolean changed = false;
+                    for (String id : spellIds) {
+                        Object c = map.get(id);
+                        if (c == null) continue;
+                        int left = (Integer) remaining.invoke(c);
+                        int amount = (int) Math.floor(left * fraction);
+                        if (amount <= 0) continue;
+                        decrement.invoke(c, amount);
+                        changed = true;
+                    }
+                    if (changed && sync != null) sync.invoke(cooldowns, player);
+                } catch (ReflectiveOperationException | RuntimeException e) {
+                    RpgClasses.LOGGER.debug("[rpgclasses] Iron's: no se pudo devolver la recarga de los conjuros", e);
                 }
-                if (changed) cooldowns.syncToPlayer(player);
             }
         };
+    }
+
+    private static final String PLAYER_COOLDOWNS = "io.redspace.ironsspellbooks.capabilities.magic.PlayerCooldowns";
+    private static final String COOLDOWN_INSTANCE = "io.redspace.ironsspellbooks.capabilities.magic.CooldownInstance";
+
+    /** Como hace el comando de maná de Iron's: la barra del cliente se actualiza al momento (por reflexión: no es API). */
+    private static void syncMana(ServerPlayer player, MagicData magic) {
+        try {
+            Class<?> packet = Class.forName("io.redspace.ironsspellbooks.network.SyncManaPacket", true, IronsCompat.class.getClassLoader());
+            Object msg = packet.getConstructor(MagicData.class).newInstance(magic);
+            Method send = method("io.redspace.ironsspellbooks.setup.PacketDistributor", "sendToPlayer", ServerPlayer.class, Object.class);
+            if (send != null) send.invoke(null, player, msg);
+        } catch (ReflectiveOperationException | RuntimeException | LinkageError e) {
+            RpgClasses.LOGGER.debug("[rpgclasses] Iron's: no se pudo sincronizar el maná (se verá en la siguiente regeneración)", e);
+        }
     }
 
     private static void decayShields(net.minecraft.server.MinecraftServer server) {

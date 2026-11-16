@@ -218,8 +218,8 @@ public final class PaladinSubclasses {
             net.minecraft.world.level.block.state.BlockState state = level.getBlockState(pos);
             if (state.isAir() || !state.is(CHARGE_BREAKABLE)) continue;
             net.minecraft.core.BlockPos at = pos.immutable();
-            if (!level.mayInteract(player, at)) continue;
-            if (net.minecraftforge.common.ForgeHooks.onBlockBreakEvent(level, player.gameMode.getGameModeForPlayer(), player, at) == -1) continue;
+            // Zonas protegidas (sin disparar la rotura en área del Coloso alrededor de cada bloque).
+            if (!io.github.rpgclasses.content.race.BodyTraits.mayBreak(player, at)) continue;
             float hardness = Math.max(0, state.getDestroySpeed(level, at));
             damage += base + hardness * perHardness;
             net.minecraft.world.level.block.SoundType sound = state.getSoundType(level, at, player);

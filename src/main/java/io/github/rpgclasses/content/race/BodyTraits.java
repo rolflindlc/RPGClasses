@@ -201,6 +201,23 @@ public final class BodyTraits {
         return Math.max(size, ColossusForms.areaSize(p));
     }
 
+    /**
+     * ¿Puede el jugador romper ese bloque? (zonas protegidas: spawn, permisos y mods de parcelas, por el evento de
+     * rotura). Para roturas que no son de picar (Embestida del Juggernaut, pasos del Titán): el evento se lanza sin
+     * que el Coloso haga su rotura en área alrededor de ese bloque.
+     */
+    public static boolean mayBreak(ServerPlayer p, BlockPos pos) {
+        boolean before = AREA_BREAKING.get();
+        AREA_BREAKING.set(true);
+        try {
+            ServerLevel level = p.serverLevel();
+            return level.mayInteract(p, pos)
+                    && net.minecraftforge.common.ForgeHooks.onBlockBreakEvent(level, p.gameMode.getGameModeForPlayer(), p, pos) != -1;
+        } finally {
+            AREA_BREAKING.set(before);
+        }
+    }
+
     /** Solo lo que la herramienta rompe de forma efectiva; nunca contenedores ni bloques con datos; nunca irrompibles. */
     public static boolean breakable(Player p, BlockPos pos, BlockState state) {
         if (state.isAir() || state.hasBlockEntity() || !state.getFluidState().isEmpty()) return false;

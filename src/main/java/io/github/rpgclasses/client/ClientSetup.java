@@ -69,7 +69,10 @@ public final class ClientSetup {
         MinecraftForge.EVENT_BUS.addListener(net.minecraftforge.eventbus.api.EventPriority.LOW, RaceBodyClient::onAttack);
         // Centauro: cuerpo de caballo.
         modBus.addListener((EntityRenderersEvent.RegisterLayerDefinitions event) ->
-                event.registerLayerDefinition(CentaurRender.LAYER, CentaurRender::createLayer));
+                {
+                    event.registerLayerDefinition(CentaurRender.LAYER, CentaurRender::createLayer);
+                    event.registerLayerDefinition(CentaurRender.ARMOR_LAYER, CentaurRender::createArmorLayer);
+                });
         modBus.addListener((EntityRenderersEvent.AddLayers event) -> {
             CentaurRender.reset();
             // Porteador: los bloques del cinturón en la cintura.

@@ -20,7 +20,12 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.Pose;
+import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.DyeableLeatherItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.client.ForgeHooksClient;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 
 /**
@@ -31,6 +36,13 @@ import net.minecraftforge.client.event.RenderPlayerEvent;
  */
 public final class CentaurRender {
     public static final ModelLayerLocation LAYER = new ModelLayerLocation(RpgClasses.id("centaur_body"), "main");
+    /** Grebas y botas sobre las patas del caballo: 4 patas de grebas y 4 de botas (texturas de armadura humanas). */
+    public static final ModelLayerLocation ARMOR_LAYER = new ModelLayerLocation(RpgClasses.id("centaur_armor"), "main");
+    private static final String[] LEG_NAMES = {"left_hind_leg", "right_hind_leg", "left_front_leg", "right_front_leg"};
+    private static final float[][] LEG_POS = {{4f, 14f, 7f}, {-4f, 14f, 7f}, {4f, 14f, -12f}, {-4f, 14f, -12f}};
+    private static ModelPart[] legArmor, bootArmor;
+    private static ItemStack stashedLegs = ItemStack.EMPTY, stashedFeet = ItemStack.EMPTY;
+    private static boolean stashed;
     private static final String[] COATS = {"white", "creamy", "chestnut", "brown", "black", "gray", "darkbrown"};
 
     /** Escala del cuerpo de caballo (un caballo vanilla se dibuja a 1,1). */
@@ -65,9 +77,35 @@ public final class CentaurRender {
         return LayerDefinition.create(mesh, 64, 64);
     }
 
+    /** Capa de las grebas y botas: cuatro patas con la UV de la pierna humana (0,17) y distinta hinchazón. */
+    public static LayerDefinition createArmorLayer() {
+        MeshDefinition mesh = new MeshDefinition();
+        PartDefinition root = mesh.getRoot();
+        for (int i = 0; i < 4; i++) {
+            float[] o = LEG_POS[i];
+            boolean left = i % 2 == 0;
+            float x0 = left ? -3.0f : -1.0f;
+            float z0 = i < 2 ? -1.0f : -1.9f;
+            root.addOrReplaceChild("legs_" + LEG_NAMES[i], CubeListBuilder.create().texOffs(0, 17).mirror(left)
+                    .addBox(x0, -1.01f, z0, 4.0f, 11.0f, 4.0f, new CubeDeformation(0.25f)),
+                    PartPose.offset(o[0], o[1], o[2]));
+            root.addOrReplaceChild("feet_" + LEG_NAMES[i], CubeListBuilder.create().texOffs(0, 17).mirror(left)
+                    .addBox(x0, -1.01f, z0, 4.0f, 11.0f, 4.0f, new CubeDeformation(0.4f)),
+                    PartPose.offset(o[0], o[1], o[2]));
+        }
+        return LayerDefinition.create(mesh, 64, 32);
+    }
+
     private static boolean bake() {
         if (body != null) return true;
         try {
+            ModelPart armorRoot = Minecraft.getInstance().getEntityModels().bakeLayer(ARMOR_LAYER);
+            legArmor = new ModelPart[4];
+            bootArmor = new ModelPart[4];
+            for (int i = 0; i < 4; i++) {
+                legArmor[i] = armorRoot.getChild("legs_" + LEG_NAMES[i]);
+                bootArmor[i] = armorRoot.getChild("feet_" + LEG_NAMES[i]);
+            }
             ModelPart root = Minecraft.getInstance().getEntityModels().bakeLayer(LAYER);
             body = root.getChild("body");
             tail = body.getChild("tail");
@@ -130,6 +168,7 @@ public final class CentaurRender {
             rightHind.render(ps, vc, light, overlay);
             leftFront.render(ps, vc, light, overlay);
             rightFront.render(ps, vc, light, overlay);
+            drawLegArmor(p, ps, event, light, overlay);
             ps.popPose();
         }
 
@@ -140,6 +179,14 @@ public final class CentaurRender {
         model.leftPants.visible = false;
         model.rightPants.visible = false;
         hidingLegs = true;
+        restoreArmor(p);
+        stashedLegs = p.getItemBySlot(EquipmentSlot.LEGS);
+        stashedFeet = p.getItemBySlot(EquipmentSlot.FEET);
+        if (!stashedLegs.isEmpty() || !stashedFeet.isEmpty()) {
+            stashed = true;
+            p.setItemSlot(EquipmentSlot.LEGS, ItemStack.EMPTY);
+            p.setItemSlot(EquipmentSlot.FEET, ItemStack.EMPTY);
+        }
         double yaw = Math.toRadians(bodyYaw);
         ps.pushPose();
         ps.translate(-Math.sin(yaw) * HUMAN_FORWARD, HUMAN_UP, Math.cos(yaw) * HUMAN_FORWARD);
@@ -147,7 +194,50 @@ public final class CentaurRender {
         pushed = true;
     }
 
+    private static void restoreArmor(AbstractClientPlayer p) {
+        if (!stashed) return;
+        stashed = false;
+        p.setItemSlot(EquipmentSlot.LEGS, stashedLegs);
+        p.setItemSlot(EquipmentSlot.FEET, stashedFeet);
+        stashedLegs = stashedFeet = ItemStack.EMPTY;
+    }
+
+    private static void drawLegArmor(AbstractClientPlayer p, PoseStack ps, RenderPlayerEvent.Pre event, int light, int overlay) {
+        ModelPart[] hooves = {leftHind, rightHind, leftFront, rightFront};
+        for (int i = 0; i < 4; i++) {
+            legArmor[i].xRot = bootArmor[i].xRot = hooves[i].xRot;
+        }
+        drawPiece(p, ps, event, light, overlay, p.getItemBySlot(EquipmentSlot.LEGS), EquipmentSlot.LEGS, legArmor);
+        drawPiece(p, ps, event, light, overlay, p.getItemBySlot(EquipmentSlot.FEET), EquipmentSlot.FEET, bootArmor);
+    }
+
+    private static void drawPiece(AbstractClientPlayer p, PoseStack ps, RenderPlayerEvent.Pre event, int light, int overlay,
+                                  ItemStack stack, EquipmentSlot slot, ModelPart[] parts) {
+        if (!(stack.getItem() instanceof ArmorItem armor) || armor.getEquipmentSlot() != slot) return;
+        String mat = armor.getMaterial().getName();
+        int colon = mat.indexOf(':');
+        String domain = colon >= 0 ? mat.substring(0, colon) : "minecraft";
+        String name = colon >= 0 ? mat.substring(colon + 1) : mat;
+        String base = domain + ":textures/models/armor/" + name + "_layer_" + (slot == EquipmentSlot.LEGS ? 2 : 1);
+        float r = 1f, g = 1f, b = 1f;
+        if (armor instanceof DyeableLeatherItem dye) {
+            int c = dye.getColor(stack);
+            r = (c >> 16 & 255) / 255f; g = (c >> 8 & 255) / 255f; b = (c & 255) / 255f;
+        }
+        ResourceLocation tex = new ResourceLocation(ForgeHooksClient.getArmorTexture(p, stack, base + ".png", slot, null));
+        var buf = event.getMultiBufferSource();
+        for (ModelPart part : parts) part.render(ps, buf.getBuffer(RenderType.armorCutoutNoCull(tex)), light, overlay, r, g, b, 1f);
+        if (armor instanceof DyeableLeatherItem) {
+            ResourceLocation over = new ResourceLocation(base + "_overlay.png");
+            for (ModelPart part : parts) part.render(ps, buf.getBuffer(RenderType.armorCutoutNoCull(over)), light, overlay, 1f, 1f, 1f, 1f);
+        }
+        if (stack.hasFoil()) {
+            for (ModelPart part : parts) part.render(ps, buf.getBuffer(RenderType.armorEntityGlint()), light, overlay, 1f, 1f, 1f, 1f);
+        }
+    }
+
     public static void onRenderPost(RenderPlayerEvent.Post event) {
+        if (event.getEntity() instanceof AbstractClientPlayer p) restoreArmor(p);
         hidingLegs = false;
         if (!pushed) return;
         pushed = false;

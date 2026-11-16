@@ -5,7 +5,7 @@ Addon de magia ritual para Iron's Spells 'n Spellbooks (Forge 1.20.1). Diseño c
 
 > Rama temporal alojada en `rpgclasses` hasta que el mod tenga repositorio propio.
 
-## Estado: Fases 1–3 completas
+## Estado: Fases 1–4 completas
 
 ### Fase 1 (bloques base)
 
@@ -41,6 +41,26 @@ Addon de magia ritual para Iron's Spells 'n Spellbooks (Forge 1.20.1). Diseño c
 - Grimorios en cofres de estructuras de ISS (`GlobalLootModifier`), por rareza (común, poco común, rara).
 - JEI (y EMI vía JEI): componentes base por nivel; los catalizadores se ocultan.
 - Las 29 definiciones, lang es/en (lore y pistas) y recetas se generan con `tools/gen_assets.py`.
+
+### Fase 4 (rituales instantáneos de entorno y objeto)
+
+- **Sol / Noche**: el reloj avanza hasta el amanecer (tick 0) o el anochecer (13000) en unos 10 s. Con Reloj +
+  4 Fragmentos de Amatista, el reloj de esa dimensión queda congelado 15 min (escala con el poder de la escuela);
+  dormir no adelanta la hora. El ritual de tiempo nuevo sustituye al activo. El temporizador avanza aunque el
+  propietario se desconecte, para no dejar el mundo congelado.
+- **Forja Eterna**: el objeto con durabilidad del área central se repara y queda `Unbreakable`. Nivel mínimo según
+  la durabilidad máxima (≤ 500 / ≤ 1600 / más); un nivel superior también sirve. Con Obsidiana Llorosa, el objeto
+  no arde ni explota en el suelo. Lista negra en la config (`effects.eternalForgeBlacklist`).
+- **Encogimiento**: escala × 0.5 con el atributo `rpgclasses:scale` del mod de Razas (modificador transitorio) o, si no
+  está, Pehkui. Sin ninguno de los dos, el núcleo lo rechaza. Relanzarlo renueva la duración; termina al morir.
+  Con Pata de Conejo: Caída Lenta y el efecto **Trepamuros** (sube al chocar con una pared; agachado, se sujeta).
+- **Custodia**: crea 4 **Sellos de Custodia**. Agachado + clic derecho sobre un contenedor, puerta, trampilla o
+  valla: solo quien lo puso y sus aliados pueden abrirlo o romperlo (cubre los cofres dobles y las explosiones).
+  Se retira agachado con las manos vacías o rompiendo el bloque, y el sello se recupera. Las tolvas aún pueden
+  vaciar un contenedor sellado.
+- **Ancla del Alma**: hasta la próxima muerte; al morir se conservan inventario, armadura, mano secundaria y Curios
+  (no los objetos con Maldición de Desaparición). Por defecto no actúa si mata otro jugador
+  (`effects.soulAnchorInPvp`).
 
 ## Círculo
 

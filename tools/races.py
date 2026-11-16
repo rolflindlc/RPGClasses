@@ -272,6 +272,8 @@ RACE_UI = {
  "msg.rpgclasses.result.not_human": "Solo los humanos eligen muro.",
  "msg.rpgclasses.result.wall_invalid": "Ese muro no se puede elegir (tu clase no lo tiene o ya lo elegiste).",
  "msg.rpgclasses.result.wall_slots_full": "Ya has elegido tus muros. Cambian al reiniciar la clase.",
+ "message.rpgclasses.breath_no_mana": "No tienes maná para el aliento",
+ "effect.rpgclasses.corrosion": "Corrosión",
  "message.rpgclasses.last_stand": "¡Última Resistencia! Sobrevives con medio corazón",
  "message.rpgclasses.elf_no_meat": "Los elfos no comen carne ni pescado",
  "message.rpgclasses.robbed": "¡%s te ha robado un objeto!",
@@ -357,18 +359,19 @@ RACES.update({
              shake_radius=24)])]),
  "draconid": ("minecraft:dragon_head", [
     mech("hunger", exhaustion=.25),
-    mech("breath", range=V(4, 5, 6, 8), damage_per_second=V(3, 4, 5, 6.5), channel_seconds=V(2, 3, 4, 5), cooldown_seconds=V(12, 10, 10, 8))], [
-    ("fire", "minecraft:blaze_powder", False, [resist("fire", True), mech("dragon_kin", element="fire", radius=32),
+    mech("breath", range=V(4, 5, 6, 8), damage_per_second=V(3, 4, 5, 6.5), channel_seconds=V(2, 3, 4, 5), cooldown_seconds=V(12, 10, 10, 8),
+         mana_per_second=10)], [
+    ("fire", "minecraft:blaze_powder", True, [resist("fire", True), mech("dragon_kin", element="fire", radius=32),
         mech("breath_fire", burn_seconds=3)]),
-    ("ice", "minecraft:blue_ice", False, [resist("ice"), mech("dragon_kin", element="ice", radius=32),
+    ("ice", "minecraft:blue_ice", True, [resist("ice"), mech("dragon_kin", element="ice", radius=32),
         mech("breath_ice", amplifier=V(0, 0, 1, 1), slow_seconds=3)]),
-    ("lightning", "minecraft:lightning_rod", False, [resist("lightning"), mech("dragon_kin", element="lightning", radius=32),
+    ("lightning", "minecraft:lightning_rod", True, [resist("lightning"), mech("dragon_kin", element="lightning", radius=32),
         mech("breath_lightning", chains=V(0, 1, 1, 2), chain_factor=.5)]),
-    ("poison", "minecraft:spider_eye", False, [resist("poison"),
+    ("poison", "minecraft:spider_eye", True, [resist("poison"),
         mech("breath_poison", amplifier=V(0, 0, 1, 1), venom_seconds=V(4, 5, 6, 8)), mech("poison_immune", 2)]),
-    ("acid", "minecraft:fermented_spider_eye", False, [resist("acid"),
+    ("acid", "minecraft:fermented_spider_eye", True, [resist("acid"),
         mech("breath_acid", corrosion=V(.10, .15, .20, .30), corrosion_seconds=5), mech("acid_stomach")]),
-    ("water", "minecraft:heart_of_the_sea", False, [resist("water"), attr(("forge:swim_speed", V(0, .15, .15, .25), "multiply_base")),
+    ("water", "minecraft:heart_of_the_sea", True, [resist("water"), attr(("forge:swim_speed", V(0, .15, .15, .25), "multiply_base")),
         mech("breath_water", breath_push=1.0), mech("deep_lungs", air_factor=3), mech("water_breathing", 2)])]),
  "centaur": ("minecraft:saddle", [
     attr((R("body"), 1, "add")),
@@ -447,7 +450,7 @@ MECHANIC_TEXT.update({
 })
 
 RACE_PARAMS.update({
- "bounce": "Rebote x", "knockback_taken": "Retroceso recibido|+%", "slimes_per_heart": "Slimes por corazón",
+ "bounce": "Rebote x", "mana_per_second": "Maná por segundo", "knockback_taken": "Retroceso recibido|+%", "slimes_per_heart": "Slimes por corazón",
  "touch_damage": "Daño por contacto|HP", "slime_speed": "Velocidad de los slimes|+%", "max_slimes": "Slimes máximos",
  "leash": "Distancia máxima (bloques)", "charge_seconds": "Carga máxima|s", "power": "Potencia (Impulso)",
  "min_charge_seconds": "Carga mínima|s", "bounces": "Rebotes", "merge_health": "Vida tras fusionar|%",

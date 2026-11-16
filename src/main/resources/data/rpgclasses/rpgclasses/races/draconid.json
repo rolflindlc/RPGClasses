@@ -43,7 +43,8 @@
           10,
           8
         ]
-      }
+      },
+      "mana_per_second": 10
     }
   ],
   "subraces": [
@@ -52,7 +53,7 @@
       "display": {
         "icon": "minecraft:blaze_powder"
       },
-      "available": false,
+      "available": true,
       "effects": [
         {
           "type": "rpgclasses:mechanic",
@@ -137,7 +138,7 @@
       "display": {
         "icon": "minecraft:blue_ice"
       },
-      "available": false,
+      "available": true,
       "effects": [
         {
           "type": "rpgclasses:mechanic",
@@ -230,7 +231,7 @@
       "display": {
         "icon": "minecraft:lightning_rod"
       },
-      "available": false,
+      "available": true,
       "effects": [
         {
           "type": "rpgclasses:mechanic",
@@ -323,7 +324,7 @@
       "display": {
         "icon": "minecraft:spider_eye"
       },
-      "available": false,
+      "available": true,
       "effects": [
         {
           "type": "rpgclasses:mechanic",
@@ -427,7 +428,7 @@
       "display": {
         "icon": "minecraft:fermented_spider_eye"
       },
-      "available": false,
+      "available": true,
       "effects": [
         {
           "type": "rpgclasses:mechanic",
@@ -519,7 +520,7 @@
       "display": {
         "icon": "minecraft:heart_of_the_sea"
       },
-      "available": false,
+      "available": true,
       "effects": [
         {
           "type": "rpgclasses:mechanic",

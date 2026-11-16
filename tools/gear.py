@@ -94,7 +94,19 @@ def lang():
            "death.attack.rpgclasses.dragon_frost": "%1$s se congeló con la escarcha de dragón de %2$s",
            "death.attack.rpgclasses.dragon_frost.player": "%1$s se congeló con la escarcha de dragón de %2$s",
            "death.attack.rpgclasses.dragon_spark": "%1$s fue fulminado por la chispa de dragón de %2$s",
-           "death.attack.rpgclasses.dragon_spark.player": "%1$s fue fulminado por la chispa de dragón de %2$s"}
+           "death.attack.rpgclasses.dragon_spark.player": "%1$s fue fulminado por la chispa de dragón de %2$s",
+           "death.attack.rpgclasses.breath_fire": "%1$s ardió en el aliento de %2$s",
+           "death.attack.rpgclasses.breath_fire.player": "%1$s ardió en el aliento de %2$s",
+           "death.attack.rpgclasses.breath_ice": "%1$s se congeló en el aliento de %2$s",
+           "death.attack.rpgclasses.breath_ice.player": "%1$s se congeló en el aliento de %2$s",
+           "death.attack.rpgclasses.breath_lightning": "%1$s fue fulminado por el aliento de %2$s",
+           "death.attack.rpgclasses.breath_lightning.player": "%1$s fue fulminado por el aliento de %2$s",
+           "death.attack.rpgclasses.breath_poison": "%1$s se envenenó con el aliento de %2$s",
+           "death.attack.rpgclasses.breath_poison.player": "%1$s se envenenó con el aliento de %2$s",
+           "death.attack.rpgclasses.breath_acid": "%1$s se disolvió en el aliento de %2$s",
+           "death.attack.rpgclasses.breath_acid.player": "%1$s se disolvió en el aliento de %2$s",
+           "death.attack.rpgclasses.breath_water": "%1$s se ahogó en el aliento de %2$s",
+           "death.attack.rpgclasses.breath_water.player": "%1$s se ahogó en el aliento de %2$s"}
     for c in CLASSES:
         for t in ARMOR_TIERS:
             for p in PIECES:
@@ -194,12 +206,14 @@ def tags():
     t["items/iceandfire/scales_any"] = [f"#{NS}:iceandfire/scales_{e}" for e in ELEMENTS]
     t["items/iceandfire/dragonsteel_any"] = [f"#{NS}:iceandfire/dragonsteel_{e}" for e in ELEMENTS]
     t["items/iceandfire/dragonbone"] = [opt(f"{IAF}:dragonbone")]
-    t["damage_type/element/fire"] = ["#minecraft:is_fire", r("dragon_flame"), opt(f"{IAF}:dragon_fire")]
-    t["damage_type/element/ice"] = ["#minecraft:is_freezing", r("dragon_frost"), opt(f"{IAF}:dragon_ice")]
-    t["damage_type/element/lightning"] = ["#minecraft:is_lightning", r("dragon_spark"), opt(f"{IAF}:dragon_lightning")]
+    t["damage_type/element/fire"] = ["#minecraft:is_fire", r("dragon_flame"), r("breath_fire"), opt(f"{IAF}:dragon_fire")]
+    t["damage_type/element/ice"] = ["#minecraft:is_freezing", r("dragon_frost"), r("breath_ice"), opt(f"{IAF}:dragon_ice")]
+    t["damage_type/element/lightning"] = ["#minecraft:is_lightning", r("dragon_spark"), r("breath_lightning"), opt(f"{IAF}:dragon_lightning")]
     return t
 
-DAMAGE_TYPES = ["martial", "dragon_flame", "dragon_frost", "dragon_spark"]
+DAMAGE_TYPES = ["martial", "dragon_flame", "dragon_frost", "dragon_spark",
+                # Aliento del Dracónido (adenda de razas 0.7)
+                "breath_fire", "breath_ice", "breath_lightning", "breath_poison", "breath_acid", "breath_water"]
 # Capacidades de Epic Fight (primera versión: movesets existentes; animaciones propias en una fase posterior).
 EF_TYPE = {
  "nunchaku": {"type": "epicfight:dagger", "attributes": {"common": {"armor_negation": 0.0, "impact": 0.6, "max_strikes": 1}}},
@@ -215,9 +229,9 @@ def build(dump, out_dir):
         dump(os.path.join(data, NS, "recipes", "gear", name + ".json"), recipe)
     for path, values in tags().items():
         dump(os.path.join(data, NS, "tags", path + ".json"), {"replace": False, "values": values})
-    dump(os.path.join(data, "minecraft", "tags", "damage_type", "is_fire.json"), {"replace": False, "values": [r("dragon_flame")]})
-    dump(os.path.join(data, "minecraft", "tags", "damage_type", "is_freezing.json"), {"replace": False, "values": [r("dragon_frost")]})
-    dump(os.path.join(data, "minecraft", "tags", "damage_type", "is_lightning.json"), {"replace": False, "values": [r("dragon_spark")]})
+    dump(os.path.join(data, "minecraft", "tags", "damage_type", "is_fire.json"), {"replace": False, "values": [r("dragon_flame"), r("breath_fire")]})
+    dump(os.path.join(data, "minecraft", "tags", "damage_type", "is_freezing.json"), {"replace": False, "values": [r("dragon_frost"), r("breath_ice")]})
+    dump(os.path.join(data, "minecraft", "tags", "damage_type", "is_lightning.json"), {"replace": False, "values": [r("dragon_spark"), r("breath_lightning")]})
     for d in DAMAGE_TYPES:
         dump(os.path.join(data, NS, "damage_type", d + ".json"), {"message_id": f"{NS}.{d}", "exhaustion": 0.1, "scaling": "never"})
     # no_proc: el daño del equipo no vuelve a pasar por el pipeline (se añade a lo que ya hay).

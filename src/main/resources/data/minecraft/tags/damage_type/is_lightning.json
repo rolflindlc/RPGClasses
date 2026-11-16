@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "rpgclasses:dragon_spark"
+    "rpgclasses:dragon_spark",
+    "rpgclasses:breath_lightning"
   ]
 }

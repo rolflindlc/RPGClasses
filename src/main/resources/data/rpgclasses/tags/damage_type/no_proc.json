@@ -12,6 +12,12 @@
     "rpgclasses:martial",
     "rpgclasses:dragon_flame",
     "rpgclasses:dragon_frost",
-    "rpgclasses:dragon_spark"
+    "rpgclasses:dragon_spark",
+    "rpgclasses:breath_fire",
+    "rpgclasses:breath_ice",
+    "rpgclasses:breath_lightning",
+    "rpgclasses:breath_poison",
+    "rpgclasses:breath_acid",
+    "rpgclasses:breath_water"
   ]
 }

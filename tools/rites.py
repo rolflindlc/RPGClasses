@@ -386,9 +386,9 @@ ENTITY_TAGS.update({
 # Elementos sin etiqueta propia en el equipo: el código añade además el Veneno (daño mágico con el efecto activo),
 # el ahogamiento y las escuelas de Iron's / T.O Magic 'n Extras.
 DAMAGE_TAGS = {
- "element/poison": [],
- "element/acid": [],
- "element/water": ["#minecraft:is_drowning"],
+ "element/poison": [NS + ":breath_poison"],
+ "element/acid": [NS + ":breath_acid"],
+ "element/water": ["#minecraft:is_drowning", NS + ":breath_water"],
 }
 
 UI = {

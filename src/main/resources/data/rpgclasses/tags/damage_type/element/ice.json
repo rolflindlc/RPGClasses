@@ -3,6 +3,7 @@
   "values": [
     "#minecraft:is_freezing",
     "rpgclasses:dragon_frost",
+    "rpgclasses:breath_ice",
     {
       "id": "iceandfire:dragon_ice",
       "required": false

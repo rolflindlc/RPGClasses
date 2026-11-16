@@ -88,7 +88,8 @@ public final class RaceAbilities {
             new Entry("race_water_wall", 2, RaceAbilities::waterWall),
             new Entry("race_nether_compass", 0, RaceAbilities::netherCompass),
             new Entry("race_portable_furnace", 0, RaceAbilities::portableFurnace),
-            new Entry("race_ethereal", 0, RaceAbilities::ethereal));
+            new Entry("race_ethereal", 0, RaceAbilities::ethereal),
+            new Entry("race_breath", 0, DraconicBreath::start));
 
     private static final TagKey<Structure> COMPASS_TARGETS = TagKey.create(Registries.STRUCTURE, RpgClasses.id("nether_compass"));
     private static final String TEMP_TAG = "rpgclasses.temp";
@@ -110,6 +111,11 @@ public final class RaceAbilities {
     /** El jugador pulsa una tecla racial. Todo se valida aquí. */
     public static void use(ServerPlayer player, int slot) {
         if (slot < 0 || slot > 3 || !player.isAlive() || player.isSpectator()) return;
+        // Dracónido: volver a pulsar mientras canaliza el aliento lo corta.
+        if (slot % 2 == 0 && DraconicBreath.isChanneling(player)) {
+            DraconicBreath.stop(player);
+            return;
+        }
         Entry entry = entryFor(player, slot);
         if (entry == null && slot >= 2) entry = entryFor(player, slot - 2);
         if (entry == null) {
@@ -147,7 +153,9 @@ public final class RaceAbilities {
         DebugLog.event(player, "raza", "{} pulsada: {}", key, used ? "usada" : "no se activó");
         if (!used) return;
         Rites.onAbilityUsed(player, entry.mechanic());
-        AbilityService.setCooldown(player, key, (int) Math.round(m.number("cooldown_seconds", 0) * 20));
+        // Las canalizaciones (aliento) empiezan su enfriamiento al terminar la canalización máxima.
+        double cooldown = m.number("cooldown_seconds", 0) + m.number("channel_seconds", 0);
+        AbilityService.setCooldown(player, key, (int) Math.round(cooldown * 20));
         player.displayClientMessage(Component.translatable("msg.rpgclasses.ability_used", name), true);
         io.github.rpgclasses.network.Net.syncPlayer(player);
     }

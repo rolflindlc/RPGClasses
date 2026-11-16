@@ -35,6 +35,13 @@ public final class ModEffects {
     public static final RegistryObject<MobEffect> IMMORTAL_FURY =
             EFFECTS.register("immortal_fury", () -> new StateEffect(MobEffectCategory.BENEFICIAL, 0x8C0A0A));
     /** Plaga (Corruptor de Plagas): el daño periódico lo hace content.BarbarianSubclasses; la leche la cura. */
+    /** Corrosión (Dracónido Ácido): −5 % de armadura y dureza por nivel del efecto. */
+    public static final RegistryObject<MobEffect> CORROSION = EFFECTS.register("corrosion", () ->
+            new CurableEffect(MobEffectCategory.HARMFUL, 0x9ACD32)
+                    .addAttributeModifier(net.minecraft.world.entity.ai.attributes.Attributes.ARMOR, "4b1c9a2e-7d3f-4a51-8e6b-0c2d9f1a7e31", -0.05,
+                            net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.MULTIPLY_TOTAL)
+                    .addAttributeModifier(net.minecraft.world.entity.ai.attributes.Attributes.ARMOR_TOUGHNESS, "4b1c9a2e-7d3f-4a51-8e6b-0c2d9f1a7e32", -0.05,
+                            net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.MULTIPLY_TOTAL));
     public static final RegistryObject<MobEffect> PLAGUE =
             EFFECTS.register("plague", () -> new CurableEffect(MobEffectCategory.HARMFUL, 0x6B7A2A));
     /** Reducción de daño de Provocación. */

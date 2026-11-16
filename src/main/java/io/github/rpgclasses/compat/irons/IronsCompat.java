@@ -133,6 +133,14 @@ public final class IronsCompat {
         MinecraftForge.EVENT_BUS.register(new RacialSpells());
         MinecraftForge.EVENT_BUS.register(new Pyromaniac());
         installChaosHooks();
+        // Aliento del Dracónido (adenda de razas 0.7): gasta maná de Iron's.
+        io.github.rpgclasses.content.race.DraconicBreath.manaBridge = (player, cost) -> {
+            MagicData magic = MagicData.getPlayerMagicData(player);
+            if (player.isCreative()) return 1;
+            if (magic.getMana() < cost) return 0;
+            magic.setMana((float) (magic.getMana() - cost));
+            return 1;
+        };
         RpgClasses.LOGGER.info("[rpgclasses] Iron's Spells detectado: puente activado");
     }
 

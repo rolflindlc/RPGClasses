@@ -43,4 +43,4 @@ code or assets.
 
 ## Credits
 
-Created by Rolflin. Textures and art by their respective artists.
+Created by Rolflin. Art by Laira.

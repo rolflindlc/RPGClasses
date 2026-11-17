@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "irons_spellbooks:arcane_essence",
+      "required": false
+    },
+    "minecraft:lapis_lazuli"
+  ]
+}

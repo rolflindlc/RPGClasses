@@ -141,7 +141,9 @@ public final class IronsCompat {
         if (!(event.getEntity() instanceof ServerPlayer player)) return;
         if (io.github.rpgclasses.content.DeathGamble.flipping(player) // Apuesta con la Muerte: no puede hacer nada
                 || io.github.rpgclasses.content.Chronomancy.isFrozen(player) // Parada Temporal: paralizado
-                || io.github.rpgclasses.content.race.SlimeForms.blocksActions(player)) { // Enjambre dividido: sin conjuros
+                || io.github.rpgclasses.content.race.SlimeForms.blocksActions(player) // Enjambre dividido: sin conjuros
+                || io.github.rpgclasses.bard.BardCombat.dancing(player) // Baile Forzado
+                || io.github.rpgclasses.bard.BardCombat.silenced(player)) { // Disonancia
             event.setCanceled(true);
             return;
         }
@@ -374,6 +376,25 @@ public final class IronsCompat {
                 }
             }
         };
+    }
+
+    /**
+     * Contrapunto del Bardo: todos los conjuros en recarga pierden esa fracción de lo que les queda (por reflexión,
+     * como el Retroceso Temporal: PlayerCooldowns no está en la API de Iron's).
+     */
+    public static void refundAllCooldowns(ServerPlayer player, double fraction) {
+        Method getCooldowns = method("io.redspace.ironsspellbooks.api.magic.MagicData", "getPlayerCooldowns");
+        Method all = method(PLAYER_COOLDOWNS, "getSpellCooldowns");
+        if (getCooldowns == null || all == null || io.github.rpgclasses.content.Chronomancy.mana == null) return;
+        try {
+            Object cooldowns = getCooldowns.invoke(MagicData.getPlayerMagicData(player));
+            if (cooldowns == null) return;
+            List<String> ids = new ArrayList<>();
+            for (Object key : ((Map<?, ?>) all.invoke(cooldowns)).keySet()) ids.add(String.valueOf(key));
+            if (!ids.isEmpty()) io.github.rpgclasses.content.Chronomancy.mana.refundCooldowns(player, ids, fraction);
+        } catch (ReflectiveOperationException | RuntimeException e) {
+            RpgClasses.LOGGER.debug("[rpgclasses] Iron's: no se pudieron reducir las recargas (Contrapunto)", e);
+        }
     }
 
     private static final String PLAYER_COOLDOWNS = "io.redspace.ironsspellbooks.capabilities.magic.PlayerCooldowns";

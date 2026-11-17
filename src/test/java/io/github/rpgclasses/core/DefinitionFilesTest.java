@@ -52,7 +52,7 @@ public class DefinitionFilesTest {
     @Test
     public void allShippedDefinitionsAreValid() {
         assertTrue("Errores de validación: " + STORE.errors(), STORE.errors().isEmpty());
-        assertEquals(List.of("rpgclasses:barbarian", "rpgclasses:mage", "rpgclasses:monk",
+        assertEquals(List.of("rpgclasses:barbarian", "rpgclasses:bard", "rpgclasses:mage", "rpgclasses:monk",
                 "rpgclasses:paladin", "rpgclasses:ranger", "rpgclasses:rogue"), List.copyOf(STORE.classIds()));
         for (String id : STORE.classIds()) {
             ClassDef c = STORE.classDef(id);
@@ -68,13 +68,13 @@ public class DefinitionFilesTest {
             assertEquals(id, 5, c.branches().size());
             for (var b : c.branches()) perks += b.perks().size();
         }
-        assertEquals(60, perks);
+        assertEquals(70, perks);
     }
 
     @Test
     public void wallTotalsMatchDesignTable() {
         Map<String, Integer> expected = Map.of("mage", 200, "paladin", 150, "barbarian", 150,
-                "rogue", 245, "ranger", 150, "monk", 275);
+                "rogue", 245, "ranger", 150, "monk", 275, "bard", 245);
         for (Map.Entry<String, Integer> e : expected.entrySet()) {
             ClassDef c = STORE.classDef("rpgclasses:" + e.getKey());
             double total = 0;

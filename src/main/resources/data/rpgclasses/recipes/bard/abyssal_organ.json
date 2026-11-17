@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:smithing_transform",
+  "template": {
+    "item": "rpgclasses:resonant_shard"
+  },
+  "base": {
+    "item": "rpgclasses:hurdy_gurdy"
+  },
+  "addition": {
+    "item": "rpgclasses:abyssal_reed"
+  },
+  "result": {
+    "item": "rpgclasses:abyssal_organ"
+  }
+}

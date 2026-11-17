@@ -67,6 +67,13 @@ public class RpgClasses {
         io.github.rpgclasses.registry.ModBlocks.ITEMS.register(modBus);
         io.github.rpgclasses.gear.ModGear.ITEMS.register(modBus);
         io.github.rpgclasses.gear.ModGear.TABS.register(modBus);
+        // Bardo (adenda del Bardo): objetos, receta de partituras, efectos y entidades.
+        io.github.rpgclasses.bard.BardItems.ITEMS.register(modBus);
+        io.github.rpgclasses.bard.BardItems.RECIPES.register(modBus);
+        io.github.rpgclasses.bard.BardEffects.EFFECTS.register(modBus);
+        io.github.rpgclasses.bard.BardEntities.ENTITIES.register(modBus);
+        io.github.rpgclasses.server.AbilityService.register(io.github.rpgclasses.bard.Bard.CRESCENDO,
+                io.github.rpgclasses.bard.BardState::startCrescendo);
         modBus.addListener(io.github.rpgclasses.registry.ModBlocks::onCreativeTab);
         modBus.addListener(ModEntities::onAttributes);
         modBus.addListener(ModAttributes::onAttributeModification);
@@ -98,7 +105,12 @@ public class RpgClasses {
         // Puente con Iron's: la clase solo se carga si el mod está instalado.
         if (net.minecraftforge.fml.ModList.get().isLoaded("irons_spellbooks")) {
             io.github.rpgclasses.compat.irons.IronsCompat.init();
+            // Escuela musical y conjuros del Bardo (registro en Iron's).
+            io.github.rpgclasses.compat.irons.music.MusicBridge.init(modBus);
         }
+        MinecraftForge.EVENT_BUS.register(new io.github.rpgclasses.bard.BardState());
+        MinecraftForge.EVENT_BUS.register(new io.github.rpgclasses.bard.BardAuras());
+        MinecraftForge.EVENT_BUS.register(new io.github.rpgclasses.bard.BardCombat());
         // Puente con Epic Fight (Acrobacia del Pícaro): solo si el mod está instalado.
         if (net.minecraftforge.fml.ModList.get().isLoaded("epicfight")) {
             io.github.rpgclasses.compat.epicfight.EpicFightCompat.init();

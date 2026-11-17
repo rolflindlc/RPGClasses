@@ -1,0 +1,35 @@
+{
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "irons_spellbooks"
+    }
+  ],
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "minecraft:paper"
+    },
+    {
+      "item": "minecraft:ink_sac"
+    },
+    {
+      "item": "minecraft:note_block"
+    },
+    {
+      "item": "minecraft:echo_shard"
+    },
+    {
+      "item": "rpgclasses:resonant_shard"
+    }
+  ],
+  "result": {
+    "item": "rpgclasses:sheet_music",
+    "count": 1,
+    "nbt": {
+      "rpgclasses_spell": "rpgclasses:dissonance",
+      "rpgclasses_level": 1
+    }
+  }
+}

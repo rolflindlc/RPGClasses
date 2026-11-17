@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "class": "rpgclasses:bard",
+  "display": {
+    "icon": "minecraft:goat_horn"
+  },
+  "effects": [
+    {
+      "type": "rpgclasses:mechanic",
+      "id": "rpgclasses:martial_combo",
+      "per_hit": 0.01,
+      "cap": 0.3
+    },
+    {
+      "type": "rpgclasses:mechanic",
+      "id": "rpgclasses:resonant_strike",
+      "every_hits": 5,
+      "radius": 3,
+      "damage_fraction": {
+        "from": 0.3,
+        "to": 0.75
+      }
+    }
+  ],
+  "milestones": [
+    {
+      "subclass_level": 5,
+      "grants": "rpgclasses:rhythmic_fury"
+    }
+  ]
+}

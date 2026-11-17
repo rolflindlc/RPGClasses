@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "irons_spellbooks:epic_ink",
+      "required": false
+    }
+  ]
+}

@@ -42,7 +42,8 @@
     "rpgclasses:shield": 0.3
   },
   "school_walls": {
-    "irons_spellbooks:holy": 1.0
+    "irons_spellbooks:holy": 1.0,
+    "rpgclasses:music": 1.0
   },
   "branches": [
     {

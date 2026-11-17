@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "minecraft:string"
+    },
+    {
+      "item": "minecraft:string"
+    },
+    {
+      "item": "minecraft:string"
+    },
+    {
+      "tag": "rpgclasses:bard/arcane_essence"
+    }
+  ],
+  "result": {
+    "item": "rpgclasses:arcane_thread",
+    "count": 3
+  }
+}

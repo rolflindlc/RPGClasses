@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "passive": true,
+  "max_combo": 30,
+  "power_per_hit": 0.01,
+  "power_per_hit_15": 0.02,
+  "power_per_hit_30": 0.03,
+  "beat_bonus": 0.15,
+  "base_bpm": 100,
+  "max_bpm": 180,
+  "window_ms": 110,
+  "perfect_ms": 50,
+  "phrase_beats": 16,
+  "rest_beats": 4,
+  "note_density": 0.6,
+  "music_power_cap": 1.5,
+  "buff_power_scaling": 0.5,
+  "play_slow": -0.15,
+  "aura_radius": 8,
+  "idle_reset_seconds": 3,
+  "aura_refresh_seconds": 1.25
+}

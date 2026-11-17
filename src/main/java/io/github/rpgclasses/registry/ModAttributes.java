@@ -43,6 +43,13 @@ public final class ModAttributes {
     public static final RegistryObject<Attribute> SNEAK_SPEED = register("sneak_speed", 0, 0, 10);
     public static final RegistryObject<Attribute> SPELL_SIZE = register("spell_size", 0, 0, 10);
 
+    /**
+     * Poder y resistencia de la escuela musical del Bardo (1 = 100 %). Siguen la convención de Iron's
+     * ({@code <escuela>_spell_power}): StatEngine les aplica los muros por escuela (−100 % para las demás clases).
+     */
+    public static final RegistryObject<Attribute> MUSIC_SPELL_POWER = register("music_spell_power", 1, 0, 10);
+    public static final RegistryObject<Attribute> MUSIC_MAGIC_RESIST = register("music_magic_resist", 1, 0, 10);
+
     /** Tamaño racial como fracción sumada a 1 (−0,5 = la mitad). Sincronizado: lo leen el cliente y el servidor. */
     public static final RegistryObject<Attribute> SCALE = register("scale", 0, -0.9, 10);
     /** Elfo: mayor que 0 = atraviesa y trepa hojas (se usa como bandera sincronizada). */

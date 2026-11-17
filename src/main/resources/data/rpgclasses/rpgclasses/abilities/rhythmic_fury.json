@@ -1,0 +1,6 @@
+{
+  "schema_version": 1,
+  "passive": true,
+  "min_stage": 3,
+  "damage_bonus": 0.1
+}

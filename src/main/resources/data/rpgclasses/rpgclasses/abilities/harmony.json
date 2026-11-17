@@ -1,0 +1,8 @@
+{
+  "schema_version": 1,
+  "passive": true,
+  "max_stage": 5,
+  "buff_per_stage": 0.06,
+  "tempo_per_stage": 0.1,
+  "stage_loss": 2
+}

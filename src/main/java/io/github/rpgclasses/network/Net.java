@@ -17,7 +17,7 @@ import net.minecraftforge.network.simple.SimpleChannel;
 
 public final class Net {
     /** Cliente y servidor con versiones de protocolo distintas no se conectan. Subir al cambiar cualquier paquete. */
-    private static final String PROTOCOL = "15";
+    private static final String PROTOCOL = "16";
 
     public static final SimpleChannel CHANNEL = NetworkRegistry.newSimpleChannel(
             RpgClasses.id("main"), () -> PROTOCOL, PROTOCOL::equals, PROTOCOL::equals);
@@ -84,6 +84,16 @@ public final class Net {
         CHANNEL.messageBuilder(Packets.TimeFrozen.class, id++, NetworkDirection.PLAY_TO_CLIENT)
                 .encoder(Packets.TimeFrozen::encode).decoder(Packets.TimeFrozen::decode)
                 .consumerMainThread(Packets.TimeFrozen::handle).add();
+        // Bardo (protocolo 16).
+        CHANNEL.messageBuilder(Packets.BardNote.class, id++, NetworkDirection.PLAY_TO_SERVER)
+                .encoder(Packets.BardNote::encode).decoder(Packets.BardNote::decode)
+                .consumerMainThread(Packets.BardNote::handle).add();
+        CHANNEL.messageBuilder(Packets.BardSync.class, id++, NetworkDirection.PLAY_TO_CLIENT)
+                .encoder(Packets.BardSync::encode).decoder(Packets.BardSync::decode)
+                .consumerMainThread(Packets.BardSync::handle).add();
+        CHANNEL.messageBuilder(Packets.DanceSync.class, id++, NetworkDirection.PLAY_TO_CLIENT)
+                .encoder(Packets.DanceSync::encode).decoder(Packets.DanceSync::decode)
+                .consumerMainThread(Packets.DanceSync::handle).add();
     }
 
     public static void toPlayer(ServerPlayer player, Object message) {

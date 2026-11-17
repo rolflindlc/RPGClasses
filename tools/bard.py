@@ -83,7 +83,7 @@ ABILITIES = {
     # Ritmo (nivel 1): el minijuego y el combo. Poder musical por acierto según el Nivel Total (1 / 15 / 30).
     "rhythm": dict(passive=True, max_combo=30, power_per_hit=.01, power_per_hit_15=.02, power_per_hit_30=.03,
                    beat_bonus=.15, base_bpm=100, max_bpm=180, window_ms=110, perfect_ms=50, phrase_beats=16, rest_beats=4,
-                   note_density=.6, music_power_cap=1.5, buff_power_scaling=.5, play_slow=-.15, aura_radius=8,
+                   note_density=.6, music_power_cap=1.5, buff_power_scaling=.5, play_slow=-.10, aura_radius=8,
                    idle_reset_seconds=3, aura_refresh_seconds=1.25),
     # Armonía (nivel 5): etapas por frase perfecta.
     "harmony": dict(passive=True, max_stage=5, buff_per_stage=.06, tempo_per_stage=.10, stage_loss=2),

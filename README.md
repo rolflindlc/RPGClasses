@@ -5,11 +5,11 @@ Mod de clases, ramas, subclases y razas definido por datapack. Diseño funcional
 `documento_de_razas_implementacion.md`, y arquitectura en el documento
 "Arquitectura técnica del mod de clases".
 
-## Estado actual (2026-11-16)
+## Estado actual (2026-11-17)
 
 Todo lo siguiente está en el código y compila con sus pruebas, pero **no se ha probado en el juego** salvo la fase 1.
 
-- **Clases:** 6 clases con 5 ramas (3 usables) y perks, 18 subclases, habilidades, muros de disciplina, críticos
+- **Clases:** 7 clases con 5 ramas (3 usables) y perks, 21 subclases, habilidades, muros de disciplina, críticos
   propios y topes (diseño v2, rev. 2.21). Integración con Iron's Spells y Epic Fight (opcionales).
 - **Equipo de Clase (rev. 2.20):** armaduras de Bárbaro y Monje de todos los tiers (hasta dragonsteel de Ice and Fire),
   armas marciales del Monje, efectos de set y nudilleras en la ranura de manos de Curios (opcional); los 32 curios están **desactivados** en la versión de salida (`Curio.ENABLED` y `CURIOS_ENABLED` en `tools/gear.py`). Texturas provisionales
@@ -24,7 +24,11 @@ Todo lo siguiente está en el código y compila con sus pruebas, pero **no se ha
   (`rpgclasses-client.toml`: intensidad del temblor del Titán).
 - **Cronomante** (sustituye al Evocador Caótico): Retroceso Temporal y Parada Temporal (esfera gris translúcida,
   compatible con shaders). Pruebas en el juego: ver "Probar el Cronomante" más abajo.
-- Red: protocolo **15** (servidor y cliente con el mismo jar). 17 mixins (2 solo de cliente).
+- **Bardo** (adenda del Bardo): minijuego de ritmo con los cuatro carriles (clic izquierdo, clic derecho, Shift y
+  espacio), combo, Armonía, Contrapunto y Crescendo; escuela musical registrada en Iron's (`rpgclasses:music`) con 12
+  conjuros, 21 instrumentos más la guitarra-hacha, partituras con nivel y atril, 3 subclases. Detalle y diferencias con
+  el diseño en `documento_bardo.md`. Pruebas: ver "Probar el Bardo" más abajo.
+- Red: protocolo **16** (servidor y cliente con el mismo jar). 18 mixins (3 solo de cliente).
 - Depuración: `/clases debug volcar` escribe un informe en `logs/`; `logs/rpgclasses-debug.log` lleva el registro.
 
 ### Pendiente
@@ -89,6 +93,26 @@ habilidades se tienen desde el nivel 1 de subclase (teclas Z y X). Para probar l
 3. **Shaders:** con Iris/Oculus y un shaderpack, la esfera debe verse igual (es una cáscara translúcida, sin
    postprocesado).
 4. **Seguridad:** desconectarse, morir o salir del chunk durante la parada no debe dejar nada congelado.
+
+## Probar el Bardo
+
+`/clase elegir rpgclasses:bard` (con Iron's Spells instalado). El kit trae un laúd en la mano secundaria. Ritmo llega
+con el primer punto (`/clase punto compas`); Armonía con Nivel Total 5, Contrapunto con 15 y Crescendo (tecla Z) con 30.
+Las partituras de nivel 1 y al máximo están en la pestaña de creativo del mod.
+
+1. **Minijuego:** con un instrumento en la mano aparecen notas que vienen hacia la mira: desde la izquierda, clic
+   izquierdo; desde la derecha, clic derecho; desde arriba, espacio; desde abajo, Shift. Acierta y mira el combo (x12)
+   debajo de la mira. Deja pasar una nota: el combo vuelve a 0. Pulsa otros carriles: el combo no baja.
+2. **Atril:** pasa el instrumento a la mano principal (F) y Mayús + clic derecho fuera de combate. Mete partituras; una de
+   nivel demasiado alto para la rareza no entra. Vuelve a pasarlo a la mano secundaria.
+3. **Conjuros:** elige uno del instrumento en la rueda de Iron's y lánzalo con el clic derecho. Sin el combo mínimo sale
+   un aviso; con la tecla de lanzar de Iron's (V) también (los musicales solo se tocan). Probar Marcha y Himno de Guerra
+   con un aliado (tecla J), el Piano de Cola sobre un zombi (la sombra lo sigue y se para antes de caer) y el Baile
+   Forzado sobre un zombi y sobre otro jugador (no puede moverse ni atacar).
+4. **Armonía:** desde Nivel Total 5, toca una frase entera sin fallos ni pulsaciones de más: suben las etapas (puntos bajo
+   el combo) y el tempo.
+5. **Subir partituras:** partitura + tinta de Iron's en la mesa de trabajo (la rareza de la tinta depende del nivel).
+6. **Otras clases:** un Mago no puede lanzar conjuros musicales ni tocar instrumentos.
 
 ## Añadir una clase
 

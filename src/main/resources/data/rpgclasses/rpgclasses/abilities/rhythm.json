@@ -15,7 +15,7 @@
   "note_density": 0.6,
   "music_power_cap": 1.5,
   "buff_power_scaling": 0.5,
-  "play_slow": -0.15,
+  "play_slow": -0.1,
   "aura_radius": 8,
   "idle_reset_seconds": 3,
   "aura_refresh_seconds": 1.25

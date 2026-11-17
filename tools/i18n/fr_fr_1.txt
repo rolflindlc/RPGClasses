@@ -221,8 +221,8 @@
 220 Crâne-trophée
 221 Tambour de guerre
 222 Lanterne du feu follet
-223 Classes RPG
-224 Classes RPG
+223 Rolflin's Rites & Paths
+224 Rolflin's Rites & Paths
 225 Capacité 1
 226 Capacité 2
 227 Capacité 3

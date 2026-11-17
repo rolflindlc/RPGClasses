@@ -22,5 +22,5 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: success()
         with:
-          name: rpgclasses-jar
+          name: rites_and_paths-jar
           path: build/libs/*.jar

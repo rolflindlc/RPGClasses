@@ -1,0 +1,335 @@
+{
+  "schema_version": 1,
+  "display": {
+    "icon": "minecraft:iron_sword",
+    "roles": [
+      "melee",
+      "sigilo"
+    ]
+  },
+  "starting_kit": [
+    {
+      "item": "minecraft:iron_sword",
+      "slot": "mainhand"
+    },
+    {
+      "item": "minecraft:leather_helmet",
+      "slot": "head"
+    },
+    {
+      "item": "minecraft:leather_chestplate",
+      "slot": "chest"
+    },
+    {
+      "item": "minecraft:leather_leggings",
+      "slot": "legs"
+    },
+    {
+      "item": "minecraft:leather_boots",
+      "slot": "feet"
+    }
+  ],
+  "crit_chance_bonus": -0.05,
+  "walls": {
+    "rites_and_paths:magic": 0.45,
+    "rites_and_paths:bow": 0.35,
+    "rites_and_paths:heavy": 0.55,
+    "rites_and_paths:armor": 0.4,
+    "rites_and_paths:shield": 0.7
+  },
+  "school_walls": {
+    "irons_spellbooks:holy": 1.0,
+    "rites_and_paths:music": 1.0
+  },
+  "traits": [
+    {
+      "type": "rites_and_paths:attribute",
+      "modifiers": [
+        {
+          "attribute": "minecraft:generic.max_health",
+          "to": -0.15,
+          "operation": "multiply_base"
+        }
+      ]
+    }
+  ],
+  "branches": [
+    {
+      "id": "shadow",
+      "max_points": 10,
+      "effects": [
+        {
+          "type": "rites_and_paths:attribute",
+          "modifiers": [
+            {
+              "attribute": "rites_and_paths:mob_detection",
+              "to": -0.5,
+              "operation": "add"
+            },
+            {
+              "attribute": "rites_and_paths:backstab_crit_damage",
+              "to": 1.0,
+              "operation": "add"
+            }
+          ]
+        }
+      ],
+      "perks": [
+        {
+          "id": "treacherous_strike",
+          "effects": [
+            {
+              "type": "rites_and_paths:mechanic",
+              "id": "rites_and_paths:treacherous_strike",
+              "damage_bonus": 0.25,
+              "pvp_window_seconds": 5,
+              "stealth_duration": -0.2
+            }
+          ]
+        },
+        {
+          "id": "deep_stealth",
+          "effects": [
+            {
+              "type": "rites_and_paths:mechanic",
+              "id": "rites_and_paths:deep_stealth",
+              "stealth_duration": 0.4
+            },
+            {
+              "type": "rites_and_paths:attribute",
+              "modifiers": [
+                {
+                  "attribute": "rites_and_paths:mob_detection",
+                  "to": 0.2,
+                  "operation": "add"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "edge",
+      "max_points": 10,
+      "effects": [
+        {
+          "type": "rites_and_paths:attribute",
+          "modifiers": [
+            {
+              "attribute": "minecraft:generic.attack_speed",
+              "to": 0.25,
+              "operation": "multiply_base"
+            },
+            {
+              "attribute": "rites_and_paths:crit_damage",
+              "to": 0.75,
+              "operation": "add"
+            }
+          ]
+        }
+      ],
+      "perks": [
+        {
+          "id": "flurry",
+          "effects": [
+            {
+              "type": "rites_and_paths:attribute",
+              "modifiers": [
+                {
+                  "attribute": "minecraft:generic.attack_speed",
+                  "to": 0.25,
+                  "operation": "multiply_base"
+                },
+                {
+                  "attribute": "minecraft:generic.attack_damage",
+                  "to": -0.12,
+                  "operation": "multiply_base"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "thrust",
+          "effects": [
+            {
+              "type": "rites_and_paths:mechanic",
+              "id": "rites_and_paths:armor_pierce",
+              "armor_ignored": 0.3
+            },
+            {
+              "type": "rites_and_paths:attribute",
+              "modifiers": [
+                {
+                  "attribute": "minecraft:generic.attack_speed",
+                  "to": -0.15,
+                  "operation": "multiply_base"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wind",
+      "max_points": 10,
+      "effects": [
+        {
+          "type": "rites_and_paths:attribute",
+          "modifiers": [
+            {
+              "attribute": "minecraft:generic.movement_speed",
+              "to": 0.35,
+              "operation": "multiply_base"
+            }
+          ]
+        }
+      ],
+      "perks": [
+        {
+          "id": "evasion",
+          "effects": [
+            {
+              "type": "rites_and_paths:mechanic",
+              "id": "rites_and_paths:evasion",
+              "chance": 0.15,
+              "leap_blocks": 1,
+              "icd_seconds": 1
+            },
+            {
+              "type": "rites_and_paths:attribute",
+              "modifiers": [
+                {
+                  "attribute": "minecraft:generic.max_health",
+                  "to": -0.1,
+                  "operation": "multiply_base"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "lightness",
+          "effects": [
+            {
+              "type": "rites_and_paths:attribute",
+              "modifiers": [
+                {
+                  "attribute": "minecraft:generic.movement_speed",
+                  "to": 0.1,
+                  "operation": "multiply_base"
+                },
+                {
+                  "attribute": "minecraft:generic.attack_speed",
+                  "to": 0.1,
+                  "operation": "multiply_base"
+                }
+              ]
+            },
+            {
+              "type": "rites_and_paths:mechanic",
+              "id": "rites_and_paths:stealth_drain",
+              "drain_change": 0.3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "toxins",
+      "max_points": 10,
+      "effects": [
+        {
+          "type": "rites_and_paths:mechanic",
+          "id": "rites_and_paths:toxin",
+          "chance": {
+            "to": 0.3
+          },
+          "toxin_damage": 1,
+          "interval_seconds": 3,
+          "duration_seconds": 6
+        }
+      ],
+      "perks": [
+        {
+          "id": "concentrated_dose",
+          "effects": [
+            {
+              "type": "rites_and_paths:mechanic",
+              "id": "rites_and_paths:toxin_variant",
+              "toxin_damage": 1,
+              "interval_seconds": 1,
+              "duration_seconds": 2
+            }
+          ]
+        },
+        {
+          "id": "prolonged_dose",
+          "effects": [
+            {
+              "type": "rites_and_paths:mechanic",
+              "id": "rites_and_paths:toxin_variant",
+              "toxin_damage": 0.5,
+              "interval_seconds": 3,
+              "duration_seconds": 12,
+              "slowness_level": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "acrobatics",
+      "max_points": 10,
+      "effects": [
+        {
+          "type": "rites_and_paths:mechanic",
+          "id": "rites_and_paths:acrobatics",
+          "stamina_cost": {
+            "to": -0.3
+          },
+          "dodge_invulnerability": {
+            "to": 0.25
+          }
+        }
+      ],
+      "perks": [
+        {
+          "id": "counterattack",
+          "effects": [
+            {
+              "type": "rites_and_paths:mechanic",
+              "id": "rites_and_paths:dodge_counter",
+              "damage_bonus": 0.3,
+              "window_seconds": 3
+            }
+          ]
+        },
+        {
+          "id": "long_roll",
+          "effects": [
+            {
+              "type": "rites_and_paths:mechanic",
+              "id": "rites_and_paths:long_roll",
+              "dodge_distance": 0.5,
+              "dodge_invulnerability": -0.15
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "milestones": [
+    {
+      "total_level": 5,
+      "grants": "rites_and_paths:stealth"
+    }
+  ],
+  "subclasses": [
+    "rites_and_paths:shadow_walker",
+    "rites_and_paths:shadow_illusionist",
+    "rites_and_paths:arcane_blade"
+  ]
+}

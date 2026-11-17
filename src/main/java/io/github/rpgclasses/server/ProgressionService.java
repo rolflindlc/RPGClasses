@@ -41,11 +41,11 @@ public final class ProgressionService {
         long delta = currentXp(player) - xpBefore;
         if (delta < 0) {
             player.sendSystemMessage(ProgressionRules.isMaxed(s)
-                    ? Component.translatable("msg.rpgclasses.xp_charged_max", -delta)
-                    : Component.translatable("msg.rpgclasses.xp_charged", -delta,
+                    ? Component.translatable("msg.rites_and_paths.xp_charged_max", -delta)
+                    : Component.translatable("msg.rites_and_paths.xp_charged", -delta,
                             ProgressionRules.nextCost(s, ServerConfig.XP_COST_MULTIPLIER.get())));
         } else if (delta > 0) {
-            player.sendSystemMessage(Component.translatable("msg.rpgclasses.xp_refunded", delta));
+            player.sendSystemMessage(Component.translatable("msg.rites_and_paths.xp_refunded", delta));
         } else {
             player.sendSystemMessage(resultMessage(result).withStyle(ChatFormatting.GREEN));
         }
@@ -188,7 +188,7 @@ public final class ProgressionService {
     }
 
     public static net.minecraft.network.chat.MutableComponent resultMessage(Result result) {
-        return Component.translatable("msg.rpgclasses.result." + result.name().toLowerCase(Locale.ROOT));
+        return Component.translatable("msg.rites_and_paths.result." + result.name().toLowerCase(Locale.ROOT));
     }
 
     private ProgressionService() {}

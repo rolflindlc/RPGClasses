@@ -1,0 +1,30 @@
+{
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "iceandfire"
+    }
+  ],
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    {
+      "item": "rites_and_paths:monk_netherite_leggings"
+    },
+    {
+      "tag": "rites_and_paths:iceandfire/scales_fire"
+    },
+    {
+      "tag": "rites_and_paths:iceandfire/scales_fire"
+    },
+    {
+      "tag": "rites_and_paths:iceandfire/scales_fire"
+    },
+    {
+      "tag": "rites_and_paths:iceandfire/scales_fire"
+    }
+  ],
+  "result": {
+    "item": "rites_and_paths:monk_dragon_fire_leggings"
+  }
+}

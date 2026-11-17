@@ -90,8 +90,8 @@ public final class BardEffects {
         PercentEffect(MobEffectCategory category, int color, String name, Mod... mods) {
             super(category, color);
             this.mods = List.of(mods);
-            // No empieza por "rpgclasses:": StatEngine no debe borrarlo al recalcular.
-            this.name = "rpgclasses_effect:" + name;
+            // No empieza por "rites_and_paths:": StatEngine no debe borrarlo al recalcular.
+            this.name = "rites_and_paths_effect:" + name;
         }
 
         @Override

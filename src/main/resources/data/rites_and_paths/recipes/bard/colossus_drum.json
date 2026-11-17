@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:smithing_transform",
+  "template": {
+    "item": "rites_and_paths:resonant_shard"
+  },
+  "base": {
+    "item": "rites_and_paths:drum"
+  },
+  "addition": {
+    "item": "rites_and_paths:colossus_drumskin"
+  },
+  "result": {
+    "item": "rites_and_paths:colossus_drum"
+  }
+}

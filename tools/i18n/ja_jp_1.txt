@@ -221,8 +221,8 @@
 220 戦利品の髑髏
 221 戦太鼓
 222 鬼火のランタン
-223 RPGクラス
-224 RPGクラス
+223 Rolflin's Rites & Paths
+224 Rolflin's Rites & Paths
 225 アビリティ1
 226 アビリティ2
 227 アビリティ3

@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    "C C",
+    "MCM",
+    "CCC"
+  ],
+  "key": {
+    "M": {
+      "item": "minecraft:iron_ingot"
+    },
+    "C": {
+      "item": "rites_and_paths:martial_cloth"
+    }
+  },
+  "result": {
+    "item": "rites_and_paths:monk_iron_chestplate",
+    "count": 1
+  }
+}

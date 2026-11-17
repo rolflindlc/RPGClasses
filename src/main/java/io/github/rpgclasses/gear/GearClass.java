@@ -14,7 +14,7 @@ public enum GearClass {
     MONK("monk");
 
     public final String id;
-    /** Id de la clase en el datapack ("rpgclasses:barbarian"). */
+    /** Id de la clase en el datapack ("rites_and_paths:barbarian"). */
     public final String classId;
     /** Piezas que no desactivan las pasivas desarmadas de esta clase (ni borran las cargas del Monje). */
     public final TagKey<Item> armorTag;

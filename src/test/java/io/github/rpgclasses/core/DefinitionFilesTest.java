@@ -22,14 +22,14 @@ import static org.junit.Assert.assertTrue;
 
 /** Valida los JSON reales del mod. Cualquier clase nueva que se añada al datapack queda cubierta sola. */
 public class DefinitionFilesTest {
-    private static final Path DATA = Path.of(System.getProperty("rpgclasses.data", "src/main/resources/data"));
+    private static final Path DATA = Path.of(System.getProperty("rites_and_paths.data", "src/main/resources/data"));
     private static final DefinitionStore STORE = new DefinitionStore();
 
     private static Map<String, String> read(String folder) throws IOException {
         Map<String, String> out = new HashMap<>();
         try (Stream<Path> namespaces = Files.list(DATA)) {
             for (Path ns : (Iterable<Path>) namespaces::iterator) {
-                Path dir = ns.resolve("rpgclasses").resolve(folder);
+                Path dir = ns.resolve("rites_and_paths").resolve(folder);
                 if (!Files.isDirectory(dir)) continue;
                 try (Stream<Path> files = Files.list(dir)) {
                     for (Path f : (Iterable<Path>) files::iterator) {
@@ -52,8 +52,8 @@ public class DefinitionFilesTest {
     @Test
     public void allShippedDefinitionsAreValid() {
         assertTrue("Errores de validación: " + STORE.errors(), STORE.errors().isEmpty());
-        assertEquals(List.of("rpgclasses:barbarian", "rpgclasses:bard", "rpgclasses:mage", "rpgclasses:monk",
-                "rpgclasses:paladin", "rpgclasses:ranger", "rpgclasses:rogue"), List.copyOf(STORE.classIds()));
+        assertEquals(List.of("rites_and_paths:barbarian", "rites_and_paths:bard", "rites_and_paths:mage", "rites_and_paths:monk",
+                "rites_and_paths:paladin", "rites_and_paths:ranger", "rites_and_paths:rogue"), List.copyOf(STORE.classIds()));
         for (String id : STORE.classIds()) {
             ClassDef c = STORE.classDef(id);
             for (String sub : c.subclasses()) assertNotNull(sub, STORE.subclassDef(sub));
@@ -76,7 +76,7 @@ public class DefinitionFilesTest {
         Map<String, Integer> expected = Map.of("mage", 200, "paladin", 150, "barbarian", 150,
                 "rogue", 245, "ranger", 150, "monk", 275, "bard", 245);
         for (Map.Entry<String, Integer> e : expected.entrySet()) {
-            ClassDef c = STORE.classDef("rpgclasses:" + e.getKey());
+            ClassDef c = STORE.classDef("rites_and_paths:" + e.getKey());
             double total = 0;
             for (double v : c.walls().values()) total += StatMath.wallPenalty(v, 30) * 100;
             assertEquals(e.getKey(), e.getValue(), Math.round(total), 0.0);
@@ -85,10 +85,10 @@ public class DefinitionFilesTest {
 
     @Test
     public void critAdjustmentsMatchDesign() {
-        assertEquals(0.05, STORE.classDef("rpgclasses:barbarian").critChanceBonus(), 1e-9);
-        assertEquals(-0.05, STORE.classDef("rpgclasses:rogue").critChanceBonus(), 1e-9);
-        assertTrue(STORE.classDef("rpgclasses:monk").armorDisablesPassives());
-        assertFalse(STORE.classDef("rpgclasses:mage").armorDisablesPassives());
+        assertEquals(0.05, STORE.classDef("rites_and_paths:barbarian").critChanceBonus(), 1e-9);
+        assertEquals(-0.05, STORE.classDef("rites_and_paths:rogue").critChanceBonus(), 1e-9);
+        assertTrue(STORE.classDef("rites_and_paths:monk").armorDisablesPassives());
+        assertFalse(STORE.classDef("rites_and_paths:mage").armorDisablesPassives());
     }
 
     @Test

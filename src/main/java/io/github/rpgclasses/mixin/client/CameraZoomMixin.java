@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.injection.ModifyArg;
 @Mixin(Camera.class)
 public abstract class CameraZoomMixin {
     @ModifyArg(method = "setup", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/Camera;getMaxZoom(D)D"), require = 0)
-    private double rpgclasses$scaleZoom(double distance) {
+    private double rites_and_paths$scaleZoom(double distance) {
         Entity e = ((Camera) (Object) this).getEntity();
         if (e instanceof Player p) {
             float s = RaceTraits.scale(p);

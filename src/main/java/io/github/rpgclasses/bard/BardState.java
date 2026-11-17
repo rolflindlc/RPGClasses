@@ -46,8 +46,8 @@ import java.util.UUID;
 public final class BardState {
     public static final int MISS = 0, HIT = 1, PERFECT = 2, EXTRA = 3, PHRASE = 4;
 
-    /** No empiezan por "rpgclasses:": StatEngine no debe borrarlos al recalcular. */
-    private static final String MOD_PREFIX = "rpgclasses_bard:";
+    /** No empiezan por "rites_and_paths:": StatEngine no debe borrarlos al recalcular. */
+    private static final String MOD_PREFIX = "rites_and_paths_bard:";
     private static final ResourceLocation CAST_TIME = new ResourceLocation("irons_spellbooks", "cast_time_reduction");
     private static final ResourceLocation MANA_REGEN = new ResourceLocation("irons_spellbooks", "mana_regen");
     private static final ResourceLocation COOLDOWN = new ResourceLocation("irons_spellbooks", "cooldown_reduction");
@@ -229,7 +229,7 @@ public final class BardState {
         p.level().playSound(null, p.getX(), p.getY(), p.getZ(), SoundEvents.NOTE_BLOCK_BELL.value(), SoundSource.PLAYERS, 1.2f, 0.7f);
         p.level().playSound(null, p.getX(), p.getY(), p.getZ(), SoundEvents.PLAYER_LEVELUP, SoundSource.PLAYERS, 0.6f, 1.6f);
         particles(p, ParticleTypes.NOTE, 20);
-        p.displayClientMessage(Component.translatable("msg.rpgclasses.bard.crescendo"), true);
+        p.displayClientMessage(Component.translatable("msg.rites_and_paths.bard.crescendo"), true);
         update(p, s, now);
         return true;
     }

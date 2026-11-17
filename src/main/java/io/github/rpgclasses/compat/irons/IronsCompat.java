@@ -79,11 +79,11 @@ import java.util.UUID;
 public final class IronsCompat {
     public static final String IRONS = "irons_spellbooks";
 
-    private static final String CD_ARCANE_STEP = "rpgclasses:arcane_step";
-    private static final String CD_AMBUSH = "rpgclasses:arcane_ambush";
-    private static final String TAG_SUMMON_DONE = "rpgclasses:summon_done";
-    private static final String TAG_SUMMON_DAMAGE = "rpgclasses:summon_damage";
-    private static final String TAG_CLONE_OF = "rpgclasses:clone_of";
+    private static final String CD_ARCANE_STEP = "rites_and_paths:arcane_step";
+    private static final String CD_AMBUSH = "rites_and_paths:arcane_ambush";
+    private static final String TAG_SUMMON_DONE = "rites_and_paths:summon_done";
+    private static final String TAG_SUMMON_DAMAGE = "rites_and_paths:summon_damage";
+    private static final String TAG_CLONE_OF = "rites_and_paths:clone_of";
     private static final UUID SUMMON_HEALTH_ID = UUID.fromString("6f0c3b1e-2a4d-4c7e-8b59-1d3e5f7a9c20");
     /** Tope de vida de una invocación extra de Legión si se pierde el vínculo con la original (10 min). */
     private static final int CLONE_MAX_TICKS = 20 * 60 * 10;
@@ -131,7 +131,7 @@ public final class IronsCompat {
             magic.setMana((float) (magic.getMana() - cost));
             return 1;
         };
-        RpgClasses.LOGGER.info("[rpgclasses] Iron's Spells detectado: puente activado");
+        RpgClasses.LOGGER.info("[rites_and_paths] Iron's Spells detectado: puente activado");
     }
 
     // ---------------------------------------------------------------- regla 14 + confirmación de préstamos
@@ -151,7 +151,7 @@ public final class IronsCompat {
         if (StatEngine.schoolWall(player, school) >= 1.0) {
             io.github.rpgclasses.server.DebugLog.event(player, "conjuro", "bloqueado: la escuela {} está vetada para su clase", school);
             event.setCanceled(true);
-            player.displayClientMessage(Component.translatable("message.rpgclasses.school_locked",
+            player.displayClientMessage(Component.translatable("message.rites_and_paths.school_locked",
                     event.getSchoolType().getDisplayName()), true);
         }
     }
@@ -372,7 +372,7 @@ public final class IronsCompat {
                     }
                     if (changed && sync != null) sync.invoke(cooldowns, player);
                 } catch (ReflectiveOperationException | RuntimeException e) {
-                    RpgClasses.LOGGER.debug("[rpgclasses] Iron's: no se pudo devolver la recarga de los conjuros", e);
+                    RpgClasses.LOGGER.debug("[rites_and_paths] Iron's: no se pudo devolver la recarga de los conjuros", e);
                 }
             }
         };
@@ -393,7 +393,7 @@ public final class IronsCompat {
             for (Object key : ((Map<?, ?>) all.invoke(cooldowns)).keySet()) ids.add(String.valueOf(key));
             if (!ids.isEmpty()) io.github.rpgclasses.content.Chronomancy.mana.refundCooldowns(player, ids, fraction);
         } catch (ReflectiveOperationException | RuntimeException e) {
-            RpgClasses.LOGGER.debug("[rpgclasses] Iron's: no se pudieron reducir las recargas (Contrapunto)", e);
+            RpgClasses.LOGGER.debug("[rites_and_paths] Iron's: no se pudieron reducir las recargas (Contrapunto)", e);
         }
     }
 
@@ -408,7 +408,7 @@ public final class IronsCompat {
             Method send = method("io.redspace.ironsspellbooks.setup.PacketDistributor", "sendToPlayer", ServerPlayer.class, Object.class);
             if (send != null) send.invoke(null, player, msg);
         } catch (ReflectiveOperationException | RuntimeException | LinkageError e) {
-            RpgClasses.LOGGER.debug("[rpgclasses] Iron's: no se pudo sincronizar el maná (se verá en la siguiente regeneración)", e);
+            RpgClasses.LOGGER.debug("[rites_and_paths] Iron's: no se pudo sincronizar el maná (se verá en la siguiente regeneración)", e);
         }
     }
 
@@ -461,7 +461,7 @@ public final class IronsCompat {
         for (KitSpell k : kit.spells()) {
             AbstractSpell spell = SpellRegistry.getSpell(k.id());
             if (spell == null || "irons_spellbooks:none".equals(spell.getSpellId())) {
-                RpgClasses.LOGGER.warn("[rpgclasses] Conjuro de kit desconocido: {}", k.id());
+                RpgClasses.LOGGER.warn("[rites_and_paths] Conjuro de kit desconocido: {}", k.id());
                 continue;
             }
             mutable.addSpellAtIndex(spell, k.level(), index++, false);
@@ -652,7 +652,7 @@ public final class IronsCompat {
         AttributeInstance max = summon.getAttribute(Attributes.MAX_HEALTH);
         if (max != null && health != 1) {
             max.removeModifier(SUMMON_HEALTH_ID);
-            max.addPermanentModifier(new AttributeModifier(SUMMON_HEALTH_ID, "rpgclasses:summon_health",
+            max.addPermanentModifier(new AttributeModifier(SUMMON_HEALTH_ID, "rites_and_paths:summon_health",
                     Math.max(-0.9, health - 1), AttributeModifier.Operation.MULTIPLY_TOTAL));
             summon.setHealth(summon.getMaxHealth());
         }
@@ -662,12 +662,12 @@ public final class IronsCompat {
     private static LivingEntity cloneSummon(ServerPlayer owner, LivingEntity original) {
         Method setOwner = setOwner();
         if (setOwner == null || !(original.level() instanceof ServerLevel level)) {
-            RpgClasses.LOGGER.warn("[rpgclasses] Legión: no se puede copiar {} (setOwner={})", original, setOwner);
+            RpgClasses.LOGGER.warn("[rites_and_paths] Legión: no se puede copiar {} (setOwner={})", original, setOwner);
             return null;
         }
         Entity created = original.getType().create(level);
         if (!(created instanceof LivingEntity clone)) {
-            RpgClasses.LOGGER.warn("[rpgclasses] Legión: el tipo {} no se puede crear", original.getType());
+            RpgClasses.LOGGER.warn("[rites_and_paths] Legión: el tipo {} no se puede crear", original.getType());
             return null;
         }
         CompoundTag tag = new CompoundTag();
@@ -680,7 +680,7 @@ public final class IronsCompat {
         clone.getPersistentData().putUUID(TAG_CLONE_OF, original.getUUID());
         clone.getPersistentData().remove(TAG_SUMMON_DONE);
         if (!level.addFreshEntity(clone)) {
-            RpgClasses.LOGGER.warn("[rpgclasses] Legión: el mundo rechazó la copia de {}", original);
+            RpgClasses.LOGGER.warn("[rites_and_paths] Legión: el mundo rechazó la copia de {}", original);
             return null;
         }
         try {
@@ -688,7 +688,7 @@ public final class IronsCompat {
             Method duration = method(SUMMON_MANAGER, "setDuration", Entity.class, int.class);
             if (duration != null) duration.invoke(null, clone, CLONE_MAX_TICKS);
         } catch (ReflectiveOperationException | RuntimeException e) {
-            RpgClasses.LOGGER.warn("[rpgclasses] Legión: fallo al asignar dueño a la copia", e);
+            RpgClasses.LOGGER.warn("[rites_and_paths] Legión: fallo al asignar dueño a la copia", e);
             clone.discard();
             return null;
         }
@@ -722,7 +722,7 @@ public final class IronsCompat {
                 return;
             }
         } catch (ReflectiveOperationException | RuntimeException | LinkageError e) {
-            RpgClasses.LOGGER.warn("[rpgclasses] Legión: no se pudo marcar la copia como invocación en el cliente", e);
+            RpgClasses.LOGGER.warn("[rites_and_paths] Legión: no se pudo marcar la copia como invocación en el cliente", e);
         }
     }
 
@@ -754,7 +754,7 @@ public final class IronsCompat {
             } catch (ReflectiveOperationException | RuntimeException | LinkageError ignored) {
             }
         }
-        if (m == null) RpgClasses.LOGGER.warn("[rpgclasses] Iron's: no se encontró {}; esa parte del puente queda desactivada", key);
+        if (m == null) RpgClasses.LOGGER.warn("[rites_and_paths] Iron's: no se encontró {}; esa parte del puente queda desactivada", key);
         METHODS.put(key, m);
         return m;
     }

@@ -87,7 +87,7 @@ public final class Chronomancy {
     public static final String STOP = Ids.NS + ":time_stop";
 
     /** Datos persistentes de una entidad paralizada (estado previo y hasta cuándo). */
-    public static final String TAG = "rpgclasses:time_frozen";
+    public static final String TAG = "rites_and_paths:time_frozen";
     /** Entidades que la Parada Temporal nunca paraliza. */
     public static final TagKey<EntityType<?>> IMMUNE = TagKey.create(Registries.ENTITY_TYPE,
             new net.minecraft.resources.ResourceLocation(Ids.NS, "time_stop_immune"));
@@ -201,13 +201,13 @@ public final class Chronomancy {
         Snap target = h == null || h.snaps.isEmpty() ? null : target(h, now - AbilityService.levelTicks(player, p, "window_seconds", 3));
         if (target == null || !target.dim().equals(level.dimension())) {
             if (h != null && target != null) h.clear();
-            player.displayClientMessage(Component.translatable("msg.rpgclasses.time_rewind_empty"), true);
+            player.displayClientMessage(Component.translatable("msg.rites_and_paths.time_rewind_empty"), true);
             return false;
         }
         Vec3 dest = safeSpot(level, player, new Vec3(target.x(), target.y(), target.z()),
                 (int) Math.round(AbilityService.number(p, "safe_search_blocks", 3)));
         if (dest == null) {
-            player.displayClientMessage(Component.translatable("msg.rpgclasses.time_rewind_blocked"), true);
+            player.displayClientMessage(Component.translatable("msg.rites_and_paths.time_rewind_blocked"), true);
             return false;
         }
         int subLevel = Math.max(1, AbilityService.subclassLevel(player));
@@ -368,7 +368,7 @@ public final class Chronomancy {
             float cost = (float) (mana.maxMana(player) * AbilityService.number(p, "mana_cost", 0.2));
             float current = mana.mana(player);
             if (current < cost) {
-                player.displayClientMessage(Component.translatable("msg.rpgclasses.time_stop_mana"), true);
+                player.displayClientMessage(Component.translatable("msg.rites_and_paths.time_stop_mana"), true);
                 return false;
             }
             mana.setMana(player, current - cost);
@@ -477,7 +477,7 @@ public final class Chronomancy {
         if (e instanceof ServerPlayer sp) {
             AttributeInstance speed = sp.getAttribute(Attributes.MOVEMENT_SPEED);
             if (speed != null && speed.getModifier(FREEZE_SPEED_ID) == null) {
-                speed.addTransientModifier(new AttributeModifier(FREEZE_SPEED_ID, "rpgclasses time stop", -1.0,
+                speed.addTransientModifier(new AttributeModifier(FREEZE_SPEED_ID, "rites_and_paths time stop", -1.0,
                         AttributeModifier.Operation.MULTIPLY_TOTAL));
             }
             sp.stopUsingItem();

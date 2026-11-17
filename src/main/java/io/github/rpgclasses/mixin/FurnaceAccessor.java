@@ -8,14 +8,14 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 @Mixin(AbstractFurnaceBlockEntity.class)
 public interface FurnaceAccessor {
     @Accessor("litTime")
-    int rpgclasses$getLitTime();
+    int rites_and_paths$getLitTime();
 
     @Accessor("cookingProgress")
-    int rpgclasses$getCookingProgress();
+    int rites_and_paths$getCookingProgress();
 
     @Accessor("cookingProgress")
-    void rpgclasses$setCookingProgress(int value);
+    void rites_and_paths$setCookingProgress(int value);
 
     @Accessor("cookingTotalTime")
-    int rpgclasses$getCookingTotalTime();
+    int rites_and_paths$getCookingTotalTime();
 }

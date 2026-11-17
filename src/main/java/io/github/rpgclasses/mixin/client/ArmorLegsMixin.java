@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(HumanoidArmorLayer.class)
 public abstract class ArmorLegsMixin {
     @Inject(method = "setPartVisibility", at = @At("TAIL"), require = 0)
-    private void rpgclasses$centaurLegs(HumanoidModel<?> model, EquipmentSlot slot, CallbackInfo ci) {
+    private void rites_and_paths$centaurLegs(HumanoidModel<?> model, EquipmentSlot slot, CallbackInfo ci) {
         if (!CentaurRender.hidingLegs()) return;
         model.leftLeg.visible = false;
         model.rightLeg.visible = false;

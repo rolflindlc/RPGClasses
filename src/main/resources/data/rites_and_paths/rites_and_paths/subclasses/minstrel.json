@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "class": "rites_and_paths:bard",
+  "display": {
+    "icon": "minecraft:jukebox"
+  },
+  "effects": [
+    {
+      "type": "rites_and_paths:mechanic",
+      "id": "rites_and_paths:extended_repertoire",
+      "extra_slots": {
+        "values": [
+          0,
+          0,
+          1,
+          1,
+          1,
+          2,
+          2,
+          2,
+          3,
+          3
+        ]
+      }
+    },
+    {
+      "type": "rites_and_paths:mechanic",
+      "id": "rites_and_paths:fine_ear",
+      "combo_reduction": {
+        "values": [
+          0,
+          1,
+          1,
+          2,
+          2,
+          3,
+          3,
+          4,
+          4,
+          5
+        ]
+      }
+    }
+  ],
+  "milestones": [
+    {
+      "subclass_level": 5,
+      "grants": "rites_and_paths:recital"
+    }
+  ]
+}

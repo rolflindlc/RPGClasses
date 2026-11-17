@@ -87,11 +87,11 @@ final class ElementalDebuffs {
         if (s.count >= max) {
             s.count = 0;
             detonate(player, target, element, amount, mech);
-            player.displayClientMessage(Component.translatable("message.rpgclasses.element_detonate",
-                    Component.translatable("element.rpgclasses." + element.key())), true);
+            player.displayClientMessage(Component.translatable("message.rites_and_paths.element_detonate",
+                    Component.translatable("element.rites_and_paths." + element.key())), true);
         } else {
-            player.displayClientMessage(Component.translatable("message.rpgclasses.element_stack",
-                    Component.translatable("element.rpgclasses." + element.key()), s.count, max), true);
+            player.displayClientMessage(Component.translatable("message.rites_and_paths.element_stack",
+                    Component.translatable("element.rites_and_paths." + element.key()), s.count, max), true);
         }
     }
 

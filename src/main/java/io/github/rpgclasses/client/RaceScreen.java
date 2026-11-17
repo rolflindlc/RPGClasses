@@ -52,8 +52,8 @@ public final class RaceScreen extends Screen {
     private static final int TABS_Y = 28;
 
     public RaceScreen(Mode mode) {
-        super(Component.translatable(mode == Mode.WALL ? "ui.rpgclasses.race.title_wall"
-                : mode == Mode.SELECT ? "ui.rpgclasses.race.title_select" : "ui.rpgclasses.race.title_view"));
+        super(Component.translatable(mode == Mode.WALL ? "ui.rites_and_paths.race.title_wall"
+                : mode == Mode.SELECT ? "ui.rites_and_paths.race.title_select" : "ui.rites_and_paths.race.title_view"));
         this.mode = mode;
     }
 
@@ -151,12 +151,12 @@ public final class RaceScreen extends Screen {
         SubraceDef sub = race == null ? null : race.subrace(selectedSubrace);
         if (mode == Mode.SELECT && race != null && sub != null) {
             Component name = Component.translatable(Ids.langKey("race", race.id(), "name")).append(" · ").append(subraceName(race, sub));
-            Button choose = Button.builder(Component.translatable("ui.rpgclasses.choose", name), btn -> confirm(race, sub, name))
+            Button choose = Button.builder(Component.translatable("ui.rites_and_paths.choose", name), btn -> confirm(race, sub, name))
                     .bounds(center - 110, footerY, 220, 20).build();
             choose.active = sub.available();
             addRenderableWidget(choose);
         } else if (mode == Mode.VIEW) {
-            addRenderableWidget(Button.builder(Component.translatable("ui.rpgclasses.close"), btn -> onClose())
+            addRenderableWidget(Button.builder(Component.translatable("ui.rites_and_paths.close"), btn -> onClose())
                     .bounds(center - 50, footerY, 100, 20).build());
         }
         rebuildLines(race, sub);
@@ -174,7 +174,7 @@ public final class RaceScreen extends Screen {
             preview.copyFrom(s);
             preview.humanWalls.add(d);
             double reduction = StatCalculator.humanWallReduction(preview, race, d);
-            Component label = Component.translatable("ui.rpgclasses.race.wall_option",
+            Component label = Component.translatable("ui.rites_and_paths.race.wall_option",
                     Component.translatable(Ids.langKey("discipline", d, "name")),
                     Math.round(wall * 100), ClassPages.format(wall * (1 - Math.min(1, reduction)), "%", false));
             addRenderableWidget(Button.builder(label, btn -> Net.CHANNEL.sendToServer(new ClassAction(ClassAction.Action.CHOOSE_WALL, d)))
@@ -182,7 +182,7 @@ public final class RaceScreen extends Screen {
             y += 24;
         }
         List<Component> text = List.of(Component.translatable(s.humanWalls.isEmpty()
-                ? "ui.rpgclasses.race.wall_text" : "ui.rpgclasses.race.wall_text_second"));
+                ? "ui.rites_and_paths.race.wall_text" : "ui.rites_and_paths.race.wall_text_second"));
         lines = new ArrayList<>();
         for (Component c : text) lines.addAll(font.split(c, Math.min(width - 40, 360)));
     }
@@ -192,7 +192,7 @@ public final class RaceScreen extends Screen {
         minecraft.setScreen(new ConfirmScreen(yes -> {
             if (yes) Net.CHANNEL.sendToServer(new ClassAction(ClassAction.Action.CHOOSE_RACE, race.id() + "/" + sub.id()));
             minecraft.setScreen(yes ? null : this);
-        }, Component.translatable("ui.rpgclasses.confirm_title", name), Component.translatable("ui.rpgclasses.race.confirm_text")));
+        }, Component.translatable("ui.rites_and_paths.confirm_title", name), Component.translatable("ui.rites_and_paths.race.confirm_text")));
     }
 
     // --- Texto ---
@@ -208,20 +208,20 @@ public final class RaceScreen extends Screen {
             boolean own = race.id().equals(s.raceId);
             out.add(Component.translatable(Ids.langKey("race", race.id(), "name")).withStyle(ChatFormatting.YELLOW, ChatFormatting.UNDERLINE));
             if (own) {
-                out.add(Component.translatable("ui.rpgclasses.race.own", subraceName(race, race.subrace(s.subraceId) == null ? race.subraces().get(0) : race.subrace(s.subraceId)),
+                out.add(Component.translatable("ui.rites_and_paths.race.own", subraceName(race, race.subrace(s.subraceId) == null ? race.subraces().get(0) : race.subrace(s.subraceId)),
                         s.raceRank).withStyle(ChatFormatting.GREEN));
             }
             out.add(Component.translatable(Ids.langKey("race", race.id(), "desc")));
             out.add(Component.empty());
-            out.add(Component.translatable("ui.rpgclasses.race.traits").withStyle(ChatFormatting.YELLOW));
+            out.add(Component.translatable("ui.rites_and_paths.race.traits").withStyle(ChatFormatting.YELLOW));
             for (EffectDef e : race.effects()) effect(e, out);
             if (sub != null) {
                 out.add(Component.empty());
                 out.add(subraceName(race, sub).withStyle(ChatFormatting.YELLOW, ChatFormatting.UNDERLINE));
-                if (!sub.available()) out.add(Component.translatable("ui.rpgclasses.race.unavailable").withStyle(ChatFormatting.RED));
+                if (!sub.available()) out.add(Component.translatable("ui.rites_and_paths.race.unavailable").withStyle(ChatFormatting.RED));
                 out.add(Component.translatable(Ids.langKey("subrace", race.id() + "." + sub.id(), "desc")));
                 out.add(Component.empty());
-                out.add(Component.translatable("ui.rpgclasses.race.by_rank").withStyle(ChatFormatting.GRAY));
+                out.add(Component.translatable("ui.rites_and_paths.race.by_rank").withStyle(ChatFormatting.GRAY));
                 for (EffectDef e : sub.effects()) effect(e, out);
             }
         }
@@ -246,7 +246,7 @@ public final class RaceScreen extends Screen {
             }
             for (AttributeEffect.Modifier m : parsed.modifiers()) {
                 if (m.attribute().equals(Ids.NS + ":leaf_walker")) continue; // bandera interna
-                out.add(Component.literal("  ").append(Component.translatable("ui.rpgclasses.data.fixed",
+                out.add(Component.literal("  ").append(Component.translatable("ui.rites_and_paths.data.fixed",
                         ClassPages.attributeName(m.attribute()), ranks(m.value(), ClassPages.isPercent(m) ? "%" : "", true))));
             }
             return;
@@ -254,14 +254,14 @@ public final class RaceScreen extends Screen {
         JsonObject p = e.params();
         String id = p.get("id").getAsString();
         MutableComponent name = Component.translatable(Ids.langKey("mechanic", id, "name")).withStyle(ChatFormatting.WHITE);
-        if (p.has("min_rank")) name.append(Component.translatable("ui.rpgclasses.race.from_rank", p.get("min_rank").getAsInt()).withStyle(ChatFormatting.GRAY));
+        if (p.has("min_rank")) name.append(Component.translatable("ui.rites_and_paths.race.from_rank", p.get("min_rank").getAsInt()).withStyle(ChatFormatting.GRAY));
         out.add(Component.literal("  ").append(name));
         out.add(Component.literal("    ").append(Component.translatable(Ids.langKey("mechanic", id, "desc"))).withStyle(ChatFormatting.GRAY));
         Map<String, String> units = ClassPages.units();
         for (Map.Entry<String, JsonElement> entry : p.entrySet()) {
             String key = entry.getKey();
             if (SKIPPED.contains(key)) continue;
-            Component label = Component.translatableWithFallback("param.rpgclasses." + key, key);
+            Component label = Component.translatableWithFallback("param.rites_and_paths." + key, key);
             String unit = units.getOrDefault(key, "");
             JsonElement v = entry.getValue();
             String text = null;
@@ -273,7 +273,7 @@ public final class RaceScreen extends Screen {
                     // no es un valor por rango
                 }
             }
-            if (text != null) out.add(Component.literal("    ").append(Component.translatable("ui.rpgclasses.data.fixed", label, text)).withStyle(ChatFormatting.DARK_AQUA));
+            if (text != null) out.add(Component.literal("    ").append(Component.translatable("ui.rites_and_paths.data.fixed", label, text)).withStyle(ChatFormatting.DARK_AQUA));
         }
     }
 
@@ -305,7 +305,7 @@ public final class RaceScreen extends Screen {
         if (big) UiStyle.scaledText(g, font, raceName, x + 44, y + 4, 1.5f, 0xFFFFE08A);
         else g.drawString(font, raceName, x + 24, y + 5, 0xFFFFE08A);
         if (big && race.id().equals(state().raceId)) {
-            g.drawString(font, Component.translatable("ui.rpgclasses.race.header_rank", state().raceRank), x + 44, y + 22, 0x55FF55);
+            g.drawString(font, Component.translatable("ui.rites_and_paths.race.header_rank", state().raceRank), x + 44, y + 22, 0x55FF55);
         }
         if (sub != null) {
             int sx = panelRight - 6 - size;
@@ -313,7 +313,7 @@ public final class RaceScreen extends Screen {
             Component name = subraceName(race, sub);
             g.drawString(font, name, sx - 6 - font.width(name), y + (big ? 8 : 5), sub.available() ? 0x55FFFF : 0x888888);
             if (big) {
-                Component label = Component.translatable("ui.rpgclasses.race.header_subrace");
+                Component label = Component.translatable("ui.rites_and_paths.race.header_subrace");
                 g.drawString(font, label, sx - 6 - font.width(label), y + 20, 0x888888);
             }
         }
@@ -352,7 +352,7 @@ public final class RaceScreen extends Screen {
                 y += LINE_HEIGHT;
             }
             if (mode == Mode.SELECT) {
-                g.drawCenteredString(font, Component.translatable("ui.rpgclasses.race.permanent").withStyle(ChatFormatting.GOLD),
+                g.drawCenteredString(font, Component.translatable("ui.rites_and_paths.race.permanent").withStyle(ChatFormatting.GOLD),
                         (panelLeft + panelRight) / 2, 19, 0xFFFFFF);
             }
         }

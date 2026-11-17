@@ -15,12 +15,12 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-/** Elfo, Paso entre Hojas: las hojas no tienen colisión para quien tenga el atributo {@code rpgclasses:leaf_walker}. */
+/** Elfo, Paso entre Hojas: las hojas no tienen colisión para quien tenga el atributo {@code rites_and_paths:leaf_walker}. */
 @Mixin(BlockBehaviour.BlockStateBase.class)
 public abstract class LeavesCollisionMixin {
     @Inject(method = "getCollisionShape(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/phys/shapes/CollisionContext;)Lnet/minecraft/world/phys/shapes/VoxelShape;",
             at = @At("HEAD"), cancellable = true)
-    private void rpgclasses$leavesPassThrough(BlockGetter level, BlockPos pos, CollisionContext context,
+    private void rites_and_paths$leavesPassThrough(BlockGetter level, BlockPos pos, CollisionContext context,
                                               CallbackInfoReturnable<VoxelShape> cir) {
         if (context instanceof EntityCollisionContext entityContext && entityContext.getEntity() instanceof Player player
                 && ((BlockBehaviour.BlockStateBase) (Object) this).is(BlockTags.LEAVES)

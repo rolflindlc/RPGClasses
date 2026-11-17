@@ -23,7 +23,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class PlayerSizeMixin {
     @Inject(method = "getDimensions(Lnet/minecraft/world/entity/Pose;)Lnet/minecraft/world/entity/EntityDimensions;",
             at = @At("RETURN"), cancellable = true)
-    private void rpgclasses$scaleDimensions(Pose pose, CallbackInfoReturnable<EntityDimensions> cir) {
+    private void rites_and_paths$scaleDimensions(Pose pose, CallbackInfoReturnable<EntityDimensions> cir) {
         Player self = (Player) (Object) this;
         // Centauro (adenda 0.7): hitbox de caballo en todas las poses salvo dormido.
         if (pose != Pose.SLEEPING && RaceTraits.isCentaur(self)) {

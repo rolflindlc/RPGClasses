@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "class": "rites_and_paths:ranger",
+  "display": {
+    "icon": "minecraft:spyglass"
+  },
+  "effects": [
+    {
+      "type": "rites_and_paths:attribute",
+      "modifiers": [
+        {
+          "attribute": "rites_and_paths:projectile_velocity",
+          "to": 2.0,
+          "operation": "add"
+        },
+        {
+          "attribute": "rites_and_paths:bow_damage",
+          "to": 0.45,
+          "operation": "add"
+        }
+      ]
+    },
+    {
+      "type": "rites_and_paths:attribute",
+      "modifiers": [
+        {
+          "attribute": "rites_and_paths:draw_speed",
+          "to": -1.0,
+          "operation": "multiply_total"
+        }
+      ]
+    }
+  ],
+  "milestones": [
+    {
+      "subclass_level": 1,
+      "grants": "rites_and_paths:lethal_shot",
+      "upgrades": "rites_and_paths:heavy_shot"
+    }
+  ]
+}

@@ -26,17 +26,17 @@ import static org.junit.Assert.assertFalse;
 /** Comprueba, con los JSON reales, que los números que se aplicarán en el juego son los del diseño. */
 public class StatCalculatorTest {
     private static final double EPS = 1e-9;
-    private static final Path DATA = Path.of(System.getProperty("rpgclasses.data", "src/main/resources/data"));
+    private static final Path DATA = Path.of(System.getProperty("rites_and_paths.data", "src/main/resources/data"));
     private static final DefinitionStore STORE = new DefinitionStore();
     private static final Context NO_ARMOR = new Context(false);
     private static final Context ARMORED = new Context(true);
 
     private static Map<String, String> read(String folder) throws IOException {
         Map<String, String> out = new HashMap<>();
-        try (Stream<Path> files = Files.list(DATA.resolve("rpgclasses/rpgclasses").resolve(folder))) {
+        try (Stream<Path> files = Files.list(DATA.resolve("rites_and_paths/rites_and_paths").resolve(folder))) {
             for (Path f : (Iterable<Path>) files::iterator) {
                 String name = f.getFileName().toString();
-                out.put("rpgclasses:" + name.substring(0, name.length() - 5), Files.readString(f, StandardCharsets.UTF_8));
+                out.put("rites_and_paths:" + name.substring(0, name.length() - 5), Files.readString(f, StandardCharsets.UTF_8));
             }
         }
         return out;
@@ -49,12 +49,12 @@ public class StatCalculatorTest {
 
     /** Jugador con sus 3 primeras ramas a {@code branchPoints} y, opcionalmente, una subclase a {@code subLevel}. */
     private static ProgressState player(String classId, int branchPoints, String subclassId, int subLevel) {
-        ClassDef c = STORE.classDef("rpgclasses:" + classId);
+        ClassDef c = STORE.classDef("rites_and_paths:" + classId);
         ProgressState s = new ProgressState();
         ProgressionRules.chooseClass(s, c);
         for (int i = 0; i < ProgressionRules.BRANCHES_USABLE; i++) s.branchPoints.put(c.branches().get(i).id(), branchPoints);
         if (subclassId != null) {
-            s.subclassId = "rpgclasses:" + subclassId;
+            s.subclassId = "rites_and_paths:" + subclassId;
             s.subclassLevel = subLevel;
         }
         return s;
@@ -65,7 +65,7 @@ public class StatCalculatorTest {
     }
 
     private static double wall(ProgressState s, String discipline) {
-        return StatCalculator.wall(s, STORE.classDef(s.classId), STORE.subclassDef(s.subclassId), "rpgclasses:" + discipline);
+        return StatCalculator.wall(s, STORE.classDef(s.classId), STORE.subclassDef(s.subclassId), "rites_and_paths:" + discipline);
     }
 
     @Test
@@ -75,7 +75,7 @@ public class StatCalculatorTest {
         assertEquals(16.0, t.get(new Key("minecraft:generic.armor", "add")), EPS);
         assertEquals(6.0, t.get(new Key("minecraft:generic.armor_toughness", "add")), EPS);
         assertEquals(0.25, t.get(new Key("minecraft:generic.movement_speed", "multiply_base")), EPS);
-        assertEquals(0.5, t.get(new Key("rpgclasses:crit_damage", "add")), EPS); // Brutalidad 2.7: +50%
+        assertEquals(0.5, t.get(new Key("rites_and_paths:crit_damage", "add")), EPS); // Brutalidad 2.7: +50%
         // Cualquier pieza de armadura desactiva la defensa y la velocidad desarmadas.
         assertFalse(totals(s, ARMORED).containsKey(new Key("minecraft:generic.armor", "add")));
         // A media rama, la mitad: ambas pasivas suben con cada punto.
@@ -84,7 +84,7 @@ public class StatCalculatorTest {
 
     @Test
     public void woundFuryMatchesDesign() {
-        ClassDef c = STORE.classDef("rpgclasses:barbarian");
+        ClassDef c = STORE.classDef("rites_and_paths:barbarian");
         ProgressState s = player("barbarian", 10, null, 0);
         assertEquals(0.0, StatCalculator.woundFuryBonus(s, c, 1.0), EPS);
         assertEquals(0.40, StatCalculator.woundFuryBonus(s, c, 0.60), EPS); // supuesto de la estimación de balance
@@ -97,7 +97,7 @@ public class StatCalculatorTest {
         Map<Key, Double> t = totals(player("monk", 10, "breeze_master", 10), NO_ARMOR);
         // Rev. 2.9: Viento ya no da bonus plano; solo Cefiro Marcial (+40% / +80%).
         assertEquals(0.4, t.get(new Key("minecraft:generic.movement_speed", "multiply_base")), EPS);
-        assertEquals(0.8, t.get(new Key("rpgclasses:jump_bonus", "add")), EPS);
+        assertEquals(0.8, t.get(new Key("rites_and_paths:jump_bonus", "add")), EPS);
     }
 
     @Test
@@ -107,7 +107,7 @@ public class StatCalculatorTest {
         Map<Key, Double> t = totals(full, NO_ARMOR);
         assertEquals(13.0, t.get(new Key("minecraft:generic.armor", "add")), EPS);
         assertEquals(4.0, t.get(new Key("minecraft:generic.armor_toughness", "add")), EPS);
-        assertEquals(4.0, t.get(new Key("rpgclasses:unarmed_damage", "add")), EPS);
+        assertEquals(4.0, t.get(new Key("rites_and_paths:unarmed_damage", "add")), EPS);
         Map<Key, Double> half = totals(player("monk", 5, null, 0), NO_ARMOR);
         assertEquals(6.5, half.get(new Key("minecraft:generic.armor", "add")), EPS);
         // Con armadura no hay suelo.
@@ -120,12 +120,12 @@ public class StatCalculatorTest {
         assertEquals(9.75, fire.get(new Key("minecraft:generic.armor", "add")), EPS);
         ProgressState breeze = player("monk", 10, "breeze_master", 10);
         Map<Key, Double> water = StatCalculator.attributeTotals(breeze, c, STORE.subclassDef(breeze.subclassId),
-                new Context(false, Map.of(), Map.of("rpgclasses:unarmed_damage", 0.75),
+                new Context(false, Map.of(), Map.of("rites_and_paths:unarmed_damage", 0.75),
                         Map.of(new Key("minecraft:generic.movement_speed", "multiply_base"), 0.8,
-                               new Key("rpgclasses:jump_bonus", "add"), 0.8)));
-        assertEquals(3.0, water.get(new Key("rpgclasses:unarmed_damage", "add")), EPS);
+                               new Key("rites_and_paths:jump_bonus", "add"), 0.8)));
+        assertEquals(3.0, water.get(new Key("rites_and_paths:unarmed_damage", "add")), EPS);
         assertEquals(1.0, water.get(new Key("minecraft:generic.movement_speed", "multiply_base")), EPS); // 0,4 + 0,8 → tope +100%
-        assertEquals(1.5, water.get(new Key("rpgclasses:jump_bonus", "add")), EPS); // 0,8 + 0,8 → tope +150%
+        assertEquals(1.5, water.get(new Key("rites_and_paths:jump_bonus", "add")), EPS); // 0,8 + 0,8 → tope +150%
     }
 
     @Test
@@ -188,7 +188,7 @@ public class StatCalculatorTest {
         s.perks.put("push", "shockwave");
         java.util.List<StatCalculator.ActiveMechanic> m = StatCalculator.mechanics(s, STORE.classDef(s.classId), null);
         assertEquals(1, m.size());
-        assertEquals("rpgclasses:shockwave", m.get(0).id());
+        assertEquals("rites_and_paths:shockwave", m.get(0).id());
         assertEquals(5, m.get(0).number("every_hits", 0), EPS);
         // Mecánica de rama que escala: Toxinas al 3% por punto.
         ProgressState r = player("rogue", 0, null, 0);
@@ -202,47 +202,47 @@ public class StatCalculatorTest {
         ProgressState s = player("barbarian", 10, null, 0);
         s.perks.put("brutality", "crushing_blow");
         Map<Key, Double> a = totals(s, NO_ARMOR);
-        assertEquals(1.25, a.get(new Key("rpgclasses:crit_damage", "add")), EPS);
-        assertEquals(-0.15, a.get(new Key("rpgclasses:crit_chance", "add")), EPS);
+        assertEquals(1.25, a.get(new Key("rites_and_paths:crit_damage", "add")), EPS);
+        assertEquals(-0.15, a.get(new Key("rites_and_paths:crit_chance", "add")), EPS);
         s.perks.put("brutality", "steady_blow");
         Map<Key, Double> b = totals(s, NO_ARMOR);
-        assertEquals(0.15, b.get(new Key("rpgclasses:crit_damage", "add")), EPS);
-        assertEquals(0.20, b.get(new Key("rpgclasses:crit_chance", "add")), EPS);
+        assertEquals(0.15, b.get(new Key("rites_and_paths:crit_damage", "add")), EPS);
+        assertEquals(0.20, b.get(new Key("rites_and_paths:crit_chance", "add")), EPS);
     }
 
     @Test
     public void sniperTotalsIncludeBase() {
         Map<Key, Double> t = totals(player("ranger", 10, "sniper", 10), ARMORED);
-        assertEquals(0.75, t.get(new Key("rpgclasses:bow_damage", "add")), EPS);
-        assertEquals(3.0, t.get(new Key("rpgclasses:projectile_velocity", "add")), EPS);
+        assertEquals(0.75, t.get(new Key("rites_and_paths:bow_damage", "add")), EPS);
+        assertEquals(3.0, t.get(new Key("rites_and_paths:projectile_velocity", "add")), EPS);
     }
 
     @Test
     public void abilitiesUnlockByMilestoneAndUpgradesStayLatent() {
-        ClassDef paladin = STORE.classDef("rpgclasses:paladin");
+        ClassDef paladin = STORE.classDef("rites_and_paths:paladin");
         // 25 de base + 5 de subclase = Nivel Total 30: ya tiene Baluarte y, con subclase 5, su mejora.
         ProgressState s = player("paladin", 0, "blessed_guardian", 5);
         s.branchPoints.put("cuirass", 10);
         s.branchPoints.put("will", 10);
         s.branchPoints.put("push", 5);
         java.util.Set<String> unlocked = io.github.rpgclasses.core.ability.UnlockResolver.unlocked(s, paladin, STORE.subclassDef(s.subclassId));
-        assertEquals(java.util.List.of("rpgclasses:taunt", "rpgclasses:steady_guard", "rpgclasses:bulwark", "rpgclasses:healing_bulwark"),
+        assertEquals(java.util.List.of("rites_and_paths:taunt", "rites_and_paths:steady_guard", "rites_and_paths:bulwark", "rites_and_paths:healing_bulwark"),
                 java.util.List.copyOf(unlocked));
-        assertEquals(java.util.List.of("rpgclasses:taunt", "rpgclasses:bulwark"),
+        assertEquals(java.util.List.of("rites_and_paths:taunt", "rites_and_paths:bulwark"),
                 io.github.rpgclasses.core.ability.UnlockResolver.actives(unlocked, STORE::abilityDef));
 
         // Con Nivel Total 29 aún no hay Baluarte: la mejora de subclase queda latente aunque su nivel se cumpla.
         s.branchPoints.put("push", 4);
         unlocked = io.github.rpgclasses.core.ability.UnlockResolver.unlocked(s, paladin, STORE.subclassDef(s.subclassId));
-        assertFalse(unlocked.contains("rpgclasses:bulwark"));
-        assertFalse(unlocked.contains("rpgclasses:healing_bulwark"));
+        assertFalse(unlocked.contains("rites_and_paths:bulwark"));
+        assertFalse(unlocked.contains("rites_and_paths:healing_bulwark"));
     }
 
     @Test
     public void suspendedOrEmptyPlayerGetsNothing() {
         ProgressState s = new ProgressState();
-        s.classId = "rpgclasses:removed";
+        s.classId = "rites_and_paths:removed";
         assertEquals(0, StatCalculator.attributeTotals(s, null, null, NO_ARMOR).size());
-        assertEquals(0.0, StatCalculator.wall(s, null, null, "rpgclasses:magic"), EPS);
+        assertEquals(0.0, StatCalculator.wall(s, null, null, "rites_and_paths:magic"), EPS);
     }
 }

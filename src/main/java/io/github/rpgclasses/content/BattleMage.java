@@ -102,7 +102,7 @@ public final class BattleMage {
             if (st.hits >= echo.number("hits", 3) && !st.echoReady) {
                 st.hits = 0;
                 st.echoReady = true;
-                p.displayClientMessage(Component.translatable("msg.rpgclasses.martial_echo"), true);
+                p.displayClientMessage(Component.translatable("msg.rites_and_paths.martial_echo"), true);
                 ClassFx.burst(p, ParticleTypes.ENCHANT, 20, 0.5);
             }
         }

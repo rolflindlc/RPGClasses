@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "class": "rites_and_paths:barbarian",
+  "display": {
+    "icon": "minecraft:totem_of_undying"
+  },
+  "effects": [
+    {
+      "type": "rites_and_paths:attribute",
+      "modifiers": [
+        {
+          "attribute": "minecraft:generic.max_health",
+          "to": 10,
+          "operation": "add"
+        }
+      ]
+    },
+    {
+      "type": "rites_and_paths:mechanic",
+      "id": "rites_and_paths:death_gamble",
+      "first_chance": 0.75,
+      "chance": 0.5,
+      "flip_seconds": 1.6,
+      "result_seconds": 1.5,
+      "immortal_seconds": 1,
+      "area_damage": 1,
+      "radius": 3,
+      "knockback_blocks": 5
+    }
+  ],
+  "milestones": []
+}

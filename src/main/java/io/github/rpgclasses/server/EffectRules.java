@@ -38,10 +38,10 @@ public final class EffectRules {
     public static final String IMMUNITY = "effect_immunity";
     private static boolean reapplying;
 
-    /** Efectos que otros mods registran como neutrales pero son negativos (data/rpgclasses/tags/mob_effect/negative.json). */
+    /** Efectos que otros mods registran como neutrales pero son negativos (data/rites_and_paths/tags/mob_effect/negative.json). */
     public static final TagKey<MobEffect> NEGATIVE_TAG = TagKey.create(Registries.MOB_EFFECT, new ResourceLocation(Ids.NS, "negative"));
 
-    /** Efecto negativo: dañino o en el tag {@code rpgclasses:negative}; nunca las marcas de estado del propio mod. */
+    /** Efecto negativo: dañino o en el tag {@code rites_and_paths:negative}; nunca las marcas de estado del propio mod. */
     public static boolean isNegative(MobEffect effect) {
         if (effect instanceof ModEffects.StateEffect) return false;
         return effect.getCategory() == MobEffectCategory.HARMFUL

@@ -20,12 +20,12 @@ final class CentaurEpicFight {
         try {
             MinecraftForge.EVENT_BUS.addListener(CentaurEpicFight::onPrepareModel);
         } catch (LinkageError | RuntimeException e) {
-            io.github.rpgclasses.RpgClasses.LOGGER.warn("[rpgclasses] Epic Fight: sin PrepareModelEvent, el Centauro puede mostrar piernas ({})", e.toString());
+            io.github.rpgclasses.RpgClasses.LOGGER.warn("[rites_and_paths] Epic Fight: sin PrepareModelEvent, el Centauro puede mostrar piernas ({})", e.toString());
         }
         try {
             MinecraftForge.EVENT_BUS.addListener(CentaurEpicFight::onMotion);
         } catch (LinkageError | RuntimeException e) {
-            io.github.rpgclasses.RpgClasses.LOGGER.warn("[rpgclasses] Epic Fight: sin UpdatePlayerMotionEvent, el Centauro se inclina al agacharse ({})", e.toString());
+            io.github.rpgclasses.RpgClasses.LOGGER.warn("[rites_and_paths] Epic Fight: sin UpdatePlayerMotionEvent, el Centauro se inclina al agacharse ({})", e.toString());
         }
     }
 

@@ -74,7 +74,7 @@ public final class MonkCharges {
     public static final String MASTERY = "stance_mastery";
     public static final String DOMINANT = "dominant_stance";
 
-    private static final String TAG_STUN = "rpgclasses.monk_stun.";
+    private static final String TAG_STUN = "rites_and_paths.monk_stun.";
 
     private static final class State {
         int stance;
@@ -248,7 +248,7 @@ public final class MonkCharges {
         if (player.isShiftKeyDown() && current != NONE) {
             if (st.charges >= threshold(player, current)) {
                 st.armed = true;
-                player.displayClientMessage(Component.translatable("msg.rpgclasses.monk_armed"), true);
+                player.displayClientMessage(Component.translatable("msg.rites_and_paths.monk_armed"), true);
                 sound(player, SoundEvents.EXPERIENCE_ORB_PICKUP, 1.6f);
                 sync(player, st);
                 return false;
@@ -258,8 +258,8 @@ public final class MonkCharges {
                 clamp(player, st);
                 StatEngine.recompute(player);
                 sync(player, st);
-                player.displayClientMessage(Component.translatable("msg.rpgclasses.stance_favorite",
-                        Component.translatable("stance.rpgclasses." + MonkAbilities.STANCE_NAMES[current])), false);
+                player.displayClientMessage(Component.translatable("msg.rites_and_paths.stance_favorite",
+                        Component.translatable("stance.rites_and_paths." + MonkAbilities.STANCE_NAMES[current])), false);
                 return false;
             }
         }
@@ -281,8 +281,8 @@ public final class MonkCharges {
         AbilityService.setCooldown(player, MonkAbilities.STANCES, (int) Math.round(seconds * 20));
         StatEngine.recompute(player);
         sync(player, st);
-        player.displayClientMessage(Component.translatable("msg.rpgclasses.stance",
-                Component.translatable("stance.rpgclasses." + MonkAbilities.STANCE_NAMES[next])), true);
+        player.displayClientMessage(Component.translatable("msg.rites_and_paths.stance",
+                Component.translatable("stance.rites_and_paths." + MonkAbilities.STANCE_NAMES[next])), true);
         player.level().playSound(null, player.getX(), player.getY(), player.getZ(),
                 SoundEvents.ARMOR_EQUIP_LEATHER, SoundSource.PLAYERS, 1.0f, 0.8f + 0.2f * next);
         return true;

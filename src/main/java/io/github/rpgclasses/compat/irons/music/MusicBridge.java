@@ -54,8 +54,8 @@ import java.util.Set;
 import java.util.UUID;
 
 /**
- * Escuela musical del Bardo en Iron's Spells: registro de la escuela ({@code rpgclasses:music}, con poder
- * {@code rpgclasses:music_spell_power}) y de sus 12 conjuros, y las reglas:
+ * Escuela musical del Bardo en Iron's Spells: registro de la escuela ({@code rites_and_paths:music}, con poder
+ * {@code rites_and_paths:music_spell_power}) y de sus 12 conjuros, y las reglas:
  * <ul>
  *   <li>Los conjuros musicales solo se lanzan tocando el instrumento (clic derecho): la tecla de lanzar de Iron's no
  *       sirve, ni los libros ni los pergaminos (no se pueden inscribir).</li>
@@ -73,7 +73,7 @@ public final class MusicBridge implements BardMagic {
     public static final RegistryObject<SchoolType> MUSIC = SCHOOLS.register("music", () -> new SchoolType(
             SCHOOL_ID,
             ItemTags.create(RpgClasses.id("music_focus")),
-            Component.translatable("school.rpgclasses.music").withStyle(s -> s.withColor(TextColor.fromRgb(0xF2C94C))),
+            Component.translatable("school.rites_and_paths.music").withStyle(s -> s.withColor(TextColor.fromRgb(0xF2C94C))),
             () -> ModAttributes.MUSIC_SPELL_POWER.get(),
             () -> ModAttributes.MUSIC_MAGIC_RESIST.get(),
             () -> SoundEvents.NOTE_BLOCK_CHIME.value(),
@@ -100,7 +100,7 @@ public final class MusicBridge implements BardMagic {
         SPELLS.register(modBus);
         MinecraftForge.EVENT_BUS.register(new MusicBridge());
         Bard.magic = new MusicBridge();
-        RpgClasses.LOGGER.info("[rpgclasses] Escuela musical del Bardo registrada en Iron's Spells");
+        RpgClasses.LOGGER.info("[rites_and_paths] Escuela musical del Bardo registrada en Iron's Spells");
     }
 
     static boolean isMusic(String spellId) {
@@ -128,7 +128,7 @@ public final class MusicBridge implements BardMagic {
             }
         }
         if (chosen == null) {
-            player.displayClientMessage(Component.translatable("msg.rpgclasses.bard.not_instrument"), true);
+            player.displayClientMessage(Component.translatable("msg.rites_and_paths.bard.not_instrument"), true);
             return;
         }
         SpellData data = chosen.spellData;
@@ -199,7 +199,7 @@ public final class MusicBridge implements BardMagic {
         MusicSpellInfo info = MusicSpellInfo.byId(event.getSpellId());
         if (!FROM_INSTRUMENT.get()) {
             event.setCanceled(true);
-            player.displayClientMessage(Component.translatable("msg.rpgclasses.bard.use_instrument"), true);
+            player.displayClientMessage(Component.translatable("msg.rites_and_paths.bard.use_instrument"), true);
             return;
         }
         if (!Bard.isBard(player)) {
@@ -210,7 +210,7 @@ public final class MusicBridge implements BardMagic {
         int combo = BardState.combo(player);
         if (combo < needed) {
             event.setCanceled(true);
-            player.displayClientMessage(Component.translatable("msg.rpgclasses.bard.combo_needed",
+            player.displayClientMessage(Component.translatable("msg.rites_and_paths.bard.combo_needed",
                     Component.translatable(info.nameKey()), needed, combo), true);
         }
     }
@@ -244,7 +244,7 @@ public final class MusicBridge implements BardMagic {
         for (Object[] o : r.recent) distinct.add((String) o[0]);
         if (distinct.size() >= (int) AbilityService.number(params, "distinct_spells", 3) && now >= r.icdUntil) {
             r.armed = true;
-            player.displayClientMessage(Component.translatable("msg.rpgclasses.bard.recital"), true);
+            player.displayClientMessage(Component.translatable("msg.rites_and_paths.bard.recital"), true);
         }
     }
 

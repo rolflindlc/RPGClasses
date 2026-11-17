@@ -228,14 +228,14 @@ public final class Allies {
             result = book.remove(player.getUUID(), target);
         }
         switch (result) {
-            case SELF -> player.sendSystemMessage(Component.translatable("msg.rpgclasses.ally.self").withStyle(ChatFormatting.RED));
-            case ALREADY -> player.sendSystemMessage(Component.translatable("msg.rpgclasses.ally.already", targetName));
-            case NOT_ALLY -> player.sendSystemMessage(Component.translatable("msg.rpgclasses.ally.not_ally", targetName));
-            case FULL -> player.sendSystemMessage(Component.translatable("msg.rpgclasses.ally.full",
+            case SELF -> player.sendSystemMessage(Component.translatable("msg.rites_and_paths.ally.self").withStyle(ChatFormatting.RED));
+            case ALREADY -> player.sendSystemMessage(Component.translatable("msg.rites_and_paths.ally.already", targetName));
+            case NOT_ALLY -> player.sendSystemMessage(Component.translatable("msg.rites_and_paths.ally.not_ally", targetName));
+            case FULL -> player.sendSystemMessage(Component.translatable("msg.rites_and_paths.ally.full",
                     book.alliesOf(player.getUUID()).size()).withStyle(ChatFormatting.RED));
             case OK -> {
                 changed(server);
-                player.sendSystemMessage(Component.translatable(ally ? "msg.rpgclasses.ally.added" : "msg.rpgclasses.ally.removed",
+                player.sendSystemMessage(Component.translatable(ally ? "msg.rites_and_paths.ally.added" : "msg.rites_and_paths.ally.removed",
                         targetName).withStyle(ally ? ChatFormatting.GREEN : ChatFormatting.YELLOW));
                 ServerPlayer other = server.getPlayerList().getPlayer(target);
                 if (other != null) {
@@ -251,11 +251,11 @@ public final class Allies {
     /** Aviso a quien acaban de marcar o desmarcar; si no es recíproco, con un enlace para marcarle también. */
     private static Component notice(ServerPlayer from, boolean ally, boolean reciprocal) {
         String name = from.getGameProfile().getName();
-        MutableComponent msg = Component.translatable(ally ? "msg.rpgclasses.ally.marked_you" : "msg.rpgclasses.ally.unmarked_you", name)
+        MutableComponent msg = Component.translatable(ally ? "msg.rites_and_paths.ally.marked_you" : "msg.rites_and_paths.ally.unmarked_you", name)
                 .withStyle(ally ? ChatFormatting.GREEN : ChatFormatting.YELLOW);
         if (ally && !reciprocal) {
             String command = "/aliados agregar " + name;
-            msg.append(" ").append(Component.translatable("msg.rpgclasses.ally.mark_back").withStyle(Style.EMPTY
+            msg.append(" ").append(Component.translatable("msg.rites_and_paths.ally.mark_back").withStyle(Style.EMPTY
                     .withColor(ChatFormatting.AQUA).withUnderlined(true)
                     .withClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, command))
                     .withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Component.literal(command)))));

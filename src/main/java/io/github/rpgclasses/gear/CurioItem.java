@@ -31,15 +31,15 @@ public class CurioItem extends Item {
             case EPIC -> ChatFormatting.LIGHT_PURPLE;
             case RELIC -> ChatFormatting.GOLD;
         };
-        tooltip.add(Component.translatable("curio.rpgclasses.rarity." + curio.rarity.name().toLowerCase(java.util.Locale.ROOT)).withStyle(color));
+        tooltip.add(Component.translatable("curio.rites_and_paths.rarity." + curio.rarity.name().toLowerCase(java.util.Locale.ROOT)).withStyle(color));
         if (curio.kind == Curio.Kind.CLASS) {
-            tooltip.add(Component.translatable("curio.rpgclasses.requires_class",
-                    Component.translatable("class.rpgclasses." + curio.requirement + ".name")).withStyle(ChatFormatting.BLUE));
+            tooltip.add(Component.translatable("curio.rites_and_paths.requires_class",
+                    Component.translatable("class.rites_and_paths." + curio.requirement + ".name")).withStyle(ChatFormatting.BLUE));
         } else if (curio.kind == Curio.Kind.RACE) {
-            tooltip.add(Component.translatable("curio.rpgclasses.requires_race",
-                    Component.translatable("race.rpgclasses." + curio.requirement + ".name")).withStyle(ChatFormatting.GREEN));
+            tooltip.add(Component.translatable("curio.rites_and_paths.requires_race",
+                    Component.translatable("race.rites_and_paths." + curio.requirement + ".name")).withStyle(ChatFormatting.GREEN));
         }
-        tooltip.add(Component.translatable("curio.rpgclasses." + curio.id + ".desc").withStyle(ChatFormatting.GRAY));
-        if (curio.rarity == Curio.Rarity.RELIC) tooltip.add(Component.translatable("curio.rpgclasses.relic_rule").withStyle(ChatFormatting.DARK_GRAY));
+        tooltip.add(Component.translatable("curio.rites_and_paths." + curio.id + ".desc").withStyle(ChatFormatting.GRAY));
+        if (curio.rarity == Curio.Rarity.RELIC) tooltip.add(Component.translatable("curio.rites_and_paths.relic_rule").withStyle(ChatFormatting.DARK_GRAY));
     }
 }

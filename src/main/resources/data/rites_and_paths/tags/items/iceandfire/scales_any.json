@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "#rites_and_paths:iceandfire/scales_fire",
+    "#rites_and_paths:iceandfire/scales_ice",
+    "#rites_and_paths:iceandfire/scales_lightning"
+  ]
+}

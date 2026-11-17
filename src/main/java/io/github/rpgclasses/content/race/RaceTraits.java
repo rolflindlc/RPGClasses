@@ -51,7 +51,7 @@ import java.util.WeakHashMap;
 /**
  * Rasgos de Rango 0 de las ocho razas (anexo de razas, sección 3). Los números salen de races/*.json.
  * <ul>
- *   <li>Tamaño (Orco, Enano, Goblin): atributo {@code rpgclasses:scale}; la hitbox la escala {@code PlayerSizeMixin}
+ *   <li>Tamaño (Orco, Enano, Goblin): atributo {@code rites_and_paths:scale}; la hitbox la escala {@code PlayerSizeMixin}
  *       en todas las poses y aquí solo se ajusta la altura de los ojos.</li>
  *   <li>Orco: hambre extra y Última Resistencia. Enano: Minero. Goblin: Saqueo. Elfo: sin carne ni pescado.</li>
  *   <li>Tritón: respiración, minería y visión bajo el agua, daño de fuego extra.</li>
@@ -337,7 +337,7 @@ public final class RaceTraits {
         if (player.level() instanceof ServerLevel sl) {
             sl.sendParticles(ParticleTypes.ANGRY_VILLAGER, player.getX(), player.getY() + 1, player.getZ(), 12, 0.4, 0.5, 0.4, 0);
         }
-        player.displayClientMessage(Component.translatable("message.rpgclasses.last_stand"), true);
+        player.displayClientMessage(Component.translatable("message.rites_and_paths.last_stand"), true);
         io.github.rpgclasses.gear.CurioEffects.onLastStand(player); // Pendiente de Hueso de Trol (rev. 2.20)
         DebugLog.event(player, "raza", "Última Resistencia: sobrevive con 1 HP");
     }
@@ -378,14 +378,14 @@ public final class RaceTraits {
         if (racial > event.getLootingLevel()) event.setLootingLevel(racial);
     }
 
-    /** Elfo: no puede comer carne ni pescado (tag rpgclasses:elf_forbidden_food). */
+    /** Elfo: no puede comer carne ni pescado (tag rites_and_paths:elf_forbidden_food). */
     @SubscribeEvent
     public void onStartEating(LivingEntityUseItemEvent.Start event) {
         if (!(event.getEntity() instanceof Player player) || !event.getItem().is(Races.FORBIDDEN_FOOD)) return;
         if (!Races.has(player, "race_no_meat")) return;
         event.setCanceled(true);
         player.stopUsingItem();
-        if (player instanceof ServerPlayer sp) sp.displayClientMessage(Component.translatable("message.rpgclasses.elf_no_meat"), true);
+        if (player instanceof ServerPlayer sp) sp.displayClientMessage(Component.translatable("message.rites_and_paths.elf_no_meat"), true);
     }
 
     /** Infernal: los aldeanos le suben los precios (se añade al ajuste especial, que el aldeano borra al cerrar). */

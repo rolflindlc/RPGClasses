@@ -20,13 +20,13 @@ import top.theillusivec4.curios.api.type.capability.ICurioItem;
 /**
  * Puente con Curios (solo se carga si el mod está instalado): busca nudilleras y curios equipados y aplica las
  * restricciones de equipo (clase o raza, y como máximo 1 Reliquia). Las ranuras se asignan al jugador por datos
- * ({@code data/rpgclasses/curios/entities}) y cada objeto va a su ranura por tag ({@code curios:<ranura>}).
+ * ({@code data/rites_and_paths/curios/entities}) y cada objeto va a su ranura por tag ({@code curios:<ranura>}).
  */
 public final class CuriosCompat {
     public static void init() {
         GearRules.curioKnuckles = p -> find(p, s -> s.getItem() instanceof KnucklesItem);
         CurioEffects.equipped = (p, c) -> find(p, s -> s.getItem() instanceof CurioItem ci && ci.curio == c);
-        RpgClasses.LOGGER.info("[rpgclasses] Curios detectado: nudilleras y curios de clase y raza activos");
+        RpgClasses.LOGGER.info("[rites_and_paths] Curios detectado: nudilleras y curios de clase y raza activos");
     }
 
     /** Registro de las restricciones de equipo; llamar en la configuración común, con los objetos ya registrados. */

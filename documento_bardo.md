@@ -52,7 +52,7 @@ Red: protocolo 16 (paquetes `BardNote`, `BardSync` y `DanceSync`).
 * Si se imbuye un conjuro en un instrumento con el yunque arcano, desaparece en un segundo (las partituras mandan).
 
 ### Poder musical
-* Atributo propio `rpgclasses:music_spell_power` (base 100 %). El muro de Magia del Bardo (−35 %) no lo toca; el resto
+* Atributo propio `rites_and_paths:music_spell_power` (base 100 %). El muro de Magia del Bardo (−35 %) no lo toca; el resto
   de clases tiene −100 % fijo.
 * **Tope +150 %** sobre combo + Compás + instrumento + Solista/Coro + Tempo Largo.
 * **Los buffs y debuffs reciben la mitad del poder musical (propuesta, parámetro `buff_power_scaling`)**: con +150 %,
@@ -90,7 +90,7 @@ Red: protocolo 16 (paquetes `BardNote`, `BardSync` y `DanceSync`).
 * **Guitarra-hacha:** la receta de la adenda (fragmento resonante, lingote arcano e hilo arcano).
 * **Legendarios:** el Laúd del Sol Eterno lo suelta Barako/Umvuthi (Mowzie's); el Leviatán suelta la Lengüeta abisal
   (Zanfona → Órgano del Abismo) y la Monstruosidad de Netherita el Parche del Coloso (Tambor → Tambor del Coloso), en la
-  mesa de herrería con un fragmento resonante. Los jefes van por tags de entidad (`rpgclasses:bard/*`) **[LEER: ids]**.
+  mesa de herrería con un fragmento resonante. Los jefes van por tags de entidad (`rites_and_paths:bard/*`) **[LEER: ids]**.
 * **Materiales nuevos:** fragmento resonante (2 fragmentos de amatista + bloque musical + polvo de piedra luminosa → 2),
   hilo arcano (3 cuerdas + esencia arcana de Iron's o lapislázuli → 3).
 * **Partituras de nivel 1:** papel + tinta + bloque musical + un ingrediente propio de cada conjuro (+ 1 o 2 fragmentos

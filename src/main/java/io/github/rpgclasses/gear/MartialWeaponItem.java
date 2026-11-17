@@ -143,13 +143,13 @@ public class MartialWeaponItem extends Item {
 
     @Override
     public void appendHoverText(ItemStack stack, Level level, List<Component> tooltip, TooltipFlag flag) {
-        tooltip.add(Component.translatable("gear.rpgclasses.weapon." + kind.id + ".desc").withStyle(ChatFormatting.GRAY));
-        tooltip.add(Component.translatable("gear.rpgclasses.weapon.monk").withStyle(ChatFormatting.DARK_GREEN));
+        tooltip.add(Component.translatable("gear.rites_and_paths.weapon." + kind.id + ".desc").withStyle(ChatFormatting.GRAY));
+        tooltip.add(Component.translatable("gear.rites_and_paths.weapon.monk").withStyle(ChatFormatting.DARK_GREEN));
         if (tier.lateTier() > 0) {
-            tooltip.add(Component.translatable("gear.rpgclasses.weapon." + kind.id + ".late" + tier.lateTier()).withStyle(ChatFormatting.YELLOW));
+            tooltip.add(Component.translatable("gear.rites_and_paths.weapon." + kind.id + ".late" + tier.lateTier()).withStyle(ChatFormatting.YELLOW));
         }
         if (tier.element != null) {
-            tooltip.add(Component.translatable("gear.rpgclasses.weapon.element." + tier.element).withStyle(ChatFormatting.AQUA));
+            tooltip.add(Component.translatable("gear.rites_and_paths.weapon.element." + tier.element).withStyle(ChatFormatting.AQUA));
         }
     }
 }

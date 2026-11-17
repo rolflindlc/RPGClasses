@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "class": "rites_and_paths:mage",
+  "display": {
+    "icon": "minecraft:iron_chestplate"
+  },
+  "effects": [
+    {
+      "type": "rites_and_paths:mechanic",
+      "id": "rites_and_paths:unbreakable_concentration"
+    },
+    {
+      "type": "rites_and_paths:mechanic",
+      "id": "rites_and_paths:wall_mitigation",
+      "disciplines": [
+        "rites_and_paths:heavy",
+        "rites_and_paths:light"
+      ],
+      "mitigation": {
+        "to": 1.0
+      }
+    },
+    {
+      "type": "rites_and_paths:mechanic",
+      "id": "rites_and_paths:arcane_shield",
+      "mana_fraction": {
+        "from": 0.03,
+        "to": 0.12
+      },
+      "cap_health_fraction": 0.5,
+      "decay_delay_seconds": 6,
+      "decay_per_second": 0.1
+    },
+    {
+      "type": "rites_and_paths:mechanic",
+      "id": "rites_and_paths:imbued_blade",
+      "damage_fraction": {
+        "from": 0.15,
+        "to": 0.35
+      },
+      "window_seconds": 5,
+      "burn_seconds": 3,
+      "slow_seconds": 2,
+      "arc_range": 4,
+      "arc_fraction": 0.5,
+      "blood_heal": 0.25,
+      "poison_seconds": 3,
+      "fangs": 3,
+      "sonic_length": 6,
+      "sonic_fraction": 1.0,
+      "push": 0.8
+    },
+    {
+      "type": "rites_and_paths:mechanic",
+      "id": "rites_and_paths:martial_echo",
+      "hits": 3,
+      "window_seconds": 4,
+      "mana_discount": 0.3
+    }
+  ],
+  "milestones": []
+}

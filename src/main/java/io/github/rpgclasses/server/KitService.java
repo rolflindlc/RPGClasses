@@ -14,7 +14,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 /** Equipo inicial: irrompible y marcado, para poder retirarlo al reiniciar la clase. */
 public final class KitService {
     /** Marca NBT de los objetos del kit; su valor es la clase que los entregó. */
-    public static final String KIT_TAG = "rpgclasses_kit";
+    public static final String KIT_TAG = "rites_and_paths_kit";
     /** Inscribe conjuros en un objeto del kit (lo pone el puente con Iron's; null si no está instalado). */
     public static java.util.function.BiConsumer<ItemStack, KitItem> spellInscriber;
 
@@ -23,7 +23,7 @@ public final class KitService {
             ResourceLocation id = ResourceLocation.tryParse(k.item());
             Item item = id == null ? null : ForgeRegistries.ITEMS.getValue(id);
             if (item == null || item == Items.AIR) {
-                RpgClasses.LOGGER.warn("[rpgclasses] Objeto de kit desconocido: {}", k.item());
+                RpgClasses.LOGGER.warn("[rites_and_paths] Objeto de kit desconocido: {}", k.item());
                 continue;
             }
             ItemStack stack = new ItemStack(item, k.count());

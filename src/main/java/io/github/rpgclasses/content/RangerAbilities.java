@@ -100,7 +100,7 @@ public final class RangerAbilities {
 
     // --- Conservación de Munición con ballesta: la munición se gasta al cargarla, no al disparar ---
 
-    private static final String CONSERVED_TAG = "rpgclasses.conserved_shot";
+    private static final String CONSERVED_TAG = "rites_and_paths.conserved_shot";
     private record CrossbowLoad(ItemStack crossbow, ItemStack ammo) {}
     private static final Map<UUID, CrossbowLoad> CROSSBOW_LOADS = new HashMap<>();
 
@@ -171,7 +171,7 @@ public final class RangerAbilities {
             level.sendParticles(last ? ParticleTypes.FLAME : ParticleTypes.ENCHANTED_HIT,
                     player.getX(), player.getY() + 1.2, player.getZ(), 10 + 8 * reached, 0.35, 0.4, 0.35, 0.05);
         }
-        player.displayClientMessage(Component.translatable("msg.rpgclasses.heavy_shot_stage",
+        player.displayClientMessage(Component.translatable("msg.rites_and_paths.heavy_shot_stage",
                 Component.translatable(Ids.langKey("ability", shot, "name")),
                 Math.round(stageBonus(params, held) * 100)), true);
     }

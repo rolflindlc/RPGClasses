@@ -35,7 +35,7 @@ public final class ServerConfig {
                 .comment("Si es true, un jugador que aún no ha elegido clase no recibe daño.")
                 .define("protectUnclassed", true);
         DISABLED_CLASSES = b
-                .comment("Clases que no se pueden elegir en este servidor, p. ej. [\"rpgclasses:mage\"].")
+                .comment("Clases que no se pueden elegir en este servidor, p. ej. [\"rites_and_paths:mage\"].")
                 .defineListAllowEmpty(List.of("disabledClasses"), () -> List.<String>of(), o -> o instanceof String);
         b.pop();
         b.push("combat");
@@ -57,7 +57,7 @@ public final class ServerConfig {
         b.pop();
         b.push("debug");
         DEBUG_LOG = b
-                .comment("Registro de depuración en logs/rpgclasses-debug.log: habilidades, pasivas, efectos, daño y curas.",
+                .comment("Registro de depuración en logs/rites_and_paths-debug.log: habilidades, pasivas, efectos, daño y curas.",
                         "Los errores se registran siempre. También se cambia en partida con /clases debug log on|off.")
                 .define("debugLog", true);
         b.pop();

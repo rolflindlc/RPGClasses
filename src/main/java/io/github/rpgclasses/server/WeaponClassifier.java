@@ -16,7 +16,7 @@ import net.minecraftforge.common.ToolActions;
 
 /**
  * Decide la disciplina de un objeto. Orden de prioridad:
- * 1) tag de objeto rpgclasses:discipline/&lt;nombre&gt; (decisión del creador del pack),
+ * 1) tag de objeto rites_and_paths:discipline/&lt;nombre&gt; (decisión del creador del pack),
  * 2) categoría de Epic Fight (fase 4, a través de su puente),
  * 3) tipo vanilla,
  * 4) sin clasificar: si aporta daño de ataque cuenta como arma ligera; si no (una bola de nieve,
@@ -33,7 +33,7 @@ public final class WeaponClassifier {
      * @param unarmed true solo con la mano vacía: es lo único que recibe los bonus de desarmado.
      */
     /**
-     * @param martial arma marcial (tag rpgclasses:martial_weapons): ligera para todas las clases, desarmado para el Monje.
+     * @param martial arma marcial (tag rites_and_paths:martial_weapons): ligera para todas las clases, desarmado para el Monje.
      */
     public record Classification(String discipline, String rule, boolean unarmed, boolean martial) {
         Classification(String discipline, String rule) {

@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    "MMM",
+    "S S"
+  ],
+  "key": {
+    "M": {
+      "tag": "minecraft:stone_tool_materials"
+    },
+    "S": {
+      "item": "rites_and_paths:cured_strap"
+    }
+  },
+  "result": {
+    "item": "rites_and_paths:knuckles_stone",
+    "count": 1
+  }
+}

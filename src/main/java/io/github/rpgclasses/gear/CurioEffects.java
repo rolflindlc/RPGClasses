@@ -302,8 +302,8 @@ public final class CurioEffects {
         if (event.getSource().is(DamageTypeTags.BYPASSES_INVULNERABILITY)) return;
         CompoundTag tag = p.getPersistentData();
         long now = p.level().getGameTime();
-        if (tag.getLong("rpgclasses.phoenix_ready") > now) return;
-        tag.putLong("rpgclasses.phoenix_ready", now + 24000);
+        if (tag.getLong("rites_and_paths.phoenix_ready") > now) return;
+        tag.putLong("rites_and_paths.phoenix_ready", now + 24000);
         event.setAmount(0);
         p.setHealth(Math.max(1, p.getMaxHealth() * 0.3f));
         p.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 40, 4));
@@ -347,7 +347,7 @@ public final class CurioEffects {
             ResourceLocation id = ForgeRegistries.ENTITY_TYPES.getKey(dead.getType());
             if (id != null) {
                 skull.getOrCreateTag().putString("trophy", id.toString());
-                killer.displayClientMessage(net.minecraft.network.chat.Component.translatable("curio.rpgclasses.trophy_skull.taken",
+                killer.displayClientMessage(net.minecraft.network.chat.Component.translatable("curio.rites_and_paths.trophy_skull.taken",
                         dead.getDisplayName()), true);
                 sound(killer, SoundEvents.WITHER_SKELETON_AMBIENT, 1.0f, 0.7f);
             }

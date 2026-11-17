@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    { "item": "minecraft:book" },
+    { "item": "minecraft:bone" },
+    { "item": "minecraft:lead" }
+  ],
+  "result": {
+    "item": "rites_and_paths:bond_book"
+  }
+}

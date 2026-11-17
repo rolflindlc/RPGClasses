@@ -38,7 +38,7 @@ public final class RoguePerks {
     public static final String STEALTH_DRAIN = "stealth_drain";
     public static final String ARMOR_PIERCE = "armor_pierce";
     public static final String EVASION = "evasion";
-    private static final String CD_EVASION = "rpgclasses:evasion";
+    private static final String CD_EVASION = "rites_and_paths:evasion";
 
     /** Víctima -> (atacante -> tick de servidor del último golpe que el atacante le dio). Solo entre jugadores. */
     private static final Map<UUID, Map<UUID, Long>> PLAYER_HITS = new HashMap<>();

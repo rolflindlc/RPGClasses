@@ -24,14 +24,14 @@ import net.minecraft.server.level.ServerPlayer;
  */
 public final class FreeCasts {
     public static final int SLOTS = 3;
-    private static final String ICD = "rpgclasses:free_cast_icd";
+    private static final String ICD = "rites_and_paths:free_cast_icd";
 
     public static String abilityId(int slot) {
         return Ids.NS + ":free_cast_slot_" + slot;
     }
 
     private static String rechargeKey(int slot) {
-        return "rpgclasses:free_cast_recharge_" + slot;
+        return "rites_and_paths:free_cast_recharge_" + slot;
     }
 
     /** Ranura (1..3) con la que se puede lanzar gratis ese conjuro ahora mismo, o 0. */
@@ -60,7 +60,7 @@ public final class FreeCasts {
         AbilityService.setCooldown(player, ICD, AbilityService.ticks(p, "icd_seconds", 3));
         recharge(player, data, slot, p);
         int max = (int) AbilityService.number(p, "charges", slot);
-        player.displayClientMessage(Component.translatable("message.rpgclasses.free_cast_used", slot, max - used, max), true);
+        player.displayClientMessage(Component.translatable("message.rites_and_paths.free_cast_used", slot, max - used, max), true);
         io.github.rpgclasses.network.Net.syncPlayer(player); // la interfaz muestra las cargas
     }
 
@@ -93,28 +93,28 @@ public final class FreeCasts {
     static int bind(ServerPlayer player, int slot) {
         PlayerClassData data = PlayerClassDataProvider.get(player);
         if (data == null || !AbilityService.has(player, abilityId(slot))) {
-            player.sendSystemMessage(Component.translatable("message.rpgclasses.free_cast_locked", slot));
+            player.sendSystemMessage(Component.translatable("message.rites_and_paths.free_cast_locked", slot));
             return 0;
         }
         String key = "free_cast_spell_" + slot;
         if (data.texts.containsKey(key)) {
-            player.sendSystemMessage(Component.translatable("message.rpgclasses.free_cast_already", slot,
+            player.sendSystemMessage(Component.translatable("message.rites_and_paths.free_cast_already", slot,
                     spellName(player, data.texts.get(key))));
             return 0;
         }
         SpellData selected = new SpellSelectionManager(player).getSelectedSpellData();
         if (selected == null || selected == SpellData.EMPTY || "irons_spellbooks:none".equals(selected.getSpell().getSpellId())) {
-            player.sendSystemMessage(Component.translatable("message.rpgclasses.free_cast_none"));
+            player.sendSystemMessage(Component.translatable("message.rites_and_paths.free_cast_none"));
             return 0;
         }
         String spellId = selected.getSpell().getSpellId();
         if (data.texts.containsValue(spellId)) {
-            player.sendSystemMessage(Component.translatable("message.rpgclasses.free_cast_duplicate"));
+            player.sendSystemMessage(Component.translatable("message.rites_and_paths.free_cast_duplicate"));
             return 0;
         }
         data.texts.put(key, spellId);
         int maxCost = (int) AbilityService.number(AbilityService.params(abilityId(slot)), "max_mana_cost", 75);
-        player.sendSystemMessage(Component.translatable("message.rpgclasses.free_cast_bound",
+        player.sendSystemMessage(Component.translatable("message.rites_and_paths.free_cast_bound",
                 selected.getSpell().getDisplayName(player), slot, maxCost));
         return 1;
     }

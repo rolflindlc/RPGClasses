@@ -39,7 +39,7 @@ public final class CreativeAmuletItem extends Item {
 
     @Override
     public void appendHoverText(ItemStack stack, Level level, List<Component> tooltip, TooltipFlag flag) {
-        tooltip.add(Component.translatable("tooltip.rpgclasses.creative_amulet").withStyle(ChatFormatting.GRAY));
+        tooltip.add(Component.translatable("tooltip.rites_and_paths.creative_amulet").withStyle(ChatFormatting.GRAY));
     }
 
     /** ¿Lleva el amuleto en el inventario (incluidas armadura y mano secundaria)? */

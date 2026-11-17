@@ -30,10 +30,10 @@ Anexo del *Documento de Diseño v2* (clases) y del anexo de *Razas*. Sustituye a
 
 1. **Cualquier clase puede llevar y usar** las armaduras y armas nuevas (decisión del usuario). Reciben su armadura, su daño y sus stats ligeros.
 2. **Los efectos de set completo** (4 piezas del mismo tier y clase de armadura) **solo funcionan para su clase**.
-3. **Exención de la regla sin armadura:** las piezas del tag `rpgclasses:class_armor/barbarian` no apagan las pasivas desarmadas del Bárbaro, y las de `rpgclasses:class_armor/monk` no apagan *Cuerpo Marcial* ni borran las cargas del Monje. Cualquier otra pieza (también la del Monje en un Bárbaro y al revés) sigue contando como armadura.
+3. **Exención de la regla sin armadura:** las piezas del tag `rites_and_paths:class_armor/barbarian` no apagan las pasivas desarmadas del Bárbaro, y las de `rites_and_paths:class_armor/monk` no apagan *Cuerpo Marcial* ni borran las cargas del Monje. Cualquier otra pieza (también la del Monje en un Bárbaro y al revés) sigue contando como armadura.
 4. **Paridad, no ventaja:** desde la netherita, el set más la defensa propia de la clase iguala al set normal del tier. En los tiers bajos la armadura es 0 o casi 0 y solo hay stats ligeros.
-5. **Armas marciales** (tag `rpgclasses:martial_weapons`): para cualquier clase son armas ligeras (muro de Armas ligeras); para el Monje cuentan como desarmado (cargas, Shift + golpe, perks, sin muro).
-6. **Ice and Fire es opcional:** los objetos de dragón se registran siempre; sus recetas llevan la condición `forge:mod_loaded`. Los materiales van por tags con entradas opcionales (`rpgclasses:iceandfire/*`) **[LEER: nombres exactos en la versión del pack]**.
+5. **Armas marciales** (tag `rites_and_paths:martial_weapons`): para cualquier clase son armas ligeras (muro de Armas ligeras); para el Monje cuentan como desarmado (cargas, Shift + golpe, perks, sin muro).
+6. **Ice and Fire es opcional:** los objetos de dragón se registran siempre; sus recetas llevan la condición `forge:mod_loaded`. Los materiales van por tags con entradas opcionales (`rites_and_paths:iceandfire/*`) **[LEER: nombres exactos en la versión del pack]**.
 7. **Curios es opcional:** sin Curios, las nudilleras funcionan en la mano secundaria y los demás curios no se pueden equipar.
 8. Los bonus de velocidad de las piezas (cuero, +3 % con 4 piezas) son modificadores del objeto y **no cuentan** para el tope global de la regla 7 **(propuesta; es un 3 %)**.
 
@@ -79,7 +79,7 @@ Anexo del *Documento de Diseño v2* (clases) y del anexo de *Razas*. Sustituye a
 * **Monje:** el golpe vale (1 + daño desarmado + bonus de tier) × DPS del arma × (4 / velocidad del arma), para que el DPS no dependa de la velocidad. Las armas lentas dan más cargas de Fuego por golpe (4 / velocidad, tope 3) **[MEDIR con Epic Fight]**.
 * **Bonus de tier del Monje:** 0 hasta diamante, +1 netherita, +2 hueso de dragón, +5 dragonsteel **[LEER]**.
 * **Espada de referencia:** madera 4, piedra 5, hierro 6, oro 4, diamante 7, netherita 8, hueso de dragón 9, dragonsteel 12 **[LEER]**.
-* **Epic Fight:** nunchaku con moveset de puños, sai de daga y bo de lanza (`data/rpgclasses/capabilities/weapons`). Animaciones propias: fase posterior.
+* **Epic Fight:** nunchaku con moveset de puños, sai de daga y bo de lanza (`data/rites_and_paths/capabilities/weapons`). Animaciones propias: fase posterior.
 
 **Efectos por tier (cualquier clase):**
 
@@ -103,7 +103,7 @@ Las armas de dragonsteel aplican su elemento en cada golpe (fuego quema, hielo r
 
 > **Desactivados en la versión de salida.** Con `Curio.ENABLED = false` (Java) y `CURIOS_ENABLED = False` (`tools/gear.py`) no se registran los objetos, no hay recetas ni ranuras salvo la de manos (nudilleras) y sus efectos no se escuchan. El código y los textos se conservan: para recuperarlos basta poner los dos interruptores a verdadero y regenerar los datos.
 
-Rarezas: Común, Raro, Épico y Reliquia (**máx. 1 Reliquia equipada**). Los curios de clase o raza solo se equipan con esa clase o raza, y sus efectos se apagan si dejas de cumplirla. Todos se fabrican; los de jefe usan su material (Ice and Fire, Cataclysm, Iron's) con una alternativa vanilla cara en el tag `rpgclasses:curio/*`.
+Rarezas: Común, Raro, Épico y Reliquia (**máx. 1 Reliquia equipada**). Los curios de clase o raza solo se equipan con esa clase o raza, y sus efectos se apagan si dejas de cumplirla. Todos se fabrican; los de jefe usan su material (Ice and Fire, Cataclysm, Iron's) con una alternativa vanilla cara en el tag `rites_and_paths:curio/*`.
 
 | Grupo | Curios |
 | ----- | ----- |
@@ -116,7 +116,7 @@ Rarezas: Común, Raro, Épico y Reliquia (**máx. 1 Reliquia equipada**). Los cu
 | Monje | Rosario de las Tres Posturas, Campana del Templo |
 | Razas | Insignia de Mil Oficios (Humano), Pendiente de Hueso de Trol (Orco), Farolillo de Mina (Enano), Hoja del Árbol Eterno (Elfo), Bolsa de Chucherías (Goblin), Caracola de las Mareas (Tritón), Corazón de Magma (Infernal), Velo de Medianoche (No-muerto) |
 
-**Cambios respecto al plan (propuesta, por no haber tecla de activación de curios):** el Cuerno de Cíclope suena solo al entrar en combate (primer golpe tras 10 s); el Reloj de Arena Arcano se activa al bajar del 30 % de vida (no de maná); la Pluma de Hipogrifo hace planear al tensar el arco en el aire; el Cinturón del Viajero come de tu inventario; la Caracola de las Mareas es pasiva; el Estandarte de Bolsillo es solo visual; los Dados Trucados con un 1 dejan el crítico en golpe normal. Las descripciones exactas están en los textos del juego (`curio.rpgclasses.<id>.desc`).
+**Cambios respecto al plan (propuesta, por no haber tecla de activación de curios):** el Cuerno de Cíclope suena solo al entrar en combate (primer golpe tras 10 s); el Reloj de Arena Arcano se activa al bajar del 30 % de vida (no de maná); la Pluma de Hipogrifo hace planear al tensar el arco en el aire; el Cinturón del Viajero come de tu inventario; la Caracola de las Mareas es pasiva; el Estandarte de Bolsillo es solo visual; los Dados Trucados con un 1 dejan el crítico en golpe normal. Las descripciones exactas están en los textos del juego (`curio.rites_and_paths.<id>.desc`).
 
 **Orden de supervivencia:** clase → raza → **Pluma de Fénix** (tras la armadura) → Tótem.
 

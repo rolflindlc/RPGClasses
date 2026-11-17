@@ -31,8 +31,8 @@ public final class MovementPerks {
     public static final String LIGHT_FEET = "light_feet";
     public static final String FEATHER_FALL = "feather_fall";
     private static final UUID SURFACE_ID = UUID.fromString("9a1d7c3e-5b2f-4e8a-b6c4-0d3f2e1a9b57");
-    /** No empieza por "rpgclasses:" a propósito: StatEngine no debe borrarlo al recalcular. */
-    private static final String SURFACE_NAME = "rpgclasses_perk:light_feet";
+    /** No empieza por "rites_and_paths:" a propósito: StatEngine no debe borrarlo al recalcular. */
+    private static final String SURFACE_NAME = "rites_and_paths_perk:light_feet";
     /** Velocidad máxima de caída manteniendo saltar (como Caída Lenta). */
     private static final double FEATHER_FALL_SPEED = -0.05;
 
@@ -91,9 +91,9 @@ public final class MovementPerks {
                     }
                 }
             } catch (ReflectiveOperationException | RuntimeException e) {
-                RpgClasses.LOGGER.warn("[rpgclasses] Pies Ligeros: no se pudo localizar la ralentización por bloques", e);
+                RpgClasses.LOGGER.warn("[rites_and_paths] Pies Ligeros: no se pudo localizar la ralentización por bloques", e);
             }
-            if (stuckField == null) RpgClasses.LOGGER.warn("[rpgclasses] Pies Ligeros: telarañas y nieve en polvo seguirán frenando");
+            if (stuckField == null) RpgClasses.LOGGER.warn("[rites_and_paths] Pies Ligeros: telarañas y nieve en polvo seguirán frenando");
         }
         if (stuckField == null) return;
         try {

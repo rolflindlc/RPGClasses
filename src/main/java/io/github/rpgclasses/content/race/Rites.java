@@ -96,13 +96,13 @@ import java.util.UUID;
  * sube el rango.
  */
 public final class Rites {
-    public static final String CRAFTER = "rpgclasses.crafter";
-    public static final String ENCHANTER = "rpgclasses.enchanter";
-    public static final String FISHED = "rpgclasses.fished";
-    public static final String MOB_EQUIP = "rpgclasses.mob_equip";
-    public static final String RITE_DROP = "rpgclasses.rite_drop";
-    private static final String BOSS_OWNER = "rpgclasses.rite_owner";
-    private static final String BOSS_RITE = "rpgclasses.rite_id";
+    public static final String CRAFTER = "rites_and_paths.crafter";
+    public static final String ENCHANTER = "rites_and_paths.enchanter";
+    public static final String FISHED = "rites_and_paths.fished";
+    public static final String MOB_EQUIP = "rites_and_paths.mob_equip";
+    public static final String RITE_DROP = "rites_and_paths.rite_drop";
+    private static final String BOSS_OWNER = "rites_and_paths.rite_owner";
+    private static final String BOSS_RITE = "rites_and_paths.rite_id";
 
     private static final TagKey<EntityType<?>> BOSSES = TagKey.create(Registries.ENTITY_TYPE, RpgClasses.id("rite_bosses"));
     private static final TagKey<EntityType<?>> BOSSES_FALLBACK = TagKey.create(Registries.ENTITY_TYPE, RpgClasses.id("rite_bosses_fallback"));
@@ -234,7 +234,7 @@ public final class Rites {
         if (sub != null) RiteProgress.addSub(prog, i, sub, amount);
         else RiteProgress.add(prog, i, amount);
         int value = Math.min(RiteProgress.value(o, i, prog), RiteProgress.target(o));
-        p.displayClientMessage(Component.translatable("msg.rpgclasses.rite.progress", objectiveName(c.rite(), i), value,
+        p.displayClientMessage(Component.translatable("msg.rites_and_paths.rite.progress", objectiveName(c.rite(), i), value,
                 RiteProgress.target(o)).withStyle(ChatFormatting.GOLD), true);
         if (RiteProgress.done(o, i, prog)) objectiveDone(p, c, i);
     }
@@ -246,7 +246,7 @@ public final class Rites {
     }
 
     private static void objectiveDone(ServerPlayer p, Current c, int i) {
-        p.sendSystemMessage(Component.translatable("msg.rpgclasses.rite.objective_done", objectiveName(c.rite(), i)).withStyle(ChatFormatting.GOLD));
+        p.sendSystemMessage(Component.translatable("msg.rites_and_paths.rite.objective_done", objectiveName(c.rite(), i)).withStyle(ChatFormatting.GOLD));
         DebugLog.event(p, "rito", "{} objetivo {} cumplido", c.rite().id(), i);
         if (!RiteProgress.complete(c.rite(), c.data().state.riteProgress)) return;
         int rank = c.rank() + 1;
@@ -254,7 +254,7 @@ public final class Rites {
         c.data().state.riteProgress.clear();
         StatEngine.refresh(p);
         io.github.rpgclasses.network.Net.syncPlayer(p);
-        p.sendSystemMessage(Component.translatable("msg.rpgclasses.rite.completed", riteName(c.rite()), rank)
+        p.sendSystemMessage(Component.translatable("msg.rites_and_paths.rite.completed", riteName(c.rite()), rank)
                 .withStyle(ChatFormatting.LIGHT_PURPLE, ChatFormatting.BOLD));
         p.level().playSound(null, p.blockPosition(), SoundEvents.UI_TOAST_CHALLENGE_COMPLETE, SoundSource.PLAYERS, 1f, 1f);
         DebugLog.event(p, "rito", "{} completado: rango {}", c.rite().id(), rank);
@@ -264,22 +264,22 @@ public final class Rites {
     public static void showStatus(ServerPlayer p) {
         Current c = current(p);
         if (c == null) {
-            p.sendSystemMessage(Component.translatable("msg.rpgclasses.rite.none"));
+            p.sendSystemMessage(Component.translatable("msg.rites_and_paths.rite.none"));
             return;
         }
-        p.sendSystemMessage(Component.translatable("msg.rpgclasses.rite.header", c.rank() + 1, riteName(c.rite()))
+        p.sendSystemMessage(Component.translatable("msg.rites_and_paths.rite.header", c.rank() + 1, riteName(c.rite()))
                 .withStyle(ChatFormatting.LIGHT_PURPLE));
         p.sendSystemMessage(Component.translatable("rite." + RpgClasses.MODID + "." + c.rite().id() + ".desc").withStyle(ChatFormatting.GRAY));
         for (int i = 0; i < c.rite().objectives().size(); i++) {
             ObjectiveDef o = c.rite().objectives().get(i);
             boolean done = RiteProgress.done(o, i, c.data().state.riteProgress);
             int value = Math.min(RiteProgress.value(o, i, c.data().state.riteProgress), RiteProgress.target(o));
-            p.sendSystemMessage(Component.translatable("msg.rpgclasses.rite.objective",
-                    Component.translatable(done ? "msg.rpgclasses.rite.done_mark" : "msg.rpgclasses.rite.todo_mark"),
+            p.sendSystemMessage(Component.translatable("msg.rites_and_paths.rite.objective",
+                    Component.translatable(done ? "msg.rites_and_paths.rite.done_mark" : "msg.rites_and_paths.rite.todo_mark"),
                     objectiveName(c.rite(), i), value, RiteProgress.target(o))
                     .withStyle(done ? ChatFormatting.GREEN : ChatFormatting.WHITE));
         }
-        p.sendSystemMessage(Component.translatable("msg.rpgclasses.rite.hint").withStyle(ChatFormatting.DARK_GRAY));
+        p.sendSystemMessage(Component.translatable("msg.rites_and_paths.rite.hint").withStyle(ChatFormatting.DARK_GRAY));
     }
 
     // ------------------------------------------------------------------ estilos y filtros
@@ -618,12 +618,12 @@ public final class Rites {
                 have++;
             }
             if (have < need) {
-                p.sendSystemMessage(Component.translatable("msg.rpgclasses.rite.structure_missing", refName(entry), have, need)
+                p.sendSystemMessage(Component.translatable("msg.rites_and_paths.rite.structure_missing", refName(entry), have, need)
                         .withStyle(ChatFormatting.RED));
                 return;
             }
         }
-        p.sendSystemMessage(Component.translatable("msg.rpgclasses.rite.structure_done", objectiveName(c.rite(), i)).withStyle(ChatFormatting.GREEN));
+        p.sendSystemMessage(Component.translatable("msg.rites_and_paths.rite.structure_done", objectiveName(c.rite(), i)).withStyle(ChatFormatting.GREEN));
         markDone(p, c, i);
     }
 
@@ -732,8 +732,8 @@ public final class Rites {
     private static void tryOffer(ServerPlayer p, Current c, int i, ObjectiveDef o, BlockPos pos) {
         String place = str(o.params(), "altar", null);
         if (place != null && !altarPlace(p.serverLevel(), pos, place)) {
-            p.sendSystemMessage(Component.translatable("msg.rpgclasses.rite.need_altar_place",
-                    Component.translatable("rite.rpgclasses.place." + place)).withStyle(ChatFormatting.RED));
+            p.sendSystemMessage(Component.translatable("msg.rites_and_paths.rite.need_altar_place",
+                    Component.translatable("rite.rites_and_paths.place." + place)).withStyle(ChatFormatting.RED));
             return;
         }
         var inv = p.getInventory();
@@ -743,7 +743,7 @@ public final class Rites {
         for (JsonElement e : o.params().getAsJsonArray("items")) {
             JsonObject entry = e.getAsJsonObject();
             if (!plan(p, c.data(), entry, left, take)) {
-                p.sendSystemMessage(Component.translatable("msg.rpgclasses.rite.missing", describe(entry)).withStyle(ChatFormatting.RED));
+                p.sendSystemMessage(Component.translatable("msg.rites_and_paths.rite.missing", describe(entry)).withStyle(ChatFormatting.RED));
                 return;
             }
         }
@@ -751,7 +751,7 @@ public final class Rites {
         p.level().playSound(null, pos, SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.BLOCKS, 1f, 0.8f);
         p.serverLevel().sendParticles(net.minecraft.core.particles.ParticleTypes.ENCHANT, pos.getX() + 0.5, pos.getY() + 1.2,
                 pos.getZ() + 0.5, 40, 0.4, 0.4, 0.4, 0.5);
-        p.sendSystemMessage(Component.translatable("msg.rpgclasses.rite.offered", objectiveName(c.rite(), i)).withStyle(ChatFormatting.GREEN));
+        p.sendSystemMessage(Component.translatable("msg.rites_and_paths.rite.offered", objectiveName(c.rite(), i)).withStyle(ChatFormatting.GREEN));
         markDone(p, c, i);
     }
 
@@ -866,7 +866,7 @@ public final class Rites {
             if ("boss".equals(o.type()) && !RiteProgress.done(o, i, c.data().state.riteProgress)) index = i;
         }
         if (index < 0) {
-            p.sendSystemMessage(Component.translatable("msg.rpgclasses.rite.not_now"));
+            p.sendSystemMessage(Component.translatable("msg.rites_and_paths.rite.not_now"));
             return;
         }
         ServerLevel level = p.serverLevel();
@@ -875,7 +875,7 @@ public final class Rites {
             for (ServerLevel l : level.getServer().getAllLevels()) {
                 Entity e = l.getEntity(active);
                 if (e != null && e.isAlive()) {
-                    p.sendSystemMessage(Component.translatable("msg.rpgclasses.rite.boss_active").withStyle(ChatFormatting.RED));
+                    p.sendSystemMessage(Component.translatable("msg.rites_and_paths.rite.boss_active").withStyle(ChatFormatting.RED));
                     return;
                 }
             }
@@ -885,34 +885,34 @@ public final class Rites {
         long now = level.getGameTime();
         long last = LAST_SUMMON.getOrDefault(p.getUUID(), -1_000_000L);
         if (now - last < SUMMON_COOLDOWN) {
-            p.sendSystemMessage(Component.translatable("msg.rpgclasses.rite.boss_cooldown", (SUMMON_COOLDOWN - (now - last)) / 20)
+            p.sendSystemMessage(Component.translatable("msg.rites_and_paths.rite.boss_cooldown", (SUMMON_COOLDOWN - (now - last)) / 20)
                     .withStyle(ChatFormatting.RED));
             return;
         }
         ObjectiveDef o = c.rite().objectives().get(index);
         String place = str(o.params(), "altar", null);
         if (place != null && !altarPlace(level, pos, place)) {
-            p.sendSystemMessage(Component.translatable("msg.rpgclasses.rite.need_altar_place",
-                    Component.translatable("rite.rpgclasses.place." + place)).withStyle(ChatFormatting.RED));
+            p.sendSystemMessage(Component.translatable("msg.rites_and_paths.rite.need_altar_place",
+                    Component.translatable("rite.rites_and_paths.place." + place)).withStyle(ChatFormatting.RED));
             return;
         }
         List<EntityType<?>> pool = bossTypes(BOSSES);
         boolean fallback = pool.isEmpty();
         if (fallback) pool = bossTypes(BOSSES_FALLBACK);
         if (pool.isEmpty()) {
-            p.sendSystemMessage(Component.translatable("msg.rpgclasses.rite.boss_none").withStyle(ChatFormatting.RED));
+            p.sendSystemMessage(Component.translatable("msg.rites_and_paths.rite.boss_none").withStyle(ChatFormatting.RED));
             return;
         }
         EntityType<?> type = pool.get(p.getRandom().nextInt(pool.size()));
         Entity created = type.create(level);
         if (!(created instanceof Mob boss)) {
             if (created != null) created.discard();
-            p.sendSystemMessage(Component.translatable("msg.rpgclasses.rite.boss_none").withStyle(ChatFormatting.RED));
+            p.sendSystemMessage(Component.translatable("msg.rites_and_paths.rite.boss_none").withStyle(ChatFormatting.RED));
             return;
         }
         BlockPos spot = freeSpot(level, pos, boss);
         if (spot == null) {
-            p.sendSystemMessage(Component.translatable("msg.rpgclasses.rite.boss_no_room").withStyle(ChatFormatting.RED));
+            p.sendSystemMessage(Component.translatable("msg.rites_and_paths.rite.boss_no_room").withStyle(ChatFormatting.RED));
             return;
         }
         boss.moveTo(spot.getX() + 0.5, spot.getY(), spot.getZ() + 0.5, p.getRandom().nextFloat() * 360, 0);
@@ -920,13 +920,13 @@ public final class Rites {
         boss.setPersistenceRequired();
         boss.getPersistentData().putUUID(BOSS_OWNER, p.getUUID());
         boss.getPersistentData().putString(BOSS_RITE, c.rite().id());
-        boss.setCustomName(Component.translatable("msg.rpgclasses.rite.boss_name", type.getDescription()).withStyle(ChatFormatting.DARK_PURPLE));
+        boss.setCustomName(Component.translatable("msg.rites_and_paths.rite.boss_name", type.getDescription()).withStyle(ChatFormatting.DARK_PURPLE));
         boss.setCustomNameVisible(true);
         boss.setGlowingTag(true);
         if (fallback) {
             AttributeInstance health = boss.getAttribute(Attributes.MAX_HEALTH);
             if (health != null && health.getModifier(FALLBACK_HEALTH) == null) {
-                health.addPermanentModifier(new AttributeModifier(FALLBACK_HEALTH, "rpgclasses rite boss", 1.0, AttributeModifier.Operation.MULTIPLY_BASE));
+                health.addPermanentModifier(new AttributeModifier(FALLBACK_HEALTH, "rites_and_paths rite boss", 1.0, AttributeModifier.Operation.MULTIPLY_BASE));
                 boss.setHealth(boss.getMaxHealth());
             }
         }
@@ -938,7 +938,7 @@ public final class Rites {
         level.playSound(null, pos, SoundEvents.WITHER_SPAWN, SoundSource.HOSTILE, 0.6f, 1.2f);
         level.sendParticles(net.minecraft.core.particles.ParticleTypes.SOUL_FIRE_FLAME, spot.getX() + 0.5, spot.getY() + 1, spot.getZ() + 0.5,
                 60, 0.6, 1, 0.6, 0.05);
-        p.sendSystemMessage(Component.translatable("msg.rpgclasses.rite.boss_summoned", type.getDescription()).withStyle(ChatFormatting.DARK_PURPLE));
+        p.sendSystemMessage(Component.translatable("msg.rites_and_paths.rite.boss_summoned", type.getDescription()).withStyle(ChatFormatting.DARK_PURPLE));
         DebugLog.event(p, "rito", "jefe de rito invocado: {} ({})", type, fallback ? "vanilla" : "mod");
     }
 
@@ -1053,7 +1053,7 @@ public final class Rites {
             }
             boss.discard();
         }
-        if (owner != null) owner.sendSystemMessage(Component.translatable("msg.rpgclasses.rite.boss_gone").withStyle(ChatFormatting.GRAY));
+        if (owner != null) owner.sendSystemMessage(Component.translatable("msg.rites_and_paths.rite.boss_gone").withStyle(ChatFormatting.GRAY));
     }
 
     private static void ownerDied(ServerPlayer dead) {
@@ -1077,8 +1077,8 @@ public final class Rites {
             if (!"boss".equals(o.type()) || RiteProgress.done(o, i, c.data().state.riteProgress)) continue;
             String fail = failReason(p, boss, f, o.params(), c.data());
             if (fail != null) {
-                p.sendSystemMessage(Component.translatable("msg.rpgclasses.rite.boss_failed",
-                        Component.translatable("rite.rpgclasses.fail." + fail)).withStyle(ChatFormatting.RED));
+                p.sendSystemMessage(Component.translatable("msg.rites_and_paths.rite.boss_failed",
+                        Component.translatable("rite.rites_and_paths.fail." + fail)).withStyle(ChatFormatting.RED));
                 DebugLog.event(p, "rito", "jefe de rito sin cumplir: {}", fail);
                 return;
             }

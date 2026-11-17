@@ -264,7 +264,7 @@ public final class RogueAbilities {
             if (dot > bestDot) { bestDot = dot; target = e; }
         }
         if (target == null) {
-            player.displayClientMessage(Component.translatable("msg.rpgclasses.shadow_step_blocked"), true);
+            player.displayClientMessage(Component.translatable("msg.rites_and_paths.shadow_step_blocked"), true);
             return false;
         }
         // Espalda = opuesto a hacia donde mira el objetivo. Se prueban varias distancias y, si no hay sitio, los lados.
@@ -280,7 +280,7 @@ public final class RogueAbilities {
             if (level.noCollision(player, box)) { dest = pos; break; }
         }
         if (dest == null) {
-            player.displayClientMessage(Component.translatable("msg.rpgclasses.shadow_step_blocked"), true);
+            player.displayClientMessage(Component.translatable("msg.rites_and_paths.shadow_step_blocked"), true);
             return false;
         }
         Vec3 from = player.position();
@@ -326,7 +326,7 @@ public final class RogueAbilities {
         ServerLevel level = player.serverLevel();
         level.sendParticles(ParticleTypes.SOUL_FIRE_FLAME, player.getX(), player.getY() + 1, player.getZ(), 20, 0.3, 0.5, 0.3, 0.05);
         level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.AMETHYST_BLOCK_CHIME, SoundSource.PLAYERS, 1.0f, 1.6f);
-        player.displayClientMessage(Component.translatable("msg.rpgclasses.shadow_step_ready"), true);
+        player.displayClientMessage(Component.translatable("msg.rites_and_paths.shadow_step_ready"), true);
     }
 
     // --- Señuelo ---

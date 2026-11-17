@@ -1,0 +1,315 @@
+{
+  "schema_version": 1,
+  "display": {
+    "icon": "minecraft:iron_pickaxe"
+  },
+  "effects": [
+    {
+      "type": "rites_and_paths:attribute",
+      "modifiers": [
+        {
+          "attribute": "rites_and_paths:scale",
+          "operation": "add",
+          "values": [
+            -0.25,
+            -0.25,
+            -0.25,
+            -0.25
+          ]
+        },
+        {
+          "attribute": "minecraft:generic.movement_speed",
+          "operation": "multiply_base",
+          "values": [
+            -0.1,
+            -0.1,
+            -0.1,
+            -0.1
+          ]
+        }
+      ]
+    },
+    {
+      "type": "rites_and_paths:mechanic",
+      "id": "rites_and_paths:race_miner",
+      "mining_speed": 0.25
+    },
+    {
+      "type": "rites_and_paths:mechanic",
+      "id": "rites_and_paths:race_fortune",
+      "level": {
+        "values": [
+          1,
+          1,
+          2,
+          3
+        ]
+      }
+    }
+  ],
+  "subraces": [
+    {
+      "id": "deep",
+      "display": {
+        "icon": "minecraft:deepslate"
+      },
+      "available": true,
+      "effects": [
+        {
+          "type": "rites_and_paths:mechanic",
+          "id": "rites_and_paths:race_cave_eyes"
+        },
+        {
+          "type": "rites_and_paths:mechanic",
+          "id": "rites_and_paths:race_stone_sense",
+          "min_rank": 1,
+          "radius": {
+            "values": [
+              8,
+              8,
+              12,
+              16
+            ]
+          },
+          "duration_seconds": {
+            "values": [
+              5,
+              5,
+              8,
+              8
+            ]
+          },
+          "cooldown_seconds": {
+            "values": [
+              30,
+              30,
+              30,
+              20
+            ]
+          }
+        }
+      ],
+      "rites": [
+        {
+          "id": "dwarf.deep.1",
+          "kind": "feat",
+          "objectives": [
+            {
+              "type": "kill",
+              "count": 30,
+              "filter": {
+                "target": "enemy",
+                "underground": true
+              }
+            }
+          ]
+        },
+        {
+          "id": "dwarf.deep.2",
+          "kind": "craft",
+          "objectives": [
+            {
+              "type": "offer",
+              "items": [
+                {
+                  "tag": "rites_and_paths:rite/ores",
+                  "count": 64,
+                  "distinct": 3
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "dwarf.deep.3",
+          "kind": "ritual",
+          "objectives": [
+            {
+              "type": "boss",
+              "altar": "underground"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "smith",
+      "display": {
+        "icon": "minecraft:anvil"
+      },
+      "available": true,
+      "effects": [
+        {
+          "type": "rites_and_paths:mechanic",
+          "id": "rites_and_paths:race_forged",
+          "durability": {
+            "values": [
+              0.2,
+              0.2,
+              0.4,
+              0.4
+            ]
+          },
+          "unbreaking": {
+            "values": [
+              0,
+              0,
+              0,
+              1
+            ]
+          }
+        },
+        {
+          "type": "rites_and_paths:mechanic",
+          "id": "rites_and_paths:race_anvil_discount",
+          "min_rank": 1,
+          "discount": 0.5
+        },
+        {
+          "type": "rites_and_paths:mechanic",
+          "id": "rites_and_paths:race_forged_armor",
+          "min_rank": 2,
+          "toughness_per_piece": 0.5
+        }
+      ],
+      "rites": [
+        {
+          "id": "dwarf.smith.1",
+          "kind": "feat",
+          "objectives": [
+            {
+              "type": "kill",
+              "count": 30,
+              "filter": {
+                "target": "enemy",
+                "weapon_crafted": true
+              }
+            }
+          ]
+        },
+        {
+          "id": "dwarf.smith.2",
+          "kind": "craft",
+          "objectives": [
+            {
+              "type": "offer",
+              "items": [
+                {
+                  "item": "minecraft:iron_helmet",
+                  "count": 1,
+                  "pred": "crafted_by_you"
+                },
+                {
+                  "item": "minecraft:iron_chestplate",
+                  "count": 1,
+                  "pred": "crafted_by_you"
+                },
+                {
+                  "item": "minecraft:iron_leggings",
+                  "count": 1,
+                  "pred": "crafted_by_you"
+                },
+                {
+                  "item": "minecraft:iron_boots",
+                  "count": 1,
+                  "pred": "crafted_by_you"
+                },
+                {
+                  "tag": "rites_and_paths:rite/iron_weapons",
+                  "count": 1,
+                  "pred": "crafted_by_you"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "dwarf.smith.3",
+          "kind": "ritual",
+          "objectives": [
+            {
+              "type": "boss",
+              "crafted_diamond": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "demolisher",
+      "display": {
+        "icon": "minecraft:tnt"
+      },
+      "available": true,
+      "effects": [
+        {
+          "type": "rites_and_paths:mechanic",
+          "id": "rites_and_paths:race_blast_proof",
+          "tnt_radius": 0.25
+        },
+        {
+          "type": "rites_and_paths:mechanic",
+          "id": "rites_and_paths:race_vein_miner",
+          "min_rank": 1,
+          "max_blocks": {
+            "values": [
+              8,
+              8,
+              16,
+              16
+            ]
+          }
+        },
+        {
+          "type": "rites_and_paths:mechanic",
+          "id": "rites_and_paths:race_tunnel",
+          "min_rank": 3,
+          "size": 3,
+          "exhaustion_per_block": 0.1
+        }
+      ],
+      "rites": [
+        {
+          "id": "dwarf.demolisher.1",
+          "kind": "feat",
+          "objectives": [
+            {
+              "type": "kill",
+              "count": 20,
+              "filter": {
+                "target": "enemy",
+                "explosion": true
+              }
+            }
+          ]
+        },
+        {
+          "id": "dwarf.demolisher.2",
+          "kind": "craft",
+          "objectives": [
+            {
+              "type": "offer",
+              "items": [
+                {
+                  "item": "minecraft:tnt",
+                  "count": 16,
+                  "pred": "crafted_by_you"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "dwarf.demolisher.3",
+          "kind": "ritual",
+          "objectives": [
+            {
+              "type": "boss",
+              "explosions": 4
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

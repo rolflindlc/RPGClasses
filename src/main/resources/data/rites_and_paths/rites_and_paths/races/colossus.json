@@ -1,0 +1,320 @@
+{
+  "schema_version": 1,
+  "display": {
+    "icon": "minecraft:iron_block"
+  },
+  "effects": [
+    {
+      "type": "rites_and_paths:attribute",
+      "modifiers": [
+        {
+          "attribute": "rites_and_paths:scale",
+          "operation": "add",
+          "values": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "attribute": "minecraft:generic.max_health",
+          "operation": "multiply_base",
+          "values": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "attribute": "rites_and_paths:jump_bonus",
+          "operation": "add",
+          "values": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "attribute": "rites_and_paths:mob_detection",
+          "operation": "add",
+          "values": [
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ]
+        },
+        {
+          "attribute": "forge:step_height_addition",
+          "operation": "add",
+          "values": [
+            0.6,
+            0.6,
+            0.6,
+            0.6
+          ]
+        },
+        {
+          "attribute": "forge:block_reach",
+          "operation": "add",
+          "values": [
+            1.5,
+            1.5,
+            1.5,
+            1.5
+          ]
+        },
+        {
+          "attribute": "forge:entity_reach",
+          "operation": "add",
+          "values": [
+            1.5,
+            1.5,
+            1.5,
+            1.5
+          ]
+        }
+      ]
+    },
+    {
+      "type": "rites_and_paths:mechanic",
+      "id": "rites_and_paths:race_hunger",
+      "exhaustion": 0.5
+    },
+    {
+      "type": "rites_and_paths:mechanic",
+      "id": "rites_and_paths:race_area_break",
+      "size": 2
+    },
+    {
+      "type": "rites_and_paths:mechanic",
+      "id": "rites_and_paths:race_heavy"
+    },
+    {
+      "type": "rites_and_paths:mechanic",
+      "id": "rites_and_paths:race_trample"
+    },
+    {
+      "type": "rites_and_paths:mechanic",
+      "id": "rites_and_paths:race_no_mount"
+    },
+    {
+      "type": "rites_and_paths:mechanic",
+      "id": "rites_and_paths:race_giant_fall",
+      "fall_height": 6
+    }
+  ],
+  "subraces": [
+    {
+      "id": "porter",
+      "display": {
+        "icon": "minecraft:chest"
+      },
+      "available": true,
+      "effects": [
+        {
+          "type": "rites_and_paths:attribute",
+          "modifiers": [
+            {
+              "attribute": "minecraft:generic.movement_speed",
+              "operation": "multiply_base",
+              "values": [
+                -0.1,
+                -0.1,
+                -0.1,
+                -0.1
+              ]
+            }
+          ]
+        },
+        {
+          "type": "rites_and_paths:mechanic",
+          "id": "rites_and_paths:race_belt",
+          "slots": {
+            "values": [
+              3,
+              4,
+              5,
+              6
+            ]
+          },
+          "passengers": {
+            "values": [
+              1,
+              1,
+              2,
+              2
+            ]
+          },
+          "passenger_penalty": {
+            "values": [
+              0.05,
+              0.05,
+              0.05,
+              0
+            ]
+          }
+        }
+      ],
+      "rites": [
+        {
+          "id": "colossus.porter.1",
+          "kind": "feat",
+          "objectives": [
+            {
+              "type": "kill",
+              "count": 30,
+              "filter": {
+                "target": "enemy",
+                "belt_min": 3
+              }
+            }
+          ]
+        },
+        {
+          "id": "colossus.porter.2",
+          "kind": "craft",
+          "objectives": [
+            {
+              "type": "offer",
+              "items": [
+                {
+                  "item": "minecraft:chest",
+                  "count": 4
+                },
+                {
+                  "item": "minecraft:furnace",
+                  "count": 2
+                },
+                {
+                  "item": "minecraft:crafting_table",
+                  "count": 1
+                },
+                {
+                  "item": "minecraft:leather",
+                  "count": 16
+                },
+                {
+                  "item": "minecraft:iron_ingot",
+                  "count": 16
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "colossus.porter.3",
+          "kind": "ritual",
+          "objectives": [
+            {
+              "type": "boss",
+              "source": "passenger",
+              "source_share": 0.25
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "titan",
+      "display": {
+        "icon": "minecraft:obsidian"
+      },
+      "available": true,
+      "effects": [
+        {
+          "type": "rites_and_paths:mechanic",
+          "id": "rites_and_paths:race_grow",
+          "duration_seconds": {
+            "values": [
+              30,
+              42,
+              51,
+              60
+            ]
+          },
+          "cooldown_seconds": {
+            "values": [
+              135,
+              120,
+              105,
+              90
+            ]
+          },
+          "absorption": {
+            "values": [
+              0.5,
+              0.7,
+              0.85,
+              1.0
+            ]
+          },
+          "shake_radius": 24,
+          "size": 3,
+          "fall_height": 12
+        }
+      ],
+      "rites": [
+        {
+          "id": "colossus.titan.1",
+          "kind": "feat",
+          "objectives": [
+            {
+              "type": "kill",
+              "count": 20,
+              "filter": {
+                "target": "enemy"
+              }
+            },
+            {
+              "type": "counter",
+              "key": "area_blocks",
+              "count": 200
+            }
+          ]
+        },
+        {
+          "id": "colossus.titan.2",
+          "kind": "craft",
+          "objectives": [
+            {
+              "type": "offer",
+              "items": [
+                {
+                  "item": "minecraft:iron_block",
+                  "count": 4
+                },
+                {
+                  "item": "minecraft:obsidian",
+                  "count": 8
+                },
+                {
+                  "item": "minecraft:cobblestone",
+                  "count": 64
+                },
+                {
+                  "item": "minecraft:anvil",
+                  "count": 1
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "colossus.titan.3",
+          "kind": "ritual",
+          "objectives": [
+            {
+              "type": "boss",
+              "source": "titan",
+              "source_share": 0.5
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

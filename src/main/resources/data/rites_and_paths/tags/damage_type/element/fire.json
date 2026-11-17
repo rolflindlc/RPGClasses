@@ -1,0 +1,12 @@
+{
+  "replace": false,
+  "values": [
+    "#minecraft:is_fire",
+    "rites_and_paths:dragon_flame",
+    "rites_and_paths:breath_fire",
+    {
+      "id": "iceandfire:dragon_fire",
+      "required": false
+    }
+  ]
+}

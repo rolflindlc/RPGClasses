@@ -209,7 +209,7 @@ public final class StatEngine {
         if (attribute == null) {
             // Normal si el mod que lo aporta no está instalado (p. ej. Iron's Spells): se avisa una sola vez.
             if (WARNED_ATTRIBUTES.add(attributeId.toString())) {
-                RpgClasses.LOGGER.warn("[rpgclasses] Atributo '{}' no registrado; se ignoran sus modificadores", attributeId);
+                RpgClasses.LOGGER.warn("[rites_and_paths] Atributo '{}' no registrado; se ignoran sus modificadores", attributeId);
             }
             return;
         }

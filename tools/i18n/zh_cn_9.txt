@@ -2,5 +2,5 @@
 1 调试日志已禁用(错误仍会被记录)
 2 尚无已记录的事件。
 3 无法写入转储文件:%s
-4 转储已写入:%s(logs 文件夹)。请把这个文件和 rpgclasses-debug.log 发给我。
-5 %s 出错:请查看 logs/rpgclasses-debug.log
+4 转储已写入:%s(logs 文件夹)。请把这个文件和 rites_and_paths-debug.log 发给我。
+5 %s 出错:请查看 logs/rites_and_paths-debug.log

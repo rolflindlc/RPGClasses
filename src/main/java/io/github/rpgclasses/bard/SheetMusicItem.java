@@ -24,7 +24,7 @@ public class SheetMusicItem extends Item {
     public Component getName(ItemStack stack) {
         MusicSpellInfo spell = Sheets.spellOf(stack);
         if (spell == null) return super.getName(stack);
-        return Component.translatable("item.rpgclasses.sheet_music.named", Component.translatable(spell.nameKey()));
+        return Component.translatable("item.rites_and_paths.sheet_music.named", Component.translatable(spell.nameKey()));
     }
 
     @Override
@@ -44,13 +44,13 @@ public class SheetMusicItem extends Item {
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
         MusicSpellInfo spell = Sheets.spellOf(stack);
         if (spell == null) {
-            tooltip.add(Component.translatable("tooltip.rpgclasses.sheet_music.empty").withStyle(ChatFormatting.GRAY));
+            tooltip.add(Component.translatable("tooltip.rites_and_paths.sheet_music.empty").withStyle(ChatFormatting.GRAY));
             return;
         }
-        tooltip.add(Component.translatable("tooltip.rpgclasses.sheet_music.level", Sheets.levelOf(stack), spell.maxLevel)
+        tooltip.add(Component.translatable("tooltip.rites_and_paths.sheet_music.level", Sheets.levelOf(stack), spell.maxLevel)
                 .withStyle(ChatFormatting.GOLD));
-        tooltip.add(Component.translatable("tooltip.rpgclasses.sheet_music.combo", spell.combo).withStyle(ChatFormatting.AQUA));
+        tooltip.add(Component.translatable("tooltip.rites_and_paths.sheet_music.combo", spell.combo).withStyle(ChatFormatting.AQUA));
         tooltip.add(Component.translatable(spell.nameKey() + ".guide").withStyle(ChatFormatting.GRAY));
-        tooltip.add(Component.translatable("tooltip.rpgclasses.sheet_music.how").withStyle(ChatFormatting.DARK_GRAY));
+        tooltip.add(Component.translatable("tooltip.rites_and_paths.sheet_music.how").withStyle(ChatFormatting.DARK_GRAY));
     }
 }

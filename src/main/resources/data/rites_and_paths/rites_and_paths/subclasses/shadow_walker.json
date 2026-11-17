@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "class": "rites_and_paths:rogue",
+  "display": {
+    "icon": "minecraft:ender_pearl"
+  },
+  "effects": [
+    {
+      "type": "rites_and_paths:attribute",
+      "modifiers": [
+        {
+          "attribute": "rites_and_paths:sneak_speed",
+          "to": 1.0,
+          "operation": "add"
+        }
+      ]
+    }
+  ],
+  "milestones": [
+    {
+      "subclass_level": 1,
+      "grants": "rites_and_paths:shadow_step"
+    }
+  ]
+}

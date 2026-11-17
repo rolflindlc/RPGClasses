@@ -24,12 +24,12 @@ public class CoreLogicTest {
 
     private static final String CLASS_JSON = """
             {"branches":[
-              {"id":"a","effects":[{"type":"rpgclasses:mechanic","id":"t:x"}]},
-              {"id":"b","effects":[{"type":"rpgclasses:mechanic","id":"t:x"}]},
-              {"id":"c","effects":[{"type":"rpgclasses:mechanic","id":"t:x"}],
-               "perks":[{"id":"p1","effects":[{"type":"rpgclasses:mechanic","id":"t:p"}]},{"id":"p2","effects":[{"type":"rpgclasses:mechanic","id":"t:q"}]}]},
-              {"id":"d","effects":[{"type":"rpgclasses:mechanic","id":"t:x"}]},
-              {"id":"e","effects":[{"type":"rpgclasses:mechanic","id":"t:x"}]}],
+              {"id":"a","effects":[{"type":"rites_and_paths:mechanic","id":"t:x"}]},
+              {"id":"b","effects":[{"type":"rites_and_paths:mechanic","id":"t:x"}]},
+              {"id":"c","effects":[{"type":"rites_and_paths:mechanic","id":"t:x"}],
+               "perks":[{"id":"p1","effects":[{"type":"rites_and_paths:mechanic","id":"t:p"}]},{"id":"p2","effects":[{"type":"rites_and_paths:mechanic","id":"t:q"}]}]},
+              {"id":"d","effects":[{"type":"rites_and_paths:mechanic","id":"t:x"}]},
+              {"id":"e","effects":[{"type":"rites_and_paths:mechanic","id":"t:x"}]}],
              "subclasses":["t:s1","t:s2","t:s3"]}""";
 
     private static ClassDef testClass() {
@@ -37,7 +37,7 @@ public class CoreLogicTest {
     }
 
     private static SubclassDef testSub(String id) {
-        return DefinitionParser.parseSubclass(id, "{\"class\":\"t:class\",\"effects\":[{\"type\":\"rpgclasses:mechanic\",\"id\":\"t:y\"}]}");
+        return DefinitionParser.parseSubclass(id, "{\"class\":\"t:class\",\"effects\":[{\"type\":\"rites_and_paths:mechanic\",\"id\":\"t:y\"}]}");
     }
 
     private static void fill(ProgressState s, ClassDef def, String branch, int points) {

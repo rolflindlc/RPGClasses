@@ -27,18 +27,18 @@ import static org.junit.Assert.assertTrue;
 
 /** Razas (anexo de razas): archivos reales del mod y reglas puras. */
 public class RaceTest {
-    private static final Path DATA = Path.of(System.getProperty("rpgclasses.data", "src/main/resources/data"));
+    private static final Path DATA = Path.of(System.getProperty("rites_and_paths.data", "src/main/resources/data"));
     private static final DefinitionStore STORE = new DefinitionStore();
     private static final RaceStore RACES = new RaceStore();
     private static final StatCalculator.Context CTX = new StatCalculator.Context(false);
 
     private static Map<String, String> read(String folder) throws IOException {
         Map<String, String> out = new HashMap<>();
-        Path dir = DATA.resolve("rpgclasses").resolve("rpgclasses").resolve(folder);
+        Path dir = DATA.resolve("rites_and_paths").resolve("rites_and_paths").resolve(folder);
         try (Stream<Path> files = Files.list(dir)) {
             for (Path f : (Iterable<Path>) files::iterator) {
                 String name = f.getFileName().toString();
-                if (name.endsWith(".json")) out.put("rpgclasses:" + name.substring(0, name.length() - 5), Files.readString(f, StandardCharsets.UTF_8));
+                if (name.endsWith(".json")) out.put("rites_and_paths:" + name.substring(0, name.length() - 5), Files.readString(f, StandardCharsets.UTF_8));
             }
         }
         return out;
@@ -52,13 +52,13 @@ public class RaceTest {
 
     private static ProgressState player(String race, String subrace, int rank, String classId, int basePoints) {
         ProgressState s = new ProgressState();
-        RaceDef def = RACES.race("rpgclasses:" + race);
+        RaceDef def = RACES.race("rites_and_paths:" + race);
         // Las subrazas de la adenda 0.7 aún no disponibles se asignan como haría un administrador.
         if (def.subrace(subrace).available()) assertEquals(Result.OK, ProgressionRules.checkChooseRace(s, def, subrace));
         ProgressionRules.chooseRace(s, def, subrace);
         s.raceRank = rank;
         if (classId != null) {
-            ClassDef c = STORE.classDef("rpgclasses:" + classId);
+            ClassDef c = STORE.classDef("rites_and_paths:" + classId);
             ProgressionRules.chooseClass(s, c);
             // 30 puntos repartidos en 3 ramas: el muro llega a su máximo.
             int left = basePoints;
@@ -88,10 +88,10 @@ public class RaceTest {
             int n = RACES.race(id).subraces().size();
             assertTrue(id + ": " + n, n >= 2 && n <= 6);
         }
-        assertEquals(4, RACES.race("rpgclasses:slime").subraces().size());
-        assertEquals(2, RACES.race("rpgclasses:colossus").subraces().size());
-        assertEquals(6, RACES.race("rpgclasses:draconid").subraces().size());
-        assertEquals(3, RACES.race("rpgclasses:centaur").subraces().size());
+        assertEquals(4, RACES.race("rites_and_paths:slime").subraces().size());
+        assertEquals(2, RACES.race("rites_and_paths:colossus").subraces().size());
+        assertEquals(6, RACES.race("rites_and_paths:draconid").subraces().size());
+        assertEquals(3, RACES.race("rites_and_paths:centaur").subraces().size());
         // Fase R3c: las 39 subrazas están programadas y se pueden elegir.
         int subraces = 0;
         for (String id : RACES.ids()) {
@@ -107,7 +107,7 @@ public class RaceTest {
     public void colossusHealthHasNoCap() {
         // Adenda 0.7: sin tope de vida. Coloso (+100 %) + Paladín (+20 %) + Juggernaut (+60 %) = +180 %.
         ProgressState s = player("colossus", "porter", 0, "paladin", 30);
-        s.subclassId = "rpgclasses:charging_juggernaut";
+        s.subclassId = "rites_and_paths:charging_juggernaut";
         s.subclassLevel = 10;
         double total = StatCalculator.attributeTotals(s, STORE.classDef(s.classId), STORE.subclassDef(s.subclassId), RACES.race(s.raceId), CTX)
                 .get(new StatCalculator.Key(StatCalculator.MAX_HEALTH, "multiply_base"));
@@ -119,10 +119,10 @@ public class RaceTest {
     @Test
     public void raceIsPermanentAndSurvivesClassRespec() {
         ProgressState s = player("orc", "stoneskin", 2, "mage", 30);
-        assertEquals(Result.ALREADY_HAS_RACE, ProgressionRules.checkChooseRace(s, RACES.race("rpgclasses:elf"), "dark"));
+        assertEquals(Result.ALREADY_HAS_RACE, ProgressionRules.checkChooseRace(s, RACES.race("rites_and_paths:elf"), "dark"));
         ProgressionRules.respecClass(s, 0.33);
         assertNull(s.classId);
-        assertEquals("rpgclasses:orc", s.raceId);
+        assertEquals("rites_and_paths:orc", s.raceId);
         assertEquals("stoneskin", s.subraceId);
         assertEquals(2, s.raceRank);
     }
@@ -131,10 +131,10 @@ public class RaceTest {
     public void allSubracesAvailableAndUnknownRejected() {
         // Fase R2: las 24 subrazas están programadas y se pueden elegir.
         for (String[] rs : new String[][]{{"dwarf", "smith"}, {"goblin", "wolf_rider"}, {"infernal", "pyromaniac"}}) {
-            assertEquals(Result.OK, ProgressionRules.checkChooseRace(new ProgressState(), RACES.race("rpgclasses:" + rs[0]), rs[1]));
+            assertEquals(Result.OK, ProgressionRules.checkChooseRace(new ProgressState(), RACES.race("rites_and_paths:" + rs[0]), rs[1]));
         }
         assertEquals(Result.UNKNOWN_SUBRACE,
-                ProgressionRules.checkChooseRace(new ProgressState(), RACES.race("rpgclasses:goblin"), "nope"));
+                ProgressionRules.checkChooseRace(new ProgressState(), RACES.race("rites_and_paths:goblin"), "nope"));
     }
 
     @Test
@@ -201,14 +201,14 @@ public class RaceTest {
     public void mechanicsUnlockByRank() {
         ProgressState s = player("orc", "devourer", 0, null, 0);
         RaceDef orc = RACES.race(s.raceId);
-        assertNotNull(StatCalculator.raceMechanic(s, orc, "rpgclasses:race_last_stand"));
-        assertNotNull(StatCalculator.raceMechanic(s, orc, "rpgclasses:race_iron_stomach"));
-        assertNull(StatCalculator.raceMechanic(s, orc, "rpgclasses:race_feast"));
+        assertNotNull(StatCalculator.raceMechanic(s, orc, "rites_and_paths:race_last_stand"));
+        assertNotNull(StatCalculator.raceMechanic(s, orc, "rites_and_paths:race_iron_stomach"));
+        assertNull(StatCalculator.raceMechanic(s, orc, "rites_and_paths:race_feast"));
         s.raceRank = 3;
-        assertNotNull(StatCalculator.raceMechanic(s, orc, "rpgclasses:race_feast"));
+        assertNotNull(StatCalculator.raceMechanic(s, orc, "rites_and_paths:race_feast"));
         // Los valores por rango salen de la tabla.
         ProgressState stone = player("orc", "stoneskin", 1, null, 0);
-        assertEquals(1.25, StatCalculator.raceMechanic(stone, orc, "rpgclasses:race_thick_skin").number("flat_reduction", 0), 1e-9);
+        assertEquals(1.25, StatCalculator.raceMechanic(stone, orc, "rites_and_paths:race_thick_skin").number("flat_reduction", 0), 1e-9);
         assertFalse(StatCalculator.raceMechanics(stone, orc).isEmpty());
     }
 
@@ -217,7 +217,7 @@ public class RaceTest {
         int total = 0;
         for (String race : new String[]{"human", "orc", "dwarf", "elf", "goblin", "triton", "infernal", "undead",
                 "slime", "colossus", "draconid", "centaur"}) {
-            for (var sub : RACES.race("rpgclasses:" + race).subraces()) {
+            for (var sub : RACES.race("rites_and_paths:" + race).subraces()) {
                 assertEquals(race + "/" + sub.id(), 3, sub.rites().size());
                 assertNotNull(sub.riteFor(0));
                 assertNull(sub.riteFor(3));
@@ -229,14 +229,14 @@ public class RaceTest {
 
     @Test
     public void riteProgressCountsAndCompletes() {
-        var orc = RACES.race("rpgclasses:orc").subrace("stoneskin").riteFor(0); // 100 golpes + 30 enemigos
+        var orc = RACES.race("rites_and_paths:orc").subrace("stoneskin").riteFor(0); // 100 golpes + 30 enemigos
         java.util.Map<String, Integer> p = new java.util.HashMap<>();
         io.github.rpgclasses.core.rite.RiteProgress.add(p, 0, 100);
         assertFalse(io.github.rpgclasses.core.rite.RiteProgress.complete(orc, p));
         io.github.rpgclasses.core.rite.RiteProgress.add(p, 1, 30);
         assertTrue(io.github.rpgclasses.core.rite.RiteProgress.complete(orc, p));
 
-        var curiosity = RACES.race("rpgclasses:human").subrace("autodidact").riteFor(0); // 6 de cada uno de 5 tipos
+        var curiosity = RACES.race("rites_and_paths:human").subrace("autodidact").riteFor(0); // 6 de cada uno de 5 tipos
         var o = curiosity.objectives().get(0);
         java.util.Map<String, Integer> q = new java.util.HashMap<>();
         for (int t = 0; t < 4; t++) io.github.rpgclasses.core.rite.RiteProgress.addSub(q, 0, "mob" + t, 6);
@@ -246,7 +246,7 @@ public class RaceTest {
         io.github.rpgclasses.core.rite.RiteProgress.addSub(q, 0, "mob4", 1);
         assertTrue(io.github.rpgclasses.core.rite.RiteProgress.complete(curiosity, q));
 
-        var boss = RACES.race("rpgclasses:dwarf").subrace("deep").riteFor(2);
+        var boss = RACES.race("rites_and_paths:dwarf").subrace("deep").riteFor(2);
         java.util.Map<String, Integer> b = new java.util.HashMap<>();
         assertFalse(io.github.rpgclasses.core.rite.RiteProgress.complete(boss, b));
         io.github.rpgclasses.core.rite.RiteProgress.markDone(b, 0);

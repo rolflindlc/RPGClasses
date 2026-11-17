@@ -113,7 +113,7 @@ public final class ClassCommands {
                         .executes(c -> {
                             ServerPlayer target = EntityArgument.getPlayer(c, "jugador");
                             ProgressionService.adminReset(target);
-                            c.getSource().sendSuccess(() -> Component.translatable("msg.rpgclasses.reset_done", target.getDisplayName()), true);
+                            c.getSource().sendSuccess(() -> Component.translatable("msg.rites_and_paths.reset_done", target.getDisplayName()), true);
                             return 1;
                         })))
                 .then(Commands.literal("validar").executes(c -> validate(c.getSource())))
@@ -144,7 +144,7 @@ public final class ClassCommands {
 
     private static int raceInfoOrFail(CommandSourceStack source, ServerPlayer target, boolean ok) {
         if (!ok) {
-            source.sendFailure(Component.translatable("msg.rpgclasses.result.unknown_race"));
+            source.sendFailure(Component.translatable("msg.rites_and_paths.result.unknown_race"));
             return 0;
         }
         return raceInfo(source, target);
@@ -155,12 +155,12 @@ public final class ClassCommands {
         if (data == null) return 0;
         ProgressState s = data.state;
         if (s.raceId == null) {
-            source.sendSuccess(() -> Component.translatable("msg.rpgclasses.race_none", target.getDisplayName()), false);
+            source.sendSuccess(() -> Component.translatable("msg.rites_and_paths.race_none", target.getDisplayName()), false);
             return 1;
         }
         List<String> walls = new ArrayList<>();
         for (String w : s.humanWalls) walls.add(Component.translatable(Ids.langKey("discipline", w, "name")).getString());
-        source.sendSuccess(() -> Component.translatable("msg.rpgclasses.race_info", target.getDisplayName(),
+        source.sendSuccess(() -> Component.translatable("msg.rites_and_paths.race_info", target.getDisplayName(),
                 Component.translatable(Ids.langKey("race", s.raceId, "name")),
                 Component.translatable(Ids.langKey("subrace", s.raceId + "." + s.subraceId, "name")), s.raceRank,
                 walls.isEmpty() ? "" : " | " + String.join(", ", walls)), false);
@@ -176,17 +176,17 @@ public final class ClassCommands {
         PlayerClassData data = PlayerClassDataProvider.get(target);
         if (data == null) return 0;
         ProgressState s = data.state;
-        Component none = Component.translatable("msg.rpgclasses.none");
+        Component none = Component.translatable("msg.rites_and_paths.none");
         Component className = s.classId == null ? none : Component.translatable(Ids.langKey("class", s.classId, "name"));
         Component subName = s.subclassId == null ? none : Component.translatable(Ids.langKey("subclass", s.subclassId, "name"));
         int cap = ProgressionRules.subclassCap(s.basePoints());
         Component next = ProgressionRules.isMaxed(s)
-                ? Component.translatable("msg.rpgclasses.max_level")
-                : Component.translatable("msg.rpgclasses.next_cost", ProgressionRules.nextCost(s, ServerConfig.XP_COST_MULTIPLIER.get()));
-        source.sendSuccess(() -> Component.translatable("msg.rpgclasses.info",
+                ? Component.translatable("msg.rites_and_paths.max_level")
+                : Component.translatable("msg.rites_and_paths.next_cost", ProgressionRules.nextCost(s, ServerConfig.XP_COST_MULTIPLIER.get()));
+        source.sendSuccess(() -> Component.translatable("msg.rites_and_paths.info",
                 className, s.basePoints(), subName, s.subclassLevel, cap, next), false);
         if (s.classId != null && DefinitionStore.SERVER.classDef(s.classId) == null) {
-            source.sendSuccess(() -> Component.translatable("msg.rpgclasses.suspended").withStyle(ChatFormatting.YELLOW), false);
+            source.sendSuccess(() -> Component.translatable("msg.rites_and_paths.suspended").withStyle(ChatFormatting.YELLOW), false);
         }
         return 1;
     }
@@ -195,7 +195,7 @@ public final class ClassCommands {
         Map<String, List<String>> errors = DefinitionStore.SERVER.errors();
         if (errors.isEmpty()) {
             int count = DefinitionStore.SERVER.classIds().size();
-            source.sendSuccess(() -> Component.translatable("msg.rpgclasses.validate_ok", count), false);
+            source.sendSuccess(() -> Component.translatable("msg.rites_and_paths.validate_ok", count), false);
             return 1;
         }
         for (Map.Entry<String, List<String>> e : errors.entrySet()) {
@@ -243,14 +243,14 @@ public final class ClassCommands {
 
     private static int setLog(CommandSourceStack source, boolean on) {
         DebugLog.setEnabled(on);
-        source.sendSuccess(() -> Component.translatable(on ? "message.rpgclasses.debug.log_on" : "message.rpgclasses.debug.log_off"), true);
+        source.sendSuccess(() -> Component.translatable(on ? "message.rites_and_paths.debug.log_on" : "message.rites_and_paths.debug.log_off"), true);
         return 1;
     }
 
     private static int showLog(CommandSourceStack source, int lines) {
         ServerPlayer player = source.getPlayer();
         List<String> recent = DebugLog.recent(player == null ? null : player.getUUID(), lines);
-        if (recent.isEmpty()) source.sendSuccess(() -> Component.translatable("message.rpgclasses.debug.log_empty"), false);
+        if (recent.isEmpty()) source.sendSuccess(() -> Component.translatable("message.rites_and_paths.debug.log_empty"), false);
         for (String line : recent) source.sendSuccess(() -> Component.literal(line).withStyle(ChatFormatting.GRAY), false);
         return recent.size();
     }
@@ -262,7 +262,7 @@ public final class ClassCommands {
             return 1;
         } catch (Throwable t) {
             DebugLog.error(target, "volcado", t, "no se pudo escribir");
-            source.sendFailure(Component.translatable("message.rpgclasses.debug.dump_failed", String.valueOf(t)));
+            source.sendFailure(Component.translatable("message.rites_and_paths.debug.dump_failed", String.valueOf(t)));
             return 0;
         }
     }

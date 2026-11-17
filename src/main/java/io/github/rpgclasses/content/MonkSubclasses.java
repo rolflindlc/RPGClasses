@@ -57,8 +57,8 @@ public final class MonkSubclasses {
     public static final String MANIFEST = "elemental_manifest";
 
     private static final UUID SWIM_ID = UUID.fromString("6e1f3a9c-4b2d-4f7e-8c05-a9d3b7e1f240");
-    private static final String SWIM_NAME = "rpgclasses_ability:elemental_manifest";
-    private static final String TAG_FIST_UNTIL = "rpgclasses.disabling_fist.";
+    private static final String SWIM_NAME = "rites_and_paths_ability:elemental_manifest";
+    private static final String TAG_FIST_UNTIL = "rites_and_paths.disabling_fist.";
     /** Golpe desarmado de este tick: el empuje se multiplica en LivingKnockBackEvent. */
     private static final Map<Integer, Double> KNOCKBACK = new HashMap<>();
     private static final Map<UUID, Boolean> REFLECTING = new HashMap<>();

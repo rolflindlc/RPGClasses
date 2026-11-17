@@ -1,5 +1,5 @@
 # Textura del Amuleto del Creativo (16x16): cordón dorado y gema magenta con un reloj.
-# Uso: python3 -I tools/art/make_creative_amulet.py src/main/resources/assets/rpgclasses/textures/item/creative_amulet.png
+# Uso: python3 -I tools/art/make_creative_amulet.py src/main/resources/assets/rites_and_paths/textures/item/creative_amulet.png
 import sys
 from PIL import Image
 im = Image.new("RGBA", (16, 16), (0, 0, 0, 0)); px = im.load()

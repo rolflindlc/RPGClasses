@@ -7,7 +7,7 @@ import java.util.Set;
  * Cuando existan los registros de Forge (fase 2+), estos conjuntos se alimentarán de ellos.
  */
 public final class Ids {
-    public static final String NS = "rpgclasses";
+    public static final String NS = "rites_and_paths";
 
     public static final String MAGIC = NS + ":magic";
     public static final String BOW = NS + ":bow";
@@ -32,7 +32,7 @@ public final class Ids {
 
     public static final Set<String> CONDITIONS = Set.of(NS + ":no_armor");
 
-    /** Clave de idioma por convención: "rpgclasses:mage" + "class" + "name" -> class.rpgclasses.mage.name */
+    /** Clave de idioma por convención: "rites_and_paths:mage" + "class" + "name" -> class.rites_and_paths.mage.name */
     public static String langKey(String kind, String id, String suffix) {
         return kind + "." + id.replace(':', '.').replace('/', '.') + "." + suffix;
     }

@@ -16,7 +16,7 @@ import java.util.List;
 public abstract class PiglinBarterMixin {
     @Inject(method = "getBarterResponseItems(Lnet/minecraft/world/entity/monster/piglin/Piglin;)Ljava/util/List;",
             at = @At("RETURN"), cancellable = true)
-    private static void rpgclasses$barter(Piglin piglin, CallbackInfoReturnable<List<ItemStack>> cir) {
+    private static void rites_and_paths$barter(Piglin piglin, CallbackInfoReturnable<List<ItemStack>> cir) {
         List<ItemStack> out = CraftTraits.onBarter(piglin, cir.getReturnValue());
         if (out != cir.getReturnValue()) cir.setReturnValue(out);
     }

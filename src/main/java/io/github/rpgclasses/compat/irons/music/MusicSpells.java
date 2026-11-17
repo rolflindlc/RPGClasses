@@ -146,7 +146,7 @@ final class MusicSpells {
         public List<MutableComponent> getUniqueInfo(int level, LivingEntity caster) {
             List<MutableComponent> out = new ArrayList<>();
             info(level, caster, out);
-            out.add(Component.translatable("spell.rpgclasses.info.combo", info.combo));
+            out.add(Component.translatable("spell.rites_and_paths.info.combo", info.combo));
             return out;
         }
 
@@ -198,9 +198,9 @@ final class MusicSpells {
 
         @Override
         protected void info(int level, LivingEntity caster, List<MutableComponent> out) {
-            out.add(Component.translatable("spell.rpgclasses.info.damage", num(damage(level, caster))));
-            out.add(Component.translatable("spell.rpgclasses.info.range", num(area(level))));
-            if (pierce(level) > 0) out.add(Component.translatable("spell.rpgclasses.info.pierce", pierce(level)));
+            out.add(Component.translatable("spell.rites_and_paths.info.damage", num(damage(level, caster))));
+            out.add(Component.translatable("spell.rites_and_paths.info.range", num(area(level))));
+            if (pierce(level) > 0) out.add(Component.translatable("spell.rites_and_paths.info.pierce", pierce(level)));
         }
 
         @Override
@@ -236,15 +236,15 @@ final class MusicSpells {
         protected void info(int level, LivingEntity caster, List<MutableComponent> out) {
             double p = potency(level, caster);
             switch (info) {
-                case MARCH -> out.add(Component.translatable("spell.rpgclasses.info.speed", num(20 * p), num(10 * p)));
-                case WAR_HYMN -> out.add(Component.translatable("spell.rpgclasses.info.damage_bonus", num(100 * p)));
-                case REST_BALLAD -> out.add(Component.translatable("spell.rpgclasses.info.regen", num(p)));
-                case ELEGY -> out.add(Component.translatable("spell.rpgclasses.info.debuff"));
-                case IRON_CHORALE -> out.add(Component.translatable("spell.rpgclasses.info.reduction", num(Math.min(60, 100 * p))));
-                default -> out.add(Component.translatable("spell.rpgclasses.info.mana_regen", num(100 * p)));
+                case MARCH -> out.add(Component.translatable("spell.rites_and_paths.info.speed", num(20 * p), num(10 * p)));
+                case WAR_HYMN -> out.add(Component.translatable("spell.rites_and_paths.info.damage_bonus", num(100 * p)));
+                case REST_BALLAD -> out.add(Component.translatable("spell.rites_and_paths.info.regen", num(p)));
+                case ELEGY -> out.add(Component.translatable("spell.rites_and_paths.info.debuff"));
+                case IRON_CHORALE -> out.add(Component.translatable("spell.rites_and_paths.info.reduction", num(Math.min(60, 100 * p))));
+                default -> out.add(Component.translatable("spell.rites_and_paths.info.mana_regen", num(100 * p)));
             }
-            out.add(Component.translatable("spell.rpgclasses.info.duration", num(seconds(level))));
-            out.add(Component.translatable("spell.rpgclasses.info.radius", num(8 + info.areaBonus(level))));
+            out.add(Component.translatable("spell.rites_and_paths.info.duration", num(seconds(level))));
+            out.add(Component.translatable("spell.rites_and_paths.info.radius", num(8 + info.areaBonus(level))));
         }
 
         @Override
@@ -279,8 +279,8 @@ final class MusicSpells {
 
         @Override
         protected void info(int level, LivingEntity caster, List<MutableComponent> out) {
-            out.add(Component.translatable("spell.rpgclasses.info.damage", num(damage(level, caster))));
-            out.add(Component.translatable("spell.rpgclasses.info.range", num(area(level))));
+            out.add(Component.translatable("spell.rites_and_paths.info.damage", num(damage(level, caster))));
+            out.add(Component.translatable("spell.rites_and_paths.info.range", num(area(level))));
         }
 
         @Override
@@ -317,8 +317,8 @@ final class MusicSpells {
 
         @Override
         protected void info(int level, LivingEntity caster, List<MutableComponent> out) {
-            out.add(Component.translatable("spell.rpgclasses.info.control", num(info.value), num(info.duration)));
-            out.add(Component.translatable("spell.rpgclasses.info.radius", num(area(level))));
+            out.add(Component.translatable("spell.rites_and_paths.info.control", num(info.value), num(info.duration)));
+            out.add(Component.translatable("spell.rites_and_paths.info.radius", num(area(level))));
         }
 
         @Override
@@ -360,7 +360,7 @@ final class MusicSpells {
             if (!(entity instanceof ServerPlayer p)) return true;
             LivingEntity t = find(p);
             if (t == null) {
-                p.displayClientMessage(Component.translatable("msg.rpgclasses.bard.no_target"), true);
+                p.displayClientMessage(Component.translatable("msg.rites_and_paths.bard.no_target"), true);
                 return false;
             }
             TARGETS.put(p.getUUID(), t.getId());
@@ -412,9 +412,9 @@ final class MusicSpells {
 
         @Override
         protected void info(int level, LivingEntity caster, List<MutableComponent> out) {
-            out.add(Component.translatable("spell.rpgclasses.info.damage", num(damage(level, caster))));
-            out.add(Component.translatable("spell.rpgclasses.info.radius", num(area(level))));
-            if (level >= info.maxLevel) out.add(Component.translatable("spell.rpgclasses.info.second_piano"));
+            out.add(Component.translatable("spell.rites_and_paths.info.damage", num(damage(level, caster))));
+            out.add(Component.translatable("spell.rites_and_paths.info.radius", num(area(level))));
+            if (level >= info.maxLevel) out.add(Component.translatable("spell.rites_and_paths.info.second_piano"));
         }
 
         @Override
@@ -449,7 +449,7 @@ final class MusicSpells {
 
         @Override
         protected void info(int level, LivingEntity caster, List<MutableComponent> out) {
-            out.add(Component.translatable("spell.rpgclasses.info.dance", num(mobSeconds(level)), num(playerSeconds(level))));
+            out.add(Component.translatable("spell.rites_and_paths.info.dance", num(mobSeconds(level)), num(playerSeconds(level))));
         }
 
         @Override
@@ -493,9 +493,9 @@ final class MusicSpells {
 
         @Override
         protected void info(int level, LivingEntity caster, List<MutableComponent> out) {
-            out.add(Component.translatable("spell.rpgclasses.info.damage", num(damage(level, caster))));
-            out.add(Component.translatable("spell.rpgclasses.info.radius", num(area(level))));
-            out.add(Component.translatable("spell.rpgclasses.info.requiem", fervor(level, caster), num(seconds(level))));
+            out.add(Component.translatable("spell.rites_and_paths.info.damage", num(damage(level, caster))));
+            out.add(Component.translatable("spell.rites_and_paths.info.radius", num(area(level))));
+            out.add(Component.translatable("spell.rites_and_paths.info.requiem", fervor(level, caster), num(seconds(level))));
         }
 
         @Override

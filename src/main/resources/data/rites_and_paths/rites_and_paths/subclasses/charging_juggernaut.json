@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "class": "rites_and_paths:paladin",
+  "display": {
+    "icon": "minecraft:anvil"
+  },
+  "effects": [
+    {
+      "type": "rites_and_paths:attribute",
+      "modifiers": [
+        {
+          "attribute": "minecraft:generic.max_health",
+          "to": 0.6,
+          "operation": "multiply_base"
+        }
+      ]
+    }
+  ],
+  "milestones": [
+    {
+      "subclass_level": 5,
+      "grants": "rites_and_paths:charging_bulwark",
+      "upgrades": "rites_and_paths:bulwark"
+    }
+  ]
+}

@@ -221,8 +221,8 @@
 220 Trophäenschädel
 221 Kriegstrommel
 222 Irrlichtlaterne
-223 RPG-Klassen
-224 RPG-Klassen
+223 Rolflin's Rites & Paths
+224 Rolflin's Rites & Paths
 225 Fähigkeit 1
 226 Fähigkeit 2
 227 Fähigkeit 3

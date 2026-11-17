@@ -198,7 +198,7 @@ public final class PaladinSubclasses {
     }
 
     /**
-     * Al chocar contra bloques débiles (tag {@code rpgclasses:charge_breakable}) los rompe: suena el sonido de rotura de
+     * Al chocar contra bloques débiles (tag {@code rites_and_paths:charge_breakable}) los rompe: suena el sonido de rotura de
      * cada bloque y el Paladín recibe daño según la dureza y el número de bloques. Respeta protecciones (evento de
      * rotura de Forge) y los permisos de construir.
      */
@@ -243,7 +243,7 @@ public final class PaladinSubclasses {
         if (step == null) return;
         boolean has = step.getModifier(CHARGE_STEP_ID) != null;
         if (on && !has) {
-            step.addTransientModifier(new AttributeModifier(CHARGE_STEP_ID, "rpgclasses:charge_step",
+            step.addTransientModifier(new AttributeModifier(CHARGE_STEP_ID, "rites_and_paths:charge_step",
                     AbilityService.number(AbilityService.params(CHARGING_BULWARK), "step_height", 0.5), AttributeModifier.Operation.ADDITION));
         } else if (!on && has) {
             step.removeModifier(CHARGE_STEP_ID);

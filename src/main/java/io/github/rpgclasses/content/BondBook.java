@@ -46,7 +46,7 @@ public final class BondBook {
 
     public static final int ACT_BIND = 0, ACT_UNBIND = 1, ACT_SAVE = 2, ACT_SELECT = 3;
 
-    private static final String KEY = "rpgclasses.bond_book";
+    private static final String KEY = "rites_and_paths.bond_book";
 
     public record Bond(UUID id, String name) {}
     public record Point(ResourceKey<Level> dim, BlockPos pos) {}
@@ -209,20 +209,20 @@ public final class BondBook {
                 if (living != null && living.distanceToSqr(p) <= RANGE * RANGE) {
                     RangerSubclasses.bond(p, living);
                 } else {
-                    p.displayClientMessage(Component.translatable("msg.rpgclasses.bond.need_near", RANGE), true);
+                    p.displayClientMessage(Component.translatable("msg.rites_and_paths.bond.need_near", RANGE), true);
                 }
             }
             case ACT_UNBIND -> {
                 LivingEntity living = findPet(p.getServer(), pet);
                 if (living != null && RangerSubclasses.isPetOf(living, p)) RangerSubclasses.unbond(p, living);
-                else if (living == null) p.displayClientMessage(Component.translatable("msg.rpgclasses.bond.need_near", RANGE), true);
+                else if (living == null) p.displayClientMessage(Component.translatable("msg.rites_and_paths.bond.need_near", RANGE), true);
             }
             case ACT_SAVE -> {
                 if (slot < 0 || slot >= SLOTS) return;
                 Point[] pts = points(p);
                 pts[slot] = new Point(p.level().dimension(), p.blockPosition());
                 savePoints(p, pts);
-                p.displayClientMessage(Component.translatable("msg.rpgclasses.bond.saved", slot + 1), true);
+                p.displayClientMessage(Component.translatable("msg.rites_and_paths.bond.saved", slot + 1), true);
             }
             case ACT_SELECT -> {
                 if (slot == SPAWN || (slot >= 0 && slot < SLOTS && points(p)[slot] != null)) root(p).putInt("selected", slot);
@@ -257,7 +257,7 @@ public final class BondBook {
             book.getOrCreateTag().putString(io.github.rpgclasses.server.KitService.KIT_TAG, KIT_OWNER);
             p.getInventory().placeItemBackInInventory(book);
             r.putBoolean("kit_given", true);
-            p.displayClientMessage(Component.translatable("msg.rpgclasses.bond.kit"), true);
+            p.displayClientMessage(Component.translatable("msg.rites_and_paths.bond.kit"), true);
         } else if (!master && r.getBoolean("kit_given")) {
             p.getInventory().clearOrCountMatchingItems(BondBook::isKitBook, -1, p.inventoryMenu.getCraftSlots());
             p.inventoryMenu.broadcastChanges();

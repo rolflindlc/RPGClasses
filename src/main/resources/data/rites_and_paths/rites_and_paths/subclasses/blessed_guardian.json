@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "class": "rites_and_paths:paladin",
+  "display": {
+    "icon": "minecraft:golden_apple"
+  },
+  "effects": [
+    {
+      "type": "rites_and_paths:attribute",
+      "modifiers": [
+        {
+          "attribute": "rites_and_paths:healing_received",
+          "to": 0.5,
+          "operation": "add"
+        }
+      ]
+    }
+  ],
+  "milestones": [
+    {
+      "subclass_level": 5,
+      "grants": "rites_and_paths:healing_bulwark",
+      "upgrades": "rites_and_paths:bulwark"
+    }
+  ]
+}

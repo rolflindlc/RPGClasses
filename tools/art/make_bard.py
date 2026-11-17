@@ -5,7 +5,7 @@ import math, os, sys
 from PIL import Image
 
 OUT = sys.argv[1]
-NS = "rpgclasses"
+NS = "rites_and_paths"
 TEX = os.path.join(OUT, "assets", NS, "textures")
 for d in ("item", "gui/spell_icons", "mob_effect", "gui/portrait/class", "gui/portrait/subclass"):
     os.makedirs(os.path.join(TEX, d), exist_ok=True)

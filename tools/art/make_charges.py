@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Iconos 9x9 de las cargas del Monje (fuego, agua, piedra), llenos y vacíos, en
-src/main/resources/assets/rpgclasses/textures/gui/charges/. Uso: python3 -I tools/art/make_charges.py src/main/resources
+src/main/resources/assets/rites_and_paths/textures/gui/charges/. Uso: python3 -I tools/art/make_charges.py src/main/resources
 Se pueden sustituir por otros PNG de 9x9 con el mismo nombre."""
 import os, sys
 from PIL import Image
@@ -64,7 +64,7 @@ def draw(name, full):
 
 def main():
     root = sys.argv[1] if len(sys.argv) > 1 else "src/main/resources"
-    out = os.path.join(root, "assets", "rpgclasses", "textures", "gui", "charges")
+    out = os.path.join(root, "assets", "rites_and_paths", "textures", "gui", "charges")
     os.makedirs(out, exist_ok=True)
     for name in SHAPES:
         for row in SHAPES[name]: assert len(row) == 9, (name, row)

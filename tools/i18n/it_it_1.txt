@@ -221,8 +221,8 @@
 220 Teschio trofeo
 221 Tamburo da guerra
 222 Lanterna del fuoco fatuo
-223 Classi RPG
-224 Classi RPG
+223 Rolflin's Rites & Paths
+224 Rolflin's Rites & Paths
 225 Abilità 1
 226 Abilità 2
 227 Abilità 3

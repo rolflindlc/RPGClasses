@@ -72,7 +72,7 @@ public final class ClientHandlers {
         try {
             Class.forName("io.redspace.ironsspellbooks.player.ClientMagicData").getMethod("updateSpellSelectionManager").invoke(null);
         } catch (ReflectiveOperationException | RuntimeException e) {
-            io.github.rpgclasses.RpgClasses.LOGGER.debug("[rpgclasses] No se pudo refrescar la rueda de conjuros de Iron's", e);
+            io.github.rpgclasses.RpgClasses.LOGGER.debug("[rites_and_paths] No se pudo refrescar la rueda de conjuros de Iron's", e);
         }
     }
 

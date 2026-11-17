@@ -100,7 +100,7 @@ public final class RaceBodyClient {
         int max = (int) Math.round(maxSeconds * 20);
         boolean sneaking = event.getInput().shiftKeyDown;
         if (sneaking && p.onGround() && !event.getInput().jumping) {
-            if (cooldownLeft(p, "rpgclasses:race_spring") <= 0) springHeld = Math.min(max, springHeld + 1);
+            if (cooldownLeft(p, "rites_and_paths:race_spring") <= 0) springHeld = Math.min(max, springHeld + 1);
             return;
         }
         int min = (int) Math.round(Races.number(p, "race_spring", "min_charge_seconds", 0.5) * 20);

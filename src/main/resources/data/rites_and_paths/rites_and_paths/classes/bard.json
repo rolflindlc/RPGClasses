@@ -1,0 +1,281 @@
+{
+  "schema_version": 1,
+  "display": {
+    "icon": "rites_and_paths:lute",
+    "roles": [
+      "apoyo",
+      "híbrido"
+    ]
+  },
+  "starting_kit": [
+    {
+      "item": "rites_and_paths:lute",
+      "slot": "offhand"
+    },
+    {
+      "item": "minecraft:iron_sword",
+      "slot": "mainhand"
+    },
+    {
+      "item": "minecraft:leather_helmet",
+      "slot": "head"
+    },
+    {
+      "item": "minecraft:leather_chestplate",
+      "slot": "chest"
+    },
+    {
+      "item": "minecraft:leather_leggings",
+      "slot": "legs"
+    },
+    {
+      "item": "minecraft:leather_boots",
+      "slot": "feet"
+    }
+  ],
+  "crit_chance_bonus": 0.0,
+  "walls": {
+    "rites_and_paths:magic": 0.35,
+    "rites_and_paths:bow": 0.6,
+    "rites_and_paths:heavy": 0.5,
+    "rites_and_paths:light": 0.15,
+    "rites_and_paths:armor": 0.3,
+    "rites_and_paths:shield": 0.55
+  },
+  "magic_wall_exempt_schools": [
+    "rites_and_paths:music"
+  ],
+  "school_walls": {
+    "irons_spellbooks:holy": 1.0
+  },
+  "traits": [
+    {
+      "type": "rites_and_paths:attribute",
+      "modifiers": [
+        {
+          "attribute": "minecraft:generic.max_health",
+          "to": -0.1,
+          "operation": "multiply_base"
+        }
+      ]
+    }
+  ],
+  "branches": [
+    {
+      "id": "compas",
+      "max_points": 10,
+      "effects": [
+        {
+          "type": "rites_and_paths:mechanic",
+          "id": "rites_and_paths:music_power",
+          "music_bonus": {
+            "to": 0.3
+          }
+        }
+      ],
+      "perks": [
+        {
+          "id": "soloist",
+          "effects": [
+            {
+              "type": "rites_and_paths:mechanic",
+              "id": "rites_and_paths:soloist",
+              "radius": 12,
+              "alone_bonus": 0.2,
+              "crowd_penalty": -0.1
+            }
+          ]
+        },
+        {
+          "id": "chorus",
+          "effects": [
+            {
+              "type": "rites_and_paths:mechanic",
+              "id": "rites_and_paths:chorus",
+              "radius": 9,
+              "per_ally": 0.08,
+              "chorus_cap": 4,
+              "alone_penalty": -0.12
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "resonance",
+      "max_points": 10,
+      "effects": [
+        {
+          "type": "rites_and_paths:mechanic",
+          "id": "rites_and_paths:aura_radius",
+          "extra_blocks": {
+            "to": 4
+          }
+        }
+      ],
+      "perks": [
+        {
+          "id": "far_echo",
+          "effects": [
+            {
+              "type": "rites_and_paths:mechanic",
+              "id": "rites_and_paths:aura_shape",
+              "radius_factor": 0.4,
+              "potency_factor": -0.15
+            }
+          ]
+        },
+        {
+          "id": "inner_circle",
+          "effects": [
+            {
+              "type": "rites_and_paths:mechanic",
+              "id": "rites_and_paths:aura_shape",
+              "radius_factor": -0.3,
+              "potency_factor": 0.25
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "perfect_pitch",
+      "max_points": 10,
+      "effects": [
+        {
+          "type": "rites_and_paths:mechanic",
+          "id": "rites_and_paths:timing_window",
+          "window_bonus": {
+            "to": 0.4
+          },
+          "miss_keep": {
+            "to": 0.5
+          }
+        }
+      ],
+      "perks": [
+        {
+          "id": "tempo_presto",
+          "effects": [
+            {
+              "type": "rites_and_paths:mechanic",
+              "id": "rites_and_paths:tempo_presto",
+              "forgiven_per_phrase": 1,
+              "tempo_bonus": 0.25
+            }
+          ]
+        },
+        {
+          "id": "tempo_largo",
+          "effects": [
+            {
+              "type": "rites_and_paths:mechanic",
+              "id": "rites_and_paths:tempo_largo",
+              "tempo_bonus": -0.2,
+              "window_bonus": 0.15,
+              "power_penalty": -0.1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "reverberation",
+      "max_points": 10,
+      "effects": [
+        {
+          "type": "rites_and_paths:mechanic",
+          "id": "rites_and_paths:aura_linger",
+          "linger_seconds": {
+            "to": 6
+          }
+        }
+      ],
+      "perks": [
+        {
+          "id": "trail",
+          "effects": [
+            {
+              "type": "rites_and_paths:mechanic",
+              "id": "rites_and_paths:trail",
+              "linger_seconds": 10,
+              "linger_potency": 0.7
+            }
+          ]
+        },
+        {
+          "id": "last_note",
+          "effects": [
+            {
+              "type": "rites_and_paths:mechanic",
+              "id": "rites_and_paths:last_note",
+              "radius": 4,
+              "sonic_damage": 2,
+              "knockback_strength": 1.0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dance",
+      "max_points": 10,
+      "effects": [
+        {
+          "type": "rites_and_paths:mechanic",
+          "id": "rites_and_paths:bard_dance",
+          "speed_bonus": {
+            "to": 0.15
+          }
+        }
+      ],
+      "perks": [
+        {
+          "id": "shared_step",
+          "effects": [
+            {
+              "type": "rites_and_paths:mechanic",
+              "id": "rites_and_paths:shared_step",
+              "ally_share": 0.5,
+              "self_penalty": -0.3
+            }
+          ]
+        },
+        {
+          "id": "perfect_march",
+          "effects": [
+            {
+              "type": "rites_and_paths:mechanic",
+              "id": "rites_and_paths:perfect_march",
+              "speed_bonus": 0.25,
+              "min_stage": 1
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "milestones": [
+    {
+      "total_level": 1,
+      "grants": "rites_and_paths:rhythm"
+    },
+    {
+      "total_level": 5,
+      "grants": "rites_and_paths:harmony"
+    },
+    {
+      "total_level": 15,
+      "grants": "rites_and_paths:counterpoint"
+    },
+    {
+      "total_level": 30,
+      "grants": "rites_and_paths:crescendo"
+    }
+  ],
+  "subclasses": [
+    "rites_and_paths:war_chanter",
+    "rites_and_paths:enchanter",
+    "rites_and_paths:minstrel"
+  ]
+}

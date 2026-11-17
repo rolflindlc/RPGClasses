@@ -1,9 +1,9 @@
 {
   "replace": false,
   "values": [
-    "rpgclasses:toxin",
-    "rpgclasses:plague",
-    "rpgclasses:sunlight",
-    "rpgclasses:scald"
+    "rites_and_paths:toxin",
+    "rites_and_paths:plague",
+    "rites_and_paths:sunlight",
+    "rites_and_paths:scald"
   ]
 }

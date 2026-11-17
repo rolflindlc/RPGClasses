@@ -32,7 +32,7 @@ public final class MechanicService {
         return CACHE.computeIfAbsent(player.getUUID(), id -> compute(player));
     }
 
-    /** La mecánica con ese id (con o sin el prefijo "rpgclasses:"), o null si no la tiene. */
+    /** La mecánica con ese id (con o sin el prefijo "rites_and_paths:"), o null si no la tiene. */
     public static ActiveMechanic find(ServerPlayer player, String id) {
         String full = id.contains(":") ? id : Ids.NS + ":" + id;
         for (ActiveMechanic m : all(player)) {

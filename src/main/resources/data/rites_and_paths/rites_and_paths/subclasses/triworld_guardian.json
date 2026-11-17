@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "class": "rites_and_paths:monk",
+  "display": {
+    "icon": "minecraft:heart_of_the_sea"
+  },
+  "effects": [
+    {
+      "type": "rites_and_paths:mechanic",
+      "id": "rites_and_paths:stance_affinity",
+      "fire_damage_reduction": {
+        "to": 0.75
+      },
+      "projectile_reduction": 0.33,
+      "melee_reduction": 0.2
+    },
+    {
+      "type": "rites_and_paths:mechanic",
+      "id": "rites_and_paths:elemental_manifest",
+      "ignite_seconds": 6,
+      "swim_bonus": 1.0,
+      "reflect_fraction": 0.15
+    }
+  ],
+  "milestones": []
+}

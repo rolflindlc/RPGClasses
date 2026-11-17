@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Genera las texturas de interfaz del mod (panel, cabecera y botones-tarjeta) en
-src/main/resources/assets/rpgclasses/textures/gui/ui/. Se dibujan de 9 porciones (ver UiStyle.nine).
+src/main/resources/assets/rites_and_paths/textures/gui/ui/. Se dibujan de 9 porciones (ver UiStyle.nine).
 
 Uso: python3 -I tools/art/make_ui.py src/main/resources
 Para cambiar el estilo basta con editar los colores de aquí o sustituir los PNG por los tuyos
@@ -79,7 +79,7 @@ def button(fill, frame, inner):
 
 def main():
     root = sys.argv[1] if len(sys.argv) > 1 else "src/main/resources"
-    out = os.path.join(root, "assets", "rpgclasses", "textures", "gui", "ui")
+    out = os.path.join(root, "assets", "rites_and_paths", "textures", "gui", "ui")
     os.makedirs(out, exist_ok=True)
     files = {
         "panel": panel(),

@@ -6,7 +6,7 @@ import allies
 import bonds
 import bard
 out = sys.argv[1]
-NS = "rpgclasses"
+NS = "rites_and_paths"
 def R(x): return f"{NS}:{x}"
 def attr(mods, cond=None):
     e = {"type": R("attribute")}
@@ -109,7 +109,7 @@ PERKS = {
                        ("feather_fall",[mech("feather_fall"), attr([(MC+"movement_speed", mb(-.1))])])],
  ("paladin","cuirass"): [("heavy_cuirass",[{"type":R("equipped_armor_multiplier"),"armor":{"to":.2},"toughness":{"to":.2}}, attr([(MC+"movement_speed", mb(-.05))])]),
                          ("colossal_body",[attr([(MC+"max_health", mb(.2)), (MC+"movement_speed", mb(-.05))])])],
- ("paladin","will"): [("will_vs_damage",[mech("effect_immunity", effects=["minecraft:poison","minecraft:wither","rpgclasses:toxin"], fire=1, other_duration=.5)]),
+ ("paladin","will"): [("will_vs_damage",[mech("effect_immunity", effects=["minecraft:poison","minecraft:wither","rites_and_paths:toxin"], fire=1, other_duration=.5)]),
                       ("will_vs_control",[mech("effect_immunity", effects=SLOWS, other_duration=.5)])],
  ("paladin","push"): [("shield_counter",[mech("shield_counter", knockback_blocks=3, icd_seconds=3)]),
                       ("shockwave",[mech("shockwave", every_hits=5, radius=3, damage_fraction=.3)])],
@@ -381,7 +381,7 @@ bard_lang = bard.build(dump, out)
 for key in bard_lang: assert key not in lang, key
 lang.update(bard_lang)
 # Unidades de los parámetros, para que el cliente sepa formatearlos: "%" porcentaje, "s" segundos.
-dump(os.path.join(out, "assets", NS, "rpgclasses_param_units.json"),
+dump(os.path.join(out, "assets", NS, "rites_and_paths_param_units.json"),
      {k: v.split("|")[1] for k, v in sorted(texts.PARAMS.items()) if "|" in v})
 attr_names = {"music_spell_power":"Poder de la escuela musical","music_magic_resist":"Resistencia a la magia musical","crit_damage":"Daño crítico","backstab_crit_damage":"Daño crítico desde invisibilidad","jump_bonus":"Altura de salto","unarmed_damage":"Daño desarmado","unarmed_knockback":"Empuje desarmado","bow_damage":"Daño con arco","draw_speed":"Velocidad de carga del arco","projectile_velocity":"Velocidad de proyectiles","zoom":"Zoom","mob_detection":"Detección por mobs","debuff_resistance":"Resistencia a efectos negativos","knockback_dealt":"Empuje infligido","healing_received":"Curación recibida","sneak_speed":"Velocidad agachado","spell_size":"Tamaño de conjuros","crit_chance":"Probabilidad de crítico"}
 for k, v in attr_names.items(): lang[f"attribute.{NS}.{k}"] = v

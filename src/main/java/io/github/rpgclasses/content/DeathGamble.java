@@ -87,7 +87,7 @@ public final class DeathGamble {
 
         AttributeInstance speed = player.getAttribute(Attributes.MOVEMENT_SPEED);
         if (speed != null && speed.getModifier(FREEZE_ID) == null) {
-            speed.addTransientModifier(new AttributeModifier(FREEZE_ID, "rpgclasses death gamble",
+            speed.addTransientModifier(new AttributeModifier(FREEZE_ID, "rites_and_paths death gamble",
                     -1.0, AttributeModifier.Operation.MULTIPLY_TOTAL));
         }
         player.stopUsingItem();
@@ -110,11 +110,11 @@ public final class DeathGamble {
             IMMORTAL_UNTIL.put(player.getUUID(), until);
             shout(player, flip.mechanic());
             String next = String.format(Locale.ROOT, "%.0f%%", chance(flip.mechanic(), flip.uses() + 1) * 100);
-            player.displayClientMessage(Component.translatable("message.rpgclasses.death_gamble", next), true);
+            player.displayClientMessage(Component.translatable("message.rites_and_paths.death_gamble", next), true);
         } else {
             player.level().playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.WITHER_SKELETON_DEATH,
                     SoundSource.PLAYERS, 1.0f, 0.7f);
-            player.displayClientMessage(Component.translatable("message.rpgclasses.death_gamble_lost"), true);
+            player.displayClientMessage(Component.translatable("message.rites_and_paths.death_gamble_lost"), true);
             RESOLVING.add(player.getUUID());
             try {
                 player.invulnerableTime = 0;

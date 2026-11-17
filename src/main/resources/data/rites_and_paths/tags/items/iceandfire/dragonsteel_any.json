@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "#rites_and_paths:iceandfire/dragonsteel_fire",
+    "#rites_and_paths:iceandfire/dragonsteel_ice",
+    "#rites_and_paths:iceandfire/dragonsteel_lightning"
+  ]
+}

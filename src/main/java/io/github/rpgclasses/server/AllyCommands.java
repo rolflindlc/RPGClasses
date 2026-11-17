@@ -47,7 +47,7 @@ public final class AllyCommands {
                 .then(Commands.literal("limpiar").executes(c -> {
                     ServerPlayer player = c.getSource().getPlayerOrException();
                     int n = Allies.clear(player);
-                    c.getSource().sendSuccess(() -> Component.translatable("msg.rpgclasses.ally.cleared", n), false);
+                    c.getSource().sendSuccess(() -> Component.translatable("msg.rites_and_paths.ally.cleared", n), false);
                     return n;
                 })));
 
@@ -83,13 +83,13 @@ public final class AllyCommands {
         AllyBook book = Allies.book(server);
         List<UUID> allies = book.alliesOf(id);
         List<UUID> by = book.alliedBy(id);
-        source.sendSuccess(() -> Component.translatable("msg.rpgclasses.ally.list_header", name, allies.size())
+        source.sendSuccess(() -> Component.translatable("msg.rites_and_paths.ally.list_header", name, allies.size())
                 .withStyle(ChatFormatting.GOLD), false);
-        source.sendSuccess(() -> Component.translatable("msg.rpgclasses.ally.list_allies",
-                allies.isEmpty() ? Component.translatable("msg.rpgclasses.ally.none") : names(server, allies, book, id)), false);
-        source.sendSuccess(() -> Component.translatable("msg.rpgclasses.ally.list_by",
-                by.isEmpty() ? Component.translatable("msg.rpgclasses.ally.none") : names(server, by, null, null)), false);
-        source.sendSuccess(() -> Component.translatable("msg.rpgclasses.ally.list_hint").withStyle(ChatFormatting.GRAY), false);
+        source.sendSuccess(() -> Component.translatable("msg.rites_and_paths.ally.list_allies",
+                allies.isEmpty() ? Component.translatable("msg.rites_and_paths.ally.none") : names(server, allies, book, id)), false);
+        source.sendSuccess(() -> Component.translatable("msg.rites_and_paths.ally.list_by",
+                by.isEmpty() ? Component.translatable("msg.rites_and_paths.ally.none") : names(server, by, null, null)), false);
+        source.sendSuccess(() -> Component.translatable("msg.rites_and_paths.ally.list_hint").withStyle(ChatFormatting.GRAY), false);
         return allies.size();
     }
 

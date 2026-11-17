@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(Player.class)
 public abstract class PlayerEnchantMixin {
     @Inject(method = "onEnchantmentPerformed(Lnet/minecraft/world/item/ItemStack;I)V", at = @At("TAIL"))
-    private void rpgclasses$arcaneRefund(ItemStack stack, int levels, CallbackInfo ci) {
+    private void rites_and_paths$arcaneRefund(ItemStack stack, int levels, CallbackInfo ci) {
         CraftTraits.onEnchanted((Player) (Object) this, stack, levels);
     }
 }

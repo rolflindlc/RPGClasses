@@ -77,13 +77,13 @@ public class ClassArmorItem extends ArmorItem {
     @Override
     public void appendHoverText(ItemStack stack, Level level, List<Component> tooltip, TooltipFlag flag) {
         String set = SetEffects.setKey(gearClass, tier);
-        tooltip.add(Component.translatable("gear.rpgclasses.set_header",
-                Component.translatable("class.rpgclasses." + gearClass.id + ".name")).withStyle(ChatFormatting.GOLD));
-        tooltip.add(Component.translatable("gear.rpgclasses.set." + set + ".name").withStyle(ChatFormatting.YELLOW));
-        tooltip.add(Component.translatable("gear.rpgclasses.set." + set + ".desc").withStyle(ChatFormatting.GRAY));
+        tooltip.add(Component.translatable("gear.rites_and_paths.set_header",
+                Component.translatable("class.rites_and_paths." + gearClass.id + ".name")).withStyle(ChatFormatting.GOLD));
+        tooltip.add(Component.translatable("gear.rites_and_paths.set." + set + ".name").withStyle(ChatFormatting.YELLOW));
+        tooltip.add(Component.translatable("gear.rites_and_paths.set." + set + ".desc").withStyle(ChatFormatting.GRAY));
         if (tier.element != null) {
-            tooltip.add(Component.translatable("gear.rpgclasses.element." + tier.element).withStyle(ChatFormatting.AQUA));
+            tooltip.add(Component.translatable("gear.rites_and_paths.element." + tier.element).withStyle(ChatFormatting.AQUA));
         }
-        tooltip.add(Component.translatable("gear.rpgclasses.exempt." + gearClass.id).withStyle(ChatFormatting.DARK_GREEN));
+        tooltip.add(Component.translatable("gear.rites_and_paths.exempt." + gearClass.id).withStyle(ChatFormatting.DARK_GREEN));
     }
 }

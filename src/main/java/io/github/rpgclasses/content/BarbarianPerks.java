@@ -36,7 +36,7 @@ public final class BarbarianPerks {
     public static final String CHARGE_UPGRADE = "charge_upgrade";
     public static final String UNSTOPPABLE_CHARGE = "unstoppable_charge";
     public static final String CRUSHING_CHARGE = "crushing_charge";
-    private static final String ENDURANCE_COOLDOWN = "rpgclasses:endurance";
+    private static final String ENDURANCE_COOLDOWN = "rites_and_paths:endurance";
 
     /** Agotamiento (hambre) del tic anterior, para descontar una parte del que se acumula. */
     private static final Map<UUID, Float> LAST_EXHAUSTION = new HashMap<>();
@@ -95,7 +95,7 @@ public final class BarbarianPerks {
         if (food == null || food.isMeat() || event.getItem().is(net.minecraft.tags.ItemTags.FISHES) || !MechanicService.has(player, CARNIVORE)) return;
         event.setCanceled(true);
         player.stopUsingItem();
-        player.displayClientMessage(net.minecraft.network.chat.Component.translatable("message.rpgclasses.carnivore"), true);
+        player.displayClientMessage(net.minecraft.network.chat.Component.translatable("message.rites_and_paths.carnivore"), true);
     }
 
     /** Carnívoro: la carne da más saturación. */

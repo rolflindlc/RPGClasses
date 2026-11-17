@@ -1,4 +1,4 @@
-"""Recorta la hoja de iconos de Daniel a resolución completa, con fondo (sin reescalar).
+"""Recorta la hoja de iconos provisional (generada con IA; el arte final será de Laira) a resolución completa, con fondo (sin reescalar).
 
 Retratos de raza: 236x236 (centro de cada celda); los de clase se reducen a 64x64. Efectos: 133x133.
 Uso: python3 -I tools/art/slice_sheet.py tools/art/source/iconos.jpg <salida>

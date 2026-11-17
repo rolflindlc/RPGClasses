@@ -18,8 +18,7 @@ GROUPS = [  # (nombre, prefijos de carpeta dentro de textures/)
     ("armaduras", ["models/armor"]),
     ("efectos", ["mob_effect"]),
     ("interfaz", ["gui/charges", "gui/spell_icons", "gui/ui"]),  # + los PNG sueltos de gui/
-    ("retratos_clase", ["gui/portrait/class", "gui/portrait/subclass"]),
-    ("retratos_raza", ["gui/portrait/race", "gui/portrait/subrace"]),
+    ("retratos", ["gui/portrait/class", "gui/portrait/subclass", "gui/portrait/race", "gui/portrait/subrace"]),
 ]
 
 def collect(tex):

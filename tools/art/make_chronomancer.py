@@ -46,6 +46,4 @@ for y in range(7,25): px[7,y]=goldd; px[24,y]=goldd
 for y in (7,24): px[7,y]=gold; px[24,y]=gold
 # chispas moradas
 for (x,y) in [(4,6),(27,9),(5,24),(26,25)]: px[x,y]=(186,130,240,255)
-big=im.resize((236,236),Image.NEAREST)
-big=big.resize((118,118),Image.BILINEAR).resize((236,236),Image.BILINEAR)
-big.save(sys.argv[1])
+im.resize((64,64),Image.NEAREST).save(sys.argv[1])  # 32x32 duplicado a 64x64, sin suavizado

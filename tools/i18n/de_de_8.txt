@@ -1,0 +1,260 @@
+0 Wenn Erzwungener Tanz oder Dissonanz endet, bleiben normale Mobs einige Sekunden lang verzaubert: Sie greifen dich nicht an und kämpfen stattdessen gegeneinander. Bosse sind immun.
+1 Bezaubern
+2 Jedes Mal, wenn deine Kombo 10, 20 oder 30 überschreitet, verlieren alle deine Zauber in Abklingzeit die Hälfte ihrer verbleibenden Abklingzeit.
+3 Kontrapunkt
+4 Einige Sekunden lang senken Fehler deine Kombo nicht, und jeder Treffer zählt doppelt.
+5 Crescendo
+6 Wenn du perfekt spielst (jede Note und keine zusätzlichen Eingaben), steigt jede Phrase eine Stufe: Deine Auren werden stärker und das Tempo zieht an. Ein Fehler oder eine zusätzliche Eingabe senkt um zwei Stufen.
+7 Harmonie
+8 Nachdem du in kurzer Zeit drei verschiedene Zauber deines Instruments gewirkt hast, kostet der nächste kein Mana und verliert die Hälfte seiner Abklingzeit (mit einer Mindestzeit zwischen den Anwendungen).
+9 Rezital
+10 Mit einem Instrument in der Hand spielst du ein Rhythmus-Minispiel: Jede Note verlangt Linksklick, Rechtsklick, Shift oder Leertaste, und die Aktion geschieht wirklich. Nur die verlangte Spur nicht rechtzeitig zu drücken, ist ein Fehler (andere Spuren zu drücken wird nicht bestraft). Jeder Treffer erhöht deine Kombo und gibt musikalische Kraft; ein Fehler setzt sie zurück. Ein Linksklick im Takt verursacht zusätzlichen Schaden. Jeder musikalische Zauber braucht eine Mindestkombo zum Wirken.
+11 Rhythmus
+12 Bei Harmonie auf Stufe 3 oder höher verursachst du mehr Nahkampfschaden.
+13 Rhythmische Wut
+14 Musikalische Magieresistenz
+15 Kraft der Musikschule
+16 Erhöht die Kraft der Musikschule.
+17 Takt
+18 Spielen bremst dich nicht mehr aus, und du rennst schneller, solange eines deiner Lieder spielt (zählt zur Tempogrenze).
+19 Tanz
+20 Ein größeres Trefferfenster, und mit mehr Punkten setzt ein Fehler deine Kombo nicht mehr zurück: Er senkt sie nur.
+21 Absolutes Gehör
+22 Erhöht den Radius deiner Auren.
+23 Resonanz
+24 Die Effekte deiner Auren halten noch einige Sekunden an, nachdem du sie verlassen hast oder das Lied endet.
+25 Nachhall
+26 Halb Magier, halb Kämpfer, der kämpft, während er spielt: Mit einem Instrument in der Hand spielt er ein Rhythmus-Minispiel mit Linksklick, Rechtsklick, Shift und Leertaste (jede Spur führt weiterhin ihre übliche Aktion aus). Treffer auf Noten erhöhen die Kombo, die die Musikschule antreibt, die dem Barden vorbehalten ist. Seine Zauber sind Noten, die im Instrument (Nebenhand) gespeichert und per Rechtsklick gewirkt werden: Die meisten sind Auren für seine Verbündeten.
+27 Barde
+28 Klassenmerkmal: etwas weniger maximale Gesundheit.
+29 %1$s wurde vom Klavier von %2$s zerquetscht
+30 %1$s wurde vom Klavier von %2$s zerquetscht
+31 %1$s erlag der Musik von %2$s
+32 %1$s erlag der Musik von %2$s
+33 %1$s wurde von der Schallwelle von %2$s weggesprengt
+34 %1$s wurde von der Schallwelle von %2$s weggesprengt
+35 Bezaubert
+36 Erzwungener Tanz
+37 Eiserner Choral
+38 Manakadenz
+39 Marsch
+40 Eifer des Requiems
+41 Ballade der Ruhe
+42 Schuppen gegen Feuer
+43 Schuppen gegen Eis
+44 Schuppen gegen Blitz
+45 Geteilter Schritt
+46 Zum Schweigen gebracht
+47 Kriegshymne
+48 Schneidender Ton
+49 Konzertflügel
+50 x%s
+51 Crescendo
+52 Gut
+53 Fehler
+54 Perfekt!
+55 Abgrundorgel
+56 Abgrundrohrblatt
+57 Arkaner Faden
+58 Dudelsack
+59 Glockenspiel
+60 Trommel des Kolosses
+61 Trommelfell des Kolosses
+62 Kristallharfe
+63 Trommel
+64 Laute der Ewigen Sonne
+65 Flöte
+66 Gitarrenaxt
+67 Harfe
+68 Drehleier
+69 Laute
+70 Leier
+71 Musiknote
+72 Okarina
+73 Panflöte
+74 Resonanter Splitter
+75 Leier der Feuerskala
+76 Leier der Eisskala
+77 Leier der Blitzskala
+78 Notenblatt
+79 Notenblatt: %s
+80 Geisterhafte Geige
+81 Tamburin
+82 Geige
+83 Kriegshorn
+84 Auren-Nachwirkung
+85 Aurenradius
+86 Aurenform
+87 Tanz
+88 Chor
+89 Ansteckung
+90 Erweitertes Repertoire
+91 Feines Ohr
+92 Hypnotische Stimme
+93 Letzter Ton
+94 Kampfkombo
+95 Musikalische Kraft
+96 Perfekter Marsch
+97 Resonanter Schlag
+98 Geteilter Schritt
+99 Solist
+100 Tempo Largo
+101 Tempo Presto
+102 Trefferfenster
+103 Spur
+104 %s braucht eine Kombo von %s (du hast %s)
+105 Crescendo!
+106 Musikalische Zauber benötigen Iron's Spells 'n Spellbooks
+107 Kein Ziel in Sicht
+108 Nur ein Barde weiß, wie man dieses Instrument spielt.
+109 Wähle einen Zauber deines Instruments im Rad
+110 Rezital: Dein nächster Zauber ist kostenlos
+111 Musikalische Zauber werden durch Spielen des Instruments gewirkt (Rechtsklick)
+112 Bonus für Verbündete
+113 Kraft ohne Verbündete in der Nähe
+114 Kraft ohne Verbündete
+115 Basis-Aurenradius (Blöcke)
+116 Dauer des Aureneffekts ohne Nachwirkung
+117 Basistempo (Schläge pro Minute)
+118 Schaden des Schlags im Takt
+119 Aurenstärke pro Stufe
+120 Anteil der musikalischen Kraft, den Buffs und Debuffs erhalten
+121 Max. gezählte Verbündete
+122 Mindestkombo gesenkt um
+123 Kontrolldauer
+124 Entfernte Abklingzeit
+125 Kraft mit Verbündeten in der Nähe
+126 Verschiedene Zauber
+127 Zusätzlicher Radius (Blöcke)
+128 Zusätzliche Notenblatt-Plätze
+129 Verziehene zusätzliche Eingaben pro Phrase
+130 Wert jedes Treffers ×
+131 Kombo verloren nach Wegstecken des Instruments für
+132 Stärke während der Nachwirkung
+133 Maximales Tempo (Schläge pro Minute)
+134 Maximale Kombo
+135 Max. zusätzliche Tänzer
+136 Max. Stufen
+137 Ab Harmoniestufe
+138 Bei Fehler behaltene Kombo
+139 Musikalische Kraft
+140 Obergrenze der musikalischen Kraft
+141 Schläge mit Note
+142 Kraft pro Verbündetem in der Nähe
+143 Schaden pro Treffer
+144 Perfektes Trefferfenster (ms)
+145 Schläge pro Phrase
+146 Tempo beim Spielen
+147 Aurenstärke
+148 Musikalische Kraft
+149 Musikalische Kraft pro Treffer (Gesamtstufe 1)
+150 Musikalische Kraft pro Treffer (Gesamtstufe 15)
+151 Musikalische Kraft pro Treffer (Gesamtstufe 30)
+152 Aurenradius
+153 Verbleibende Abklingzeit entfernt
+154 Pause zwischen Phrasen (Schläge)
+155 Dein Bonus
+156 Schallschaden
+157 Verlorene Stufen pro Fehler
+158 Tempo
+159 Tempo pro Stufe
+160 Trefferfenster
+161 Trefferfenster (ms)
+162 Mehr musikalische Kraft für jeden Verbündeten in der Nähe (bis zu 4); weniger, wenn du allein spielst.
+163 Chor
+164 Mehr musikalische Kraft ohne Verbündete in der Nähe; etwas weniger, wenn welche da sind.
+165 Solist
+166 Der Tempobonus des Tanzes ist höher, aber nur, solange die Harmonie läuft.
+167 Perfekter Marsch
+168 Verbündete in deiner Aura erhalten die Hälfte deines Tanz-Tempobonus; du erhältst etwas weniger.
+169 Geteilter Schritt
+170 Langsameres Tempo (einschließlich seines Anstiegs durch die Harmonie) und ein noch größeres Trefferfenster, auf Kosten von etwas musikalischer Kraft.
+171 Tempo Largo
+172 Eine zusätzliche Eingabe pro Phrase bricht die Harmonie nicht, aber das Basistempo ist schneller.
+173 Tempo Presto
+174 Deine Auren reichen viel weiter, aber ihre Effekte sind etwas schwächer.
+175 Fernes Echo
+176 Deine Auren decken weniger Fläche ab, aber ihre Effekte sind viel stärker.
+177 Innerer Kreis
+178 Wenn eine Aura endet, setzt sie eine Welle frei, die Feinde in der Nähe zurückstößt und etwas Schallschaden verursacht.
+179 Letzter Ton
+180 Effekte halten nach der Aura länger an, sind dabei aber schwächer.
+181 Spur
+182 Musikalisch
+183 Schneidender Ton
+184 Du feuerst einen scharfen Ton ab, der Schallschaden verursacht. Auf hohen Stufen durchbohrt er Feinde.
+185 Dissonanz
+186 Ein zerbrochener Ton um dich: Feinde werden zum Schweigen gebracht (keine Zauber) und kurz betäubt.
+187 Elegie
+188 Aura: Feinde in der Nähe werden schwach und langsam.
+189 Finales Requiem
+190 Das große Finale: enormer Schallschaden um dich und mehr Schaden für deine Verbündeten für einige Sekunden.
+191 Erzwungener Tanz
+192 Dein Ziel beginnt zu tanzen: Es kann nicht angreifen, zaubern oder Gegenstände benutzen. Bosse sind immun.
+193 Konzertflügel
+194 Ein Schatten wächst unter deinem Ziel und folgt ihm; am Ende bleibt er stehen und ein Klavier fällt. Geh aus dem Weg!
+195 Mindestkombo: %s
+196 Stille %s s und Betäubung %s s
+197 Schaden: %s
+198 +%s %% Schaden
+199 Tanz %s s (Spieler %s s)
+200 Schwäche I und Verlangsamung I
+201 Dauer: %s s
+202 +%s %% Manaregeneration
+203 Durchbohrt %s Feinde
+204 Radius: %s Blöcke
+205 Reichweite: %s Blöcke
+206 −%s %% erlittener Schaden
+207 %s Gesundheit pro Sekunde
+208 +%s %% Schaden für deine Verbündeten für %s s
+209 Ein zweites Klavier fällt mit halbem Schaden
+210 +%s %% Bewegungstempo und +%s %% Angriffstempo
+211 Eiserner Choral
+212 Aura: Du und deine Verbündeten erleidet weniger Schaden.
+213 Manakadenz
+214 Aura: Du und deine Verbündeten regeneriert Mana schneller.
+215 Marsch
+216 Aura: Du und deine Verbündeten rennt und greift schneller an.
+217 Ballade der Ruhe
+218 Aura: Du und deine Verbündeten regeneriert Gesundheit.
+219 Grollen
+220 Ein Schallkegel vor dir, der Feinde verletzt und zurückstößt.
+221 Kriegshymne
+222 Aura: Du und deine Verbündeten verursacht mehr Schaden.
+223 Meister der Kontrolle. Deine Kontrolleffekte halten länger, der Tanz breitet sich auf Mobs in der Nähe aus, und ab Stufe 5 bleiben Mobs, die aus dem Tanz oder der Dissonanz kommen, verzaubert und kämpfen gegeneinander.
+224 Bezauberer
+225 Der Vielseitigste: mehr Notenblatt-Plätze in deinen Instrumenten, Zauber mit niedrigerer Mindestkombo und ab Stufe 5 das Rezital: Nach drei verschiedenen Zaubern in Folge ist der nächste kostenlos und lädt sich schneller auf.
+226 Minnesänger
+227 Ein Barde an der Frontlinie. Jede getroffene Note fügt Schaden mit leichten und schweren Waffen hinzu (zusätzlich zu deinen Mauern), jeder fünfte Schlag im Takt setzt eine Schallwelle frei, und bei hoher Harmonie schlägst du noch härter zu.
+228 Kriegssänger
+229 +%s %% Zaubertempo
+230 −%s %% Zauber-Abklingzeit
+231 %s-Instrument (nur Barde):
+232 Rechtsklick: Wirkt den im Iron's-Rad gewählten Zauber. Shift + Rechtsklick (außerhalb des Kampfes, in der Haupthand): Notenständer.
+233 +%s %% Manaregeneration
+234 +%s max. Mana
+235 Passiv: %s
+236 Größerer Aurenradius und doppelter Schaden beim Letzten Ton.
+237 Alle 10 Kombo setzt es ein Dröhnen frei, das Feinde in der Nähe betäubt.
+238 Alle 10 Treffer in Folge erholst du etwas von deinem Mana.
+239 Perfekte Treffer heilen deine Verbündeten in der Nähe.
+240 Zweihändige Axt, die man auch spielen kann. Der Barde hat damit keine Schwere-Waffen-Mauer; andere Klassen benutzen sie als normale Axt.
+241 Deine Auren verleihen deinen Verbündeten Feuerresistenz.
+242 Deine Auren verleihen deinen Verbündeten Eisresistenz.
+243 Deine Auren verleihen deinen Verbündeten Blitzresistenz.
+244 Ein Fehler senkt nur ein Drittel deiner Kombo.
+245 Deine Auren haben einen größeren Radius.
+246 +%s %% musikalische Kraft
+247 Gewöhnlich
+248 Episch
+249 Legendär
+250 Selten
+251 Notenblätter: %s/%s · max. Notenblattstufe: %s %%
+252  ♪ %s (Stufe %s)
+253  ♪ %s (Stufe %s, begrenzt auf %s)
+254 Mindestkombo: %s
+255 Leeres Notenblatt
+256 In einem Instrument gespeichert (Notenständer). Verbessere es mit Tinte an einer Werkbank.
+257 Stufe %s von %s
+258 Lege Notenblätter in die Plätze. Graue Plätze übersteigen deine Plätze: Sie können nur geleert werden.
+259 Notenständer: %s

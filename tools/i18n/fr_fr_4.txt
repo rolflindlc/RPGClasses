@@ -1,0 +1,286 @@
+0 Rayon de l'onde (blocs)
+1 Rayon de la faiblesse (blocs)
+2 Faiblesse en cas de survie
+3 Eau : Mouillé
+4 Fenêtre
+5 Fenêtre après un coup (ticks)
+6 XP de pêche supplémentaire
+7 Expérience d'enchantement
+8 Coups critiques bien plus puissants, mais moins fréquents.
+9 Coup écrasant
+10 Coups critiques bien plus fréquents, mais plus faibles.
+11 Coup régulier
+12 Un peu moins de dégâts liés à la santé perdue, mais vous vous soignez d'autant plus que vous êtes blessé.
+13 Fureur maîtrisée
+14 Encore plus de dégâts quand vous avez peu de santé, sans plafond, mais vous vous soignez bien moins de toutes les sources.
+15 Fureur déchaînée
+16 La viande vous rassasie deux fois plus, mais vous ne pouvez rien manger qui ne soit de la viande.
+17 Carnivore
+18 Quand votre santé descend sous un certain seuil, vous subissez moins de dégâts pendant quelques secondes. Vous vous soignez un peu moins.
+19 Endurance
+20 Moins d'armure et de robustesse sans armure, mais vous êtes plus rapide.
+21 Peau légère
+22 Plus d'armure et de robustesse sans armure, mais vous êtes plus lent.
+23 Peau renforcée
+24 La Charge étourdit deux fois plus longtemps et se termine par une onde de choc qui inflige des dégâts, mais met plus de temps à se recharger.
+25 Charge écrasante
+26 La Charge transperce les ennemis et les frappe tous avec moins de dégâts, sans étourdir.
+27 Charge irrésistible
+28 Des délais de recharge encore plus courts, en échange d'un peu de puissance de sort.
+29 Cadence arcanique
+30 Si vous manquez de mana, vous payez le sort avec de la santé, sans descendre sous un minimum.
+31 Magie du sang
+32 Après avoir lancé un sort, vous courez plus vite un instant.
+33 Pas arcanique
+34 Pas de dégâts de chute, et vous tombez lentement en maintenant saut. Vous vous déplacez un peu plus lentement.
+35 Chute de plume
+36 Plus de dégâts contre les cibles proches et moins contre les lointaines.
+37 Puissance à bout portant
+38 Plus de dégâts contre les cibles lointaines et moins contre les proches.
+39 Puissance à distance
+40 Moins de mana maximal, mais vous le récupérez 60 % plus vite (mana par seconde).
+41 Afflux de mana
+42 Bien plus de mana maximal, mais vous le récupérez 40 % plus lentement (mana par seconde).
+43 Puits de mana
+44 Chaque sort d'invocation crée une invocation de moins (minimum une), mais elles sont plus fortes et un peu plus chères.
+45 Élite
+46 Chaque sort d'invocation crée une invocation de plus, mais elles sont toutes plus faibles.
+47 Légion
+48 Vous pouvez lancer la Frappe enflammée dès 6 charges, mais elle inflige +4 % de dégâts par charge au lieu de +5 %.
+49 Allumage précoce
+50 Les charges de Feu s'estompent deux fois moins vite, mais chacune donne 20 % de dégâts en moins.
+51 Flamme constante
+52 Pendant la méditation, vous retirez un effet négatif toutes les 5 s.
+53 Esprit clair
+54 Vous vous soignez deux fois plus vite en méditant et jusqu'à 80 % de votre santé, mais mettez plus de temps à commencer.
+55 Transe profonde
+56 Moins d'armure et de robustesse, mais vous subissez bien moins de dégâts magiques et élémentaires.
+57 Peau spirituelle
+58 L'absorption de la décharge de Pierre est doublée, mais vous ne gagnez des charges de Pierre qu'avec des coups infligeant 4 dégâts ou plus.
+59 Écho de pierre
+60 Au changement de posture, vous conservez 30 % des charges dans la nouvelle et ne déchargez que le reste. Vous changez de posture 1 s plus lentement.
+61 Flux continu
+62 Accroupi + la touche des postures définit votre posture favorite : sa décharge et son effet de posture sont 30 % plus forts, et ceux des deux autres 30 % plus faibles.
+63 Posture dominante
+64 Vous ignorez les toiles d'araignée, le sable des âmes, le miel, la neige poudreuse et le ralentissement dû à manger ou utiliser des objets. Un peu moins de vitesse.
+65 Pieds légers
+66 Après avoir couru un instant, votre prochain coup à mains nues inflige plus de dégâts et repousse davantage.
+67 Élan de course
+68 Votre aura régénère la santé de vos alliés (pas la vôtre).
+69 Étendard de vie
+70 Votre aura augmente aussi les dégâts de vos alliés, mais vous perdez de l'armure.
+71 Étendard de guerre
+72 Plus de santé maximale, mais vous êtes un peu plus lent.
+73 Corps colossal
+74 Vos pièces d'armure protègent encore plus, mais vous êtes un peu plus lent.
+75 Cuirasse lourde
+76 Quand vous bloquez un coup de mêlée avec un bouclier, vous projetez l'attaquant en arrière.
+77 Contre au bouclier
+78 Tous les quelques coups, vous libérez une onde qui repousse et blesse les ennemis proches.
+79 Onde de choc
+80 Vous marquez votre cible : elle subit plus de dégâts de votre part. Vous ne pouvez pas en marquer une autre tant que cela dure.
+81 Condamnation
+82 Tous les quelques coups, vous déchaînez des dégâts sacrés de zone, en échange de moins de dégâts de base.
+83 Jugement
+84 Immunisé contre la lenteur, la faiblesse, la cécité, la fatigue, la nausée et les ténèbres. Les autres effets négatifs durent plus longtemps sur vous.
+85 Volonté contre le contrôle
+86 Immunisé contre les effets qui infligent des dégâts (poison, wither, brûlure). Les autres effets négatifs durent plus longtemps sur vous.
+87 Volonté contre les dégâts
+88 Plus de dégâts en mouvement ; moins si vous restez immobile.
+89 Tireur mobile
+90 Plus de dégâts si vous êtes resté immobile un instant ; moins si vous tirez en courant ou en l'air.
+91 Tireur constant
+92 Bander l'arc ne vous ralentit pas, mais vous bandez un peu plus lentement.
+93 Tireur agile
+94 Après un coup de mêlée subi, votre prochaine flèche part avec une tension instantanée et un peu moins de dégâts.
+95 Contre rapide
+96 L'impact marque la cible : elle subit plus de dégâts de toutes les sources.
+97 Marque du chasseur
+98 La flèche transperce un ennemi de plus, avec un peu moins de dégâts sur le premier.
+99 Perforation
+100 De temps en temps, le premier coup de mêlée vous fait bondir en arrière sans subir de dégâts.
+101 Saut d'esquive
+102 Après un coup de mêlée subi, vous laissez un piège qui ralentit fortement quiconque marche dessus.
+103 Piège du chasseur
+104 Les flèches normales explosent à l'impact sans casser de blocs et repoussent les ennemis proches, avec moins de dégâts directs.
+105 Flèche explosive
+106 L'impact ralentit la cible, mais vos flèches volent un peu plus lentement.
+107 Flèche collante
+108 Après une esquive réussie, votre prochain coup inflige plus de dégâts.
+109 Contre-attaque
+110 L'esquive couvre plus de distance, mais son invulnérabilité dure moins longtemps.
+111 Longue roulade
+112 Vous attaquez encore plus vite, avec un peu moins de dégâts.
+113 Rafale
+114 Vous ignorez une partie de l'armure de la cible, mais attaquez plus lentement.
+115 Estoc
+116 La Discrétion dure considérablement plus longtemps, mais les monstres vous détectent de plus loin.
+117 Discrétion profonde
+118 Plus de dégâts contre les ennemis qui ne vous ciblent pas. La Discrétion dure moins longtemps.
+119 Frappe perfide
+120 La Toxine inflige les mêmes dégâts, mais bien plus vite.
+121 Dose concentrée
+122 La Toxine inflige les mêmes dégâts, plus lentement, et ralentit la cible tant qu'elle dure.
+123 Dose prolongée
+124 Chance d'esquiver coups et projectiles en bondissant en arrière. Moins de santé maximale.
+125 Esquive
+126 Plus de vitesse de déplacement et d'attaque, mais la Discrétion s'épuise plus vite.
+127 Légèreté
+128 Petit et lent, mais mineur né : casse la pierre et les minerais plus vite et possède une Fortune raciale sur les minerais (elle ne s'ajoute pas à l'enchantement : le plus élevé compte).
+129 Nain
+130 Traverse le feuillage et l'escalade comme un échafaudage (sauter monte, s'accroupir descend). Ne peut pas manger de viande ni de poisson.
+131 Elfe
+132 Moitié moins grand : très difficile à toucher et passe par les petits interstices. A la Chance et le Butin raciaux (le plus élevé entre ceci et l'enchantement compte). En contrepartie, bien moins de santé.
+133 Gobelin
+134 Polyvalent : atténue les inconvénients de sa classe. Après avoir choisi une classe, il choisit un mur, dont la pénalité est réduite selon le Rang ; les traits de base négatifs de la classe sont réduits de la même façon. Aucun avantage environnemental.
+135 Humain
+136 Immunisé contre le feu et la lave, mais le froid et l'eau blessent davantage et entrer dans l'eau le brûle lentement. Avec Iron's Spells, il a des sorts de feu raciaux toujours disponibles, qui subissent le mur de Magie de votre classe comme n'importe quel sort. Les golems de fer l'attaquent toujours et les villageois lui font payer plus.
+137 Infernal
+138 Plus grand et plus robuste. Une fois par vie, il survit à un coup mortel avec un demi-cœur. En contrepartie, il consomme plus de faim et est plus facile à toucher.
+139 Orc
+140 Respire sous l'eau, nage plus vite, mine sous l'eau à vitesse normale et voit dans le noir sous l'eau. Le feu blesse davantage et dans le Nether il a Faiblesse.
+141 Triton
+142 Respire sous l'eau, sa faim est fixe et il régénère constamment de la santé (interrompue quelques secondes en cas de dégâts). La lumière directe du soleil le blesse même avec un casque, et ni les potions de soin ni les sorts ne le soignent.
+143 Mort-vivant
+144 Sous la roche
+145 Vainquez 30 ennemis sous terre (sans ciel au-dessus).
+146 Ennemis vaincus sous terre
+147 Tribut des filons
+148 Offrez 64 minerais d'au moins 3 types.
+149 64 minerais (3 types)
+150 Rite de l'abîme
+151 Vainquez un boss de rite invoqué avec l'autel sous terre.
+152 Boss vaincu (autel sous terre)
+153 Démolition
+154 Vainquez 20 ennemis avec vos propres explosions.
+155 Ennemis vaincus par des explosions
+156 Baril de poudre
+157 Fabriquez et offrez 16 TNT (fabriqués pendant ce rite).
+158 16 TNT fabriqués par vous
+159 Cataclysme
+160 Vainquez un boss de rite qui subit au moins 4 de vos explosions.
+161 Boss vaincu après 4 explosions
+162 Lame personnelle
+163 Vainquez 30 ennemis avec une arme que vous avez fabriquée.
+164 Ennemis vaincus avec votre arme
+165 Chef-d'œuvre du maître
+166 Offrez une armure en fer complète et une arme en fer fabriquées par vous.
+167 Armure et arme en fer fabriquées par vous
+168 Épreuve de la forge
+169 Vainquez un boss de rite en portant les 4 pièces d'armure en diamant (ou en netherite) fabriquées par vous.
+170 Boss vaincu dans votre armure en diamant
+171 Lame enchantée
+172 Vainquez 30 ennemis avec une arme que vous avez enchantée à la table.
+173 Ennemis vaincus avec votre arme enchantée
+174 Trois enchantements
+175 Enchantez 3 objets à la table et offrez-les.
+176 3 objets enchantés par vous
+177 Livres jumeaux
+178 Offrez 2 livres avec le même enchantement à son niveau maximal.
+179 2 livres jumeaux
+180 Chasse nocturne
+181 Vainquez 30 ennemis à un niveau de lumière de 7 ou moins.
+182 Ennemis vaincus dans le noir
+183 Offrande de fumée
+184 Offrez 8 feux de camp et 16 charbons de bois.
+185 Feux de camp et charbon
+186 Voile d'ombre
+187 Vainquez un boss de rite la nuit, en utilisant le Nuage de fumée au moins 3 fois pendant le combat.
+188 Boss vaincu la nuit avec 3 Nuages
+189 Rôdeur sylvestre
+190 Vainquez 30 ennemis dans les biomes forestiers.
+191 Ennemis vaincus en forêt
+192 Récolte rituelle
+193 Offrez 16 de chacune de 4 cultures différentes (64 au total).
+194 4 cultures × 16
+195 Cœur de la forêt
+196 Vainquez un boss de rite invoqué avec l'autel dans un biome forestier.
+197 Boss vaincu (autel en forêt)
+198 trop peu d'utilisations de la capacité
+199 trop peu d'alliés à proximité
+200 trop peu de coups subis du boss
+201 vous ne portiez pas votre armure en diamant
+202 vous lui avez à peine infligé de dégâts
+203 trop peu d'explosions
+204 vous êtes descendu du loup ou il est mort
+205 ce n'était pas la nuit
+206 trop peu de projectiles subis
+207 trop peu de dégâts avec les sorts raciaux
+208 trop peu de Collets
+209 trop peu de soins de la Soif
+210 trop peu de dégâts avec la discipline de votre mur
+211 Doigts agiles
+212 Volez avec succès 30 monstres.
+213 Vols sur des monstres
+214 Butin varié
+215 Offrez 64 objets de butin de monstres d'au moins 8 types.
+216 64 butins de monstres (8 types)
+217 Grand casse
+218 Offrez 3 pièces d'équipement de monstres (volées ou lâchées par des monstres que vous avez tués) et vainquez un boss de rite.
+219 3 pièces d'équipement de monstres
+220 Boss de rite vaincu
+221 Chasseur de pièges
+222 Vainquez 20 ennemis pris dans votre Collet.
+223 Ennemis piégés vaincus
+224 Mécanismes
+225 Offrez 4 distributeurs, 4 pistons et 16 ficelles.
+226 Distributeurs, pistons et ficelle
+227 Proie piégée
+228 Vainquez un boss de rite immobilisé par votre Collet au moins 3 fois.
+229 Boss vaincu après 3 Collets
+230 Cavalcade
+231 Vainquez 30 ennemis en selle.
+232 Ennemis vaincus en selle
+233 Meute
+234 Offrez 32 os et 16 viandes cuites.
+235 Os et viande
+236 Cavalier inséparable
+237 Vainquez un boss de rite monté sur votre loup durant tout le combat sans qu'il meure.
+238 Boss vaincu sans descendre de selle
+239 Curiosité
+240 Vainquez 6 ennemis de chacun de 5 types de monstres différents.
+241 Types d'ennemis avec 6 victoires
+242 Bibliothèque
+243 Entourez l'autel de 15 bibliothèques (comme une table d'enchantement : à 2 blocs, à sa hauteur ou un bloc au-dessus) et offrez 10 livres.
+244 Bibliothèques autour de l'autel
+245 10 livres
+246 Les trois savoirs
+247 Offrez un livre avec un enchantement à son niveau maximal, une potion de niveau II et une carte explorée presque entièrement (90 %).
+248 Livre, potion et carte
+249 Les trois styles
+250 Vainquez 10 ennemis avec chacun de 3 styles de combat différents (magie, arc, armes lourdes, armes légères ou à mains nues).
+251 Styles avec 10 victoires
+252 Offrande des guildes
+253 Offrez sur l'autel un objet de chaque catégorie : arme lourde, arme légère, arc ou arbalète, bouclier, pièce d'armure et un parchemin ou livre de sort.
+254 Offrande des 6 guildes
+255 Épreuve des deux murs
+256 Invoquez un boss de rite à l'autel et vainquez-le avec les disciplines de vos deux murs choisis, avec au moins 25 % des dégâts pour chacun (Armure : portez 3+ pièces ; Boucliers : bloquez 10 coups).
+257 Boss vaincu avec vos deux murs
+258 Maîtriser l'étranger
+259 Vainquez 40 ennemis avec la discipline de votre mur choisi.
+260 Ennemis vaincus avec votre mur
+261 Chef-d'œuvre
+262 Offrez sur l'autel un objet de haute qualité (diamant ou mieux, ou enchanté s'il n'a pas de palier) de la discipline de votre mur.
+263 Chef-d'œuvre de votre mur
+264 Duel de maîtrise
+265 Invoquez un boss de rite et vainquez-le en infligeant au moins 90 % des dégâts avec la discipline de votre mur.
+266 Boss vaincu avec votre mur (90 %)
+267 Chasse infernale
+268 Vainquez 30 monstres hostiles du Nether (piglins et hoglins ne comptent pas).
+269 Monstres du Nether vaincus
+270 Marché infernal
+271 Troquez 20 fois avec des piglins et offrez 16 quartz du Nether.
+272 Trocs avec des piglins
+273 16 quartz
+274 Rite du Nether
+275 Vainquez un boss de rite invoqué avec l'autel dans le Nether.
+276 Boss vaincu (autel dans le Nether)
+277 Tirs croisés
+278 Vainquez 40 ennemis avec vos sorts raciaux.
+279 Ennemis vaincus avec des sorts raciaux
+280 Combustible
+281 Offrez 8 boules de feu, 4 blocs de magma et 8 bâtons de blaze.
+282 Boules de feu, magma et blaze
+283 Blaze rituel
+284 Vainquez un boss de rite en infligeant au moins 50 % des dégâts avec des sorts raciaux.
+285 Boss vaincu avec 50 % de sorts raciaux

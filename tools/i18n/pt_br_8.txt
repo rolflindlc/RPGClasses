@@ -1,0 +1,260 @@
+0 Quando Dança Forçada ou Dissonância termina, monstros comuns continuam enfeitiçados por alguns segundos: eles não te atacam e lutam entre si. Chefes são imunes.
+1 Enfeitiçar
+2 Cada vez que seu combo cruza 10, 20 ou 30, todos os seus feitiços em recarga perdem metade da recarga restante.
+3 Contraponto
+4 Por alguns segundos, erros não reduzem seu combo e cada acerto conta em dobro.
+5 Crescendo
+6 Se você tocar perfeitamente (cada nota e nenhum toque extra), cada frase sobe um estágio: suas auras ficam mais fortes e o andamento acelera. Um erro ou toque extra derruba dois estágios.
+7 Harmonia
+8 Depois de lançar três feitiços diferentes do seu instrumento em pouco tempo, o próximo não custa mana e perde metade da recarga (com um tempo mínimo entre usos).
+9 Recital
+10 Com um instrumento na mão você joga um minijogo de ritmo: cada nota pede clique esquerdo, clique direito, Shift ou Espaço, e a ação realmente acontece. Só não apertar a faixa pedida a tempo conta como erro (apertar outras faixas não é punido). Cada acerto aumenta seu combo e dá poder musical; um erro o zera. Um clique esquerdo no tempo causa dano extra. Cada feitiço musical precisa de um combo mínimo para ser lançado.
+11 Ritmo
+12 Com Harmonia no estágio 3 ou mais, você causa mais dano corpo a corpo.
+13 Fúria Rítmica
+14 Resistência à Magia Musical
+15 Poder da Escola Musical
+16 Aumenta o poder da escola musical.
+17 Compasso
+18 Tocar não te desacelera mais, e você corre mais rápido enquanto uma das suas músicas toca (conta para o limite de velocidade).
+19 Dança
+20 Uma janela de acerto maior e, com mais pontos, um erro não zera mais seu combo: só o reduz.
+21 Ouvido Absoluto
+22 Aumenta o raio das suas auras.
+23 Ressonância
+24 Os efeitos das suas auras continuam por alguns segundos depois de sair delas ou depois que a música acaba.
+25 Reverberação
+26 Meio mago, meio lutador, que luta enquanto toca: com um instrumento na mão ele joga um minijogo de ritmo com clique esquerdo, clique direito, Shift e Espaço (cada faixa ainda faz sua ação habitual). Acertar notas aumenta o combo, que alimenta a escola musical, exclusiva do Bardo. Seus feitiços são partituras guardadas no instrumento (mão secundária) e lançadas com clique direito: a maioria são auras para seus aliados.
+27 Bardo
+28 Traço da classe: vida máxima um pouco menor.
+29 %1$s foi esmagado pelo piano de %2$s
+30 %1$s foi esmagado pelo piano de %2$s
+31 %1$s caiu diante da música de %2$s
+32 %1$s caiu diante da música de %2$s
+33 %1$s foi explodido pela onda sônica de %2$s
+34 %1$s foi explodido pela onda sônica de %2$s
+35 Enfeitiçado
+36 Dança Forçada
+37 Coral de Ferro
+38 Cadência de Mana
+39 Marcha
+40 Fervor do Réquiem
+41 Balada do Descanso
+42 Escamas contra Fogo
+43 Escamas contra Gelo
+44 Escamas contra Raio
+45 Passo Compartilhado
+46 Silenciado
+47 Hino de Guerra
+48 Nota Cortante
+49 Piano de Cauda
+50 x%s
+51 Crescendo
+52 Bom
+53 Erro
+54 Perfeito!
+55 Órgão Abissal
+56 Palheta Abissal
+57 Fio Arcano
+58 Gaita de Foles
+59 Carrilhão
+60 Tambor do Colosso
+61 Pele do Tambor do Colosso
+62 Harpa de Cristal
+63 Tambor
+64 Alaúde do Sol Eterno
+65 Flauta
+66 Guitarra-Machado
+67 Harpa
+68 Sanfona de Roda
+69 Alaúde
+70 Lira
+71 Nota Musical
+72 Ocarina
+73 Flauta de Pã
+74 Fragmento Ressonante
+75 Lira da Escala de Fogo
+76 Lira da Escala de Gelo
+77 Lira da Escala de Raio
+78 Partitura
+79 Partitura: %s
+80 Violino Espectral
+81 Pandeiro
+82 Violino
+83 Trompa de Guerra
+84 Persistência da aura
+85 Raio da aura
+86 Forma da aura
+87 Dança
+88 Coro
+89 Contágio
+90 Repertório Ampliado
+91 Ouvido Fino
+92 Voz Hipnótica
+93 Última Nota
+94 Combo Marcial
+95 Poder musical
+96 Marcha Perfeita
+97 Golpe Ressonante
+98 Passo Compartilhado
+99 Solista
+100 Tempo Largo
+101 Tempo Presto
+102 Janela de acerto
+103 Rastro
+104 %s precisa de um combo de %s (você tem %s)
+105 Crescendo!
+106 Feitiços musicais precisam de Iron's Spells 'n Spellbooks
+107 Não há alvo à vista
+108 Só um Bardo sabe tocar este instrumento.
+109 Escolha um feitiço do seu instrumento na roda
+110 Recital: seu próximo feitiço é grátis
+111 Feitiços musicais são lançados tocando o instrumento (clique direito)
+112 Bônus para aliados
+113 Poder sem aliados por perto
+114 Poder sem aliados
+115 Raio base da aura (blocos)
+116 Duração do efeito da aura sem persistência
+117 Andamento base (batidas por minuto)
+118 Dano do golpe no tempo
+119 Força da aura por estágio
+120 Parte do poder musical que bônus e penalidades recebem
+121 Máx. de aliados contados
+122 Combo mínimo reduzido em
+123 Duração do controle
+124 Recarga removida
+125 Poder com aliados por perto
+126 Feitiços diferentes
+127 Raio extra (blocos)
+128 Espaços extras de partitura
+129 Toques extras perdoados por frase
+130 Valor de cada acerto x
+131 Combo perdido ao guardar o instrumento por
+132 Força enquanto persiste
+133 Andamento máximo (batidas por minuto)
+134 Combo máximo
+135 Máx. de dançarinos extras
+136 Máx. de estágios
+137 A partir do estágio de Harmonia
+138 Combo mantido num erro
+139 Poder musical
+140 Limite do poder musical
+141 Batidas com nota
+142 Poder por aliado próximo
+143 Dano por acerto
+144 Janela de acerto perfeito (ms)
+145 Batidas por frase
+146 Velocidade ao tocar
+147 Força da aura
+148 Poder musical
+149 Poder musical por acerto (Nível Total 1)
+150 Poder musical por acerto (Nível Total 15)
+151 Poder musical por acerto (Nível Total 30)
+152 Raio da aura
+153 Recarga restante removida
+154 Pausa entre frases (batidas)
+155 Seu bônus
+156 Dano sônico
+157 Estágios perdidos por erro
+158 Andamento
+159 Andamento por estágio
+160 Janela de acerto
+161 Janela de acerto (ms)
+162 Mais poder musical para cada aliado próximo (até 4); menos se você toca sozinho.
+163 Coro
+164 Mais poder musical sem aliados por perto; um pouco menos se houver.
+165 Solista
+166 O bônus de velocidade da Dança é maior, mas só enquanto a Harmonia estiver ativa.
+167 Marcha Perfeita
+168 Aliados dentro da sua aura recebem metade do bônus de velocidade da sua Dança; você recebe um pouco menos.
+169 Passo Compartilhado
+170 Andamento mais lento (incluindo seu aumento pela Harmonia) e uma janela de acerto ainda maior, ao custo de parte do poder musical.
+171 Tempo Largo
+172 Um toque extra por frase não quebra a Harmonia, mas o andamento base é mais rápido.
+173 Tempo Presto
+174 Suas auras chegam bem mais longe, mas seus efeitos são um pouco mais fracos.
+175 Eco Distante
+176 Suas auras cobrem menos terreno, mas seus efeitos são bem mais fortes.
+177 Círculo Interno
+178 Quando uma aura termina, ela libera uma onda que empurra inimigos próximos e causa um pouco de dano sônico.
+179 Última Nota
+180 Os efeitos persistem por mais tempo após a aura, mas são mais fracos enquanto persistem.
+181 Rastro
+182 Musical
+183 Nota Cortante
+184 Você dispara uma nota afiada que causa dano sônico. Em níveis altos perfura inimigos.
+185 Dissonância
+186 Uma nota quebrada ao seu redor: inimigos são silenciados (sem feitiços) e atordoados por um instante.
+187 Elegia
+188 Aura: inimigos próximos ficam fracos e lentos.
+189 Réquiem Final
+190 O grande final: enorme dano sônico ao seu redor e mais dano para seus aliados por alguns segundos.
+191 Dança Forçada
+192 Seu alvo começa a dançar: não pode atacar, lançar feitiços nem usar itens. Chefes são imunes.
+193 Piano de Cauda
+194 Uma sombra cresce sob seu alvo e o segue; no fim ela para e um piano cai. Saia da frente!
+195 Combo mínimo: %s
+196 Silêncio de %s s e atordoamento de %s s
+197 Dano: %s
+198 +%s%% de dano
+199 Dança %s s (jogadores %s s)
+200 Fraqueza I e Lentidão I
+201 Duração: %s s
+202 +%s%% de regeneração de mana
+203 Perfura %s inimigos
+204 Raio: %s blocos
+205 Alcance: %s blocos
+206 −%s%% de dano recebido
+207 %s de vida por segundo
+208 +%s%% de dano para seus aliados por %s s
+209 Um segundo piano cai com metade do dano
+210 +%s%% de velocidade de movimento e +%s%% de velocidade de ataque
+211 Coral de Ferro
+212 Aura: você e seus aliados recebem menos dano.
+213 Cadência de Mana
+214 Aura: você e seus aliados regeneram mana mais rápido.
+215 Marcha
+216 Aura: você e seus aliados correm e atacam mais rápido.
+217 Balada do Descanso
+218 Aura: você e seus aliados regeneram vida.
+219 Estrondo
+220 Um cone de som à sua frente que causa dano e empurra inimigos.
+221 Hino de Guerra
+222 Aura: você e seus aliados causam mais dano.
+223 Mestre do controle. Seus efeitos de controle duram mais, a dança se espalha para monstros próximos e, a partir do nível 5, monstros que saem da dança ou da Dissonância continuam enfeitiçados e lutam entre si.
+224 Encantador
+225 O mais versátil: mais espaços de partitura nos seus instrumentos, feitiços com combo mínimo menor e, a partir do nível 5, o Recital: depois de três feitiços diferentes seguidos, o próximo é grátis e recarrega mais cedo.
+226 Menestrel
+227 Um Bardo de linha de frente. Cada nota que você acerta adiciona dano com armas leves e pesadas (além das suas muralhas), todo quinto golpe no tempo libera uma onda sônica e, com Harmonia alta, você bate ainda mais forte.
+228 Cantor de Guerra
+229 +%s%% de velocidade de lançamento
+230 −%s%% de recarga de feitiços
+231 Instrumento %s (somente Bardo):
+232 Clique direito: lança o feitiço selecionado na roda do Iron's. Shift + clique direito (fora de combate, na mão principal): estante de partitura.
+233 +%s%% de regeneração de mana
+234 +%s de mana máx.
+235 Passiva: %s
+236 Maior raio das auras e dano dobrado na Última Nota.
+237 A cada 10 de combo libera um estrondo que atordoa inimigos próximos.
+238 A cada 10 acertos seguidos você recupera parte da sua mana.
+239 Acertos perfeitos curam seus aliados próximos.
+240 Machado de duas mãos que também pode ser tocado. O Bardo não tem a muralha de Armas Pesadas com ele; outras classes o usam como um machado normal.
+241 Suas auras dão resistência a fogo aos seus aliados.
+242 Suas auras dão resistência a gelo aos seus aliados.
+243 Suas auras dão resistência a raio aos seus aliados.
+244 Um erro derruba só um terço do seu combo.
+245 Suas auras têm um raio maior.
+246 +%s%% de poder musical
+247 Comum
+248 Épico
+249 Lendário
+250 Raro
+251 Partituras: %s/%s · nível máx. da partitura: %s%%
+252  ♪ %s (nível %s)
+253  ♪ %s (nível %s, limitado a %s)
+254 Combo mínimo: %s
+255 Partitura em branco
+256 Guardada em um instrumento (estante de partitura). Suba o nível com tinta numa bancada de trabalho.
+257 Nível %s de %s
+258 Coloque partituras nos espaços. Os espaços cinzas excedem os seus: só podem ser esvaziados.
+259 Estante de partitura: %s

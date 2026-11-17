@@ -1,0 +1,37 @@
+0 Você volta para onde estava alguns segundos atrás e recupera parte da vida e da mana que perdeu desde então (nunca tira nada). Cancela o dano de queda; com níveis maiores de subclasse a janela é mais longa, você recupera mais, os efeitos negativos recebidos nesse tempo são removidos e os feitiços lançados nele recuperam parte da recarga. Trocar de dimensão, morrer ou se teletransportar para longe apaga o histórico.
+1 Retroceder o Tempo
+2 Você cria uma esfera de tempo parado ao seu redor. Tudo dentro dela, e tudo que entrar enquanto durar (projéteis incluídos), fica congelado; você e seus aliados não. Chefes ficam congelados só por parte do tempo. A esfera parece cinza por dentro e por fora; jogadores congelados veem tudo em cinza, mudam para terceira pessoa e ouvem um relógio tiquetaqueando até acabar. Custa mana.
+3 Parar o Tempo
+4 Cinto de %s
+5 %1$s foi engolido pelo enxame de %2$s
+6 %1$s foi engolido pelo enxame de %2$s
+7 Cópia Mitótica
+8 Slime do Enxame
+9 Amuleto Criativo
+10 Nível de cada feitiço de água racial (0 = você ainda não o tem). Requer T.O Magic 'n Extras.
+11 Feitiços de Água
+12 Você perdeu uma cópia: recuperará seu tamanho quando a recarga da divisão acabar
+13 Você se funde com sua cópia
+14 Mitose! Você se divide em duas cópias: agache-se ao lado da outra para fundir
+15 Sem espaço para crescer: você precisa de espaço livre do dobro do seu tamanho
+16 Não há um lugar seguro para voltar.
+17 Ainda não há para onde voltar.
+18 Você não tem mana suficiente para parar o tempo.
+19 Remove efeitos negativos a partir do nível
+20 Vida perdida recuperada
+21 Hidrojato (nível)
+22 Jato de Vapor (nível)
+23 Custo (da mana máx.)
+24 Mana gasta recuperada
+25 Teletransporte que apaga o histórico (blocos)
+26 Transbordamento (nível)
+27 Busca de lugar seguro (blocos)
+28 Salva seu estado a cada
+29 Recupera recargas de feitiços a partir do nível
+30 Recarga de feitiços recuperada
+31 Agarre da Maré (nível)
+32 Mago do tempo. Você lança feitiços mais rápido e domina duas habilidades: Retroceder o Tempo, que te leva de volta para onde estava alguns segundos atrás recuperando vida e mana, e Parar o Tempo, uma esfera que congela inimigos e projéteis por um instante.
+33 Cronomante
+34 Teste: enquanto estiver no seu inventário, todas as recargas de classe e raça são 0.
+35 Espaços: %s/%s
+36 Abrir

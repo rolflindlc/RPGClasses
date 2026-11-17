@@ -1,0 +1,284 @@
+0 Lavakampf
+1 Besiege 20 Feinde, während du auf Lava stehst.
+2 Auf Lava besiegte Feinde
+3 Opfergabe des Schmelzers
+4 Opfere 64 Barren von mindestens 3 Arten.
+5 64 Barren (3 Arten)
+6 Ritual der Schmiede
+7 Besiege einen Ritual-Boss, der mit dem Altar im Umkreis von 4 Blöcken um Lava beschworen wurde.
+8 Boss besiegt (Altar neben Lava)
+9 Erste Beute
+10 Besiege 20 Feinde und erlege 20 Tiere.
+11 Besiegte Feinde
+12 Erlegte Tiere
+13 Bankett
+14 Opfere 16 gegarte Fleischsorten von mindestens 3 Arten.
+15 16 gegarte Fleischstücke (3 Arten)
+16 Boss-Festmahl
+17 Besiege einen Ritual-Boss und opfere einen seiner Drops auf dem Altar.
+18 Ritual-Boss besiegt
+19 Einer der Drops des Bosses
+20 Felshaut
+21 Erleide 100 Treffer und besiege 30 Feinde.
+22 Eingesteckte Treffer
+23 Besiegte Feinde
+24 Schmiede der Ausdauer
+25 Opfere 4 Obsidian, 16 Eisenbarren und 1 Amboss.
+26 Obsidian, Eisen und Amboss
+27 Prüfung der Mauer
+28 Besiege einen Ritual-Boss, nachdem du mindestens 10 seiner Treffer eingesteckt hast, ohne zu sterben.
+29 Boss nach 10 seiner Treffer besiegt
+30 Waffengefährten
+31 Besiege 40 Feinde, mit einem Verbündeten (Spieler oder Tier) im Umkreis von 12 Blöcken.
+32 Neben einem Verbündeten besiegte Feinde
+33 Lager
+34 Errichte neben dem Altar (6 Blöcke) ein Lager: 1 Lagerfeuer, 4 Banner und 2 Betten.
+35 Lager neben dem Altar
+36 Ruf zu den Waffen
+37 Besiege einen Ritual-Boss mit mindestens 2 Verbündeten (Spieler oder Tiere) im Umkreis von 12 Blöcken.
+38 Boss mit 2 Verbündeten in der Nähe besiegt
+39 in einem Waldbiom
+40 im Umkreis von 4 Blöcken um Lava
+41 im Nether
+42 unter der Erde
+43 unter Wasser
+44 Jagd in der Tiefe
+45 Besiege 30 Feinde, während du untergetaucht bist.
+46 Untergetaucht besiegte Feinde
+47 Opfergabe des Ozeans
+48 Opfere bei einem Altar unter Wasser 16 Prismarinkristalle, 8 Seelaternen und 3 Nautilusschalen.
+49 Prismarin, Laternen und Nautilus (Altar unter Wasser)
+50 Hof des Abgrunds
+51 Besiege einen Großen Wächter oder einen Ritual-Boss, der mit dem Altar unter Wasser beschworen wurde.
+52 Großer Wächter oder Boss (Altar unter Wasser)
+53 Tiefseefischerei
+54 Besiege 20 Wassermobs.
+55 Besiegte Wassermobs
+56 Großer Fang
+57 Opfere 32 Fische von 4 Arten und eine verzauberte Angel.
+58 Fische und verzauberte Angel
+59 Schatz der Tiefe
+60 Opfere einen von dir geangelten Schatzgegenstand und besiege einen Ritual-Boss.
+61 Ein geangelter Schatz
+62 Ritual-Boss besiegt
+63 Strömung
+64 Besiege 30 Feinde, die sich im Wasser befinden.
+65 Im Wasser besiegte Feinde
+66 Riff
+67 Opfere 4 Schwämme, 8 Korallenblöcke und 3 Wassereimer.
+68 Schwämme, Korallen und Wasser
+69 Springflut
+70 Besiege einen Ritual-Boss und wirke dabei mindestens 3-mal deine rassischen Wasserzauber.
+71 Boss mit 3 rassischen Wasserzaubern besiegt
+72 Gebrochene Knochen
+73 Erleide 50 Projektiltreffer und besiege 20 Feinde (Skelette zählen nicht).
+74 Eingesteckte Projektiltreffer
+75 Besiegte Feinde (keine Skelette)
+76 Beinhaus
+77 Opfere 64 Knochen, 32 Pfeile und 4 Knochenblöcke.
+78 Knochen, Pfeile und Knochenblöcke
+79 Prüfung des Kreuzfeuers
+80 Besiege einen Ritual-Boss, nachdem du mindestens 10 Projektile von ihm oder seiner Eskorte eingesteckt hast, ohne zu sterben.
+81 Boss nach 10 Projektilen besiegt
+82 Jagd in der Luft
+83 Besiege 20 fliegende Mobs (Phantome, Plagegeister, Lohen, Ghasts …).
+84 Besiegte fliegende Mobs
+85 Ätherische Opfergabe
+86 Opfere 16 Phantommembranen, 16 Federn und 4 Enderperlen.
+87 Membranen, Federn und Perlen
+88 Ätherischer Tanz
+89 Besiege einen Ritual-Boss und nutze dabei mindestens 3-mal die Ätherische Gestalt im Kampf.
+90 Boss mit 3 Ätherischen Gestalten besiegt
+91 Nachtjagd
+92 Besiege 30 feindliche Mobs nachts oder bei Lichtstärke 7 oder weniger.
+93 Nachts besiegte Feinde
+94 Opfergabe des Blutes
+95 Opfere 16 Redstone-Staub, 8 Rote Beten und 8 rote Pilze.
+96 Redstone, Rote Bete und Pilze
+97 Purpurnes Bankett
+98 Besiege einen Ritual-Boss und stelle dabei mit Durst mindestens 100 HP wieder her.
+99 Boss besiegt, 100 HP mit Durst geheilt
+100 Feuer
+101 Neutral
+102 Stein
+103 Wasser
+104 Flinker Späher: mehr Geschwindigkeit, Dreifachsprung und Wandklettern.
+105 Agiler Späher
+106 Ein Schurke, der auch zaubert: verliert die Magie-Mauer, gewinnt Mana und Macht, und sein erster Zauber aus der Unsichtbarkeit trifft härter.
+107 Arkane Klinge
+108 Ein Frontlinien-Magier, der zwischen Schwert und Zauber wechselt. Jeder Zauber durchdringt deine Waffe mit seiner Schule (Feuer brennt, Eis verlangsamt, Blitz springt, Blut heilt, Natur vergiftet, Ender bringt dich hinter das Ziel, Hervorrufung lässt Fangzähne entstehen, Unheimlich setzt eine Schallwelle in einer Linie frei und Wasser stößt zurück); alle 3 aufeinanderfolgenden Treffer kostet dein nächster Zauber weniger Mana. Du wirst beim Zaubern nicht unterbrochen, verlierst die Mauern der Nahkampfwaffen, und das ausgegebene Mana verleiht dir einen Schild.
+109 Kampfmagier
+110 Deine gebundenen Tiere sind stärker, schneller und zäher und entgehen dem Tod, indem sie zu deinem Spawnpunkt zurückkehren, wo sie ihre nicht dauerhaften Trankeffekte verlieren, gelöscht werden, falls sie brennen, und 5 s lang unverwundbar sind. Bänder werden nur mit dem Buch der Bande geknüpft und gelöst.
+111 Tiermeister
+112 Heilender Beschützer. Du erhältst mehr Heilung, und dein Bollwerk heilt die Gruppe mit dem Schaden, den du abmilderst.
+113 Gesegneter Wächter
+114 Der Schnellste und der am höchsten Springende, mit einem Luftsprint.
+115 Brisenmeister
+116 Ein Berg an Gesundheit. Dein Bollwerk wird zu einem unaufhaltsamen Sturmangriff, der Feinde niedertrampelt.
+117 Stürmender Koloss
+118 Deine Zauber bauen Ladungen auf Feinden auf; wenn sie voll sind, detonieren sie je nach Schule: Feuer explodiert, Eis friert ein, Blitz springt in Bögen, Blut raubt Leben, Ender teleportiert, Hervorrufung lässt Fangzähne entstehen, Natur verwurzelt und vergiftet, Unheimlich hinterlässt das Mal der Leere (speichert den erlittenen Schaden und implodiert dann), und Wasser (mit T.O Magic 'n Extras) schickt eine Welle, die zurückstößt und durchnässt.
+119 Elementarist
+120 Treffer, die zurückstoßen und weiter reichen. Beim Ducken lädst du die Handfläche auf (mehr Schaden und Rückstoß; bei voller Ladung durchbricht sie die Deckung). Prallt der weggeschleuderte Feind gegen einen Block oder einen anderen Feind, erleidet er zusätzlichen Schaden und wird betäubt und außer Gefecht gesetzt.
+121 Schwere Handfläche
+122 Mehr Gesundheit und das Spiel mit dem Tod: Bei einem tödlichen Treffer wird eine Münze geworfen; bei Ankh überlebst du (beim ersten Mal 75 %, danach 50 %).
+123 Unzerstörbar
+124 Immun gegen Hunger, Gift und Wither. Deine Treffer verbreiten die Seuche, die mit der Zeit Schaden verursacht, selbst bei Untoten.
+125 Seuchenverderber
+126 Noch schwerer zu entdecken, und wenn du unsichtbar wirst, hinterlässt du einen Köder, der Feinde ablenkt.
+127 Schattenillusionist
+128 Du bewegst dich geduckt so schnell wie beim Gehen und teleportierst dich kurze Strecken.
+129 Schattenwandler
+130 Sehr schnelle Pfeile und deutlich mehr Schaden pro Schuss, im Tausch gegen langsameres Spannen des Bogens.
+131 Scharfschütze
+132 Mehr Schaden, und wenn du einen tödlichen Treffer einsteckst, wirst du einige Sekunden lang unsterblich: Tötest du deinen Angreifer, lebst du.
+133 Selbstmörderischer Berserker
+134 Jede Haltung schützt dich vor einer Schadensart und fügt ihren eigenen Effekt hinzu: Feuer, Wasser oder Stein.
+135 Wächter der drei Welten
+136 Unverrückbar. Immun gegen Rückstoß, du widerstehst Trefferserien, und dein Bollwerk befreit dich von negativen Effekten.
+137 Unbeugsame Bastion
+138 Du siehst unter der Erde im Dunkeln und bist immun gegen Dunkelheit. Steinsinn (Rassentaste 1, Rang 1) hebt Erze und Lava in der Nähe hervor.
+139 der Tiefe
+140 Dein eigenes TNT verletzt dich nicht und explodiert mit 25 % größerem Radius. Ab Rang 1 baut das Abbauen eines Erzes auch die verbundenen mit ab (nicht beim Ducken). Auf Rang 3 baust du geduckt Stein in einem 3×3-Tunnel ab (verbraucht mehr Hunger).
+141 Sprengmeister
+142 Was du herstellst oder reparierst, hält länger (+20 %, +40 % auf Rang 2). Ab Rang 1 kostet dich der Amboss die Hälfte der Stufen. Auf Rang 3 haben hergestellte Dinge Haltbarkeit +1 (maximal III).
+143 Schmied
+144 Der Verzauberungstisch zählt, als wäre seine Stufe höher, und Verzaubern (am Tisch oder Amboss) kostet dich weniger Erfahrung. Auf Rang 3 verschmilzt du am Amboss zwei identische Verzauberungen auf Höchststufe, um dieses Maximum um 1 zu übertreffen.
+145 Arkan
+146 Du siehst in jeder Dunkelheit. Rauchwolke (Rassentaste 1, Rang 1): Du und deine Verbündeten darin seid unsichtbar, und Mobs außerhalb verlieren dich aus den Augen. Wird durch Nähe nicht verraten.
+147 Dunkel
+148 Deine Feldfrüchte geben mehr Ertrag; mit Rängen sättigt pflanzliche Nahrung stärker, und du kannst Pflanzen mit leerer Hand wachsen lassen.
+149 Sylvan
+150 Flinke Finger: Wenn du im Nahkampf triffst, kannst du einen Gegenstand aus der Beute eines Mobs (ohne ihn zu töten) oder aus dem Inventar eines Spielers stehlen (nie aus der Schnellleiste oder dem Set).
+151 Dieb
+152 Schlinge (Rassentaste 1): Du legst eine Falle, die nie verfällt; nur du kannst sie sehen, und der erste Feind, der hineintritt, erleidet Schaden und wird festgesetzt.
+153 Fallensteller
+154 Rechtsklicke deinen Wolf mit leerer Hand, um ihn zu reiten (Ducken: ihn wie üblich sitzen lassen). Mit Rängen: Deine Wölfe haben mehr Gesundheit, der gerittene Wolf beißt, was du triffst, und regeneriert, während du ihn reitest.
+155 Wolfsreiter
+156 Du verlierst beim Zurücksetzen deiner Klasse oder Unterklasse weniger EP: Der Verlust wird um den Prozentsatz deines Rangs verringert.
+157 Autodidakt
+158 Wähle eine zweite Mauer, die die Hälfte der Verringerung erhält.
+159 Vielseitig
+160 Die Verringerung deiner gewählten Mauer ist 50 % größer (bis zu −75 % auf Rang 3).
+161 Spezialist
+162 Piglins, Brutes und Hoglins sind dir gegenüber neutral, solange du sie nicht angreifst. Mit Rängen: immun gegen Wither, besserer Tauschhandel mit Piglins und Höllenkompass (Rassentaste 1, Rang 3).
+163 Einheimischer
+164 Dein rassischer Feuerschuss durchbohrt Feinde. Mit Rängen hinterlässt deine rassische Magmabombe eine Flammenlache und auf Rang 3 Lava, die verlangsamt. Benötigt Iron's Spells.
+165 Pyromane
+166 Du gehst auf Lava. Mit Rängen arbeiten Öfen in der Nähe schneller, abgebaute Erze kommen geschmolzen heraus, und du schmilzt sofort, was du in der Hand hältst (Rassentaste 1, Rang 3).
+167 Schmelzer
+168 Du isst rohes Fleisch und rohen Fisch ohne negative Effekte, und sie sättigen, als wären sie gegart. Mit Rängen nährt dich das Töten und gewährt Kampfeffekte.
+169 Verschlinger
+170 Dicke Haut: Jeder Treffer, den du einsteckst, verursacht um einen festen Wert weniger Schaden, ohne Minimum.
+171 Steinhaut
+172 Stimme des Kriegsherrn (Rassentaste 1): Entfernt Kontrolleffekte von dir und Verbündeten in der Nähe.
+173 Kriegsherr
+174 Ertrunkene und Wächter sind dir gegenüber neutral, solange du sie nicht angreifst. Mit Rängen: Unterwasser-Immunitäten, Tarnung und eine Wächter-Eskorte.
+175 Abgrundtief
+176 Fische beißen früher an, und beim Angeln hast du rassisches Glück des Meeres; mit Rängen zusätzlicher Fang, mehr Schätze und mehr Erfahrung.
+177 Fischer
+178 Rassische Wasserzauber immer im Iron's-Rad: Wasserschuss; Überlauf (Stufe 3) auf Rang 1; Dampfstrahl auf Rang 2 und Gezeitengriff auf Rang 3. Sie kosten Mana und leiden unter der Magie-Mauer deiner Klasse. Benötigt T.O Magic 'n Extras.
+179 Former
+180 Skelette sind dir gegenüber neutral, solange du sie nicht angreifst, und du erleidest weniger Projektilschaden. Auf Rang 3 wird deine Regeneration kürzer unterbrochen.
+181 Skelett
+182 Du erleidest keinen Fallschaden und fällst langsam (Ducken verhindert das). Ätherische Gestalt (Rassentaste 1, Rang 1): einige Sekunden, in denen du weder Schaden erleiden noch angreifen kannst; schützt nicht vor der Sonne.
+183 Spektrum
+184 Durst: Töten heilt dich, und mit Rängen raubst du Leben aus dem von dir verursachten Schaden (mit einer Grenze pro Sekunde).
+185 Vampir
+186 Zwergenschmiede: +%s %% Haltbarkeit
+187 Fähigkeiten
+188 Verwandte Disziplinen (kein Malus): %s
+189 Verbündeten markieren
+190  · hat dich als Verbündeten
+191 Verbündete
+192 Verbündete: %s · Seite %s/%s
+193 Es sind keine anderen Spieler online.
+194 Deine Unterstützung erreicht nur deine Verbündeten, und deine Angriffe betreffen sie nicht. Alle anderen zählen als Feinde.
+195  · offline
+196 Verbündeten entfernen
+197 Verbündeter
+198 Feind
+199 Verbündete
+200 Das Tragen eines beliebigen Rüstungsteils schaltet deine „Ohne Rüstung“-Passiven ab, außer deiner Klassenausrüstung (Barbarengeschirre oder Mönchsroben).
+201 Gebunden (%s/%s)
+202 Lösen
+203 Ziel beim Tod
+204 Spawnpunkt
+205 Band
+206 In der Nähe, ungebunden
+207 Du hast keine ungebundenen Tiere im Umkreis von %s Blöcken.
+208 Du hast noch keine gebundenen Tiere.
+209 Punkt %s: leer
+210 Punkt %s: %s, %s, %s (%s)
+211 Hier speichern
+212 Gesundheit %s/%s · Schaden %s · Tempo %s
+213 Buch der Bande
+214 Nicht geladen: Geh näher heran, um es zu sehen oder freizulassen
+215 Benutzen
+216 Gesperrt: Du nutzt bereits 3 Zweige. Wird beim Zurücksetzen deiner Klasse freigeschaltet.
+217 Zweige (je 10 Punkte; jeder Punkt erhöht alle ihre Passiven). Du kannst 3 der 5 nutzen: Wenn du Punkte in drei steckst, sind die anderen beiden gesperrt, bis du deine Klasse zurücksetzt.
+218 %s wählen
+219 Schließen
+220 Den Perk %s wählen?
+221 Er ist kostenlos, aber du kannst ihn erst ändern, wenn du deine Klasse zurücksetzt.
+222 %s wählen?
+223 Du kannst nur eine Unterklasse gleichzeitig haben. Du kannst sie zurücksetzen, aber jedes Zurücksetzen verliert einen Teil der ausgegebenen EP.
+224 Du kannst nur eine Klasse haben. Du kannst sie später zurücksetzen, aber jedes Zurücksetzen verliert einen Teil der ausgegebenen EP.
+225 %s wählen?
+226 (nur ohne Rüstung)
+227 Kritisch: %s Chance, ×%s Schaden plus die Zweigboni
+228 %s: %s
+229 Keine Zahlenwerte.
+230 %s: %s pro Punkt, %s bei 10
+231 (Perk, fester Wert)
+232 %s: von %s (Stufe 1) bis %s (Stufe 10)
+233 Passiven (Unterklassenstufe 1 bis 10)
+234 %s pro Stufe: %s
+235 EP-Kosten
+236 Stufe n: %s EP. Gesamt: %s bis Stufe 30 und %s für die 10 Unterklassenstufen.
+237 Deine Unterklasse
+238 Startausrüstung mit unendlicher Haltbarkeit.
+239 Du musst eine Klasse wählen, um mit dem Spielen zu beginnen.
+240 Keine Startausrüstung.
+241 keine Taste
+242 Wähle einen Perk:
+243 %s: %s
+244 Perk bei vollem Zweig (du wählst einen, kostenlos, bis du die Klasse zurücksetzt):
+245 Gesamtstufe %s/40  |  EP: %s  |  %s
+246 Rasse
+247 Merkmale der Unterrasse. R0–R3 = Wert auf jedem Rang (Ränge 1–3 werden durch Rituale verdient).
+248 Rasse und Unterrasse sind DAUERHAFT. Sie können nicht geändert oder zurückgesetzt werden, auch nicht beim Zurücksetzen deiner Klasse.
+249  (ab Rang %s)
+250 Deine Rasse · Rang %s
+251 Unterrasse
+252 Deine Rasse. Unterrasse: %s. Rang %s.
+253 Rasse und Unterrasse sind dauerhaft: Sie können nicht geändert werden.
+254 Wähle deine Rasse und Unterrasse
+255 Rassen
+256 Mensch: Wähle deine Mauer
+257 Rassenmerkmale (Rang 0)
+258 Noch nicht verfügbar: Ihre Merkmale sind in Entwicklung.
+259 %s: −%s %% → −%s (bei 30 Punkten)
+260 Anpassungsfähig verringert den Malus der Mauer, die du wählst. Sie wird bei der Klassenwahl gewählt und ändert sich nur beim Zurücksetzen der Klasse.
+261 Vielseitig: Wähle eine zweite Mauer, die die Hälfte der Verringerung erhält.
+262 Klasse zurücksetzen
+263 Unterklasse zurücksetzen
+264 Du verlierst %s der für das Zurückgesetzte ausgegebenen EP; der Rest wird erstattet. Im Kampf nicht möglich.
+265 Rolle: %s
+266 Stufe %s (aktuelle Grenze %s, Maximum 10)
+267 Die Unterklasse wird bei %s Basisklassenpunkten freigeschaltet (du hast %s).
+268 Die Unterklasse wird bei 15 Basisklassenpunkten freigeschaltet. Sie hat 10 Stufen.
+269 Wähle deine Unterklasse:
+270 Zweige und Fähigkeiten
+271 Genaue Daten
+272 Fortschritt
+273 Unterklassen
+274 Übersicht
+275 Klassen
+276 Wähle deine Klasse
+277 Basisklassenmerkmal (voll ab der Klassenwahl)
+278 Unterklassenstufe %s
+279 Gesamtstufe %s
+280 Verbessert %s: bleibt ruhend, bis du es hast.
+281 %s: -%s im Maximum
+282 Disziplinmauern
+283 Die Mauer wächst mit deinen Basisklassenpunkten und erreicht bei 30 ihr Maximum. Mit %s Punkten hättest du %s.

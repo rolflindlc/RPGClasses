@@ -1,0 +1,37 @@
+0 Vous retournez là où vous étiez il y a quelques secondes et récupérez une partie de la santé et du mana perdus depuis (cela n'en retire jamais). Annule les dégâts de chute ; avec des niveaux de sous-classe plus élevés, la fenêtre est plus longue, vous récupérez plus, les effets négatifs reçus pendant ce temps sont retirés et les sorts lancés pendant ce temps récupèrent une partie de leur recharge. Changer de dimension, mourir ou se téléporter loin efface l'historique.
+1 Remontée du temps
+2 Vous créez autour de vous une sphère de temps arrêté. Tout ce qui s'y trouve, et tout ce qui y entre tant qu'elle dure (projectiles compris), est figé ; vous et vos alliés non. Les boss ne sont figés que pendant une partie du temps. La sphère paraît grise de l'intérieur et de l'extérieur ; les joueurs figés voient tout en gris, passent en troisième personne et entendent une horloge qui tictaque jusqu'à la fin. Coûte du mana.
+3 Arrêt du temps
+4 Ceinture de %s
+5 %1$s a été englouti par l'essaim de %2$s
+6 %1$s a été englouti par l'essaim de %2$s
+7 Copie mitotique
+8 Slime de l'essaim
+9 Amulette créative
+10 Niveau de chaque sort d'eau racial (0 = vous ne l'avez pas encore). Nécessite T.O Magic 'n Extras.
+11 Sorts d'eau
+12 Vous avez perdu une copie : vous retrouverez votre taille à la fin de la recharge de la division
+13 Vous fusionnez avec votre copie
+14 Mitose ! Vous vous divisez en deux copies : accroupissez-vous près de l'autre pour fusionner
+15 Pas la place de grandir : vous avez besoin d'un espace libre du double de votre taille
+16 Il n'y a aucun endroit sûr où retourner.
+17 Il n'y a encore nulle part où retourner.
+18 Vous n'avez pas assez de mana pour arrêter le temps.
+19 Retire les effets négatifs à partir du niveau
+20 Santé perdue récupérée
+21 Tir hydraulique (niveau)
+22 Jet de vapeur (niveau)
+23 Coût (du mana max.)
+24 Mana dépensé récupéré
+25 Téléportation qui efface l'historique (blocs)
+26 Débordement (niveau)
+27 Recherche d'un endroit sûr (blocs)
+28 Enregistre votre état toutes les
+29 Récupère les recharges de sorts à partir du niveau
+30 Recharge de sorts récupérée
+31 Étreinte des marées (niveau)
+32 Mage du temps. Vous lancez des sorts plus vite et maîtrisez deux capacités : la Remontée du temps, qui vous ramène là où vous étiez il y a quelques secondes en récupérant santé et mana, et l'Arrêt du temps, une sphère qui fige ennemis et projectiles un instant.
+33 Chronomancien
+34 Test : tant qu'elle est dans votre inventaire, toutes les recharges de classe et de race sont à 0.
+35 Emplacements : %s/%s
+36 Ouvrir

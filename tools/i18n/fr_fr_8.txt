@@ -1,0 +1,260 @@
+0 Quand la Danse forcée ou la Dissonance se termine, les monstres normaux restent charmés quelques secondes : ils ne vous attaquent pas et se battent entre eux. Les boss sont immunisés.
+1 Ensorceler
+2 Chaque fois que votre combo franchit 10, 20 ou 30, tous vos sorts en recharge perdent la moitié de leur recharge restante.
+3 Contrepoint
+4 Pendant quelques secondes, les ratés n'abaissent pas votre combo et chaque coup compte double.
+5 Crescendo
+6 Si vous jouez parfaitement (chaque note et aucune pression en trop), chaque phrase monte d'un palier : vos auras se renforcent et le tempo s'accélère. Un raté ou une pression en trop fait perdre deux paliers.
+7 Harmonie
+8 Après avoir lancé trois sorts différents de votre instrument en peu de temps, le suivant ne coûte pas de mana et perd la moitié de sa recharge (avec un délai minimal entre les utilisations).
+9 Récital
+10 Avec un instrument en main, vous jouez à un mini-jeu de rythme : chaque note demande clic gauche, clic droit, Maj ou Espace, et l'action a vraiment lieu. Seul le fait de ne pas appuyer à temps sur la voie demandée est un raté (appuyer sur d'autres voies n'est pas puni). Chaque coup augmente votre combo et donne de la puissance musicale ; un raté la remet à zéro. Un clic gauche sur le temps inflige des dégâts supplémentaires. Chaque sort musical nécessite un combo minimal pour être lancé.
+11 Rythme
+12 Avec l'Harmonie au palier 3 ou plus, vous infligez plus de dégâts de mêlée.
+13 Fureur rythmique
+14 Résistance à la magie musicale
+15 Puissance de l'école musicale
+16 Augmente la puissance de l'école musicale.
+17 Mesure
+18 Jouer ne vous ralentit plus, et vous courez plus vite tant que l'un de vos morceaux joue (compte dans le plafond de vitesse).
+19 Danse
+20 Une fenêtre de frappe plus large et, avec plus de points, un raté ne remet plus votre combo à zéro : il ne fait que le baisser.
+21 Oreille absolue
+22 Augmente le rayon de vos auras.
+23 Résonance
+24 Les effets de vos auras continuent quelques secondes après les avoir quittées ou après la fin du morceau.
+25 Réverbération
+26 Mi-mage, mi-combattant, qui se bat en jouant : avec un instrument en main, il joue à un mini-jeu de rythme avec clic gauche, clic droit, Maj et Espace (chaque voie fait toujours son action habituelle). Toucher les notes augmente le combo, qui alimente l'école musicale, exclusive au Barde. Ses sorts sont des partitions rangées dans l'instrument (main secondaire) et lancées par clic droit : la plupart sont des auras pour ses alliés.
+27 Barde
+28 Trait de classe : légèrement moins de santé maximale.
+29 %1$s a été écrasé par le piano de %2$s
+30 %1$s a été écrasé par le piano de %2$s
+31 %1$s est tombé sous la musique de %2$s
+32 %1$s est tombé sous la musique de %2$s
+33 %1$s a été soufflé par l'onde sonique de %2$s
+34 %1$s a été soufflé par l'onde sonique de %2$s
+35 Charmé
+36 Danse forcée
+37 Choral de fer
+38 Cadence de mana
+39 Marche
+40 Ferveur du requiem
+41 Ballade du repos
+42 Écailles contre le feu
+43 Écailles contre la glace
+44 Écailles contre la foudre
+45 Pas partagé
+46 Réduit au silence
+47 Hymne de guerre
+48 Note tranchante
+49 Piano à queue
+50 x%s
+51 Crescendo
+52 Bien
+53 Raté
+54 Parfait !
+55 Orgue abyssal
+56 Anche abyssale
+57 Fil arcanique
+58 Cornemuse
+59 Carillon
+60 Tambour du colosse
+61 Peau de tambour du colosse
+62 Harpe de cristal
+63 Tambour
+64 Luth du soleil éternel
+65 Flûte
+66 Guitare-hache
+67 Harpe
+68 Vielle à roue
+69 Luth
+70 Lyre
+71 Note de musique
+72 Ocarina
+73 Flûte de Pan
+74 Éclat résonnant
+75 Lyre de la gamme de feu
+76 Lyre de la gamme de glace
+77 Lyre de la gamme de foudre
+78 Partition
+79 Partition : %s
+80 Violon spectral
+81 Tambourin
+82 Violon
+83 Cor de guerre
+84 Persistance de l'aura
+85 Rayon de l'aura
+86 Forme de l'aura
+87 Danse
+88 Chœur
+89 Contagion
+90 Répertoire étendu
+91 Oreille fine
+92 Voix hypnotique
+93 Dernière note
+94 Combo martial
+95 Puissance musicale
+96 Marche parfaite
+97 Frappe résonnante
+98 Pas partagé
+99 Soliste
+100 Tempo Largo
+101 Tempo Presto
+102 Fenêtre de frappe
+103 Traînée
+104 %s nécessite un combo de %s (vous avez %s)
+105 Crescendo !
+106 Les sorts musicaux nécessitent Iron's Spells 'n Spellbooks
+107 Aucune cible en vue
+108 Seul un Barde sait jouer de cet instrument.
+109 Choisissez un sort de votre instrument dans la roue
+110 Récital : votre prochain sort est gratuit
+111 Les sorts musicaux se lancent en jouant de l'instrument (clic droit)
+112 Bonus pour les alliés
+113 Puissance sans alliés à proximité
+114 Puissance sans alliés
+115 Rayon de base de l'aura (blocs)
+116 Durée de l'effet d'aura sans persistance
+117 Tempo de base (battements par minute)
+118 Dégâts du coup sur le temps
+119 Force de l'aura par palier
+120 Part de la puissance musicale que reçoivent les bonus et malus
+121 Alliés comptés au maximum
+122 Combo minimal réduit de
+123 Durée du contrôle
+124 Recharge retirée
+125 Puissance avec alliés à proximité
+126 Sorts différents
+127 Rayon supplémentaire (blocs)
+128 Emplacements de partition supplémentaires
+129 Pressions en trop pardonnées par phrase
+130 Valeur de chaque coup ×
+131 Combo perdu après avoir rangé l'instrument pendant
+132 Force pendant la persistance
+133 Tempo maximal (battements par minute)
+134 Combo maximal
+135 Danseurs supplémentaires au maximum
+136 Paliers maximum
+137 À partir du palier d'Harmonie
+138 Combo conservé sur un raté
+139 Puissance musicale
+140 Plafond de puissance musicale
+141 Battements avec une note
+142 Puissance par allié à proximité
+143 Dégâts par coup
+144 Fenêtre de frappe parfaite (ms)
+145 Battements par phrase
+146 Vitesse en jouant
+147 Force de l'aura
+148 Puissance musicale
+149 Puissance musicale par coup (Niveau total 1)
+150 Puissance musicale par coup (Niveau total 15)
+151 Puissance musicale par coup (Niveau total 30)
+152 Rayon de l'aura
+153 Recharge restante retirée
+154 Repos entre les phrases (battements)
+155 Votre bonus
+156 Dégâts soniques
+157 Paliers perdus par raté
+158 Tempo
+159 Tempo par palier
+160 Fenêtre de frappe
+161 Fenêtre de frappe (ms)
+162 Plus de puissance musicale pour chaque allié à proximité (jusqu'à 4) ; moins si vous jouez seul.
+163 Chœur
+164 Plus de puissance musicale sans alliés à proximité ; un peu moins s'il y en a.
+165 Soliste
+166 Le bonus de vitesse de la Danse est plus élevé, mais seulement tant que l'Harmonie est active.
+167 Marche parfaite
+168 Les alliés dans votre aura reçoivent la moitié du bonus de vitesse de votre Danse ; vous en recevez un peu moins.
+169 Pas partagé
+170 Tempo plus lent (y compris son augmentation par l'Harmonie) et fenêtre de frappe encore plus large, au prix d'un peu de puissance musicale.
+171 Tempo Largo
+172 Une pression en trop par phrase ne brise pas l'Harmonie, mais le tempo de base est plus rapide.
+173 Tempo Presto
+174 Vos auras portent bien plus loin, mais leurs effets sont un peu plus faibles.
+175 Écho lointain
+176 Vos auras couvrent moins de terrain, mais leurs effets sont bien plus forts.
+177 Cercle intérieur
+178 Quand une aura se termine, elle libère une onde qui repousse les ennemis proches et inflige un peu de dégâts soniques.
+179 Dernière note
+180 Les effets persistent plus longtemps après l'aura, mais sont plus faibles pendant la persistance.
+181 Traînée
+182 Musical
+183 Note tranchante
+184 Vous tirez une note acérée qui inflige des dégâts soniques. À haut niveau, elle transperce les ennemis.
+185 Dissonance
+186 Une note brisée autour de vous : les ennemis sont réduits au silence (pas de sorts) et étourdis un instant.
+187 Élégie
+188 Aura : les ennemis proches deviennent faibles et lents.
+189 Requiem final
+190 Le grand final : d'énormes dégâts soniques autour de vous et plus de dégâts pour vos alliés pendant quelques secondes.
+191 Danse forcée
+192 Votre cible se met à danser : elle ne peut pas attaquer, lancer de sorts ni utiliser d'objets. Les boss sont immunisés.
+193 Piano à queue
+194 Une ombre grandit sous votre cible et la suit ; à la fin elle s'arrête et un piano tombe. Écartez-vous !
+195 Combo minimal : %s
+196 Silence %s s et étourdissement %s s
+197 Dégâts : %s
+198 +%s %% de dégâts
+199 Danse %s s (joueurs %s s)
+200 Faiblesse I et Lenteur I
+201 Durée : %s s
+202 +%s %% de régénération de mana
+203 Transperce %s ennemis
+204 Rayon : %s blocs
+205 Portée : %s blocs
+206 −%s %% de dégâts subis
+207 %s de santé par seconde
+208 +%s %% de dégâts pour vos alliés pendant %s s
+209 Un second piano tombe avec la moitié des dégâts
+210 +%s %% de vitesse de déplacement et +%s %% de vitesse d'attaque
+211 Choral de fer
+212 Aura : vous et vos alliés subissez moins de dégâts.
+213 Cadence de mana
+214 Aura : vous et vos alliés régénérez le mana plus vite.
+215 Marche
+216 Aura : vous et vos alliés courez et attaquez plus vite.
+217 Ballade du repos
+218 Aura : vous et vos alliés régénérez de la santé.
+219 Grondement
+220 Un cône de son devant vous qui blesse et repousse les ennemis.
+221 Hymne de guerre
+222 Aura : vous et vos alliés infligez plus de dégâts.
+223 Maître du contrôle. Vos effets de contrôle durent plus longtemps, la danse se propage aux monstres proches et, à partir du niveau 5, les monstres qui sortent de la danse ou de la Dissonance restent charmés et se battent entre eux.
+224 Enchanteur
+225 Le plus polyvalent : plus d'emplacements de partition dans vos instruments, des sorts avec un combo minimal plus bas et, à partir du niveau 5, le Récital : après trois sorts différents d'affilée, le suivant est gratuit et se recharge plus tôt.
+226 Ménestrel
+227 Un Barde de première ligne. Chaque note touchée ajoute des dégâts avec les armes légères et lourdes (en plus de vos murs), chaque cinquième coup sur le temps libère une onde sonique et, avec une Harmonie élevée, vous frappez encore plus fort.
+228 Chantre de guerre
+229 +%s %% de vitesse d'incantation
+230 −%s %% de recharge des sorts
+231 Instrument %s (Barde uniquement) :
+232 Clic droit : lance le sort sélectionné dans la roue d'Iron's. Maj + clic droit (hors combat, en main principale) : pupitre.
+233 +%s %% de régénération de mana
+234 +%s de mana max.
+235 Passif : %s
+236 Rayon d'aura plus grand et dégâts doublés sur la Dernière note.
+237 Tous les 10 de combo, libère un grondement qui étourdit les ennemis proches.
+238 Tous les 10 coups d'affilée, vous récupérez une partie de votre mana.
+239 Les coups parfaits soignent vos alliés proches.
+240 Hache à deux mains dont on peut aussi jouer. Le Barde n'a pas le mur des Armes lourdes avec elle ; les autres classes l'utilisent comme une hache normale.
+241 Vos auras donnent à vos alliés une résistance au feu.
+242 Vos auras donnent à vos alliés une résistance à la glace.
+243 Vos auras donnent à vos alliés une résistance à la foudre.
+244 Un raté ne fait perdre qu'un tiers de votre combo.
+245 Vos auras ont un rayon plus grand.
+246 +%s %% de puissance musicale
+247 Commun
+248 Épique
+249 Légendaire
+250 Rare
+251 Partitions : %s/%s · niveau max. de partition : %s %%
+252  ♪ %s (niveau %s)
+253  ♪ %s (niveau %s, plafonné à %s)
+254 Combo minimal : %s
+255 Partition vierge
+256 Rangée dans un instrument (pupitre). Montez-la de niveau avec de l'encre sur un établi.
+257 Niveau %s sur %s
+258 Placez des partitions dans les emplacements. Les emplacements gris dépassent les vôtres : ils ne peuvent qu'être vidés.
+259 Pupitre : %s

@@ -1,0 +1,284 @@
+0 Combate na Lava
+1 Derrote 20 inimigos enquanto estiver sobre lava.
+2 Inimigos derrotados sobre lava
+3 Oferenda do Fundidor
+4 Ofereça 64 lingotes de pelo menos 3 tipos.
+5 64 lingotes (3 tipos)
+6 Rito da Forja
+7 Derrote um chefe de rito invocado com o altar a até 4 blocos de lava.
+8 Chefe derrotado (altar perto da lava)
+9 Primeira Presa
+10 Derrote 20 inimigos e cace 20 animais.
+11 Inimigos derrotados
+12 Animais caçados
+13 Banquete
+14 Ofereça 16 carnes cozidas de pelo menos 3 tipos.
+15 16 carnes cozidas (3 tipos)
+16 Festim do Chefe
+17 Derrote um chefe de rito e ofereça um dos seus drops no altar.
+18 Chefe de rito derrotado
+19 Um dos drops do chefe
+20 Pele de Rocha
+21 Receba 100 golpes e derrote 30 inimigos.
+22 Golpes recebidos
+23 Inimigos derrotados
+24 Forja da Resistência
+25 Ofereça 4 obsidianas, 16 lingotes de ferro e 1 bigorna.
+26 Obsidiana, ferro e bigorna
+27 Prova da Muralha
+28 Derrote um chefe de rito depois de receber pelo menos 10 golpes dele sem morrer.
+29 Chefe derrotado após 10 golpes dele
+30 Companhia em Armas
+31 Derrote 40 inimigos com um aliado (jogador ou animal) a até 12 blocos.
+32 Inimigos derrotados ao lado de um aliado
+33 Acampamento
+34 Monte um acampamento junto ao altar (6 blocos): 1 fogueira, 4 estandartes e 2 camas.
+35 Acampamento junto ao altar
+36 Chamado às Armas
+37 Derrote um chefe de rito com pelo menos 2 aliados (jogadores ou animais) a até 12 blocos.
+38 Chefe derrotado com 2 aliados por perto
+39 em um bioma de floresta
+40 a até 4 blocos de lava
+41 no Nether
+42 no subsolo
+43 debaixo d'água
+44 Caça nas Profundezas
+45 Derrote 30 inimigos enquanto estiver submerso.
+46 Inimigos derrotados submerso
+47 Oferenda do Oceano
+48 Com o altar debaixo d'água, ofereça 16 cristais de prismarinho, 8 lanternas marinhas e 3 conchas de náutilo.
+49 Prismarinho, lanternas e náutilo (altar debaixo d'água)
+50 Corte do Abismo
+51 Derrote um guardião ancestral, ou um chefe de rito invocado com o altar debaixo d'água.
+52 Guardião ancestral ou chefe (altar debaixo d'água)
+53 Pesca em Alto-Mar
+54 Derrote 20 monstros aquáticos.
+55 Monstros aquáticos derrotados
+56 Grande Pescaria
+57 Ofereça 32 peixes de 4 tipos e uma vara de pescar encantada.
+58 Peixes e vara encantada
+59 Tesouro das Profundezas
+60 Ofereça um item de tesouro que você pescou e derrote um chefe de rito.
+61 Um tesouro pescado
+62 Chefe de rito derrotado
+63 Correnteza
+64 Derrote 30 inimigos que estejam na água.
+65 Inimigos derrotados na água
+66 Recife
+67 Ofereça 4 esponjas, 8 blocos de coral e 3 baldes de água.
+68 Esponjas, corais e água
+69 Maré Viva
+70 Derrote um chefe de rito lançando seus feitiços de água raciais pelo menos 3 vezes.
+71 Chefe derrotado com 3 feitiços de água raciais
+72 Ossos Quebrados
+73 Receba 50 golpes de projéteis e derrote 20 inimigos (esqueletos não contam).
+74 Golpes de projéteis recebidos
+75 Inimigos derrotados (sem esqueletos)
+76 Ossuário
+77 Ofereça 64 ossos, 32 flechas e 4 blocos de osso.
+78 Ossos, flechas e blocos de osso
+79 Prova do Fogo Cruzado
+80 Derrote um chefe de rito depois de receber pelo menos 10 projéteis dele ou da sua escolta sem morrer.
+81 Chefe derrotado após 10 projéteis
+82 Caça no Ar
+83 Derrote 20 monstros voadores (phantoms, vexes, blazes, ghasts…).
+84 Monstros voadores derrotados
+85 Oferenda Etérea
+86 Ofereça 16 membranas de phantom, 16 penas e 4 pérolas do Ender.
+87 Membranas, penas e pérolas
+88 Dança Etérea
+89 Derrote um chefe de rito usando a Forma Etérea pelo menos 3 vezes durante a luta.
+90 Chefe derrotado com 3 Formas Etéreas
+91 Caça Noturna
+92 Derrote 30 monstros hostis à noite ou com nível de luz 7 ou menos.
+93 Inimigos derrotados à noite
+94 Oferenda de Sangue
+95 Ofereça 16 pós de redstone, 8 beterrabas e 8 cogumelos vermelhos.
+96 Redstone, beterraba e cogumelos
+97 Banquete Carmesim
+98 Derrote um chefe de rito recuperando pelo menos 100 PV com a Sede durante a luta.
+99 Chefe derrotado curando 100 PV com a Sede
+100 Fogo
+101 Neutra
+102 Pedra
+103 Água
+104 Batedor veloz: mais velocidade, pulo triplo e escalada de parede.
+105 Batedor Ágil
+106 Um Ladino que também lança feitiços: perde a muralha de Magia, ganha mana e poder, e seu primeiro feitiço a partir da invisibilidade acerta mais forte.
+107 Lâmina Arcana
+108 Um Mago de linha de frente que alterna espada e feitiço. Cada feitiço imbui sua arma com a escola dele (fogo queima, gelo deixa lento, raio salta, sangue cura, natureza envenena, ender te leva para trás do alvo, evocação ergue presas, sobrenatural libera uma onda sônica em linha e água empurra); a cada 3 golpes consecutivos seu próximo feitiço custa menos mana. Você não é interrompido ao lançar, perde as muralhas de armas corpo a corpo e a mana que gasta te dá um escudo.
+109 Mago de Batalha
+110 Seus animais vinculados são mais fortes, mais rápidos e mais resistentes, e escapam da morte voltando ao seu ponto de renascimento, onde perdem os efeitos de poção não permanentes, são apagados se estiverem queimando e ficam invulneráveis por 5 s. Os vínculos são feitos e desfeitos apenas com o Livro dos Vínculos.
+111 Mestre das Feras
+112 Protetor curandeiro. Você recebe mais cura e seu Baluarte cura o grupo com o dano que você mitiga.
+113 Guardião Abençoado
+114 O mais rápido e o que pula mais alto, com uma investida aérea.
+115 Mestre da Brisa
+116 Uma montanha de vida. Seu Baluarte vira uma investida imparável que pisoteia inimigos.
+117 Colosso Impetuoso
+118 Seus feitiços acumulam cargas nos inimigos; quando cheias, detonam conforme a escola: fogo explode, gelo congela, raio salta em arcos, sangue rouba vida, ender teletransporta, evocação ergue presas, natureza enraíza e envenena, sobrenatural deixa a Marca do Vazio (armazena o dano que recebe e depois implode) e água (com T.O Magic 'n Extras) lança uma onda que empurra e molha.
+119 Elementalista
+120 Golpes que empurram e alcançam mais longe. Agachado você carrega a palma (mais dano e empurrão; com a carga total, quebra a guarda). Se o inimigo lançado bater em um bloco ou em outro inimigo, ele sofre dano extra e fica atordoado e incapacitado.
+121 Palma Pesada
+122 Mais vida e a Aposta com a Morte: em um golpe fatal uma moeda é lançada; se cair no ankh você sobrevive (75% da primeira vez, depois 50%).
+123 Indestrutível
+124 Imune a fome, veneno e wither. Seus golpes espalham a Praga, que causa dano ao longo do tempo até em mortos-vivos.
+125 Corruptor da Praga
+126 Ainda mais difícil de detectar e, quando fica invisível, você deixa uma isca que distrai os inimigos.
+127 Ilusionista das Sombras
+128 Você se move agachado tão rápido quanto andando e se teletransporta por curtas distâncias.
+129 Andarilho das Sombras
+130 Flechas muito rápidas e muito mais dano por disparo, em troca de esticar o arco mais devagar.
+131 Atirador de Elite
+132 Mais dano e, quando você recebe um golpe fatal, fica imortal por alguns segundos: se matar o atacante, você vive.
+133 Berserker Suicida
+134 Cada postura te protege de um tipo de dano e adiciona seu próprio efeito: fogo, água ou pedra.
+135 Guardião dos Três Mundos
+136 Inabalável. Imune a empurrão, você resiste a rajadas de golpes e seu Baluarte te limpa dos efeitos negativos.
+137 Bastião Inflexível
+138 Você enxerga no escuro no subsolo e é imune à Escuridão. O Sentido da Pedra (tecla racial 1, Rank 1) destaca minérios e lava próximos.
+139 das Profundezas
+140 Seu próprio TNT não te machuca e explode com um raio 25% maior. A partir do Rank 1, quebrar um minério também quebra os conectados (não agachado). No Rank 3, agachado, você minera pedra em um túnel 3×3 (usa mais fome).
+141 Demolidor
+142 O que você fabrica ou repara dura mais (+20%, +40% no Rank 2). A partir do Rank 1 a bigorna custa metade dos níveis para você. No Rank 3 o que você fabrica sai com Inquebrável +1 (máximo III).
+143 Ferreiro
+144 A mesa de encantamento conta como se seu nível fosse maior e encantar (na mesa ou na bigorna) custa menos experiência. No Rank 3, funda na bigorna dois encantamentos idênticos de nível máximo para ultrapassar esse máximo em 1.
+145 Arcano
+146 Você enxerga em qualquer escuridão. Nuvem de Fumaça (tecla racial 1, Rank 1): você e seus aliados dentro ficam invisíveis e os monstros fora perdem você de vista. Não é revelada por proximidade.
+147 Sombrio
+148 Suas plantações rendem mais; com os ranks, comida vegetal sacia mais e você pode fazer plantações crescerem com a mão vazia.
+149 Silvestre
+150 Dedos Ágeis: ao acertar corpo a corpo, você pode roubar um item do espólio de um monstro (sem matá-lo) ou do inventário de um jogador (nunca da hotbar nem do kit).
+151 Ladrão
+152 Armadilha (tecla racial 1): você coloca uma armadilha que nunca expira, só você a vê e o primeiro inimigo a pisar nela sofre dano e fica imobilizado.
+153 Caçador de Armadilhas
+154 Clique com o botão direito no seu lobo com a mão vazia para montá-lo (agachado: fazê-lo sentar, como de costume). Com os ranks: seus lobos têm mais vida, o lobo montado morde o que você acertar e regenera enquanto você o monta.
+155 Cavaleiro de Lobo
+156 Você perde menos XP ao reiniciar sua classe ou subclasse: a perda é reduzida pela porcentagem do seu Rank.
+157 Autodidata
+158 Escolha uma segunda muralha, que recebe metade da redução.
+159 Polivalente
+160 A redução da muralha escolhida é 50% maior (até −75% no Rank 3).
+161 Especialista
+162 Piglins, brutos e hoglins são neutros com você, a menos que você os ataque. Com os ranks: imune a Wither, melhores trocas com piglins e Bússola Infernal (tecla racial 1, Rank 3).
+163 Nativo
+164 Seu Disparo de Fogo racial perfura os inimigos. Com os ranks, sua Bomba de Magma racial deixa uma poça de chamas e, no Rank 3, lava que deixa lento. Requer Iron's Spells.
+165 Piromaníaco
+166 Você anda sobre lava. Com os ranks, fornalhas próximas funcionam mais rápido, os minérios que você minera saem fundidos e você funde instantaneamente o que segura na mão (tecla racial 1, Rank 3).
+167 Fundidor
+168 Você come carne e peixe crus sem efeitos negativos e eles saciam como se estivessem cozidos. Com os ranks, matar te alimenta e concede efeitos de combate.
+169 Devorador
+170 Pele Grossa: cada golpe que você recebe causa menos dano por um valor fixo, sem mínimo.
+171 Pele de Pedra
+172 Voz do Senhor da Guerra (tecla racial 1): remove efeitos de controle de você e dos aliados próximos.
+173 Senhor da Guerra
+174 Afogados e guardiões são neutros com você, a menos que você os ataque. Com os ranks: imunidades debaixo d'água, camuflagem e escolta de guardiões.
+175 Abissal
+176 Os peixes mordem mais cedo e você tem Sorte do Mar racial ao pescar; com os ranks, pescas extras, mais tesouros e mais experiência.
+177 Pescador
+178 Feitiços de água raciais sempre na roda do Iron's: Hidrojato; Transbordamento (nível 3) no Rank 1; Jato de Vapor no Rank 2 e Agarre da Maré no Rank 3. Custam mana e sofrem a muralha de Magia da sua classe. Requer T.O Magic 'n Extras.
+179 Moldador
+180 Esqueletos são neutros com você, a menos que você os ataque, e você recebe menos dano de projéteis. No Rank 3 sua regeneração é interrompida por menos tempo.
+181 Esqueleto
+182 Você não sofre dano de queda e cai devagar (agachar impede). Forma Etérea (tecla racial 1, Rank 1): alguns segundos sem poder sofrer dano nem atacar; não protege do sol.
+183 Espectro
+184 Sede: matar te cura e, com os ranks, você rouba vida do dano que causa (com um limite por segundo).
+185 Vampiro
+186 Forja Anã: +%s%% de durabilidade
+187 Habilidades
+188 Disciplinas afins (sem penalidade): %s
+189 Marcar aliado
+190  · tem você como aliado
+191 Aliados
+192 Aliados: %s · página %s/%s
+193 Não há outros jogadores online.
+194 Seu apoio só alcança seus aliados e seus ataques não os afetam. Todos os outros contam como inimigos.
+195  · offline
+196 Remover aliado
+197 Aliado
+198 Inimigo
+199 Aliados
+200 Vestir qualquer peça de armadura desativa suas passivas de "sem armadura", exceto o equipamento da sua classe (arreios de Bárbaro ou túnicas de Monge).
+201 Vinculado (%s/%s)
+202 Romper
+203 Destino ao morrer
+204 Ponto de renascimento
+205 Vínculo
+206 Por perto, sem vínculo
+207 Você não tem animais sem vínculo a até %s blocos.
+208 Você ainda não tem animais vinculados.
+209 Ponto %s: vazio
+210 Ponto %s: %s, %s, %s (%s)
+211 Salvar aqui
+212 Vida %s/%s · Dano %s · Vel. %s
+213 Livro dos Vínculos
+214 Não carregado: aproxime-se para ver ou soltar
+215 Usar
+216 Bloqueado: você já usa 3 ramos. Libera quando você reiniciar sua classe.
+217 Ramos (10 pontos cada; cada ponto aumenta todas as suas passivas). Você pode usar 3 dos 5: ao colocar pontos em três, os outros dois ficam bloqueados até você reiniciar sua classe.
+218 Escolher %s
+219 Fechar
+220 Escolher o perk %s?
+221 É grátis, mas você não poderá mudá-lo até reiniciar sua classe.
+222 Escolher %s?
+223 Você só pode ter uma subclasse por vez. Pode reiniciá-la, mas cada reinício perde parte do XP gasto.
+224 Você só pode ter uma classe. Pode reiniciá-la depois, mas cada reinício perde parte do XP gasto.
+225 Escolher %s?
+226 (somente sem armadura)
+227 Crítico: %s de chance, x%s de dano mais os bônus dos ramos
+228 %s: %s
+229 Sem valores numéricos.
+230 %s: %s por ponto, %s com 10
+231 (perk, valor fixo)
+232 %s: de %s (nível 1) a %s (nível 10)
+233 Passivas (nível de subclasse 1 a 10)
+234 %s por nível: %s
+235 Custo de XP
+236 Nível n: %s de XP. Total: %s até o nível 30 e %s para os 10 níveis de subclasse.
+237 Sua subclasse
+238 Equipamento inicial com durabilidade infinita.
+239 Você precisa escolher uma classe para começar a jogar.
+240 Sem equipamento inicial.
+241 sem tecla
+242 Escolha um perk:
+243 %s: %s
+244 Perk quando completo (você escolhe um, grátis, até reiniciar a classe):
+245 Nível total %s/40  |  XP: %s  |  %s
+246 Raça
+247 Traços da sub-raça. R0–R3 = valor em cada Rank (os Ranks 1–3 são conquistados com ritos).
+248 Raça e sub-raça são PERMANENTES. Não podem ser mudadas nem reiniciadas, nem mesmo ao reiniciar sua classe.
+249  (a partir do Rank %s)
+250 Sua raça · Rank %s
+251 Sub-raça
+252 Sua raça. Sub-raça: %s. Rank %s.
+253 Raça e sub-raça são permanentes: não podem ser mudadas.
+254 Escolha sua raça e sub-raça
+255 Raças
+256 Humano: escolha sua muralha
+257 Traços da raça (Rank 0)
+258 Ainda não disponível: seus traços estão em desenvolvimento.
+259 %s: −%s%% → −%s (com 30 pontos)
+260 Adaptável reduz a penalidade da muralha que você escolher. Ela é escolhida ao escolher uma classe e só muda quando você a reinicia.
+261 Polivalente: escolha uma segunda muralha, que recebe metade da redução.
+262 Reiniciar classe
+263 Reiniciar subclasse
+264 Você perderá %s do XP gasto no que reiniciar; o resto é devolvido. Não pode ser feito em combate.
+265 Função: %s
+266 nível %s (limite atual %s, máximo 10)
+267 A subclasse é liberada com %s pontos de classe base (você tem %s).
+268 A subclasse é liberada com 15 pontos de classe base. Ela tem 10 níveis.
+269 Escolha sua subclasse:
+270 Ramos e habilidades
+271 Dados exatos
+272 Progresso
+273 Subclasses
+274 Resumo
+275 Classes
+276 Escolha sua classe
+277 Traço da classe base (completo desde que você escolhe a classe)
+278 Nível de subclasse %s
+279 Nível Total %s
+280 Aprimora %s: fica inativo até você ter.
+281 %s: -%s no máximo
+282 Muralhas de disciplina
+283 A muralha cresce com seus pontos de classe base e chega ao máximo em 30. Com %s pontos você teria %s.

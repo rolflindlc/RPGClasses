@@ -1,0 +1,278 @@
+0 Verringert die gewählte Mauer und die negativen Grundmerkmale deiner Klasse.
+1 Anpassungsfähig
+2 Der Amboss kostet dich weniger Stufen.
+3 Amboss-Hand
+4 Du baust unter Wasser mit normaler Geschwindigkeit ab und siehst unter Wasser. Feuer verletzt dich stärker.
+5 Wasserwesen
+6 Verbesserter Verzauberungstisch und Arkane Fusion.
+7 Arkanes Wissen
+8 Erze, die du abbaust, kommen bereits geschmolzen heraus.
+9 Schmelzende Berührung
+10 Chance, dass der Tauschhandel mit Piglins das Doppelte ergibt.
+11 Höllenhandel
+12 Explosionen, die du verursachst, verletzen dich nicht.
+13 Explosionsfest
+14 Neutrale Skelette und weniger Projektilschaden.
+15 Knochen
+16 Unter Wasser unsichtbar, solange du stillstehst.
+17 Tarnung
+18 Nachtsicht ohne Himmelslicht; immun gegen Dunkelheit.
+19 Höhlenaugen
+20 Kälte (Frost- und Eiszauber) und Wasser (Wasserzauber aus T.O Magic 'n Extras) verletzen dich stärker.
+21 Feuriges Blut
+22 Nachtsicht bei schwachem Licht.
+23 Dunkelsicht
+24 Du regenerierst ständig Gesundheit; es hört auf, wenn du Schaden erleidest.
+25 Untoten-Regeneration
+26 Einen Feind zu töten gewährt Hunger und Sättigung.
+27 Verschlingen
+28 Wächter in der Nähe greifen deine Feinde an.
+29 Eskorte
+30 Du kannst weder Schaden erleiden noch angreifen.
+31 Ätherische Gestalt
+32 Wenn du einen feindlichen Mob oder Boss tötest, erhältst du zufällig Stärke, Resistenz oder Regeneration I für so viele Sekunden wie seine maximale Gesundheit (Bosse) oder einen Bruchteil davon (andere).
+33 Festmahl
+34 Immun gegen Feuer und Lava (nicht gegen magischen Feuerschaden). Milch entfernt es nicht.
+35 Glutenhaut
+36 Verbesserungen beim Angeln.
+37 Angelexperte
+38 Dein Hunger steigt und sinkt nicht, und du hast keine Sättigung.
+39 Fester Hunger
+40 Deine rassische Magmabombe hinterlässt Flammen, die Feinde verbrennen.
+41 Flammenlache
+42 Der beim Zurücksetzen verlorene EP-Anteil wird um den Anpassungsfähig-Prozentsatz verringert.
+43 Flexibles Zurücksetzen
+44 Ab Rang 2 hast du Regeneration I in Waldbiomen.
+45 Pflanzensaft
+46 Öfen in der Nähe arbeiten schneller.
+47 Schmiedehitze
+48 Was du herstellst oder reparierst, hält länger; auf Rang 3 haben hergestellte Dinge zusätzlich Haltbarkeit.
+49 Zwergenschmiede
+50 Ab Rang 2 gibt jedes selbst hergestellte Rüstungsteil, das du trägst, +0,5 Zähigkeit.
+51 Geschmiedete Rüstung
+52 Glück-Stufe auf Erze (nie mit Behutsamkeit).
+53 Rassisches Glück
+54 Rechtsklick mit leerer Hand: kostenloses Knochenmehl auf eine Pflanze.
+55 Grüne Berührung
+56 Zusätzlicher Ertrag von reifen Pflanzen.
+57 Reiche Ernte
+58 Du verbrauchst mehr Hunger.
+59 Orkappetit
+60 Immun gegen den Hunger-Effekt.
+61 Abgehärteter Magen
+62 Rohes Fleisch und roher Fisch ohne negative Effekte; sie sättigen, als wären sie gegart.
+63 Eisenmagen
+64 Du überlebst einen tödlichen Treffer mit 1 HP, einmal pro Leben. Wird nach Klassenfähigkeiten und vor dem Totem aufgelöst.
+65 Letztes Gefecht
+66 Deine rassische Magmabombe hinterlässt Lava, die Feinde verbrennt und verlangsamt.
+67 Lavalache
+68 Du gehst auf Lava (Ducken lässt dich einsinken).
+69 Lavawandler
+70 Du gehst durch Laub hindurch und kletterst daran.
+71 Blätterläufer
+72 Heiltränke und Heilzauber heilen dich nicht.
+73 Lebloser Körper
+74 Chance zu stehlen, wenn du im Nahkampf triffst.
+75 Flinke Finger
+76 Plünderung-Stufe (der höhere Wert aus diesem und der Verzauberung zählt).
+77 Rassische Plünderung
+78 Zusätzliche Geschwindigkeit beim Abbauen von Stein und Erzen.
+79 Bergmann
+80 Findet die nächste Festung oder Bastion.
+81 Höllenkompass
+82 Neutrale Piglins, Brutes und Hoglins.
+83 Nether-Einheimischer
+84 Im Nether hast du Schwäche.
+85 Fern vom Meer
+86 Du kannst weder Fleisch noch Fisch essen.
+87 Elfendiät
+88 Eisengolems sind immer feindlich, und Dorfbewohner verlangen mehr.
+89 Gezeichnet
+90 Dein rassischer Feuerschuss durchbohrt Feinde.
+91 Durchbohrendes Feuer
+92 Essen, das weder Fleisch noch Fisch ist, sättigt dich stärker.
+93 Pflanzendiät
+94 Schmilzt sofort, was du in der Hand hältst, mit Brennstoff aus deinem Inventar.
+95 Tragbarer Ofen
+96 Stufe jedes rassischen Feuerzaubers (0 = du hast ihn noch nicht). Benötigt Iron's Spells.
+97 Rassische Zauber
+98 Ab Rang 2 geben besiegte Feinde 15 % mehr Erfahrung.
+99 Gelehrter
+100 Ertrunkene und Wächter sind neutral.
+101 Freund des Meeres
+102 Ab Rang 2 setzen deine Nahkampftreffer das Ziel 2 s lang in Brand.
+103 Sengende Schläge
+104 Eine zweite Mauer erhält einen Teil der Verringerung.
+105 Zweite Mauer
+106 Eine Wolke, die alles in ihrem Inneren unsichtbar macht.
+107 Rauchwolke
+108 Eine Falle, die nie verfällt: Der erste Feind, der hineintritt, erleidet Schaden und wird festgesetzt. Nur du kannst sie sehen.
+109 Schlinge
+110 Hebt Erze und Lava in der Nähe hervor.
+111 Steinsinn
+112 Direktes Sonnenlicht schadet dir (ignoriert Rüstung) und hebt deine Regeneration auf.
+113 Sonnenlicht
+114 Von jedem Treffer, den du erleidest, wird Schaden abgezogen.
+115 Dicke Haut
+116 Heilung beim Töten und Lebensraub.
+117 Durst
+118 Ab Rang 2 verursacht der Dreizack (Nahkampf oder Wurf) 25 % mehr Schaden.
+119 Dreizack-Meisterschaft
+120 Beim Ducken baust du Stein in einem 3×3-Tunnel ab, bei höherem Hungerverbrauch.
+121 Tunnel
+122 Wenn du ein Erz abbaust, baust du die verbundenen Erze derselben Art mit ab.
+123 Adern
+124 Vervielfacht die Verringerung der Hauptmauer.
+125 Mauermeisterschaft
+126 Entfernt Verlangsamung, Schwäche, Blindheit, Müdigkeit, Übelkeit und Dunkelheit im Umkreis.
+127 Stimme des Kriegsherrn
+128 Du verbrauchst unter Wasser keine Luft.
+129 Wasseratmung
+130 Solange du im Wasser bist, verbrennst du langsam.
+131 Schwindende Flamme
+132 Kein Fallschaden und langsames Fallen.
+133 Schwerelos
+134 Immun gegen Wither.
+135 Aschenblut
+136 Der Wolf, den du reitest, beißt das, was du triffst.
+137 Biss
+138 Du reitest deine gezähmten Wölfe (Rechtsklick mit leerer Hand).
+139 Reiter
+140 Der Wolf, den du reitest, hat Regeneration.
+141 Band
+142 Deine Wölfe haben mehr Gesundheit.
+143 Starke Wölfe
+144 Widerstandsfähiges Blut
+145 Rückzug
+146 Laufschwung
+147 Schildkonter
+148 Schockwelle
+149 Niederstrecken
+150 Geisterhaut
+151 Haltungs-Körperaffinität
+152 Wirksamkeit von Entladung und Haltungseffekt
+153 Stete Flamme
+154 Stetiger Schütze
+155 Tarnungsverlust
+156 Klebepfeil
+157 Steinecho
+158 Stärke der Steinladungen
+159 Verstärkte Beschwörungen
+160 Beschwörungen pro Zauber
+161 Zähigkeit
+162 Toxin
+163 Toxindosis
+164 Heimtückischer Schlag
+165 Unerschütterliche Konzentration
+166 Unaufhaltsamer Sturmangriff
+167 Harmonie (verringert Mauern)
+168 Kriegsbanner
+169 Stärke der Wasserladungen
+170 Wildes Band
+171 Du hast das Band zu %s gelöst
+172 Wildes Band mit %s
+173 Fleischfresser: Du kannst nur Fleisch essen
+174 Höllenkompass: Struktur bei X %s, Z %s (%s Blöcke entfernt)
+175 Der Höllenkompass funktioniert nur im Nether
+176 In der Nähe gibt es keine Festung oder Bastion
+177 Ankh! Du überlebst das Spiel mit dem Tod (nächstes: %s)
+178 Totenkopf: Der Tod gewinnt die Wette
+179 %s-Detonation!
+180 %s: %s/%s Ladungen
+181 Elfen essen weder Fleisch noch Fisch
+182 Platz %s hat bereits %s gebunden (ändert sich beim Zurücksetzen deiner Klasse)
+183 %s an Platz %s gebunden (kostenlos, wenn die Kosten höchstens %s Mana betragen)
+184 Dieser Zauber ist bereits an einen anderen Platz gebunden
+185 Du hast den Platz für freies Wirken %s noch nicht
+186 Wähle zuerst einen Zauber im Iron's-Rad aus
+187 Freies Wirken (Platz %s): %s/%s Ladungen übrig
+188 Tragbarer Ofen: Du hast nicht genug Brennstoff
+189 Letzte Wut! Töte %s, bevor die Zeit abläuft
+190 Letztes Gefecht! Du überlebst mit einem halben Herzen
+191 Deine Unterrasse hat keine aktive Fähigkeit (oder du hast den Rang noch nicht)
+192 %s hat dir einen Gegenstand gestohlen!
+193 Deine Klasse kann die Schule %s nicht nutzen
+194 Du hast gestohlen: %s
+195 Steinsinn: %s Blöcke hervorgehoben
+196 %s: %s s
+197 %s ist in dieser Version der Mod noch nicht verfügbar.
+198 %s
+199 %s ist jetzt dein Verbündeter.
+200 %s ist bereits dein Verbündeter.
+201 Du hast deine %s Verbündeten entfernt.
+202 Du hast bereits die maximale Anzahl an Verbündeten (%s).
+203  Seine Verbündeten: %s
+204  Hat ihn als Verbündeten: %s
+205 Verbündete von %s (%s):
+206  ★ = gegenseitiger Verbündeter. /aliados agregar|quitar <Spieler>, /aliados limpiar oder die Taste J.
+207 [Als Verbündeten markieren]
+208 %s hat dich als Verbündeten markiert.
+209 niemand
+210 %s ist nicht dein Verbündeter.
+211 %s ist nicht mehr dein Verbündeter: Er zählt als Feind.
+212 Du kannst dich nicht selbst markieren: Du zählst bereits als dein eigener Verbündeter.
+213 %s hat dich nicht mehr als Verbündeten.
+214 Du hast bereits die maximale Anzahl an Bändern (%s).
+215 Du hast das Buch der Bande erhalten.
+216 Geh näher an das Tier heran (weniger als %s Blöcke).
+217 Nur der Tiermeister kann dieses Buch benutzen.
+218 Punkt %s hier gespeichert.
+219 Wähle deine Klasse (klicke eine an):
+220 %s: +%s %% Schaden
+221 Klasse: %s | Basis: %s/30 | Unterklasse: %s (%s/%s) | %s
+222 Kampfecho: Dein nächster Zauber kostet weniger Mana
+223 Maximale Stufe erreicht
+224 Haltungseffekt bereit: Dein nächster unbewaffneter Treffer verbraucht die Ladungen
+225 Nächste Stufe: %s EP
+226 keine
+227 %s — Rasse: %s | Unterrasse: %s | Rang %s%s
+228 %s hat noch keine Rasse gewählt.
+229 Die Klasse von %s wurde zurückgesetzt.
+230 Du hast bereits eine Klasse. Setze sie zurück, um eine andere zu wählen.
+231 Du hast bereits eine Rasse: Sie ist dauerhaft.
+232 Du hast bereits eine Unterklasse. Setze sie zurück, um eine andere zu wählen.
+233 Dieser Zweig hat bereits 10 Punkte.
+234 Du nutzt bereits 3 Zweige: Die anderen sind gesperrt, bis du deine Klasse zurücksetzt.
+235 Diese Klasse ist auf diesem Server deaktiviert.
+236 Das kannst du im Kampf nicht tun.
+237 Du hast noch keine Klasse gewählt.
+238 Du musst eine Rasse wählen, bevor du eine Klasse wählst.
+239 Du hast noch keine Unterklasse gewählt.
+240 Du hast nicht genug EP.
+241 Nur Menschen wählen eine Mauer.
+242 Erledigt.
+243 Du hast den Perk dieses Zweigs bereits gewählt. Er ändert sich erst beim Zurücksetzen deiner Klasse.
+244 Fülle den Zweig (10 Punkte), um seinen Perk zu wählen.
+245 Du brauchst mehr Basisklassenpunkte, um die Unterklasse aufzustufen.
+246 Die Unterklasse wird bei 15 Basisklassenpunkten freigeschaltet.
+247 Diese Unterrasse ist noch nicht verfügbar.
+248 Dieser Zweig existiert in deiner Klasse nicht.
+249 Diese Klasse existiert nicht oder ist deaktiviert.
+250 Dieser Perk existiert in diesem Zweig nicht.
+251 Diese Rasse oder Unterrasse existiert nicht.
+252 Diese Unterklasse gehört nicht zu deiner Klasse.
+253 Diese Unterrasse gehört nicht zu dieser Rasse.
+254 Diese Mauer kann nicht gewählt werden (deine Klasse hat sie nicht oder du hast sie schon gewählt).
+255 Du hast deine Mauern bereits gewählt. Sie ändern sich beim Zurücksetzen deiner Klasse.
+256 Dein Ritual-Boss lebt noch.
+257 Du kannst noch keinen weiteren Ritual-Boss beschwören (%s s).
+258 Der Ritual-Boss ist gefallen, aber die Bedingung wurde nicht erfüllt: %s
+259 Dein Ritual-Boss ist verschwunden.
+260 Dich ducken und den Altar rechtsklicken, um den Ritual-Boss zu beschwören.
+261 Ritual-Boss: %s
+262 Neben dem Altar ist kein freier Platz für den Boss.
+263 Kein Ritual-Boss verfügbar.
+264 %s folgt deinem Ruf! Er zählt nur für dich.
+265 Ritual abgeschlossen: %s! Du bist jetzt Rang %s.
+266 ✔
+267 Ritual für Rang %s: %s
+268 Rituale: Rechtsklicke den Rassenaltar, um das Ritual zu sehen und Opfergaben abzugeben; ducken + klicken, um den Boss zu beschwören.
+269 Für die Opfergabe fehlt: %s
+270 Der Altar steht nicht an dem Ort, den das Ritual verlangt: %s
+271 Du hast keine offenen Rituale (keine Rasse oder maximaler Rang).
+272 Dieses Ritual braucht gerade keinen Boss.
+273  %s %s: %s/%s
+274 Ritual: %s ✔
+275 Opfergabe angenommen: %s
+276 %s: %s/%s
+277 Struktur angenommen: %s

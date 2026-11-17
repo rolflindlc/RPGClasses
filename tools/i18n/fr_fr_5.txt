@@ -1,0 +1,284 @@
+0 Combat sur la lave
+1 Vainquez 20 ennemis en vous tenant sur de la lave.
+2 Ennemis vaincus sur la lave
+3 Offrande du fondeur
+4 Offrez 64 lingots d'au moins 3 types.
+5 64 lingots (3 types)
+6 Rite de la forge
+7 Vainquez un boss de rite invoqué avec l'autel à moins de 4 blocs de la lave.
+8 Boss vaincu (autel près de la lave)
+9 Première proie
+10 Vainquez 20 ennemis et chassez 20 animaux.
+11 Ennemis vaincus
+12 Animaux chassés
+13 Banquet
+14 Offrez 16 viandes cuites d'au moins 3 types.
+15 16 viandes cuites (3 types)
+16 Festin du boss
+17 Vainquez un boss de rite et offrez l'un de ses butins sur l'autel.
+18 Boss de rite vaincu
+19 L'un des butins du boss
+20 Peau de roche
+21 Subissez 100 coups et vainquez 30 ennemis.
+22 Coups subis
+23 Ennemis vaincus
+24 Forge de l'endurance
+25 Offrez 4 obsidiennes, 16 lingots de fer et 1 enclume.
+26 Obsidienne, fer et enclume
+27 Épreuve du mur
+28 Vainquez un boss de rite après avoir subi au moins 10 de ses coups sans mourir.
+29 Boss vaincu après 10 de ses coups
+30 Compagnie d'armes
+31 Vainquez 40 ennemis avec un allié (joueur ou animal) à moins de 12 blocs.
+32 Ennemis vaincus aux côtés d'un allié
+33 Campement
+34 Construisez un campement près de l'autel (6 blocs) : 1 feu de camp, 4 bannières et 2 lits.
+35 Campement près de l'autel
+36 Appel aux armes
+37 Vainquez un boss de rite avec au moins 2 alliés (joueurs ou animaux) à moins de 12 blocs.
+38 Boss vaincu avec 2 alliés à proximité
+39 dans un biome forestier
+40 à moins de 4 blocs de la lave
+41 dans le Nether
+42 sous terre
+43 sous l'eau
+44 Chasse dans les profondeurs
+45 Vainquez 30 ennemis en étant immergé.
+46 Ennemis vaincus en étant immergé
+47 Offrande de l'océan
+48 Avec l'autel sous l'eau, offrez 16 cristaux de prismarine, 8 lanternes marines et 3 coquilles de nautile.
+49 Prismarine, lanternes et nautile (autel sous l'eau)
+50 Cour de l'abîme
+51 Vainquez un grand gardien, ou un boss de rite invoqué avec l'autel sous l'eau.
+52 Grand gardien ou boss (autel sous l'eau)
+53 Pêche en haute mer
+54 Vainquez 20 monstres aquatiques.
+55 Monstres aquatiques vaincus
+56 Belle prise
+57 Offrez 32 poissons de 4 types et une canne à pêche enchantée.
+58 Poissons et canne enchantée
+59 Trésor des profondeurs
+60 Offrez un objet de trésor que vous avez pêché et vainquez un boss de rite.
+61 Un trésor pêché
+62 Boss de rite vaincu
+63 Courant
+64 Vainquez 30 ennemis qui sont dans l'eau.
+65 Ennemis vaincus dans l'eau
+66 Récif
+67 Offrez 4 éponges, 8 blocs de corail et 3 seaux d'eau.
+68 Éponges, corail et eau
+69 Grande marée
+70 Vainquez un boss de rite en lançant vos sorts d'eau raciaux au moins 3 fois.
+71 Boss vaincu avec 3 sorts d'eau raciaux
+72 Os brisés
+73 Subissez 50 coups de projectiles et vainquez 20 ennemis (les squelettes ne comptent pas).
+74 Coups de projectiles subis
+75 Ennemis vaincus (sans squelettes)
+76 Ossuaire
+77 Offrez 64 os, 32 flèches et 4 blocs d'os.
+78 Os, flèches et blocs d'os
+79 Épreuve du feu croisé
+80 Vainquez un boss de rite après avoir subi au moins 10 projectiles de lui ou de son escorte sans mourir.
+81 Boss vaincu après 10 projectiles
+82 Chasse dans les airs
+83 Vainquez 20 monstres volants (fantômes, vexes, blazes, ghasts…).
+84 Monstres volants vaincus
+85 Offrande éthérée
+86 Offrez 16 membranes de fantôme, 16 plumes et 4 perles de l'Ender.
+87 Membranes, plumes et perles
+88 Danse éthérée
+89 Vainquez un boss de rite en utilisant la Forme éthérée au moins 3 fois pendant le combat.
+90 Boss vaincu avec 3 Formes éthérées
+91 Chasse nocturne
+92 Vainquez 30 monstres hostiles la nuit ou à un niveau de lumière de 7 ou moins.
+93 Ennemis vaincus la nuit
+94 Offrande de sang
+95 Offrez 16 poussières de redstone, 8 betteraves et 8 champignons rouges.
+96 Redstone, betterave et champignons
+97 Banquet cramoisi
+98 Vainquez un boss de rite en récupérant au moins 100 PV avec la Soif pendant le combat.
+99 Boss vaincu en soignant 100 PV avec la Soif
+100 Feu
+101 Neutre
+102 Pierre
+103 Eau
+104 Éclaireur rapide : plus de vitesse, triple saut et escalade murale.
+105 Éclaireur agile
+106 Un Voleur qui lance aussi des sorts : perd le mur de Magie, gagne du mana et de la puissance, et son premier sort depuis l'invisibilité frappe plus fort.
+107 Lame arcanique
+108 Un Mage de première ligne qui alterne épée et sort. Chaque sort imprègne votre arme de son école (le feu brûle, la glace ralentit, la foudre rebondit, le sang soigne, la nature empoisonne, l'ender vous place derrière la cible, l'évocation fait surgir des crocs, le surnaturel libère une onde sonique en ligne et l'eau repousse) ; tous les 3 coups consécutifs, votre prochain sort coûte moins de mana. Vous n'êtes pas interrompu en lançant un sort, vous perdez les murs des armes de mêlée et le mana dépensé vous donne un bouclier.
+109 Mage de bataille
+110 Vos animaux liés sont plus forts, plus rapides et plus robustes, et échappent à la mort en retournant à votre point d'apparition, où ils perdent leurs effets de potion non permanents, sont éteints s'ils brûlent et sont invulnérables pendant 5 s. Les liens ne se créent et ne se rompent qu'avec le Livre des liens.
+111 Maître des bêtes
+112 Protecteur guérisseur. Vous recevez plus de soins et votre Rempart soigne le groupe avec les dégâts que vous atténuez.
+113 Gardien béni
+114 Le plus rapide et celui qui saute le plus haut, avec un élan aérien.
+115 Maître de la brise
+116 Une montagne de santé. Votre Rempart devient une charge irrésistible qui piétine les ennemis.
+117 Mastodonte de charge
+118 Vos sorts accumulent des charges sur les ennemis ; une fois pleines, elles détonent selon l'école : le feu explose, la glace gèle, la foudre rebondit en arcs, le sang vole la vie, l'ender téléporte, l'évocation fait surgir des crocs, la nature enracine et empoisonne, le surnaturel laisse la Marque du Vide (stocke les dégâts qu'elle subit puis implose) et l'eau (avec T.O Magic 'n Extras) lance une onde qui repousse et trempe.
+119 Élémentaliste
+120 Des coups qui repoussent et portent plus loin. Accroupi, vous chargez la paume (plus de dégâts et de recul ; à pleine charge, elle brise la garde). Si l'ennemi projeté percute un bloc ou un autre ennemi, il subit des dégâts supplémentaires et est étourdi et neutralisé.
+121 Paume lourde
+122 Plus de santé et le Pari avec la mort : sur un coup mortel, une pièce est lancée ; sur l'ankh, vous survivez (75 % la première fois, puis 50 %).
+123 Indestructible
+124 Immunisé contre la faim, le poison et le wither. Vos coups propagent la Peste, qui inflige des dégâts avec le temps, même aux morts-vivants.
+125 Corrupteur de peste
+126 Encore plus difficile à détecter, et quand vous devenez invisible, vous laissez un leurre qui distrait les ennemis.
+127 Illusionniste des ombres
+128 Vous vous déplacez accroupi aussi vite qu'en marchant et vous vous téléportez sur de courtes distances.
+129 Marcheur des ombres
+130 Des flèches très rapides et bien plus de dégâts par tir, en échange d'une tension d'arc plus lente.
+131 Sniper
+132 Plus de dégâts, et quand vous subissez un coup mortel, vous devenez immortel quelques secondes : si vous tuez votre agresseur, vous vivez.
+133 Berserker suicidaire
+134 Chaque posture vous protège d'un type de dégâts et ajoute son propre effet : feu, eau ou pierre.
+135 Gardien des trois mondes
+136 Inébranlable. Immunisé contre le recul, vous résistez aux rafales de coups et votre Rempart vous purge des effets négatifs.
+137 Bastion inflexible
+138 Vous voyez dans le noir sous terre et êtes immunisé contre les Ténèbres. Le Sens de la pierre (touche raciale 1, Rang 1) met en évidence les minerais et la lave proches.
+139 des Profondeurs
+140 Votre propre TNT ne vous blesse pas et explose avec un rayon 25 % plus grand. À partir du Rang 1, casser un minerai casse aussi ceux qui lui sont connectés (pas en étant accroupi). Au Rang 3, accroupi, vous minez la pierre dans un tunnel 3×3 (consomme plus de faim).
+141 Démolisseur
+142 Ce que vous fabriquez ou réparez dure plus longtemps (+20 %, +40 % au Rang 2). À partir du Rang 1, l'enclume vous coûte la moitié des niveaux. Au Rang 3, ce que vous fabriquez sort avec Solidité +1 (maximum III).
+143 Forgeron
+144 La table d'enchantement compte comme si son niveau était plus élevé et enchanter (à la table ou à l'enclume) vous coûte moins d'expérience. Au Rang 3, fusionnez à l'enclume deux enchantements identiques de niveau maximal pour dépasser ce maximum de 1.
+145 Arcanique
+146 Vous voyez dans n'importe quelle obscurité. Nuage de fumée (touche raciale 1, Rang 1) : vous et vos alliés à l'intérieur êtes invisibles et les monstres à l'extérieur vous perdent de vue. N'est pas révélé par la proximité.
+147 Ténébreux
+148 Vos cultures donnent plus de rendement ; avec les rangs, la nourriture végétale vous rassasie davantage et vous pouvez faire pousser les cultures à mains nues.
+149 Sylvestre
+150 Doigts agiles : en frappant en mêlée, vous pouvez voler un objet du butin d'un monstre (sans le tuer) ou de l'inventaire d'un joueur (jamais de la barre rapide ni du kit).
+151 Voleur
+152 Collet (touche raciale 1) : vous posez un piège qui n'expire jamais ; vous seul le voyez et le premier ennemi à marcher dessus subit des dégâts et est immobilisé.
+153 Piégeur
+154 Faites un clic droit sur votre loup à mains nues pour le monter (accroupi : le faire s'asseoir, comme d'habitude). Avec les rangs : vos loups ont plus de santé, le loup monté mord ce que vous frappez et régénère pendant que vous le montez.
+155 Cavalier de loup
+156 Vous perdez moins d'XP en réinitialisant votre classe ou sous-classe : la perte est réduite du pourcentage de votre Rang.
+157 Autodidacte
+158 Choisissez un second mur, qui reçoit la moitié de la réduction.
+159 Polyvalent
+160 La réduction de votre mur choisi est 50 % plus grande (jusqu'à −75 % au Rang 3).
+161 Spécialiste
+162 Les piglins, brutes et hoglins sont neutres envers vous tant que vous ne les attaquez pas. Avec les rangs : immunisé contre le Wither, meilleur troc avec les piglins et Boussole infernale (touche raciale 1, Rang 3).
+163 Natif
+164 Votre Tir de feu racial transperce les ennemis. Avec les rangs, votre Bombe de magma raciale laisse une flaque de flammes et, au Rang 3, de la lave qui ralentit. Nécessite Iron's Spells.
+165 Pyromane
+166 Vous marchez sur la lave. Avec les rangs, les fourneaux proches fonctionnent plus vite, les minerais que vous minez sortent fondus et vous faites fondre instantanément ce que vous tenez en main (touche raciale 1, Rang 3).
+167 Fondeur
+168 Vous mangez viande et poisson crus sans effets négatifs et ils vous rassasient comme s'ils étaient cuits. Avec les rangs, tuer vous nourrit et accorde des effets de combat.
+169 Dévoreur
+170 Peau épaisse : chaque coup que vous subissez inflige un montant fixe de dégâts en moins, sans minimum.
+171 Peau de pierre
+172 Voix du seigneur de guerre (touche raciale 1) : retire les effets de contrôle de vous et des alliés proches.
+173 Seigneur de guerre
+174 Les noyés et les gardiens sont neutres envers vous tant que vous ne les attaquez pas. Avec les rangs : immunités sous l'eau, camouflage et escorte de gardiens.
+175 Abyssal
+176 Les poissons mordent plus tôt et vous avez la Chance de la mer raciale en pêchant ; avec les rangs, prises supplémentaires, plus de trésors et plus d'expérience.
+177 Pêcheur
+178 Sorts d'eau raciaux toujours dans la roue d'Iron's : Tir hydraulique ; Débordement (niveau 3) au Rang 1 ; Jet de vapeur au Rang 2 et Étreinte des marées au Rang 3. Ils coûtent du mana et subissent le mur de Magie de votre classe. Nécessite T.O Magic 'n Extras.
+179 Façonneur
+180 Les squelettes sont neutres envers vous tant que vous ne les attaquez pas et vous subissez moins de dégâts de projectiles. Au Rang 3, votre régénération est interrompue moins longtemps.
+181 Squelette
+182 Vous ne subissez pas de dégâts de chute et tombez lentement (s'accroupir l'empêche). Forme éthérée (touche raciale 1, Rang 1) : quelques secondes sans pouvoir subir de dégâts ni attaquer ; ne protège pas du soleil.
+183 Spectre
+184 Soif : tuer vous soigne et, avec les rangs, vous volez de la vie sur les dégâts que vous infligez (avec un plafond par seconde).
+185 Vampire
+186 Forge naine : +%s %% de solidité
+187 Capacités
+188 Disciplines affines (sans pénalité) : %s
+189 Marquer comme allié
+190  · vous a pour allié
+191 Alliés
+192 Alliés : %s · page %s/%s
+193 Il n'y a aucun autre joueur en ligne.
+194 Votre soutien n'atteint que vos alliés et vos attaques ne les affectent pas. Tous les autres comptent comme des ennemis.
+195  · hors ligne
+196 Retirer l'allié
+197 Allié
+198 Ennemi
+199 Alliés
+200 Porter la moindre pièce d'armure désactive vos passifs « sans armure », sauf l'équipement de votre classe (harnais de Barbare ou robes de Moine).
+201 Lié (%s/%s)
+202 Rompre
+203 Destination à la mort
+204 Point d'apparition
+205 Lien
+206 À proximité, non lié
+207 Vous n'avez aucun animal non lié à moins de %s blocs.
+208 Vous n'avez pas encore d'animal lié.
+209 Point %s : vide
+210 Point %s : %s, %s, %s (%s)
+211 Enregistrer ici
+212 Santé %s/%s · Dégâts %s · Vit. %s
+213 Livre des liens
+214 Non chargé : rapprochez-vous pour le voir ou le libérer
+215 Utiliser
+216 Verrouillé : vous utilisez déjà 3 branches. Il se déverrouille quand vous réinitialisez votre classe.
+217 Branches (10 points chacune ; chaque point augmente tous ses passifs). Vous pouvez en utiliser 3 sur 5 : quand vous investissez des points dans trois, les deux autres sont verrouillées jusqu'à la réinitialisation de votre classe.
+218 Choisir %s
+219 Fermer
+220 Choisir le perk %s ?
+221 C'est gratuit, mais vous ne pourrez pas le changer avant de réinitialiser votre classe.
+222 Choisir %s ?
+223 Vous ne pouvez avoir qu'une seule sous-classe à la fois. Vous pouvez la réinitialiser, mais chaque réinitialisation fait perdre une partie de l'XP dépensée.
+224 Vous ne pouvez avoir qu'une seule classe. Vous pourrez la réinitialiser plus tard, mais chaque réinitialisation fait perdre une partie de l'XP dépensée.
+225 Choisir %s ?
+226 (sans armure uniquement)
+227 Critique : %s de chances, ×%s de dégâts plus les bonus des branches
+228 %s : %s
+229 Aucune valeur numérique.
+230 %s : %s par point, %s à 10
+231 (perk, valeur fixe)
+232 %s : de %s (niveau 1) à %s (niveau 10)
+233 Passifs (niveau de sous-classe 1 à 10)
+234 %s par niveau : %s
+235 Coût en XP
+236 Niveau n : %s XP. Total : %s jusqu'au niveau 30 et %s pour les 10 niveaux de sous-classe.
+237 Votre sous-classe
+238 Équipement de départ à durabilité infinie.
+239 Vous devez choisir une classe pour commencer à jouer.
+240 Pas d'équipement de départ.
+241 sans touche
+242 Choisissez un perk :
+243 %s : %s
+244 Perk quand la branche est pleine (vous en choisissez un, gratuitement, jusqu'à la réinitialisation de la classe) :
+245 Niveau total %s/40  |  XP : %s  |  %s
+246 Race
+247 Traits de la sous-race. R0–R3 = valeur à chaque Rang (les Rangs 1–3 se gagnent par des rites).
+248 La race et la sous-race sont PERMANENTES. Elles ne peuvent être ni changées ni réinitialisées, même en réinitialisant votre classe.
+249  (à partir du Rang %s)
+250 Votre race · Rang %s
+251 Sous-race
+252 Votre race. Sous-race : %s. Rang %s.
+253 La race et la sous-race sont permanentes : elles ne peuvent pas être changées.
+254 Choisissez votre race et votre sous-race
+255 Races
+256 Humain : choisissez votre mur
+257 Traits de la race (Rang 0)
+258 Pas encore disponible : ses traits sont en développement.
+259 %s : −%s %% → −%s (à 30 points)
+260 Adaptable réduit la pénalité du mur que vous choisissez. Il se choisit en choisissant une classe et ne change qu'à sa réinitialisation.
+261 Polyvalent : choisissez un second mur, qui reçoit la moitié de la réduction.
+262 Réinitialiser la classe
+263 Réinitialiser la sous-classe
+264 Vous perdrez %s de l'XP dépensée pour ce que vous réinitialisez ; le reste est remboursé. Impossible en combat.
+265 Rôle : %s
+266 niveau %s (plafond actuel %s, maximum 10)
+267 La sous-classe se débloque à %s points de classe de base (vous en avez %s).
+268 La sous-classe se débloque à 15 points de classe de base. Elle a 10 niveaux.
+269 Choisissez votre sous-classe :
+270 Branches et capacités
+271 Données exactes
+272 Progression
+273 Sous-classes
+274 Résumé
+275 Classes
+276 Choisissez votre classe
+277 Trait de la classe de base (complet dès le choix de la classe)
+278 Niveau de sous-classe %s
+279 Niveau total %s
+280 Améliore %s : reste dormant tant que vous ne l'avez pas.
+281 %s : -%s au maximum
+282 Murs de disciplines
+283 Le mur croît avec vos points de classe de base et atteint son maximum à 30. Avec %s points, vous auriez %s.

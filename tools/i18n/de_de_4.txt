@@ -1,0 +1,286 @@
+0 Wellenradius (Blöcke)
+1 Schwächeradius (Blöcke)
+2 Schwäche beim Überleben
+3 Wasser: Nass
+4 Zeitfenster
+5 Zeitfenster nach einem Treffer (Ticks)
+6 Zusätzliche Angel-EP
+7 Verzauberungserfahrung
+8 Deutlich stärkere, aber seltenere kritische Treffer.
+9 Vernichtender Schlag
+10 Deutlich häufigere, aber schwächere kritische Treffer.
+11 Stetiger Schlag
+12 Etwas weniger Schaden durch verlorene Gesundheit, aber du heilst mehr, je verwundeter du bist.
+13 Gezügelte Wut
+14 Noch mehr Schaden, je weniger Gesundheit du hast, ohne Grenze, aber du heilst aus allen Quellen deutlich weniger.
+15 Entfesselte Wut
+16 Fleisch sättigt doppelt so stark, aber du kannst nichts essen, was kein Fleisch ist.
+17 Fleischfresser
+18 Fällst du unter eine bestimmte Gesundheit, erleidest du einige Sekunden lang weniger Schaden. Du heilst etwas weniger.
+19 Ausdauer
+20 Ohne Rüstung weniger Rüstung und Zähigkeit, aber du bist schneller.
+21 Leichte Haut
+22 Ohne Rüstung mehr Rüstung und Zähigkeit, aber du bist langsamer.
+23 Verstärkte Haut
+24 Der Sturmangriff betäubt doppelt so lange und endet mit einer schadenverursachenden Schockwelle, lädt aber langsamer auf.
+25 Zermalmender Sturmangriff
+26 Der Sturmangriff durchbohrt Feinde und trifft alle mit weniger Schaden, ohne zu betäuben.
+27 Unaufhaltsamer Sturmangriff
+28 Noch kürzere Abklingzeiten, im Tausch gegen etwas Zauberstärke.
+29 Arkane Kadenz
+30 Fehlt dir Mana, bezahlst du den Zauber mit Gesundheit, ohne unter ein Minimum zu fallen.
+31 Blutmagie
+32 Nach dem Zaubern rennst du einen Moment lang schneller.
+33 Arkaner Schritt
+34 Kein Fallschaden, und du fällst langsam, während du Springen hältst. Du bewegst dich etwas langsamer.
+35 Federfall
+36 Mehr Schaden gegen nahe Ziele und weniger gegen ferne.
+37 Nahkampf-Macht
+38 Mehr Schaden gegen ferne Ziele und weniger gegen nahe.
+39 Fernkampf-Macht
+40 Weniger maximales Mana, aber du erholst es 60 % schneller (Mana pro Sekunde).
+41 Manaschub
+42 Deutlich mehr maximales Mana, aber du erholst es 40 % langsamer (Mana pro Sekunde).
+43 Manaquelle
+44 Jeder Beschwörungszauber erzeugt eine Beschwörung weniger (mindestens eine), aber sie sind stärker und etwas teurer.
+45 Elite
+46 Jeder Beschwörungszauber erzeugt eine Beschwörung mehr, aber alle sind schwächer.
+47 Legion
+48 Du kannst den Feurigen Schlag ab 6 Ladungen starten, aber er verursacht +4 % Schaden pro Ladung statt +5 %.
+49 Frühzündung
+50 Feuerladungen schwinden halb so schnell, aber jede gibt 20 % weniger Schaden.
+51 Stete Flamme
+52 Während du meditierst, entfernst du alle 5 s einen negativen Effekt.
+53 Klarer Geist
+54 Du heilst beim Meditieren doppelt so schnell und bis zu 80 % deiner Gesundheit, brauchst aber länger zum Starten.
+55 Tiefe Trance
+56 Weniger Rüstung und Zähigkeit, aber du erleidest deutlich weniger magischen und elementaren Schaden.
+57 Geisterhaut
+58 Die Absorption der Steinentladung verdoppelt sich, aber du erhältst Steinladungen nur von Treffern mit 4 oder mehr Schaden.
+59 Steinecho
+60 Beim Haltungswechsel behältst du 30 % der Ladungen in der neuen und entlädst nur den Rest. Du wechselst die Haltung 1 s langsamer.
+61 Stetiger Fluss
+62 Ducken + die Haltungstaste legt deine Lieblingshaltung fest: Ihre Entladung und ihr Haltungseffekt sind 30 % stärker, die der anderen beiden 30 % schwächer.
+63 Dominante Haltung
+64 Du ignorierst Spinnweben, Seelensand, Honig, Pulverschnee und die Verlangsamung durch Essen oder Gegenstandsnutzung. Etwas weniger Geschwindigkeit.
+65 Leichte Füße
+66 Nachdem du einen Moment gerannt bist, verursacht dein nächster unbewaffneter Treffer mehr Schaden und stößt stärker zurück.
+67 Laufschwung
+68 Deine Aura regeneriert die Gesundheit deiner Verbündeten (nicht deine).
+69 Banner des Lebens
+70 Deine Aura erhöht auch den Schaden deiner Verbündeten, aber du verlierst Rüstung.
+71 Kriegsbanner
+72 Mehr maximale Gesundheit, aber du bist etwas langsamer.
+73 Kolossaler Körper
+74 Deine Rüstungsteile schützen noch mehr, aber du bist etwas langsamer.
+75 Schwerer Kürass
+76 Wenn du einen Nahkampftreffer mit einem Schild blockst, schleuderst du den Angreifer zurück.
+77 Schildkonter
+78 Alle paar Treffer setzt du eine Welle frei, die Feinde in der Nähe zurückstößt und verletzt.
+79 Schockwelle
+80 Du markierst dein Ziel: Es erleidet mehr Schaden von dir. Solange das anhält, kannst du kein anderes markieren.
+81 Verdammung
+82 Alle paar Treffer entfesselst du heiligen Flächenschaden, im Tausch gegen weniger Grundschaden.
+83 Urteil
+84 Immun gegen Verlangsamung, Schwäche, Blindheit, Müdigkeit, Übelkeit und Dunkelheit. Andere negative Effekte halten bei dir länger.
+85 Wille gegen Kontrolle
+86 Immun gegen schadenverursachende Effekte (Gift, Wither, Brennen). Andere negative Effekte halten bei dir länger.
+87 Wille gegen Schaden
+88 Mehr Schaden in Bewegung; weniger, wenn du stillstehst.
+89 Beweglicher Schütze
+90 Mehr Schaden, wenn du einen Moment stillgestanden hast; weniger, wenn du im Rennen oder in der Luft schießt.
+91 Stetiger Schütze
+92 Das Spannen des Bogens bremst dich nicht, aber du spannst etwas langsamer.
+93 Agiler Schütze
+94 Nach einem Nahkampftreffer wird dein nächster Pfeil mit sofortigem Spannen und etwas weniger Schaden abgefeuert.
+95 Schneller Konter
+96 Der Einschlag markiert das Ziel: Es erleidet mehr Schaden aus allen Quellen.
+97 Jägermal
+98 Der Pfeil durchbohrt einen weiteren Feind, mit etwas weniger Schaden am ersten.
+99 Durchbohrung
+100 Ab und zu lässt dich der erste Nahkampftreffer rückwärts springen, ohne Schaden zu nehmen.
+101 Ausweichsprung
+102 Nach einem Nahkampftreffer hinterlässt du eine Falle, die jeden, der hineintritt, stark verlangsamt.
+103 Jägerfalle
+104 Normale Pfeile explodieren beim Einschlag, ohne Blöcke zu zerstören, und stoßen Feinde in der Nähe zurück, bei weniger direktem Schaden.
+105 Explosionspfeil
+106 Der Einschlag verlangsamt das Ziel, aber deine Pfeile fliegen etwas langsamer.
+107 Klebepfeil
+108 Nach einem erfolgreichen Ausweichen verursacht dein nächster Treffer mehr Schaden.
+109 Gegenangriff
+110 Das Ausweichen legt mehr Strecke zurück, aber seine Unverwundbarkeit hält kürzer.
+111 Lange Rolle
+112 Du greifst noch schneller an, mit etwas weniger Schaden.
+113 Hagel
+114 Du ignorierst einen Teil der Rüstung des Ziels, greifst aber langsamer an.
+115 Stoß
+116 Die Tarnung hält deutlich länger, aber Mobs entdecken dich aus größerer Entfernung.
+117 Tiefe Tarnung
+118 Mehr Schaden gegen Feinde, die dich nicht anvisieren. Die Tarnung hält kürzer.
+119 Heimtückischer Schlag
+120 Das Toxin verursacht denselben Schaden, aber viel schneller.
+121 Konzentrierte Dosis
+122 Das Toxin verursacht denselben Schaden, langsamer, und verlangsamt das Ziel, solange es anhält.
+123 Verlängerte Dosis
+124 Chance, Treffern und Projektilen durch einen Rückwärtssprung auszuweichen. Weniger maximale Gesundheit.
+125 Ausweichen
+126 Mehr Bewegungs- und Angriffsgeschwindigkeit, aber die Tarnung ist früher aufgebraucht.
+127 Leichtigkeit
+128 Klein und langsam, aber ein geborener Bergmann: baut Stein und Erze schneller ab und hat rassisches Glück auf Erze (es addiert sich nicht zur Verzauberung: Der höhere Wert zählt).
+129 Zwerg
+130 Geht durch Laub hindurch und klettert daran wie an einem Gerüst (Springen steigt auf, Ducken steigt ab). Kann weder Fleisch noch Fisch essen.
+131 Elf
+132 Halbe Größe: sehr schwer zu treffen und passt durch kleine Lücken. Hat rassisches Glück und rassische Plünderung (der höhere Wert aus diesem und der Verzauberung zählt). Dafür deutlich weniger Gesundheit.
+133 Goblin
+134 Vielseitig: mildert die Nachteile seiner Klasse. Nach der Klassenwahl wählt er eine Mauer, deren Malus je nach Rang verringert wird; die negativen Grundmerkmale der Klasse werden auf dieselbe Weise verringert. Keine Umweltvorteile.
+135 Mensch
+136 Immun gegen Feuer und Lava, aber Kälte und Wasser verletzen stärker, und das Betreten von Wasser verbrennt ihn langsam. Mit Iron's Spells hat er stets verfügbare rassische Feuerzauber, die wie jeder Zauber unter der Magie-Mauer deiner Klasse leiden. Eisengolems greifen ihn immer an, und Dorfbewohner verlangen mehr von ihm.
+137 Infernal
+138 Größer und zäher. Einmal pro Leben überlebt er einen tödlichen Treffer mit einem halben Herzen. Dafür verbraucht er mehr Hunger und ist leichter zu treffen.
+139 Ork
+140 Atmet unter Wasser, schwimmt schneller, baut unter Wasser mit normaler Geschwindigkeit ab und sieht unter Wasser im Dunkeln. Feuer verletzt stärker, und im Nether hat er Schwäche.
+141 Triton
+142 Atmet unter Wasser, sein Hunger ist fest und er regeneriert ständig Gesundheit (bei Schaden einige Sekunden unterbrochen). Direktes Sonnenlicht schadet ihm auch mit Helm, und weder Heiltränke noch Heilzauber heilen ihn.
+143 Untoter
+144 Unter dem Fels
+145 Besiege 30 Feinde unter der Erde (kein Himmel darüber).
+146 Unter der Erde besiegte Feinde
+147 Tribut der Adern
+148 Opfere 64 Erze von mindestens 3 Arten.
+149 64 Erze (3 Arten)
+150 Ritual des Abgrunds
+151 Besiege einen Ritual-Boss, der mit dem Altar unter der Erde beschworen wurde.
+152 Boss besiegt (Altar unter der Erde)
+153 Abriss
+154 Besiege 20 Feinde mit deinen eigenen Explosionen.
+155 Mit Explosionen besiegte Feinde
+156 Pulverfass
+157 Stelle 16 TNT her und opfere sie (während dieses Rituals hergestellt).
+158 16 von dir hergestellte TNT
+159 Kataklysmus
+160 Besiege einen Ritual-Boss, der mindestens 4 deiner Explosionen abbekommt.
+161 Boss nach 4 Explosionen besiegt
+162 Eigene Klinge
+163 Besiege 30 Feinde mit einer Waffe, die du hergestellt hast.
+164 Mit deiner Waffe besiegte Feinde
+165 Meisterwerk
+166 Opfere ein Eisenrüstungsset und eine Eisenwaffe, die du hergestellt hast.
+167 Von dir gefertigte Eisenrüstung und -waffe
+168 Prüfung der Schmiede
+169 Besiege einen Ritual-Boss, während du alle 4 von dir hergestellten Diamant- (oder Netherit-)Rüstungsteile trägst.
+170 Boss in deiner Diamantrüstung besiegt
+171 Verzauberte Klinge
+172 Besiege 30 Feinde mit einer Waffe, die du am Tisch verzaubert hast.
+173 Mit deiner verzauberten Waffe besiegte Feinde
+174 Drei Verzauberungen
+175 Verzaubere 3 Gegenstände am Tisch und opfere sie.
+176 3 von dir verzauberte Gegenstände
+177 Zwillingsbücher
+178 Opfere 2 Bücher mit derselben Verzauberung auf Höchststufe.
+179 2 Zwillingsbücher
+180 Nachtjagd
+181 Besiege 30 Feinde bei Lichtstärke 7 oder weniger.
+182 Im Dunkeln besiegte Feinde
+183 Opfergabe des Rauchs
+184 Opfere 8 Lagerfeuer und 16 Holzkohle.
+185 Lagerfeuer und Holzkohle
+186 Schleier des Schattens
+187 Besiege nachts einen Ritual-Boss und nutze dabei mindestens 3-mal die Rauchwolke im Kampf.
+188 Boss nachts mit 3 Wolken besiegt
+189 Waldläufer
+190 Besiege 30 Feinde in Waldbiomen.
+191 Im Wald besiegte Feinde
+192 Rituelle Ernte
+193 Opfere je 16 von 4 verschiedenen Feldfrüchten (64 insgesamt).
+194 4 Feldfrüchte × 16
+195 Herz des Waldes
+196 Besiege einen Ritual-Boss, der mit dem Altar in einem Waldbiom beschworen wurde.
+197 Boss besiegt (Altar im Wald)
+198 zu wenige Nutzungen der Fähigkeit
+199 zu wenige Verbündete in der Nähe
+200 zu wenige Treffer vom Boss eingesteckt
+201 du trugst deine Diamantrüstung nicht
+202 du hast ihm kaum Schaden zugefügt
+203 zu wenige Explosionen
+204 du bist vom Wolf abgestiegen oder er ist gestorben
+205 es war nicht Nacht
+206 zu wenige Projektile eingesteckt
+207 zu wenig Schaden mit rassischen Zaubern
+208 zu wenige Schlingen
+209 zu wenig Heilung durch Durst
+210 zu wenig Schaden mit der Disziplin deiner Mauer
+211 Flinke Finger
+212 Stiehl erfolgreich von 30 Mobs.
+213 Diebstähle bei Mobs
+214 Gemischte Beute
+215 Opfere 64 Beutegegenstände von Mobs von mindestens 8 Arten.
+216 64 Mob-Drops (8 Arten)
+217 Großer Coup
+218 Opfere 3 Stücke Mob-Ausrüstung (gestohlen oder von getöteten Mobs fallen gelassen) und besiege einen Ritual-Boss.
+219 3 Stücke Mob-Ausrüstung
+220 Ritual-Boss besiegt
+221 Fallensteller
+222 Besiege 20 Feinde, die in deiner Schlinge gefangen waren.
+223 Gefangene Feinde besiegt
+224 Apparaturen
+225 Opfere 4 Werfer, 4 Kolben und 16 Fäden.
+226 Werfer, Kolben und Fäden
+227 Gefangene Beute
+228 Besiege einen Ritual-Boss, der mindestens 3-mal von deiner Schlinge festgesetzt wurde.
+229 Boss nach 3 Schlingen besiegt
+230 Kavalkade
+231 Besiege 30 Feinde im Sattel.
+232 Im Sattel besiegte Feinde
+233 Rudel
+234 Opfere 32 Knochen und 16 gegartes Fleisch.
+235 Knochen und Fleisch
+236 Unzertrennlicher Reiter
+237 Besiege einen Ritual-Boss, während du den ganzen Kampf über auf deinem Wolf reitest, ohne dass er stirbt.
+238 Boss ohne Absteigen besiegt
+239 Neugier
+240 Besiege je 6 Feinde von 5 verschiedenen Mob-Arten.
+241 Feindarten mit 6 Siegen
+242 Bibliothek
+243 Umgib den Altar mit 15 Bücherregalen (wie bei einem Verzauberungstisch: 2 Blöcke entfernt, auf seiner Höhe oder einen höher) und opfere 10 Bücher.
+244 Bücherregale um den Altar
+245 10 Bücher
+246 Die drei Lehren
+247 Opfere ein Buch mit einer Verzauberung auf Höchststufe, einen Trank der Stufe II und eine fast vollständig erkundete Karte (90 %).
+248 Buch, Trank und Karte
+249 Die drei Stile
+250 Besiege je 10 Feinde mit 3 verschiedenen Kampfstilen (Magie, Bogen, schwere Waffen, leichte Waffen oder unbewaffnet).
+251 Stile mit 10 Siegen
+252 Opfergabe der Gilden
+253 Opfere auf dem Altar je einen Gegenstand jeder Kategorie: schwere Waffe, leichte Waffe, Bogen oder Armbrust, Schild, Rüstungsteil und eine Zauberschriftrolle oder ein Zauberbuch.
+254 Opfergabe der 6 Gilden
+255 Prüfung der zwei Mauern
+256 Beschwöre am Altar einen Ritual-Boss und besiege ihn mit den Disziplinen deiner zwei gewählten Mauern, mit mindestens 25 % des Schadens in jeder (Rüstung: 3+ Teile tragen; Schilde: 10 Treffer blocken).
+257 Boss mit deinen beiden Mauern besiegt
+258 Das Fremde meistern
+259 Besiege 40 Feinde mit der Disziplin deiner gewählten Mauer.
+260 Mit deiner Mauer besiegte Feinde
+261 Meisterstück
+262 Opfere auf dem Altar einen hochwertigen Gegenstand (Diamant oder besser, oder verzaubert, falls er keine Stufe hat) der Disziplin deiner Mauer.
+263 Meisterstück deiner Mauer
+264 Duell der Meisterschaft
+265 Beschwöre einen Ritual-Boss und besiege ihn, wobei mindestens 90 % des Schadens mit der Disziplin deiner Mauer verursacht werden.
+266 Boss mit deiner Mauer besiegt (90 %)
+267 Höllenjagd
+268 Besiege 30 feindliche Nether-Mobs (Piglins und Hoglins zählen nicht).
+269 Besiegte Nether-Mobs
+270 Höllenhandel
+271 Tausche 20-mal mit Piglins und opfere 16 Nether-Quarz.
+272 Tauschgeschäfte mit Piglins
+273 16 Quarz
+274 Ritual des Nethers
+275 Besiege einen Ritual-Boss, der mit dem Altar im Nether beschworen wurde.
+276 Boss besiegt (Altar im Nether)
+277 Kreuzfeuer
+278 Besiege 40 Feinde mit deinen rassischen Zaubern.
+279 Mit rassischen Zaubern besiegte Feinde
+280 Brennstoff
+281 Opfere 8 Feuerkugeln, 4 Magmablöcke und 8 Lohenruten.
+282 Feuerkugeln, Magma und Lohen
+283 Rituelle Lohe
+284 Besiege einen Ritual-Boss und verursache dabei mindestens 50 % des Schadens mit rassischen Zaubern.
+285 Boss mit 50 % rassischen Zaubern besiegt

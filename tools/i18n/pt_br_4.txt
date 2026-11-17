@@ -1,0 +1,286 @@
+0 Raio da onda (blocos)
+1 Raio da fraqueza (blocos)
+2 Fraqueza ao sobreviver
+3 Água: Molhado
+4 Janela
+5 Janela após um golpe (ticks)
+6 XP extra de pesca
+7 Experiência de encantamento
+8 Acertos críticos muito mais fortes, mas menos frequentes.
+9 Golpe Esmagador
+10 Acertos críticos muito mais frequentes, mas mais fracos.
+11 Golpe Constante
+12 Um pouco menos de dano pela vida perdida, mas você se cura mais quanto mais ferido estiver.
+13 Fúria Temperada
+14 Ainda mais dano quanto menos vida você tem, sem limite, mas você se cura muito menos de todas as fontes.
+15 Fúria Desenfreada
+16 A carne sacia o dobro, mas você não pode comer nada que não seja carne.
+17 Carnívoro
+18 Quando sua vida cai abaixo de certo nível, você recebe menos dano por alguns segundos. Você se cura um pouco menos.
+19 Resistência
+20 Menos armadura e resistência sem armadura, mas você é mais rápido.
+21 Pele Leve
+22 Mais armadura e resistência sem armadura, mas você é mais lento.
+23 Pele Reforçada
+24 A Investida atordoa o dobro do tempo e termina com uma onda de choque que causa dano, mas demora mais para recarregar.
+25 Investida Esmagadora
+26 A Investida atravessa os inimigos e acerta todos com menos dano, sem atordoar.
+27 Investida Imparável
+28 Recargas ainda menores, em troca de um pouco de poder dos feitiços.
+29 Cadência Arcana
+30 Se faltar mana, você paga o feitiço com vida, sem cair abaixo de um mínimo.
+31 Magia de Sangue
+32 Depois de lançar um feitiço você corre mais rápido por um momento.
+33 Passo Arcano
+34 Sem dano de queda, e você cai devagar enquanto segura pular. Você se move um pouco mais devagar.
+35 Queda de Pluma
+36 Mais dano em alvos próximos e menos em alvos distantes.
+37 Poder à Queima-Roupa
+38 Mais dano em alvos distantes e menos em alvos próximos.
+39 Poder à Distância
+40 Menos mana máxima, mas você a recupera 60% mais rápido (mana por segundo).
+41 Surto de Mana
+42 Muito mais mana máxima, mas você a recupera 40% mais devagar (mana por segundo).
+43 Poço de Mana
+44 Cada feitiço de invocação cria uma invocação a menos (mínimo uma), mas elas são mais fortes e um pouco mais caras.
+45 Elite
+46 Cada feitiço de invocação cria uma invocação a mais, mas todas são mais fracas.
+47 Legião
+48 Você pode lançar o Golpe Flamejante a partir de 6 cargas, mas ele causa +4% de dano por carga em vez de +5%.
+49 Ignição Antecipada
+50 As cargas de Fogo se dissipam na metade da velocidade, mas cada uma dá 20% menos dano.
+51 Chama Constante
+52 Enquanto medita, você remove um efeito negativo a cada 5 s.
+53 Mente Clara
+54 Você se cura o dobro da velocidade enquanto medita e até 80% da vida, mas demora mais para começar.
+55 Transe Profundo
+56 Menos armadura e resistência, mas você recebe muito menos dano mágico e elemental.
+57 Pele Espiritual
+58 A absorção da descarga de Pedra dobra, mas você só ganha cargas de Pedra com golpes que causem 4 ou mais de dano.
+59 Eco da Pedra
+60 Ao trocar de postura você mantém 30% das cargas na nova e só descarrega o resto. Você troca de postura 1 s mais devagar.
+61 Fluxo Contínuo
+62 Agachar + a tecla de posturas define sua postura favorita: a descarga e o efeito de postura dela ficam 30% mais fortes, e os das outras duas 30% mais fracos.
+63 Postura Dominante
+64 Você ignora teias, areia de almas, mel, neve em pó e a lentidão de comer ou usar itens. Um pouco menos de velocidade.
+65 Pés Leves
+66 Depois de correr por um momento, seu próximo golpe desarmado causa mais dano e empurra mais.
+67 Impulso da Corrida
+68 Sua aura regenera a vida dos seus aliados (não a sua).
+69 Estandarte da Vida
+70 Sua aura também aumenta o dano dos seus aliados, mas você perde armadura.
+71 Estandarte de Guerra
+72 Mais vida máxima, mas você é um pouco mais lento.
+73 Corpo Colossal
+74 Suas peças de armadura protegem ainda mais, mas você é um pouco mais lento.
+75 Couraça Pesada
+76 Quando você bloqueia um golpe corpo a corpo com um escudo, você arremessa o atacante para trás.
+77 Contra-ataque com Escudo
+78 A cada poucos golpes você libera uma onda que empurra e fere os inimigos próximos.
+79 Onda de Choque
+80 Você marca seu alvo: ele recebe mais dano seu. Você não pode marcar outro enquanto durar.
+81 Condenação
+82 A cada poucos golpes você libera dano sagrado em área, em troca de menos dano base.
+83 Julgamento
+84 Imune a lentidão, fraqueza, cegueira, fadiga, náusea e escuridão. Outros efeitos negativos duram mais em você.
+85 Vontade contra Controle
+86 Imune a efeitos que causam dano (veneno, wither, queima). Outros efeitos negativos duram mais em você.
+87 Vontade contra Dano
+88 Mais dano em movimento; menos se você ficar parado.
+89 Atirador Móvel
+90 Mais dano se você ficou parado por um momento; menos se atirar correndo ou no ar.
+91 Atirador Constante
+92 Esticar o arco não te deixa lento, mas você estica um pouco mais devagar.
+93 Atirador Ágil
+94 Depois de receber um golpe corpo a corpo, sua próxima flecha sai com disparo instantâneo e um pouco menos de dano.
+95 Contragolpe Rápido
+96 O impacto marca o alvo: ele recebe mais dano de todas as fontes.
+97 Marca do Caçador
+98 A flecha perfura mais um inimigo, com um pouco menos de dano no primeiro.
+99 Perfuração
+100 De vez em quando, o primeiro golpe corpo a corpo faz você saltar para trás sem sofrer dano.
+101 Salto Evasivo
+102 Depois de receber um golpe corpo a corpo você deixa uma armadilha que deixa muito lento quem pisar nela.
+103 Armadilha do Caçador
+104 Flechas normais explodem no impacto sem quebrar blocos e empurram os inimigos próximos, com menos dano direto.
+105 Flecha Explosiva
+106 O impacto deixa o alvo lento, mas suas flechas voam um pouco mais devagar.
+107 Flecha Pegajosa
+108 Depois de uma esquiva bem-sucedida, seu próximo golpe causa mais dano.
+109 Contra-ataque
+110 A esquiva cobre mais distância, mas sua invulnerabilidade dura menos.
+111 Rolamento Longo
+112 Você ataca ainda mais rápido, com um pouco menos de dano.
+113 Rajada
+114 Você ignora parte da armadura do alvo, mas ataca mais devagar.
+115 Estocada
+116 A Furtividade dura bem mais, mas os monstros te detectam de mais longe.
+117 Furtividade Profunda
+118 Mais dano contra inimigos que não estão mirando em você. A Furtividade dura menos.
+119 Golpe Traiçoeiro
+120 A Toxina causa o mesmo dano, mas muito mais rápido.
+121 Dose Concentrada
+122 A Toxina causa o mesmo dano, mais devagar, e deixa o alvo lento enquanto durar.
+123 Dose Prolongada
+124 Chance de esquivar de golpes e projéteis saltando para trás. Menos vida máxima.
+125 Evasão
+126 Mais velocidade de movimento e ataque, mas a Furtividade acaba mais cedo.
+127 Leveza
+128 Baixo e lento, mas minerador nato: quebra pedra e minérios mais rápido e tem Fortuna racial em minérios (não soma ao encantamento: vale o maior).
+129 Anão
+130 Atravessa folhas e as escala como andaimes (pular sobe, agachar desce). Não pode comer carne nem peixe.
+131 Elfo
+132 Metade da altura: muito difícil de acertar e passa por vãos pequenos. Tem Sorte e Pilhagem raciais (vale o maior entre isto e o encantamento). Em troca, muito menos vida.
+133 Goblin
+134 Versátil: suaviza as desvantagens da sua classe. Depois de escolher uma classe, escolhe uma muralha, cuja penalidade é reduzida conforme o Rank; os traços base negativos da classe são reduzidos da mesma forma. Sem vantagens ambientais.
+135 Humano
+136 Imune a fogo e lava, mas frio e água machucam mais e entrar na água o queima devagar. Com Iron's Spells, tem feitiços de fogo raciais sempre disponíveis, que sofrem a muralha de Magia da sua classe como qualquer feitiço. Golens de ferro sempre os atacam e os aldeões cobram mais deles.
+137 Infernal
+138 Maior e mais resistente. Uma vez por vida sobrevive a um golpe letal com meio coração. Em troca, gasta mais fome e é mais fácil de acertar.
+139 Orc
+140 Respira debaixo d'água, nada mais rápido, minera debaixo d'água em velocidade normal e enxerga no escuro debaixo d'água. O fogo machuca mais e no Nether tem Fraqueza.
+141 Tritão
+142 Respira debaixo d'água, sua fome é fixa e regenera vida constantemente (interrompida por alguns segundos ao receber dano). A luz solar direta o machuca mesmo com capacete, e nem poções nem feitiços de cura o curam.
+143 Morto-vivo
+144 Sob a Rocha
+145 Derrote 30 inimigos no subsolo (sem céu acima).
+146 Inimigos derrotados no subsolo
+147 Tributo dos Veios
+148 Ofereça 64 minérios de pelo menos 3 tipos.
+149 64 minérios (3 tipos)
+150 Rito do Abismo
+151 Derrote um chefe de rito invocado com o altar no subsolo.
+152 Chefe derrotado (altar no subsolo)
+153 Demolição
+154 Derrote 20 inimigos com suas próprias explosões.
+155 Inimigos derrotados com explosões
+156 Barril de Pólvora
+157 Fabrique e ofereça 16 TNT (fabricados durante este rito).
+158 16 TNT fabricados por você
+159 Cataclismo
+160 Derrote um chefe de rito que sofra pelo menos 4 das suas explosões.
+161 Chefe derrotado após 4 explosões
+162 Fio Próprio
+163 Derrote 30 inimigos com uma arma que você fabricou.
+164 Inimigos derrotados com sua arma
+165 Obra do Mestre
+166 Ofereça um conjunto de armadura de ferro e uma arma de ferro fabricados por você.
+167 Armadura e arma de ferro feitas por você
+168 Prova da Forja
+169 Derrote um chefe de rito vestindo as 4 peças de armadura de diamante (ou netherita) fabricadas por você.
+170 Chefe derrotado com sua armadura de diamante
+171 Fio Encantado
+172 Derrote 30 inimigos com uma arma que você encantou na mesa.
+173 Inimigos derrotados com sua arma encantada
+174 Três Encantamentos
+175 Encante 3 itens na mesa e ofereça-os.
+176 3 itens encantados por você
+177 Livros Gêmeos
+178 Ofereça 2 livros com o mesmo encantamento no nível máximo.
+179 2 livros gêmeos
+180 Caça Noturna
+181 Derrote 30 inimigos com nível de luz 7 ou menos.
+182 Inimigos derrotados no escuro
+183 Oferenda de Fumaça
+184 Ofereça 8 fogueiras e 16 carvões.
+185 Fogueiras e carvão
+186 Véu da Sombra
+187 Derrote um chefe de rito à noite, usando a Nuvem de Fumaça pelo menos 3 vezes durante a luta.
+188 Chefe derrotado à noite com 3 Nuvens
+189 Patrulheiro da Floresta
+190 Derrote 30 inimigos em biomas de floresta.
+191 Inimigos derrotados na floresta
+192 Colheita Ritual
+193 Ofereça 16 de cada uma de 4 plantações diferentes (64 no total).
+194 4 plantações × 16
+195 Coração da Floresta
+196 Derrote um chefe de rito invocado com o altar em um bioma de floresta.
+197 Chefe derrotado (altar na floresta)
+198 poucos usos da habilidade
+199 poucos aliados por perto
+200 poucos golpes recebidos do chefe
+201 você não estava com sua armadura de diamante
+202 você quase não causou dano a ele
+203 poucas explosões
+204 você desmontou do lobo ou ele morreu
+205 não era noite
+206 poucos projéteis recebidos
+207 pouco dano com feitiços raciais
+208 poucas Armadilhas
+209 pouca cura da Sede
+210 pouco dano com a disciplina da sua muralha
+211 Dedos Ágeis
+212 Roube com sucesso de 30 monstros.
+213 Roubos de monstros
+214 Espólios Variados
+215 Ofereça 64 itens de espólio de monstros de pelo menos 8 tipos.
+216 64 drops de monstros (8 tipos)
+217 Grande Roubo
+218 Ofereça 3 peças de equipamento de monstros (roubadas ou largadas por monstros que você matou) e derrote um chefe de rito.
+219 3 peças de equipamento de monstros
+220 Chefe de rito derrotado
+221 Caçador de Armadilhas
+222 Derrote 20 inimigos presos pela sua Armadilha.
+223 Inimigos presos derrotados
+224 Engenhocas
+225 Ofereça 4 dispensadores, 4 pistões e 16 fios.
+226 Dispensadores, pistões e fios
+227 Presa Encurralada
+228 Derrote um chefe de rito imobilizado pela sua Armadilha pelo menos 3 vezes.
+229 Chefe derrotado após 3 Armadilhas
+230 Cavalgada
+231 Derrote 30 inimigos montado.
+232 Inimigos derrotados montado
+233 Matilha
+234 Ofereça 32 ossos e 16 carnes cozidas.
+235 Ossos e carne
+236 Cavaleiro Inseparável
+237 Derrote um chefe de rito montado no seu lobo durante toda a luta sem que ele morra.
+238 Chefe derrotado sem desmontar
+239 Curiosidade
+240 Derrote 6 inimigos de cada um de 5 tipos diferentes de monstro.
+241 Tipos de inimigo com 6 derrotas
+242 Biblioteca
+243 Cerque o altar com 15 estantes (como uma mesa de encantamento: a 2 blocos, na altura dela ou um acima) e ofereça 10 livros.
+244 Estantes ao redor do altar
+245 10 livros
+246 Os Três Saberes
+247 Ofereça um livro com um encantamento no nível máximo, uma poção de nível II e um mapa explorado quase por completo (90%).
+248 Livro, poção e mapa
+249 Os Três Estilos
+250 Derrote 10 inimigos com cada um de 3 estilos de combate diferentes (magia, arco, armas pesadas, armas leves ou desarmado).
+251 Estilos com 10 derrotas
+252 Oferenda das Guildas
+253 Ofereça no altar um item de cada categoria: arma pesada, arma leve, arco ou besta, escudo, peça de armadura e um pergaminho ou livro de feitiço.
+254 Oferenda das 6 guildas
+255 Prova das Duas Muralhas
+256 Invoque um chefe de rito no altar e derrote-o usando as disciplinas das suas duas muralhas escolhidas, com pelo menos 25% do dano em cada uma (Armadura: vista 3+ peças; Escudos: bloqueie 10 golpes).
+257 Chefe derrotado com suas duas muralhas
+258 Dominando o Alheio
+259 Derrote 40 inimigos com a disciplina da muralha que você escolheu.
+260 Inimigos derrotados com sua muralha
+261 Obra-Prima
+262 Ofereça no altar um item de alta qualidade (diamante ou melhor, ou encantado se não tiver nível) da disciplina da sua muralha.
+263 Obra-prima da sua muralha
+264 Duelo de Maestria
+265 Invoque um chefe de rito e derrote-o causando pelo menos 90% do dano com a disciplina da sua muralha.
+266 Chefe derrotado com sua muralha (90%)
+267 Caça Infernal
+268 Derrote 30 monstros hostis do Nether (piglins e hoglins não contam).
+269 Monstros do Nether derrotados
+270 Acordo Infernal
+271 Troque 20 vezes com piglins e ofereça 16 quartzos do Nether.
+272 Trocas com piglins
+273 16 quartzos
+274 Rito do Nether
+275 Derrote um chefe de rito invocado com o altar no Nether.
+276 Chefe derrotado (altar no Nether)
+277 Fogo Cruzado
+278 Derrote 40 inimigos com seus feitiços raciais.
+279 Inimigos derrotados com feitiços raciais
+280 Combustível
+281 Ofereça 8 cargas de fogo, 4 blocos de magma e 8 varas de blaze.
+282 Cargas de fogo, magma e blaze
+283 Chama Ritual
+284 Derrote um chefe de rito causando pelo menos 50% do dano com feitiços raciais.
+285 Chefe derrotado com 50% de feitiços raciais

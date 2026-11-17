@@ -1,0 +1,260 @@
+0 Quando Danza forzata o Dissonanza termina, i mob normali restano ammaliati per qualche secondo: non ti attaccano e combattono tra loro. I boss sono immuni.
+1 Ammaliare
+2 Ogni volta che il tuo combo supera 10, 20 o 30, tutti i tuoi incantesimi in ricarica perdono metà della ricarica rimanente.
+3 Contrappunto
+4 Per qualche secondo gli errori non abbassano il combo e ogni colpo conta il doppio.
+5 Crescendo
+6 Se suoni alla perfezione (ogni nota e nessuna pressione extra), ogni frase sale di una fase: le tue aure si rafforzano e il tempo accelera. Un errore o una pressione extra fa scendere di due fasi.
+7 Armonia
+8 Dopo aver lanciato tre incantesimi diversi dal tuo strumento in poco tempo, il successivo non costa mana e perde metà della ricarica (con un tempo minimo tra un uso e l'altro).
+9 Recital
+10 Con uno strumento in mano giochi a un minigioco di ritmo: ogni nota richiede clic sinistro, clic destro, Maiusc o Spazio, e l'azione avviene davvero. Sbaglia solo chi non preme in tempo la corsia richiesta (premere altre corsie non è penalizzato). Ogni colpo a segno aumenta il combo e dà potenza musicale; un errore lo azzera. Un clic sinistro a tempo infligge danno extra. Ogni incantesimo musicale richiede un combo minimo per essere lanciato.
+11 Ritmo
+12 Con Armonia alla fase 3 o superiore, infliggi più danno in mischia.
+13 Furia ritmica
+14 Resistenza alla magia musicale
+15 Potenza della scuola musicale
+16 Aumenta la potenza della scuola musicale.
+17 Battuta
+18 Suonare non ti rallenta più e corri più veloce mentre suona una delle tue canzoni (conta per il limite di velocità).
+19 Danza
+20 Una finestra di colpo più ampia e, con più punti, un errore non azzera più il combo: lo abbassa soltanto.
+21 Orecchio assoluto
+22 Aumenta il raggio delle tue aure.
+23 Risonanza
+24 Gli effetti delle tue aure continuano per qualche secondo dopo averle lasciate o dopo la fine della canzone.
+25 Riverbero
+26 Metà mago, metà combattente, che combatte mentre suona: con uno strumento in mano gioca a un minigioco di ritmo con clic sinistro, clic destro, Maiusc e Spazio (ogni corsia fa comunque la sua azione abituale). Colpire le note aumenta il combo, che alimenta la scuola musicale, esclusiva del Bardo. I suoi incantesimi sono spartiti conservati nello strumento (mano secondaria) e si lanciano con il clic destro: la maggior parte sono aure per i suoi alleati.
+27 Bardo
+28 Tratto di classe: un po' meno salute massima.
+29 %1$s è stato schiacciato dal pianoforte di %2$s
+30 %1$s è stato schiacciato dal pianoforte di %2$s
+31 %1$s è caduto sotto la musica di %2$s
+32 %1$s è caduto sotto la musica di %2$s
+33 %1$s è stato travolto dall'onda sonora di %2$s
+34 %1$s è stato travolto dall'onda sonora di %2$s
+35 Ammaliato
+36 Danza forzata
+37 Corale di ferro
+38 Cadenza di mana
+39 Marcia
+40 Fervore del requiem
+41 Ballata del riposo
+42 Scaglie contro il fuoco
+43 Scaglie contro il ghiaccio
+44 Scaglie contro i fulmini
+45 Passo condiviso
+46 Silenziato
+47 Inno di guerra
+48 Nota tagliente
+49 Pianoforte a coda
+50 ×%s
+51 Crescendo
+52 Bene
+53 Errore
+54 Perfetto!
+55 Organo abissale
+56 Ancia abissale
+57 Filo arcano
+58 Cornamusa
+59 Carillon
+60 Tamburo del colosso
+61 Pelle del tamburo del colosso
+62 Arpa di cristallo
+63 Tamburo
+64 Liuto del sole eterno
+65 Flauto
+66 Chitarra-ascia
+67 Arpa
+68 Ghironda
+69 Liuto
+70 Lira
+71 Nota musicale
+72 Ocarina
+73 Flauto di Pan
+74 Frammento risonante
+75 Lira della scala di fuoco
+76 Lira della scala di ghiaccio
+77 Lira della scala di fulmini
+78 Spartito
+79 Spartito: %s
+80 Violino spettrale
+81 Tamburello
+82 Violino
+83 Corno da guerra
+84 Persistenza dell'aura
+85 Raggio dell'aura
+86 Forma dell'aura
+87 Danza
+88 Coro
+89 Contagio
+90 Repertorio esteso
+91 Orecchio fine
+92 Voce ipnotica
+93 Ultima nota
+94 Combo marziale
+95 Potenza musicale
+96 Marcia perfetta
+97 Colpo risonante
+98 Passo condiviso
+99 Solista
+100 Tempo largo
+101 Tempo presto
+102 Finestra di colpo
+103 Scia
+104 %s richiede un combo di %s (hai %s)
+105 Crescendo!
+106 Gli incantesimi musicali richiedono Iron's Spells 'n Spellbooks
+107 Non c'è nessun bersaglio in vista
+108 Solo un Bardo sa suonare questo strumento.
+109 Scegli un incantesimo del tuo strumento sulla ruota
+110 Recital: il tuo prossimo incantesimo è gratis
+111 Gli incantesimi musicali si lanciano suonando lo strumento (clic destro)
+112 Bonus per gli alleati
+113 Potenza senza alleati vicini
+114 Potenza senza alleati
+115 Raggio base dell'aura (blocchi)
+116 Durata dell'effetto dell'aura senza persistenza
+117 Tempo base (battiti al minuto)
+118 Danno del colpo a tempo
+119 Forza dell'aura per fase
+120 Quota di potenza musicale che ricevono potenziamenti e indebolimenti
+121 Massimo di alleati contati
+122 Combo minimo ridotto di
+123 Durata del controllo
+124 Ricarica rimossa
+125 Potenza con alleati vicini
+126 Incantesimi diversi
+127 Raggio extra (blocchi)
+128 Slot di spartito extra
+129 Pressioni extra perdonate per frase
+130 Valore di ogni colpo ×
+131 Combo perso dopo aver riposto lo strumento per
+132 Forza durante la persistenza
+133 Tempo massimo (battiti al minuto)
+134 Combo massimo
+135 Massimo di ballerini extra
+136 Fasi massime
+137 Dalla fase di Armonia
+138 Combo mantenuto con un errore
+139 Potenza musicale
+140 Limite di potenza musicale
+141 Battiti con una nota
+142 Potenza per alleato vicino
+143 Danno per colpo
+144 Finestra di colpo perfetto (ms)
+145 Battiti per frase
+146 Velocità mentre suoni
+147 Forza dell'aura
+148 Potenza musicale
+149 Potenza musicale per colpo (Livello totale 1)
+150 Potenza musicale per colpo (Livello totale 15)
+151 Potenza musicale per colpo (Livello totale 30)
+152 Raggio dell'aura
+153 Ricarica rimanente rimossa
+154 Pausa tra le frasi (battiti)
+155 Il tuo bonus
+156 Danno sonoro
+157 Fasi perse per errore
+158 Tempo
+159 Tempo per fase
+160 Finestra di colpo
+161 Finestra di colpo (ms)
+162 Più potenza musicale per ogni alleato vicino (fino a 4); meno se suoni da solo.
+163 Coro
+164 Più potenza musicale senza alleati vicini; un po' meno se ce ne sono.
+165 Solista
+166 Il bonus di velocità di Danza è più alto, ma solo mentre Armonia è attiva.
+167 Marcia perfetta
+168 Gli alleati dentro la tua aura ricevono metà del bonus di velocità di Danza; tu ne ricevi un po' meno.
+169 Passo condiviso
+170 Tempo più lento (compreso il suo aumento con Armonia) e una finestra di colpo ancora più ampia, al costo di un po' di potenza musicale.
+171 Tempo largo
+172 Una pressione extra per frase non spezza Armonia, ma il tempo base è più veloce.
+173 Tempo presto
+174 Le tue aure arrivano molto più lontano, ma i loro effetti sono un po' più deboli.
+175 Eco lontana
+176 Le tue aure coprono meno terreno, ma i loro effetti sono molto più forti.
+177 Cerchio interno
+178 Quando un'aura termina rilascia un'onda che respinge i nemici vicini e infligge un po' di danno sonoro.
+179 Ultima nota
+180 Gli effetti persistono più a lungo dopo l'aura, ma sono più deboli mentre persistono.
+181 Scia
+182 Musicale
+183 Nota tagliente
+184 Lanci una nota acuta che infligge danno sonoro. Ai livelli alti trapassa i nemici.
+185 Dissonanza
+186 Una nota spezzata attorno a te: i nemici sono silenziati (niente incantesimi) e storditi per un momento.
+187 Elegia
+188 Aura: i nemici vicini diventano deboli e lenti.
+189 Requiem finale
+190 Il gran finale: enorme danno sonoro attorno a te e più danno per i tuoi alleati per qualche secondo.
+191 Danza forzata
+192 Il tuo bersaglio inizia a ballare: non può attaccare, lanciare incantesimi né usare oggetti. I boss sono immuni.
+193 Pianoforte a coda
+194 Un'ombra cresce sotto il tuo bersaglio e lo segue; alla fine si ferma e cade un pianoforte. Spostati!
+195 Combo minimo: %s
+196 Silenzio %s s e stordimento %s s
+197 Danno: %s
+198 +%s%% di danno
+199 Danza %s s (giocatori %s s)
+200 Debolezza I e Lentezza I
+201 Durata: %s s
+202 +%s%% di rigenerazione del mana
+203 Trapassa %s nemici
+204 Raggio: %s blocchi
+205 Portata: %s blocchi
+206 −%s%% di danno subito
+207 %s salute al secondo
+208 +%s%% di danno per i tuoi alleati per %s s
+209 Un secondo pianoforte cade con metà del danno
+210 +%s%% di velocità di movimento e +%s%% di velocità d'attacco
+211 Corale di ferro
+212 Aura: tu e i tuoi alleati subite meno danno.
+213 Cadenza di mana
+214 Aura: tu e i tuoi alleati rigenerate il mana più in fretta.
+215 Marcia
+216 Aura: tu e i tuoi alleati correte e attaccate più in fretta.
+217 Ballata del riposo
+218 Aura: tu e i tuoi alleati rigenerate salute.
+219 Rimbombo
+220 Un cono di suono davanti a te che danneggia e respinge i nemici.
+221 Inno di guerra
+222 Aura: tu e i tuoi alleati infliggete più danno.
+223 Maestro del controllo. I tuoi effetti di controllo durano di più, la danza si diffonde ai mob vicini e, dal livello 5, i mob che escono dalla danza o dalla Dissonanza restano ammaliati e combattono tra loro.
+224 Incantatore
+225 Il più versatile: più slot di spartito nei tuoi strumenti, incantesimi con un combo minimo più basso e, dal livello 5, il Recital: dopo tre incantesimi diversi di fila, il successivo è gratis e si ricarica prima.
+226 Menestrello
+227 Un Bardo da prima linea. Ogni nota che colpisci aggiunge danno con armi leggere e pesanti (oltre ai tuoi muri), ogni quinto colpo a tempo rilascia un'onda sonora e, con Armonia alta, colpisci ancora più forte.
+228 Cantore di guerra
+229 +%s%% di velocità di lancio
+230 −%s%% di ricarica degli incantesimi
+231 Strumento %s (solo Bardo):
+232 Clic destro: lancia l'incantesimo selezionato nella ruota di Iron's. Maiusc + clic destro (fuori dal combattimento, nella mano principale): leggio.
+233 +%s%% di rigenerazione del mana
+234 +%s di mana massimo
+235 Passiva: %s
+236 Raggio dell'aura maggiore e danno doppio dell'Ultima nota.
+237 Ogni 10 di combo rilascia un boato che stordisce i nemici vicini.
+238 Ogni 10 colpi di fila recuperi parte del tuo mana.
+239 I colpi perfetti curano i tuoi alleati vicini.
+240 Ascia a due mani che si può anche suonare. Il Bardo con essa non ha il muro Armi pesanti; le altre classi la usano come una normale ascia.
+241 Le tue aure danno ai tuoi alleati resistenza al fuoco.
+242 Le tue aure danno ai tuoi alleati resistenza al ghiaccio.
+243 Le tue aure danno ai tuoi alleati resistenza ai fulmini.
+244 Un errore abbassa solo un terzo del tuo combo.
+245 Le tue aure hanno un raggio maggiore.
+246 +%s%% di potenza musicale
+247 Comune
+248 Epico
+249 Leggendario
+250 Raro
+251 Spartiti: %s/%s · livello massimo dello spartito: %s%%
+252  ♪ %s (livello %s)
+253  ♪ %s (livello %s, limitato a %s)
+254 Combo minimo: %s
+255 Spartito vuoto
+256 Si conserva in uno strumento (leggio). Fallo salire di livello con l'inchiostro su un banco da lavoro.
+257 Livello %s di %s
+258 Metti gli spartiti negli slot. Gli slot grigi superano i tuoi slot: si possono solo svuotare.
+259 Leggio: %s

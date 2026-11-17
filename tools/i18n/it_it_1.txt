@@ -1,0 +1,286 @@
+0 Ruggito del drago: la Furia del berserker lancia un ruggito; i mob non boss entro 8 blocchi fuggono e subiscono l'elemento delle scaglie.
+1 Muta del drago
+2 Ira del wyrm: sotto il 40% di salute o durante la Furia del berserker ti spuntano ali spettrali e ogni colpo critico libera un cono elementale di 4 blocchi (una volta al secondo).
+3 Furia del wyrm
+4 Bottino dorato: quando uccidi un mob ostile, 10% di probabilità che lasci una pepita d'oro che balza verso di te.
+5 Abito del saccheggiatore
+6 Petto di ferro: −5% di danno dai proiettili.
+7 Finimenti di ferro
+8 Fiuto: i mob ostili entro 12 blocchi con meno del 30% di salute brillano.
+9 Pelli di bestia
+10 Cuore di brace: ogni colpo che subisci accumula una brace (max 5, 8 s). La Carica o la Furia del berserker le libera in un anello di fuoco di 4 blocchi.
+11 Piastre di cenere
+12 Maglie squillanti: ogni carica tintinna e, al raggiungimento della soglia, le maglie risuonano in accordo.
+13 Gi ad anelli
+14 Riflesso di cristallo: la Deviazione dei proiettili concede +1 carica con un lampo prismatico.
+15 Abito di cristallo
+16 Danza del drago: quando attivi un effetto di postura, un drago spettrale del colore della postura ti gira attorno per 4 s e morde il nemico più vicino ogni secondo.
+17 Mantello squamato
+18 Pugno del wyrm: ogni effetto di postura lancia una testa di drago di energia che percorre 8 blocchi in linea retta. Fuoco: camminare sulla lava nella Postura del fuoco concede velocità. Ghiaccio: nell'Acqua congeli l'acqua mentre cammini. Fulmine: nella Pietra, i colpi pesanti che subisci rilasciano una scintilla.
+19 Vesti del wyrm
+20 Pellegrinaggio: la Meditazione cura il 20% in più.
+21 Tunica del pellegrino
+22 Postura salda: la Pietra ottiene carica anche da colpi di appena 1,5 PV.
+23 Gi di ferro
+24 Primo passo: entrando in una postura senza cariche ne ricevi 1, e le cariche decadono il 10% più lentamente.
+25 Fasce del novizio
+26 Sigillo di postura: le cariche della Pietra decadono a metà velocità e, cambiando postura con 5 o più cariche, lasci un sigillo runico che ripete la scarica al 30% dopo 3 s.
+27 Kesa di ossidiana
+28 Set completo (4 pezzi, solo %s):
+29 Lento, con portata extra e un fendente ad arco che colpisce gli altri nemici al 60%.
+30 Fendente di cenere: il fendente acceca i mob per 1 s.
+31 Salto con l'asta: accovacciato + salto ti lancia in avanti e atterri con un'onda d'urto (8 s).
+32 Onda dell'orizzonte: se aspetti 1,5 s tra un colpo e l'altro, il colpo emette un'onda elementale ad arco.
+33 Fuoco: ogni colpo brucia.
+34 Ghiaccio: ogni colpo rallenta.
+35 Fulmine: ogni colpo salta su un nemico vicino.
+36 Indossati nello slot Curios delle mani (o nella mano secondaria), potenziano i colpi a mani nude.
+37 Pugni di ossidiana: al 5° colpo contro lo stesso bersaglio, un'esplosione di 2 blocchi.
+38 Artigli di drago: i tuoi colpi possono infliggere Ferita (−30% di cure per 4 s).
+39 Pugni del wyrm: i tuoi colpi applicano l'elemento e gli effetti di postura del Monaco sono più forti del 20%.
+40 Monaco: conta come mani nude (cariche, perk e sottoclasse).
+41 Veloce, con portata corta. Per il Monaco conta come mani nude.
+42 Turbine: ogni 8 colpi concatenati, una rotazione che colpisce tutto attorno al 50%.
+43 Eco d'osso: il Turbine lascia un nunchaku fantasma che ripete 3 colpi al 30%.
+44 Tempesta di catene: il Turbine diventa un vortice di 3 s che attira i nemici e applica l'elemento.
+45 Velocità media. Tieni premuto il clic destro per parare: un colpo nei primi istanti viene parato e stordisce l'attaccante; altrimenti riduce il danno.
+46 Parata di ferro: la parata restituisce il 50% del colpo.
+47 Disarmo: la parata dà all'attaccante Debolezza II per 3 s.
+48 Contrattacco del wyrm: dopo una parata, il tuo colpo successivo entro 1,5 s è un affondo elementale che trapassa in linea.
+49 Lancio libero %s: %s
+50 Furtività
+51 Clessidra arcana
+52 Prisma dell'arcimago
+53 Stivali del Barbaro in maglia
+54 Finimenti del Barbaro in maglia
+55 Elmo del Barbaro in maglia
+56 Schinieri del Barbaro in maglia
+57 Stivali del Barbaro di diamante
+58 Finimenti del Barbaro di diamante
+59 Elmo del Barbaro di diamante
+60 Schinieri del Barbaro di diamante
+61 Stivali del Barbaro di scaglie di drago di fuoco
+62 Finimenti del Barbaro di scaglie di drago di fuoco
+63 Elmo del Barbaro di scaglie di drago di fuoco
+64 Schinieri del Barbaro di scaglie di drago di fuoco
+65 Stivali del Barbaro di scaglie di drago di ghiaccio
+66 Finimenti del Barbaro di scaglie di drago di ghiaccio
+67 Elmo del Barbaro di scaglie di drago di ghiaccio
+68 Schinieri del Barbaro di scaglie di drago di ghiaccio
+69 Stivali del Barbaro di scaglie di drago del fulmine
+70 Finimenti del Barbaro di scaglie di drago del fulmine
+71 Elmo del Barbaro di scaglie di drago del fulmine
+72 Schinieri del Barbaro di scaglie di drago del fulmine
+73 Stivali del Barbaro di acciaio draconico di fuoco
+74 Finimenti del Barbaro di acciaio draconico di fuoco
+75 Elmo del Barbaro di acciaio draconico di fuoco
+76 Schinieri del Barbaro di acciaio draconico di fuoco
+77 Stivali del Barbaro di acciaio draconico di ghiaccio
+78 Finimenti del Barbaro di acciaio draconico di ghiaccio
+79 Elmo del Barbaro di acciaio draconico di ghiaccio
+80 Schinieri del Barbaro di acciaio draconico di ghiaccio
+81 Stivali del Barbaro di acciaio draconico del fulmine
+82 Finimenti del Barbaro di acciaio draconico del fulmine
+83 Elmo del Barbaro di acciaio draconico del fulmine
+84 Schinieri del Barbaro di acciaio draconico del fulmine
+85 Stivali del Barbaro d'oro
+86 Finimenti del Barbaro d'oro
+87 Elmo del Barbaro d'oro
+88 Schinieri del Barbaro d'oro
+89 Stivali del Barbaro di ferro
+90 Finimenti del Barbaro di ferro
+91 Elmo del Barbaro di ferro
+92 Schinieri del Barbaro di ferro
+93 Stivali del Barbaro di cuoio
+94 Finimenti del Barbaro di cuoio
+95 Elmo del Barbaro di cuoio
+96 Schinieri del Barbaro di cuoio
+97 Stivali del Barbaro di netherite
+98 Finimenti del Barbaro di netherite
+99 Elmo del Barbaro di netherite
+100 Schinieri del Barbaro di netherite
+101 Bastone Bo di diamante
+102 Bastone Bo di osso di drago
+103 Bastone Bo di acciaio draconico di fuoco
+104 Bastone Bo di acciaio draconico di ghiaccio
+105 Bastone Bo di acciaio draconico del fulmine
+106 Bastone Bo d'oro
+107 Bastone Bo di ferro
+108 Bastone Bo di netherite
+109 Bastone Bo di pietra
+110 Bastone Bo di legno
+111 Libro dei legami
+112 Mantello di corvo
+113 Cinghia conciata
+114 Corno del ciclope
+115 Modello di forgia draconica
+116 Faretra dell'ammazzadraghi
+117 Foglia sempreverde
+118 Collare di zanne
+119 Anello del gelo errante
+120 Occhio di gorgone
+121 Insegna del factotum
+122 Medaglione dell'eremita
+123 Piuma di ippogrifo
+124 Tirapugni di diamante
+125 Tirapugni di osso di drago
+126 Tirapugni di acciaio draconico di fuoco
+127 Tirapugni di acciaio draconico di ghiaccio
+128 Tirapugni di acciaio draconico del fulmine
+129 Tirapugni d'oro
+130 Tirapugni di ferro
+131 Tirapugni di netherite
+132 Tirapugni di pietra
+133 Tirapugni di legno
+134 Bussola dell'ultimo respiro
+135 Dadi truccati
+136 Cuore di magma
+137 Panno marziale
+138 Velo di mezzanotte
+139 Lanterna del minatore
+140 Sandali del Monaco in maglia
+141 Gi del Monaco in maglia
+142 Fascia del Monaco in maglia
+143 Pantaloni del Monaco in maglia
+144 Sandali del Monaco di diamante
+145 Gi del Monaco di diamante
+146 Fascia del Monaco di diamante
+147 Pantaloni del Monaco di diamante
+148 Sandali del Monaco di scaglie di drago di fuoco
+149 Gi del Monaco di scaglie di drago di fuoco
+150 Fascia del Monaco di scaglie di drago di fuoco
+151 Pantaloni del Monaco di scaglie di drago di fuoco
+152 Sandali del Monaco di scaglie di drago di ghiaccio
+153 Gi del Monaco di scaglie di drago di ghiaccio
+154 Fascia del Monaco di scaglie di drago di ghiaccio
+155 Pantaloni del Monaco di scaglie di drago di ghiaccio
+156 Sandali del Monaco di scaglie di drago del fulmine
+157 Gi del Monaco di scaglie di drago del fulmine
+158 Fascia del Monaco di scaglie di drago del fulmine
+159 Pantaloni del Monaco di scaglie di drago del fulmine
+160 Sandali del Monaco di acciaio draconico di fuoco
+161 Gi del Monaco di acciaio draconico di fuoco
+162 Fascia del Monaco di acciaio draconico di fuoco
+163 Pantaloni del Monaco di acciaio draconico di fuoco
+164 Sandali del Monaco di acciaio draconico di ghiaccio
+165 Gi del Monaco di acciaio draconico di ghiaccio
+166 Fascia del Monaco di acciaio draconico di ghiaccio
+167 Pantaloni del Monaco di acciaio draconico di ghiaccio
+168 Sandali del Monaco di acciaio draconico del fulmine
+169 Gi del Monaco di acciaio draconico del fulmine
+170 Fascia del Monaco di acciaio draconico del fulmine
+171 Pantaloni del Monaco di acciaio draconico del fulmine
+172 Sandali del Monaco d'oro
+173 Gi del Monaco d'oro
+174 Fascia del Monaco d'oro
+175 Pantaloni del Monaco d'oro
+176 Sandali del Monaco di ferro
+177 Gi del Monaco di ferro
+178 Fascia del Monaco di ferro
+179 Pantaloni del Monaco di ferro
+180 Sandali del Monaco di cuoio
+181 Gi del Monaco di cuoio
+182 Fascia del Monaco di cuoio
+183 Pantaloni del Monaco di cuoio
+184 Sandali del Monaco di netherite
+185 Gi del Monaco di netherite
+186 Fascia del Monaco di netherite
+187 Pantaloni del Monaco di netherite
+188 Nunchaku di diamante
+189 Nunchaku di osso di drago
+190 Nunchaku di acciaio draconico di fuoco
+191 Nunchaku di acciaio draconico di ghiaccio
+192 Nunchaku di acciaio draconico del fulmine
+193 Nunchaku d'oro
+194 Nunchaku di ferro
+195 Nunchaku di netherite
+196 Nunchaku di pietra
+197 Nunchaku di legno
+198 Reliquiario del giuramento
+199 Piuma di fenice
+200 Campanella del pixie
+201 Stendardo tascabile
+202 Sai di diamante
+203 Sai di osso di drago
+204 Sai di acciaio draconico di fuoco
+205 Sai di acciaio draconico di ghiaccio
+206 Sai di acciaio draconico del fulmine
+207 Sai d'oro
+208 Sai di ferro
+209 Sai di netherite
+210 Sai di pietra
+211 Sai di legno
+212 Pendente del serpente marino
+213 Rosario delle tre posture
+214 Talismano della tempesta
+215 Campana del tempio
+216 Conchiglia della marea
+217 Cintura del viandante
+218 Borsa di ninnoli
+219 Orecchino d'osso di troll
+220 Teschio trofeo
+221 Tamburo da guerra
+222 Lanterna del fuoco fatuo
+223 Classi RPG
+224 Classi RPG
+225 Abilità 1
+226 Abilità 2
+227 Abilità 3
+228 Alleati
+229 Apri il libro della classe
+230 Abilità razziale 1
+231 Abilità razziale 2
+232 Schivata di Epic Fight
+233 Colpo afflittivo (Peste)
+234 Imboscata arcana
+235 Scudo arcano
+236 Perforazione dell'armatura
+237 Aura dello stendardo
+238 Protezione delle bestie
+239 Magia del sangue
+240 Carnivoro
+241 Nessun rallentamento nel lancio
+242 Passo arcano
+243 Carica potenziata
+244 Colpo caricato
+245 Condanna
+246 Flusso continuo
+247 Carica schiacciante
+248 Scommessa con la morte
+249 Furtività profonda
+250 Pugno invalidante
+251 Potenza in base alla distanza
+252 Contrattacco
+253 Postura dominante
+254 Tensione senza rallentamento
+255 Riduzione della velocità di tensione
+256 Accensione anticipata
+257 Immunità agli effetti
+258 Indebolimenti elementali
+259 Manifestazione elementale
+260 Resistenza
+261 Evasione
+262 Balzo evasivo
+263 Freccia esplosiva
+264 Caduta morbida
+265 Potenza delle cariche di Fuoco
+266 Furia (perk)
+267 Temprato
+268 Trappola del cacciatore
+269 Marchio del cacciatore
+270 Lama infusa
+271 Giudizio
+272 Ultima furia immortale
+273 Stendardo della vita
+274 Piedi leggeri
+275 Rotolata lunga
+276 Eco marziale
+277 Meditazione
+278 Meditazione (perk)
+279 Tiratore mobile
+280 Impatto
+281 Perforazione
+282 Frecce con pozione
+283 Contrattacco rapido
+284 Sott'acqua, immune a Fatica da scavo, Cecità e Oscurità.
+285 Figlio dell'abisso

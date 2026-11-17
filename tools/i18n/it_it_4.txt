@@ -1,0 +1,286 @@
+0 Raggio dell'onda (blocchi)
+1 Raggio di debolezza (blocchi)
+2 Debolezza a chi sopravvive
+3 Acqua: Bagnato
+4 Finestra
+5 Finestra dopo un colpo (tick)
+6 XP di pesca extra
+7 Esperienza di incantamento
+8 Colpi critici molto più potenti ma meno frequenti.
+9 Colpo schiacciante
+10 Colpi critici molto più frequenti ma più deboli.
+11 Colpo costante
+12 Un po' meno danno per la salute persa, ma ti curi di più quanto più sei ferito.
+13 Furia temprata
+14 Ancora più danno quanto meno salute hai, senza limite, ma ti curi molto meno da ogni fonte.
+15 Furia scatenata
+16 La carne sazia il doppio, ma non puoi mangiare nient'altro che carne.
+17 Carnivoro
+18 Quando scendi sotto una certa salute subisci meno danno per qualche secondo. Ti curi un po' meno.
+19 Resistenza
+20 Meno armatura e tenacia senza armatura, ma sei più veloce.
+21 Pelle leggera
+22 Più armatura e tenacia senza armatura, ma sei più lento.
+23 Pelle rinforzata
+24 La carica stordisce il doppio e termina con un'onda d'urto che fa danno, ma si ricarica più lentamente.
+25 Carica schiacciante
+26 La carica trapassa i nemici e li colpisce tutti con meno danno, senza stordire.
+27 Carica inarrestabile
+28 Ricariche ancora più brevi, in cambio di un po' di potenza degli incantesimi.
+29 Cadenza arcana
+30 Se non hai mana, paghi l'incantesimo con la salute, senza scendere sotto un minimo.
+31 Magia del sangue
+32 Dopo aver lanciato un incantesimo corri più veloce per un momento.
+33 Passo arcano
+34 Nessun danno da caduta e cadi lentamente tenendo premuto il salto. Ti muovi un po' più lentamente.
+35 Caduta di piuma
+36 Più danno contro i bersagli vicini e meno contro quelli lontani.
+37 Potenza a bruciapelo
+38 Più danno contro i bersagli lontani e meno contro quelli vicini.
+39 Potenza a distanza
+40 Meno mana massimo, ma lo recuperi il 60% più in fretta (mana al secondo).
+41 Esplosione di mana
+42 Molto più mana massimo, ma lo recuperi il 40% più lentamente (mana al secondo).
+43 Pozzo di mana
+44 Ogni incantesimo di evocazione crea un'evocazione in meno (minimo una), ma sono più forti e un po' più costose.
+45 Élite
+46 Ogni incantesimo di evocazione crea un'evocazione in più, ma sono tutte più deboli.
+47 Legione
+48 Puoi lanciare il Colpo infuocato da 6 cariche, ma infligge +4% di danno per carica invece di +5%.
+49 Accensione precoce
+50 Le cariche di fuoco svaniscono la metà più lentamente, ma ognuna dà il 20% di danno in meno.
+51 Fiamma costante
+52 Mentre mediti elimini un effetto negativo ogni 5 s.
+53 Mente lucida
+54 Ti curi il doppio più in fretta mentre mediti e fino all'80% della tua salute, ma ci metti di più a iniziare.
+55 Trance profonda
+56 Meno armatura e tenacia, ma subisci molto meno danno magico ed elementale.
+57 Pelle spirituale
+58 L'assorbimento della scarica di Pietra raddoppia, ma ottieni cariche di Pietra solo dai colpi che infliggono 4 o più danni.
+59 Eco di pietra
+60 Quando cambi postura mantieni il 30% delle cariche nella nuova e scarichi solo il resto. Cambi postura 1 s più lentamente.
+61 Flusso continuo
+62 Accovacciati + il tasto delle posture per impostare la postura preferita: la sua scarica e il suo effetto di postura sono il 30% più forti, e quelli delle altre due il 30% più deboli.
+63 Postura dominante
+64 Ignori ragnatele, sabbia delle anime, miele, neve in polvere e il rallentamento da mangiare o usare oggetti. Un po' meno velocità.
+65 Piedi leggeri
+66 Dopo aver corso per un momento, il tuo prossimo colpo a mani nude infligge più danno e respinge di più.
+67 Slancio di corsa
+68 La tua aura rigenera la salute dei tuoi alleati (non la tua).
+69 Stendardo della vita
+70 La tua aura aumenta anche il danno dei tuoi alleati, ma perdi armatura.
+71 Stendardo di guerra
+72 Più salute massima, ma sei un po' più lento.
+73 Corpo colossale
+74 I tuoi pezzi di armatura proteggono ancora di più, ma sei un po' più lento.
+75 Corazza pesante
+76 Quando pari un colpo in mischia con lo scudo, scagli indietro l'attaccante.
+77 Contrattacco con lo scudo
+78 Ogni pochi colpi rilasci un'onda che spinge e danneggia i nemici vicini.
+79 Onda d'urto
+80 Marchi il bersaglio: subisce più danno da te. Non puoi marcarne un altro finché dura.
+81 Condanna
+82 Ogni pochi colpi scateni danno sacro ad area, in cambio di meno danno base.
+83 Giudizio
+84 Immune a lentezza, debolezza, cecità, fatica, nausea e oscurità. Gli altri effetti negativi durano di più su di te.
+85 Volontà contro il controllo
+86 Immune agli effetti che infliggono danno (veleno, Wither, bruciatura). Gli altri effetti negativi durano di più su di te.
+87 Volontà contro il danno
+88 Più danno mentre ti muovi; meno se stai fermo.
+89 Tiratore mobile
+90 Più danno se sei rimasto fermo per un momento; meno se tiri correndo o in aria.
+91 Tiratore costante
+92 Tendere l'arco non ti rallenta, ma lo tendi un po' più lentamente.
+93 Tiratore agile
+94 Dopo aver subito un colpo in mischia, la tua prossima freccia parte con tensione istantanea e un po' meno danno.
+95 Contrattacco rapido
+96 L'impatto marchia il bersaglio: subisce più danno da ogni fonte.
+97 Marchio del cacciatore
+98 La freccia trapassa un nemico in più, con un po' meno danno al primo.
+99 Perforazione
+100 Ogni tanto, il primo colpo in mischia ti fa balzare all'indietro senza subire danno.
+101 Balzo evasivo
+102 Dopo aver subito un colpo in mischia lasci una trappola che rallenta molto chi la calpesta.
+103 Trappola del cacciatore
+104 Le frecce normali esplodono all'impatto senza rompere blocchi e respingono i nemici vicini, con meno danno diretto.
+105 Freccia esplosiva
+106 L'impatto rallenta il bersaglio, ma le tue frecce volano un po' più lentamente.
+107 Freccia appiccicosa
+108 Dopo una schivata riuscita, il tuo prossimo colpo infligge più danno.
+109 Contrattacco
+110 La schivata copre più distanza, ma la sua invulnerabilità dura meno.
+111 Rotolata lunga
+112 Attacchi ancora più in fretta, con un po' meno danno.
+113 Raffica
+114 Ignori parte dell'armatura del bersaglio, ma attacchi più lentamente.
+115 Affondo
+116 La Furtività dura molto di più, ma i mob ti individuano da più lontano.
+117 Furtività profonda
+118 Più danno contro i nemici che non ti stanno prendendo di mira. La Furtività dura meno.
+119 Colpo a tradimento
+120 La tossina infligge lo stesso danno, ma molto più in fretta.
+121 Dose concentrata
+122 La tossina infligge lo stesso danno, più lentamente, e rallenta il bersaglio finché dura.
+123 Dose prolungata
+124 Probabilità di schivare colpi e proiettili balzando all'indietro. Meno salute massima.
+125 Evasione
+126 Più velocità di movimento e d'attacco, ma la Furtività si esaurisce prima.
+127 Leggerezza
+128 Basso e lento, ma minatore nato: rompe pietra e minerali più in fretta e ha Fortuna razziale sui minerali (non si somma all'incantesimo: conta quella più alta).
+129 Nano
+130 Attraversa le foglie e ci si arrampica come su un'impalcatura (saltare sale, accovacciarsi scende). Non può mangiare carne né pesce.
+131 Elfo
+132 Metà altezza: molto difficile da colpire e passa per i piccoli varchi. Ha Fortuna e Saccheggio razziali (conta il più alto tra questi e l'incantesimo). In cambio, molta meno salute.
+133 Goblin
+134 Versatile: attenua gli svantaggi della sua classe. Dopo aver scelto una classe sceglie un muro, la cui penalità si riduce in base al Rango; anche i tratti base negativi della classe si riducono allo stesso modo. Nessun vantaggio ambientale.
+135 Umano
+136 Immune a fuoco e lava, ma freddo e acqua lo feriscono di più ed entrare in acqua lo fa bruciare lentamente. Con Iron's Spells ha sempre a disposizione incantesimi di fuoco razziali, che subiscono il muro Magia della tua classe come qualsiasi incantesimo. I golem di ferro lo attaccano sempre e i villici gli fanno pagare di più.
+137 Infernale
+138 Più grosso e robusto. Una volta per vita sopravvive a un colpo mortale con mezzo cuore. In cambio consuma più fame ed è più facile da colpire.
+139 Orco
+140 Respira sott'acqua, nuota più in fretta, scava sott'acqua a velocità normale e vede al buio sott'acqua. Il fuoco lo ferisce di più e nel Nether ha Debolezza.
+141 Tritone
+142 Respira sott'acqua, la sua fame è fissa e rigenera salute costantemente (interrotta per qualche secondo quando subisce danno). La luce solare diretta lo danneggia anche con l'elmo, e né le pozioni né gli incantesimi di guarigione lo curano.
+143 Non morto
+144 Sotto la roccia
+145 Sconfiggi 30 nemici sottoterra (senza cielo sopra la testa).
+146 Nemici sconfitti sottoterra
+147 Tributo delle vene
+148 Offri 64 minerali di almeno 3 tipi.
+149 64 minerali (3 tipi)
+150 Rito dell'abisso
+151 Sconfiggi un boss del rito evocato con l'altare sottoterra.
+152 Boss sconfitto (altare sottoterra)
+153 Demolizione
+154 Sconfiggi 20 nemici con le tue esplosioni.
+155 Nemici sconfitti con esplosioni
+156 Barile di polvere
+157 Fabbrica e offri 16 TNT (fabbricati mentre fai questo rito).
+158 16 TNT fabbricati da te
+159 Cataclisma
+160 Sconfiggi un boss del rito che subisce almeno 4 delle tue esplosioni.
+161 Boss sconfitto dopo 4 esplosioni
+162 Lama propria
+163 Sconfiggi 30 nemici con un'arma che hai fabbricato.
+164 Nemici sconfitti con la tua arma
+165 Opera del maestro
+166 Offri un set di armatura di ferro e un'arma di ferro fabbricati da te.
+167 Armatura e arma di ferro fatte da te
+168 Prova della forgia
+169 Sconfiggi un boss del rito indossando tutti e 4 i pezzi di armatura di diamante (o netherite) fabbricati da te.
+170 Boss sconfitto con la tua armatura di diamante
+171 Lama incantata
+172 Sconfiggi 30 nemici con un'arma che hai incantato al tavolo.
+173 Nemici sconfitti con la tua arma incantata
+174 Tre incantamenti
+175 Incanta 3 oggetti al tavolo e offrili.
+176 3 oggetti incantati da te
+177 Libri gemelli
+178 Offri 2 libri con lo stesso incantamento al massimo livello.
+179 2 libri gemelli
+180 Caccia notturna
+181 Sconfiggi 30 nemici con livello di luce 7 o inferiore.
+182 Nemici sconfitti al buio
+183 Offerta di fumo
+184 Offri 8 falò e 16 carbone di legna.
+185 Falò e carbone di legna
+186 Velo d'ombra
+187 Sconfiggi un boss del rito di notte, usando Nube di fumo almeno 3 volte durante lo scontro.
+188 Boss sconfitto di notte con 3 nubi
+189 Ranger della foresta
+190 Sconfiggi 30 nemici nei biomi di foresta.
+191 Nemici sconfitti nella foresta
+192 Raccolto rituale
+193 Offri 16 unità ciascuna di 4 colture diverse (64 in totale).
+194 4 colture × 16
+195 Cuore della foresta
+196 Sconfiggi un boss del rito evocato con l'altare in un bioma di foresta.
+197 Boss sconfitto (altare nella foresta)
+198 troppi pochi usi dell'abilità
+199 troppi pochi alleati vicini
+200 troppi pochi colpi subiti dal boss
+201 non indossavi la tua armatura di diamante
+202 gli hai inflitto a malapena danno
+203 troppe poche esplosioni
+204 sei sceso dal lupo o è morto
+205 non era notte
+206 troppi pochi proiettili subiti
+207 troppo poco danno con gli incantesimi razziali
+208 troppe poche Tagliole
+209 troppa poca cura dalla Sete
+210 troppo poco danno con la disciplina del tuo muro
+211 Dita leggere
+212 Deruba con successo 30 mob.
+213 Furti ai mob
+214 Bottino assortito
+215 Offri 64 oggetti di bottino dei mob di almeno 8 tipi.
+216 64 drop di mob (8 tipi)
+217 Gran colpo
+218 Offri 3 pezzi di equipaggiamento dei mob (rubati o lasciati da mob che hai ucciso) e sconfiggi un boss del rito.
+219 3 pezzi di equipaggiamento dei mob
+220 Boss del rito sconfitto
+221 Cacciatore di trappole
+222 Sconfiggi 20 nemici presi dalla tua Tagliola.
+223 Nemici intrappolati sconfitti
+224 Congegni
+225 Offri 4 distributori, 4 pistoni e 16 fili.
+226 Distributori, pistoni e fili
+227 Preda in trappola
+228 Sconfiggi un boss del rito immobilizzato dalla tua Tagliola almeno 3 volte.
+229 Boss sconfitto dopo 3 Tagliole
+230 Cavalcata
+231 Sconfiggi 30 nemici in sella.
+232 Nemici sconfitti in sella
+233 Branco
+234 Offri 32 ossa e 16 carni cotte.
+235 Ossa e carne
+236 Cavaliere inseparabile
+237 Sconfiggi un boss del rito in sella al tuo lupo per tutto lo scontro senza che muoia.
+238 Boss sconfitto senza scendere
+239 Curiosità
+240 Sconfiggi 6 nemici di ciascuno di 5 tipi di mob diversi.
+241 Tipi di nemico con 6 sconfitte
+242 Biblioteca
+243 Circonda l'altare con 15 librerie (come un tavolo degli incantesimi: a 2 blocchi di distanza, alla sua altezza o una più in alto) e offri 10 libri.
+244 Librerie intorno all'altare
+245 10 libri
+246 I tre saperi
+247 Offri un libro con un incantamento al massimo livello, una pozione di livello II e una mappa esplorata quasi per intero (90%).
+248 Libro, pozione e mappa
+249 I tre stili
+250 Sconfiggi 10 nemici con ciascuno di 3 stili di combattimento diversi (magia, arco, armi pesanti, armi leggere o mani nude).
+251 Stili con 10 sconfitte
+252 Offerta delle gilde
+253 Offri sull'altare un oggetto per ogni categoria: arma pesante, arma leggera, arco o balestra, scudo, pezzo di armatura e una pergamena o un libro di incantesimi.
+254 Offerta delle 6 gilde
+255 Prova dei due muri
+256 Evoca un boss del rito all'altare e sconfiggilo usando le discipline dei tuoi due muri scelti, con almeno il 25% del danno in ciascuna (Armatura: indossa 3+ pezzi; Scudi: para 10 colpi).
+257 Boss sconfitto con i tuoi due muri
+258 Padroneggiare l'estraneo
+259 Sconfiggi 40 nemici con la disciplina del tuo muro scelto.
+260 Nemici sconfitti con il tuo muro
+261 Capolavoro
+262 Offri sull'altare un oggetto di alta qualità (diamante o superiore, oppure incantato se non ha livello) della disciplina del tuo muro.
+263 Capolavoro del tuo muro
+264 Duello di maestria
+265 Evoca un boss del rito e sconfiggilo infliggendo almeno il 90% del danno con la disciplina del tuo muro.
+266 Boss sconfitto con il tuo muro (90%)
+267 Caccia infernale
+268 Sconfiggi 30 mob ostili del Nether (piglin e hoglin non contano).
+269 Mob del Nether sconfitti
+270 Commercio infernale
+271 Baratta 20 volte con i piglin e offri 16 quarzi del Nether.
+272 Baratti con i piglin
+273 16 quarzi
+274 Rito del Nether
+275 Sconfiggi un boss del rito evocato con l'altare nel Nether.
+276 Boss sconfitto (altare nel Nether)
+277 Fuoco incrociato
+278 Sconfiggi 40 nemici con i tuoi incantesimi razziali.
+279 Nemici sconfitti con incantesimi razziali
+280 Combustibile
+281 Offri 8 cariche di fuoco, 4 blocchi di magma e 8 verghe di blaze.
+282 Cariche di fuoco, magma e blaze
+283 Fiamma rituale
+284 Sconfiggi un boss del rito infliggendo almeno il 50% del danno con incantesimi razziali.
+285 Boss sconfitto con 50% di incantesimi razziali

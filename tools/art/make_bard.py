@@ -1,5 +1,5 @@
 # Texturas provisionales del Bardo: instrumentos, materiales, partitura y nota (16x16), iconos de conjuro (16x16),
-# iconos de efecto (18x18) y retratos de la clase y sus subclases (32x32 duplicados a 64x64).
+# iconos de efecto (16x16) y retratos de la clase y sus subclases (32x32 duplicados a 64x64).
 # Uso: python3 -I tools/art/make_bard.py src/main/resources
 import math, os, sys
 from PIL import Image
@@ -533,18 +533,18 @@ EFFECTS = {"march": "march", "war_hymn": "war_hymn", "rest_ballad": "rest_ballad
            "mana_cadence": "mana_cadence", "requiem_fervor": "final_requiem", "forced_dance": "forced_dance",
            "silenced": "dissonance", "charmed": "forced_dance"}
 for eff, base in EFFECTS.items():
-    spell_icon(base, 18).save(os.path.join(TEX, "mob_effect", eff + ".png"))
+    spell_icon(base).save(os.path.join(TEX, "mob_effect", eff + ".png"))
 
 
 def effect_icon(color, symbol):
-    c = framed(18, rgb(color), shade(rgb(color), 0.35))
+    c = framed(16, rgb(color), shade(rgb(color), 0.35))
     if symbol == "step":
         for dx in (0, 5):
-            c.line(5 + dx, 5, 8 + dx, 9, W)
-            c.line(8 + dx, 9, 5 + dx, 13, W)
+            c.line(4 + dx, 4, 7 + dx, 8, W)
+            c.line(7 + dx, 8, 4 + dx, 12, W)
     else:
-        c.ellipse(9, 9, 4.5, 4.5, rgb(0xFFFFFF, 90))
-        for (x, y) in ((7, 6), (11, 7), (6, 10), (10, 11), (8, 8)):
+        c.ellipse(8, 8, 4, 4, rgb(0xFFFFFF, 90))
+        for (x, y) in ((6, 5), (10, 6), (5, 9), (9, 10), (7, 7)):
             c.set(x, y, W)
     return c
 

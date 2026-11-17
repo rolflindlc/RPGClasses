@@ -1,6 +1,6 @@
 """Recorta la hoja de iconos provisional (generada con IA; el arte final será de Laira) a resolución completa, con fondo (sin reescalar).
 
-Retratos de raza: 236x236 (centro de cada celda); los de clase se reducen a 64x64. Efectos: 133x133.
+Retratos de raza: 236x236 (centro de cada celda); los de clase se reducen a 64x64. Efectos: se reducen a 16x16.
 Uso: python3 -I tools/art/slice_sheet.py tools/art/source/iconos.jpg <salida>
 """
 import os, sys
@@ -64,5 +64,5 @@ for name, box in zip(PORTRAITS, portrait_cells):
 for name, box in zip(EFFECTS, cells[7]):
     if name is None: continue
     p = os.path.join(outdir, 'mob_effect', name + '.png'); os.makedirs(os.path.dirname(p), exist_ok=True)
-    crop(box, 133).save(p)
+    crop(box, 133).resize((16, 16), Image.LANCZOS).save(p)  # iconos de efecto: 16x16
 print('ok')

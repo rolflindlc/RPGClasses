@@ -52,7 +52,7 @@ public final class BardAuras {
 
     private static final Map<UUID, List<Aura>> ACTIVE = new HashMap<>();
 
-    private BardAuras() {}
+    public BardAuras() {}
 
     /** Radio de las auras del Bardo: base + Resonancia + bonus de nivel, por perk e instrumento. */
     public static double radius(ServerPlayer bard, double levelBonus) {

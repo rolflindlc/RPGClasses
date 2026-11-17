@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "class": "rpgclasses:bard",
+  "display": {
+    "icon": "minecraft:amethyst_cluster"
+  },
+  "effects": [
+    {
+      "type": "rpgclasses:mechanic",
+      "id": "rpgclasses:hypnotic_voice",
+      "control_duration": {
+        "to": 0.5
+      }
+    },
+    {
+      "type": "rpgclasses:mechanic",
+      "id": "rpgclasses:dance_contagion",
+      "radius": 3,
+      "chance": 0.5,
+      "max_extra": 3
+    }
+  ],
+  "milestones": [
+    {
+      "subclass_level": 5,
+      "grants": "rpgclasses:bewitch"
+    }
+  ]
+}

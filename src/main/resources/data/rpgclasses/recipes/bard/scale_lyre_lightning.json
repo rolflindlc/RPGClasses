@@ -1,0 +1,27 @@
+{
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "iceandfire"
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    "SSS",
+    "SLS",
+    "SSS"
+  ],
+  "key": {
+    "S": {
+      "tag": "rpgclasses:iceandfire/scales_lightning"
+    },
+    "L": {
+      "item": "rpgclasses:lyre"
+    }
+  },
+  "result": {
+    "item": "rpgclasses:scale_lyre_lightning",
+    "count": 1
+  }
+}

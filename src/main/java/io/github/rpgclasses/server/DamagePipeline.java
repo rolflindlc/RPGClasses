@@ -196,8 +196,17 @@ public final class DamagePipeline {
                 }
             } else if (weapon.discipline() != null) {
                 double wall = StatCalculator.wall(s, classDef, subDef, StatEngine.race(s), weapon.discipline());
-                damage *= StatMath.wallDamageFactor(wall);
-                log.append(String.format(Locale.ROOT, " | muro %s x%.2f", weapon.discipline(), StatMath.wallDamageFactor(wall)));
+                // Bardo: la guitarra-hacha no tiene muro y el Combo Marcial (Cantor de Guerra) se suma al muro.
+                double wallFactor = io.github.rpgclasses.bard.BardCombat.wallFactor(attacker, attacker.getMainHandItem(),
+                        weapon.discipline(), StatMath.wallDamageFactor(wall));
+                damage *= wallFactor;
+                log.append(String.format(Locale.ROOT, " | muro %s x%.2f", weapon.discipline(), wallFactor));
+            }
+            // Bardo: golpe a compás y Furia Rítmica.
+            double beat = io.github.rpgclasses.bard.BardCombat.meleeBonus(attacker);
+            if (beat != 1) {
+                damage *= beat;
+                log.append(String.format(Locale.ROOT, " | a compás x%.2f", beat));
             }
             // Mago de Batalla: Eco Marcial cuenta golpes y Filo Imbuido añade daño de la escuela del último conjuro.
             double imbued = io.github.rpgclasses.content.BattleMage.onMeleeHit(attacker, target, damage);
@@ -310,6 +319,7 @@ public final class DamagePipeline {
             DebugLog.guard(attacker, "Toxinas", () -> Toxins.onMeleeHit(attacker, target));
             DebugLog.guard(attacker, "subclase Bárbaro al golpear (Plaga...)", () -> BarbarianSubclasses.onMeleeHit(attacker, target));
             DebugLog.guard(attacker, "Onda de choque", () -> PaladinPerks.shockwave(attacker, target, result));
+            DebugLog.guard(attacker, "Golpe Resonante", () -> io.github.rpgclasses.bard.BardCombat.afterMelee(attacker, target, result));
         }
     }
 

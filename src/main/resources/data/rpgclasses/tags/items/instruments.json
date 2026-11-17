@@ -1,0 +1,27 @@
+{
+  "replace": false,
+  "values": [
+    "rpgclasses:lute",
+    "rpgclasses:flute",
+    "rpgclasses:harp",
+    "rpgclasses:drum",
+    "rpgclasses:violin",
+    "rpgclasses:lyre",
+    "rpgclasses:ocarina",
+    "rpgclasses:pan_flute",
+    "rpgclasses:tambourine",
+    "rpgclasses:bagpipe",
+    "rpgclasses:carillon",
+    "rpgclasses:hurdy_gurdy",
+    "rpgclasses:crystal_harp",
+    "rpgclasses:war_horn",
+    "rpgclasses:spectral_violin",
+    "rpgclasses:scale_lyre_fire",
+    "rpgclasses:scale_lyre_ice",
+    "rpgclasses:scale_lyre_lightning",
+    "rpgclasses:eternal_sun_lute",
+    "rpgclasses:abyssal_organ",
+    "rpgclasses:colossus_drum",
+    "rpgclasses:guitar_axe"
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "mowziesmobs:barako",
+      "required": false
+    },
+    {
+      "id": "mowziesmobs:umvuthi",
+      "required": false
+    }
+  ]
+}

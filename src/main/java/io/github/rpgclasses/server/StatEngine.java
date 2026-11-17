@@ -61,8 +61,11 @@ public final class StatEngine {
         io.github.rpgclasses.core.definition.Definitions.RaceDef race = race(s);
 
         // 1. Pasivas de atributo de ramas, subclase y raza (con topes y suelos globales ya aplicados).
+        // Bonus que cambian en combate y deben pasar por los topes: cargas del Monje y velocidad del Bardo (tocar y Danza).
+        Map<StatCalculator.Key, Double> extra = new java.util.HashMap<>(io.github.rpgclasses.content.MonkCharges.extra(player));
+        io.github.rpgclasses.bard.BardState.extra(player).forEach((k, v) -> extra.merge(k, v, Double::sum));
         StatCalculator.Context ctx = new StatCalculator.Context(isWearingArmor(player), Map.of(),
-                io.github.rpgclasses.content.MonkCharges.traitFactors(player), io.github.rpgclasses.content.MonkCharges.extra(player));
+                io.github.rpgclasses.content.MonkCharges.traitFactors(player), extra);
         for (Map.Entry<StatCalculator.Key, Double> e : StatCalculator.attributeTotals(s, classDef, subDef, race, ctx).entrySet()) {
             apply(player, new ResourceLocation(e.getKey().attribute()), "stat", operation(e.getKey().operation()), e.getValue());
         }

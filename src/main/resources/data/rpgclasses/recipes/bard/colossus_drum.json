@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:smithing_transform",
+  "template": {
+    "item": "rpgclasses:resonant_shard"
+  },
+  "base": {
+    "item": "rpgclasses:drum"
+  },
+  "addition": {
+    "item": "rpgclasses:colossus_drumskin"
+  },
+  "result": {
+    "item": "rpgclasses:colossus_drum"
+  }
+}

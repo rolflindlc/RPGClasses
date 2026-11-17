@@ -14,5 +14,9 @@ public final class ModMenus {
 
     public static final RegistryObject<MenuType<BeltMenu>> BELT = MENUS.register("belt", () -> IForgeMenuType.create(BeltMenu::new));
 
+    /** Atril del Bardo: las partituras de un instrumento. */
+    public static final RegistryObject<MenuType<io.github.rpgclasses.bard.MusicStandMenu>> MUSIC_STAND = MENUS.register("music_stand",
+            () -> IForgeMenuType.create(io.github.rpgclasses.bard.MusicStandMenu::new));
+
     private ModMenus() {}
 }

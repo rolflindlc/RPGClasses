@@ -37,6 +37,9 @@
   "magic_wall_exempt_schools": [
     "irons_spellbooks:holy"
   ],
+  "school_walls": {
+    "rpgclasses:music": 1.0
+  },
   "traits": [
     {
       "type": "rpgclasses:attribute",

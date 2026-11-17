@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "cataclysm:the_leviathan",
+      "required": false
+    }
+  ]
+}

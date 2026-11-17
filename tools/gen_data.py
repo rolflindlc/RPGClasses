@@ -4,6 +4,7 @@ import texts
 import races
 import allies
 import bonds
+import bard
 out = sys.argv[1]
 NS = "rpgclasses"
 def R(x): return f"{NS}:{x}"
@@ -157,6 +158,11 @@ PERKS = {
  ("monk","meditation"): [("deep_trance",[mech("meditation_variant", heal_per_second_fixed=1, delay_seconds=4, health_limit=.8)]),
                          ("clear_mind",[mech("meditation_variant", purge_interval_seconds=5)])],
 }
+# Bardo (adenda del Bardo): clase, rasgos, ramas extra y perks desde tools/bard.py.
+classes["bard"] = dict(bard.CLASS)
+TRAITS["bard"] = bard.TRAITS
+EXTRA_BRANCHES["bard"] = bard.EXTRA_BRANCHES
+for _b, _ps in bard.PERKS.items(): PERKS[("bard", _b)] = _ps
 for cid, extra in EXTRA_BRANCHES.items(): classes[cid]["branches"] = classes[cid]["branches"] + extra
 for cid, c in classes.items():
     for b, _ in c["branches"]: assert (cid, b) in PERKS, (cid, b)
@@ -225,6 +231,8 @@ subs = {
      mech("elemental_manifest", ignite_seconds=6, swim_bonus=1.0, reflect_fraction=.15)], []),
 }
 
+for _sid, (_icon, _effects, _miles) in bard.SUBS.items(): subs[_sid] = ("bard", _icon, _effects, _miles)
+
 def armor(material): return [{"item": f"minecraft:{material}_{piece}", "slot": slot} for piece, slot in
                          (("helmet","head"),("chestplate","chest"),("leggings","legs"),("boots","feet"))]
 KITS = {
@@ -233,6 +241,7 @@ KITS = {
  "barbarian": [{"item": "minecraft:iron_axe", "slot": "mainhand"}],
  "rogue": [{"item": "minecraft:iron_sword", "slot": "mainhand"}] + armor("leather"),
  "ranger": [{"item": "minecraft:bow", "slot": "mainhand"}, {"item": "minecraft:arrow", "count": 64, "slot": "inventory"}] + armor("leather"),
+ "bard": bard.KIT,
 }
 
 def dump(path, obj):
@@ -247,8 +256,16 @@ for cid, c in classes.items():
     o["crit_chance_bonus"] = c["crit"]
     o["walls"] = {R(k): v for k, v in c["walls"].items()}
     # Regla 14: la escuela sagrada de Iron's solo es del Paladín; su muro de Magia no la toca.
-    if cid == "paladin": o["magic_wall_exempt_schools"] = [IR + "holy"]
-    else: o["school_walls"] = {IR + "holy": 1.0}
+    # Adenda del Bardo: la escuela musical es exclusiva del Bardo (−100 % fijo para el resto) y su muro de Magia
+    # (−35 %) no la toca: su poder sale solo de Compás, el combo y el instrumento.
+    if cid == "paladin":
+        o["magic_wall_exempt_schools"] = [IR + "holy"]
+        o["school_walls"] = {bard.MUSIC: 1.0}
+    elif cid == "bard":
+        o["magic_wall_exempt_schools"] = [bard.MUSIC]
+        o["school_walls"] = {IR + "holy": 1.0}
+    else:
+        o["school_walls"] = {IR + "holy": 1.0, bard.MUSIC: 1.0}
     if TRAITS.get(cid): o["traits"] = TRAITS[cid]
     if c.get("armor_rule"): o["armor_rule"] = "disables_unarmored_passives"
     o["branches"] = [{"id": b, "max_points": 10, "effects": e,
@@ -261,7 +278,7 @@ for sid, (parent, icon, effects, miles) in subs.items():
          {"schema_version": 1, "class": R(parent), "display": {"icon": icon}, "effects": effects, "milestones": miles})
 
 names = {
- "class": {"mage":"Mago","paladin":"Paladín","barbarian":"Bárbaro","rogue":"Pícaro","ranger":"Ranger","monk":"Monje"},
+ "class": {"mage":"Mago","paladin":"Paladín","barbarian":"Bárbaro","rogue":"Pícaro","ranger":"Ranger","monk":"Monje","bard":bard.CLASS_NAME},
  "subclass": {"chronomancer":"Cronomante","elementalist":"Elementalista","battle_mage":"Mago de Batalla",
    "blessed_guardian":"Guardián Bendito","unyielding_bastion":"Bastión Inflexible","charging_juggernaut":"Juggernaut de Carga",
    "indestructible":"Indestructible","suicidal_berserker":"Berserker Suicida","plague_corruptor":"Corruptor de Plagas",
@@ -274,8 +291,26 @@ branch_names = {"mage":{"power":"Poder","reserve":"Reserva","cadence":"Cadencia"
  "barbarian":{"fury":"Furia","brutality":"Brutalidad","iron_skin":"Piel de Hierro"},
  "rogue":{"shadow":"Sombra","edge":"Filo","wind":"Viento"},
  "ranger":{"aim":"Puntería","cadence":"Cadencia","range":"Alcance"},
- "monk":{"fist":"Puño","wind":"Viento","skin":"Piel"}}
+ "monk":{"fist":"Puño","wind":"Viento","skin":"Piel"},
+ "bard":dict(bard.BRANCH_NAMES)}
 for (cid, bid), name in texts.EXTRA_BRANCH_NAMES.items(): branch_names[cid][bid] = name
+for _sid, _name in bard.SUB_NAMES.items(): names["subclass"][_sid] = _name
+# Textos del Bardo en las tablas comunes (habilidades, ramas, perks, mecánicas y parámetros).
+for _aid, _p in bard.ABILITIES.items():
+    assert _aid not in texts.ABILITIES, _aid
+    texts.ABILITIES[_aid] = _p
+texts.ABILITY_TEXT.update(bard.ABILITY_TEXT)
+texts.CLASS_DESC["bard"] = bard.CLASS_DESC
+texts.TRAIT_DESC["bard"] = bard.TRAIT_DESC
+for _b, _d in bard.BRANCH_DESC.items(): texts.BRANCH_DESC[("bard", _b)] = _d
+for (_b, _p), _t in bard.PERK_TEXT.items(): texts.PERK_TEXT[("bard", _b, _p)] = _t
+texts.SUBCLASS_DESC.update(bard.SUB_DESC)
+for _m, _n in bard.MECHANIC_NAMES.items():
+    assert _m not in texts.MECHANIC_NAMES, _m
+    texts.MECHANIC_NAMES[_m] = _n
+for _k, _v in bard.PARAMS.items():
+    assert _k not in texts.PARAMS, _k
+    texts.PARAMS[_k] = _v
 lang = {}
 for kind, m in names.items():
     for k, v in m.items(): lang[f"{kind}.{NS}.{k}.name"] = v
@@ -341,10 +376,14 @@ import gear
 gear_lang = gear.build(dump, out)
 for key in gear_lang: assert key not in lang, key
 lang.update(gear_lang)
+# Bardo: instrumentos, partituras, materiales, recetas, tags, conjuros y textos.
+bard_lang = bard.build(dump, out)
+for key in bard_lang: assert key not in lang, key
+lang.update(bard_lang)
 # Unidades de los parámetros, para que el cliente sepa formatearlos: "%" porcentaje, "s" segundos.
 dump(os.path.join(out, "assets", NS, "rpgclasses_param_units.json"),
      {k: v.split("|")[1] for k, v in sorted(texts.PARAMS.items()) if "|" in v})
-attr_names = {"crit_damage":"Daño crítico","backstab_crit_damage":"Daño crítico desde invisibilidad","jump_bonus":"Altura de salto","unarmed_damage":"Daño desarmado","unarmed_knockback":"Empuje desarmado","bow_damage":"Daño con arco","draw_speed":"Velocidad de carga del arco","projectile_velocity":"Velocidad de proyectiles","zoom":"Zoom","mob_detection":"Detección por mobs","debuff_resistance":"Resistencia a efectos negativos","knockback_dealt":"Empuje infligido","healing_received":"Curación recibida","sneak_speed":"Velocidad agachado","spell_size":"Tamaño de conjuros","crit_chance":"Probabilidad de crítico"}
+attr_names = {"music_spell_power":"Poder de la escuela musical","music_magic_resist":"Resistencia a la magia musical","crit_damage":"Daño crítico","backstab_crit_damage":"Daño crítico desde invisibilidad","jump_bonus":"Altura de salto","unarmed_damage":"Daño desarmado","unarmed_knockback":"Empuje desarmado","bow_damage":"Daño con arco","draw_speed":"Velocidad de carga del arco","projectile_velocity":"Velocidad de proyectiles","zoom":"Zoom","mob_detection":"Detección por mobs","debuff_resistance":"Resistencia a efectos negativos","knockback_dealt":"Empuje infligido","healing_received":"Curación recibida","sneak_speed":"Velocidad agachado","spell_size":"Tamaño de conjuros","crit_chance":"Probabilidad de crítico"}
 for k, v in attr_names.items(): lang[f"attribute.{NS}.{k}"] = v
 # Idiomas. El texto fuente está en español (es_es y las variantes hispanas, que Minecraft NO
 # enlaza entre sí: sin copia, un jugador en es_mx vería inglés). en_us sale de tools/i18n/en_*.json

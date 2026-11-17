@@ -454,4 +454,58 @@ public final class Packets {
             if (player != null) io.github.rpgclasses.content.BondBook.act(player, kind, pet, slot);
         }
     }
+
+    // ------------------------------------------------------------------ Bardo
+
+    /** Cliente -> servidor: resultado de una nota del minijuego (tipo de BardState y carril). */
+    public record BardNote(int type, int lane) {
+        public void encode(FriendlyByteBuf buf) {
+            buf.writeByte(type);
+            buf.writeByte(lane);
+        }
+
+        public static BardNote decode(FriendlyByteBuf buf) {
+            return new BardNote(buf.readByte(), buf.readByte());
+        }
+
+        public void handle(Supplier<NetworkEvent.Context> ctx) {
+            ServerPlayer player = ctx.get().getSender();
+            if (player == null || type < 0 || type > 4 || lane < 0 || lane > 3) return;
+            io.github.rpgclasses.bard.BardState.onNote(player, type, lane);
+        }
+    }
+
+    /** Servidor -> cliente: combo, etapa de Armonía y ticks de Crescendo del Bardo. {@code bard} = false: deja de serlo. */
+    public record BardSync(int combo, int stage, int crescendoTicks, boolean bard) {
+        public void encode(FriendlyByteBuf buf) {
+            buf.writeVarInt(combo);
+            buf.writeVarInt(stage);
+            buf.writeVarInt(crescendoTicks);
+            buf.writeBoolean(bard);
+        }
+
+        public static BardSync decode(FriendlyByteBuf buf) {
+            return new BardSync(buf.readVarInt(), buf.readVarInt(), buf.readVarInt(), buf.readBoolean());
+        }
+
+        public void handle(Supplier<NetworkEvent.Context> ctx) {
+            DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> io.github.rpgclasses.client.bard.RhythmGame.onSync(this));
+        }
+    }
+
+    /** Servidor -> clientes: una criatura baila (Baile Forzado) durante esos ticks. */
+    public record DanceSync(int entityId, int ticks) {
+        public void encode(FriendlyByteBuf buf) {
+            buf.writeVarInt(entityId);
+            buf.writeVarInt(ticks);
+        }
+
+        public static DanceSync decode(FriendlyByteBuf buf) {
+            return new DanceSync(buf.readVarInt(), buf.readVarInt());
+        }
+
+        public void handle(Supplier<NetworkEvent.Context> ctx) {
+            DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> io.github.rpgclasses.client.bard.DanceFx.onSync(this));
+        }
+    }
 }

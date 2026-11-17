@@ -19,6 +19,9 @@
     "rpgclasses:breath_poison",
     "rpgclasses:breath_acid",
     "rpgclasses:breath_water",
-    "rpgclasses:swarm"
+    "rpgclasses:swarm",
+    "rpgclasses:music_magic",
+    "rpgclasses:sonic",
+    "rpgclasses:grand_piano"
   ]
 }

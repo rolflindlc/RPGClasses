@@ -1,0 +1,8 @@
+{
+  "schema_version": 1,
+  "passive": true,
+  "distinct_spells": 3,
+  "window_seconds": 12,
+  "cooldown_cut": 0.5,
+  "icd_seconds": 20
+}

@@ -55,6 +55,7 @@ public final class ClientSetup {
         });
         io.github.rpgclasses.content.race.Races.clientLookup = (player, id) ->
                 player == Minecraft.getInstance().player ? localMechanic(id) : null;
+        registerBard(modBus);
         MinecraftForge.EVENT_BUS.addListener(net.minecraftforge.eventbus.api.EventPriority.LOWEST, ClientSetup::onRenderScaledPre);
         MinecraftForge.EVENT_BUS.addListener(net.minecraftforge.eventbus.api.EventPriority.HIGHEST, ClientSetup::onRenderScaledPost);
         modBus.addListener((RegisterGuiOverlaysEvent event) -> event.registerAboveAll("abilities", AbilityHud::render));
@@ -113,7 +114,46 @@ public final class ClientSetup {
         MinecraftForge.EVENT_BUS.addListener((ClientPlayerNetworkEvent.LoggingOut event) -> {
             ClientHandlers.reset();
             BeltLayer.reset();
+            io.github.rpgclasses.client.bard.RhythmGame.reset();
+            io.github.rpgclasses.client.bard.DanceFx.reset();
         });
+    }
+
+    /** Bardo (adenda del Bardo): minijuego de ritmo, baile, piano, Nota Cortante y atril. */
+    private static void registerBard(IEventBus modBus) {
+        io.github.rpgclasses.bard.Bard.clientIsBard = player -> {
+            if (player != Minecraft.getInstance().player) return false;
+            var s = ClientHandlers.LOCAL_DATA.state;
+            var c = DefinitionStore.CLIENT.classDef(s.classId);
+            return c != null && UnlockResolver.unlocked(s, c, DefinitionStore.CLIENT.subclassDef(s.subclassId))
+                    .contains(io.github.rpgclasses.bard.Bard.RHYTHM);
+        };
+        io.github.rpgclasses.bard.Bard.clientExtraSlots = player -> {
+            var m = player == Minecraft.getInstance().player ? localMechanic("rpgclasses:" + io.github.rpgclasses.bard.Bard.EXTENDED_REPERTOIRE) : null;
+            return m == null ? 0 : (int) Math.round(m.number("extra_slots", 0));
+        };
+        modBus.addListener((RegisterGuiOverlaysEvent event) -> event.registerAbove(
+                net.minecraftforge.client.gui.overlay.VanillaGuiOverlay.CROSSHAIR.id(), "bard_rhythm",
+                io.github.rpgclasses.client.bard.RhythmGame::renderHud));
+        MinecraftForge.EVENT_BUS.addListener(io.github.rpgclasses.client.bard.RhythmGame::onClientTick);
+        MinecraftForge.EVENT_BUS.addListener(io.github.rpgclasses.client.bard.RhythmGame::onMouse);
+        MinecraftForge.EVENT_BUS.addListener(io.github.rpgclasses.client.bard.RhythmGame::onKey);
+        MinecraftForge.EVENT_BUS.addListener(io.github.rpgclasses.client.bard.DanceFx::onClientTick);
+        MinecraftForge.EVENT_BUS.addListener(net.minecraftforge.eventbus.api.EventPriority.LOWEST, false,
+                net.minecraftforge.client.event.RenderLivingEvent.Pre.class, io.github.rpgclasses.client.bard.DanceFx::onRenderPre);
+        MinecraftForge.EVENT_BUS.addListener(net.minecraftforge.eventbus.api.EventPriority.LOWEST, true,
+                net.minecraftforge.client.event.RenderLivingEvent.Post.class, io.github.rpgclasses.client.bard.DanceFx::onRenderPost);
+        MinecraftForge.EVENT_BUS.addListener(net.minecraftforge.eventbus.api.EventPriority.LOWEST, io.github.rpgclasses.client.bard.DanceFx::onMovementInput);
+        MinecraftForge.EVENT_BUS.addListener(net.minecraftforge.eventbus.api.EventPriority.HIGHEST, io.github.rpgclasses.client.bard.DanceFx::onInteractionKey);
+        modBus.addListener((EntityRenderersEvent.RegisterRenderers event) -> {
+            event.registerEntityRenderer(io.github.rpgclasses.bard.BardEntities.CUTTING_NOTE.get(),
+                    ctx -> new net.minecraft.client.renderer.entity.ThrownItemRenderer<>(ctx, 1.0f, true));
+            event.registerEntityRenderer(io.github.rpgclasses.bard.BardEntities.GRAND_PIANO.get(),
+                    io.github.rpgclasses.client.bard.GrandPianoRenderer::new);
+        });
+        modBus.addListener((net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent event) -> event.enqueueWork(() ->
+                net.minecraft.client.gui.screens.MenuScreens.register(io.github.rpgclasses.registry.ModMenus.MUSIC_STAND.get(),
+                        io.github.rpgclasses.client.bard.MusicStandScreen::new)));
     }
 
     /**
@@ -358,7 +398,7 @@ public final class ClientSetup {
     }
 
     /** La mecánica del jugador local con ese id completo, o null. */
-    static io.github.rpgclasses.core.stat.StatCalculator.ActiveMechanic localMechanic(String id) {
+    public static io.github.rpgclasses.core.stat.StatCalculator.ActiveMechanic localMechanic(String id) {
         var s = ClientHandlers.LOCAL_DATA.state;
         var classDef = io.github.rpgclasses.core.definition.DefinitionStore.CLIENT.classDef(s.classId);
         if (classDef != null) {

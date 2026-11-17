@@ -144,7 +144,7 @@ public final class AbilityService {
             used = active.activate(player, params);
         } catch (Throwable t) {
             DebugLog.error(player, "habilidad", t, "{} lanzó una excepción al activarse (params {})", id, params);
-            player.displayClientMessage(Component.literal("Error en " + id + ": mira logs/rpgclasses-debug.log")
+            player.displayClientMessage(Component.translatable("message.rpgclasses.debug.ability_error", String.valueOf(id))
                     .withStyle(net.minecraft.ChatFormatting.RED), true);
             return;
         }

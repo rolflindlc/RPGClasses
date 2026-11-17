@@ -1,0 +1,8 @@
+{
+"message.rpgclasses.debug.log_on": "Debug log enabled",
+"message.rpgclasses.debug.log_off": "Debug log disabled (errors are still recorded)",
+"message.rpgclasses.debug.log_empty": "No events recorded yet.",
+"message.rpgclasses.debug.dump_failed": "Could not write the dump: %s",
+"message.rpgclasses.debug.dump_written": "Dump written: %s (logs folder). Send me this file and rpgclasses-debug.log.",
+"message.rpgclasses.debug.ability_error": "Error in %s: see logs/rpgclasses-debug.log"
+}

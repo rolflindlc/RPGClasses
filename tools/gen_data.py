@@ -399,6 +399,29 @@ import re as _re
 _ph = lambda t: sorted(_re.findall(r"%(?:\d\$)?[sdf%]", t))
 bad = [k for k in lang if _ph(lang[k]) != _ph(en[k])]
 assert not bad, f"marcadores %s distintos entre es y en: {bad[:10]}"
-for locale in ("es_es", "es_mx", "es_ar", "es_cl", "es_uy", "es_ve"):
+# Todas las variantes de español que trae Minecraft (no se enlazan entre sí).
+for locale in ("es_es", "es_mx", "es_ar", "es_cl", "es_uy", "es_ve", "es_ec"):
     dump(os.path.join(out, "assets", NS, "lang", locale + ".json"), dict(sorted(lang.items())))
 dump(os.path.join(out, "assets", NS, "lang", "en_us.json"), dict(sorted(en.items())))
+# Idiomas traducidos desde el inglés: tools/i18n/<locale>_<n>.txt tiene una línea "<índice> <texto>"
+# por cada clave de en_<n>.json (en el orden del archivo). Se valida que no falte ninguna cadena y
+# que los marcadores %s/%d coincidan con el inglés.
+for locale in ("zh_cn", "ru_ru", "pt_br", "de_de", "fr_fr"):
+    tr = {}
+    for f in sorted(_glob.glob(os.path.join(os.path.dirname(os.path.abspath(__file__)), "i18n", "en_*.json"))):
+        part = os.path.basename(f)[3:-5]
+        tf = os.path.join(os.path.dirname(f), f"{locale}_{part}.txt")
+        with open(f, encoding="utf-8") as fh: keys = list(json.load(fh))
+        vals = []
+        with open(tf, encoding="utf-8") as fh:
+            for ln, line in enumerate(fh.read().split("\n")):
+                if not line.strip(): continue
+                idx, _, txt = line.partition(" ")
+                assert idx == str(len(vals)), f"{locale}_{part}.txt línea {ln + 1}: se esperaba el índice {len(vals)} y hay {idx}"
+                vals.append(txt)
+        assert len(keys) == len(vals), f"{locale}_{part}: {len(vals)} valores para {len(keys)} claves"
+        tr.update(zip(keys, vals))
+    assert set(tr) == set(en), f"{locale}: claves distintas a en_us"
+    bad = [k for k in tr if _ph(tr[k]) != _ph(en[k])]
+    assert not bad, f"{locale}: marcadores distintos al inglés: {bad[:10]} ({len(bad)})"
+    dump(os.path.join(out, "assets", NS, "lang", locale + ".json"), dict(sorted(tr.items())))

@@ -1,0 +1,286 @@
+0 Unvollständige Struktur (%s): %s von %s
+1 •
+2 Kein Feind in Sicht oder kein Platz dahinter.
+3 Schattenschritt aufgeladen!
+4 Schild für %s s deaktiviert
+5 Haltung: %s
+6 Lieblingshaltung: %s
+7 Deine Klasse existiert auf diesem Server nicht mehr. Nutze /clase reiniciar clase.
+8 Alle Definitionen sind gültig (%s Klassen).
+9 Du hast %s EP ausgegeben. Nächste Stufe: %s EP.
+10 Du hast %s EP ausgegeben. Du hast die maximale Stufe erreicht.
+11 Zurücksetzen abgeschlossen. %s EP wurden erstattet (bei jedem Zurücksetzen geht ein Teil verloren).
+12 Absorptionsmultiplikator
+13 Maximale Reserve
+14 Reserve pro Sekunde
+15 Kosten für Angriff oder Zauber
+16 Schaden an Verbündeten
+17 Heilung pro Sekunde für Verbündete
+18 Effektstufe (0 = I)
+19 Blitz: Bogenschaden
+20 Blitz: Bogenreichweite (Blöcke)
+21 Blitz: getroffene Feinde
+22 Flächenschaden
+23 Rüstung der Teile
+24 Ignorierte Rüstung
+25 Weniger Projektilschaden
+26 Angriffsgeschwindigkeit
+27 Rüstung in der Aura
+28 Dauer negativer Effekte in der Aura
+29 Abstand dahinter (Blöcke)
+30 Blut: Das Extra heilt dich
+31 Bonus
+32 Gegen Bosse ×
+33 Eis: Einfrieren gegen Bosse
+34 Verwurzelung bei Bossen
+35 Rückprall beim Aufprall
+36 Änderung des Bonus pro Ladung
+37 Brenngrenze
+38 Brennen
+39 Grenze
+40 Schildgrenze (maximale Gesundheit)
+41 Heilungsgrenze pro Sekunde (HP)
+42 Chance
+43 Maximale Chance
+44 Chance pro ausgegebenem Manapunkt
+45 Chance bei jeder Aktivierung
+46 Ladungen
+47 Zusätzlicher erlittener Kälteschaden
+48 Grenze der kombinierten Verringerung
+49 Trampelschaden
+50 Ansteckungsradius (Blöcke)
+51 Änderung der Abklingzeit
+52 Abklingzeit
+53 Anzahl
+54 Beschwörungen pro Zauber
+55 Chance auf kritische Treffer
+56 Tierschaden
+57 Schadensbonus
+58 Schadensbonus pro Stufe
+59 Schaden (des Treffers)
+60 Schaden pro 1 % verlorener Gesundheit
+61 Schaden pro Sekunde
+62 Verringerung des erlittenen Schadens
+63 Schadensverringerung (Maximum)
+64 Schadensverringerung (Minimum)
+65 Zusätzlich erlittener Schaden
+66 Sprintstärke
+67 Beginnt zu schwinden nach
+68 Verlust pro Sekunde (vom Maximum)
+69 Langsamerer Ladungsverlust
+70 Stillstandszeit vor dem Start
+71 Direkter Schaden
+72 Betroffene Mauern
+73 Rabatt
+74 Entfernung (Blöcke)
+75 Zusätzliche Entfernung
+76 Ausweichdistanz
+77 Dauer der Unverwundbarkeit beim Ausweichen
+78 Tarnungsverlust
+79 Verbrauchte Leiste pro Sekunde
+80 Zusätzliche Haltbarkeit
+81 Dauer (Maximum)
+82 Dauer (Minimum)
+83 Dauerverkürzung
+84 Dauer
+85 Effekte
+86 Zusätzliche Tischstufe
+87 Ladungen am Ende
+88 Ender: Schaden
+89 Ender: Teleportdistanz (Blöcke)
+90 Leere Hände: Ausrüstungsdiebstähle bei Mobs
+91 Leere Hände: Ausrüstungsdiebstähle bei Spielern
+92 Alle N Treffer
+93 Zusätzlicher Hunger
+94 Zusätzlicher Hunger pro Block
+95 Netz: zusätzlicher Fang
+96 Doppelchance
+97 Zusätzliche maximale Ladungen
+98 Durchbohrte Feinde
+99 Faktor ×
+100 Beschwörung: Fangzähne
+101 Fern: ab (Blöcke)
+102 Schaden aus der Ferne
+103 Bonus der Lieblingshaltung
+104 Ladungen in der Lieblingshaltung
+105 Schwelle des Haltungseffekts
+106 Immun gegen Brennen
+107 Feuer: Rüstung und Zähigkeit ×
+108 Feuerblitz (Stufe)
+109 Zusätzlich erlittener Feuerschaden
+110 Feuer: unbewaffneter Schaden ×
+111 Feuer: Feuerschadensverringerung
+112 Feuer: Explosionsschaden
+113 Feuer: Explosionsradius (Blöcke)
+114 Feuer: Brenndauer
+115 Schaden am Ersten
+116 Pro Treffer abgezogener Schaden (HP)
+117 Hunger (Punkte)
+118 Entfernte Grund-Spanngeschwindigkeit
+119 Eis: Eisgrab
+120 Ofengeschwindigkeit
+121 Arkane Fusion
+122 Fusionskosten (Stufen)
+123 Golemradius (Blöcke)
+124 Verringerung von Sturz-, Feuer- und Explosionsschaden
+125 Heilung ×
+126 Wiederhergestellte maximale Gesundheit
+127 Abgemilderter Schaden als Heilung (Maximum)
+128 Abgemilderter Schaden als Heilung (Minimum)
+129 Heilung pro Sekunde
+130 Heilung pro Sekunde
+131 Erhaltene Heilung pro 1 % verlorener Gesundheit
+132 Tiergesundheit
+133 Bis zu Gesundheit
+134 Unter Gesundheit
+135 Schaden beim Treffer
+136 Mindestzeit zwischen Treffern auf denselben Feind (Ticks)
+137 Mindestschaden, um eine Ladung zu erhalten
+138 Zeit ohne Verlust
+139 Verringerung des Hungerverbrauchs
+140 Mindestzeit zwischen Nutzungen
+141 Mindestzeit zwischen Aktivierungen (Ticks)
+142 Zeit ohne Befehle
+143 Zusätzlicher Schaden pro Ladung des Feurigen Schlags
+144 Feuer: Brenndauer
+145 Immunität danach
+146 Intervall
+147 Unverwundbar danach
+148 Sprungkraft ×
+149 Behaltene Ladungen
+150 Heilung pro Tötung (HP)
+151 Rückstoß (Blöcke)
+152 Zusätzlicher Rückstoß
+153 Rückstoßradius (Blöcke)
+154 Rückstoßstärke
+155 Sprung (Blöcke)
+156 Blut: zusätzlicher Schaden, der dich heilt
+157 Stufe
+158 Lebensraub
+159 Effekt der vorherigen Haltung
+160 Vorherige Haltung wirkt nach
+161 Sperre bei Erschöpfung, bis
+162 Rassisches Glück des Meeres
+163 Schnellere Bisse
+164 Verringerung von magischem und elementarem Schaden
+165 Magmabombe (Stufe)
+166 Ausgegebenes Mana als Schild
+167 Mana pro Gesundheitspunkt
+168 Markierungsdauer (s)
+169 Maximal geheilte Verbündete
+170 Verbundene Blöcke
+171 Maximale Ladungen
+172 Gegenstände pro Nutzung
+173 Maximale Manakosten
+174 Maximal betroffene Tiere
+175 Maximale Dauer
+176 Maximale Ladungen
+177 Sättigung von Fleisch
+178 Stein: Verringerung von Nahkampfschaden
+179 Mindestchance
+180 Mindestanzahl Beschwörungen
+181 Mindestgesundheit
+182 Mit Punkten im Zweig
+183 Mindestdauer
+184 Zusätzliche Abbaugeschwindigkeit
+185 Mauerverringerung
+186 Chance gegen Mobs
+187 Nicht-Boss-Mobs ×
+188 Schaden in Bewegung
+189 Schaden in Bewegung oder in der Luft
+190 Nah: bis (Blöcke)
+191 Schaden aus der Nähe
+192 Schaden ohne Schild
+193 Dauer anderer negativer Effekte
+194 Sättigung anderer Speisen
+195 Bonus der anderen Haltungen
+196 Ladungen in den anderen
+197 Unterbrechung bei Schaden
+198 Schaden pro 1 % verlorener Gesundheit
+199 Durchbohrte Feinde
+200 Chance gegen Spieler
+201 Abklingzeit pro Spieler
+202 Natur: Giftstufe
+203 Natur: Gift
+204 Zusätzliche Stärke
+205 Effektdauer und -stärke
+206 Dorfbewohnerpreise
+207 Wasser: Verringerung von Projektilschaden
+208 Entfernt einen Effekt alle
+209 Wasser: Rückstoß
+210 Gegen Spieler ×
+211 PvP: greift dich nicht an seit
+212 Radius (Blöcke)
+213 Höllenfeuer entfesseln (Stufe)
+214 Reichweite (Blöcke)
+215 Reichweite (Blöcke)
+216 Aufladung pro Ladung
+217 Schadensverringerung
+218 Dauer der Verringerung
+219 Stein: reflektierter physischer Schaden
+220 Erneuert den Timer ab Stufe
+221 Regenerationsunterbrechung
+222 Wiederhergestellte Leiste pro Sekunde
+223 Verwurzelung
+224 Sättigung
+225 Wasserschaden
+226 Schaden am Zweiten
+227 Seitenlänge des Abbaubereichs (Blöcke)
+228 Dauer der Verlangsamung
+229 Verlangsamung der Feinde (Stufe)
+230 Verlangsamungsstufe
+231 Dauer der Verlangsamung
+232 Unheimlich: Wellenschaden (vom Extra)
+233 Unheimlich: Wellenreichweite (Blöcke)
+234 Tiergeschwindigkeit
+235 Zusätzliche Geschwindigkeit
+236 Wolfsgeschwindigkeit ×
+237 Geschwindigkeitsstufe
+238 Sprinten für
+239 Ausdauerkosten beim Ausweichen
+240 Bonus jeder Haltung
+241 Effekt jeder Haltung
+242 Diebstähle pro Mob
+243 Kosten der Tarnleiste
+244 Tarndauer
+245 Zusätzliche Stufenhöhe (Blöcke)
+246 Schaden im Stillstand
+247 Schaden im Stillstand
+248 Stillstand für
+249 Stein: Rüstung ×
+250 Stein: Geschwindigkeit und Sprung ×
+251 Rückstoßstärke
+252 Betäubung ×
+253 Schaden der Beschwörung
+254 Gesundheit der Beschwörung
+255 Manakosten der Beschwörung
+256 Gesundheit und Schaden der Beschwörung
+257 Wasser: Schwimmgeschwindigkeit
+258 Zusätzliche Wechsel-Abklingzeit
+259 Abklingzeit beim Haltungswechsel
+260 Ladungsschwelle
+261 Spannstufen
+262 Radius deines TNT
+263 Zähigkeit der Teile
+264 Zähigkeit pro Teil
+265 Toxinschaden pro Tick
+266 Schlingenschaden
+267 Gleichzeitige Fallen
+268 Zusätzlicher Schatz
+269 Unbewaffneter Schaden
+270 Zusätzliche Haltbarkeit
+271 Schaden gegen Untote und Nether
+272 Maximaler Zauberschaden
+273 Minimaler Zauberschaden
+274 Unheimlich: Implosion auf die anderen
+275 Unheimlich: Implosion gegen Bosse
+276 Unheimlich: gespeicherter Anfangsschaden
+277 Unheimlich: Sog
+278 Unheimlich: Implosionsradius (Blöcke)
+279 Unheimlich: Dauer der Markierung
+280 Unheimlich: von der Markierung gespeicherter erlittener Schaden
+281 Verringerung von Mauer und Grundmerkmal
+282 Zusätzlich erlittener Wasserschaden
+283 Wasser: unbewaffneter Schaden ×
+284 Wasser: Geschwindigkeit und Sprung ×
+285 Wasser: Wellenschaden

@@ -1,0 +1,286 @@
+0 Rugido do Dragão: a Fúria do Berserker solta um rugido; monstros que não são chefes a até 8 blocos fogem e sofrem o elemento das escamas.
+1 Muda de Dragão
+2 Ira do Dracoaço: abaixo de 40% de vida ou durante a Fúria do Berserker você ganha asas espectrais e cada acerto crítico libera um cone elemental de 4 blocos (uma vez por segundo).
+3 Fúria do Dracoaço
+4 Espólio Dourado: ao matar um monstro hostil, 10% de chance de ele soltar uma pepita de ouro que salta até você.
+5 Trajes do Saqueador
+6 Peitoral de Ferro: −5% de dano de projéteis.
+7 Arreio de Ferro
+8 Faro: monstros hostis a até 12 blocos com menos de 30% de vida brilham.
+9 Peles de Fera
+10 Coração de Brasa: cada golpe que você recebe acumula uma brasa (máx. 5, 8 s). A Investida ou a Fúria do Berserker as libera em um anel de fogo de 4 blocos.
+11 Placas de Cinzas
+12 Elos Ressoantes: cada carga tilinta e, ao atingir o limite, os elos soam em acorde.
+13 Gi de Malha
+14 Reflexo de Cristal: o Desvio de Projéteis concede +1 carga com um clarão prismático.
+15 Hábito de Cristal
+16 Dança do Dragão: quando você ativa um efeito de postura, um dragão espectral da cor da postura circula você por 4 s e morde o inimigo mais próximo a cada segundo.
+17 Manto Escamado
+18 Punho do Dracoaço: cada efeito de postura lança uma cabeça de dragão de energia que percorre 8 blocos em linha. Fogo: andar sobre lava na Postura de Fogo concede velocidade. Gelo: na Água você congela a água ao andar. Raio: na Pedra, golpes pesados que você recebe liberam uma faísca.
+19 Vestes do Dracoaço
+20 Peregrinação: a Meditação cura 20% a mais.
+21 Túnica do Peregrino
+22 Postura Firme: a Pedra ganha carga com golpes de apenas 1,5 PV.
+23 Gi de Ferro
+24 Primeiro Passo: ao entrar em uma postura sem cargas você recebe 1, e as cargas se dissipam 10% mais devagar.
+25 Faixas do Noviço
+26 Selo de Postura: as cargas de Pedra se dissipam na metade da velocidade e, ao trocar de postura com 5 ou mais cargas, você deixa um selo rúnico que repete a descarga a 30% após 3 s.
+27 Kesa de Obsidiana
+28 Conjunto completo (4 peças, somente %s):
+29 Lento, com alcance extra e uma varredura em arco que acerta os outros inimigos com 60%.
+30 Varredura de Cinzas: a varredura cega os monstros por 1 s.
+31 Salto com Vara: agachar + pular te lança para a frente e você pousa com uma onda de choque (8 s).
+32 Onda do Horizonte: se você esperar 1,5 s entre golpes, o golpe emite uma onda elemental em arco.
+33 Fogo: cada golpe queima.
+34 Gelo: cada golpe deixa lento.
+35 Raio: cada golpe salta para um inimigo próximo.
+36 Usadas no espaço de mãos do Curios (ou na mão secundária), melhoram os golpes de mãos vazias.
+37 Punhos de Obsidiana: no 5º golpe contra o mesmo alvo, uma explosão de 2 blocos.
+38 Garras de Dragão: seus golpes podem causar Ferida (−30% de cura por 4 s).
+39 Punhos do Dracoaço: seus golpes aplicam o elemento e os efeitos de postura do Monge ficam 20% mais fortes.
+40 Monge: conta como desarmado (cargas, perks e subclasse).
+41 Rápido, com alcance curto. Para o Monge conta como desarmado.
+42 Redemoinho: a cada 8 golpes encadeados, um giro que acerta tudo ao redor com 50%.
+43 Eco de Ossos: o Redemoinho deixa um nunchaku fantasma que repete 3 golpes a 30%.
+44 Tempestade de Correntes: o Redemoinho vira um turbilhão de 3 s que puxa inimigos e aplica o elemento.
+45 Velocidade média. Segure o botão direito para defender: um golpe nos primeiros instantes é aparado e atordoa o atacante; caso contrário, reduz o dano.
+46 Aparo de Ferro: o aparo devolve 50% do golpe.
+47 Desarmar: o aparo dá Fraqueza II ao atacante por 3 s.
+48 Contragolpe do Dracoaço: depois de um aparo, seu próximo golpe em até 1,5 s é uma estocada elemental que perfura em linha.
+49 Lançamento Livre %s: %s
+50 Furtividade
+51 Ampulheta Arcana
+52 Prisma do Arquimago
+53 Botas do Bárbaro de Cota de Malha
+54 Arreio do Bárbaro de Cota de Malha
+55 Elmo do Bárbaro de Cota de Malha
+56 Grevas do Bárbaro de Cota de Malha
+57 Botas do Bárbaro de Diamante
+58 Arreio do Bárbaro de Diamante
+59 Elmo do Bárbaro de Diamante
+60 Grevas do Bárbaro de Diamante
+61 Botas do Bárbaro de Escamas de Dragão de Fogo
+62 Arreio do Bárbaro de Escamas de Dragão de Fogo
+63 Elmo do Bárbaro de Escamas de Dragão de Fogo
+64 Grevas do Bárbaro de Escamas de Dragão de Fogo
+65 Botas do Bárbaro de Escamas de Dragão de Gelo
+66 Arreio do Bárbaro de Escamas de Dragão de Gelo
+67 Elmo do Bárbaro de Escamas de Dragão de Gelo
+68 Grevas do Bárbaro de Escamas de Dragão de Gelo
+69 Botas do Bárbaro de Escamas de Dragão de Raio
+70 Arreio do Bárbaro de Escamas de Dragão de Raio
+71 Elmo do Bárbaro de Escamas de Dragão de Raio
+72 Grevas do Bárbaro de Escamas de Dragão de Raio
+73 Botas do Bárbaro de Dracoaço de Fogo
+74 Arreio do Bárbaro de Dracoaço de Fogo
+75 Elmo do Bárbaro de Dracoaço de Fogo
+76 Grevas do Bárbaro de Dracoaço de Fogo
+77 Botas do Bárbaro de Dracoaço de Gelo
+78 Arreio do Bárbaro de Dracoaço de Gelo
+79 Elmo do Bárbaro de Dracoaço de Gelo
+80 Grevas do Bárbaro de Dracoaço de Gelo
+81 Botas do Bárbaro de Dracoaço de Raio
+82 Arreio do Bárbaro de Dracoaço de Raio
+83 Elmo do Bárbaro de Dracoaço de Raio
+84 Grevas do Bárbaro de Dracoaço de Raio
+85 Botas do Bárbaro de Ouro
+86 Arreio do Bárbaro de Ouro
+87 Elmo do Bárbaro de Ouro
+88 Grevas do Bárbaro de Ouro
+89 Botas do Bárbaro de Ferro
+90 Arreio do Bárbaro de Ferro
+91 Elmo do Bárbaro de Ferro
+92 Grevas do Bárbaro de Ferro
+93 Botas do Bárbaro de Couro
+94 Arreio do Bárbaro de Couro
+95 Elmo do Bárbaro de Couro
+96 Grevas do Bárbaro de Couro
+97 Botas do Bárbaro de Netherita
+98 Arreio do Bárbaro de Netherita
+99 Elmo do Bárbaro de Netherita
+100 Grevas do Bárbaro de Netherita
+101 Bastão Bo de Diamante
+102 Bastão Bo de Osso de Dragão
+103 Bastão Bo de Dracoaço de Fogo
+104 Bastão Bo de Dracoaço de Gelo
+105 Bastão Bo de Dracoaço de Raio
+106 Bastão Bo de Ouro
+107 Bastão Bo de Ferro
+108 Bastão Bo de Netherita
+109 Bastão Bo de Pedra
+110 Bastão Bo de Madeira
+111 Livro dos Vínculos
+112 Capa de Corvo
+113 Tira Curtida
+114 Corno do Ciclope
+115 Molde da Forja Dracônica
+116 Aljava do Matador de Dragões
+117 Folha Perene
+118 Colar de Presas
+119 Anel de Gelo Errante
+120 Olho de Górgona
+121 Insígnia do Pau para Toda Obra
+122 Medalhão do Eremita
+123 Pena de Hipogrifo
+124 Soqueiras de Diamante
+125 Soqueiras de Osso de Dragão
+126 Soqueiras de Dracoaço de Fogo
+127 Soqueiras de Dracoaço de Gelo
+128 Soqueiras de Dracoaço de Raio
+129 Soqueiras de Ouro
+130 Soqueiras de Ferro
+131 Soqueiras de Netherita
+132 Soqueiras de Pedra
+133 Soqueiras de Madeira
+134 Bússola do Último Suspiro
+135 Dados Viciados
+136 Coração de Magma
+137 Faixa Marcial
+138 Véu da Meia-Noite
+139 Lanterna do Mineiro
+140 Sandálias do Monge de Cota de Malha
+141 Gi do Monge de Cota de Malha
+142 Faixa do Monge de Cota de Malha
+143 Calças do Monge de Cota de Malha
+144 Sandálias do Monge de Diamante
+145 Gi do Monge de Diamante
+146 Faixa do Monge de Diamante
+147 Calças do Monge de Diamante
+148 Sandálias do Monge de Escamas de Dragão de Fogo
+149 Gi do Monge de Escamas de Dragão de Fogo
+150 Faixa do Monge de Escamas de Dragão de Fogo
+151 Calças do Monge de Escamas de Dragão de Fogo
+152 Sandálias do Monge de Escamas de Dragão de Gelo
+153 Gi do Monge de Escamas de Dragão de Gelo
+154 Faixa do Monge de Escamas de Dragão de Gelo
+155 Calças do Monge de Escamas de Dragão de Gelo
+156 Sandálias do Monge de Escamas de Dragão de Raio
+157 Gi do Monge de Escamas de Dragão de Raio
+158 Faixa do Monge de Escamas de Dragão de Raio
+159 Calças do Monge de Escamas de Dragão de Raio
+160 Sandálias do Monge de Dracoaço de Fogo
+161 Gi do Monge de Dracoaço de Fogo
+162 Faixa do Monge de Dracoaço de Fogo
+163 Calças do Monge de Dracoaço de Fogo
+164 Sandálias do Monge de Dracoaço de Gelo
+165 Gi do Monge de Dracoaço de Gelo
+166 Faixa do Monge de Dracoaço de Gelo
+167 Calças do Monge de Dracoaço de Gelo
+168 Sandálias do Monge de Dracoaço de Raio
+169 Gi do Monge de Dracoaço de Raio
+170 Faixa do Monge de Dracoaço de Raio
+171 Calças do Monge de Dracoaço de Raio
+172 Sandálias do Monge de Ouro
+173 Gi do Monge de Ouro
+174 Faixa do Monge de Ouro
+175 Calças do Monge de Ouro
+176 Sandálias do Monge de Ferro
+177 Gi do Monge de Ferro
+178 Faixa do Monge de Ferro
+179 Calças do Monge de Ferro
+180 Sandálias do Monge de Couro
+181 Gi do Monge de Couro
+182 Faixa do Monge de Couro
+183 Calças do Monge de Couro
+184 Sandálias do Monge de Netherita
+185 Gi do Monge de Netherita
+186 Faixa do Monge de Netherita
+187 Calças do Monge de Netherita
+188 Nunchaku de Diamante
+189 Nunchaku de Osso de Dragão
+190 Nunchaku de Dracoaço de Fogo
+191 Nunchaku de Dracoaço de Gelo
+192 Nunchaku de Dracoaço de Raio
+193 Nunchaku de Ouro
+194 Nunchaku de Ferro
+195 Nunchaku de Netherita
+196 Nunchaku de Pedra
+197 Nunchaku de Madeira
+198 Relicário do Juramento
+199 Pena de Fênix
+200 Sino de Fada
+201 Estandarte de Bolso
+202 Sai de Diamante
+203 Sai de Osso de Dragão
+204 Sai de Dracoaço de Fogo
+205 Sai de Dracoaço de Gelo
+206 Sai de Dracoaço de Raio
+207 Sai de Ouro
+208 Sai de Ferro
+209 Sai de Netherita
+210 Sai de Pedra
+211 Sai de Madeira
+212 Pingente de Serpente Marinha
+213 Rosário das Três Posturas
+214 Talismã da Tempestade
+215 Sino do Templo
+216 Concha da Maré
+217 Cinto do Viajante
+218 Bolsa de Bugigangas
+219 Brinco de Osso de Troll
+220 Caveira-Troféu
+221 Tambor de Guerra
+222 Lanterna do Fogo-Fátuo
+223 Classes RPG
+224 Classes RPG
+225 Habilidade 1
+226 Habilidade 2
+227 Habilidade 3
+228 Aliados
+229 Abrir o livro de classes
+230 Habilidade Racial 1
+231 Habilidade Racial 2
+232 Esquiva do Epic Fight
+233 Golpe Aflitivo (Praga)
+234 Emboscada Arcana
+235 Escudo Arcano
+236 Perfuração de Armadura
+237 Aura do Estandarte
+238 Proteção das Feras
+239 Magia de Sangue
+240 Carnívoro
+241 Sem Lentidão ao Lançar
+242 Passo Arcano
+243 Investida Aprimorada
+244 Golpe Carregado
+245 Condenação
+246 Fluxo Contínuo
+247 Investida Esmagadora
+248 Aposta com a Morte
+249 Furtividade Profunda
+250 Punho Incapacitante
+251 Poder pela Distância
+252 Contra-ataque
+253 Postura Dominante
+254 Esticar sem Lentidão
+255 Redução da Velocidade de Disparo
+256 Ignição Antecipada
+257 Imunidade a Efeitos
+258 Penalidades Elementais
+259 Manifestação Elemental
+260 Resistência
+261 Evasão
+262 Salto Evasivo
+263 Flecha Explosiva
+264 Queda de Pluma
+265 Potência das Cargas de Fogo
+266 Fúria (perk)
+267 Enrijecido
+268 Armadilha do Caçador
+269 Marca do Caçador
+270 Lâmina Imbuída
+271 Julgamento
+272 Última Fúria Imortal
+273 Estandarte da Vida
+274 Pés Leves
+275 Rolamento Longo
+276 Eco Marcial
+277 Meditação
+278 Meditação (perk)
+279 Atirador Móvel
+280 Impacto
+281 Perfuração
+282 Flechas de Poção
+283 Contragolpe Rápido
+284 Debaixo d'água, imune a Fadiga de Mineração, Cegueira e Escuridão.
+285 Filho do Abismo

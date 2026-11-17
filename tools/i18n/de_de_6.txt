@@ -1,0 +1,314 @@
+0 Zentaurenkörper
+1 %1$s löste sich im Atem von %2$s auf
+2 %1$s löste sich im Atem von %2$s auf
+3 %1$s verbrannte im Atem von %2$s
+4 %1$s verbrannte im Atem von %2$s
+5 %1$s erfror im Atem von %2$s
+6 %1$s erfror im Atem von %2$s
+7 %1$s wurde vom Atem von %2$s niedergestreckt
+8 %1$s wurde vom Atem von %2$s niedergestreckt
+9 %1$s wurde vom Atem von %2$s vergiftet
+10 %1$s wurde vom Atem von %2$s vergiftet
+11 %1$s ertrank im Atem von %2$s
+12 %1$s ertrank im Atem von %2$s
+13 Korrosion
+14 Immun gegen den Effekt Hunger und gegen die negativen Effekte von Nahrung.
+15 Säuremagen
+16 Du baust Blöcke in einem Würfel ab (einzeln, wenn du geduckt bist). Nie Behälter.
+17 Riesenhände
+18 Nutzblöcke, die du bei dir trägst, und verbündete Passagiere.
+19 Gürtel
+20 Du erhältst mehr Heilung durch Tränke und Zauber.
+21 Gesegnet
+22 Kein Fallschaden; du federst beim Landen auf jedem Block zurück (Ducken verhindert das).
+23 Elastischer Körper
+24 Gebündelter Kegel deines Elements (Rassentaste 1). Kostet Mana und leidet unter der Magie-Mauer.
+25 Atem
+26 Dein Atem wendet Korrosion an: weniger Rüstung und Zähigkeit.
+27 Säureatem
+28 Dein Atem setzt das Ziel in Brand.
+29 Feueratem
+30 Dein Atem verlangsamt.
+31 Eisatem
+32 Der Blitz deines Atems springt auf Feinde in der Nähe über.
+33 Sturmatem
+34 Dein Atem vergiftet (Verlangsamung gegen Untote).
+35 Giftatem
+36 Dein Atem stößt zurück und löscht Feuer.
+37 Wasseratem
+38 Beschleunigung, Rammen, aufgeladener Sprung und verbündete Passagiere.
+39 Pferdekörper
+40 Deine Luft hält länger.
+41 Kiemen
+42 Wilde Kreaturen deines Elements (Ice-and-Fire-Drachen, Seeschlangen, Gorgonen oder Hydras) greifen dich nicht an, solange sie nicht provoziert werden.
+43 Drachenblut
+44 Weniger Schaden durch dein Element.
+45 Schuppen
+46 Du überlebst höhere Stürze ohne Schaden.
+47 Langer Schritt
+48 Beim Fallen aus großer Höhe gleitest du ohne Schaden.
+49 Flügel
+50 Du verdoppelst deine Größe und erhältst eine zweite Lebensleiste.
+51 Wachsen
+52 Du kannst nicht schwimmen: Du sinkst und gehst über den Grund.
+53 Steingewicht
+54 In der Luft rutschst du langsam an Wänden herab.
+55 Honigwand
+56 Dein Rammen verursacht mehr Schaden.
+57 Horn
+58 Verbündete in der Nähe regenerieren Mana schneller (betrifft dich nicht).
+59 Manaaura
+60 Wenn ein Feind einen tödlichen Treffer landet, teilst du dich in zwei Kopien, statt zu sterben.
+61 Mitose
+62 Du kannst keine Tiere oder Boote reiten.
+63 Kein Reittier
+64 Immun gegen den Effekt Gift.
+65 Giftiges Blut
+66 Deine Nahkampftreffer wenden Verlangsamung an (weniger bei Bossen).
+67 Zäher Schlag
+68 Du erleidest mehr Rückstoß durch Treffer.
+69 Weicher Körper
+70 Aufgeladener Sprung im Ducken, der dich dorthin schleudert, wohin du schaust.
+71 Federsprung
+72 Beim Ducken haftest du an Wänden und Entitäten, solange die Leiste reicht.
+73 Griff
+74 Du teilst dich in kleine Schleime, die dir folgen; sterben alle, stirbst du.
+75 Schwarm
+76 Du zertrampelst Feldfrüchte, wenn du auf sie trittst (nicht beim Ducken).
+77 Stampfen
+78 Nahkampfschaden abhängig von deiner Geschwindigkeit; Rammen bremst dich weniger.
+79 Kriegsgalopp
+80 In deinem Gürtel ist kein Platz für weitere Blöcke
+81 Nicht genug Mana für deinen Atem
+82 Zweite Lebensleiste
+83 Zeit bis zur Höchstgeschwindigkeit
+84 Luftkontrolle
+85 Luft ×
+86 Abprall ×
+87 Min. Fall zum Abprallen (Blöcke)
+88 Atemstoß
+89 Sprungschaden
+90 Blitzsprünge
+91 Max. Kanalisierung
+92 Max. Ladung
+93 Korrosion
+94 Korrosion
+95 Element
+96 Sicherer Fall (Blöcke)
+97 Flügelschlag: Abklingzeit
+98 Griff
+99 Erhaltene Heilung
+100 Sprungladung
+101 Erlittener Rückstoß
+102 Max. Entfernung (Blöcke)
+103 Mana pro Sekunde
+104 Manaregeneration der Verbündeten
+105 Max. Schleime
+106 Rassische Höchstgeschwindigkeit
+107 Gesundheit nach Verschmelzung
+108 Verschmelzungszeit
+109 Min. Ladung
+110 Gleiten ab (Blöcke)
+111 Tempo pro Passagier
+112 Passagiere
+113 Kraft (Sog)
+114 Rammschaden
+115 Max. Rammen
+116 Ramm-Stoß (Blöcke)
+117 Beim Rammen verlorenes Tempo
+118 Rammen ab
+119 Gelöst durch einen Treffer von (HP)
+120 Beben-Radius (Blöcke)
+121 Rutschen (Blöcke/Tick)
+122 Schleimtempo
+123 Schleime pro Herz
+124 Gürtelplätze
+125 Technisches Tempolimit ×
+126 Tempo
+127 Kontaktschaden
+128 Gift
+129 Wand- und Bodenabprall ×
+130 Pferdekörper: beschleunigt beim Laufen in gerader Linie allmählich und rammt oberhalb von 40 % seiner Höchstgeschwindigkeit alles, was er trifft (und verliert dabei Tempo). Aufgeladener Sprung wie bei einem Pferd (Sprung gedrückt halten), und ein Verbündeter kann auf seinem Rücken reiten. Passt nicht durch 1-Block-Lücken und kann keine Tiere oder Boote reiten.
+131 Zentaur
+132 Doppelte Größe und doppelte Gesundheit (ohne Obergrenze). Baut Blöcke in einem 2×2×2-Würfel ab (einzeln beim Ducken), und Reichweite, Schritt, Sprung und sicherer Fall wachsen mit der Größe. Im Gegenzug: mehr Hunger, kann nicht schwimmen (sinkt), Mobs entdecken ihn aus größerer Entfernung, zertrampelt Feldfrüchte und kann keine Tiere oder Boote reiten.
+133 Koloss
+134 Nachfahre von Drachen: widersteht dem Schaden seines Elements und haucht einen Atem dieses Elements (Rassentaste 1), der Mana kostet und unter der Magie-Mauer deiner Klasse leidet. Wilde Drachen seines Elements (Ice and Fire) greifen ihn nicht an, solange sie nicht provoziert werden. Verbraucht mehr Hunger.
+135 Drakonide
+136 Erleidet keinen Fallschaden, federt beim Landen auf jedem Block zurück (Ducken verhindert das) und springt doppelt so hoch. Im Gegenzug weniger Gesundheit und wird weiter zurückgestoßen.
+137 Schleim
+138 Geflügelter Ritt
+139 Besiege 20 Feinde mit deinem Rammen und mache 20 langsame Stürze aus mindestens 8 Blöcken.
+140 Mit dem Rammen besiegte Feinde
+141 Gleitflüge aus 8 Blöcken
+142 Gefieder
+143 Opfere 64 Federn, 16 Phantommembranen und 8 Feuerwerksraketen.
+144 Federn, Membranen und Raketen
+145 Dach der Welt
+146 Besiege bei einem Altar auf Höhe 150 oder höher einen Ritual-Boss und gleite dabei im Kampf mindestens 3-mal.
+147 Boss in der Höhe mit 3 Gleitflügen besiegt
+148 Silberhorn
+149 Besiege 30 Feinde mit deinem Rammen.
+150 Mit dem Rammen besiegte Feinde
+151 Mondopfer
+152 Opfere 4 goldene Äpfel, 8 Amethystscherben, 16 Goldbarren und 8 Blumen von mindestens 4 Arten.
+153 Goldene Äpfel, Amethyst, Gold und Blumen
+154 Strahlende Aura
+155 Besiege einen Ritual-Boss mit mindestens 2 Verbündeten in deiner Aura und verursache mindestens 40 % des Schadens mit deinem Rammen.
+156 Boss mit Verbündeten in der Aura besiegt
+157 Kriegssturm
+158 Besiege 30 Feinde mit Nahkampfangriffen bei mindestens 40 % deiner Höchstgeschwindigkeit.
+159 Im Galopp besiegte Feinde
+160 Rüstzeug
+161 Opfere ein komplettes Eisenrüstungsset, 1 Eisenwaffe, 8 Leder und 16 Eisenbarren.
+162 Eisenrüstung und -waffe, Leder und Eisen
+163 Ungebrochener Galopp
+164 Besiege einen Ritual-Boss mit mindestens 10 aufeinanderfolgenden Nahkampftreffern, ohne unter 40 % deines Tempos zu fallen.
+165 Boss mit 10 Treffern im Galopp besiegt
+166 Schwere Last
+167 Besiege 30 Feinde mit mindestens 3 belegten Gürtelplätzen.
+168 Mit beladenem Gürtel besiegte Feinde
+169 Ledergürtel
+170 Opfere 4 Truhen, 2 Öfen, 1 Werkbank, 16 Leder und 16 Eisenbarren.
+171 Truhen, Öfen, Werkbank, Leder und Eisen
+172 Karawane
+173 Besiege einen Ritual-Boss mit einem Verbündeten auf dir, der mindestens 25 % des Schadens verursacht.
+174 Boss mit einem Passagier besiegt
+175 Schwere Schritte
+176 Besiege 20 Feinde und baue 200 Blöcke mit dem Flächenabbau ab (stehend).
+177 Besiegte Feinde
+178 In einer Fläche abgebaute Blöcke
+179 Stein auf Stein
+180 Opfere 4 Eisenblöcke, 8 Obsidian, 64 Bruchstein und 1 Amboss.
+181 Eisen, Obsidian, Bruchstein und Amboss
+182 Brüllen des Titanen
+183 Besiege einen Ritual-Boss bei aktiver Titanform und verursache in dieser Form mindestens 50 % des Schadens.
+184 Boss in Titanform besiegt
+185 Korrosion
+186 Besiege 30 gepanzerte Feinde, die von deinem Atem korrodiert wurden.
+187 Besiegte korrodierte gepanzerte Feinde
+188 Ätzende Alchemie
+189 Opfere 4 Tränke des Schadens, 16 Spinnenaugen und 16 Schleimbälle.
+190 Schadenstränke, Spinnenaugen und Schleim
+191 Eisen schmelzen
+192 Besiege einen Ritual-Boss und wende mindestens 5-mal Korrosion auf ihn an.
+193 Boss mit 5 Korrosionen besiegt
+194 Brennender Atem
+195 Besiege 30 Feinde mit deinem Atem.
+196 Mit dem Atem besiegte Feinde
+197 Glut
+198 Opfere 8 Lohenruten, 16 Holzkohle und 4 Lavaeimer.
+199 Lohe, Holzkohle und Lava
+200 Scheiterhaufen des Drachen
+201 Besiege bei einem Altar im Nether einen Ritual-Boss und verursache mindestens 50 % des Schadens mit deinem Atem.
+202 Boss mit dem Atem besiegt (Nether)
+203 Frostatem
+204 Besiege 30 Feinde mit deinem Atem.
+205 Mit dem Atem besiegte Feinde
+206 Frost
+207 Opfere 64 Schneeblöcke, 16 Packeis und 4 Blaueis.
+208 Schnee und Eis
+209 Ewiger Winter
+210 Besiege bei einem Altar in einem verschneiten oder gefrorenen Biom einen Ritual-Boss und verursache mindestens 50 % des Schadens mit deinem Atem.
+211 Boss mit dem Atem besiegt (Schnee)
+212 Sturmatem
+213 Besiege 30 Feinde mit deinem Atem (Blitzsprünge zählen).
+214 Mit dem Atem besiegte Feinde
+215 Blitzableiter
+216 Opfere 4 Blitzableiter, 32 Kupferbarren und 16 Redstone.
+217 Blitzableiter, Kupfer und Redstone
+218 Rituelles Gewitter
+219 Beschwöre bei einem Gewitter mit dem Altar unter freiem Himmel einen Ritual-Boss und besiege ihn, wobei du mindestens 50 % des Schadens mit deinem Atem verursachst.
+220 Boss mit dem Atem besiegt (Gewitter)
+221 Giftatem
+222 Besiege 30 Feinde, die von deinem Atem vergiftet wurden (Untote zählen nicht).
+223 Besiegte vergiftete Feinde
+224 Gegengift
+225 Opfere 16 Spinnenaugen, 4 Tränke der Vergiftung, 8 giftige Kartoffeln und 4 Kugelfische.
+226 Spinnenaugen, Gift, Kartoffeln und Kugelfische
+227 Tödliches Gift
+228 Besiege einen Ritual-Boss und vergifte ihn mindestens 5-mal mit deinem Atem.
+229 Boss mit 5 Vergiftungen besiegt
+230 Atem des Meeres
+231 Besiege 30 Feinde mit deinem Atem, 10 davon, während du untergetaucht bist.
+232 Mit dem Atem besiegte Feinde
+233 Untergetaucht mit dem Atem besiegt
+234 Gezeitenopfer
+235 Opfere 16 Fische von mindestens 3 Arten, 32 Seetang und 8 Tränke der Wasseratmung.
+236 Fische, Seetang und Tränke
+237 Hof des Ozeans
+238 Besiege bei einem Altar unter Wasser (mindestens 3 Blöcke tief) einen Ritual-Boss und verursache mindestens 50 % des Schadens mit deinem Atem.
+239 Boss mit dem Atem besiegt (unter Wasser)
+240 du hast die Aktionen des Rituals im Kampf nicht abgeschlossen
+241 es blieben zu wenige Schleime übrig
+242 zu wenig Schaden mit deinem Rassenmerkmal
+243 unter mindestens 3 Blöcken Wasser
+244 auf Höhe 150 oder höher
+245 in einem verschneiten oder gefrorenen Biom
+246 unter freiem Himmel bei einem Gewitter
+247 Zwei in Einem
+248 Teile dich (durch einen Feindtreffer) und verschmelze 2-mal wieder mit deiner Kopie.
+249 Teilungen mit Verschmelzung
+250 Gelee-Form
+251 Opfere je 2 identische Gegenstände von 6 verschiedenen Arten in Eisenqualität oder besser.
+252 6 Paare von Gegenständen in Eisenqualität oder besser
+253 Zwillinge
+254 Besiege einen Ritual-Boss, nachdem du dich im Kampf geteilt hast, und verschmelze am Ende mit deiner lebenden Kopie.
+255 Boss nach Teilen und Verschmelzen besiegt
+256 Abgeschossen
+257 Führe 40 Katapultsprünge mit mindestens 2 s Ladung aus und besiege 15 Feinde mit dem Aufprall eines Katapultsprungs.
+258 Aufgeladene Katapultsprünge
+259 Mit dem Aufprall besiegte Feinde
+260 Federn
+261 Opfere 8 Kolben, 4 Klebrige Kolben, 16 Schleimbälle und 4 Schleimblöcke.
+262 Kolben und Schleim
+263 Riesensprung
+264 Besiege einen Ritual-Boss und triff ihn im Kampf mit mindestens 3 Katapultaufprällen.
+265 Boss mit 3 Aufprällen besiegt
+266 Erste Teilung
+267 Besiege 30 Feinde durch den Kontakt deiner kleinen Schleime.
+268 Von deinen Schleimen besiegte Feinde
+269 Geleebrut
+270 Opfere 32 Schleimbälle, 4 Schleimblöcke und 3 Tränke der Heilung.
+271 Schleim und Heiltränke
+272 Geleeflut
+273 Besiege einen Ritual-Boss im geteilten Zustand, mit am Ende mindestens 6 lebenden Schleimen und mindestens 50 % des Schadens durch Kontakt.
+274 Boss durch den Schwarm besiegt
+275 Klebrig
+276 Besiege 20 Feinde, während du an einer Wand oder Entität haftest.
+277 Haftend besiegte Feinde
+278 Harz und Honig
+279 Opfere 8 Honigblöcke, 16 Honigflaschen, 16 Schleimbälle und 8 Spinnweben.
+280 Honig, Schleim und Spinnweben
+281 Zecke
+282 Besiege einen Ritual-Boss, nachdem du insgesamt mindestens 10 s an ihm geklebt hast und mit mindestens 20 Treffern, die Verlangsamung anwenden.
+283 Boss besiegt, an ihm haftend
+284 Beim Fallen aus großer Höhe gleitest du langsam und ohne Schaden; mit Rängen aus geringerer Höhe, mit Luftkontrolle und Flügelschlag.
+285 Pegasus
+286 Verbündete in der Nähe regenerieren Mana schneller, du erhältst mehr Heilung durch Tränke und Zauber, und dein Horn rammt härter.
+287 Einhorn
+288 Ab 40 % deiner Höchstgeschwindigkeit greifst du an, ohne langsamer zu werden (Epic Fight), und verursachst im Nahkampf umso mehr Schaden, je schneller du bist. Rammen bremst dich weniger.
+289 Krieger
+290 Du trägst einen Gürtel aus Truhen, Öfen und Werkbänken, den du im Gehen benutzen kannst (Rassentaste 1; Verbündete öffnen ihn, indem sie sich ducken und dich rechtsklicken), und deine Verbündeten können auf dir reiten. Etwas langsamer, mit Passagieren noch mehr.
+291 Träger
+292 Wachsen (Rassentaste 1): Du verdoppelst deine Größe erneut mit einer zweiten Lebensleiste, baust in 3×3×3 ab und der Boden bebt bei jedem Schritt.
+293 Titan
+294 Du widerstehst Säure, Nahrung bekommt dir immer, und dein Atem korrodiert die Rüstung des Ziels. Wilde Hydras greifen dich nicht an, solange sie nicht provoziert werden.
+295 Säure
+296 Du widerstehst Feuer, und dein Atem setzt Feinde in Brand. Wilde Feuerdrachen greifen dich nicht an, solange sie nicht provoziert werden.
+297 Feuer
+298 Du widerstehst Eis und Frost, und dein Atem verlangsamt. Wilde Eisdrachen greifen dich nicht an, solange sie nicht provoziert werden.
+299 Eis
+300 Du widerstehst Blitzen, und der Blitz deines Atems springt auf Feinde in der Nähe über. Wilde Blitzdrachen greifen dich nicht an, solange sie nicht provoziert werden.
+301 Blitz
+302 Du widerstehst Giftschaden (ab Rang 2 immun gegen Gift), und dein Atem vergiftet. Wilde Gorgonen greifen dich nicht an, solange sie nicht provoziert werden.
+303 Giftig
+304 Du widerstehst Wasser und Ertrinken, deine Luft hält dreimal so lang (ab Rang 2 atmest du unter Wasser), und dein Atem stößt zurück und löscht Feuer. Wilde Seeschlangen greifen dich nicht an, solange sie nicht provoziert werden.
+305 Wasser
+306 Noch weniger Gesundheit, aber wenn ein Feind einen tödlichen Treffer landet, teilst du dich in zwei Kopien halber Größe. Dücke dich neben deiner Kopie, um zu verschmelzen.
+307 Mitotisch
+308 Dücke dich, um einen Sprung aufzuladen; beim Springen wirst du dorthin geschleudert, wohin du schaust (wie Sog), ohne Aufprallschaden und mit Abprallen von Boden und Wänden.
+309 Feder
+310 Rassentaste 1: Du teilst dich in einen kleinen Schleim pro Herz (max. 25), die nur Kontaktschaden verursachen. Jeder Treffer tötet einen Schleim, und überschüssiger Schaden wird nicht übertragen. Heilung im geteilten Zustand erzeugt neue Schleime. Erneut drücken zum Verschmelzen.
+311 Schwarm
+312 Dücke dich an einer Wand oder Entität, um daran zu haften. Du rutschst langsam an Wänden herab wie auf Honig, und deine Treffer wenden Verlangsamung an.
+313 Zäh

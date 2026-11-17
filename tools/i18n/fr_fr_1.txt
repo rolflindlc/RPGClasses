@@ -1,0 +1,286 @@
+0 Rugissement du dragon : la Rage du berserker pousse un rugissement ; les monstres non-boss dans un rayon de 8 blocs fuient et subissent l'élément des écailles.
+1 Mue de dragon
+2 Courroux du wyrm : sous 40 % de santé ou pendant la Rage du berserker, vous déployez des ailes spectrales et chaque coup critique libère un cône élémentaire de 4 blocs (une fois par seconde).
+3 Fureur du wyrm
+4 Butin doré : quand vous tuez un monstre hostile, 10 % de chances qu'il lâche une pépite d'or qui bondit vers vous.
+5 Parure du pillard
+6 Torse de fer : −5 % de dégâts de projectiles.
+7 Harnais de fer
+8 Flair : les monstres hostiles dans un rayon de 12 blocs avec moins de 30 % de santé brillent.
+9 Peaux de bête
+10 Cœur de braise : chaque coup que vous subissez accumule une braise (5 max, 8 s). La Charge ou la Rage du berserker les libère en un anneau de feu de 4 blocs.
+11 Plaques cendrées
+12 Maillons tintants : chaque charge tinte et, en atteignant le seuil, les maillons sonnent en accord.
+13 Gi de mailles
+14 Reflet de cristal : la Déviation de projectiles accorde +1 charge avec un éclat prismatique.
+15 Habit de cristal
+16 Danse du dragon : quand vous déclenchez un effet de posture, un dragon spectral de la couleur de la posture tourne autour de vous pendant 4 s et mord l'ennemi le plus proche chaque seconde.
+17 Manteau écailleux
+18 Poing du wyrm : chaque effet de posture lance une tête de dragon d'énergie qui parcourt 8 blocs en ligne. Feu : marcher sur la lave en Posture de feu donne de la vitesse. Glace : en Eau, vous gelez l'eau en marchant. Foudre : en Pierre, les coups lourds que vous subissez libèrent une étincelle.
+19 Vêtements du wyrm
+20 Pèlerinage : la Méditation soigne 20 % de plus.
+21 Tunique du pèlerin
+22 Posture ferme : la Pierre gagne des charges avec des coups dès 1,5 PV.
+23 Gi de fer
+24 Premier pas : en entrant dans une posture sans charge, vous en recevez 1, et les charges s'estompent 10 % plus lentement.
+25 Bandelettes du novice
+26 Sceau de posture : les charges de Pierre s'estompent deux fois moins vite et, en changeant de posture avec 5 charges ou plus, vous laissez un sceau runique qui répète la décharge à 30 % après 3 s.
+27 Kesa d'obsidienne
+28 Ensemble complet (4 pièces, %s uniquement) :
+29 Lent, avec une allonge supplémentaire et un balayage en arc qui touche les autres ennemis à 60 %.
+30 Balayage cendré : le balayage aveugle les monstres pendant 1 s.
+31 Saut à la perche : accroupi + saut vous propulse en avant et vous atterrissez avec une onde de choc (8 s).
+32 Onde de l'horizon : si vous attendez 1,5 s entre deux coups, le coup envoie une onde élémentaire en arc.
+33 Feu : chaque coup enflamme.
+34 Glace : chaque coup ralentit.
+35 Foudre : chaque coup rebondit sur un ennemi proche.
+36 Portés dans l'emplacement de mains de Curios (ou dans la main secondaire), ils améliorent les coups à mains nues.
+37 Poings d'obsidienne : au 5e coup contre la même cible, une explosion de 2 blocs.
+38 Griffes de dragon : vos coups peuvent infliger Blessure (−30 % de soins pendant 4 s).
+39 Poings du wyrm : vos coups appliquent l'élément et les effets de posture du Moine sont 20 % plus forts.
+40 Moine : compte comme à mains nues (charges, perks et sous-classe).
+41 Rapide, avec une courte allonge. Pour le Moine, il compte comme à mains nues.
+42 Tourbillon : tous les 8 coups enchaînés, une rotation qui frappe tout autour à 50 %.
+43 Écho d'os : le Tourbillon laisse un nunchaku fantôme qui répète 3 coups à 30 %.
+44 Tempête de chaînes : le Tourbillon devient un tourbillon de 3 s qui attire les ennemis et applique l'élément.
+45 Vitesse moyenne. Maintenez le clic droit pour garder : un coup dans les premiers instants est paré et étourdit l'attaquant ; sinon, il réduit les dégâts.
+46 Parade de fer : la parade renvoie 50 % du coup.
+47 Désarmement : la parade donne Faiblesse II à l'attaquant pendant 3 s.
+48 Contre du wyrm : après une parade, votre prochain coup dans les 1,5 s est une estocade élémentaire qui transperce en ligne.
+49 %s libre : %s
+50 Discrétion
+51 Sablier arcanique
+52 Prisme de l'archimage
+53 Bottes du Barbare en mailles
+54 Harnais du Barbare en mailles
+55 Heaume du Barbare en mailles
+56 Jambières du Barbare en mailles
+57 Bottes du Barbare en diamant
+58 Harnais du Barbare en diamant
+59 Heaume du Barbare en diamant
+60 Jambières du Barbare en diamant
+61 Bottes du Barbare en écailles de dragon de feu
+62 Harnais du Barbare en écailles de dragon de feu
+63 Heaume du Barbare en écailles de dragon de feu
+64 Jambières du Barbare en écailles de dragon de feu
+65 Bottes du Barbare en écailles de dragon de glace
+66 Harnais du Barbare en écailles de dragon de glace
+67 Heaume du Barbare en écailles de dragon de glace
+68 Jambières du Barbare en écailles de dragon de glace
+69 Bottes du Barbare en écailles de dragon de foudre
+70 Harnais du Barbare en écailles de dragon de foudre
+71 Heaume du Barbare en écailles de dragon de foudre
+72 Jambières du Barbare en écailles de dragon de foudre
+73 Bottes du Barbare en acier draconique de feu
+74 Harnais du Barbare en acier draconique de feu
+75 Heaume du Barbare en acier draconique de feu
+76 Jambières du Barbare en acier draconique de feu
+77 Bottes du Barbare en acier draconique de glace
+78 Harnais du Barbare en acier draconique de glace
+79 Heaume du Barbare en acier draconique de glace
+80 Jambières du Barbare en acier draconique de glace
+81 Bottes du Barbare en acier draconique de foudre
+82 Harnais du Barbare en acier draconique de foudre
+83 Heaume du Barbare en acier draconique de foudre
+84 Jambières du Barbare en acier draconique de foudre
+85 Bottes du Barbare en or
+86 Harnais du Barbare en or
+87 Heaume du Barbare en or
+88 Jambières du Barbare en or
+89 Bottes du Barbare en fer
+90 Harnais du Barbare en fer
+91 Heaume du Barbare en fer
+92 Jambières du Barbare en fer
+93 Bottes du Barbare en cuir
+94 Harnais du Barbare en cuir
+95 Heaume du Barbare en cuir
+96 Jambières du Barbare en cuir
+97 Bottes du Barbare en netherite
+98 Harnais du Barbare en netherite
+99 Heaume du Barbare en netherite
+100 Jambières du Barbare en netherite
+101 Bo en diamant
+102 Bo en os de dragon
+103 Bo en acier draconique de feu
+104 Bo en acier draconique de glace
+105 Bo en acier draconique de foudre
+106 Bo en or
+107 Bo en fer
+108 Bo en netherite
+109 Bo en pierre
+110 Bo en bois
+111 Livre des liens
+112 Cape de corbeau
+113 Sangle tannée
+114 Corne de cyclope
+115 Modèle de forge draconique
+116 Carquois du tueur de dragons
+117 Feuille persistante
+118 Collier de crocs
+119 Anneau de givre errant
+120 Œil de gorgone
+121 Insigne du touche-à-tout
+122 Médaillon de l'ermite
+123 Plume d'hippogriffe
+124 Poings américains en diamant
+125 Poings américains en os de dragon
+126 Poings américains en acier draconique de feu
+127 Poings américains en acier draconique de glace
+128 Poings américains en acier draconique de foudre
+129 Poings américains en or
+130 Poings américains en fer
+131 Poings américains en netherite
+132 Poings américains en pierre
+133 Poings américains en bois
+134 Boussole du dernier souffle
+135 Dés pipés
+136 Cœur de magma
+137 Tissu martial
+138 Voile de minuit
+139 Lanterne du mineur
+140 Sandales du Moine en mailles
+141 Gi du Moine en mailles
+142 Bandeau du Moine en mailles
+143 Pantalon du Moine en mailles
+144 Sandales du Moine en diamant
+145 Gi du Moine en diamant
+146 Bandeau du Moine en diamant
+147 Pantalon du Moine en diamant
+148 Sandales du Moine en écailles de dragon de feu
+149 Gi du Moine en écailles de dragon de feu
+150 Bandeau du Moine en écailles de dragon de feu
+151 Pantalon du Moine en écailles de dragon de feu
+152 Sandales du Moine en écailles de dragon de glace
+153 Gi du Moine en écailles de dragon de glace
+154 Bandeau du Moine en écailles de dragon de glace
+155 Pantalon du Moine en écailles de dragon de glace
+156 Sandales du Moine en écailles de dragon de foudre
+157 Gi du Moine en écailles de dragon de foudre
+158 Bandeau du Moine en écailles de dragon de foudre
+159 Pantalon du Moine en écailles de dragon de foudre
+160 Sandales du Moine en acier draconique de feu
+161 Gi du Moine en acier draconique de feu
+162 Bandeau du Moine en acier draconique de feu
+163 Pantalon du Moine en acier draconique de feu
+164 Sandales du Moine en acier draconique de glace
+165 Gi du Moine en acier draconique de glace
+166 Bandeau du Moine en acier draconique de glace
+167 Pantalon du Moine en acier draconique de glace
+168 Sandales du Moine en acier draconique de foudre
+169 Gi du Moine en acier draconique de foudre
+170 Bandeau du Moine en acier draconique de foudre
+171 Pantalon du Moine en acier draconique de foudre
+172 Sandales du Moine en or
+173 Gi du Moine en or
+174 Bandeau du Moine en or
+175 Pantalon du Moine en or
+176 Sandales du Moine en fer
+177 Gi du Moine en fer
+178 Bandeau du Moine en fer
+179 Pantalon du Moine en fer
+180 Sandales du Moine en cuir
+181 Gi du Moine en cuir
+182 Bandeau du Moine en cuir
+183 Pantalon du Moine en cuir
+184 Sandales du Moine en netherite
+185 Gi du Moine en netherite
+186 Bandeau du Moine en netherite
+187 Pantalon du Moine en netherite
+188 Nunchaku en diamant
+189 Nunchaku en os de dragon
+190 Nunchaku en acier draconique de feu
+191 Nunchaku en acier draconique de glace
+192 Nunchaku en acier draconique de foudre
+193 Nunchaku en or
+194 Nunchaku en fer
+195 Nunchaku en netherite
+196 Nunchaku en pierre
+197 Nunchaku en bois
+198 Reliquaire du serment
+199 Plume de phénix
+200 Clochette de lutin
+201 Étendard de poche
+202 Sai en diamant
+203 Sai en os de dragon
+204 Sai en acier draconique de feu
+205 Sai en acier draconique de glace
+206 Sai en acier draconique de foudre
+207 Sai en or
+208 Sai en fer
+209 Sai en netherite
+210 Sai en pierre
+211 Sai en bois
+212 Pendentif de serpent de mer
+213 Chapelet des trois postures
+214 Talisman de la tempête
+215 Cloche du temple
+216 Conque des marées
+217 Ceinture du voyageur
+218 Pochette de babioles
+219 Boucle d'oreille en os de troll
+220 Crâne-trophée
+221 Tambour de guerre
+222 Lanterne du feu follet
+223 Classes RPG
+224 Classes RPG
+225 Capacité 1
+226 Capacité 2
+227 Capacité 3
+228 Alliés
+229 Ouvrir le livre des classes
+230 Capacité raciale 1
+231 Capacité raciale 2
+232 Esquive d'Epic Fight
+233 Frappe affligeante (Peste)
+234 Embuscade arcanique
+235 Bouclier arcanique
+236 Perforation d'armure
+237 Aura d'étendard
+238 Protection des bêtes
+239 Magie du sang
+240 Carnivore
+241 Pas de ralentissement en lançant des sorts
+242 Pas arcanique
+243 Charge améliorée
+244 Frappe chargée
+245 Condamnation
+246 Flux continu
+247 Charge écrasante
+248 Pari avec la mort
+249 Discrétion profonde
+250 Poing paralysant
+251 Puissance selon la distance
+252 Contre-attaque
+253 Posture dominante
+254 Tension sans ralentissement
+255 Réduction de la vitesse de tension
+256 Allumage précoce
+257 Immunité aux effets
+258 Affaiblissements élémentaires
+259 Manifestation élémentaire
+260 Endurance
+261 Esquive
+262 Saut d'esquive
+263 Flèche explosive
+264 Chute de plume
+265 Puissance des charges de Feu
+266 Fureur (perk)
+267 Endurci
+268 Piège du chasseur
+269 Marque du chasseur
+270 Lame imprégnée
+271 Jugement
+272 Dernière fureur immortelle
+273 Étendard de vie
+274 Pieds légers
+275 Longue roulade
+276 Écho martial
+277 Méditation
+278 Méditation (perk)
+279 Tireur mobile
+280 Impact
+281 Perforation
+282 Flèches de potion
+283 Contre rapide
+284 Sous l'eau, immunisé contre la Fatigue de minage, la Cécité et les Ténèbres.
+285 Enfant de l'abîme

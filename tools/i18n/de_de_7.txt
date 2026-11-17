@@ -1,0 +1,37 @@
+0 Du kehrst dorthin zurück, wo du vor einigen Sekunden warst, und erholst einen Teil der seither verlorenen Gesundheit und des Manas (es nimmt nie etwas weg). Hebt Fallschaden auf; mit höheren Unterklassenstufen ist das Zeitfenster länger, du erholst mehr, in dieser Zeit erhaltene negative Effekte werden entfernt und in dieser Zeit gewirkte Zauber erhalten einen Teil ihrer Abklingzeit zurück. Dimensionswechsel, Tod oder Teleportation über weite Strecken löscht den Verlauf.
+1 Zeitrückspulen
+2 Du erschaffst eine Sphäre aus angehaltener Zeit um dich. Alles darin und alles, was hineingelangt, solange sie anhält (Projektile eingeschlossen), wird eingefroren; du und deine Verbündeten nicht. Bosse werden nur für einen Teil der Zeit eingefroren. Die Sphäre wirkt von innen und außen grau; eingefrorene Spieler sehen alles grau, wechseln in die dritte Person und hören eine tickende Uhr, bis sie endet. Kostet Mana.
+3 Zeitstopp
+4 Gürtel von %s
+5 %1$s wurde vom Schwarm von %2$s verschlungen
+6 %1$s wurde vom Schwarm von %2$s verschlungen
+7 Mitotische Kopie
+8 Schwarmschleim
+9 Kreativ-Amulett
+10 Stufe jedes rassischen Wasserzaubers (0 = du hast ihn noch nicht). Benötigt T.O Magic 'n Extras.
+11 Wasserzauber
+12 Du hast eine Kopie verloren: Du erhältst deine Größe zurück, wenn die Abklingzeit der Teilung endet
+13 Du verschmilzt mit deiner Kopie
+14 Mitose! Du teilst dich in zwei Kopien: Dücke dich neben der anderen, um zu verschmelzen
+15 Kein Platz zum Wachsen: Du brauchst freien Platz in doppelter Größe
+16 Es gibt keinen sicheren Ort, zu dem du zurückkehren kannst.
+17 Es gibt noch nichts, zu dem du zurückkehren kannst.
+18 Du hast nicht genug Mana, um die Zeit anzuhalten.
+19 Entfernt negative Effekte ab Stufe
+20 Verlorene Gesundheit erholt
+21 Wasserschuss (Stufe)
+22 Dampfstrahl (Stufe)
+23 Kosten (vom max. Mana)
+24 Verbrauchtes Mana erholt
+25 Teleport, der den Verlauf löscht (Blöcke)
+26 Überlauf (Stufe)
+27 Suche nach sicherem Ort (Blöcke)
+28 Speichert deinen Zustand alle
+29 Erholt Zauber-Abklingzeiten ab Stufe
+30 Erholte Zauber-Abklingzeit
+31 Gezeitengriff (Stufe)
+32 Magier der Zeit. Du wirkst Zauber schneller und beherrschst zwei Fähigkeiten: Zeitrückspulen, das dich dorthin zurückbringt, wo du vor einigen Sekunden warst, und Gesundheit und Mana erholt, sowie Zeitstopp, eine Sphäre, die Feinde und Projektile für einen Augenblick einfriert.
+33 Chronomant
+34 Test: Solange es in deinem Inventar ist, sind alle Klassen- und Rassen-Abklingzeiten 0.
+35 Plätze: %s/%s
+36 Öffnen

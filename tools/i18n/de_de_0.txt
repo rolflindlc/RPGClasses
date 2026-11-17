@@ -1,0 +1,245 @@
+0 Jeder Bogen- oder Armbrustschuss hat eine Chance, keine Munition zu verbrauchen.
+1 Munitionsersparnis
+2 Für einige Sekunden greifst du schneller und härter an, erleidest aber auch mehr Schaden. Beim Aktivieren werden Feinde in der Nähe geschwächt.
+3 Berserkerwut
+4 Jedes Mal, wenn du einen Feind tötest, erholst du einen Teil deiner maximalen Gesundheit.
+5 Blutdurst
+6 Für einige Sekunden verringerst du jeglichen erlittenen Schaden stark.
+7 Bollwerk
+8 Du stürmst geradeaus und prallst gegen den ersten Feind: Er erleidet wenig Schaden, wird zurückgeschleudert und betäubt, und du prallst ab.
+9 Sturmangriff
+10 Während des Bollwerks rennst du ununterbrochen mit großer Geschwindigkeit, hinterlässt eine Windspur und verursachst Schaden und Rückstoß bei allem, was du niedertrampelst. Du durchbrichst schwache Blöcke (Laub, Glas, Türen, Zäune, Holzfallen …), aber jeder verletzt dich je nach Härte ein wenig.
+11 Stürmendes Bollwerk
+12 Wenn du unsichtbar wirst, hinterlässt du einen Klon mit deiner Ausrüstung, der Feinde anzieht und davonrennt.
+13 Köder
+14 Automatisch, mit Abklingzeit. Verringert den Schaden eines Projektils um einen Wert in Höhe deiner Gesamtstufe. Wird er auf null reduziert, schickst du es zurück. Gewährt Ladungen: +1 bei Feuer, +3 bei Wasser und +1 bei Stein.
+15 Projektilabwehr
+16 Drücke in der Luft erneut Springen, um einen zweiten Sprung auszuführen.
+17 Doppelsprung
+18 Wähle einen Zauber (wähle ihn im Rad aus und nutze /clase conjuro 1), der dauerhaft an diesen Platz gebunden bleibt. Solange du Ladungen hast, kostet das Wirken eine Ladung statt Mana.
+19 Freies Wirken I
+20 Zweiter Platz für freies Wirken, mit mehr Ladungen und einer höheren Kostengrenze.
+21 Freies Wirken II
+22 Dritter Platz für freies Wirken, mit der höchsten erlaubten Kostengrenze.
+23 Freies Wirken III
+24 Solange das Bollwerk aktiv ist, heilt ein Teil des von dir abgemilderten Schadens Verbündete in der Nähe und dich selbst.
+25 Heilendes Bollwerk
+26 Hältst du den Bogen voll gespannt, steigt der Schuss-Schaden in Zeitstufen.
+27 Schwerer Schuss
+28 Verbessert den Schweren Schuss: Die Stufen kommen früher und die letzte ist deutlich stärker.
+29 Tödlicher Schuss
+30 Das Bollwerk entfernt alle deine negativen Effekte und macht dich währenddessen immun gegen neue.
+31 Unbestechliches Bollwerk
+32 Du erleidest keinen Fallschaden und gehst auf Wasser. In der Feuerhaltung gehst du auch auf Lava.
+33 Leichter Schritt
+34 Du teleportierst dich hinter den Feind, den du ansiehst (bis zu 10 Blöcke). 8 s lang sind deine Treffer gegen ihn garantiert kritisch, und wenn du ihn in dieser Zeit tötest, lädt die Fähigkeit sofort wieder auf.
+35 Schattenschritt
+36 Jeder Tastendruck wechselt zur nächsten Haltung (Wasser, Stein, Feuer). Du sammelst nur Ladungen der aktiven Haltung: Feuer mit jedem unbewaffneten Treffer (mehr Schaden), Stein beim Einstecken von Treffern (mehr Rüstung) und Wasser beim Rennen, Ausweichen oder Abwehren (mehr Geschwindigkeit und Sprung). Beim Maximum oder mit Shift + Treffer (oder Ducken + diese Taste) ab 10 Ladungen verbraucht dein nächster unbewaffneter Treffer sie alle: Feuriger Schlag, Betäubung oder Gegenströmung. Ein Haltungswechsel entlädt die Ladungen der vorherigen Haltung als Flächeneffekt. Ladungen schwinden allmählich, wenn du keine mehr sammelst und wenn du Rüstung anlegst.
+37 Elementarhaltungen
+38 Du verursachst mehr Schaden an Feinden, die dich anvisieren.
+39 Fester Stand
+40 Wenn du dich duckst, wirst du wirklich unsichtbar, solange du noch Tarnleiste hast. Angreifen oder Zaubern verbraucht einen großen Teil der Leiste.
+41 Tarnung
+42 Zwingt Mobs in der Nähe, dich anzugreifen, verlangsamt sie und verringert für einige Sekunden den Schaden, den du erleidest.
+43 Spott
+44 Fügt in der Luft einen dritten Sprung hinzu.
+45 Dreifachsprung
+46 Wenn du dich neben einer Wand duckst, klammerst du dich daran fest und kannst sie erklimmen. Spannst du einen Bogen, lässt du los.
+47 Wandklettern
+48 Ein waagerechter Stoß in der Luft, mit Ladungen, die sich von selbst erholen.
+49 Windsprint
+50 Kritischer Schaden aus der Unsichtbarkeit
+51 Bogenschaden
+52 Chance auf kritische Treffer
+53 Kritischer Schaden
+54 Widerstand gegen negative Effekte
+55 Bogenspanngeschwindigkeit
+56 Erhaltene Heilung
+57 Sprunghöhe
+58 Verursachter Rückstoß
+59 Blätterläufer
+60 Mob-Erkennungsreichweite
+61 Projektilgeschwindigkeit
+62 Größe
+63 Schleichgeschwindigkeit
+64 Zaubergröße
+65 Unbewaffneter Schaden
+66 Unbewaffneter Rückstoß
+67 Zoom
+68 Rassenaltar
+69 Deine kritischen Treffer verursachen deutlich mehr Schaden.
+70 Brutalität
+71 Wundenwut: Du verursachst mehr Schaden, je mehr Gesundheit dir fehlt.
+72 Wut
+73 Du erleidest weniger Schaden durch Stürze, Feuer und Explosionen und verlierst weniger Hunger.
+74 Abgehärtet
+75 Ohne Rüstung erhältst du Rüstung, Zähigkeit und Bewegungsgeschwindigkeit.
+76 Eisenhaut
+77 Der Sturmangriff reicht weiter und lädt schneller auf. Ruht, bis du den Sturmangriff hast.
+78 Stampede
+79 Verringert die Abklingzeit deiner Zauber.
+80 Kadenz
+81 Du bewegst dich schneller; bei vollem Zweig bremst dich das Zaubern nicht mehr ab.
+82 Fluss
+83 Erhöht die Stärke all deiner Zauber.
+84 Macht
+85 Erhöht dein maximales Mana und wie schnell du es zurückgewinnst (+40 % Mana pro Sekunde bei 10 Punkten). Iron's regeneriert anhand des maximalen Manas, daher wird das Regenerationsattribut zum Ausgleich gesenkt.
+86 Reserve
+87 Deine Beschwörungen haben mehr Gesundheit und verursachen mehr Schaden.
+88 Beschwörung
+89 Verstärkt die Feuerladungen: mehr Schaden pro Ladung und eine stärkere Entladungswelle.
+90 Faust
+91 Wenn du dich einige Sekunden duckst und stillstehst, heilst du langsam bis zu einer Gesundheitsgrenze. Schaden unterbricht dies. Wenn du die Meditation beendest, erhältst du 4 Ladungen deiner Haltung, die 10 s lang nicht schwinden.
+92 Meditation
+93 Verstärkt die Steinladungen: mehr Rüstung und Zähigkeit pro Ladung und mehr Absorption bei der Entladung.
+94 Haut
+95 Deine Entladungen beim Haltungswechsel und deine eigenen Haltungseffekte sind stärker: +20 % bei 5 Punkten und +40 % bei 10 (die maximalen Ladungen bleiben 10).
+96 Haltungsmeisterschaft
+97 Verstärkt die Wasserladungen: mehr Geschwindigkeit und Sprung pro Ladung und eine stärkere Entladung.
+98 Wind
+99 Eine Aura um dich: Du und deine Verbündeten erhaltet Rüstung, und negative Effekte halten bei dir kürzer. Wird nicht mit der eines anderen Paladins gestapelt.
+100 Banner
+101 Vervielfacht die Rüstung und Zähigkeit der Teile, die du trägst.
+102 Kürass
+103 Du wirst weniger zurückgestoßen und stößt Feinde stärker zurück.
+104 Stoß
+105 Mehr Schaden gegen Untote und Nether-Mobs und etwas mehr Schaden insgesamt, wenn du keinen Schild trägst.
+106 Niederstrecken
+107 Negative Effekte halten bei dir kürzer.
+108 Wille
+109 Mehr Schaden mit Bögen und Armbrüsten sowie Zoom, wenn du dich mit dem Bogen in der Hand duckst oder ihn spannst.
+110 Zielen
+111 Du spannst den Bogen schneller.
+112 Kadenz
+113 Deine Projektile fliegen schneller und weiter. Erhöht den Schaden nicht.
+114 Reichweite
+115 Bei vollem Zweig läufst du nach einem Nahkampftreffer einige Sekunden schneller.
+116 Rückzug
+117 Die Effekte deiner Trankpfeile halten länger an und sind stärker.
+118 Spezialpfeile
+119 Das Ausweichen von Epic Fight verbraucht weniger Ausdauer und seine Unverwundbarkeit hält länger.
+120 Akrobatik
+121 Du greifst schneller an und deine kritischen Treffer verursachen mehr Schaden.
+122 Schneide
+123 Mobs entdecken dich erst aus geringerer Entfernung, und deine kritischen Treffer aus der Unsichtbarkeit verursachen mehr Schaden.
+124 Schatten
+125 Deine Treffer können mit Toxin vergiften, einem langsamen Schaden, der sich nicht stapelt.
+126 Toxine
+127 Du bewegst dich schneller.
+128 Wind
+129 Ein ungepanzerter Krieger mit schweren Waffen. Je weniger Gesundheit er hat, desto mehr Schaden verursacht er, und seine kritischen Treffer sind die stärksten. Jedes Rüstungsteil schaltet seine natürliche Verteidigung ab, außer Barbarengeschirren (seiner Klassenausrüstung).
+130 Barbar
+131 Zauberwirker mit Iron's Spells. Viel Fernschaden und Nutzen im Tausch gegen sehr wenig Zähigkeit. Seine Zweige erhöhen Zauberstärke, Mana und Abklinggeschwindigkeit.
+132 Magier
+133 Klassenmerkmal: geringere maximale Gesundheit.
+134 Ein unbewaffneter, ungepanzerter Kämpfer. Seine Stufe gibt eine Grundlage an Schaden und Verteidigung; den Rest verdient er im Kampf, indem er Feuer-, Stein- oder Wasserladungen aufbaut. Rüstung schaltet seine Passiven ab und löscht die Ladungen, außer Mönchsroben (seiner Klassenausrüstung). Nunchaku, Sai, Bo und Schlagringe zählen als unbewaffnet.
+135 Mönch
+136 Kampfkörper: keine Rüstung (Mönchsroben zählen nicht), unbewaffneter Schaden, Rüstung und Zähigkeit wachsen mit deinen Basisklassenpunkten (voll bei 30). Feuer zieht 25 % von dieser Rüstung ab und Wasser 25 % von diesem Schaden.
+137 Der Tank der Gruppe. Hält mit Rüstung und Schild mehr aus als jeder andere, zieht Feinde an und schützt Verbündete. Verursacht allein wenig Schaden.
+138 Paladin
+139 Klassenmerkmal: mehr maximale Gesundheit und etwas weniger Geschwindigkeit.
+140 Bogenschütze. Stetiger Fernschaden, schnelle Pfeile mit großer Reichweite und gute Beweglichkeit. Kann Rüstung ohne Abzug tragen.
+141 Waldläufer
+142 Ein flinker Assassine mit leichten Waffen. Wird unsichtbar, schlägt überraschend mit garantierten kritischen Treffern zu und bewegt sich sehr schnell. Sehr zerbrechlich, wenn er erwischt wird.
+143 Schurke
+144 Klassenmerkmal: geringere maximale Gesundheit.
+145 Fällst du unter 30 % Gesundheit, werden Projektile im Umkreis von 6 Blöcken langsamer (60 s).
+146 Jeder 5. schadende Zauber bricht sich: 30 % davon springen auf einen weiteren Feind in der Nähe über.
+147 Wenn du die Unsichtbarkeit verlässt, blendet ein Krähenschwarm Feinde im Umkreis von 3 Blöcken für 1 s (15 s).
+148 Wenn du den Kampf beginnst, ertönt das Horn: Feinde im Umkreis von 16 Blöcken leuchten 8 s lang und deine Verbündeten erhalten 8 s lang Stärke (90 s).
+149 Jeder 11. Pfeil ist ein Drachenknochenpfeil: +50 % Schaden und durchbohrt einen Feind.
+150 Im Laub regenerierst du Gesundheit und Mobs, die weiter als 8 Blöcke entfernt sind, nehmen dich nicht ins Visier.
+151 Jeder getötete feindliche Mob fügt einen Fangzahn hinzu (max. 10, beim Tod verloren): +1 % Nahkampfschaden pro Fangzahn.
+152 Du lässt Wasser gefrieren, wenn du darauf gehst.
+153 2 s lang einen Nicht-Boss-Mob anzustarren versteinert ihn für 2 s (30 s).
+154 Wenn du zu einer Waffe einer anderen Disziplin wechselst, +10 % Nahkampfschaden für 3 s (6 s).
+155 Zieht Gegenstände und Erfahrungskugeln im Umkreis von 6 Blöcken an.
+156 Einen Bogen in der Luft zu spannen lässt dich gleiten.
+157 Wenn du stirbst, markiert eine Lichtsäule 10 min lang die Stelle, an der du gefallen bist.
+158 Jeder kritische Treffer würfelt: Bei einer 6 verursacht er zusätzlich ×1,5; bei einer 1 wird er zu einem normalen Treffer.
+159 Wenn du einen Nahkampftreffer einsteckst, besteht eine Chance von 15 %, den Angreifer in Brand zu setzen. Du hinterlässt leuchtende Fußspuren.
+160 Die Sonne verursacht bei dir nur halben Schaden.
+161 Erze im Umkreis von 4 Blöcken funkeln.
+162 Wer einen Mob trifft, der dich verfolgt (du oder deine Verbündeten), heilt 1 HP (einmal pro Sekunde).
+163 Ein tödlicher Treffer lässt dich in Flammen mit 30 % Gesundheit wiedergeboren werden (20 min). Wird nach Klassen- und Rassenfähigkeiten aufgelöst.
+164 Wenn du dich in der Luft duckst, schwebst du 3 s lang (10 s Abklingzeit).
+165 Du trägst ein goldenes Banner auf dem Rücken.
+166 Gewöhnlich
+167 Episch
+168 Selten
+169 Relikt
+170 Du kannst nur ein Relikt gleichzeitig tragen.
+171 Nur %s
+172 Nur Rasse %s
+173 Du schwimmst schneller und rennst nach dem Verlassen des Wassers 5 s lang schneller.
+174 Beim Haltungswechsel mit 8 oder mehr Ladungen springen die Perlen zwischen 3 Feinden hin und her.
+175 Wenn du einen Nahkampftreffer einsteckst, besteht eine Chance von 10 %, dass ein Blitz den Angreifer trifft (8 s).
+176 Wenn du die Meditation beendest, verlieren deine Verbündeten im Umkreis von 8 Blöcken einen negativen Effekt.
+177 Unter Wasser erholen deine Verbündeten im Umkreis von 5 Blöcken Luft. An Land löscht es das Feuer, wenn du brennst (10 s).
+178 Unter 6 Hungerkeulen isst du nur Essen aus deinem Inventar (ohne Effekte).
+179 5 % Chance, beim Töten einen gewöhnlichen Drop zu verdoppeln.
+180 Wenn dein Letztes Gefecht aktiviert wird, fliehen Mobs im Umkreis von 6 Blöcken.
+181 Wenn du einen Boss tötest, bewahrt der Schädel seine Trophäe auf und verleiht dir bis zum nächsten eine Eigenschaft dieses Bosses (Feuerimmunität, Verlangsamungsimmunität, Witherimmunität … oder +10 % Schaden).
+182 Der Schädel bewahrt die Trophäe von %s auf
+183 Die Berserkerwut schlägt die Trommeln: Deine Verbündeten im Umkreis von 10 Blöcken greifen 10 s lang schneller an.
+184 Alle 30 s fliegt ein Irrlicht zur nächsten Truhe oder zum nächsten Spawner im Umkreis von 24 Blöcken.
+185 %1$s wurde von einem Pfeil von %2$s in den Himmel gesprengt
+186 %1$s wurde von einem Pfeil von %2$s in den Himmel gesprengt
+187 %1$s wurde von %2$s niedergetrampelt
+188 %1$s wurde von %2$s niedergetrampelt
+189 %1$s verbrannte in %2$ss Drachenfeuer
+190 %1$s verbrannte in %2$ss Drachenfeuer
+191 %1$s erfror in %2$ss Drachenfrost
+192 %1$s erfror in %2$ss Drachenfrost
+193 %1$s wurde von %2$ss Drachenblitz niedergestreckt
+194 %1$s wurde von %2$ss Drachenblitz niedergestreckt
+195 %1$s wurde von %2$s gerichtet
+196 %1$s wurde von %2$s gerichtet
+197 %1$s fiel %2$ss Kampfkunst zum Opfer
+198 %1$s fiel %2$ss Kampfkunst zum Opfer
+199 %1$s erlag der Seuche
+200 %1$s erlag %2$ss Seuche
+201 %1$s wurde vom Wasser gelöscht
+202 %1$s wurde von %2$ss Schockwelle niedergeworfen
+203 %1$s wurde von %2$ss Schockwelle niedergeworfen
+204 %1$s verdorrte in der Sonne
+205 %1$s starb an einer Toxinvergiftung
+206 %1$s starb an einer Toxinvergiftung auf der Flucht vor %2$s
+207 Rüstung
+208 Bogen
+209 Schwere Waffen
+210 Leichte Waffen
+211 Magie
+212 Schilde
+213 Arkaner Schritt
+214 Banner
+215 Berserkerwut
+216 Bollwerk
+217 Stürmendes Bollwerk
+218 Verdammt
+219 Ausdauer
+220 Jägermal
+221 Letzte Wut
+222 Seuche
+223 Rückzug
+224 Spott
+225 Toxin
+226 Wasser
+227 Blut
+228 Unheimlich
+229 Ender
+230 Hervorrufung
+231 Feuer
+232 Eis
+233 Blitz
+234 Natur
+235 Köder
+236 Feuerschuppen: Jedes Teil verringert Feuerschaden.
+237 Eisschuppen: Jedes Teil verringert Eisschaden.
+238 Blitzschuppen: Jedes Teil verringert Blitzschaden.
+239 Schaltet die unbewaffneten Passiven des Barbaren nicht ab.
+240 Schaltet den Kampfkörper nicht ab und löscht die Ladungen des Mönchs nicht.
+241 Kriegsrasseln: Der erste Treffer nach 2 s Rennen schleudert stärker zurück.
+242 Kettenglieder-Geschirr
+243 Knirschen: Deine kritischen Treffer verlangsamen das Ziel für 1 s (einmal alle 3 s pro Ziel).
+244 Knochenbrecher-Geschirr

@@ -1,0 +1,314 @@
+0 Corps de centaure
+1 %1$s s'est dissous dans le souffle de %2$s
+2 %1$s s'est dissous dans le souffle de %2$s
+3 %1$s a brûlé dans le souffle de %2$s
+4 %1$s a brûlé dans le souffle de %2$s
+5 %1$s a gelé dans le souffle de %2$s
+6 %1$s a gelé dans le souffle de %2$s
+7 %1$s a été foudroyé par le souffle de %2$s
+8 %1$s a été foudroyé par le souffle de %2$s
+9 %1$s a été empoisonné par le souffle de %2$s
+10 %1$s a été empoisonné par le souffle de %2$s
+11 %1$s s'est noyé dans le souffle de %2$s
+12 %1$s s'est noyé dans le souffle de %2$s
+13 Corrosion
+14 Immunisé contre l'effet Faim et les effets négatifs de la nourriture.
+15 Estomac acide
+16 Vous cassez des blocs dans un cube (un par un en étant accroupi). Jamais les conteneurs.
+17 Mains de géant
+18 Blocs utilitaires que vous portez sur vous, et passagers alliés.
+19 Ceinture
+20 Vous recevez plus de soins des potions et des sorts.
+21 Béni
+22 Pas de dégâts de chute ; vous rebondissez en atterrissant sur n'importe quel bloc (s'accroupir l'empêche).
+23 Corps élastique
+24 Cône canalisé de votre élément (touche raciale 1). Coûte du mana et subit le mur de Magie.
+25 Souffle
+26 Votre souffle applique la Corrosion : moins d'armure et de robustesse.
+27 Souffle d'acide
+28 Votre souffle enflamme la cible.
+29 Souffle de feu
+30 Votre souffle ralentit.
+31 Souffle de glace
+32 La foudre de votre souffle saute vers les ennemis proches.
+33 Souffle de tempête
+34 Votre souffle empoisonne (Lenteur contre les morts-vivants).
+35 Souffle toxique
+36 Votre souffle repousse et éteint le feu.
+37 Souffle d'eau
+38 Accélération, charge, saut chargé et passagers alliés.
+39 Corps de cheval
+40 Votre air dure plus longtemps.
+41 Branchies
+42 Les créatures sauvages de votre élément (dragons d'Ice and Fire, serpents de mer, gorgones ou hydres) ne vous attaquent pas tant qu'elles ne sont pas provoquées.
+43 Sang de dragon
+44 Moins de dégâts de votre élément.
+45 Écailles
+46 Vous survivez à des chutes plus hautes sans dégâts.
+47 Longue foulée
+48 En tombant de haut, vous planez sans dégâts.
+49 Ailes
+50 Vous doublez votre taille avec une seconde barre de vie.
+51 Croissance
+52 Vous ne savez pas nager : vous coulez et marchez au fond.
+53 Poids de pierre
+54 Dans les airs, vous glissez lentement le long des murs.
+55 Mur de miel
+56 Votre charge inflige plus de dégâts.
+57 Corne
+58 Les alliés proches régénèrent leur mana plus vite (cela ne vous affecte pas).
+59 Aura de mana
+60 Quand un ennemi porte un coup mortel, vous vous divisez en deux copies au lieu de mourir.
+61 Mitose
+62 Vous ne pouvez monter ni animaux ni bateaux.
+63 Sans monture
+64 Immunisé contre l'effet Poison.
+65 Sang toxique
+66 Vos coups de mêlée appliquent la Lenteur (moins sur les boss).
+67 Frappe visqueuse
+68 Vous subissez plus de recul des coups.
+69 Corps mou
+70 Saut chargé en étant accroupi qui vous propulse là où vous regardez.
+71 Saut à ressort
+72 En étant accroupi, vous vous collez aux murs et aux entités tant que la barre dure.
+73 Adhérence
+74 Vous vous divisez en petits slimes qui vous suivent ; s'ils meurent tous, vous mourez.
+75 Essaim
+76 Vous piétinez les cultures en marchant dessus (pas en étant accroupi).
+77 Piétinement
+78 Dégâts de mêlée selon votre vitesse ; la charge vous ralentit moins.
+79 Galop de guerre
+80 Votre ceinture n'a plus de place pour d'autres blocs
+81 Pas assez de mana pour votre souffle
+82 Seconde barre de vie
+83 Temps jusqu'à la vitesse maximale
+84 Contrôle aérien
+85 Air ×
+86 Rebond ×
+87 Chute min. pour rebondir (blocs)
+88 Poussée du souffle
+89 Dégâts des sauts
+90 Sauts de foudre
+91 Canalisation max.
+92 Charge max.
+93 Corrosion
+94 Corrosion
+95 Élément
+96 Chute sans danger (blocs)
+97 Battement d'ailes : recharge
+98 Adhérence
+99 Soins reçus
+100 Charge du saut
+101 Recul subi
+102 Distance max. (blocs)
+103 Mana par seconde
+104 Régénération de mana des alliés
+105 Slimes max.
+106 Vitesse max. raciale
+107 Santé après fusion
+108 Temps de fusion
+109 Charge min.
+110 Plané à partir de (blocs)
+111 Vitesse par passager
+112 Passagers
+113 Puissance (Torrent)
+114 Dégâts de charge
+115 Charge max.
+116 Poussée de charge (blocs)
+117 Vitesse perdue en chargeant
+118 Charge à partir de
+119 Libéré par un coup de (PV)
+120 Rayon du tremblement (blocs)
+121 Glissade (blocs/tick)
+122 Vitesse des slimes
+123 Slimes par cœur
+124 Emplacements de ceinture
+125 Limite technique de vitesse ×
+126 Vitesse
+127 Dégâts de contact
+128 Poison
+129 Rebond mur et sol ×
+130 Corps de cheval : accélère progressivement en courant en ligne droite et, au-dessus de 40 % de sa vitesse maximale, charge tout ce qu'il touche (en perdant de la vitesse). Saut chargé comme un cheval (maintenez saut) et un allié peut monter sur son dos. Ne passe pas dans les passages d'1 bloc et ne peut monter ni animaux ni bateaux.
+131 Centaure
+132 Deux fois la taille et deux fois la santé (sans plafond). Casse des blocs dans un cube 2×2×2 (un par un en étant accroupi), et sa portée, son pas, son saut et sa chute sans danger croissent avec sa taille. En échange : plus de faim, ne sait pas nager (coule), les monstres le détectent de plus loin, piétine les cultures et ne peut monter ni animaux ni bateaux.
+133 Colosse
+134 Descendant des dragons : résiste aux dégâts de son élément et exhale un souffle de cet élément (touche raciale 1), qui coûte du mana et subit le mur de Magie de votre classe. Les dragons sauvages de son élément (Ice and Fire) ne l'attaquent pas tant qu'ils ne sont pas provoqués. Consomme plus de faim.
+135 Draconide
+136 Ne subit pas de dégâts de chute, rebondit en atterrissant sur n'importe quel bloc (s'accroupir l'empêche) et saute deux fois plus haut. En échange, moins de santé et il est repoussé plus loin.
+137 Slime
+138 Monture ailée
+139 Vainquez 20 ennemis avec votre charge et faites 20 chutes lentes d'au moins 8 blocs.
+140 Ennemis vaincus avec la charge
+141 Planés depuis 8 blocs
+142 Plumage
+143 Offrez 64 plumes, 16 membranes de fantôme et 8 fusées de feu d'artifice.
+144 Plumes, membranes et fusées
+145 Toit du monde
+146 Avec l'autel à une hauteur de 150 ou plus, vainquez un boss de rite en planant au moins 3 fois pendant le combat.
+147 Boss vaincu en altitude avec 3 planés
+148 Corne d'argent
+149 Vainquez 30 ennemis avec votre charge.
+150 Ennemis vaincus avec la charge
+151 Offrande lunaire
+152 Offrez 4 pommes dorées, 8 éclats d'améthyste, 16 lingots d'or et 8 fleurs d'au moins 4 types.
+153 Pommes dorées, améthyste, or et fleurs
+154 Aura radieuse
+155 Vainquez un boss de rite avec au moins 2 alliés dans votre aura, en infligeant au moins 40 % des dégâts avec votre charge.
+156 Boss vaincu avec des alliés dans l'aura
+157 Charge de guerre
+158 Vainquez 30 ennemis avec des attaques de mêlée à au moins 40 % de votre vitesse maximale.
+159 Ennemis vaincus au galop
+160 Panoplie
+161 Offrez une armure complète en fer, 1 arme en fer, 8 cuirs et 16 lingots de fer.
+162 Armure et arme en fer, cuir et fer
+163 Galop ininterrompu
+164 Vainquez un boss de rite en enchaînant au moins 10 coups de mêlée sans descendre sous 40 % de votre vitesse.
+165 Boss vaincu avec 10 coups au galop
+166 Lourde charge
+167 Vainquez 30 ennemis avec au moins 3 emplacements de ceinture remplis.
+168 Ennemis vaincus avec la ceinture chargée
+169 Ceinture de cuir
+170 Offrez 4 coffres, 2 fourneaux, 1 établi, 16 cuirs et 16 lingots de fer.
+171 Coffres, fourneaux, établi, cuir et fer
+172 Caravane
+173 Vainquez un boss de rite avec un allié monté sur vous qui inflige au moins 25 % des dégâts.
+174 Boss vaincu avec un passager
+175 Pas lourds
+176 Vainquez 20 ennemis et cassez 200 blocs avec la casse de zone (debout).
+177 Ennemis vaincus
+178 Blocs cassés en zone
+179 Pierre sur pierre
+180 Offrez 4 blocs de fer, 8 obsidiennes, 64 pierres et 1 enclume.
+181 Fer, obsidienne, pierre et enclume
+182 Rugissement du Titan
+183 Vainquez un boss de rite avec la forme de Titan active et infligez dans cette forme au moins 50 % des dégâts.
+184 Boss vaincu en forme de Titan
+185 Corrosion
+186 Vainquez 30 ennemis en armure corrodés par votre souffle.
+187 Ennemis en armure corrodés vaincus
+188 Alchimie corrosive
+189 Offrez 4 potions de Dégâts, 16 yeux d'araignée et 16 boules de slime.
+190 Potions de dégâts, yeux d'araignée et slime
+191 Fondre le fer
+192 Vainquez un boss de rite en lui appliquant la Corrosion au moins 5 fois.
+193 Boss vaincu avec 5 corrosions
+194 Souffle brûlant
+195 Vainquez 30 ennemis avec votre souffle.
+196 Ennemis vaincus avec le souffle
+197 Braises
+198 Offrez 8 bâtons de blaze, 16 charbons de bois et 4 seaux de lave.
+199 Blaze, charbon et lave
+200 Bûcher du dragon
+201 Avec l'autel dans le Nether, vainquez un boss de rite en infligeant au moins 50 % des dégâts avec votre souffle.
+202 Boss vaincu avec le souffle (Nether)
+203 Souffle de givre
+204 Vainquez 30 ennemis avec votre souffle.
+205 Ennemis vaincus avec le souffle
+206 Givre
+207 Offrez 64 blocs de neige, 16 glaces compactées et 4 glaces bleues.
+208 Neige et glace
+209 Hiver éternel
+210 Avec l'autel dans un biome enneigé ou gelé, vainquez un boss de rite en infligeant au moins 50 % des dégâts avec votre souffle.
+211 Boss vaincu avec le souffle (neige)
+212 Souffle de tempête
+213 Vainquez 30 ennemis avec votre souffle (les sauts de foudre comptent).
+214 Ennemis vaincus avec le souffle
+215 Paratonnerres
+216 Offrez 4 paratonnerres, 32 lingots de cuivre et 16 redstones.
+217 Paratonnerres, cuivre et redstone
+218 Tempête rituelle
+219 Invoquez un boss de rite pendant un orage, avec l'autel à ciel ouvert, et vainquez-le en infligeant au moins 50 % des dégâts avec votre souffle.
+220 Boss vaincu avec le souffle (orage)
+221 Souffle toxique
+222 Vainquez 30 ennemis empoisonnés par votre souffle (les morts-vivants ne comptent pas).
+223 Ennemis empoisonnés vaincus
+224 Antidote
+225 Offrez 16 yeux d'araignée, 4 potions de Poison, 8 pommes de terre empoisonnées et 4 poissons-globes.
+226 Yeux d'araignée, poison, pommes de terre et poissons-globes
+227 Venin mortel
+228 Vainquez un boss de rite en l'empoisonnant avec votre souffle au moins 5 fois.
+229 Boss vaincu avec 5 empoisonnements
+230 Souffle de la mer
+231 Vainquez 30 ennemis avec votre souffle, dont 10 pendant que vous êtes immergé.
+232 Ennemis vaincus avec le souffle
+233 Vaincus avec le souffle en étant immergé
+234 Offrande des marées
+235 Offrez 16 poissons d'au moins 3 types, 32 algues et 8 potions de Respiration aquatique.
+236 Poissons, algues et potions
+237 Cour de l'océan
+238 Avec l'autel sous l'eau (d'au moins 3 blocs de profondeur), vainquez un boss de rite en infligeant au moins 50 % des dégâts avec votre souffle.
+239 Boss vaincu avec le souffle (sous l'eau)
+240 vous n'avez pas accompli les actions du rite pendant le combat
+241 il restait trop peu de slimes
+242 trop peu de dégâts avec votre trait racial
+243 sous au moins 3 blocs d'eau
+244 à une hauteur de 150 ou plus
+245 dans un biome enneigé ou gelé
+246 à ciel ouvert pendant un orage
+247 Deux en un
+248 Divisez-vous (par un coup ennemi) et refusionnez avec votre copie 2 fois.
+249 Divisions avec fusion
+250 Moule de gelée
+251 Offrez 2 objets identiques de chacun de 6 types différents de qualité fer ou supérieure.
+252 6 paires d'objets de qualité fer ou supérieure
+253 Jumeaux
+254 Vainquez un boss de rite après vous être divisé pendant le combat, et fusionnez avec votre copie vivante à la fin.
+255 Boss vaincu après division et fusion
+256 Propulsé
+257 Faites 40 propulsions avec au moins 2 s de charge et vainquez 15 ennemis avec l'impact d'une propulsion.
+258 Propulsions chargées
+259 Ennemis vaincus avec l'impact
+260 Ressorts
+261 Offrez 8 pistons, 4 pistons collants, 16 boules de slime et 4 blocs de slime.
+262 Pistons et slime
+263 Bond de géant
+264 Vainquez un boss de rite en le frappant avec au moins 3 impacts de propulsion pendant le combat.
+265 Boss vaincu avec 3 impacts
+266 Première division
+267 Vainquez 30 ennemis avec le contact de vos petits slimes.
+268 Ennemis vaincus par vos slimes
+269 Couvée de gelée
+270 Offrez 32 boules de slime, 4 blocs de slime et 3 potions de Soin.
+271 Slime et potions de soin
+272 Marée de gelée
+273 Vainquez un boss de rite en étant divisé, avec au moins 6 slimes vivants à la fin et au moins 50 % des dégâts par contact.
+274 Boss vaincu par l'Essaim
+275 Collant
+276 Vainquez 20 ennemis en étant collé à un mur ou à une entité.
+277 Ennemis vaincus en étant collé
+278 Sève et miel
+279 Offrez 8 blocs de miel, 16 bouteilles de miel, 16 boules de slime et 8 toiles d'araignée.
+280 Miel, slime et toiles d'araignée
+281 Tique
+282 Vainquez un boss de rite après être resté collé à lui au moins 10 s au total et avec au moins 20 coups qui appliquent la Lenteur.
+283 Boss vaincu en étant collé à lui
+284 En tombant de haut, vous planez lentement et sans dégâts ; avec les rangs, depuis moins haut, avec contrôle aérien et battement d'ailes.
+285 Pégase
+286 Les alliés proches régénèrent leur mana plus vite, vous recevez plus de soins des potions et des sorts, et votre corne charge plus fort.
+287 Licorne
+288 À 40 % de votre vitesse maximale ou plus, vous attaquez sans ralentir (Epic Fight) et infligez plus de dégâts de mêlée plus vous allez vite. La charge vous ralentit moins.
+289 Guerrier
+290 Vous portez une ceinture de coffres, fourneaux et établis que vous pouvez utiliser en marchant (touche raciale 1 ; les alliés l'ouvrent en s'accroupissant et en faisant un clic droit sur vous), et vos alliés peuvent monter sur vous. Un peu plus lent, et davantage avec des passagers.
+291 Porteur
+292 Croissance (touche raciale 1) : vous doublez de nouveau votre taille avec une seconde barre de vie, cassez en 3×3×3 et le sol tremble à chaque pas.
+293 Titan
+294 Vous résistez à l'acide, la nourriture ne vous fait jamais de mal et votre souffle corrode l'armure de la cible. Les hydres sauvages ne vous attaquent pas tant qu'elles ne sont pas provoquées.
+295 Acide
+296 Vous résistez au feu et votre souffle enflamme les ennemis. Les dragons de feu sauvages ne vous attaquent pas tant qu'ils ne sont pas provoqués.
+297 Feu
+298 Vous résistez à la glace et au gel, et votre souffle ralentit. Les dragons de glace sauvages ne vous attaquent pas tant qu'ils ne sont pas provoqués.
+299 Glace
+300 Vous résistez à la foudre et la foudre de votre souffle saute vers les ennemis proches. Les dragons de foudre sauvages ne vous attaquent pas tant qu'ils ne sont pas provoqués.
+301 Foudre
+302 Vous résistez aux dégâts toxiques (immunisé contre le Poison à partir du Rang 2) et votre souffle empoisonne. Les gorgones sauvages ne vous attaquent pas tant qu'elles ne sont pas provoquées.
+303 Venimeux
+304 Vous résistez à l'eau et à la noyade, votre air dure trois fois plus longtemps (vous respirez sous l'eau à partir du Rang 2) et votre souffle repousse et éteint le feu. Les serpents de mer sauvages ne vous attaquent pas tant qu'ils ne sont pas provoqués.
+305 Eau
+306 Encore moins de santé, mais quand un ennemi porte un coup mortel, vous vous divisez en deux copies de demi-taille. Accroupissez-vous près de votre copie pour fusionner.
+307 Mitotique
+308 Accroupissez-vous pour charger un saut ; en sautant, vous êtes propulsé là où vous regardez (comme Torrent), sans dégâts d'impact et en rebondissant sur le sol et les murs.
+309 Ressort
+310 Touche raciale 1 : vous vous divisez en un petit slime par cœur (max. 25) qui n'infligent que des dégâts de contact. Chaque coup tue un slime et les dégâts excédentaires ne se reportent pas. Se soigner en étant divisé fait apparaître de nouveaux slimes. Appuyez à nouveau pour fusionner.
+311 Essaim
+312 Accroupissez-vous contre un mur ou une entité pour vous y coller. Vous glissez lentement le long des murs comme sur du miel et vos coups appliquent la Lenteur.
+313 Visqueux

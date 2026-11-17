@@ -1,0 +1,278 @@
+0 Réduit le mur choisi et les traits de base négatifs de votre classe.
+1 Adaptable
+2 L'enclume vous coûte moins de niveaux.
+3 Main d'enclume
+4 Vous minez sous l'eau à vitesse normale et voyez sous l'eau. Le feu vous blesse davantage.
+5 Créature aquatique
+6 Table d'enchantement améliorée et Fusion arcanique.
+7 Savoir arcanique
+8 Les minerais que vous minez sortent déjà fondus.
+9 Toucher fondeur
+10 Chance que le troc avec les piglins donne le double.
+11 Marché infernal
+12 Les explosions que vous causez ne vous blessent pas.
+13 Antidéflagrant
+14 Squelettes neutres et moins de dégâts de projectiles.
+15 Os
+16 Invisible sous l'eau tant que vous restez immobile.
+17 Camouflage
+18 Vision nocturne sans lumière du ciel ; immunisé contre les Ténèbres.
+19 Yeux de caverne
+20 Le froid (gel et sorts de glace) et l'eau (sorts d'eau de T.O Magic 'n Extras) vous blessent davantage.
+21 Sang ardent
+22 Vision nocturne en faible lumière.
+23 Vision dans le noir
+24 Vous régénérez constamment de la santé ; cela s'arrête quand vous subissez des dégâts.
+25 Régénération des morts
+26 Tuer un ennemi accorde de la faim et de la saturation.
+27 Dévorer
+28 Les gardiens proches attaquent vos ennemis.
+29 Escorte
+30 Vous ne pouvez ni subir de dégâts ni attaquer.
+31 Forme éthérée
+32 Quand vous tuez un monstre hostile ou un boss, vous gagnez au hasard Force, Résistance ou Régénération I pendant autant de secondes que sa santé maximale (boss) ou une fraction de celle-ci (autres).
+33 Festin
+34 Immunisé contre le feu et la lave (pas contre les dégâts de feu magique). Le lait ne le retire pas.
+35 Peau de braise
+36 Améliorations de la pêche.
+37 Pêche experte
+38 Votre faim ne monte ni ne descend et vous n'avez pas de saturation.
+39 Faim fixe
+40 Votre Bombe de magma raciale laisse des flammes qui brûlent les ennemis.
+41 Flaque de flammes
+42 L'XP perdue à la réinitialisation est réduite du pourcentage d'Adaptable.
+43 Réinitialisation flexible
+44 À partir du Rang 2, vous avez Régénération I dans les biomes forestiers.
+45 Sève
+46 Les fourneaux proches fonctionnent plus vite.
+47 Chaleur de forge
+48 Ce que vous fabriquez ou réparez dure plus longtemps ; au Rang 3, ce que vous fabriquez sort avec un Solidité supplémentaire.
+49 Forge naine
+50 À partir du Rang 2, chaque pièce d'armure que vous avez fabriquée et portez donne +0,5 de robustesse.
+51 Armure forgée
+52 Niveau de Fortune sur les minerais (jamais avec Toucher de soie).
+53 Fortune raciale
+54 Clic droit à mains nues : farine d'os gratuite sur une culture.
+55 Toucher vert
+56 Rendement supplémentaire des cultures mûres.
+57 Récolte abondante
+58 Vous consommez plus de faim.
+59 Appétit d'orc
+60 Immunisé contre l'effet Faim.
+61 Estomac endurci
+62 Viande et poisson crus sans effets négatifs ; ils rassasient comme s'ils étaient cuits.
+63 Estomac de fer
+64 Vous survivez à un coup mortel avec 1 PV, une fois par vie. Se résout après les capacités de classe et avant le Totem.
+65 Dernier Combat
+66 Votre Bombe de magma raciale laisse de la lave qui brûle et ralentit les ennemis.
+67 Flaque de lave
+68 Vous marchez sur la lave (s'accroupir vous fait couler).
+69 Marcheur de lave
+70 Vous traversez le feuillage et l'escaladez.
+71 Marcheur des feuilles
+72 Les potions de soin et les sorts de soin ne vous soignent pas.
+73 Corps sans vie
+74 Chance de voler en frappant en mêlée.
+75 Doigts agiles
+76 Niveau de Butin (le plus élevé entre celui-ci et l'enchantement compte).
+77 Butin racial
+78 Vitesse supplémentaire en cassant la pierre et les minerais.
+79 Mineur
+80 Localise la forteresse ou le bastion le plus proche.
+81 Boussole infernale
+82 Piglins, brutes et hoglins neutres.
+83 Natif du Nether
+84 Dans le Nether, vous avez Faiblesse.
+85 Loin de la mer
+86 Vous ne pouvez pas manger de viande ni de poisson.
+87 Régime elfique
+88 Les golems de fer sont toujours hostiles et les villageois vous font payer plus.
+89 Marqué
+90 Votre Tir de feu racial transperce les ennemis.
+91 Feu perforant
+92 La nourriture qui n'est ni de la viande ni du poisson vous rassasie davantage.
+93 Régime végétal
+94 Fait fondre instantanément ce que vous tenez en main avec le combustible de votre inventaire.
+95 Fourneau portable
+96 Niveau de chaque sort de feu racial (0 = vous ne l'avez pas encore). Nécessite Iron's Spells.
+97 Sorts raciaux
+98 À partir du Rang 2, les ennemis que vous vainquez donnent 15 % d'expérience en plus.
+99 Érudit
+100 Noyés et gardiens neutres.
+101 Ami de la mer
+102 À partir du Rang 2, vos coups de mêlée enflamment la cible pendant 2 s.
+103 Frappes brûlantes
+104 Un second mur reçoit une partie de la réduction.
+105 Second mur
+106 Un nuage qui rend invisible tout ce qu'il contient.
+107 Nuage de fumée
+108 Un piège qui n'expire jamais : le premier ennemi à marcher dessus subit des dégâts et est immobilisé. Vous seul le voyez.
+109 Collet
+110 Met en évidence les minerais et la lave proches.
+111 Sens de la pierre
+112 La lumière directe du soleil vous blesse (ignore l'armure) et annule votre régénération.
+113 Lumière du soleil
+114 Des dégâts sont soustraits à chaque coup que vous subissez.
+115 Peau épaisse
+116 Soins à la mort d'un ennemi et vol de vie.
+117 Soif
+118 À partir du Rang 2, le trident (en mêlée ou lancé) inflige 25 % de dégâts en plus.
+119 Maîtrise du trident
+120 Accroupi, vous minez la pierre dans un tunnel 3×3 pour un coût de faim plus élevé.
+121 Tunnel
+122 Quand vous cassez un minerai, vous cassez les minerais connectés du même type.
+123 Filons
+124 Multiplie la réduction du mur principal.
+125 Maîtrise des murs
+126 Retire Lenteur, Faiblesse, Cécité, Fatigue, Nausée et Ténèbres dans le rayon.
+127 Voix du seigneur de guerre
+128 Vous ne consommez pas d'air sous l'eau.
+129 Respiration aquatique
+130 Tant que vous êtes dans l'eau, vous brûlez lentement.
+131 Flamme déclinante
+132 Pas de dégâts de chute et chute lente.
+133 Apesanteur
+134 Immunisé contre le Wither.
+135 Sang de cendres
+136 Le loup que vous montez mord ce que vous frappez.
+137 Morsure
+138 Vous montez vos loups apprivoisés (clic droit à mains nues).
+139 Cavalier
+140 Le loup que vous montez a Régénération.
+141 Lien
+142 Vos loups ont plus de santé.
+143 Loups robustes
+144 Sang résistant
+145 Retraite
+146 Élan de course
+147 Contre au bouclier
+148 Onde de choc
+149 Châtiment
+150 Peau spirituelle
+151 Affinité corporelle de posture
+152 Efficacité de décharge et d'effet de posture
+153 Flamme constante
+154 Tireur constant
+155 Drain de discrétion
+156 Flèche collante
+157 Écho de pierre
+158 Puissance des charges de Pierre
+159 Invocations renforcées
+160 Invocations par sort
+161 Ténacité
+162 Toxine
+163 Dose de toxine
+164 Frappe perfide
+165 Concentration inébranlable
+166 Charge irrésistible
+167 Harmonie (réduit les murs)
+168 Étendard de guerre
+169 Puissance des charges d'Eau
+170 Lien sauvage
+171 Vous avez rompu le lien avec %s
+172 Lien sauvage avec %s
+173 Carnivore : vous ne pouvez manger que de la viande
+174 Boussole infernale : structure en X %s, Z %s (à %s blocs)
+175 La Boussole infernale ne fonctionne que dans le Nether
+176 Il n'y a ni forteresse ni bastion à proximité
+177 Ankh ! Vous survivez au Pari avec la mort (prochain : %s)
+178 Crâne : la Mort remporte le pari
+179 Détonation de %s !
+180 %s : %s/%s charges
+181 Les elfes ne mangent ni viande ni poisson
+182 L'emplacement %s a déjà %s lié (il change quand vous réinitialisez votre classe)
+183 %s lié à l'emplacement %s (gratuit si son coût est d'au plus %s de mana)
+184 Ce sort est déjà lié à un autre emplacement
+185 Vous n'avez pas encore l'emplacement d'Incantation libre %s
+186 Sélectionnez d'abord un sort dans la roue d'Iron's
+187 Incantation libre (emplacement %s) : %s/%s charges restantes
+188 Fourneau portable : vous n'avez pas assez de combustible
+189 Dernière fureur ! Tuez %s avant la fin du temps
+190 Dernier Combat ! Vous survivez avec un demi-cœur
+191 Votre sous-race n'a pas de capacité active (ou vous n'avez pas encore le Rang)
+192 %s vous a volé un objet !
+193 Votre classe ne peut pas utiliser l'école %s
+194 Vous avez volé : %s
+195 Sens de la pierre : %s blocs mis en évidence
+196 %s : %s s
+197 %s n'est pas encore disponible dans cette version du mod.
+198 %s
+199 %s est maintenant votre allié.
+200 %s est déjà votre allié.
+201 Vous avez retiré vos %s alliés.
+202 Vous avez déjà le nombre maximal d'alliés (%s).
+203  Ses alliés : %s
+204  L'a pour allié : %s
+205 Alliés de %s (%s) :
+206  ★ = allié mutuel. /aliados agregar|quitar <joueur>, /aliados limpiar ou la touche J.
+207 [Marquer comme allié]
+208 %s vous a marqué comme allié.
+209 personne
+210 %s n'est pas votre allié.
+211 %s n'est plus votre allié : il compte comme un ennemi.
+212 Vous ne pouvez pas vous marquer vous-même : vous comptez déjà comme votre propre allié.
+213 %s ne vous a plus pour allié.
+214 Vous avez déjà le nombre maximal de liens (%s).
+215 Vous avez reçu le Livre des liens.
+216 Rapprochez-vous de l'animal (moins de %s blocs).
+217 Seul le Maître des bêtes peut utiliser ce livre.
+218 Point %s enregistré ici.
+219 Choisissez votre classe (cliquez sur l'une) :
+220 %s : +%s %% de dégâts
+221 Classe : %s | Base : %s/30 | Sous-classe : %s (%s/%s) | %s
+222 Écho martial : votre prochain sort coûte moins de mana
+223 Niveau maximal atteint
+224 Effet de posture prêt : votre prochain coup à mains nues dépense les charges
+225 Niveau suivant : %s XP
+226 aucun
+227 %s — Race : %s | Sous-race : %s | Rang %s%s
+228 %s n'a pas encore choisi de race.
+229 La classe de %s a été réinitialisée.
+230 Vous avez déjà une classe. Réinitialisez-la pour en choisir une autre.
+231 Vous avez déjà une race : elle est permanente.
+232 Vous avez déjà une sous-classe. Réinitialisez-la pour en choisir une autre.
+233 Cette branche a déjà 10 points.
+234 Vous utilisez déjà 3 branches : les autres sont verrouillées jusqu'à la réinitialisation de votre classe.
+235 Cette classe est désactivée sur ce serveur.
+236 Vous ne pouvez pas faire cela en combat.
+237 Vous n'avez pas encore choisi de classe.
+238 Vous devez choisir une race avant de choisir une classe.
+239 Vous n'avez pas encore choisi de sous-classe.
+240 Vous n'avez pas assez d'XP.
+241 Seuls les humains choisissent un mur.
+242 Fait.
+243 Vous avez déjà choisi le perk de cette branche. Il ne change qu'à la réinitialisation de votre classe.
+244 Remplissez la branche (10 points) pour choisir son perk.
+245 Il vous faut plus de points de classe de base pour monter la sous-classe de niveau.
+246 La sous-classe se débloque à 15 points de classe de base.
+247 Cette sous-race n'est pas encore disponible.
+248 Cette branche n'existe pas dans votre classe.
+249 Cette classe n'existe pas ou est désactivée.
+250 Ce perk n'existe pas dans cette branche.
+251 Cette race ou sous-race n'existe pas.
+252 Cette sous-classe n'appartient pas à votre classe.
+253 Cette sous-race n'appartient pas à cette race.
+254 Ce mur ne peut pas être choisi (votre classe ne l'a pas ou vous l'avez déjà choisi).
+255 Vous avez déjà choisi vos murs. Ils changent à la réinitialisation de votre classe.
+256 Le boss de votre rite est toujours en vie.
+257 Vous ne pouvez pas encore invoquer un autre boss de rite (%s s).
+258 Le boss du rite est tombé, mais la condition n'a pas été remplie : %s
+259 Le boss de votre rite a disparu.
+260 Accroupissez-vous et faites un clic droit sur l'autel pour invoquer le boss du rite.
+261 Boss du rite : %s
+262 Il n'y a pas de place libre à côté de l'autel pour le boss.
+263 Aucun boss de rite disponible.
+264 %s répond à votre appel ! Il ne compte que pour vous.
+265 Rite accompli : %s ! Vous êtes maintenant Rang %s.
+266 ✔
+267 Rite pour le Rang %s : %s
+268 Rites : faites un clic droit sur l'Autel de race pour voir le rite et remettre des offrandes ; accroupi + clic pour invoquer le boss.
+269 Il manque pour l'offrande : %s
+270 L'autel n'est pas à l'endroit exigé par le rite : %s
+271 Vous n'avez aucun rite en attente (pas de race ou Rang maximal).
+272 Ce rite n'a pas besoin de boss pour le moment.
+273  %s %s : %s/%s
+274 Rite : %s ✔
+275 Offrande acceptée : %s
+276 %s : %s/%s
+277 Structure acceptée : %s

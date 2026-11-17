@@ -1,0 +1,286 @@
+0 Drachengebrüll: Die Berserkerwut stößt ein Brüllen aus; Nicht-Boss-Mobs im Umkreis von 8 Blöcken fliehen und erleiden das Element der Schuppen.
+1 Drachenhäutung
+2 Wyrm-Zorn: Unter 40 % Gesundheit oder während der Berserkerwut wachsen dir Geisterflügel, und jeder kritische Treffer setzt einen elementaren 4-Block-Kegel frei (einmal pro Sekunde).
+3 Wyrm-Wut
+4 Goldbeute: Wenn du einen feindlichen Mob tötest, lässt er mit 10 % Chance einen Goldklumpen fallen, der zu dir springt.
+5 Plünderer-Staat
+6 Eisenbrust: −5 % Projektilschaden.
+7 Eisengeschirr
+8 Witterung: Feindliche Mobs im Umkreis von 12 Blöcken mit weniger als 30 % Gesundheit leuchten.
+9 Bestienfelle
+10 Glutherz: Jeder Treffer, den du einsteckst, baut eine Glut auf (max. 5, 8 s). Sturmangriff oder Berserkerwut setzen sie in einem 4-Block-Feuerring frei.
+11 Aschene Platten
+12 Klingende Glieder: Jede Ladung klingt, und beim Erreichen der Schwelle erklingen die Glieder im Akkord.
+13 Kettengi
+14 Kristallspiegelung: Die Projektilabwehr gewährt +1 Ladung mit einem prismatischen Blitz.
+15 Kristallgewand
+16 Drachentanz: Wenn du einen Haltungseffekt auslöst, umkreist dich 4 s lang ein Geisterdrache in der Farbe der Haltung und beißt jede Sekunde den nächsten Feind.
+17 Schuppenmantel
+18 Wyrm-Faust: Jeder Haltungseffekt schickt einen Energie-Drachenkopf los, der 8 Blöcke geradeaus fliegt. Feuer: Auf Lava zu gehen gibt in der Feuerhaltung Geschwindigkeit. Eis: In Wasser frierst du beim Gehen das Wasser ein. Blitz: In Stein setzen schwere Treffer, die du einsteckst, einen Funken frei.
+19 Wyrm-Gewänder
+20 Pilgerfahrt: Die Meditation heilt 20 % mehr.
+21 Pilgertunika
+22 Fester Stand: Stein sammelt schon bei Treffern ab 1,5 HP Ladung.
+23 Eisengi
+24 Erster Schritt: Wenn du ohne Ladungen in eine Haltung wechselst, erhältst du 1, und Ladungen schwinden 10 % langsamer.
+25 Wickel des Novizen
+26 Haltungssiegel: Steinladungen schwinden halb so schnell, und beim Haltungswechsel mit 5 oder mehr Ladungen hinterlässt du ein Runensiegel, das die Entladung nach 3 s mit 30 % wiederholt.
+27 Obsidian-Kesa
+28 Vollständiges Set (4 Teile, nur %s):
+29 Langsam, mit zusätzlicher Reichweite und einem Bogenschwung, der andere Feinde mit 60 % trifft.
+30 Aschenschwung: Der Schwung blendet Mobs für 1 s.
+31 Stabhochsprung: Ducken + Springen katapultiert dich nach vorn, und du landest mit einer Schockwelle (8 s).
+32 Horizontwelle: Wenn du zwischen Treffern 1,5 s wartest, sendet der Treffer eine elementare Welle im Bogen aus.
+33 Feuer: Jeder Treffer entzündet.
+34 Eis: Jeder Treffer verlangsamt.
+35 Blitz: Jeder Treffer springt auf einen Feind in der Nähe über.
+36 In den Handplatz von Curios (oder in die Nebenhand) getragen, verbessern sie Schläge mit leeren Händen.
+37 Obsidianfäuste: Beim 5. Treffer gegen dasselbe Ziel ein 2-Block-Ausbruch.
+38 Drachenklauen: Deine Treffer können Wunde verursachen (−30 % Heilung für 4 s).
+39 Wyrm-Fäuste: Deine Treffer wenden das Element an, und die Haltungseffekte des Mönchs sind 20 % stärker.
+40 Mönch: zählt als unbewaffnet (Ladungen, Perks und Unterklasse).
+41 Schnell, mit kurzer Reichweite. Für den Mönch zählt es als unbewaffnet.
+42 Wirbel: Alle 8 verketteten Treffer ein Wirbel, der alles ringsum mit 50 % trifft.
+43 Knochenecho: Der Wirbel hinterlässt ein Geister-Nunchaku, das 3 Treffer mit 30 % wiederholt.
+44 Kettensturm: Der Wirbel wird zu einem 3 s langen Wirbelsturm, der Feinde heranzieht und das Element anwendet.
+45 Mittleres Tempo. Halte die rechte Maustaste zum Blocken: Ein Treffer in den ersten Augenblicken wird pariert und betäubt den Angreifer; andernfalls verringert er den Schaden.
+46 Eiserne Parade: Die Parade gibt 50 % des Treffers zurück.
+47 Entwaffnen: Die Parade gibt dem Angreifer 3 s lang Schwäche II.
+48 Wyrm-Konter: Nach einer Parade ist dein nächster Treffer innerhalb von 1,5 s ein elementarer Stoß, der in einer Linie durchbohrt.
+49 Freies %s: %s
+50 Tarnung
+51 Arkane Sanduhr
+52 Prisma des Erzmagiers
+53 Barbaren-Kettenstiefel
+54 Barbaren-Kettengeschirr
+55 Barbaren-Kettenhelm
+56 Barbaren-Kettenbeinschienen
+57 Barbaren-Diamantstiefel
+58 Barbaren-Diamantgeschirr
+59 Barbaren-Diamanthelm
+60 Barbaren-Diamantbeinschienen
+61 Barbaren-Feuerdrachenschuppenstiefel
+62 Barbaren-Feuerdrachenschuppengeschirr
+63 Barbaren-Feuerdrachenschuppenhelm
+64 Barbaren-Feuerdrachenschuppenbeinschienen
+65 Barbaren-Eisdrachenschuppenstiefel
+66 Barbaren-Eisdrachenschuppengeschirr
+67 Barbaren-Eisdrachenschuppenhelm
+68 Barbaren-Eisdrachenschuppenbeinschienen
+69 Barbaren-Blitzdrachenschuppenstiefel
+70 Barbaren-Blitzdrachenschuppengeschirr
+71 Barbaren-Blitzdrachenschuppenhelm
+72 Barbaren-Blitzdrachenschuppenbeinschienen
+73 Barbaren-Feuerdrachenstahlstiefel
+74 Barbaren-Feuerdrachenstahlgeschirr
+75 Barbaren-Feuerdrachenstahlhelm
+76 Barbaren-Feuerdrachenstahlbeinschienen
+77 Barbaren-Eisdrachenstahlstiefel
+78 Barbaren-Eisdrachenstahlgeschirr
+79 Barbaren-Eisdrachenstahlhelm
+80 Barbaren-Eisdrachenstahlbeinschienen
+81 Barbaren-Blitzdrachenstahlstiefel
+82 Barbaren-Blitzdrachenstahlgeschirr
+83 Barbaren-Blitzdrachenstahlhelm
+84 Barbaren-Blitzdrachenstahlbeinschienen
+85 Barbaren-Goldstiefel
+86 Barbaren-Goldgeschirr
+87 Barbaren-Goldhelm
+88 Barbaren-Goldbeinschienen
+89 Barbaren-Eisenstiefel
+90 Barbaren-Eisengeschirr
+91 Barbaren-Eisenhelm
+92 Barbaren-Eisenbeinschienen
+93 Barbaren-Lederstiefel
+94 Barbaren-Ledergeschirr
+95 Barbaren-Lederhelm
+96 Barbaren-Lederbeinschienen
+97 Barbaren-Netheritstiefel
+98 Barbaren-Netheritgeschirr
+99 Barbaren-Netherithelm
+100 Barbaren-Netheritbeinschienen
+101 Diamant-Bostab
+102 Drachenknochen-Bostab
+103 Feuerdrachenstahl-Bostab
+104 Eisdrachenstahl-Bostab
+105 Blitzdrachenstahl-Bostab
+106 Gold-Bostab
+107 Eisen-Bostab
+108 Netherit-Bostab
+109 Stein-Bostab
+110 Holz-Bostab
+111 Buch der Bande
+112 Krähenumhang
+113 Gegerbter Riemen
+114 Zyklopenhorn
+115 Drakonische Schmiedevorlage
+116 Köcher des Drachentöters
+117 Immergrünes Blatt
+118 Fangzahn-Halsband
+119 Wandernder Frostring
+120 Gorgonenauge
+121 Abzeichen des Alleskönners
+122 Medaillon des Einsiedlers
+123 Hippogreif-Feder
+124 Diamant-Schlagringe
+125 Drachenknochen-Schlagringe
+126 Feuerdrachenstahl-Schlagringe
+127 Eisdrachenstahl-Schlagringe
+128 Blitzdrachenstahl-Schlagringe
+129 Gold-Schlagringe
+130 Eisen-Schlagringe
+131 Netherit-Schlagringe
+132 Stein-Schlagringe
+133 Holz-Schlagringe
+134 Kompass des letzten Atems
+135 Gezinkte Würfel
+136 Magmaherz
+137 Kampfbinde
+138 Mitternachtsschleier
+139 Laterne des Bergmanns
+140 Mönchs-Kettensandalen
+141 Mönchs-Kettengi
+142 Mönchs-Kettenstirnband
+143 Mönchs-Kettenhose
+144 Mönchs-Diamantsandalen
+145 Mönchs-Diamantgi
+146 Mönchs-Diamantstirnband
+147 Mönchs-Diamanthose
+148 Mönchs-Feuerdrachenschuppensandalen
+149 Mönchs-Feuerdrachenschuppengi
+150 Mönchs-Feuerdrachenschuppenstirnband
+151 Mönchs-Feuerdrachenschuppenhose
+152 Mönchs-Eisdrachenschuppensandalen
+153 Mönchs-Eisdrachenschuppengi
+154 Mönchs-Eisdrachenschuppenstirnband
+155 Mönchs-Eisdrachenschuppenhose
+156 Mönchs-Blitzdrachenschuppensandalen
+157 Mönchs-Blitzdrachenschuppengi
+158 Mönchs-Blitzdrachenschuppenstirnband
+159 Mönchs-Blitzdrachenschuppenhose
+160 Mönchs-Feuerdrachenstahlsandalen
+161 Mönchs-Feuerdrachenstahlgi
+162 Mönchs-Feuerdrachenstahlstirnband
+163 Mönchs-Feuerdrachenstahlhose
+164 Mönchs-Eisdrachenstahlsandalen
+165 Mönchs-Eisdrachenstahlgi
+166 Mönchs-Eisdrachenstahlstirnband
+167 Mönchs-Eisdrachenstahlhose
+168 Mönchs-Blitzdrachenstahlsandalen
+169 Mönchs-Blitzdrachenstahlgi
+170 Mönchs-Blitzdrachenstahlstirnband
+171 Mönchs-Blitzdrachenstahlhose
+172 Mönchs-Goldsandalen
+173 Mönchs-Goldgi
+174 Mönchs-Goldstirnband
+175 Mönchs-Goldhose
+176 Mönchs-Eisensandalen
+177 Mönchs-Eisengi
+178 Mönchs-Eisenstirnband
+179 Mönchs-Eisenhose
+180 Mönchs-Ledersandalen
+181 Mönchs-Ledergi
+182 Mönchs-Lederstirnband
+183 Mönchs-Lederhose
+184 Mönchs-Netheritsandalen
+185 Mönchs-Netheritgi
+186 Mönchs-Netheritstirnband
+187 Mönchs-Netherithose
+188 Diamant-Nunchaku
+189 Drachenknochen-Nunchaku
+190 Feuerdrachenstahl-Nunchaku
+191 Eisdrachenstahl-Nunchaku
+192 Blitzdrachenstahl-Nunchaku
+193 Gold-Nunchaku
+194 Eisen-Nunchaku
+195 Netherit-Nunchaku
+196 Stein-Nunchaku
+197 Holz-Nunchaku
+198 Schwurreliquiar
+199 Phönixfeder
+200 Pixie-Glöckchen
+201 Taschenbanner
+202 Diamant-Sai
+203 Drachenknochen-Sai
+204 Feuerdrachenstahl-Sai
+205 Eisdrachenstahl-Sai
+206 Blitzdrachenstahl-Sai
+207 Gold-Sai
+208 Eisen-Sai
+209 Netherit-Sai
+210 Stein-Sai
+211 Holz-Sai
+212 Seeschlangenanhänger
+213 Rosenkranz der drei Haltungen
+214 Sturmtalisman
+215 Tempelglocke
+216 Gezeitenmuschel
+217 Gürtel des Reisenden
+218 Krimskramsbeutel
+219 Trollknochen-Ohrring
+220 Trophäenschädel
+221 Kriegstrommel
+222 Irrlichtlaterne
+223 RPG-Klassen
+224 RPG-Klassen
+225 Fähigkeit 1
+226 Fähigkeit 2
+227 Fähigkeit 3
+228 Verbündete
+229 Klassenbuch öffnen
+230 Rassenfähigkeit 1
+231 Rassenfähigkeit 2
+232 Epic-Fight-Ausweichen
+233 Leidzufügender Schlag (Seuche)
+234 Arkaner Hinterhalt
+235 Arkaner Schild
+236 Rüstungsdurchdringung
+237 Bannerlaura
+238 Schutz der Bestien
+239 Blutmagie
+240 Fleischfresser
+241 Keine Verlangsamung beim Zaubern
+242 Arkaner Schritt
+243 Verbesserter Sturmangriff
+244 Geladener Schlag
+245 Verdammung
+246 Stetiger Fluss
+247 Zermalmender Sturmangriff
+248 Spiel mit dem Tod
+249 Tiefe Tarnung
+250 Lähmende Faust
+251 Entfernungsabhängige Macht
+252 Gegenangriff
+253 Dominante Haltung
+254 Spannen ohne Verlangsamung
+255 Verringerte Spanngeschwindigkeit
+256 Frühzündung
+257 Effektimmunität
+258 Elementare Schwächungen
+259 Elementare Manifestation
+260 Ausdauer
+261 Ausweichen
+262 Ausweichsprung
+263 Explosionspfeil
+264 Federfall
+265 Stärke der Feuerladungen
+266 Wut (Perk)
+267 Abgehärtet
+268 Jägerfalle
+269 Jägermal
+270 Durchdrungene Klinge
+271 Urteil
+272 Letzte unsterbliche Wut
+273 Banner des Lebens
+274 Leichte Füße
+275 Lange Rolle
+276 Kampfecho
+277 Meditation
+278 Meditation (Perk)
+279 Beweglicher Schütze
+280 Wucht
+281 Durchbohrung
+282 Trankpfeile
+283 Schneller Konter
+284 Unter Wasser immun gegen Abbaumüdigkeit, Blindheit und Dunkelheit.
+285 Kind des Abgrunds

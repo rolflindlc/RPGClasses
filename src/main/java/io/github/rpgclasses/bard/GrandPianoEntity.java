@@ -130,6 +130,12 @@ public class GrandPianoEntity extends Entity {
         }
     }
 
+    /** El piano se dibuja hasta 9 bloques por encima: que no se recorte al mirar hacia arriba. */
+    @Override
+    public net.minecraft.world.phys.AABB getBoundingBoxForCulling() {
+        return getBoundingBox().inflate(size() * 2.2).expandTowards(0, 10, 0);
+    }
+
     @Override
     public boolean shouldBeSaved() {
         return false;

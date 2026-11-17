@@ -139,7 +139,10 @@ public final class BardAuras {
                 if (!enemy(bard, e)) continue;
                 int t = refresh + linger;
                 e.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, t, 0, true, true, true), bard);
-                e.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, t, 0, true, true, true), bard);
+                // Control contra jefes a la mitad: solo Debilidad, sin Lentitud.
+                if (!io.github.rpgclasses.content.race.Races.isBoss(e)) {
+                    e.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, t, 0, true, true, true), bard);
+                }
                 continue;
             }
             if (!Allies.isAlly(bard, e) || (e instanceof Player pl && pl.isSpectator())) continue;

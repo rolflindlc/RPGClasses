@@ -177,7 +177,7 @@ public final class BardCombat {
     public void onAttack(LivingAttackEvent event) {
         Entity src = event.getSource().getEntity();
         if (!(src instanceof LivingEntity attacker) || src == event.getEntity()) return;
-        if (event.getSource().getDirectEntity() == attacker && dancing(attacker)) {
+        if (dancing(attacker)) {
             event.setCanceled(true);
             return;
         }

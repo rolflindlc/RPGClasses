@@ -6,7 +6,11 @@ license="All Rights Reserved (see LICENSE)"
 modId="rpgclasses"
 version="${file.jarVersion}"
 displayName="RPG Classes"
-description='''Sistema de clases, ramas y subclases definido por datapack.'''
+authors="Rolflin"
+credits="Textures and art by their respective artists. Built for Minecraft Forge 1.20.1."
+description='''A balanced class and race system for Minecraft, defined entirely by datapacks.
+Pick a race and a class, grow through branches and subclasses, complete race rites, and fight with class abilities.
+Integrates with Iron's Spells 'n Spellbooks and Epic Fight (both optional). Available in 15 languages.'''
 
 [[dependencies.rpgclasses]]
     modId="forge"

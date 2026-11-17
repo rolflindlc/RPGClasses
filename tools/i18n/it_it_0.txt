@@ -1,0 +1,245 @@
+0 Ogni colpo di arco o balestra ha una probabilità di non consumare munizioni.
+1 Risparmio di munizioni
+2 Per alcuni secondi attacchi più veloce e più forte, ma subisci anche più danno. Attivarla indebolisce i nemici vicini.
+3 Furia del berserker
+4 Ogni volta che uccidi un nemico recuperi parte della tua salute massima.
+5 Sete di sangue
+6 Per alcuni secondi riduci enormemente tutto il danno che subisci.
+7 Baluardo
+8 Carichi in linea retta e ti schianti sul primo nemico: subisce poco danno, viene respinto e stordito, e tu rimbalzi.
+9 Carica
+10 Durante il Baluardo corri senza sosta a grande velocità, lasciando una scia di vento, e infliggi danno e contraccolpo a tutto ciò che calpesti. Sfondi blocchi deboli (foglie, vetro, porte, recinzioni, botole di legno…), ma ognuno ti ferisce un po' in base alla sua durezza.
+11 Baluardo travolgente
+12 Quando diventi invisibile lasci un clone con il tuo equipaggiamento che attira i nemici e scappa.
+13 Esca
+14 Automatica, con ricarica. Riduce il danno di un proiettile di una quantità pari al tuo Livello totale. Se lo riduci a zero, lo rimandi indietro. Concede cariche: +1 nel Fuoco, +3 nell'Acqua e +1 nella Pietra.
+15 Deviazione dei proiettili
+16 Premi di nuovo salta a mezz'aria per fare un secondo salto.
+17 Doppio salto
+18 Scegli un incantesimo (selezionalo nella ruota e usa /clase conjuro 1) che resta legato a questo slot per sempre. Finché hai cariche, lanciarlo costa una carica invece del mana.
+19 Lancio libero I
+20 Secondo slot di lancio libero, con più cariche e un limite di costo più alto.
+21 Lancio libero II
+22 Terzo slot di lancio libero, con il costo massimo consentito.
+23 Lancio libero III
+24 Mentre il Baluardo è attivo, parte del danno che mitighi cura gli alleati vicini e te stesso.
+25 Baluardo curativo
+26 Tenere l'arco completamente teso aumenta il danno del colpo a scatti di tempo.
+27 Colpo pesante
+28 Il Baluardo rimuove tutti i tuoi effetti negativi e ti rende immune a quelli nuovi finché dura.
+29 Baluardo incorruttibile
+30 Potenzia il Colpo pesante: gli scatti arrivano prima e l'ultimo è molto più forte.
+31 Colpo letale
+32 Non subisci danno da caduta e cammini sull'acqua. Nella Postura del fuoco cammini anche sulla lava.
+33 Passo leggero
+34 Ti teletrasporti dietro al nemico che stai guardando (fino a 10 blocchi). Per 8 s i tuoi colpi contro quel nemico sono critici garantiti e, se lo uccidi in quel tempo, l'abilità si ricarica all'istante.
+35 Passo d'ombra
+36 Ogni pressione passa alla postura successiva (Acqua, Pietra, Fuoco). Accumuli cariche solo della postura attiva: Fuoco a ogni colpo a mani nude (più danno), Pietra quando subisci colpi (più armatura) e Acqua quando corri, schivi o devii (più velocità e salto). Al massimo, o con Maiusc + colpo (o accovacciato + questo tasto) da 10 cariche, il tuo prossimo colpo a mani nude le consuma tutte: Colpo infuocato, stordimento o Controcorrente. Cambiare postura rilascia le cariche della postura precedente come effetto ad area. Le cariche svaniscono gradualmente quando smetti di accumularle e quando indossi un'armatura.
+37 Posture elementali
+38 Infliggi più danno ai nemici che ti stanno prendendo di mira.
+39 Guardia salda
+40 Quando ti accovacci diventi davvero invisibile finché ti resta barra di Furtività. Attaccare o lanciare un incantesimo consuma gran parte della barra.
+41 Furtività
+42 Costringe i mob vicini ad attaccarti, li rallenta e riduce il danno che subisci per alcuni secondi.
+43 Provocazione
+44 Aggiunge un terzo salto a mezz'aria.
+45 Triplo salto
+46 Accovacciandoti accanto a un muro ti ci aggrappi e puoi scalarlo. Se tendi un arco, ti lasci andare.
+47 Scalata dei muri
+48 Uno scatto orizzontale a mezz'aria, con cariche che si recuperano da sole.
+49 Scatto del vento
+50 Danno critico dall'invisibilità
+51 Danno con l'arco
+52 Probabilità di colpo critico
+53 Danno critico
+54 Resistenza agli effetti negativi
+55 Velocità di tensione dell'arco
+56 Cure ricevute
+57 Altezza del salto
+58 Contraccolpo inflitto
+59 Camminatore tra le foglie
+60 Raggio di individuazione dei mob
+61 Velocità dei proiettili
+62 Dimensioni
+63 Velocità da accovacciato
+64 Dimensione degli incantesimi
+65 Danno a mani nude
+66 Contraccolpo a mani nude
+67 Zoom
+68 Altare della razza
+69 I tuoi colpi critici infliggono molto più danno.
+70 Brutalità
+71 Furia della ferita: infliggi più danno quanta più salute ti manca.
+72 Furia
+73 Subisci meno danno da cadute, fuoco ed esplosioni e perdi meno fame.
+74 Temprato
+75 Senza armatura, ottieni armatura, tenacia e velocità di movimento.
+76 Pelle di ferro
+77 La Carica arriva più lontano e si ricarica prima. Inattiva finché non hai la Carica.
+78 Fuga precipitosa
+79 Riduce la ricarica dei tuoi incantesimi.
+80 Cadenza
+81 Ti muovi più veloce; con il ramo completo, lanciare incantesimi non ti rallenta.
+82 Fluidità
+83 Aumenta la potenza di tutti i tuoi incantesimi.
+84 Potere
+85 Aumenta il tuo mana massimo e la velocità con cui lo recuperi (+40% di mana al secondo a 10 punti). Iron's rigenera in base al mana massimo, quindi l'attributo di rigenerazione viene abbassato per compensare.
+86 Riserva
+87 Le tue evocazioni hanno più salute e infliggono più danno.
+88 Evocazione
+89 Potenzia le cariche del Fuoco: più danno per carica e un'onda di scarica più forte.
+90 Pugno
+91 Accovacciato e fermo per alcuni secondi, guarisci lentamente fino a un limite di salute. Subire danno lo interrompe. Quando smetti di meditare ottieni 4 cariche della tua postura che non decadono per 10 s.
+92 Meditazione
+93 Potenzia le cariche della Pietra: più armatura e tenacia per carica e più assorbimento alla scarica.
+94 Pelle
+95 Le tue scariche al cambio di postura e gli effetti delle tue posture sono più forti: +20% a 5 punti e +40% a 10 (le cariche massime restano 10).
+96 Maestria delle posture
+97 Potenzia le cariche dell'Acqua: più velocità e salto per carica e una scarica più forte.
+98 Vento
+99 Un'aura attorno a te: tu e i tuoi alleati ottenete armatura e gli effetti negativi su di te durano meno. Non si somma a quella di un altro Paladino.
+100 Stendardo
+101 Moltiplica l'armatura e la tenacia concesse dai pezzi che indossi.
+102 Corazza
+103 Vieni spinto meno e spingi di più i nemici.
+104 Spinta
+105 Più danno contro non morti e mob del Nether, e un po' più danno in generale se non porti uno scudo.
+106 Punizione
+107 Gli effetti negativi su di te durano meno.
+108 Volontà
+109 Più danno con archi e balestre, e zoom quando ti accovacci con l'arco in mano o mentre lo tendi.
+110 Mira
+111 Tendi l'arco più in fretta.
+112 Cadenza
+113 I tuoi proiettili volano più veloci e arrivano più lontano. Non aumenta il danno.
+114 Gittata
+115 Con il ramo completo, dopo aver subito un colpo in mischia corri più veloce per alcuni secondi.
+116 Ritirata
+117 Gli effetti delle tue frecce con pozione durano di più e sono più forti.
+118 Frecce speciali
+119 La schivata di Epic Fight consuma meno stamina e la sua invulnerabilità dura di più.
+120 Acrobazia
+121 Attacchi più veloce e i tuoi colpi critici infliggono più danno.
+122 Lama
+123 I mob ti individuano da più vicino e i tuoi colpi critici dall'invisibilità infliggono più danno.
+124 Ombra
+125 I tuoi colpi possono avvelenare con la Tossina, un danno lento che non si somma.
+126 Tossine
+127 Ti muovi più veloce.
+128 Vento
+129 Un guerriero senza armatura con armi pesanti. Meno salute ha, più danno infligge, e i suoi colpi critici sono i più forti. Indossare qualsiasi pezzo di armatura disattiva la sua difesa naturale, tranne i finimenti da Barbaro (il suo equipaggiamento di classe).
+130 Barbaro
+131 Lanciatore di incantesimi che usa Iron's Spells. Molto danno a distanza e utilità in cambio di pochissima resistenza. I suoi rami aumentano potenza degli incantesimi, mana e velocità di ricarica.
+132 Mago
+133 Tratto di classe: salute massima inferiore.
+134 Un combattente a mani nude e senza armatura. Il suo livello dà una base di danno e difesa; il resto si guadagna in combattimento accumulando cariche di Fuoco, Pietra o Acqua. Indossare un'armatura disattiva le sue passive e azzera le cariche, tranne le vesti da Monaco (il suo equipaggiamento di classe). Nunchaku, sai, bo e tirapugni contano come mani nude.
+135 Monaco
+136 Corpo marziale: senza armatura (le vesti da Monaco non contano), danno a mani nude, armatura e tenacia che crescono con i tuoi punti di classe base (al massimo a 30). Il Fuoco sottrae il 25% a questa armatura e l'Acqua il 25% a questo danno.
+137 Il tank del gruppo. Resiste più di chiunque altro con armatura e scudo, attira i nemici e protegge gli alleati. Infligge poco danno da solo.
+138 Paladino
+139 Tratto di classe: più salute massima e un po' meno velocità.
+140 Tiratore con l'arco. Danno a distanza costante, frecce veloci a lunga gittata e buona mobilità. Può indossare armature senza penalità.
+141 Ranger
+142 Un assassino agile con armi leggere. Diventa invisibile, colpisce di sorpresa con critici garantiti e si muove molto veloce. Molto fragile se preso.
+143 Ladro
+144 Tratto di classe: salute massima inferiore.
+145 Quando scendi sotto il 30% di salute, i proiettili entro 6 blocchi rallentano (60 s).
+146 Ogni 5° incantesimo dannoso si rifrange: il 30% salta su un altro nemico vicino.
+147 Quando esci dall'invisibilità, uno stormo di corvi acceca i nemici entro 3 blocchi per 1 s (15 s).
+148 Quando entri in combattimento il corno suona: i nemici entro 16 blocchi brillano per 8 s e i tuoi alleati ottengono Forza per 8 s (90 s).
+149 Ogni 11ª freccia è una freccia di osso di drago: +50% di danno e trapassa un nemico.
+150 Tra le foglie rigeneri salute e i mob a più di 8 blocchi non ti prendono di mira.
+151 Ogni mob ostile che uccidi aggiunge una zanna (max 10, perse alla morte): +1% di danno in mischia per zanna.
+152 Congeli l'acqua mentre ci cammini sopra.
+153 Fissare per 2 s un mob non boss lo pietrifica per 2 s (30 s).
+154 Quando passi a un'arma di un'altra disciplina, +10% di danno in mischia per 3 s (6 s).
+155 Attira oggetti e sfere di esperienza entro 6 blocchi.
+156 Tendere un arco a mezz'aria ti fa planare.
+157 Quando muori, una colonna di luce segna il luogo in cui sei caduto per 10 min.
+158 Ogni colpo critico tira un dado: con un 6 infligge un extra ×1,5; con un 1 diventa un colpo normale.
+159 Quando subisci un colpo in mischia, 15% di probabilità di dare fuoco all'aggressore. Lasci impronte luminose.
+160 Il sole ti infligge metà del danno.
+161 I minerali entro 4 blocchi brillano.
+162 Chi colpisce un mob che ti sta inseguendo (tu o i tuoi alleati) guarisce 1 PV (una volta al secondo).
+163 Un colpo letale ti fa rinascere tra le fiamme con il 30% di salute (20 min). Si risolve dopo le abilità di classe e razza.
+164 Accovacciandoti a mezz'aria, leviti per 3 s (ricarica di 10 s).
+165 Porti uno stendardo dorato sulla schiena.
+166 Comune
+167 Epico
+168 Raro
+169 Reliquia
+170 Puoi indossare una sola Reliquia alla volta.
+171 Solo %s
+172 Solo razza %s
+173 Nuoti più veloce e, uscendo dall'acqua, corri più veloce per 5 s.
+174 Cambiando postura con 8 o più cariche, le perline rimbalzano tra 3 nemici.
+175 Quando subisci un colpo in mischia, 10% di probabilità che un fulmine colpisca l'aggressore (8 s).
+176 Quando finisci di meditare, i tuoi alleati entro 8 blocchi perdono un effetto negativo.
+177 Sott'acqua, i tuoi alleati entro 5 blocchi recuperano aria. Sulla terraferma, se stai bruciando, spegne il fuoco (10 s).
+178 Sotto 6 cosce di fame mangi solo cibo del tuo inventario (senza effetti).
+179 5% di probabilità di duplicare un drop comune all'uccisione.
+180 Quando si attiva la tua Ultima resistenza, i mob entro 6 blocchi fuggono.
+181 Quando uccidi un boss, il teschio conserva il suo trofeo e ti concede un tratto di quel boss fino al successivo (immunità al fuoco, alla lentezza, al wither… o +10% di danno).
+182 Il teschio custodisce il trofeo di %s
+183 La Furia del berserker fa suonare i tamburi: i tuoi alleati entro 10 blocchi attaccano più veloci per 10 s.
+184 Ogni 30 s, un fuoco fatuo vola verso il forziere o lo spawner più vicino entro 24 blocchi.
+185 %1$s è stato scagliato in cielo da una freccia di %2$s
+186 %1$s è stato scagliato in cielo da una freccia di %2$s
+187 %1$s è stato calpestato da %2$s
+188 %1$s è stato calpestato da %2$s
+189 %1$s è bruciato nel fuoco di drago di %2$s
+190 %1$s è bruciato nel fuoco di drago di %2$s
+191 %1$s si è congelato nel gelo di drago di %2$s
+192 %1$s si è congelato nel gelo di drago di %2$s
+193 %1$s è stato abbattuto dal fulmine di drago di %2$s
+194 %1$s è stato abbattuto dal fulmine di drago di %2$s
+195 %1$s è stato giudicato da %2$s
+196 %1$s è stato giudicato da %2$s
+197 %1$s è caduto sotto le arti marziali di %2$s
+198 %1$s è caduto sotto le arti marziali di %2$s
+199 %1$s è soccombuto alla peste
+200 %1$s è soccombuto alla peste di %2$s
+201 %1$s è stato spento dall'acqua
+202 %1$s è stato abbattuto dall'onda d'urto di %2$s
+203 %1$s è stato abbattuto dall'onda d'urto di %2$s
+204 %1$s è appassito sotto il sole
+205 %1$s è morto avvelenato da una tossina
+206 %1$s è morto avvelenato da una tossina mentre fuggiva da %2$s
+207 Armatura
+208 Arco
+209 Armi pesanti
+210 Armi leggere
+211 Magia
+212 Scudi
+213 Passo arcano
+214 Stendardo
+215 Furia del berserker
+216 Baluardo
+217 Baluardo travolgente
+218 Condannato
+219 Resistenza
+220 Marchio del cacciatore
+221 Ultima furia
+222 Peste
+223 Ritirata
+224 Provocazione
+225 Tossina
+226 Acqua
+227 Sangue
+228 Sovrannaturale
+229 Ender
+230 Evocazione
+231 Fuoco
+232 Ghiaccio
+233 Fulmine
+234 Natura
+235 Esca
+236 Scaglie di fuoco: ogni pezzo riduce il danno da fuoco.
+237 Scaglie di ghiaccio: ogni pezzo riduce il danno da ghiaccio.
+238 Scaglie di fulmine: ogni pezzo riduce il danno da fulmine.
+239 Non disattiva le passive a mani nude del Barbaro.
+240 Non disattiva il Corpo marziale né azzera le cariche del Monaco.
+241 Fragore di guerra: il primo colpo dopo 2 s di corsa respinge più forte.
+242 Finimenti di maglia ad anelli
+243 Frantumazione: i tuoi colpi critici rallentano il bersaglio per 1 s (una volta ogni 3 s per bersaglio).
+244 Finimenti spezzaossa

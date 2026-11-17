@@ -1,0 +1,314 @@
+0 Corpo da centauro
+1 %1$s si è dissolto nel soffio di %2$s
+2 %1$s si è dissolto nel soffio di %2$s
+3 %1$s è bruciato nel soffio di %2$s
+4 %1$s è bruciato nel soffio di %2$s
+5 %1$s si è congelato nel soffio di %2$s
+6 %1$s si è congelato nel soffio di %2$s
+7 %1$s è stato abbattuto dal soffio di %2$s
+8 %1$s è stato abbattuto dal soffio di %2$s
+9 %1$s è stato avvelenato dal soffio di %2$s
+10 %1$s è stato avvelenato dal soffio di %2$s
+11 %1$s è annegato nel soffio di %2$s
+12 %1$s è annegato nel soffio di %2$s
+13 Corrosione
+14 Immune all'effetto Fame e agli effetti negativi del cibo.
+15 Stomaco acido
+16 Rompi blocchi in un cubo (uno alla volta se accovacciato). Mai i contenitori.
+17 Mani da gigante
+18 Blocchi utili che porti con te e passeggeri alleati.
+19 Cintura
+20 Ricevi più cure da pozioni e incantesimi.
+21 Benedetto
+22 Nessun danno da caduta; rimbalzi atterrando su qualsiasi blocco (accovacciarsi lo impedisce).
+23 Corpo elastico
+24 Cono canalizzato del tuo elemento (tasto razziale 1). Costa mana e subisce il muro di Magia.
+25 Soffio
+26 Il tuo soffio applica Corrosione: meno armatura e tenacia.
+27 Soffio acido
+28 Il tuo soffio dà fuoco al bersaglio.
+29 Soffio di fuoco
+30 Il tuo soffio rallenta.
+31 Soffio di ghiaccio
+32 Il fulmine del tuo soffio salta sui nemici vicini.
+33 Soffio di tempesta
+34 Il tuo soffio avvelena (Lentezza contro i non morti).
+35 Soffio tossico
+36 Il tuo soffio respinge e spegne il fuoco.
+37 Soffio d'acqua
+38 Accelerazione, carica, salto caricato e passeggeri alleati.
+39 Corpo da cavallo
+40 La tua aria dura di più.
+41 Branchie
+42 Le creature selvagge del tuo elemento (draghi di Ice and Fire, serpenti marini, gorgoni o idre) non ti attaccano se non vengono provocate.
+43 Sangue di drago
+44 Meno danno dal tuo elemento.
+45 Scaglie
+46 Sopravvivi a cadute più alte senza danno.
+47 Lungo passo
+48 Cadendo da molto in alto plani senza subire danno.
+49 Ali
+50 Raddoppi le tue dimensioni con una seconda barra della salute.
+51 Crescita
+52 Non sai nuotare: affondi e cammini sul fondo.
+53 Peso di pietra
+54 In aria, scivoli lentamente lungo i muri.
+55 Muro di miele
+56 La tua carica infligge più danno.
+57 Corno
+58 Gli alleati vicini rigenerano il mana più in fretta (non ti riguarda).
+59 Aura di mana
+60 Quando un nemico mette a segno un colpo mortale, ti dividi in due copie invece di morire.
+61 Mitosi
+62 Non puoi cavalcare animali né barche.
+63 Senza cavalcatura
+64 Immune all'effetto Veleno.
+65 Sangue tossico
+66 I tuoi colpi in mischia applicano Lentezza (meno sui boss).
+67 Colpo vischioso
+68 Subisci più contraccolpo dai colpi.
+69 Corpo molle
+70 Salto caricato da accovacciato che ti lancia dove guardi.
+71 Salto a molla
+72 Da accovacciato, ti attacchi a muri ed entità finché dura la barra.
+73 Presa
+74 Ti dividi in piccoli slime che ti seguono; se muoiono tutti, muori.
+75 Sciame
+76 Calpesti le colture quando ci cammini sopra (non da accovacciato).
+77 Pestata
+78 Danno in mischia in base alla tua velocità; la carica ti rallenta meno.
+79 Galoppo di guerra
+80 La tua cintura non ha spazio per altri blocchi
+81 Mana insufficiente per il tuo soffio
+82 Seconda barra della salute
+83 Tempo alla velocità massima
+84 Controllo aereo
+85 Aria ×
+86 Rimbalzo ×
+87 Caduta min. per rimbalzare (blocchi)
+88 Spinta del soffio
+89 Danno dei salti
+90 Salti del fulmine
+91 Canalizzazione max.
+92 Carica max.
+93 Corrosione
+94 Corrosione
+95 Elemento
+96 Caduta sicura (blocchi)
+97 Battito d'ali: ricarica
+98 Presa
+99 Cure ricevute
+100 Carica del salto
+101 Contraccolpo subito
+102 Distanza max. (blocchi)
+103 Mana al secondo
+104 Rigenerazione di mana degli alleati
+105 Slime max.
+106 Velocità max. razziale
+107 Salute dopo la fusione
+108 Tempo di fusione
+109 Carica min.
+110 Planata da (blocchi)
+111 Velocità per passeggero
+112 Passeggeri
+113 Potenza (Risacca)
+114 Danno della carica
+115 Carica max.
+116 Spinta della carica (blocchi)
+117 Velocità persa caricando
+118 Carica da
+119 Rilasciato da un colpo di (PV)
+120 Raggio del tremore (blocchi)
+121 Scivolata (blocchi/tick)
+122 Velocità degli slime
+123 Slime per cuore
+124 Slot della cintura
+125 Limite tecnico di velocità ×
+126 Velocità
+127 Danno da contatto
+128 Veleno
+129 Rimbalzo su muro e suolo ×
+130 Corpo da cavallo: accelera gradualmente correndo in linea retta e, oltre il 40% della sua velocità massima, carica tutto ciò che colpisce (perdendo velocità). Salto caricato come un cavallo (tieni premuto salta) e un alleato può montargli in groppa. Non passa negli spazi da 1 blocco e non può cavalcare animali né barche.
+131 Centauro
+132 Dimensioni e salute doppie (senza limite). Rompe blocchi in un cubo 2×2×2 (uno alla volta se accovacciato), e portata, passo, salto e caduta sicura crescono con le dimensioni. In cambio: più fame, non sa nuotare (affonda), i mob lo individuano da più lontano, calpesta le colture e non può cavalcare animali né barche.
+133 Colosso
+134 Discendente dei draghi: resiste al danno del suo elemento ed espira un soffio di quell'elemento (tasto razziale 1), che costa mana e subisce il muro di Magia della tua classe. I draghi selvaggi del suo elemento (Ice and Fire) non lo attaccano se non vengono provocati. Consuma più fame.
+135 Draconide
+136 Non subisce danno da caduta, rimbalza atterrando su qualsiasi blocco (accovacciarsi lo impedisce) e salta il doppio. In cambio ha meno salute e viene respinto più lontano.
+137 Slime
+138 Cavalcata alata
+139 Sconfiggi 20 nemici con la carica e fai 20 cadute lente da almeno 8 blocchi.
+140 Nemici sconfitti con la carica
+141 Planate da 8 blocchi
+142 Piumaggio
+143 Offri 64 piume, 16 membrane di phantom e 8 razzi pirotecnici.
+144 Piume, membrane e razzi
+145 Tetto del mondo
+146 Con l'altare a un'altezza di 150 o più, sconfiggi un boss del rito planando almeno 3 volte durante lo scontro.
+147 Boss sconfitto in quota con 3 planate
+148 Corno d'argento
+149 Sconfiggi 30 nemici con la carica.
+150 Nemici sconfitti con la carica
+151 Offerta lunare
+152 Offri 4 mele dorate, 8 frammenti di ametista, 16 lingotti d'oro e 8 fiori di almeno 4 tipi.
+153 Mele dorate, ametista, oro e fiori
+154 Aura radiosa
+155 Sconfiggi un boss del rito con almeno 2 alleati dentro la tua aura, infliggendo almeno il 40% del danno con la carica.
+156 Boss sconfitto con alleati nell'aura
+157 Carica di guerra
+158 Sconfiggi 30 nemici con attacchi in mischia a non meno del 40% della tua velocità massima.
+159 Nemici sconfitti al galoppo
+160 Panoplia
+161 Offri un set completo di armatura di ferro, 1 arma di ferro, 8 pelli e 16 lingotti di ferro.
+162 Armatura e arma di ferro, pelle e ferro
+163 Galoppo ininterrotto
+164 Sconfiggi un boss del rito concatenando almeno 10 colpi in mischia senza scendere sotto il 40% della tua velocità.
+165 Boss sconfitto con 10 colpi al galoppo
+166 Carico pesante
+167 Sconfiggi 30 nemici con almeno 3 slot della cintura occupati.
+168 Nemici sconfitti con la cintura carica
+169 Cintura di cuoio
+170 Offri 4 forzieri, 2 fornaci, 1 banco da lavoro, 16 pelli e 16 lingotti di ferro.
+171 Forzieri, fornaci, banco, pelle e ferro
+172 Carovana
+173 Sconfiggi un boss del rito con un alleato in sella a te che infligga almeno il 25% del danno.
+174 Boss sconfitto con un passeggero
+175 Passi pesanti
+176 Sconfiggi 20 nemici e rompi 200 blocchi con la rottura ad area (in piedi).
+177 Nemici sconfitti
+178 Blocchi rotti in area
+179 Pietra su pietra
+180 Offri 4 blocchi di ferro, 8 ossidiane, 64 ciottoli e 1 incudine.
+181 Ferro, ossidiana, ciottoli e incudine
+182 Ruggito del Titano
+183 Sconfiggi un boss del rito con la forma di Titano attiva e infliggi in quella forma almeno il 50% del danno.
+184 Boss sconfitto in forma di Titano
+185 Corrosione
+186 Sconfiggi 30 nemici corazzati corrosi dal tuo soffio.
+187 Nemici corazzati corrosi sconfitti
+188 Alchimia corrosiva
+189 Offri 4 pozioni del Danno, 16 occhi di ragno e 16 palline di slime.
+190 Pozioni del danno, occhi di ragno e slime
+191 Sciogli il ferro
+192 Sconfiggi un boss del rito applicandogli Corrosione almeno 5 volte.
+193 Boss sconfitto con 5 corrosioni
+194 Soffio rovente
+195 Sconfiggi 30 nemici con il tuo soffio.
+196 Nemici sconfitti con il soffio
+197 Braci
+198 Offri 8 verghe di blaze, 16 carboni di legna e 4 secchi di lava.
+199 Blaze, carbone e lava
+200 Pira del drago
+201 Con l'altare nel Nether, sconfiggi un boss del rito infliggendo almeno il 50% del danno con il tuo soffio.
+202 Boss sconfitto con il soffio (Nether)
+203 Soffio di gelo
+204 Sconfiggi 30 nemici con il tuo soffio.
+205 Nemici sconfitti con il soffio
+206 Gelo
+207 Offri 64 blocchi di neve, 16 ghiacci compatti e 4 ghiacci blu.
+208 Neve e ghiaccio
+209 Inverno eterno
+210 Con l'altare in un bioma innevato o ghiacciato, sconfiggi un boss del rito infliggendo almeno il 50% del danno con il tuo soffio.
+211 Boss sconfitto con il soffio (neve)
+212 Soffio di tempesta
+213 Sconfiggi 30 nemici con il tuo soffio (contano i salti del fulmine).
+214 Nemici sconfitti con il soffio
+215 Parafulmini
+216 Offri 4 parafulmini, 32 lingotti di rame e 16 redstone.
+217 Parafulmini, rame e redstone
+218 Tempesta rituale
+219 Evoca un boss del rito durante un temporale, con l'altare a cielo aperto, e sconfiggilo infliggendo almeno il 50% del danno con il tuo soffio.
+220 Boss sconfitto con il soffio (tempesta)
+221 Soffio tossico
+222 Sconfiggi 30 nemici avvelenati dal tuo soffio (i non morti non contano).
+223 Nemici avvelenati sconfitti
+224 Antidoto
+225 Offri 16 occhi di ragno, 4 pozioni del Veleno, 8 patate velenose e 4 pesci palla.
+226 Occhi di ragno, veleno, patate e pesci palla
+227 Veleno mortale
+228 Sconfiggi un boss del rito avvelenandolo con il tuo soffio almeno 5 volte.
+229 Boss sconfitto con 5 avvelenamenti
+230 Soffio del mare
+231 Sconfiggi 30 nemici con il tuo soffio, 10 dei quali mentre sei immerso.
+232 Nemici sconfitti con il soffio
+233 Sconfitti con il soffio in immersione
+234 Offerta della marea
+235 Offri 16 pesci di almeno 3 tipi, 32 alghe e 8 pozioni di Respirazione acquatica.
+236 Pesci, alghe e pozioni
+237 Corte dell'oceano
+238 Con l'altare sott'acqua (profondo almeno 3 blocchi), sconfiggi un boss del rito infliggendo almeno il 50% del danno con il tuo soffio.
+239 Boss sconfitto con il soffio (sott'acqua)
+240 non hai completato le azioni del rito durante lo scontro
+241 erano rimasti troppo pochi slime
+242 troppo poco danno con il tuo tratto razziale
+243 sotto almeno 3 blocchi d'acqua
+244 a un'altezza di 150 o più
+245 in un bioma innevato o ghiacciato
+246 a cielo aperto durante un temporale
+247 Due in uno
+248 Dividiti (da un colpo nemico) e riunisciti con la tua copia 2 volte.
+249 Divisioni con fusione
+250 Stampo di gelatina
+251 Offri 2 oggetti identici di ciascuno di 6 tipi diversi di qualità ferro o superiore.
+252 6 coppie di oggetti di ferro o superiori
+253 Gemelli
+254 Sconfiggi un boss del rito dopo esserti diviso durante lo scontro e riunisciti con la tua copia viva alla fine.
+255 Boss sconfitto dopo divisione e fusione
+256 Lanciato
+257 Fai 40 lanci con almeno 2 s di carica e sconfiggi 15 nemici con l'impatto di un lancio.
+258 Lanci caricati
+259 Nemici sconfitti con l'impatto
+260 Molle
+261 Offri 8 pistoni, 4 pistoni appiccicosi, 16 palline di slime e 4 blocchi di slime.
+262 Pistoni e slime
+263 Salto gigante
+264 Sconfiggi un boss del rito colpendolo con almeno 3 impatti di lancio durante lo scontro.
+265 Boss sconfitto con 3 impatti
+266 Prima divisione
+267 Sconfiggi 30 nemici con il contatto dei tuoi piccoli slime.
+268 Nemici sconfitti dai tuoi slime
+269 Nidiata di gelatina
+270 Offri 32 palline di slime, 4 blocchi di slime e 3 pozioni di Guarigione.
+271 Slime e pozioni di guarigione
+272 Marea di gelatina
+273 Sconfiggi un boss del rito da diviso, con almeno 6 slime vivi alla fine e almeno il 50% del danno per contatto.
+274 Boss sconfitto dallo Sciame
+275 Appiccicoso
+276 Sconfiggi 20 nemici mentre sei attaccato a un muro o a un'entità.
+277 Nemici sconfitti da attaccato
+278 Linfa e miele
+279 Offri 8 blocchi di miele, 16 bottiglie di miele, 16 palline di slime e 8 ragnatele.
+280 Miele, slime e ragnatele
+281 Zecca
+282 Sconfiggi un boss del rito essendo rimasto attaccato a lui per almeno 10 s in totale e con almeno 20 colpi che applicano Lentezza.
+283 Boss sconfitto da attaccato a lui
+284 Cadendo da molto in alto plani lentamente e senza danno; con i ranghi, da altezze minori, con controllo aereo e battito d'ali.
+285 Pegaso
+286 Gli alleati vicini rigenerano il mana più in fretta, ricevi più cure da pozioni e incantesimi e il tuo corno carica più forte.
+287 Unicorno
+288 Al 40% della tua velocità massima o più attacchi senza rallentare (Epic Fight) e infliggi più danno in mischia quanto più vai veloce. La carica ti rallenta meno.
+289 Guerriero
+290 Porti una cintura di forzieri, fornaci e banchi da lavoro che puoi usare camminando (tasto razziale 1; gli alleati la aprono accovacciandosi e facendo clic destro su di te), e i tuoi alleati possono montare su di te. Un po' più lento, e più ancora con i passeggeri.
+291 Portatore
+292 Crescita (tasto razziale 1): raddoppi di nuovo le tue dimensioni con una seconda barra della salute, rompi in 3×3×3 e il suolo trema a ogni passo.
+293 Titano
+294 Resisti all'acido, il cibo non ti fa mai male e il tuo soffio corrode l'armatura del bersaglio. Le idre selvagge non ti attaccano se non vengono provocate.
+295 Acido
+296 Resisti al fuoco e il tuo soffio dà fuoco ai nemici. I draghi di fuoco selvaggi non ti attaccano se non vengono provocati.
+297 Fuoco
+298 Resisti al ghiaccio e al congelamento e il tuo soffio rallenta. I draghi di ghiaccio selvaggi non ti attaccano se non vengono provocati.
+299 Ghiaccio
+300 Resisti ai fulmini e il fulmine del tuo soffio salta sui nemici vicini. I draghi del fulmine selvaggi non ti attaccano se non vengono provocati.
+301 Fulmine
+302 Resisti al danno tossico (immune al Veleno dal Rango 2) e il tuo soffio avvelena. Le gorgoni selvagge non ti attaccano se non vengono provocate.
+303 Velenoso
+304 Resisti all'acqua e all'annegamento, la tua aria dura tre volte di più (respiri sott'acqua dal Rango 2) e il tuo soffio respinge e spegne il fuoco. I serpenti marini selvaggi non ti attaccano se non vengono provocati.
+305 Acqua
+306 Ancora meno salute, ma quando un nemico mette a segno un colpo mortale ti dividi in due copie di metà dimensione. Accovacciati accanto alla tua copia per fonderti.
+307 Mitotico
+308 Accovacciati per caricare un salto; quando salti vieni lanciato dove guardi (come Risacca), senza danno da impatto e rimbalzando su suolo e muri.
+309 Molla
+310 Tasto razziale 1: ti dividi in uno slime piccolo per ogni cuore (max. 25) che infliggono solo danno da contatto. Ogni colpo uccide uno slime e il danno in eccesso non si trasferisce. Curarsi da diviso genera nuovi slime. Premi di nuovo per fonderti.
+311 Sciame
+312 Accovacciati contro un muro o un'entità per attaccarti. Scivoli lentamente lungo i muri come sul miele e i tuoi colpi applicano Lentezza.
+313 Viscoso

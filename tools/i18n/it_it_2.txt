@@ -1,0 +1,278 @@
+0 Riduce il muro scelto e i tratti base negativi della tua classe.
+1 Adattabile
+2 L'incudine ti costa meno livelli.
+3 Mano d'incudine
+4 Scavi sott'acqua a velocità normale e vedi sott'acqua. Il fuoco ti ferisce di più.
+5 Creatura acquatica
+6 Tavolo degli incantesimi potenziato e Fusione arcana.
+7 Sapere arcano
+8 I minerali che estrai escono già fusi.
+9 Tocco fonditore
+10 Probabilità che il baratto con i piglin dia il doppio.
+11 Patto infernale
+12 Le esplosioni che causi non ti feriscono.
+13 A prova di esplosione
+14 Scheletri neutrali e meno danno dai proiettili.
+15 Ossa
+16 Invisibile sott'acqua mentre stai fermo.
+17 Mimetismo
+18 Visione notturna senza luce del cielo; immune all'Oscurità.
+19 Occhi di caverna
+20 Il freddo (congelamento e incantesimi di ghiaccio) e l'acqua (incantesimi d'acqua di T.O Magic 'n Extras) ti feriscono di più.
+21 Sangue ardente
+22 Visione notturna con poca luce.
+23 Scurovisione
+24 Rigeneri costantemente salute; si ferma quando subisci danno.
+25 Rigenerazione dei morti
+26 Uccidere un nemico concede fame e saturazione.
+27 Divorare
+28 I guardiani vicini attaccano i tuoi nemici.
+29 Scorta
+30 Non puoi subire danno né attaccare.
+31 Forma eterea
+32 Quando uccidi un mob ostile o un boss ottieni a caso Forza, Resistenza o Rigenerazione I per tanti secondi quanti sono i suoi PV massimi (boss) o una frazione (gli altri).
+33 Banchetto
+34 Immune a fuoco e lava (non al danno magico da fuoco). Il latte non lo rimuove.
+35 Pelle di brace
+36 Miglioramenti alla pesca.
+37 Pesca esperta
+38 La tua fame non sale né scende e non hai saturazione.
+39 Fame fissa
+40 La tua Bomba di magma razziale lascia fiamme che bruciano i nemici.
+41 Pozza di fiamme
+42 L'XP persa al reset è ridotta della percentuale di Adattabile.
+43 Reset flessibile
+44 Dal Rango 2, hai Rigenerazione I nei biomi di foresta.
+45 Linfa
+46 Le fornaci vicine lavorano più in fretta.
+47 Calore della forgia
+48 Ciò che fabbrichi o ripari dura di più; al Rango 3 ciò che fabbrichi esce con Integrità extra.
+49 Forgia nanica
+50 Dal Rango 2, ogni pezzo di armatura che hai fabbricato e indossi dà +0,5 di tenacia.
+51 Armatura forgiata
+52 Livello di Fortuna sui minerali (mai con Tocco di velluto).
+53 Fortuna razziale
+54 Clic destro a mani nude: farina d'ossa gratis su una coltura.
+55 Tocco verde
+56 Resa extra dalle colture mature.
+57 Raccolto abbondante
+58 Consumi più fame.
+59 Appetito da orco
+60 Immune all'effetto Fame.
+61 Stomaco temprato
+62 Carne e pesce crudi senza effetti negativi; ti saziano come se fossero cotti.
+63 Stomaco di ferro
+64 Sopravvivi a un colpo mortale con 1 PV, una volta per vita. Si risolve dopo le abilità di classe e prima del Totem.
+65 Ultima resistenza
+66 La tua Bomba di magma razziale lascia lava che brucia e rallenta i nemici.
+67 Pozza di lava
+68 Cammini sulla lava (accovacciarsi ti fa affondare).
+69 Camminalava
+70 Attraversi le foglie e ci ti arrampichi.
+71 Camminatore tra le foglie
+72 Le pozioni di guarigione e gli incantesimi di cura non ti curano.
+73 Corpo senza vita
+74 Probabilità di rubare colpendo in mischia.
+75 Dita agili
+76 Livello di Saccheggio (conta il più alto tra questo e l'incantesimo).
+77 Saccheggio razziale
+78 Velocità extra quando rompi pietra e minerali.
+79 Minatore
+80 Individua la fortezza o il bastione più vicini.
+81 Bussola infernale
+82 Piglin, brute e hoglin neutrali.
+83 Nativo del Nether
+84 Nel Nether hai Debolezza.
+85 Lontano dal mare
+86 Non puoi mangiare carne né pesce.
+87 Dieta elfica
+88 I golem di ferro sono sempre ostili e i villici fanno pagare di più.
+89 Marchiato
+90 Il tuo Colpo di fuoco razziale trapassa i nemici.
+91 Fuoco perforante
+92 Il cibo che non è né carne né pesce ti sazia di più.
+93 Dieta vegetale
+94 Fonde all'istante ciò che tieni in mano usando il combustibile del tuo inventario.
+95 Fornace portatile
+96 Livello di ciascun incantesimo di fuoco razziale (0 = non lo hai ancora). Richiede Iron's Spells.
+97 Incantesimi razziali
+98 Dal Rango 2, i nemici che sconfiggi danno il 15% di esperienza in più.
+99 Studioso
+100 Annegati e guardiani neutrali.
+101 Amico del mare
+102 Dal Rango 2, i tuoi colpi in mischia danno fuoco al bersaglio per 2 s.
+103 Colpi ardenti
+104 Un secondo muro riceve parte della riduzione.
+105 Secondo muro
+106 Una nube che rende invisibile tutto ciò che c'è dentro.
+107 Nube di fumo
+108 Una trappola che non scade mai: il primo nemico che ci passa sopra subisce danno ed è immobilizzato. Solo tu puoi vederla.
+109 Tagliola
+110 Evidenzia minerali e lava vicini.
+111 Senso della pietra
+112 La luce solare diretta ti ferisce (ignora l'armatura) e annulla la tua rigenerazione.
+113 Luce solare
+114 Danno sottratto a ogni colpo che subisci.
+115 Pelle spessa
+116 Cura all'uccisione e furto di vita.
+117 Sete
+118 Dal Rango 2, il tridente (in mischia o lanciato) infligge il 25% di danno in più.
+119 Maestria del tridente
+120 Da accovacciato scavi la pietra in un tunnel 3×3 a un costo di fame maggiore.
+121 Tunnel
+122 Quando rompi un minerale rompi i minerali collegati dello stesso tipo.
+123 Vene
+124 Moltiplica la riduzione del muro principale.
+125 Maestria del muro
+126 Elimina Lentezza, Debolezza, Cecità, Fatica, Nausea e Oscurità nel raggio.
+127 Voce del signore della guerra
+128 Non consumi aria sott'acqua.
+129 Respirazione acquatica
+130 Mentre sei nell'acqua bruci lentamente.
+131 Fiamma morente
+132 Nessun danno da caduta e caduta lenta.
+133 Senza peso
+134 Immune al Wither.
+135 Sangue di cenere
+136 Il lupo che cavalchi morde ciò che colpisci.
+137 Morso
+138 Cavalchi i tuoi lupi addomesticati (clic destro a mani nude).
+139 Cavaliere
+140 Il lupo che cavalchi ha Rigenerazione.
+141 Legame
+142 I tuoi lupi hanno più salute.
+143 Lupi forti
+144 Sangue resistente
+145 Ritirata
+146 Slancio di corsa
+147 Contrattacco con lo scudo
+148 Onda d'urto
+149 Punizione
+150 Pelle spirituale
+151 Affinità del corpo di postura
+152 Efficacia di scarica ed effetti di postura
+153 Fiamma costante
+154 Tiratore costante
+155 Consumo di Furtività
+156 Freccia appiccicosa
+157 Eco di pietra
+158 Potenza delle cariche di Pietra
+159 Evocazioni potenziate
+160 Evocazioni per incantesimo
+161 Tenacia
+162 Tossina
+163 Dose di tossina
+164 Colpo a tradimento
+165 Concentrazione incrollabile
+166 Carica inarrestabile
+167 Armonia (riduce i muri)
+168 Stendardo di guerra
+169 Potenza delle cariche d'Acqua
+170 Legame selvaggio
+171 Hai spezzato il legame con %s
+172 Legame selvaggio con %s
+173 Carnivoro: puoi mangiare solo carne
+174 Bussola infernale: struttura a X %s, Z %s (a %s blocchi)
+175 La Bussola infernale funziona solo nel Nether
+176 Non ci sono fortezze né bastioni nelle vicinanze
+177 Ankh! Sopravvivi alla Scommessa con la morte (prossima: %s)
+178 Teschio: la Morte vince la scommessa
+179 Detonazione di %s!
+180 %s: %s/%s cariche
+181 Gli elfi non mangiano carne né pesce
+182 Lo slot %s ha già %s legato (cambia quando reimposti la classe)
+183 %s legato allo slot %s (gratis se il suo costo è al massimo %s di mana)
+184 Quell'incantesimo è già legato a un altro slot
+185 Non hai ancora lo slot di Lancio libero %s
+186 Seleziona prima un incantesimo nella ruota di Iron's
+187 Lancio libero (slot %s): %s/%s cariche rimaste
+188 Fornace portatile: non hai abbastanza combustibile
+189 Ultima furia! Uccidi %s prima che finisca
+190 Ultima resistenza! Sopravvivi con mezzo cuore
+191 La tua sottorazza non ha un'abilità attiva (o non hai ancora il Rango)
+192 %s ti ha rubato un oggetto!
+193 La tua classe non può usare la scuola %s
+194 Hai rubato: %s
+195 Senso della pietra: %s blocchi evidenziati
+196 %s: %s s
+197 %s non è ancora disponibile in questa versione del mod.
+198 %s
+199 %s è ora tuo alleato.
+200 %s è già tuo alleato.
+201 Hai rimosso i tuoi %s alleati.
+202 Hai già il numero massimo di alleati (%s).
+203  I suoi alleati: %s
+204  Ti ha come alleato: %s
+205 Alleati di %s (%s):
+206  ★ = alleato reciproco. /aliados agregar|quitar <giocatore>, /aliados limpiar, o il tasto J.
+207 [Segna come alleato]
+208 %s ti ha segnato come alleato.
+209 nessuno
+210 %s non è tuo alleato.
+211 %s non è più tuo alleato: conta come nemico.
+212 Non puoi segnare te stesso: conti già come alleato di te stesso.
+213 %s non ti ha più come alleato.
+214 Hai già il numero massimo di legami (%s).
+215 Hai ricevuto il Libro dei legami.
+216 Avvicinati all'animale (meno di %s blocchi).
+217 Solo il Domatore può usare questo libro.
+218 Punto %s salvato qui.
+219 Scegli la tua classe (clicca su una):
+220 %s: +%s%% di danno
+221 Classe: %s | Base: %s/30 | Sottoclasse: %s (%s/%s) | %s
+222 Eco marziale: il tuo prossimo incantesimo costa meno mana
+223 Livello massimo raggiunto
+224 Effetto di postura pronto: il tuo prossimo colpo a mani nude consuma le cariche
+225 Livello successivo: %s XP
+226 nessuna
+227 %s — Razza: %s | Sottorazza: %s | Rango %s%s
+228 %s non ha ancora scelto una razza.
+229 La classe di %s è stata reimpostata.
+230 Hai già una classe. Reimpostala per sceglierne un'altra.
+231 Hai già una razza: è permanente.
+232 Hai già una sottoclasse. Reimpostala per sceglierne un'altra.
+233 Quel ramo ha già 10 punti.
+234 Usi già 3 rami: gli altri sono bloccati finché non reimposti la classe.
+235 Quella classe è disabilitata su questo server.
+236 Non puoi farlo in combattimento.
+237 Non hai ancora scelto una classe.
+238 Devi scegliere una razza prima di scegliere una classe.
+239 Non hai ancora scelto una sottoclasse.
+240 Non hai abbastanza XP.
+241 Solo gli umani scelgono un muro.
+242 Fatto.
+243 Hai già scelto il perk di quel ramo. Cambia solo quando reimposti la classe.
+244 Completa il ramo (10 punti) per scegliere il suo perk.
+245 Servono più punti di classe base per far salire di livello la sottoclasse.
+246 La sottoclasse si sblocca a 15 punti di classe base.
+247 Quella sottorazza non è ancora disponibile.
+248 Quel ramo non esiste nella tua classe.
+249 Quella classe non esiste o è disabilitata.
+250 Quel perk non esiste in quel ramo.
+251 Quella razza o sottorazza non esiste.
+252 Quella sottoclasse non appartiene alla tua classe.
+253 Quella sottorazza non appartiene a quella razza.
+254 Quel muro non può essere scelto (la tua classe non lo ha o lo hai già scelto).
+255 Hai già scelto i tuoi muri. Cambiano quando reimposti la classe.
+256 Il tuo boss del rito è ancora vivo.
+257 Non puoi ancora evocare un altro boss del rito (%s s).
+258 Il boss del rito è caduto, ma la condizione non è stata soddisfatta: %s
+259 Il tuo boss del rito è svanito.
+260 Accovacciati e fai clic destro sull'altare per evocare il boss del rito.
+261 Boss del rito: %s
+262 Non c'è spazio libero accanto all'altare per il boss.
+263 Nessun boss del rito è disponibile.
+264 %s risponde alla tua chiamata! Conta solo per te.
+265 Rito completato: %s! Ora sei Rango %s.
+266 ✔
+267 Rito per il Rango %s: %s
+268 Riti: fai clic destro sull'Altare della razza per vedere il rito e consegnare le offerte; accovacciato + clic per evocare il boss.
+269 Manca per l'offerta: %s
+270 L'altare non è nel luogo richiesto dal rito: %s
+271 Non hai riti in sospeso (nessuna razza o Rango massimo).
+272 Questo rito non ha bisogno di un boss in questo momento.
+273  %s %s: %s/%s
+274 Rito: %s ✔
+275 Offerta accettata: %s
+276 %s: %s/%s
+277 Struttura accettata: %s

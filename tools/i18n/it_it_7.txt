@@ -1,0 +1,37 @@
+0 Torni dove eri alcuni secondi fa e recuperi parte della salute e del mana persi da allora (non ne toglie mai). Annulla il danno da caduta; con livelli di sottoclasse più alti la finestra è più lunga, recuperi di più, gli effetti negativi ricevuti in quel tempo vengono rimossi e gli incantesimi lanciati in quel tempo riottengono parte della ricarica. Cambiare dimensione, morire o teletrasportarsi lontano cancella la cronologia.
+1 Riavvolgimento del tempo
+2 Crei attorno a te una sfera di tempo fermo. Tutto ciò che c'è dentro, e tutto ciò che entra finché dura (proiettili inclusi), si congela; tu e i tuoi alleati no. I boss sono congelati solo per parte del tempo. La sfera appare grigia dall'interno e dall'esterno; i giocatori congelati vedono tutto in grigio, passano alla terza persona e sentono un orologio ticchettare fino alla fine. Costa mana.
+3 Arresto del tempo
+4 Cintura di %s
+5 %1$s è stato inghiottito dallo sciame di %2$s
+6 %1$s è stato inghiottito dallo sciame di %2$s
+7 Copia mitotica
+8 Slime dello sciame
+9 Amuleto creativo
+10 Livello di ciascun incantesimo d'acqua razziale (0 = non lo hai ancora). Richiede T.O Magic 'n Extras.
+11 Incantesimi d'acqua
+12 Hai perso una copia: riavrai le tue dimensioni quando finisce la ricarica della divisione
+13 Ti fondi con la tua copia
+14 Mitosi! Ti dividi in due copie: accovacciati accanto all'altra per fonderti
+15 Non c'è spazio per crescere: ti serve spazio libero pari al doppio delle tue dimensioni
+16 Non c'è un posto sicuro a cui tornare.
+17 Non c'è ancora nulla a cui tornare.
+18 Non hai abbastanza mana per fermare il tempo.
+19 Rimuove gli effetti negativi dal livello
+20 Salute persa recuperata
+21 Idrogetto (livello)
+22 Getto (livello)
+23 Costo (del mana max.)
+24 Mana speso recuperato
+25 Teletrasporto che cancella la cronologia (blocchi)
+26 Straripamento (livello)
+27 Ricerca di un punto sicuro (blocchi)
+28 Salva il tuo stato ogni
+29 Recupera le ricariche degli incantesimi dal livello
+30 Ricarica degli incantesimi recuperata
+31 Presa della marea (livello)
+32 Mago del tempo. Lanci incantesimi più in fretta e padroneggi due abilità: Riavvolgimento del tempo, che ti riporta dove eri alcuni secondi fa recuperando salute e mana, e Arresto del tempo, una sfera che congela nemici e proiettili per un istante.
+33 Cronomante
+34 Test: finché è nel tuo inventario, tutte le ricariche di classe e razza sono a 0.
+35 Slot: %s/%s
+36 Apri

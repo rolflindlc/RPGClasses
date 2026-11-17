@@ -1,0 +1,116 @@
+RPG Classes — License
+Copyright (c) 2026 [AUTHOR NAME]. All Rights Reserved.
+
+This license applies to the mod "RPG Classes" (the "Mod"): its source code,
+compiled files, textures, models, sounds, translations and any other asset.
+All rights not expressly granted below are reserved by the author (the
+"Author"). Nothing in this license transfers ownership of the Mod.
+
+--------------------------------------------------------------------------
+1. DATAPACKS ARE FREE
+--------------------------------------------------------------------------
+Everything under the Mod's `data/` folders (class, subclass, branch, race
+and ability definitions, loot tables, tags, damage types and any other
+datapack content) is free to use. You may edit it, delete it, replace it
+and create new datapack content for the Mod, and you may share and sell
+the datapacks you create. This applies to datapacks you write yourself;
+it does not give you the right to redistribute the Mod's compiled code
+or its non-datapack assets (see section 4).
+
+--------------------------------------------------------------------------
+2. USE IN MODPACKS
+--------------------------------------------------------------------------
+You may include the unmodified Mod in a modpack, and play, stream and
+record it, provided that:
+  a) the Author is credited (name of the Mod and name of the Author) in
+     the modpack's description or credits page, with a link to the Mod's
+     official page;
+  b) the Mod is not modified, and is obtained from an official
+     distribution page of the Author (see section 4);
+  c) the modpack and any server or service using the Mod comply with
+     section 3.
+
+--------------------------------------------------------------------------
+3. PROHIBITED USES
+--------------------------------------------------------------------------
+The Mod, and any modpack, server, addon or service that uses it, must NOT
+be used in or for:
+  a) Pay-to-win: selling or granting, in exchange for money or any other
+     real-world consideration, any gameplay advantage related to the Mod,
+     including classes, races, class or race ranks, experience, skill
+     points, resets, abilities, gear, items, mana, stats or any other
+     progression or power.
+  b) Pay-to-fast: selling or granting, in exchange for real-world
+     consideration, faster progression, skipped content (for example
+     skipped rites or requirements), boosts or time savers related to the
+     Mod.
+  c) Any server, community, modpack or distribution that discriminates
+     against people on the basis of race, ethnicity, nationality,
+     religion, sex, gender, sexual orientation, disability, age or any
+     similar characteristic, or that promotes hatred or harassment.
+  d) Any malicious purpose, including malware, data theft or the
+     deliberate harm of other people's computers, accounts or servers.
+Purely cosmetic items that give no gameplay advantage are not covered by
+(a) and (b).
+
+--------------------------------------------------------------------------
+4. REDISTRIBUTION AND MODIFICATION
+--------------------------------------------------------------------------
+Except as stated in sections 1, 2 and 5, you may NOT:
+  a) upload, mirror or redistribute the Mod, in whole or in part, in
+     modified or unmodified form, on any site or service, whether or not
+     for money;
+  b) sell, rent or charge for the Mod or for access to it, including
+     through ad-links, paywalls or donation-gated downloads;
+  c) modify, decompile, re-package or copy the Mod's code or non-datapack
+     assets into another project.
+The official distribution pages are those the Author lists in the Mod's
+repository or project description.
+Modpack distribution platforms (for example CurseForge, Modrinth or
+launcher-managed pack files) may download the Mod from its official page
+as part of installing a modpack that complies with section 2.
+
+--------------------------------------------------------------------------
+5. ADDONS
+--------------------------------------------------------------------------
+You may create addons that add classes, subclasses, races, abilities,
+rites or other content to the Mod, whether as datapacks or as separate
+mods that depend on the Mod through its published interfaces. Addons may
+be sold or monetized, and may use any license of their choice, provided
+that:
+  a) the addon does not contain a copy of the Mod's code, textures or
+     other non-datapack assets;
+  b) the addon complies with section 3 (in particular, an addon cannot be
+     sold as, or give access to, a pay-to-win or pay-to-fast advantage);
+  c) the addon does not present itself as an official part of the Mod.
+
+--------------------------------------------------------------------------
+6. TERMINATION
+--------------------------------------------------------------------------
+If you breach this license, your rights under it end automatically. The
+Author may restore them in writing. Rights granted to others are not
+affected by your breach.
+
+--------------------------------------------------------------------------
+7. NO WARRANTY, NO LIABILITY
+--------------------------------------------------------------------------
+THE MOD IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND. TO THE MAXIMUM
+EXTENT PERMITTED BY LAW, THE AUTHOR IS NOT LIABLE FOR ANY CLAIM, DAMAGE OR
+OTHER LIABILITY ARISING FROM THE USE OF THE MOD.
+
+--------------------------------------------------------------------------
+8. THIRD-PARTY MATERIAL
+--------------------------------------------------------------------------
+Minecraft, Forge and the other mods the Mod interoperates with (such as
+Iron's Spells 'n Spellbooks, Epic Fight, T.O Magic 'n Extras and Ice and
+Fire) belong to their respective owners and are governed by their own
+licenses and terms. This license does not grant any right over them. Use of
+Minecraft is subject to the Minecraft EULA and Mojang's usage guidelines.
+
+--------------------------------------------------------------------------
+9. LEGAL
+--------------------------------------------------------------------------
+Versions of the Mod already released remain under the license they were
+released with. The Author may publish a different license for future
+versions. If any part of this license is unenforceable, the rest remains
+in force.

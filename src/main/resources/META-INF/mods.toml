@@ -7,7 +7,7 @@ modId="rites_and_paths"
 version="${file.jarVersion}"
 displayName="Rolflin's Rites & Paths"
 authors="Rolflin"
-credits="Textures and art by their respective artists. Built for Minecraft Forge 1.20.1."
+credits="Art by Laira. Built for Minecraft Forge 1.20.1."
 description='''A balanced class and race system for Minecraft, defined entirely by datapacks.
 Pick a race and a class, grow through branches and subclasses, complete race rites, and fight with class abilities.
 Integrates with Iron's Spells 'n Spellbooks and Epic Fight (both optional). Available in 10 languages.'''

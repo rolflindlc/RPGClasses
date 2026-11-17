@@ -91,7 +91,7 @@ public final class DraconicBreath {
         if (element == null) return false;
         double cost = m.number("mana_per_second", MANA_PER_SECOND) * PULSE_TICKS / 20.0;
         if (manaBridge.applyAsDouble(p, cost) <= 0) {
-            p.displayClientMessage(Component.translatable("message.rpgclasses.breath_no_mana"), true);
+            p.displayClientMessage(Component.translatable("message.rites_and_paths.breath_no_mana"), true);
             return false;
         }
         long end = p.level().getGameTime() + Math.round(m.number("channel_seconds", 2) * 20);
@@ -124,7 +124,7 @@ public final class DraconicBreath {
         double cost = m.number("mana_per_second", MANA_PER_SECOND) * PULSE_TICKS / 20.0;
         if (manaBridge.applyAsDouble(p, cost) <= 0) {
             CHANNELS.remove(p.getUUID());
-            p.displayClientMessage(Component.translatable("message.rpgclasses.breath_no_mana"), true);
+            p.displayClientMessage(Component.translatable("message.rites_and_paths.breath_no_mana"), true);
             return;
         }
         level.playSound(null, p.blockPosition(), sound(ch.element()), SoundSource.PLAYERS, 0.8f, 1.0f);

@@ -33,7 +33,7 @@ public final class AllyScreen extends Screen {
     private int perPage = 1;
 
     public AllyScreen(Screen parent) {
-        super(Component.translatable("ui.rpgclasses.ally.title"));
+        super(Component.translatable("ui.rites_and_paths.ally.title"));
         this.parent = parent;
     }
 
@@ -71,7 +71,7 @@ public final class AllyScreen extends Screen {
         for (int i = page * perPage; i < Math.min(rows.size(), (page + 1) * perPage); i++) {
             Row r = rows.get(i);
             boolean ally = ClientHandlers.isAlly(r.id());
-            addRenderableWidget(Button.builder(Component.translatable(ally ? "ui.rpgclasses.ally.remove" : "ui.rpgclasses.ally.add"),
+            addRenderableWidget(Button.builder(Component.translatable(ally ? "ui.rites_and_paths.ally.remove" : "ui.rites_and_paths.ally.add"),
                     b -> Net.CHANNEL.sendToServer(new Packets.SetAlly(r.id(), !ally))).bounds(right - 90, y, 90, 20).build());
             y += ROW;
         }
@@ -88,7 +88,7 @@ public final class AllyScreen extends Screen {
         }).bounds(width / 2 - 126, bottom, 20, 20).build();
         next.active = page < pages - 1;
         addRenderableWidget(next);
-        addRenderableWidget(Button.builder(Component.translatable("ui.rpgclasses.close"), b -> onClose())
+        addRenderableWidget(Button.builder(Component.translatable("ui.rites_and_paths.close"), b -> onClose())
                 .bounds(width / 2 + 50, bottom, 100, 20).build());
     }
 
@@ -96,10 +96,10 @@ public final class AllyScreen extends Screen {
     public void render(GuiGraphics g, int mouseX, int mouseY, float partialTick) {
         renderBackground(g);
         g.drawCenteredString(font, title, width / 2, 10, 0xFFFFFF);
-        g.drawCenteredString(font, Component.translatable("ui.rpgclasses.ally.help"), width / 2, 24, 0xAAAAAA);
+        g.drawCenteredString(font, Component.translatable("ui.rites_and_paths.ally.help"), width / 2, 24, 0xAAAAAA);
         int left = width / 2 - 150;
         if (rows.isEmpty()) {
-            g.drawCenteredString(font, Component.translatable("ui.rpgclasses.ally.empty"), width / 2, TOP + 6, 0x888888);
+            g.drawCenteredString(font, Component.translatable("ui.rites_and_paths.ally.empty"), width / 2, TOP + 6, 0x888888);
         }
         int y = TOP;
         for (int i = page * perPage; i < Math.min(rows.size(), (page + 1) * perPage); i++) {
@@ -107,17 +107,17 @@ public final class AllyScreen extends Screen {
             boolean ally = ClientHandlers.isAlly(r.id());
             Component name = Component.literal(r.name()).withStyle(ally ? ChatFormatting.GREEN : ChatFormatting.WHITE);
             g.drawString(font, name, left, y + 2, 0xFFFFFF);
-            Component status = Component.translatable(ally ? "ui.rpgclasses.ally.status_ally" : "ui.rpgclasses.ally.status_enemy")
+            Component status = Component.translatable(ally ? "ui.rites_and_paths.ally.status_ally" : "ui.rites_and_paths.ally.status_enemy")
                     .withStyle(ally ? ChatFormatting.DARK_GREEN : ChatFormatting.RED);
-            if (!r.online()) status = Component.empty().append(status).append(Component.translatable("ui.rpgclasses.ally.offline")
+            if (!r.online()) status = Component.empty().append(status).append(Component.translatable("ui.rites_and_paths.ally.offline")
                     .withStyle(ChatFormatting.GRAY));
             if (ClientHandlers.isAlliedBy(r.id())) status = Component.empty().append(status)
-                    .append(Component.translatable("ui.rpgclasses.ally.allied_by").withStyle(ChatFormatting.AQUA));
+                    .append(Component.translatable("ui.rites_and_paths.ally.allied_by").withStyle(ChatFormatting.AQUA));
             g.drawString(font, status, left, y + 12, 0xFFFFFF);
             y += ROW;
         }
         int pages = Math.max(1, (rows.size() + perPage - 1) / perPage);
-        g.drawString(font, Component.translatable("ui.rpgclasses.ally.count", ClientHandlers.ALLIES.size(), page + 1, pages),
+        g.drawString(font, Component.translatable("ui.rites_and_paths.ally.count", ClientHandlers.ALLIES.size(), page + 1, pages),
                 width / 2 - 100, height - 22, 0xAAAAAA);
         super.render(g, mouseX, mouseY, partialTick);
     }

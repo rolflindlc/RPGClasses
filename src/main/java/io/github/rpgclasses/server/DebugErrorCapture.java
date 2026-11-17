@@ -10,7 +10,7 @@ import org.apache.logging.log4j.core.config.Configuration;
 import org.apache.logging.log4j.core.config.Property;
 
 /**
- * Copia en {@code rpgclasses-debug.log} todo aviso o error de cualquier mod que mencione a RPG Classes
+ * Copia en {@code rites_and_paths-debug.log} todo aviso o error de cualquier mod que mencione a Rolflin's Rites & Paths
  * (excepciones en nuestros eventos, en el render, en paquetes, avisos de Forge...). Así no hace falta buscar
  * en latest.log: todo lo relevante acaba en el mismo archivo.
  */
@@ -34,7 +34,7 @@ final class DebugErrorCapture extends AbstractAppender {
             config.getRootLogger().addAppender(appender, Level.WARN, null);
             ctx.updateLoggers();
         } catch (Throwable t) {
-            RpgClasses.LOGGER.warn("[rpgclasses] No se pudo instalar el capturador de errores del registro de depuración", t);
+            RpgClasses.LOGGER.warn("[rites_and_paths] No se pudo instalar el capturador de errores del registro de depuración", t);
         }
     }
 
@@ -53,7 +53,7 @@ final class DebugErrorCapture extends AbstractAppender {
     }
 
     private static boolean mentionsUs(String message, String logger, Throwable error) {
-        if (message.contains("rpgclasses") || (logger != null && logger.startsWith(PACKAGE))) return true;
+        if (message.contains("rites_and_paths") || (logger != null && logger.startsWith(PACKAGE))) return true;
         for (Throwable t = error; t != null; t = t.getCause()) {
             for (StackTraceElement e : t.getStackTrace()) {
                 if (e.getClassName().startsWith(PACKAGE)) return true;

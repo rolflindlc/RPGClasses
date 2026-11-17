@@ -1,0 +1,297 @@
+{
+  "schema_version": 1,
+  "display": {
+    "icon": "minecraft:oak_leaves"
+  },
+  "effects": [
+    {
+      "type": "rites_and_paths:attribute",
+      "modifiers": [
+        {
+          "attribute": "rites_and_paths:leaf_walker",
+          "operation": "add",
+          "values": [
+            1,
+            1,
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "type": "rites_and_paths:mechanic",
+      "id": "rites_and_paths:race_leaf_walker"
+    },
+    {
+      "type": "rites_and_paths:mechanic",
+      "id": "rites_and_paths:race_no_meat"
+    }
+  ],
+  "subraces": [
+    {
+      "id": "dark",
+      "display": {
+        "icon": "minecraft:campfire"
+      },
+      "available": true,
+      "effects": [
+        {
+          "type": "rites_and_paths:mechanic",
+          "id": "rites_and_paths:race_dark_vision"
+        },
+        {
+          "type": "rites_and_paths:mechanic",
+          "id": "rites_and_paths:race_smoke_cloud",
+          "min_rank": 1,
+          "radius": {
+            "values": [
+              8,
+              8,
+              10,
+              16
+            ]
+          },
+          "duration_seconds": {
+            "values": [
+              6,
+              6,
+              8,
+              8
+            ]
+          },
+          "cooldown_seconds": 22,
+          "slowness": {
+            "values": [
+              0,
+              0,
+              0,
+              1
+            ]
+          }
+        }
+      ],
+      "rites": [
+        {
+          "id": "elf.dark.1",
+          "kind": "feat",
+          "objectives": [
+            {
+              "type": "kill",
+              "count": 30,
+              "filter": {
+                "target": "enemy",
+                "max_light": 7
+              }
+            }
+          ]
+        },
+        {
+          "id": "elf.dark.2",
+          "kind": "craft",
+          "objectives": [
+            {
+              "type": "offer",
+              "items": [
+                {
+                  "item": "minecraft:campfire",
+                  "count": 8
+                },
+                {
+                  "item": "minecraft:charcoal",
+                  "count": 16
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "elf.dark.3",
+          "kind": "ritual",
+          "objectives": [
+            {
+              "type": "boss",
+              "night": true,
+              "ability": "race_smoke_cloud",
+              "uses": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "arcane",
+      "display": {
+        "icon": "minecraft:enchanting_table"
+      },
+      "available": true,
+      "effects": [
+        {
+          "type": "rites_and_paths:mechanic",
+          "id": "rites_and_paths:race_arcane",
+          "enchant_bonus": {
+            "values": [
+              0.1,
+              0.2,
+              0.3,
+              0.3
+            ]
+          },
+          "xp_discount": {
+            "values": [
+              0.1,
+              0.2,
+              0.3,
+              0.3
+            ]
+          },
+          "fusion": {
+            "values": [
+              0,
+              0,
+              0,
+              1
+            ]
+          },
+          "fusion_cost_levels": 30
+        }
+      ],
+      "rites": [
+        {
+          "id": "elf.arcane.1",
+          "kind": "feat",
+          "objectives": [
+            {
+              "type": "kill",
+              "count": 30,
+              "filter": {
+                "target": "enemy",
+                "weapon_enchanted": true
+              }
+            }
+          ]
+        },
+        {
+          "id": "elf.arcane.2",
+          "kind": "craft",
+          "objectives": [
+            {
+              "type": "offer",
+              "items": [
+                {
+                  "item": "*",
+                  "count": 3,
+                  "pred": "enchanted_by_you"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "elf.arcane.3",
+          "kind": "ritual",
+          "objectives": [
+            {
+              "type": "offer",
+              "items": [
+                {
+                  "item": "minecraft:enchanted_book",
+                  "count": 2,
+                  "pred": "twin_books"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sylvan",
+      "display": {
+        "icon": "minecraft:wheat"
+      },
+      "available": true,
+      "effects": [
+        {
+          "type": "rites_and_paths:mechanic",
+          "id": "rites_and_paths:race_harvest",
+          "bonus": {
+            "values": [
+              0.25,
+              0.25,
+              0.25,
+              0.5
+            ]
+          }
+        },
+        {
+          "type": "rites_and_paths:mechanic",
+          "id": "rites_and_paths:race_plant_food",
+          "min_rank": 1,
+          "bonus": 0.25
+        },
+        {
+          "type": "rites_and_paths:mechanic",
+          "id": "rites_and_paths:race_green_touch",
+          "min_rank": 2,
+          "cooldown_seconds": {
+            "values": [
+              5,
+              5,
+              5,
+              2
+            ]
+          }
+        },
+        {
+          "type": "rites_and_paths:mechanic",
+          "id": "rites_and_paths:race_forest_regen",
+          "min_rank": 2,
+          "amplifier": 0
+        }
+      ],
+      "rites": [
+        {
+          "id": "elf.sylvan.1",
+          "kind": "feat",
+          "objectives": [
+            {
+              "type": "kill",
+              "count": 30,
+              "filter": {
+                "target": "enemy",
+                "biome": "minecraft:is_forest"
+              }
+            }
+          ]
+        },
+        {
+          "id": "elf.sylvan.2",
+          "kind": "craft",
+          "objectives": [
+            {
+              "type": "offer",
+              "items": [
+                {
+                  "tag": "rites_and_paths:rite/crops",
+                  "count": 16,
+                  "types": 4
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "elf.sylvan.3",
+          "kind": "ritual",
+          "objectives": [
+            {
+              "type": "boss",
+              "altar": "forest"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

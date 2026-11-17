@@ -44,11 +44,11 @@ public final class PaladinPerks {
     public static final String SHOCKWAVE = "shockwave";
     public static final String SHIELD_COUNTER = "shield_counter";
     public static final ResourceKey<DamageType> SHOCKWAVE_DAMAGE = ResourceKey.create(Registries.DAMAGE_TYPE, RpgClasses.id("shockwave"));
-    private static final String SHOCKWAVE_COUNTER = "rpgclasses:shockwave_hits";
-    private static final String SHIELD_COUNTER_COOLDOWN = "rpgclasses:shield_counter";
+    private static final String SHOCKWAVE_COUNTER = "rites_and_paths:shockwave_hits";
+    private static final String SHIELD_COUNTER_COOLDOWN = "rites_and_paths:shield_counter";
     public static final TagKey<EntityType<?>> NETHER_MOBS = TagKey.create(Registries.ENTITY_TYPE, RpgClasses.id("nether_mobs"));
     public static final ResourceKey<DamageType> HOLY_DAMAGE = ResourceKey.create(Registries.DAMAGE_TYPE, RpgClasses.id("holy"));
-    private static final String JUDGEMENT_COUNTER = "rpgclasses:judgement_hits";
+    private static final String JUDGEMENT_COUNTER = "rites_and_paths:judgement_hits";
 
     /** Paladín -> marca de Condena activa. */
     private record Mark(UUID target, long untilTick) {}

@@ -24,7 +24,7 @@ public class BeltScreen extends AbstractContainerScreen<BeltMenu> {
         super.init();
         for (int i = 0; i < menu.capacity(); i++) {
             int slot = i;
-            open[i] = addRenderableWidget(Button.builder(Component.translatable("ui.rpgclasses.belt.open"), b -> click(slot))
+            open[i] = addRenderableWidget(Button.builder(Component.translatable("ui.rites_and_paths.belt.open"), b -> click(slot))
                     .bounds(leftPos + BeltMenu.slotX(i, menu.capacity()) - 5, topPos + BeltMenu.SLOT_Y + 19, 26, 12).build());
         }
         containerTick();
@@ -59,7 +59,7 @@ public class BeltScreen extends AbstractContainerScreen<BeltMenu> {
         g.drawString(font, title, titleLabelX, titleLabelY, UiStyle.GOLD, false);
         int used = 0;
         for (int i = 0; i < menu.capacity(); i++) used += io.github.rpgclasses.content.race.PorterBelt.cost(menu.getSlot(i).getItem());
-        Component cap = Component.translatable("ui.rpgclasses.belt.capacity", used, menu.capacity());
+        Component cap = Component.translatable("ui.rites_and_paths.belt.capacity", used, menu.capacity());
         g.drawString(font, cap, imageWidth - 8 - font.width(cap), titleLabelY, 0xFFCCCCCC, false);
         g.drawString(font, playerInventoryTitle, inventoryLabelX, inventoryLabelY, 0xFFDDDDDD, false);
     }

@@ -1,0 +1,293 @@
+{
+  "schema_version": 1,
+  "display": {
+    "icon": "minecraft:bow",
+    "roles": [
+      "distancia",
+      "daño"
+    ]
+  },
+  "starting_kit": [
+    {
+      "item": "minecraft:bow",
+      "slot": "mainhand"
+    },
+    {
+      "item": "minecraft:arrow",
+      "count": 64,
+      "slot": "inventory"
+    },
+    {
+      "item": "minecraft:leather_helmet",
+      "slot": "head"
+    },
+    {
+      "item": "minecraft:leather_chestplate",
+      "slot": "chest"
+    },
+    {
+      "item": "minecraft:leather_leggings",
+      "slot": "legs"
+    },
+    {
+      "item": "minecraft:leather_boots",
+      "slot": "feet"
+    }
+  ],
+  "crit_chance_bonus": 0.0,
+  "walls": {
+    "rites_and_paths:magic": 0.4,
+    "rites_and_paths:heavy": 0.45,
+    "rites_and_paths:light": 0.35,
+    "rites_and_paths:shield": 0.3
+  },
+  "school_walls": {
+    "irons_spellbooks:holy": 1.0,
+    "rites_and_paths:music": 1.0
+  },
+  "branches": [
+    {
+      "id": "aim",
+      "max_points": 10,
+      "effects": [
+        {
+          "type": "rites_and_paths:attribute",
+          "modifiers": [
+            {
+              "attribute": "rites_and_paths:bow_damage",
+              "to": 0.3,
+              "operation": "add"
+            },
+            {
+              "attribute": "rites_and_paths:zoom",
+              "to": 0.35,
+              "operation": "add"
+            }
+          ]
+        }
+      ],
+      "perks": [
+        {
+          "id": "steady_shooter",
+          "effects": [
+            {
+              "type": "rites_and_paths:mechanic",
+              "id": "rites_and_paths:steady_shooter",
+              "still_seconds": 1,
+              "still_bonus": 0.25,
+              "moving_penalty": -0.15
+            }
+          ]
+        },
+        {
+          "id": "mobile_shooter",
+          "effects": [
+            {
+              "type": "rites_and_paths:mechanic",
+              "id": "rites_and_paths:mobile_shooter",
+              "moving_bonus": 0.2,
+              "still_penalty": -0.15
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cadence",
+      "max_points": 10,
+      "effects": [
+        {
+          "type": "rites_and_paths:attribute",
+          "modifiers": [
+            {
+              "attribute": "rites_and_paths:draw_speed",
+              "to": 0.3,
+              "operation": "add"
+            }
+          ]
+        }
+      ],
+      "perks": [
+        {
+          "id": "agile_shooter",
+          "effects": [
+            {
+              "type": "rites_and_paths:mechanic",
+              "id": "rites_and_paths:draw_no_slow"
+            },
+            {
+              "type": "rites_and_paths:attribute",
+              "modifiers": [
+                {
+                  "attribute": "rites_and_paths:draw_speed",
+                  "to": -0.15,
+                  "operation": "add"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "quick_counter",
+          "effects": [
+            {
+              "type": "rites_and_paths:mechanic",
+              "id": "rites_and_paths:quick_counter",
+              "window_seconds": 3,
+              "damage_fraction": 0.7,
+              "icd_seconds": 8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "range",
+      "max_points": 10,
+      "effects": [
+        {
+          "type": "rites_and_paths:attribute",
+          "modifiers": [
+            {
+              "attribute": "rites_and_paths:projectile_velocity",
+              "to": 1.0,
+              "operation": "add"
+            }
+          ]
+        }
+      ],
+      "perks": [
+        {
+          "id": "piercing",
+          "effects": [
+            {
+              "type": "rites_and_paths:mechanic",
+              "id": "rites_and_paths:piercing",
+              "extra_targets": 1,
+              "second_damage": 0.6,
+              "first_damage": -0.1
+            }
+          ]
+        },
+        {
+          "id": "hunters_mark",
+          "effects": [
+            {
+              "type": "rites_and_paths:mechanic",
+              "id": "rites_and_paths:hunters_mark",
+              "duration_seconds": 6,
+              "icd_seconds": 10,
+              "damage_bonus": 0.12
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "special_arrows",
+      "max_points": 10,
+      "effects": [
+        {
+          "type": "rites_and_paths:mechanic",
+          "id": "rites_and_paths:potion_arrows",
+          "potion_bonus": {
+            "to": 0.25
+          }
+        }
+      ],
+      "perks": [
+        {
+          "id": "explosive_arrow",
+          "effects": [
+            {
+              "type": "rites_and_paths:mechanic",
+              "id": "rites_and_paths:explosive_arrow",
+              "radius": 2,
+              "damage_fraction": 0.3,
+              "knockback_strength": 0.8,
+              "direct_damage": -0.1
+            }
+          ]
+        },
+        {
+          "id": "sticky_arrow",
+          "effects": [
+            {
+              "type": "rites_and_paths:mechanic",
+              "id": "rites_and_paths:sticky_arrow",
+              "slowness_seconds": 2
+            },
+            {
+              "type": "rites_and_paths:attribute",
+              "modifiers": [
+                {
+                  "attribute": "rites_and_paths:projectile_velocity",
+                  "to": -0.1,
+                  "operation": "add"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "retreat",
+      "max_points": 10,
+      "effects": [
+        {
+          "type": "rites_and_paths:mechanic",
+          "id": "rites_and_paths:retreat",
+          "speed_bonus": 0.25,
+          "duration_seconds": 2,
+          "icd_seconds": 5,
+          "min_points": 10
+        }
+      ],
+      "perks": [
+        {
+          "id": "evasive_leap",
+          "effects": [
+            {
+              "type": "rites_and_paths:mechanic",
+              "id": "rites_and_paths:evasive_leap",
+              "leap_blocks": 4,
+              "icd_seconds": 12
+            }
+          ]
+        },
+        {
+          "id": "hunter_trap",
+          "effects": [
+            {
+              "type": "rites_and_paths:mechanic",
+              "id": "rites_and_paths:hunter_trap",
+              "duration_seconds": 3,
+              "slowness_level": 2,
+              "icd_seconds": 12
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "milestones": [
+    {
+      "total_level": 5,
+      "grants": "rites_and_paths:ammo_conservation"
+    },
+    {
+      "total_level": 15,
+      "grants": "rites_and_paths:double_jump"
+    },
+    {
+      "total_level": 30,
+      "grants": "rites_and_paths:heavy_shot"
+    }
+  ],
+  "subclasses": [
+    "rites_and_paths:beast_master",
+    "rites_and_paths:agile_scout",
+    "rites_and_paths:sniper"
+  ]
+}

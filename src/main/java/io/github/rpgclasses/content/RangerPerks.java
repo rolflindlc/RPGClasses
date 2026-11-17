@@ -63,14 +63,14 @@ public final class RangerPerks {
     public static final String HUNTER_TRAP = "hunter_trap";
     public static final ResourceKey<DamageType> ARROW_BLAST = ResourceKey.create(Registries.DAMAGE_TYPE, RpgClasses.id("arrow_blast"));
 
-    private static final String TAG_HITS = "rpgclasses.hits";
-    private static final String TAG_EXPLOSIVE = "rpgclasses.explosive";
-    private static final String TAG_MARK_ICD = "rpgclasses.mark_icd";
-    private static final String TAG_MARK_BONUS = "rpgclasses.mark_bonus";
-    private static final String CD_RETREAT = "rpgclasses:retreat";
-    private static final String CD_LEAP = "rpgclasses:evasive_leap";
-    private static final String CD_TRAP = "rpgclasses:hunter_trap";
-    private static final String CD_QUICK = "rpgclasses:quick_counter";
+    private static final String TAG_HITS = "rites_and_paths.hits";
+    private static final String TAG_EXPLOSIVE = "rites_and_paths.explosive";
+    private static final String TAG_MARK_ICD = "rites_and_paths.mark_icd";
+    private static final String TAG_MARK_BONUS = "rites_and_paths.mark_bonus";
+    private static final String CD_RETREAT = "rites_and_paths:retreat";
+    private static final String CD_LEAP = "rites_and_paths:evasive_leap";
+    private static final String CD_TRAP = "rites_and_paths:hunter_trap";
+    private static final String CD_QUICK = "rites_and_paths:quick_counter";
 
     /** Último tick de servidor en que el jugador se movió en horizontal, y su posición anterior. */
     private static final Map<UUID, Long> LAST_MOVED = new HashMap<>();
@@ -198,7 +198,7 @@ public final class RangerPerks {
         if (event.getRayTraceResult().getType() != HitResult.Type.BLOCK || !arrow.getPersistentData().getBoolean(TAG_EXPLOSIVE)) return;
         if (!(arrow.getOwner() instanceof ServerPlayer shooter)) return;
         arrow.getPersistentData().remove(TAG_EXPLOSIVE);
-        double factor = arrow.getPersistentData().contains("rpgclasses.factor") ? arrow.getPersistentData().getDouble("rpgclasses.factor") : 1;
+        double factor = arrow.getPersistentData().contains("rites_and_paths.factor") ? arrow.getPersistentData().getDouble("rites_and_paths.factor") : 1;
         float damage = (float) (Math.ceil(arrow.getDeltaMovement().length() * arrow.getBaseDamage()) * factor);
         blast(shooter, event.getRayTraceResult().getLocation(), null, damage);
     }

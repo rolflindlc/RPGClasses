@@ -13,13 +13,13 @@ import java.util.function.ToIntFunction;
 
 /** Ids y utilidades comunes del Bardo (adenda del Bardo). */
 public final class Bard {
-    public static final String RHYTHM = "rpgclasses:rhythm";
-    public static final String HARMONY = "rpgclasses:harmony";
-    public static final String COUNTERPOINT = "rpgclasses:counterpoint";
-    public static final String CRESCENDO = "rpgclasses:crescendo";
-    public static final String RHYTHMIC_FURY = "rpgclasses:rhythmic_fury";
-    public static final String BEWITCH = "rpgclasses:bewitch";
-    public static final String RECITAL = "rpgclasses:recital";
+    public static final String RHYTHM = "rites_and_paths:rhythm";
+    public static final String HARMONY = "rites_and_paths:harmony";
+    public static final String COUNTERPOINT = "rites_and_paths:counterpoint";
+    public static final String CRESCENDO = "rites_and_paths:crescendo";
+    public static final String RHYTHMIC_FURY = "rites_and_paths:rhythmic_fury";
+    public static final String BEWITCH = "rites_and_paths:bewitch";
+    public static final String RECITAL = "rites_and_paths:recital";
 
     // Mecánicas (ramas, perks y subclases).
     public static final String MUSIC_POWER = "music_power";

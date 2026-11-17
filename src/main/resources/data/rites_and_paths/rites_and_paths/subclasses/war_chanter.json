@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "class": "rites_and_paths:bard",
+  "display": {
+    "icon": "minecraft:goat_horn"
+  },
+  "effects": [
+    {
+      "type": "rites_and_paths:mechanic",
+      "id": "rites_and_paths:martial_combo",
+      "per_hit": 0.01,
+      "cap": 0.3
+    },
+    {
+      "type": "rites_and_paths:mechanic",
+      "id": "rites_and_paths:resonant_strike",
+      "every_hits": 5,
+      "radius": 3,
+      "damage_fraction": {
+        "from": 0.3,
+        "to": 0.75
+      }
+    }
+  ],
+  "milestones": [
+    {
+      "subclass_level": 5,
+      "grants": "rites_and_paths:rhythmic_fury"
+    }
+  ]
+}

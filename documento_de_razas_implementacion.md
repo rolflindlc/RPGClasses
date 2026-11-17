@@ -6,12 +6,12 @@ Acompaña a *Documento de Diseño: Razas* (anexo, rev. 0.6, y adenda rev. 0.7). 
 
 ## 1. Qué hay hecho
 
-* **Sistema:** 8 razas × 3 subrazas en el datapack (`data/rpgclasses/rpgclasses/races/*.json`), con todos los valores por Rango. Se pueden cambiar con un datapack y `/reload`.
+* **Sistema:** 8 razas × 3 subrazas en el datapack (`data/rites_and_paths/rites_and_paths/races/*.json`), con todos los valores por Rango. Se pueden cambiar con un datapack y `/reload`.
 * **Elección:** al entrar, pantallas **Raza → Subraza → Clase**. La raza y la subraza son permanentes y sobreviven al reinicio de clase. Los jugadores que ya tenían clase eligen raza al entrar. Mientras eligen no reciben daño.
 * **Rangos 0–3:** guardados por jugador; suben con los **ritos** (también se pueden fijar con un comando de administrador).
 * **Ritos (fase R2b):** los 72 ritos del anexo (3 por subraza, en orden). Las hazañas cuentan solas; las ofrendas y construcciones se entregan en el **Altar de Raza** (clic derecho), y los jefes de rito se invocan en él (**agachado + clic derecho**). `/raza ritos` muestra el rito en curso.
 * **Altar de Raza:** receta `vela · libro · vela / oro · diamante · oro / 3 ladrillos de piedra`. Aparece en la pestaña de bloques funcionales.
-* **Jefes de rito:** uno al azar del tag `rpgclasses:rite_bosses` (jefes medianos de Cataclysm y Mowzie's si están instalados); si no hay ninguno, un devastador o un evocador con el doble de vida. Solo cuentan para quien los invoca, que debe hacerles al menos el 25 % del daño. Desaparecen si su dueño muere, se desconecta, se aleja más de 64 bloques durante 30 s o pasan 10 minutos; 1 minuto de espera entre invocaciones.
+* **Jefes de rito:** uno al azar del tag `rites_and_paths:rite_bosses` (jefes medianos de Cataclysm y Mowzie's si están instalados); si no hay ninguno, un devastador o un evocador con el doble de vida. Solo cuentan para quien los invoca, que debe hacerles al menos el 25 % del daño. Desaparecen si su dueño muere, se desconecta, se aleja más de 64 bloques durante 30 s o pasan 10 minutos; 1 minuto de espera entre invocaciones.
 * **Topes y suelos:** la vida y la velocidad raciales suman con las de clase (tope +100 %); suelos de −50 % de vida (10 HP) y −25 % de velocidad.
 * **Tamaño** (Orco +10 %, Enano −25 %, Goblin −50 %): implementación propia, sin librería. Cambia modelo, hitbox (el mixin `PlayerSizeMixin` escala `getDimensions` en **todas las poses**, para que quepan huecos de 1 bloque y las paredes no den problemas) y altura de ojos.
 * **Interfaz:** los menús de clase y raza usan **retratos** (tus iconos a resolución completa y con fondo) para clases, subclases, razas y subrazas, y **texturas propias** de panel, cabecera y botones (`textures/gui/ui/`, generadas con `tools/art/make_ui.py`; se pueden sustituir por otras). Los estados (efectos) tienen su icono en `textures/mob_effect/`.
@@ -30,7 +30,7 @@ Acompaña a *Documento de Diseño: Razas* (anexo, rev. 0.6, y adenda rev. 0.7). 
 | Libro de Vínculos (Maestro de Bestias) | objeto propio (no tiene tecla): receta libro + hueso + correa; el kit lo da al coger la subclase |
 | Habilidades raciales | teclas **V** y **B**; agachado + V es una tercera ranura |
 
-Ids de raza: `rpgclasses:human`, `orc`, `dwarf`, `elf`, `goblin`, `triton`, `infernal`, `undead`.
+Ids de raza: `rites_and_paths:human`, `orc`, `dwarf`, `elf`, `goblin`, `triton`, `infernal`, `undead`.
 
 ### Razas y subrazas
 
@@ -55,15 +55,15 @@ Ids de raza: `rpgclasses:human`, `orc`, `dwarf`, `elf`, `goblin`, `triton`, `inf
 * **Nube de Humo y aliados:** la invisibilidad solo se aplica al Elfo y a sus aliados (y sus mascotas); los enemigos dentro no se vuelven invisibles y, desde R3, se ralentizan. Sustituye a "todo lo que hay dentro es invisible" del anexo.
 * **Ladrón y Escolta:** Mano Larga no roba a quien el Goblin tiene como aliado; los guardianes del Abisal no atacan a mascotas ni invocaciones de aliados.
 * **Fusión Arcana:** cuesta 30 niveles y 1 objeto; solo sube los encantamientos que están a nivel máximo en los dos objetos.
-* **Fortuna racial:** solo en bloques del tag `forge:ores`. **Minero:** tag `rpgclasses:dwarf_mineable`.
-* **Carne y pescado:** tags `rpgclasses:meat` y `rpgclasses:elf_forbidden_food`. El perk *Carnívoro* del Bárbaro ya cuenta el pescado y **no se puede elegir siendo Elfo**.
+* **Fortuna racial:** solo en bloques del tag `forge:ores`. **Minero:** tag `rites_and_paths:dwarf_mineable`.
+* **Carne y pescado:** tags `rites_and_paths:meat` y `rites_and_paths:elf_forbidden_food`. El perk *Carnívoro* del Bárbaro ya cuenta el pescado y **no se puede elegir siendo Elfo**.
 * **Mano Larga:** solo golpes cuerpo a cuerpo; no roba a mobs de spawner ni a jefes; el objeto robado solo lo puede recoger el Goblin.
 * **Espectro:** la caída lenta se desactiva al agacharse.
 * **Sol del No-muerto:** 1 HP por segundo con un tipo de daño propio que ignora la armadura.
 * **Conjuros raciales:** aparecen al final de la rueda de Iron's; gastan maná y enfriamiento normales. **Desde la rev. 2.13 sufren el muro de Magia de la clase** (decisión del usuario), igual que los del Moldeador (escuela de **agua** de *T.O Magic 'n Extras*; sin T.O no aparecen).
 * **Infernal y aldeanos:** el recargo se aplica a aldeanos, no al comerciante errante.
 * **Herrero:** la durabilidad extra va marcada en el objeto (se ve en la descripción) y viaja con él. Cuenta lo que fabricas (mesa y herrería) y lo que reparas o combinas en el yunque; Irrompibilidad +1 solo en lo fabricado. El descuento del yunque (−50 %) es de niveles y no salva el "Demasiado caro".
-* **Demoledor:** su TNT se repite con radio 5 (vanilla 4): también alcanza un poco más a las entidades. Túnel: agachado, solo en bloques del tag `rpgclasses:dwarf_mineable`, frente a la cara que miras; +0,1 de agotamiento por bloque extra.
+* **Demoledor:** su TNT se repite con radio 5 (vanilla 4): también alcanza un poco más a las entidades. Túnel: agachado, solo en bloques del tag `rites_and_paths:dwarf_mineable`, frente a la cara que miras; +0,1 de agotamiento por bloque extra.
 * **Elfo Arcano:** en la mesa se devuelve el porcentaje de la experiencia gastada; en el yunque se reducen los niveles. No se suma al descuento del Herrero (cuenta el mayor).
 * **Jinete de Lobo:** clic derecho con la mano vacía en tu lobo adulto para montarlo; agachado conserva el "sentar" de vanilla. El lobo se mueve con la velocidad del lobo (sin tope del jugador). **Salto cargado como el del caballo:** mantén saltar hasta 1 s (mínimo 35 %), con factor de salto 1,6 y una barra propia (`WolfJumpGauge`) en lugar de la de vanilla. R1: +25 % de vida a tus lobos cercanos (48 bloques). R2: el lobo **montado** muerde a lo que golpeas (1 s entre mordiscos); sin montar ya lo hacen los lobos vanilla.
 * **Pescador:** cada espera hasta que pica un pez se acorta un 40 %.
@@ -93,7 +93,7 @@ Ids de raza: `rpgclasses:human`, `orc`, `dwarf`, `elf`, `goblin`, `triton`, `inf
 
 ## 4. Qué probar
 
-Nada de esto se ha probado en el juego. Perfil: Forge 1.20.1 (47.4.x) + Iron's Spells 3.16.3 + Epic Fight 20.15.x + el jar del último run verde; Cataclysm o Mowzie's opcionales (jefes de rito). Varias pruebas necesitan un segundo jugador (LAN). Si algo falla: `/clases debug volcar`, `logs/rpgclasses-debug.log` y, si hay, el crash-report.
+Nada de esto se ha probado en el juego. Perfil: Forge 1.20.1 (47.4.x) + Iron's Spells 3.16.3 + Epic Fight 20.15.x + el jar del último run verde; Cataclysm o Mowzie's opcionales (jefes de rito). Varias pruebas necesitan un segundo jugador (LAN). Si algo falla: `/clases debug volcar`, `logs/rites_and_paths-debug.log` y, si hay, el crash-report.
 
 **A. Arranque.** El juego abre y entra al mundo sin errores de Mixin en el log (hay 14 mixins). Servidor y cliente con el mismo jar (protocolo de red 11).
 
@@ -131,7 +131,7 @@ Nada de esto se ha probado en el juego. Perfil: Forge 1.20.1 (47.4.x) + Iron's S
 3. Menús de clase y raza: rejilla de tarjetas con retrato, cabecera con retrato grande (compacta a 24 px si la pantalla mide menos de 330 de alto), pestañas de subraza y botones de subclase con retrato; paneles, cabeceras y tarjetas con las texturas nuevas. Comprobar legibilidad en tamaños de interfaz 1 a 4.
 4. Iconos de estados (efectos) en la barra y en el inventario.
 
-**K. Aturdimiento de Epic Fight (diseño v2, rev. 2.12).** Con Epic Fight, Embestida (y Carga Demoledora), Puño de Inhabilitación y el efecto de Piedra del Monje ponen al objetivo en el aturdimiento real de Epic Fight (animación de golpe y sin poder actuar) durante el tiempo de la habilidad; sin Epic Fight, lentitud y debilidad fuertes. En `logs/rpgclasses-debug.log` sale "aturdimiento … aplicado" o "sin animación" (entonces usa el simulado).
+**K. Aturdimiento de Epic Fight (diseño v2, rev. 2.12).** Con Epic Fight, Embestida (y Carga Demoledora), Puño de Inhabilitación y el efecto de Piedra del Monje ponen al objetivo en el aturdimiento real de Epic Fight (animación de golpe y sin poder actuar) durante el tiempo de la habilidad; sin Epic Fight, lentitud y debilidad fuertes. En `logs/rites_and_paths-debug.log` sale "aturdimiento … aplicado" o "sin animación" (entonces usa el simulado).
 
 **J. Monje rev. 2.9 (cargas de postura).** Protocolo de red 11.
 1. Suelo (*Cuerpo Marcial*): con `/clases debug stats`, armadura 10 / dureza 4 y +4 de daño desarmado con 30 puntos de base (la mitad con 15); nada con armadura puesta.
@@ -166,7 +166,7 @@ Nada de esto se ha probado en el juego. Perfil: Forge 1.20.1 (47.4.x) + Iron's S
 
 ## 5. Fase R3: razas de la adenda 0.7 (Slime, Coloso, Dracónido y Centauro)
 
-Fecha: 2026-11-16 (R3a y R3b; R3c el mismo día). Protocolo de red **14** (servidor y cliente con el mismo jar). Ids: `rpgclasses:slime`, `colossus`, `draconid`, `centaur`. **Las 15 subrazas están disponibles** (39 en total).
+Fecha: 2026-11-16 (R3a y R3b; R3c el mismo día). Protocolo de red **14** (servidor y cliente con el mismo jar). Ids: `rites_and_paths:slime`, `colossus`, `draconid`, `centaur`. **Las 15 subrazas están disponibles** (39 en total).
 
 ### 5.1 Qué hay hecho
 
@@ -196,7 +196,7 @@ Fecha: 2026-11-16 (R3a y R3b; R3c el mismo día). Protocolo de red **14** (servi
 * **Pegaso:** el planeo es la caída lenta de vanilla (oculta), activada al caer desde la altura del Rango.
 * **Unicornio:** el aura suma +50 % al atributo de regeneración de maná de Iron's de los aliados (jugadores) en el radio. La Regeneración de manzanas doradas y faros también cuenta como "poción".
 * **Viscoso:** te sueltas al perder 6 HP o más de golpe; la barra se recarga en el suelo en 2 s.
-* **Titán (R3c):** volver a pulsar la tecla termina la forma antes. Un pisotón cada ~2,6 bloques caminados; el temblor baja con la distancia (el Titán lo nota al 30 %) y cada jugador lo puede reducir o quitar con la opción `titanShake` de `config/rpgclasses-client.toml`. Sonido a volumen 4 (se oye a ~64 bloques). Para que las vibraciones lleguen más lejos, cada pisotón se emite también a 8 bloques en las 4 direcciones; agachado no vibra. La barra extra es absorción (corazones amarillos).
+* **Titán (R3c):** volver a pulsar la tecla termina la forma antes. Un pisotón cada ~2,6 bloques caminados; el temblor baja con la distancia (el Titán lo nota al 30 %) y cada jugador lo puede reducir o quitar con la opción `titanShake` de `config/rites_and_paths-client.toml`. Sonido a volumen 4 (se oye a ~64 bloques). Para que las vibraciones lleguen más lejos, cada pisotón se emite también a 8 bloques en las 4 direcciones; agachado no vibra. La barra extra es absorción (corazones amarillos).
 * **Porteador (R3c):** el cofre de Ender del cinturón abre el cofre de Ender de quien lo usa. Las mesas se abren donde está el Porteador (la de encantamientos cuenta las estanterías de alrededor) y el yunque del cinturón no se desgasta. La experiencia de los hornos se da al dueño al cocinar. Quitar un bloque del cinturón devuelve su contenido a tu inventario. El −10 % de velocidad es un rasgo de datos (con los suelos de velocidad); el −5 % por pasajero va aparte.
 * **Enjambre (R3c):** el número de slimes redondea hacia arriba (con 5,5 HP, 3 slimes) y la vida se reparte por igual. El enfriamiento empieza al uniros. Los slimes atacan a mobs hostiles, jefes, jugadores enemigos y a quien os ataque a ti o a tus aliados (a 8 bloques del slime y 16 de ti). La regeneración natural cura 1 HP a un slime dañado cada 4 s con la comida casi llena. Al salir o cambiar de dimensión os unís. Dividido tampoco haces daño de otras formas (Epic Fight, proyectiles ya lanzados, efectos).
 * **Mitótico (R3c):** "enemigo" = mob hostil, jefe, jugador enemigo o un mob que te tenía como objetivo. Si tu copia muere (o se queda atrás al cambiar de dimensión), recuperas tu tamaño al acabar el enfriamiento de la división, sin curarte. Vida tras fusionar en Rango 0: 1 HP.

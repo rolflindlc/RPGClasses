@@ -82,7 +82,7 @@ public final class ModGear {
 
     /** Pestaña de creativo con todos los objetos del mod: primero los demás registros (altar, libro...) y luego el equipo. */
     public static final RegistryObject<CreativeModeTab> TAB = TABS.register("class_gear", () -> CreativeModeTab.builder()
-            .title(Component.translatable("itemGroup.rpgclasses.class_gear"))
+            .title(Component.translatable("itemGroup.rites_and_paths.class_gear"))
             .icon(() -> new ItemStack(ARMOR.get(GearClass.MONK).get(ArmorTier.DRAGONSTEEL_FIRE).get(ArmorItem.Type.CHESTPLATE).get()))
             .displayItems((params, out) -> {
                 io.github.rpgclasses.registry.ModBlocks.ITEMS.getEntries().forEach(ro -> out.accept(ro.get()));

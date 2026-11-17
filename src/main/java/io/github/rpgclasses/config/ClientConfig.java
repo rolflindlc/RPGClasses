@@ -2,7 +2,7 @@ package io.github.rpgclasses.config;
 
 import net.minecraftforge.common.ForgeConfigSpec;
 
-/** Configuración de cliente (cada jugador la suya, en config/rpgclasses-client.toml). Solo efectos visuales. */
+/** Configuración de cliente (cada jugador la suya, en config/rites_and_paths-client.toml). Solo efectos visuales. */
 public final class ClientConfig {
     public static final ForgeConfigSpec SPEC;
 

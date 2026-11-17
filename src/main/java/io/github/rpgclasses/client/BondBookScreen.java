@@ -31,7 +31,7 @@ public final class BondBookScreen extends Screen {
     private static final UUID NONE = new UUID(0, 0);
 
     public BondBookScreen() {
-        super(Component.translatable("ui.rpgclasses.bond.title"));
+        super(Component.translatable("ui.rites_and_paths.bond.title"));
     }
 
     public void onDataChanged() {
@@ -63,38 +63,38 @@ public final class BondBookScreen extends Screen {
         // Izquierda: vinculadas. Romper solo si la mascota está cargada (para verla y soltarla).
         for (int i = 0; i < d.bonded().size(); i++) {
             Packets.BookEntry e = d.bonded().get(i);
-            Button hold = Button.builder(Component.translatable("ui.rpgclasses.bond.break"),
+            Button hold = Button.builder(Component.translatable("ui.rites_and_paths.bond.break"),
                     b -> send(BondBook.ACT_UNBIND, e.id(), 0)).bounds(x0 + 128, TOP + 14 + i * ROW + 3, 52, 18).build();
             hold.active = e.loaded();
             addRenderableWidget(hold);
         }
 
         // Derecha: destino de la Salvaguarda.
-        addRenderableWidget(Button.builder(Component.translatable("ui.rpgclasses.bond.dest_spawn"),
+        addRenderableWidget(Button.builder(Component.translatable("ui.rites_and_paths.bond.dest_spawn"),
                 b -> send(BondBook.ACT_SELECT, NONE, BondBook.SPAWN)).bounds(x1, TOP + 14, 170, 18).build())
                 .active = d.selected() != BondBook.SPAWN;
         for (int i = 0; i < d.points().size(); i++) {
             Packets.BookPoint p = d.points().get(i);
             int y = POINTS_Y + i * POINT_ROW;
             int slot = i;
-            Button use = Button.builder(Component.translatable("ui.rpgclasses.bond.use"),
+            Button use = Button.builder(Component.translatable("ui.rites_and_paths.bond.use"),
                     b -> send(BondBook.ACT_SELECT, NONE, slot)).bounds(x1, y + 11, 84, 18).build();
             use.active = p.set() && d.selected() != i;
             addRenderableWidget(use);
-            addRenderableWidget(Button.builder(Component.translatable("ui.rpgclasses.bond.save_here"),
+            addRenderableWidget(Button.builder(Component.translatable("ui.rites_and_paths.bond.save_here"),
                     b -> send(BondBook.ACT_SAVE, NONE, slot)).bounds(x1 + 86, y + 11, 84, 18).build());
         }
 
         // Derecha, abajo: mascotas cercanas sin vincular.
         for (int j = 0; j < d.nearby().size(); j++) {
             Packets.BookEntry e = d.nearby().get(j);
-            Button link = Button.builder(Component.translatable("ui.rpgclasses.bond.link"),
+            Button link = Button.builder(Component.translatable("ui.rites_and_paths.bond.link"),
                     b -> send(BondBook.ACT_BIND, e.id(), 0)).bounds(x1 + 104, NEARBY_Y + 14 + j * ROW + 3, 66, 18).build();
             link.active = d.bonded().size() < BondBook.MAX_BONDS;
             addRenderableWidget(link);
         }
 
-        addRenderableWidget(Button.builder(Component.translatable("ui.rpgclasses.close"), b -> onClose())
+        addRenderableWidget(Button.builder(Component.translatable("ui.rites_and_paths.close"), b -> onClose())
                 .bounds(width / 2 - 50, height - 26, 100, 20).build());
     }
 
@@ -110,9 +110,9 @@ public final class BondBookScreen extends Screen {
         int x0 = leftX(), x1 = rightX();
 
         // Izquierda: vinculadas.
-        g.drawString(font, Component.translatable("ui.rpgclasses.bond.bonded", d.bonded().size(), BondBook.MAX_BONDS), x0, TOP, 0xFFFFFF, false);
+        g.drawString(font, Component.translatable("ui.rites_and_paths.bond.bonded", d.bonded().size(), BondBook.MAX_BONDS), x0, TOP, 0xFFFFFF, false);
         if (d.bonded().isEmpty()) {
-            g.drawString(font, Component.translatable("ui.rpgclasses.bond.none"), x0, TOP + 14, 0x888888, false);
+            g.drawString(font, Component.translatable("ui.rites_and_paths.bond.none"), x0, TOP + 14, 0x888888, false);
         }
         for (int i = 0; i < d.bonded().size(); i++) {
             Packets.BookEntry e = d.bonded().get(i);
@@ -120,27 +120,27 @@ public final class BondBookScreen extends Screen {
             g.renderItem(iconOf(e.type()), x0 + 2, y + 3);
             g.drawString(font, font.plainSubstrByWidth(e.name(), 100), x0 + 22, y + 1, e.boosted() ? 0x55FF55 : 0xFFFFFF, false);
             Component line = e.loaded()
-                    ? Component.translatable("ui.rpgclasses.bond.stats", fmt(e.health(), "%.0f"), fmt(e.maxHealth(), "%.0f"),
+                    ? Component.translatable("ui.rites_and_paths.bond.stats", fmt(e.health(), "%.0f"), fmt(e.maxHealth(), "%.0f"),
                             fmt(e.attack(), "%.1f"), fmt(e.speed(), "%.2f"))
-                    : Component.translatable("ui.rpgclasses.bond.unloaded");
+                    : Component.translatable("ui.rites_and_paths.bond.unloaded");
             g.drawString(font, line, x0 + 22, y + 11, 0xAAAAAA, false);
         }
 
         // Derecha: destino de la Salvaguarda.
-        g.drawString(font, Component.translatable("ui.rpgclasses.bond.dest"), x1, TOP, 0xFFFFFF, false);
+        g.drawString(font, Component.translatable("ui.rites_and_paths.bond.dest"), x1, TOP, 0xFFFFFF, false);
         for (int i = 0; i < d.points().size(); i++) {
             Packets.BookPoint p = d.points().get(i);
             int y = POINTS_Y + i * POINT_ROW;
             Component text = p.set()
-                    ? Component.translatable("ui.rpgclasses.bond.point_line", i + 1, p.x(), p.y(), p.z(), dimName(p.dim()))
-                    : Component.translatable("ui.rpgclasses.bond.point_empty", i + 1);
+                    ? Component.translatable("ui.rites_and_paths.bond.point_line", i + 1, p.x(), p.y(), p.z(), dimName(p.dim()))
+                    : Component.translatable("ui.rites_and_paths.bond.point_empty", i + 1);
             g.drawString(font, text, x1, y + 2, d.selected() == i ? 0x55FF55 : 0xAAAAAA, false);
         }
 
         // Derecha, abajo: cercanas sin vincular.
-        g.drawString(font, Component.translatable("ui.rpgclasses.bond.nearby"), x1, NEARBY_Y, 0xFFFFFF, false);
+        g.drawString(font, Component.translatable("ui.rites_and_paths.bond.nearby"), x1, NEARBY_Y, 0xFFFFFF, false);
         if (d.nearby().isEmpty()) {
-            g.drawString(font, Component.translatable("ui.rpgclasses.bond.no_nearby", BondBook.RANGE), x1, NEARBY_Y + 14, 0x888888, false);
+            g.drawString(font, Component.translatable("ui.rites_and_paths.bond.no_nearby", BondBook.RANGE), x1, NEARBY_Y + 14, 0x888888, false);
         }
         for (int j = 0; j < d.nearby().size(); j++) {
             Packets.BookEntry e = d.nearby().get(j);

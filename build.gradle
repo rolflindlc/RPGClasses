@@ -9,7 +9,7 @@ version = mod_version
 group = mod_group_id
 
 base {
-    archivesName = mod_id
+    archivesName = 'rolflins-rites-and-paths'
 }
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
@@ -44,8 +44,8 @@ minecraft {
 
 // Mixins (razas): colisión de hojas del Elfo y curación instantánea del No-muerto.
 mixin {
-    add sourceSets.main, 'rpgclasses.refmap.json'
-    config 'rpgclasses.mixins.json'
+    add sourceSets.main, 'rites_and_paths.refmap.json'
+    config 'rites_and_paths.mixins.json'
 }
 
 repositories {
@@ -77,7 +77,7 @@ dependencies {
 
 test {
     useJUnit()
-    systemProperty 'rpgclasses.data', file('src/main/resources/data').absolutePath
+    systemProperty 'rites_and_paths.data', file('src/main/resources/data').absolutePath
 }
 
 tasks.named('jar', Jar).configure {

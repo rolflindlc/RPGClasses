@@ -8,8 +8,8 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 @Mixin(FishingHook.class)
 public interface FishingHookAccessor {
     @Accessor("timeUntilLured")
-    int rpgclasses$getTimeUntilLured();
+    int rites_and_paths$getTimeUntilLured();
 
     @Accessor("timeUntilLured")
-    void rpgclasses$setTimeUntilLured(int value);
+    void rites_and_paths$setTimeUntilLured(int value);
 }

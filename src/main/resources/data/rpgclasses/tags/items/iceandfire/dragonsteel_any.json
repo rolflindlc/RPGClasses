@@ -1,8 +1,0 @@
-{
-  "replace": false,
-  "values": [
-    "#rpgclasses:iceandfire/dragonsteel_fire",
-    "#rpgclasses:iceandfire/dragonsteel_ice",
-    "#rpgclasses:iceandfire/dragonsteel_lightning"
-  ]
-}

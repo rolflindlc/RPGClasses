@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "class": "rites_and_paths:ranger",
+  "display": {
+    "icon": "minecraft:bone"
+  },
+  "effects": [
+    {
+      "type": "rites_and_paths:mechanic",
+      "id": "rites_and_paths:wild_bond",
+      "health": 0.3,
+      "damage": 0.3,
+      "speed": 0.25,
+      "max_pets": 8
+    },
+    {
+      "type": "rites_and_paths:mechanic",
+      "id": "rites_and_paths:beast_safeguard",
+      "cooldown_seconds": 300,
+      "idle_seconds": 60,
+      "invulnerable_seconds": 5
+    }
+  ],
+  "milestones": []
+}

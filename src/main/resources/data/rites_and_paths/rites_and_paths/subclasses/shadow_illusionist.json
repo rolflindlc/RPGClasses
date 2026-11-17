@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "class": "rites_and_paths:rogue",
+  "display": {
+    "icon": "minecraft:armor_stand"
+  },
+  "effects": [
+    {
+      "type": "rites_and_paths:attribute",
+      "modifiers": [
+        {
+          "attribute": "rites_and_paths:mob_detection",
+          "to": -0.25,
+          "operation": "add"
+        }
+      ]
+    }
+  ],
+  "milestones": [
+    {
+      "subclass_level": 1,
+      "grants": "rites_and_paths:decoy"
+    }
+  ]
+}

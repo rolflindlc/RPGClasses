@@ -90,10 +90,10 @@ public final class CentaurTraits {
             AttributeInstance inst = ally.getAttribute(regen);
             if (inst == null) continue;
             if (inst.getModifier(AURA) == null) {
-                inst.addTransientModifier(new AttributeModifier(AURA, "rpgclasses unicorn aura", aura.number("mana_regen", 0.5),
+                inst.addTransientModifier(new AttributeModifier(AURA, "rites_and_paths unicorn aura", aura.number("mana_regen", 0.5),
                         AttributeModifier.Operation.MULTIPLY_BASE));
             }
-            ally.getPersistentData().putLong("rpgclasses.unicorn_aura", p.level().getGameTime());
+            ally.getPersistentData().putLong("rites_and_paths.unicorn_aura", p.level().getGameTime());
             IN_AURA.add(ally.getUUID());
         }
     }
@@ -103,7 +103,7 @@ public final class CentaurTraits {
     public void onAnyTick(TickEvent.PlayerTickEvent event) {
         if (event.phase != TickEvent.Phase.END || !(event.player instanceof ServerPlayer p) || p.tickCount % 20 != 10
                 || !IN_AURA.contains(p.getUUID())) return;
-        long last = p.getPersistentData().getLong("rpgclasses.unicorn_aura");
+        long last = p.getPersistentData().getLong("rites_and_paths.unicorn_aura");
         if (p.level().getGameTime() - last <= 40) return;
         Attribute regen = ForgeRegistries.ATTRIBUTES.getValue(IRONS_MANA_REGEN);
         AttributeInstance inst = regen == null ? null : p.getAttribute(regen);

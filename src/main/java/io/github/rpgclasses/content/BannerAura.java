@@ -33,8 +33,8 @@ public final class BannerAura {
     public static final String WAR = "war_banner";
     public static final String LIFE = "life_banner";
     private static final UUID ARMOR_ID = UUID.fromString("0f6b8d52-3c1e-4d9a-a8f1-6b2c9e0d4a71");
-    /** No empieza por "rpgclasses:" a propósito: StatEngine no debe borrarlo al recalcular. */
-    private static final String ARMOR_NAME = "rpgclasses_aura:banner";
+    /** No empieza por "rites_and_paths:" a propósito: StatEngine no debe borrarlo al recalcular. */
+    private static final String ARMOR_NAME = "rites_and_paths_aura:banner";
     private static final int PERIOD_TICKS = 20;
 
     /** Lo que recibe un jugador del aura más fuerte que le alcanza. */

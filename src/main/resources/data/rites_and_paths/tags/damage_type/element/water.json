@@ -1,0 +1,7 @@
+{
+  "replace": false,
+  "values": [
+    "#minecraft:is_drowning",
+    "rites_and_paths:breath_water"
+  ]
+}

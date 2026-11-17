@@ -8,5 +8,5 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 @Mixin(LivingEntity.class)
 public interface LivingEntityAccessor {
     @Accessor("jumping")
-    boolean rpgclasses$isJumping();
+    boolean rites_and_paths$isJumping();
 }

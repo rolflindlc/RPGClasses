@@ -357,7 +357,7 @@ public final class BodyTraits {
         if (current != null && current.getAmount() == bonus) return;
         speed.removeModifier(CENTAUR_SPEED);
         if (bonus > 0) {
-            speed.addTransientModifier(new AttributeModifier(CENTAUR_SPEED, "rpgclasses centaur gallop", bonus, AttributeModifier.Operation.MULTIPLY_TOTAL));
+            speed.addTransientModifier(new AttributeModifier(CENTAUR_SPEED, "rites_and_paths centaur gallop", bonus, AttributeModifier.Operation.MULTIPLY_TOTAL));
         }
     }
 
@@ -367,7 +367,7 @@ public final class BodyTraits {
         if (step == null) return;
         boolean has = step.getModifier(CENTAUR_STEP) != null;
         if (on == has) return;
-        if (on) step.addTransientModifier(new AttributeModifier(CENTAUR_STEP, "rpgclasses centaur step", 0.75, AttributeModifier.Operation.ADDITION));
+        if (on) step.addTransientModifier(new AttributeModifier(CENTAUR_STEP, "rites_and_paths centaur step", 0.75, AttributeModifier.Operation.ADDITION));
         else step.removeModifier(CENTAUR_STEP);
     }
 

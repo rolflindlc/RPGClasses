@@ -99,7 +99,7 @@ public final class WolfRider {
             AttributeModifier current = health.getModifier(VIGOR_ID);
             if (current != null && current.getAmount() == bonus) continue;
             if (current != null) health.removeModifier(VIGOR_ID);
-            if (bonus > 0) health.addPermanentModifier(new AttributeModifier(VIGOR_ID, "rpgclasses wolf vigor", bonus,
+            if (bonus > 0) health.addPermanentModifier(new AttributeModifier(VIGOR_ID, "rites_and_paths wolf vigor", bonus,
                     AttributeModifier.Operation.MULTIPLY_BASE));
             if (wolf.getHealth() > wolf.getMaxHealth()) wolf.setHealth(wolf.getMaxHealth());
         }

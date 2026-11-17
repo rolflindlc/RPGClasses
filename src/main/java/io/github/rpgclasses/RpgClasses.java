@@ -45,7 +45,7 @@ import org.slf4j.Logger;
 
 @Mod(RpgClasses.MODID)
 public class RpgClasses {
-    public static final String MODID = "rpgclasses";
+    public static final String MODID = "rites_and_paths";
     public static final Logger LOGGER = LogUtils.getLogger();
 
     public RpgClasses() {

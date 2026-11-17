@@ -221,8 +221,8 @@
 220 戰利品頭骨
 221 戰鼓
 222 鬼火提燈
-223 RPG 職業
-224 RPG 職業
+223 Rolflin's Rites & Paths
+224 Rolflin's Rites & Paths
 225 技能 1
 226 技能 2
 227 技能 3

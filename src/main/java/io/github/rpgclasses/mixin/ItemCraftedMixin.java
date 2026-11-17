@@ -18,7 +18,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class ItemCraftedMixin {
     @Inject(method = "onCraftedBy(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;)V",
             at = @At("HEAD"))
-    private void rpgclasses$forged(ItemStack stack, Level level, Player player, CallbackInfo ci) {
+    private void rites_and_paths$forged(ItemStack stack, Level level, Player player, CallbackInfo ci) {
         if (level != null && !level.isClientSide()) CraftTraits.onCrafted(player, stack);
     }
 }

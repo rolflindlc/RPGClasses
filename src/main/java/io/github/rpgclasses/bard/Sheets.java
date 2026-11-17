@@ -16,9 +16,9 @@ import java.util.List;
  * reescribe a partir de él ({@link BardMagic#syncContainer}).
  */
 public final class Sheets {
-    public static final String SPELL = "rpgclasses_spell";
-    public static final String LEVEL = "rpgclasses_level";
-    public static final String LIST = "rpgclasses_sheets";
+    public static final String SPELL = "rites_and_paths_spell";
+    public static final String LEVEL = "rites_and_paths_level";
+    public static final String LIST = "rites_and_paths_sheets";
 
     /** Partitura guardada en el hueco {@code slot} de un instrumento. */
     public record Entry(int slot, MusicSpellInfo spell, int level) {}

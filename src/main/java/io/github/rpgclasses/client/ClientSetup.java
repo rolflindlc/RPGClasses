@@ -29,21 +29,21 @@ import org.lwjgl.glfw.GLFW;
 /** Registro de todo lo que solo existe en el cliente. Se llama desde el mod a través de DistExecutor. */
 public final class ClientSetup {
     public static final KeyMapping OPEN_BOOK = new KeyMapping(
-            "key.rpgclasses.open", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_K, "key.categories.rpgclasses");
+            "key.rites_and_paths.open", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_K, "key.categories.rites_and_paths");
 
     public static final KeyMapping[] ABILITY_KEYS = {
-            new KeyMapping("key.rpgclasses.ability_1", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_Z, "key.categories.rpgclasses"),
-            new KeyMapping("key.rpgclasses.ability_2", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_X, "key.categories.rpgclasses"),
-            new KeyMapping("key.rpgclasses.ability_3", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_C, "key.categories.rpgclasses"),
+            new KeyMapping("key.rites_and_paths.ability_1", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_Z, "key.categories.rites_and_paths"),
+            new KeyMapping("key.rites_and_paths.ability_2", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_X, "key.categories.rites_and_paths"),
+            new KeyMapping("key.rites_and_paths.ability_3", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_C, "key.categories.rites_and_paths"),
     };
 
     /** Habilidades raciales: agachado se usan las ranuras 2 y 3. */
     public static final KeyMapping OPEN_ALLIES = new KeyMapping(
-            "key.rpgclasses.allies", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_J, "key.categories.rpgclasses");
+            "key.rites_and_paths.allies", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_J, "key.categories.rites_and_paths");
 
     public static final KeyMapping[] RACE_KEYS = {
-            new KeyMapping("key.rpgclasses.race_1", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_V, "key.categories.rpgclasses"),
-            new KeyMapping("key.rpgclasses.race_2", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_B, "key.categories.rpgclasses"),
+            new KeyMapping("key.rites_and_paths.race_1", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_V, "key.categories.rites_and_paths"),
+            new KeyMapping("key.rites_and_paths.race_2", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_B, "key.categories.rites_and_paths"),
     };
 
     public static void init(IEventBus modBus) {
@@ -129,7 +129,7 @@ public final class ClientSetup {
                     .contains(io.github.rpgclasses.bard.Bard.RHYTHM);
         };
         io.github.rpgclasses.bard.Bard.clientExtraSlots = player -> {
-            var m = player == Minecraft.getInstance().player ? localMechanic("rpgclasses:" + io.github.rpgclasses.bard.Bard.EXTENDED_REPERTOIRE) : null;
+            var m = player == Minecraft.getInstance().player ? localMechanic("rites_and_paths:" + io.github.rpgclasses.bard.Bard.EXTENDED_REPERTOIRE) : null;
             return m == null ? 0 : (int) Math.round(m.number("extra_slots", 0));
         };
         modBus.addListener((RegisterGuiOverlaysEvent event) -> event.registerAbove(
@@ -170,7 +170,7 @@ public final class ClientSetup {
         var tag = event.getItemStack().getTag();
         if (tag == null || !tag.contains(io.github.rpgclasses.content.race.CraftTraits.FORGED_TAG)) return;
         int pct = Math.round(tag.getFloat(io.github.rpgclasses.content.race.CraftTraits.FORGED_TAG) * 100);
-        if (pct > 0) event.getToolTip().add(net.minecraft.network.chat.Component.translatable("tooltip.rpgclasses.forged", pct)
+        if (pct > 0) event.getToolTip().add(net.minecraft.network.chat.Component.translatable("tooltip.rites_and_paths.forged", pct)
                 .withStyle(net.minecraft.ChatFormatting.GOLD));
     }
 
@@ -226,7 +226,7 @@ public final class ClientSetup {
             return;
         }
         leafClimb(mc.player, mc.screen == null && mc.options.keyJump.isDown());
-        if (hasLocalMechanic("rpgclasses:race_lava_walk")) io.github.rpgclasses.content.MonkSubclasses.fluidWalk(mc.player, false, true);
+        if (hasLocalMechanic("rites_and_paths:race_lava_walk")) io.github.rpgclasses.content.MonkSubclasses.fluidWalk(mc.player, false, true);
         for (int i = 0; i < RACE_KEYS.length; i++) {
             while (RACE_KEYS[i].consumeClick()) {
                 if (mc.screen == null) Net.CHANNEL.sendToServer(new Packets.UseRaceAbility(i + (mc.player.isShiftKeyDown() ? 2 : 0)));
@@ -236,8 +236,8 @@ public final class ClientSetup {
         wallClimb(mc);
         elementalMarch(mc);
         tickZoom(mc.player);
-        MovementPerks.lightFeetTick(mc.player, hasLocalMechanic("rpgclasses:light_feet"));
-        if (hasLocalMechanic("rpgclasses:feather_fall")) MovementPerks.featherFallTick(mc.player, mc.options.keyJump.isDown());
+        MovementPerks.lightFeetTick(mc.player, hasLocalMechanic("rites_and_paths:light_feet"));
+        if (hasLocalMechanic("rites_and_paths:feather_fall")) MovementPerks.featherFallTick(mc.player, mc.options.keyJump.isDown());
         for (int i = 0; i < ABILITY_KEYS.length; i++) {
             while (ABILITY_KEYS[i].consumeClick()) {
                 if (mc.screen == null) Net.CHANNEL.sendToServer(new Packets.UseAbility(i));
@@ -373,8 +373,8 @@ public final class ClientSetup {
         // Tirador Ágil (arco) y Pies Ligeros (cualquier objeto): usar no ralentiza
         // (vanilla multiplica el movimiento por 0,2 después de este evento).
         if (player.isUsingItem() && !player.isPassenger()
-                && ((player.getUseItem().getItem() instanceof net.minecraft.world.item.BowItem && hasLocalMechanic("rpgclasses:draw_no_slow"))
-                    || hasLocalMechanic("rpgclasses:light_feet"))) {
+                && ((player.getUseItem().getItem() instanceof net.minecraft.world.item.BowItem && hasLocalMechanic("rites_and_paths:draw_no_slow"))
+                    || hasLocalMechanic("rites_and_paths:light_feet"))) {
             event.getInput().leftImpulse *= 5f;
             event.getInput().forwardImpulse *= 5f;
         }
@@ -393,7 +393,7 @@ public final class ClientSetup {
         try {
             CentaurEpicFight.init();
         } catch (LinkageError e) {
-            io.github.rpgclasses.RpgClasses.LOGGER.warn("[rpgclasses] Epic Fight: ajustes del Centauro no disponibles en esta versión ({})", e.toString());
+            io.github.rpgclasses.RpgClasses.LOGGER.warn("[rites_and_paths] Epic Fight: ajustes del Centauro no disponibles en esta versión ({})", e.toString());
         }
     }
 

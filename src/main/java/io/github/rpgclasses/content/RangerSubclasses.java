@@ -66,12 +66,12 @@ public final class RangerSubclasses {
     private static final UUID HEALTH_ID = UUID.fromString("2f6c1d8a-7b4e-4c39-a1d2-5e8f9a0b3c71");
     private static final UUID DAMAGE_ID = UUID.fromString("8a3e5b1c-2d7f-4e60-9b14-c6d0e2f4a835");
     private static final UUID SPEED_ID = UUID.fromString("c41d7e92-0a5b-4f83-8e26-1b9c3d5f7a04");
-    private static final String NAME = "rpgclasses_ability:wild_bond";
-    private static final String TAG_SAFEGUARD_UNTIL = "rpgclasses.safeguard_until";
-    private static final String TAG_IDLE_UNTIL = "rpgclasses.safeguard_idle";
-    private static final String TAG_INVULN_UNTIL = "rpgclasses.safeguard_invuln";
+    private static final String NAME = "rites_and_paths_ability:wild_bond";
+    private static final String TAG_SAFEGUARD_UNTIL = "rites_and_paths.safeguard_until";
+    private static final String TAG_IDLE_UNTIL = "rites_and_paths.safeguard_idle";
+    private static final String TAG_INVULN_UNTIL = "rites_and_paths.safeguard_invuln";
     private static final int PERIOD_TICKS = 20;
-    public static final String TAG_BONDED = "rpgclasses.bonded";
+    public static final String TAG_BONDED = "rites_and_paths.bonded";
 
     /** Mascotas con bonus, por Ranger (para quitarlo cuando dejan de estar entre las 8 o el Ranger lo pierde). */
     private static final Map<UUID, Set<UUID>> BOOSTED = new HashMap<>();
@@ -130,7 +130,7 @@ public final class RangerSubclasses {
     public static boolean ownedBy(Entity e, ServerPlayer ranger) {
         if (!(e instanceof OwnableEntity own) || !e.isAlive() || !ranger.getUUID().equals(own.getOwnerUUID())) return false;
         if (e instanceof AbstractHorse horse && !horse.isTamed()) return false;
-        if (e.getPersistentData().contains("rpgclasses:summon_done")) return false;
+        if (e.getPersistentData().contains("rites_and_paths:summon_done")) return false;
         ResourceLocation type = ForgeRegistries.ENTITY_TYPES.getKey(e.getType());
         return type == null || !"irons_spellbooks".equals(type.getNamespace());
     }
@@ -177,12 +177,12 @@ public final class RangerSubclasses {
     public static boolean bond(ServerPlayer ranger, LivingEntity pet) {
         if (!isBeastMaster(ranger) || !ownedBy(pet, ranger) || isPetOf(pet, ranger)) return false;
         if (BondBook.bonds(ranger).size() >= BondBook.MAX_BONDS) {
-            ranger.displayClientMessage(Component.translatable("msg.rpgclasses.bond.full", BondBook.MAX_BONDS), true);
+            ranger.displayClientMessage(Component.translatable("msg.rites_and_paths.bond.full", BondBook.MAX_BONDS), true);
             return false;
         }
         pet.getPersistentData().putUUID(TAG_BONDED, ranger.getUUID());
         BondBook.ensureBond(ranger, pet.getUUID(), pet.getName().getString());
-        ranger.displayClientMessage(Component.translatable("message.rpgclasses.bond_made", pet.getName()), true);
+        ranger.displayClientMessage(Component.translatable("message.rites_and_paths.bond_made", pet.getName()), true);
         if (ranger.level() instanceof ServerLevel level) {
             level.sendParticles(net.minecraft.core.particles.ParticleTypes.HEART, pet.getX(), pet.getY() + pet.getBbHeight(), pet.getZ(), 6, 0.3, 0.2, 0.3, 0.02);
         }
@@ -194,7 +194,7 @@ public final class RangerSubclasses {
         pet.getPersistentData().remove(TAG_BONDED);
         unboost(pet);
         BondBook.removeBond(ranger, pet.getUUID());
-        ranger.displayClientMessage(Component.translatable("message.rpgclasses.bond_broken", pet.getName()), true);
+        ranger.displayClientMessage(Component.translatable("message.rites_and_paths.bond_broken", pet.getName()), true);
     }
 
     // --- Salvaguarda de Bestias ---

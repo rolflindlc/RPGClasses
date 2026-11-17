@@ -80,7 +80,7 @@ import java.util.UUID;
  */
 public final class SubraceTraits {
     private static final UUID FISHER_LUCK = UUID.fromString("5b0f6f0e-2c57-4f63-9d0b-6a1f0c9e7a11");
-    private static final String STEAL_TAG = "rpgclasses.stolen";
+    private static final String STEAL_TAG = "rites_and_paths.stolen";
 
     private static final Map<UUID, Vec3> LAST_POSITION = new HashMap<>();
     /** Vampiro: [segundo de juego, curado en ese segundo] para el tope por segundo. */
@@ -110,7 +110,7 @@ public final class SubraceTraits {
             AttributeModifier current = luck.getModifier(FISHER_LUCK);
             if (current != null && current.getAmount() != bonus) luck.removeModifier(FISHER_LUCK);
             if (bonus > 0 && luck.getModifier(FISHER_LUCK) == null) {
-                luck.addTransientModifier(new AttributeModifier(FISHER_LUCK, "rpgclasses_fisher_luck", bonus, AttributeModifier.Operation.ADDITION));
+                luck.addTransientModifier(new AttributeModifier(FISHER_LUCK, "rites_and_paths_fisher_luck", bonus, AttributeModifier.Operation.ADDITION));
             }
         }
     }
@@ -251,7 +251,7 @@ public final class SubraceTraits {
                 stolen = target.getInventory().removeItemNoUpdate(slots.get(rnd.nextInt(slots.size())));
             }
             STEAL_COOLDOWN.put(key, now + Math.round(m.number("player_cooldown_seconds", 30) * 20));
-            target.displayClientMessage(Component.translatable("message.rpgclasses.robbed", thief.getDisplayName()), true);
+            target.displayClientMessage(Component.translatable("message.rites_and_paths.robbed", thief.getDisplayName()), true);
         } else if (victim instanceof Mob mob && mob instanceof Enemy && !Races.isBoss(mob) && mob.getSpawnType() != MobSpawnType.SPAWNER) {
             int done = mob.getPersistentData().getInt(STEAL_TAG);
             if (done >= (int) m.number("steals_per_mob", 1) || rnd.nextDouble() >= m.number("mob_chance", 0)) return;
@@ -285,7 +285,7 @@ public final class SubraceTraits {
             drop.setTarget(thief.getUUID()); // prioridad de recogida para el Goblin
             drop.setPickUpDelay(5);
         }
-        thief.displayClientMessage(Component.translatable("message.rpgclasses.stole", stolen.getHoverName()), true);
+        thief.displayClientMessage(Component.translatable("message.rites_and_paths.stole", stolen.getHoverName()), true);
         DebugLog.event(thief, "raza", "Mano Larga: roba {} a {}", stolen, DebugLog.describe(victim));
     }
 

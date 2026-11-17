@@ -1,0 +1,12 @@
+{
+  "replace": false,
+  "values": [
+    "#minecraft:is_lightning",
+    "rites_and_paths:dragon_spark",
+    "rites_and_paths:breath_lightning",
+    {
+      "id": "iceandfire:dragon_lightning",
+      "required": false
+    }
+  ]
+}

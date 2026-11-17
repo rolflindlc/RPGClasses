@@ -56,7 +56,7 @@ import java.util.Map;
 import java.util.UUID;
 
 /**
- * Coloso Porteador (adenda 0.7, 4.3): el cinturón. Bloques funcionales (tag {@code rpgclasses:belt_blocks}) sujetos
+ * Coloso Porteador (adenda 0.7, 4.3): el cinturón. Bloques funcionales (tag {@code rites_and_paths:belt_blocks}) sujetos
  * al cuerpo, en 3–6 huecos según el Rango; dos cofres en un hueco son un cofre grande y cuentan como 2.
  * <ul>
  *   <li>Tecla racial 1: el menú del cinturón (poner y quitar bloques y abrirlos). Los aliados lo abren agachados con
@@ -72,7 +72,7 @@ import java.util.UUID;
 public final class PorterBelt {
     public static final TagKey<Item> BELT_BLOCKS = TagKey.create(Registries.ITEM, RpgClasses.id("belt_blocks"));
     public static final int MAX_SLOTS = 6;
-    private static final String TAG = "rpgclasses.belt";
+    private static final String TAG = "rites_and_paths.belt";
     private static final UUID PASSENGER_SPEED = UUID.fromString("4c8e2f1a-7d3b-4a6e-9f05-1b2c3d4e5f60");
 
     enum Kind { CHEST, BARREL, ENDER, FURNACE, BLAST, SMOKER, CRAFTING, ENCHANTING, ANVIL, LOOM, STONECUTTER, GRINDSTONE, SMITHING, CARTOGRAPHY }
@@ -380,7 +380,7 @@ public final class PorterBelt {
         if (cap <= 0) return;
         Belt b = belt(owner);
         UUID ownerId = owner.getUUID();
-        Component title = Component.translatable("container.rpgclasses.belt", owner.getDisplayName());
+        Component title = Component.translatable("container.rites_and_paths.belt", owner.getDisplayName());
         NetworkHooks.openScreen(viewer, new SimpleMenuProvider((id, inv, pl) -> new BeltMenu(id, inv, b.blocks, cap, manage, ownerId), title),
                 buf -> {
                     buf.writeVarInt(cap);
@@ -509,7 +509,7 @@ public final class PorterBelt {
         int used = 0;
         for (int i = 0; i < cap; i++) used += cost(b.blocks.getItem(i));
         if (used >= cap) {
-            p.displayClientMessage(Component.translatable("message.rpgclasses.belt_full"), true);
+            p.displayClientMessage(Component.translatable("message.rites_and_paths.belt_full"), true);
             return;
         }
         boolean chest = kindOf(hand) == Kind.CHEST;
@@ -520,7 +520,7 @@ public final class PorterBelt {
         }
         for (int i = 0; i < cap && target < 0; i++) if (b.blocks.getItem(i).isEmpty()) target = i;
         if (target < 0) {
-            p.displayClientMessage(Component.translatable("message.rpgclasses.belt_full"), true);
+            p.displayClientMessage(Component.translatable("message.rites_and_paths.belt_full"), true);
             return;
         }
         ItemStack in = b.blocks.getItem(target);
@@ -634,7 +634,7 @@ public final class PorterBelt {
         if (current != null && current.getAmount() == -penalty) return;
         speed.removeModifier(PASSENGER_SPEED);
         if (penalty > 0) {
-            speed.addTransientModifier(new AttributeModifier(PASSENGER_SPEED, "rpgclasses porter passengers", -penalty,
+            speed.addTransientModifier(new AttributeModifier(PASSENGER_SPEED, "rites_and_paths porter passengers", -penalty,
                     AttributeModifier.Operation.MULTIPLY_BASE));
         }
     }

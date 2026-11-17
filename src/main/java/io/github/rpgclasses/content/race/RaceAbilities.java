@@ -95,8 +95,8 @@ public final class RaceAbilities {
     private static final Set<String> FORMS = Set.of("race_grow", "race_swarm");
 
     private static final TagKey<Structure> COMPASS_TARGETS = TagKey.create(Registries.STRUCTURE, RpgClasses.id("nether_compass"));
-    private static final String TEMP_TAG = "rpgclasses.temp";
-    public static final String SNARED_BY = "rpgclasses.snared_by";
+    private static final String TEMP_TAG = "rites_and_paths.temp";
+    public static final String SNARED_BY = "rites_and_paths.snared_by";
 
     private record Cloud(ResourceKey<Level> dim, Vec3 center, double radius, long end, UUID owner, int slowness) {}
     private record Trap(ResourceKey<Level> dim, Vec3 pos, UUID owner, long end, double seconds, double bossSeconds, double pvpFactor,
@@ -132,7 +132,7 @@ public final class RaceAbilities {
         Entry entry = entryFor(player, slot);
         if (entry == null && slot >= 2) entry = entryFor(player, slot - 2);
         if (entry == null) {
-            if (slot == 0) player.displayClientMessage(Component.translatable("message.rpgclasses.no_race_ability"), true);
+            if (slot == 0) player.displayClientMessage(Component.translatable("message.rites_and_paths.no_race_ability"), true);
             return;
         }
         ActiveMechanic m = Races.find(player, entry.mechanic());
@@ -152,7 +152,7 @@ public final class RaceAbilities {
             }
         }
         if (remaining > 0) {
-            player.displayClientMessage(Component.translatable("msg.rpgclasses.ability_cooldown", name,
+            player.displayClientMessage(Component.translatable("msg.rites_and_paths.ability_cooldown", name,
                     String.format(Locale.ROOT, "%.1f", remaining / 20.0)), true);
             return;
         }
@@ -170,7 +170,7 @@ public final class RaceAbilities {
         double cooldown = m.number("cooldown_seconds", 0) + m.number("channel_seconds", 0)
                 + (FORMS.contains(entry.mechanic()) ? m.number("duration_seconds", 0) : 0);
         AbilityService.setCooldown(player, key, (int) Math.round(cooldown * 20));
-        player.displayClientMessage(Component.translatable("msg.rpgclasses.ability_used", name), true);
+        player.displayClientMessage(Component.translatable("msg.rites_and_paths.ability_used", name), true);
         io.github.rpgclasses.network.Net.syncPlayer(player);
     }
 
@@ -252,7 +252,7 @@ public final class RaceAbilities {
             shown++;
         }
         sound(p, SoundEvents.AMETHYST_BLOCK_CHIME);
-        p.displayClientMessage(Component.translatable("message.rpgclasses.stone_sense", shown), true);
+        p.displayClientMessage(Component.translatable("message.rites_and_paths.stone_sense", shown), true);
         return true;
     }
 
@@ -346,16 +346,16 @@ public final class RaceAbilities {
 
     private static boolean netherCompass(ServerPlayer p, ActiveMechanic m) {
         if (!(p.level() instanceof ServerLevel level) || level.dimension() != Level.NETHER) {
-            p.displayClientMessage(Component.translatable("message.rpgclasses.compass_not_nether"), true);
+            p.displayClientMessage(Component.translatable("message.rites_and_paths.compass_not_nether"), true);
             return false;
         }
         BlockPos found = level.findNearestMapStructure(COMPASS_TARGETS, p.blockPosition(), 100, false);
         if (found == null) {
-            p.displayClientMessage(Component.translatable("message.rpgclasses.compass_nothing"), true);
+            p.displayClientMessage(Component.translatable("message.rites_and_paths.compass_nothing"), true);
             return false;
         }
         int distance = (int) Math.sqrt(found.atY(p.getBlockY()).distSqr(p.blockPosition()));
-        p.sendSystemMessage(Component.translatable("message.rpgclasses.compass_found", found.getX(), found.getZ(), distance));
+        p.sendSystemMessage(Component.translatable("message.rites_and_paths.compass_found", found.getX(), found.getZ(), distance));
         return true;
     }
 
@@ -376,7 +376,7 @@ public final class RaceAbilities {
             available += ForgeHooks.getBurnTime(fuel, RecipeType.SMELTING) * fuel.getCount();
         }
         if (available < needed) {
-            p.displayClientMessage(Component.translatable("message.rpgclasses.furnace_no_fuel"), true);
+            p.displayClientMessage(Component.translatable("message.rites_and_paths.furnace_no_fuel"), true);
             return false;
         }
         for (int i = 0; i < p.getInventory().items.size() && needed > 0; i++) {

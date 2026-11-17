@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "class": "rites_and_paths:monk",
+  "display": {
+    "icon": "minecraft:piston"
+  },
+  "effects": [
+    {
+      "type": "rites_and_paths:attribute",
+      "modifiers": [
+        {
+          "attribute": "rites_and_paths:unarmed_knockback",
+          "to": 1.0,
+          "operation": "add"
+        },
+        {
+          "attribute": "forge:entity_reach",
+          "to": 0.5,
+          "operation": "multiply_base"
+        }
+      ]
+    },
+    {
+      "type": "rites_and_paths:mechanic",
+      "id": "rites_and_paths:charged_palm",
+      "charge_seconds": 1,
+      "damage_bonus": {
+        "from": 0.2,
+        "to": 0.5
+      },
+      "knockback_bonus": 1.0
+    },
+    {
+      "type": "rites_and_paths:mechanic",
+      "id": "rites_and_paths:palm_impact",
+      "window_seconds": 1,
+      "flat_damage": 2,
+      "damage_fraction": {
+        "from": 0.2,
+        "to": 0.4
+      },
+      "stun_seconds": 1
+    },
+    {
+      "type": "rites_and_paths:mechanic",
+      "id": "rites_and_paths:disabling_fist",
+      "icd_seconds": 6,
+      "duration_seconds": 1.5
+    }
+  ],
+  "milestones": []
+}

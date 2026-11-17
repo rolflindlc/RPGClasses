@@ -1,0 +1,30 @@
+{
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "irons_spellbooks"
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    "LLF",
+    "LFH",
+    "FHH"
+  ],
+  "key": {
+    "F": {
+      "item": "rites_and_paths:resonant_shard"
+    },
+    "L": {
+      "tag": "rites_and_paths:bard/arcane_ingot"
+    },
+    "H": {
+      "item": "rites_and_paths:arcane_thread"
+    }
+  },
+  "result": {
+    "item": "rites_and_paths:guitar_axe",
+    "count": 1
+  }
+}

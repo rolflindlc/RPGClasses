@@ -51,7 +51,7 @@ public final class ClassScreen extends Screen {
     private Component pendingTooltip;
 
     public ClassScreen(boolean selecting) {
-        super(Component.translatable(selecting ? "ui.rpgclasses.title_select" : "ui.rpgclasses.title_book"));
+        super(Component.translatable(selecting ? "ui.rites_and_paths.title_select" : "ui.rites_and_paths.title_book"));
         this.selecting = selecting;
         this.tab = selecting ? ClassPages.Tab.SUMMARY : ClassPages.Tab.PROGRESS;
     }
@@ -109,12 +109,12 @@ public final class ClassScreen extends Screen {
 
         // Raza propia (permanente): se consulta en su pantalla.
         if (!selecting && !io.github.rpgclasses.core.definition.RaceStore.CLIENT.ids().isEmpty()) {
-            addRenderableWidget(Button.builder(Component.translatable("ui.rpgclasses.race.button"),
+            addRenderableWidget(Button.builder(Component.translatable("ui.rites_and_paths.race.button"),
                     btn -> minecraft.setScreen(new RaceScreen(RaceScreen.Mode.VIEW))).bounds(8, height - 28, LEFT_WIDTH - 4, 20).build());
         }
         // Aliados (tecla J): quién cuenta como aliado; el resto son enemigos.
         if (!selecting) {
-            addRenderableWidget(Button.builder(Component.translatable("ui.rpgclasses.ally.button"),
+            addRenderableWidget(Button.builder(Component.translatable("ui.rites_and_paths.ally.button"),
                     btn -> minecraft.setScreen(new AllyScreen(this))).bounds(8, height - 50, LEFT_WIDTH - 4, 20).build());
         }
 
@@ -126,7 +126,7 @@ public final class ClassScreen extends Screen {
         int tabWidth = (panelRight - panelLeft) / tabs.size();
         for (int i = 0; i < tabs.size(); i++) {
             ClassPages.Tab t = tabs.get(i);
-            Button b = Button.builder(Component.translatable("ui.rpgclasses.tab." + t.name().toLowerCase(Locale.ROOT)), btn -> {
+            Button b = Button.builder(Component.translatable("ui.rites_and_paths.tab." + t.name().toLowerCase(Locale.ROOT)), btn -> {
                 tab = t;
                 scroll = 0;
                 rebuildWidgets();
@@ -140,20 +140,20 @@ public final class ClassScreen extends Screen {
         int center = (panelLeft + panelRight) / 2;
         if (selecting && selectedClass != null) {
             Component name = Component.translatable(Ids.langKey("class", selectedClass, "name"));
-            addRenderableWidget(Button.builder(Component.translatable("ui.rpgclasses.choose", name), btn -> confirmChoice())
+            addRenderableWidget(Button.builder(Component.translatable("ui.rites_and_paths.choose", name), btn -> confirmChoice())
                     .bounds(center - 90, footerY, 180, 20).build());
         } else if (tab == ClassPages.Tab.PROGRESS) {
             int w = Math.min(120, (panelRight - panelLeft - 8) / 3);
-            Button resetSub = Button.builder(Component.translatable("ui.rpgclasses.respec_subclass"),
-                    btn -> confirm("ui.rpgclasses.respec_subclass", ClassAction.Action.RESPEC_SUBCLASS, "")).bounds(center - w * 3 / 2 - 4, footerY, w, 20).build();
+            Button resetSub = Button.builder(Component.translatable("ui.rites_and_paths.respec_subclass"),
+                    btn -> confirm("ui.rites_and_paths.respec_subclass", ClassAction.Action.RESPEC_SUBCLASS, "")).bounds(center - w * 3 / 2 - 4, footerY, w, 20).build();
             resetSub.active = state().subclassId != null;
             addRenderableWidget(resetSub);
-            addRenderableWidget(Button.builder(Component.translatable("ui.rpgclasses.respec_class"),
-                    btn -> confirm("ui.rpgclasses.respec_class", ClassAction.Action.RESPEC_CLASS, "")).bounds(center - w / 2, footerY, w, 20).build());
-            addRenderableWidget(Button.builder(Component.translatable("ui.rpgclasses.close"), btn -> onClose())
+            addRenderableWidget(Button.builder(Component.translatable("ui.rites_and_paths.respec_class"),
+                    btn -> confirm("ui.rites_and_paths.respec_class", ClassAction.Action.RESPEC_CLASS, "")).bounds(center - w / 2, footerY, w, 20).build());
+            addRenderableWidget(Button.builder(Component.translatable("ui.rites_and_paths.close"), btn -> onClose())
                     .bounds(center + w / 2 + 4, footerY, w, 20).build());
         } else if (!selecting) {
-            addRenderableWidget(Button.builder(Component.translatable("ui.rpgclasses.close"), btn -> onClose())
+            addRenderableWidget(Button.builder(Component.translatable("ui.rites_and_paths.close"), btn -> onClose())
                     .bounds(center - 50, footerY, 100, 20).build());
         }
 
@@ -196,7 +196,7 @@ public final class ClassScreen extends Screen {
         if (big) UiStyle.scaledText(g, font, className, x + 44, y + 4, 1.5f, 0xFFFFE08A);
         else g.drawString(font, className, x + 24, y + 5, 0xFFFFE08A);
         if (def != null && !def.roles().isEmpty()) {
-            Component roles = Component.translatable("ui.rpgclasses.roles", String.join(", ", def.roles()));
+            Component roles = Component.translatable("ui.rites_and_paths.roles", String.join(", ", def.roles()));
             if (big) g.drawString(font, roles, x + 44, y + 22, 0xAAAAAA);
             else g.drawString(font, roles, x + 30 + font.width(className), y + 5, 0xAAAAAA);
         }
@@ -208,7 +208,7 @@ public final class ClassScreen extends Screen {
             Portraits.draw(g, Portraits.subclassTex(sub), subDef == null ? null : subDef.icon(), sx, y, size);
             g.drawString(font, name, sx - 6 - font.width(name), y + (big ? 8 : 5), 0x55FFFF);
             if (big) {
-                Component label = Component.translatable("ui.rpgclasses.header_subclass");
+                Component label = Component.translatable("ui.rites_and_paths.header_subclass");
                 g.drawString(font, label, sx - 6 - font.width(label), y + 20, 0x888888);
             }
         }
@@ -260,7 +260,7 @@ public final class ClassScreen extends Screen {
             Button plus = Button.builder(Component.literal("+"), btn -> send(ClassAction.Action.SPEND_BRANCH, b.id()))
                     .bounds(panelRight - 34, y, 24, 18).build();
             plus.active = canPay && !locked && s.pointsIn(b.id()) < b.maxPoints();
-            if (locked) plus.setTooltip(Tooltip.create(Component.translatable("ui.rpgclasses.branch_locked")));
+            if (locked) plus.setTooltip(Tooltip.create(Component.translatable("ui.rites_and_paths.branch_locked")));
             addRenderableWidget(plus);
 
             // Rama llena sin perk: los dos perks como botones en el hueco de la barra.
@@ -293,7 +293,7 @@ public final class ClassScreen extends Screen {
                 Component name = Component.translatable(Ids.langKey("subclass", subId, "name"));
                 addRenderableWidget(new PortraitButton(panelLeft + 8 + i * w, y + 10, w - 4, 22, name, Portraits.subclassTex(subId),
                         subDef == null ? null : subDef.icon(), PortraitButton.Layout.HORIZONTAL, true,
-                        btn -> confirmNamed("ui.rpgclasses.confirm_subclass", name, ClassAction.Action.CHOOSE_SUBCLASS, subId)));
+                        btn -> confirmNamed("ui.rites_and_paths.confirm_subclass", name, ClassAction.Action.CHOOSE_SUBCLASS, subId)));
             }
         }
     }
@@ -304,9 +304,9 @@ public final class ClassScreen extends Screen {
         ProgressState s = state();
         int x = panelLeft + 8;
         Component cost = ProgressionRules.isMaxed(s)
-                ? Component.translatable("msg.rpgclasses.max_level")
-                : Component.translatable("msg.rpgclasses.next_cost", ProgressionRules.nextCost(s, costMultiplier()));
-        g.drawString(font, Component.translatable("ui.rpgclasses.progress_header", s.totalLevel(), availableXp(), cost), x, panelTop + 7, 0xFFFF55);
+                ? Component.translatable("msg.rites_and_paths.max_level")
+                : Component.translatable("msg.rites_and_paths.next_cost", ProgressionRules.nextCost(s, costMultiplier()));
+        g.drawString(font, Component.translatable("ui.rites_and_paths.progress_header", s.totalLevel(), availableXp(), cost), x, panelTop + 7, 0xFFFF55);
 
         Component hover = null;
         for (int i = 0; i < def.branches().size(); i++) {
@@ -332,9 +332,9 @@ public final class ClassScreen extends Screen {
                 // Oscurecida y con candado (regla 13).
                 g.fill(x - 2, y, panelRight - 36, y + 18, 0x90000000);
                 drawLock(g, x, y + 4);
-                if (rowHovered) hover = Component.translatable("ui.rpgclasses.branch_locked");
+                if (rowHovered) hover = Component.translatable("ui.rites_and_paths.branch_locked");
             } else if (ProgressionRules.perkPending(s, b) && rowHovered && mouseX < barLeft()) {
-                hover = Component.translatable("ui.rpgclasses.perk_choose");
+                hover = Component.translatable("ui.rites_and_paths.perk_choose");
             }
         }
 
@@ -344,11 +344,11 @@ public final class ClassScreen extends Screen {
             var subDef = DefinitionStore.CLIENT.subclassDef(s.subclassId);
             Portraits.draw(g, Portraits.subclassTex(s.subclassId), subDef == null ? null : subDef.icon(), x, y, 18);
             g.drawString(font, Component.translatable(Ids.langKey("subclass", s.subclassId, "name")), x + 22, y + 5, 0x55FFFF);
-            g.drawString(font, Component.translatable("ui.rpgclasses.subclass_level", s.subclassLevel, cap), x + 140, y + 5, 0xFFFFFF);
+            g.drawString(font, Component.translatable("ui.rites_and_paths.subclass_level", s.subclassLevel, cap), x + 140, y + 5, 0xFFFFFF);
         } else if (s.basePoints() >= ProgressionRules.SUBCLASS_UNLOCK) {
-            g.drawString(font, Component.translatable("ui.rpgclasses.subclass_pick"), x, y, 0x55FFFF);
+            g.drawString(font, Component.translatable("ui.rites_and_paths.subclass_pick"), x, y, 0x55FFFF);
         } else {
-            g.drawString(font, Component.translatable("ui.rpgclasses.subclass_locked", ProgressionRules.SUBCLASS_UNLOCK, s.basePoints()), x, y + 5, 0xAAAAAA);
+            g.drawString(font, Component.translatable("ui.rites_and_paths.subclass_locked", ProgressionRules.SUBCLASS_UNLOCK, s.basePoints()), x, y + 5, 0xAAAAAA);
         }
         pendingTooltip = hover;
     }
@@ -370,16 +370,16 @@ public final class ClassScreen extends Screen {
     }
 
     private void confirm(String titleKey, ClassAction.Action action, String arg) {
-        confirmWith(Component.translatable(titleKey), Component.translatable("ui.rpgclasses.respec_text", lossPercent()), action, arg);
+        confirmWith(Component.translatable(titleKey), Component.translatable("ui.rites_and_paths.respec_text", lossPercent()), action, arg);
     }
 
     private void confirmPerk(Component name, String branchId, String perkId) {
-        confirmWith(Component.translatable("ui.rpgclasses.confirm_perk", name), Component.translatable("ui.rpgclasses.confirm_perk_text"),
+        confirmWith(Component.translatable("ui.rites_and_paths.confirm_perk", name), Component.translatable("ui.rites_and_paths.confirm_perk_text"),
                 ClassAction.Action.CHOOSE_PERK, ClassAction.perkArg(branchId, perkId));
     }
 
     private void confirmNamed(String titleKey, Component name, ClassAction.Action action, String arg) {
-        confirmWith(Component.translatable(titleKey, name), Component.translatable("ui.rpgclasses.confirm_subclass_text"), action, arg);
+        confirmWith(Component.translatable(titleKey, name), Component.translatable("ui.rites_and_paths.confirm_subclass_text"), action, arg);
     }
 
     private void confirmWith(Component title, Component text, ClassAction.Action action, String arg) {
@@ -409,7 +409,7 @@ public final class ClassScreen extends Screen {
         String id = selectedClass;
         if (id == null) return;
         Component name = Component.translatable(Ids.langKey("class", id, "name"));
-        confirmWith(Component.translatable("ui.rpgclasses.confirm_title", name), Component.translatable("ui.rpgclasses.confirm_text"),
+        confirmWith(Component.translatable("ui.rites_and_paths.confirm_title", name), Component.translatable("ui.rites_and_paths.confirm_text"),
                 ClassAction.Action.CHOOSE_CLASS, id);
     }
 
@@ -441,7 +441,7 @@ public final class ClassScreen extends Screen {
         renderBackground(g);
         g.drawCenteredString(font, title, width / 2, 8, 0xFFFFFF);
         if (selecting) {
-            g.drawCenteredString(font, Component.translatable("ui.rpgclasses.must_choose"), (panelLeft + panelRight) / 2, 18, 0xAAAAAA);
+            g.drawCenteredString(font, Component.translatable("ui.rites_and_paths.must_choose"), (panelLeft + panelRight) / 2, 18, 0xAAAAAA);
         }
 
         UiStyle.panel(g, panelLeft, headerTop, panelRight, panelBottom);

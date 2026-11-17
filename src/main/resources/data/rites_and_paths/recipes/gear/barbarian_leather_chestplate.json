@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    "C C",
+    "MCM",
+    "CMC"
+  ],
+  "key": {
+    "M": {
+      "item": "minecraft:leather"
+    },
+    "C": {
+      "item": "rites_and_paths:cured_strap"
+    }
+  },
+  "result": {
+    "item": "rites_and_paths:barbarian_leather_chestplate",
+    "count": 1
+  }
+}

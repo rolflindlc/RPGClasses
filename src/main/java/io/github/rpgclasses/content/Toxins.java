@@ -27,7 +27,7 @@ public final class Toxins {
     public static final String TOXIN = "toxin";
     public static final String VARIANT = "toxin_variant";
     public static final ResourceKey<DamageType> TOXIN_DAMAGE = ResourceKey.create(Registries.DAMAGE_TYPE, RpgClasses.id("toxin"));
-    private static final String TAG = "rpgclasses.toxin";
+    private static final String TAG = "rites_and_paths.toxin";
 
     /** Llamado por DamagePipeline tras un golpe cuerpo a cuerpo del jugador. */
     public static void onMeleeHit(ServerPlayer attacker, LivingEntity target) {

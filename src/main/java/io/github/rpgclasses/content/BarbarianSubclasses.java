@@ -58,12 +58,12 @@ public final class BarbarianSubclasses {
     public static final String RESISTANT_BLOOD = "resistant_blood";
     private static final String GAMBLE_COUNTER = "death_gamble_uses";
     private static final String FURY_PENDING = "last_fury_pending";
-    private static final String FURY_COOLDOWN = "rpgclasses:last_immortal_fury";
+    private static final String FURY_COOLDOWN = "rites_and_paths:last_immortal_fury";
 
     public static final ResourceKey<DamageType> PLAGUE_DAMAGE = ResourceKey.create(Registries.DAMAGE_TYPE, RpgClasses.id("plague"));
     private static final TagKey<EntityType<?>> BOSSES = TagKey.create(Registries.ENTITY_TYPE,
             new net.minecraft.resources.ResourceLocation("forge", "bosses"));
-    private static final String PLAGUE_TAG = "rpgclasses.plague";
+    private static final String PLAGUE_TAG = "rites_and_paths.plague";
 
     /** Última Furia en curso: agresor que hay que matar y tick en que termina. */
     private record Fury(UUID target, long endTick) {}
@@ -112,7 +112,7 @@ public final class BarbarianSubclasses {
         player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, ticks, 2));
         AbilityService.setCooldown(player, FURY_COOLDOWN, (int) Math.round(m.number("cooldown_seconds", 300) * 20));
         player.level().playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.WITHER_SPAWN, SoundSource.PLAYERS, 0.6f, 1.4f);
-        player.displayClientMessage(Component.translatable("message.rpgclasses.last_fury", aggressor.getDisplayName()), true);
+        player.displayClientMessage(Component.translatable("message.rites_and_paths.last_fury", aggressor.getDisplayName()), true);
         if (aggressor instanceof net.minecraft.world.entity.Mob mob) mob.setGlowingTag(true);
         return true;
     }

@@ -1,7 +1,0 @@
-{
-  "replace": false,
-  "values": [
-    "#minecraft:is_drowning",
-    "rpgclasses:breath_water"
-  ]
-}

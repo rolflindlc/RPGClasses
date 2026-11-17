@@ -42,7 +42,7 @@ public class MusicStandScreen extends AbstractContainerScreen<MusicStandMenu> {
         super.render(g, mouseX, mouseY, partialTick);
         renderTooltip(g, mouseX, mouseY);
         if (mouseX >= leftPos && mouseX < leftPos + imageWidth && mouseY >= topPos + 4 && mouseY < topPos + 16) {
-            g.renderTooltip(font, font.split(Component.translatable("ui.rpgclasses.stand.help"), 200), mouseX, mouseY);
+            g.renderTooltip(font, font.split(Component.translatable("ui.rites_and_paths.stand.help"), 200), mouseX, mouseY);
         }
     }
 }

@@ -34,7 +34,7 @@ public final class DebugEvents {
 
     public static void install() {
         DebugErrorCapture.install();
-        DebugLog.event(null, "arranque", "RPG Classes {} cargado; Iron's {}, Epic Fight {}", DebugLog.modVersion(),
+        DebugLog.event(null, "arranque", "Rolflin's Rites & Paths {} cargado; Iron's {}, Epic Fight {}", DebugLog.modVersion(),
                 loaded("irons_spellbooks"), loaded("epicfight"));
     }
 
@@ -63,7 +63,7 @@ public final class DebugEvents {
 
     private static boolean ours(MobEffectInstance effect) {
         ResourceLocation id = ForgeRegistries.MOB_EFFECTS.getKey(effect.getEffect());
-        return id != null && "rpgclasses".equals(id.getNamespace());
+        return id != null && "rites_and_paths".equals(id.getNamespace());
     }
 
     // ------------------------------------------------------------------ efectos

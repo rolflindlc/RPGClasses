@@ -29,7 +29,7 @@ public final class BardPlay {
 
     public static InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand, ItemStack stack) {
         if (!Bard.isBard(player)) {
-            if (!level.isClientSide) player.displayClientMessage(Component.translatable("msg.rpgclasses.bard.not_bard"), true);
+            if (!level.isClientSide) player.displayClientMessage(Component.translatable("msg.rites_and_paths.bard.not_bard"), true);
             return InteractionResultHolder.pass(stack);
         }
         // Con la guitarra-hacha en la mano principal, la secundaria no se toca (va a dos manos).
@@ -51,7 +51,7 @@ public final class BardPlay {
         }
         BardMagic magic = Bard.magic;
         if (magic == null) {
-            sp.displayClientMessage(Component.translatable("msg.rpgclasses.bard.no_irons"), true);
+            sp.displayClientMessage(Component.translatable("msg.rites_and_paths.bard.no_irons"), true);
         } else {
             magic.castFromInstrument(sp, hand, stack);
         }
@@ -64,7 +64,7 @@ public final class BardPlay {
         if (kind == null) return;
         int capacity = Bard.capacity(player, kind);
         NetworkHooks.openScreen(player, new SimpleMenuProvider((id, inv, p) -> new MusicStandMenu(id, inv, capacity),
-                Component.translatable("ui.rpgclasses.stand.title", stack.getHoverName())), buf -> buf.writeVarInt(capacity));
+                Component.translatable("ui.rites_and_paths.stand.title", stack.getHoverName())), buf -> buf.writeVarInt(capacity));
     }
 
     /** Cada segundo (escalonado por hueco), el contenedor de Iron's se ajusta a las partituras y a quien lo lleva. */
@@ -79,32 +79,32 @@ public final class BardPlay {
     }
 
     public static void tooltip(ItemStack stack, Instrument kind, List<Component> tooltip) {
-        tooltip.add(Component.translatable("tooltip.rpgclasses.instrument.header",
-                Component.translatable("tooltip.rpgclasses.instrument.rarity." + kind.tier.key())).withStyle(ChatFormatting.GOLD));
+        tooltip.add(Component.translatable("tooltip.rites_and_paths.instrument.header",
+                Component.translatable("tooltip.rites_and_paths.instrument.rarity." + kind.tier.key())).withStyle(ChatFormatting.GOLD));
         tooltip.add(line("power", pct(kind.musicPower())));
         if (kind.castSpeed() > 0) tooltip.add(line("cast_speed", pct(kind.castSpeed())));
         if (kind.manaRegen() > 0) tooltip.add(line("mana_regen", pct(kind.manaRegen())));
         if (kind.cooldownReduction() > 0) tooltip.add(line("cooldown", pct(kind.cooldownReduction())));
         if (kind.maxMana() > 0) tooltip.add(line("max_mana", num(kind.maxMana())));
         if (kind.passive != Instrument.Passive.NONE) {
-            tooltip.add(Component.translatable("tooltip.rpgclasses.instrument.passive",
-                    Component.translatable("tooltip.rpgclasses.instrument.passive." + kind.id)).withStyle(ChatFormatting.LIGHT_PURPLE));
+            tooltip.add(Component.translatable("tooltip.rites_and_paths.instrument.passive",
+                    Component.translatable("tooltip.rites_and_paths.instrument.passive." + kind.id)).withStyle(ChatFormatting.LIGHT_PURPLE));
         }
         List<Sheets.Entry> sheets = Sheets.read(stack);
-        tooltip.add(Component.translatable("tooltip.rpgclasses.instrument.slots", sheets.size(), kind.slots(),
+        tooltip.add(Component.translatable("tooltip.rites_and_paths.instrument.slots", sheets.size(), kind.slots(),
                 num(kind.levelCap() * 100)).withStyle(ChatFormatting.GRAY));
         for (Sheets.Entry e : sheets) {
             int cap = e.spell().levelCap(kind.levelCap());
             Component name = Component.translatable(e.spell().nameKey());
             tooltip.add((e.level() > cap
-                    ? Component.translatable("tooltip.rpgclasses.instrument.spell_capped", name, e.level(), cap)
-                    : Component.translatable("tooltip.rpgclasses.instrument.spell", name, e.level())).withStyle(ChatFormatting.AQUA));
+                    ? Component.translatable("tooltip.rites_and_paths.instrument.spell_capped", name, e.level(), cap)
+                    : Component.translatable("tooltip.rites_and_paths.instrument.spell", name, e.level())).withStyle(ChatFormatting.AQUA));
         }
-        tooltip.add(Component.translatable("tooltip.rpgclasses.instrument.how").withStyle(ChatFormatting.DARK_GRAY));
+        tooltip.add(Component.translatable("tooltip.rites_and_paths.instrument.how").withStyle(ChatFormatting.DARK_GRAY));
     }
 
     private static Component line(String key, String value) {
-        return Component.translatable("tooltip.rpgclasses.instrument." + key, value).withStyle(ChatFormatting.BLUE);
+        return Component.translatable("tooltip.rites_and_paths.instrument." + key, value).withStyle(ChatFormatting.BLUE);
     }
 
     private static String pct(double fraction) {

@@ -13,11 +13,11 @@ import java.util.Set;
 import java.util.UUID;
 
 /**
- * Aliados de todos los jugadores, guardados con el mundo (data/rpgclasses_allies.dat del Overworld).
+ * Aliados de todos los jugadores, guardados con el mundo (data/rites_and_paths_allies.dat del Overworld).
  * Va aparte de los datos del jugador para poder consultarlos aunque el otro esté desconectado.
  */
 public final class AllyStore extends SavedData {
-    private static final String NAME = "rpgclasses_allies";
+    private static final String NAME = "rites_and_paths_allies";
 
     public final AllyBook book = new AllyBook();
 

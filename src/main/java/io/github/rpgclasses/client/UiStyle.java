@@ -16,7 +16,7 @@ public final class UiStyle {
     public static final ResourceLocation BUTTON_SELECTED = tex("button_selected");
 
     private static ResourceLocation tex(String name) {
-        return new ResourceLocation("rpgclasses", "textures/gui/ui/" + name + ".png");
+        return new ResourceLocation("rites_and_paths", "textures/gui/ui/" + name + ".png");
     }
 
     /** Panel del mod (textura de 24x24, borde 6). */

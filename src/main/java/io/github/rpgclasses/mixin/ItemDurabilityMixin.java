@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(ItemStack.class)
 public abstract class ItemDurabilityMixin {
     @Inject(method = "getMaxDamage()I", at = @At("RETURN"), cancellable = true)
-    private void rpgclasses$forged(CallbackInfoReturnable<Integer> cir) {
+    private void rites_and_paths$forged(CallbackInfoReturnable<Integer> cir) {
         int base = cir.getReturnValueI();
         int boosted = CraftTraits.maxDamage((ItemStack) (Object) this, base);
         if (boosted != base) cir.setReturnValue(boosted);

@@ -49,7 +49,7 @@ public final class ShieldWall {
                 int ticks = (int) Math.round(VANILLA_DISABLE_TICKS * StatMath.shieldCooldownFactor(wall));
                 player.getCooldowns().addCooldown(shield.getItem(), ticks);
                 // Aviso sobre la barra de objetos: deja ver la penalización (y comprobar que se aplica).
-                player.displayClientMessage(Component.translatable("msg.rpgclasses.shield_disabled",
+                player.displayClientMessage(Component.translatable("msg.rites_and_paths.shield_disabled",
                         String.format(java.util.Locale.ROOT, "%.1f", ticks / 20.0)), true);
             }
         }

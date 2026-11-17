@@ -20,7 +20,7 @@ public final class BondBookItem extends Item {
         ItemStack stack = player.getItemInHand(hand);
         if (level.isClientSide()) return InteractionResultHolder.success(stack);
         if (!(player instanceof ServerPlayer sp) || !RangerSubclasses.isBeastMaster(sp)) {
-            player.displayClientMessage(Component.translatable("msg.rpgclasses.bond.only_beast_master"), true);
+            player.displayClientMessage(Component.translatable("msg.rites_and_paths.bond.only_beast_master"), true);
             return InteractionResultHolder.fail(stack);
         }
         BondBook.open(sp);

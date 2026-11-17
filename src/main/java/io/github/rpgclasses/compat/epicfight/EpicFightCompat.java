@@ -52,7 +52,7 @@ public final class EpicFightCompat {
 
     private static final UUID LISTENER = UUID.fromString("6b0d3c9e-6a63-4f1e-9c55-2f6d0f7a1a01");
     private static final UUID DISTANCE_MODIFIER = UUID.fromString("6b0d3c9e-6a63-4f1e-9c55-2f6d0f7a1a02");
-    private static final String DISTANCE_NAME = "rpgclasses_dodge_distance";
+    private static final String DISTANCE_NAME = "rites_and_paths_dodge_distance";
 
     /** Mecánica del jugador local en el cliente (la pone ClientSetup). En servidor se usa MechanicService. */
     public static BiFunction<Player, String, ActiveMechanic> clientMechanic = (player, id) -> null;
@@ -67,7 +67,7 @@ public final class EpicFightCompat {
         // Aturdimientos de las habilidades del mod: el estado de aturdimiento real de Epic Fight.
         io.github.rpgclasses.content.CombatAbilities.epicFightStun = EpicFightCompat::applyStun;
         MinecraftForge.EVENT_BUS.register(new EpicFightCompat());
-        RpgClasses.LOGGER.info("[rpgclasses] Epic Fight detectado: Acrobacia, Contraataque y Voltereta Larga activos");
+        RpgClasses.LOGGER.info("[rites_and_paths] Epic Fight detectado: Acrobacia, Contraataque y Voltereta Larga activos");
     }
 
     static ActiveMechanic mechanic(Player player, String id) {
@@ -164,7 +164,7 @@ public final class EpicFightCompat {
             DebugLog.event(null, "aturdimiento", "Epic Fight {} {} s: {}", DebugLog.describe(target), ticks / 20.0F, ok ? "aplicado" : "sin animación");
             return ok;
         } catch (RuntimeException | LinkageError e) {
-            RpgClasses.LOGGER.warn("[rpgclasses] Aturdimiento de Epic Fight no disponible: {}", e.toString());
+            RpgClasses.LOGGER.warn("[rites_and_paths] Aturdimiento de Epic Fight no disponible: {}", e.toString());
             return false;
         }
     }

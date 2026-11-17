@@ -116,7 +116,7 @@ public final class CentaurRender {
             rightFront = root.getChild("right_front_leg");
             return true;
         } catch (RuntimeException e) {
-            RpgClasses.LOGGER.warn("[rpgclasses] Cuerpo de centauro no disponible: {}", e.toString());
+            RpgClasses.LOGGER.warn("[rites_and_paths] Cuerpo de centauro no disponible: {}", e.toString());
             return false;
         }
     }

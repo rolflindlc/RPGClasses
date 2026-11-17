@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "class": "rites_and_paths:paladin",
+  "display": {
+    "icon": "minecraft:obsidian"
+  },
+  "effects": [
+    {
+      "type": "rites_and_paths:attribute",
+      "modifiers": [
+        {
+          "attribute": "minecraft:generic.knockback_resistance",
+          "to": 1.0,
+          "operation": "add"
+        }
+      ]
+    },
+    {
+      "type": "rites_and_paths:mechanic",
+      "id": "rites_and_paths:tenacity",
+      "window_ticks": 20,
+      "reduction": 0.5
+    }
+  ],
+  "milestones": [
+    {
+      "subclass_level": 5,
+      "grants": "rites_and_paths:incorruptible_bulwark",
+      "upgrades": "rites_and_paths:bulwark"
+    }
+  ]
+}

@@ -1,0 +1,372 @@
+{
+  "schema_version": 1,
+  "display": {
+    "icon": "minecraft:saddle"
+  },
+  "effects": [
+    {
+      "type": "rites_and_paths:attribute",
+      "modifiers": [
+        {
+          "attribute": "rites_and_paths:body",
+          "operation": "add",
+          "values": [
+            1,
+            1,
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "type": "rites_and_paths:mechanic",
+      "id": "rites_and_paths:race_centaur",
+      "max_speed": {
+        "values": [
+          0.4,
+          0.5,
+          0.6,
+          0.75
+        ]
+      },
+      "accel_seconds": {
+        "values": [
+          5,
+          4.3,
+          3.7,
+          3
+        ]
+      },
+      "ram_damage": {
+        "values": [
+          6,
+          8,
+          10,
+          13
+        ]
+      },
+      "ram_knockback": {
+        "values": [
+          4,
+          5,
+          6,
+          7
+        ]
+      },
+      "ram_threshold": 0.4,
+      "ram_speed_loss": 0.75,
+      "jump_charge_seconds": {
+        "values": [
+          1,
+          0.9,
+          0.75,
+          0.6
+        ]
+      },
+      "passengers": {
+        "values": [
+          1,
+          1,
+          2,
+          2
+        ]
+      },
+      "passenger_penalty": 0.1,
+      "speed_limit": 3.0,
+      "fall_height": 6
+    },
+    {
+      "type": "rites_and_paths:mechanic",
+      "id": "rites_and_paths:race_no_mount"
+    }
+  ],
+  "subraces": [
+    {
+      "id": "pegasus",
+      "display": {
+        "icon": "minecraft:feather"
+      },
+      "available": true,
+      "effects": [
+        {
+          "type": "rites_and_paths:mechanic",
+          "id": "rites_and_paths:race_glide",
+          "min_fall": {
+            "values": [
+              8,
+              6,
+              4,
+              3
+            ]
+          },
+          "air_control": {
+            "values": [
+              0,
+              0,
+              1,
+              1
+            ]
+          },
+          "flap_cooldown_seconds": {
+            "values": [
+              0,
+              0,
+              0,
+              20
+            ]
+          }
+        }
+      ],
+      "rites": [
+        {
+          "id": "centaur.pegasus.1",
+          "kind": "feat",
+          "objectives": [
+            {
+              "type": "kill",
+              "count": 20,
+              "filter": {
+                "target": "enemy",
+                "by": "ram"
+              }
+            },
+            {
+              "type": "counter",
+              "key": "glide_8",
+              "count": 20
+            }
+          ]
+        },
+        {
+          "id": "centaur.pegasus.2",
+          "kind": "craft",
+          "objectives": [
+            {
+              "type": "offer",
+              "items": [
+                {
+                  "item": "minecraft:feather",
+                  "count": 64
+                },
+                {
+                  "item": "minecraft:phantom_membrane",
+                  "count": 16
+                },
+                {
+                  "item": "minecraft:firework_rocket",
+                  "count": 8
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "centaur.pegasus.3",
+          "kind": "ritual",
+          "objectives": [
+            {
+              "type": "boss",
+              "altar": "high",
+              "counts": {
+                "glide": 3
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "unicorn",
+      "display": {
+        "icon": "minecraft:amethyst_shard"
+      },
+      "available": true,
+      "effects": [
+        {
+          "type": "rites_and_paths:mechanic",
+          "id": "rites_and_paths:race_mana_aura",
+          "radius": {
+            "values": [
+              8,
+              10,
+              12,
+              16
+            ]
+          },
+          "mana_regen": 0.5
+        },
+        {
+          "type": "rites_and_paths:mechanic",
+          "id": "rites_and_paths:race_blessed",
+          "healing": 0.5
+        },
+        {
+          "type": "rites_and_paths:mechanic",
+          "id": "rites_and_paths:race_horn",
+          "ram_bonus": {
+            "values": [
+              0.25,
+              0.33,
+              0.4,
+              0.5
+            ]
+          }
+        }
+      ],
+      "rites": [
+        {
+          "id": "centaur.unicorn.1",
+          "kind": "feat",
+          "objectives": [
+            {
+              "type": "kill",
+              "count": 30,
+              "filter": {
+                "target": "enemy",
+                "by": "ram"
+              }
+            }
+          ]
+        },
+        {
+          "id": "centaur.unicorn.2",
+          "kind": "craft",
+          "objectives": [
+            {
+              "type": "offer",
+              "items": [
+                {
+                  "item": "minecraft:golden_apple",
+                  "count": 4
+                },
+                {
+                  "item": "minecraft:amethyst_shard",
+                  "count": 8
+                },
+                {
+                  "item": "minecraft:gold_ingot",
+                  "count": 16
+                },
+                {
+                  "tag": "minecraft:small_flowers",
+                  "count": 8,
+                  "distinct": 4
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "centaur.unicorn.3",
+          "kind": "ritual",
+          "objectives": [
+            {
+              "type": "boss",
+              "allies": 2,
+              "ally_radius": 8,
+              "source": "ram",
+              "source_share": 0.4
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "warrior",
+      "display": {
+        "icon": "minecraft:iron_horse_armor"
+      },
+      "available": true,
+      "effects": [
+        {
+          "type": "rites_and_paths:mechanic",
+          "id": "rites_and_paths:race_war_gallop",
+          "damage_bonus": {
+            "values": [
+              0.2,
+              0.3,
+              0.4,
+              0.5
+            ]
+          },
+          "ram_speed_loss": {
+            "values": [
+              0.6,
+              0.5,
+              0.4,
+              0.3
+            ]
+          }
+        }
+      ],
+      "rites": [
+        {
+          "id": "centaur.warrior.1",
+          "kind": "feat",
+          "objectives": [
+            {
+              "type": "kill",
+              "count": 30,
+              "filter": {
+                "target": "enemy",
+                "by": "gallop"
+              }
+            }
+          ]
+        },
+        {
+          "id": "centaur.warrior.2",
+          "kind": "craft",
+          "objectives": [
+            {
+              "type": "offer",
+              "items": [
+                {
+                  "item": "minecraft:iron_helmet",
+                  "count": 1
+                },
+                {
+                  "item": "minecraft:iron_chestplate",
+                  "count": 1
+                },
+                {
+                  "item": "minecraft:iron_leggings",
+                  "count": 1
+                },
+                {
+                  "item": "minecraft:iron_boots",
+                  "count": 1
+                },
+                {
+                  "tag": "rites_and_paths:rite/iron_weapons",
+                  "count": 1
+                },
+                {
+                  "item": "minecraft:leather",
+                  "count": 8
+                },
+                {
+                  "item": "minecraft:iron_ingot",
+                  "count": 16
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "centaur.warrior.3",
+          "kind": "ritual",
+          "objectives": [
+            {
+              "type": "boss",
+              "counts": {
+                "gallop_chain": 10
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

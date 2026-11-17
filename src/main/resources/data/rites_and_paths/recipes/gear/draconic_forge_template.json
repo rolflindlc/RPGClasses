@@ -1,0 +1,30 @@
+{
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "iceandfire"
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    "BSB",
+    "SNS",
+    "BSB"
+  ],
+  "key": {
+    "B": {
+      "tag": "rites_and_paths:iceandfire/dragonbone"
+    },
+    "S": {
+      "tag": "rites_and_paths:iceandfire/scales_any"
+    },
+    "N": {
+      "item": "minecraft:netherite_upgrade_smithing_template"
+    }
+  },
+  "result": {
+    "item": "rites_and_paths:draconic_forge_template",
+    "count": 1
+  }
+}

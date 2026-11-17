@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:smithing_transform",
+  "template": {
+    "item": "rites_and_paths:resonant_shard"
+  },
+  "base": {
+    "item": "rites_and_paths:hurdy_gurdy"
+  },
+  "addition": {
+    "item": "rites_and_paths:abyssal_reed"
+  },
+  "result": {
+    "item": "rites_and_paths:abyssal_organ"
+  }
+}

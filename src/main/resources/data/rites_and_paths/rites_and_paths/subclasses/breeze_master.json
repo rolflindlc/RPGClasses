@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "class": "rites_and_paths:monk",
+  "display": {
+    "icon": "minecraft:phantom_membrane"
+  },
+  "effects": [
+    {
+      "type": "rites_and_paths:attribute",
+      "condition": "rites_and_paths:no_armor",
+      "modifiers": [
+        {
+          "attribute": "minecraft:generic.movement_speed",
+          "to": 0.4,
+          "operation": "multiply_base"
+        },
+        {
+          "attribute": "rites_and_paths:jump_bonus",
+          "to": 0.8,
+          "operation": "add"
+        }
+      ]
+    }
+  ],
+  "milestones": [
+    {
+      "subclass_level": 1,
+      "grants": "rites_and_paths:wind_dash"
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "io.github.rpgclasses.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "refmap": "rites_and_paths.refmap.json",
+  "mixins": [
+    "AllyEntityMixin",
+    "AnvilMenuMixin",
+    "FishingHookAccessor",
+    "FurnaceAccessor",
+    "InstantHealMixin",
+    "IronsHealTargetMixin",
+    "ItemCraftedMixin",
+    "ItemDurabilityMixin",
+    "LeavesCollisionMixin",
+    "LivingEntityAccessor",
+    "PiglinBarterMixin",
+    "PlayerEnchantMixin",
+    "PlayerPassengerMixin",
+    "PlayerSizeMixin",
+    "WolfRideMixin"
+  ],
+  "client": [
+    "client.CameraZoomMixin",
+    "client.ArmorLegsMixin",
+    "client.LocalPlayerPushMixin",
+    "client.DanceModelMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

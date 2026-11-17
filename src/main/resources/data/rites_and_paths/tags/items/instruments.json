@@ -1,0 +1,27 @@
+{
+  "replace": false,
+  "values": [
+    "rites_and_paths:lute",
+    "rites_and_paths:flute",
+    "rites_and_paths:harp",
+    "rites_and_paths:drum",
+    "rites_and_paths:violin",
+    "rites_and_paths:lyre",
+    "rites_and_paths:ocarina",
+    "rites_and_paths:pan_flute",
+    "rites_and_paths:tambourine",
+    "rites_and_paths:bagpipe",
+    "rites_and_paths:carillon",
+    "rites_and_paths:hurdy_gurdy",
+    "rites_and_paths:crystal_harp",
+    "rites_and_paths:war_horn",
+    "rites_and_paths:spectral_violin",
+    "rites_and_paths:scale_lyre_fire",
+    "rites_and_paths:scale_lyre_ice",
+    "rites_and_paths:scale_lyre_lightning",
+    "rites_and_paths:eternal_sun_lute",
+    "rites_and_paths:abyssal_organ",
+    "rites_and_paths:colossus_drum",
+    "rites_and_paths:guitar_axe"
+  ]
+}

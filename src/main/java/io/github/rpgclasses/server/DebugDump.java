@@ -34,7 +34,7 @@ public final class DebugDump {
 
     public static Path write(ServerPlayer player) throws IOException {
         List<String> out = new ArrayList<>();
-        out.add("=== RPG Classes " + DebugLog.modVersion() + " — volcado de " + player.getGameProfile().getName()
+        out.add("=== Rolflin's Rites & Paths " + DebugLog.modVersion() + " — volcado de " + player.getGameProfile().getName()
                 + " (" + LocalDateTime.now() + ") ===");
         out.add("Mods: forge " + version("forge") + ", irons_spellbooks " + version("irons_spellbooks") + ", epicfight " + version("epicfight")
                 + ", curios " + version("curios") + ", cataclysm " + version("cataclysm") + ", mowziesmobs " + version("mowziesmobs"));
@@ -133,7 +133,7 @@ public final class DebugDump {
 
         Path dir = FMLPaths.GAMEDIR.get().resolve("logs");
         Files.createDirectories(dir);
-        Path file = dir.resolve("rpgclasses-volcado-" + player.getGameProfile().getName() + "-"
+        Path file = dir.resolve("rites_and_paths-volcado-" + player.getGameProfile().getName() + "-"
                 + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd-HHmmss")) + ".txt");
         Files.write(file, out, StandardCharsets.UTF_8);
         DebugLog.event(player, "volcado", "escrito en {}", file.getFileName());
@@ -143,7 +143,7 @@ public final class DebugDump {
     /** Mensaje de chat con la ruta; en un jugador local, al pulsarlo se abre el archivo. */
     public static Component link(Path file) {
         String path = file.toAbsolutePath().toString();
-        return Component.translatable("message.rpgclasses.debug.dump_written", Component.literal(file.getFileName().toString())
+        return Component.translatable("message.rites_and_paths.debug.dump_written", Component.literal(file.getFileName().toString())
                 .withStyle(s -> s.withColor(ChatFormatting.AQUA).withUnderlined(true)
                         .withClickEvent(new ClickEvent(ClickEvent.Action.OPEN_FILE, path))
                         .withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Component.literal(path)))));

@@ -66,17 +66,17 @@ public final class ClassPages {
         out.add(Component.translatable(Ids.langKey("class", c.id(), "desc")));
         out.add(Component.empty());
         if (!c.roles().isEmpty()) {
-            out.add(Component.translatable("ui.rpgclasses.roles", String.join(", ", c.roles())).withStyle(ChatFormatting.GRAY));
+            out.add(Component.translatable("ui.rites_and_paths.roles", String.join(", ", c.roles())).withStyle(ChatFormatting.GRAY));
         }
-        out.add(Component.translatable(c.startingKit().isEmpty() ? "ui.rpgclasses.no_kit" : "ui.rpgclasses.kit").withStyle(ChatFormatting.GRAY));
+        out.add(Component.translatable(c.startingKit().isEmpty() ? "ui.rites_and_paths.no_kit" : "ui.rites_and_paths.kit").withStyle(ChatFormatting.GRAY));
         List<String> affine = new ArrayList<>();
         for (String d : new TreeSet<>(Ids.DISCIPLINES)) {
             if (!c.walls().containsKey(d) && !(Ids.ARMOR.equals(d) && c.armorDisablesPassives())) affine.add(discipline(d).getString());
         }
         out.add(Component.empty());
-        out.add(Component.translatable("ui.rpgclasses.affine", String.join(", ", affine)).withStyle(ChatFormatting.GREEN));
+        out.add(Component.translatable("ui.rites_and_paths.affine", String.join(", ", affine)).withStyle(ChatFormatting.GREEN));
         if (c.armorDisablesPassives()) {
-            out.add(Component.translatable("ui.rpgclasses.armor_rule").withStyle(ChatFormatting.YELLOW));
+            out.add(Component.translatable("ui.rites_and_paths.armor_rule").withStyle(ChatFormatting.YELLOW));
         }
         if (!c.traits().isEmpty()) {
             out.add(Component.empty());
@@ -87,26 +87,26 @@ public final class ClassPages {
     }
 
     private static void branches(ClassDef c, List<Component> out) {
-        out.add(header("ui.rpgclasses.branches_header"));
+        out.add(header("ui.rites_and_paths.branches_header"));
         for (BranchDef b : c.branches()) {
             out.add(Component.empty());
             out.add(branchName(c, b).withStyle(ChatFormatting.GOLD));
             out.add(Component.translatable(branchKey(c, b, "desc")));
             if (!b.perks().isEmpty()) {
-                out.add(Component.translatable("ui.rpgclasses.perks_line").withStyle(ChatFormatting.GRAY));
+                out.add(Component.translatable("ui.rites_and_paths.perks_line").withStyle(ChatFormatting.GRAY));
                 for (PerkDef p : b.perks()) {
-                    out.add(indent(Component.translatable("ui.rpgclasses.perk_option",
+                    out.add(indent(Component.translatable("ui.rites_and_paths.perk_option",
                             perkName(c, b, p).withStyle(ChatFormatting.LIGHT_PURPLE), Component.translatable(perkKey(c, b, p, "desc")))));
                 }
             }
         }
         out.add(Component.empty());
-        out.add(header("ui.rpgclasses.abilities_header"));
+        out.add(header("ui.rites_and_paths.abilities_header"));
         for (MilestoneDef m : c.milestones()) milestone(m, out);
     }
 
     private static void subclasses(ClassDef c, List<Component> out) {
-        out.add(Component.translatable("ui.rpgclasses.subclass_note").withStyle(ChatFormatting.GRAY));
+        out.add(Component.translatable("ui.rites_and_paths.subclass_note").withStyle(ChatFormatting.GRAY));
         for (String subId : c.subclasses()) {
             SubclassDef sub = DefinitionStore.CLIENT.subclassDef(subId);
             if (sub == null) continue;
@@ -119,29 +119,29 @@ public final class ClassPages {
 
     private static void data(ClassDef c, List<Component> out) {
         double base = critBase();
-        out.add(Component.translatable("ui.rpgclasses.data.crit",
+        out.add(Component.translatable("ui.rites_and_paths.data.crit",
                 percent(StatMath.critChance(base, c.critChanceBonus(), false)), number(StatMath.BASE_CRIT_MULTIPLIER)));
         walls(c, out);
         if (!c.traits().isEmpty()) {
             out.add(Component.empty());
-            out.add(header("ui.rpgclasses.traits_header"));
+            out.add(header("ui.rites_and_paths.traits_header"));
             for (EffectDef e : c.traits()) effect(e, 1, out);
         }
 
         out.add(Component.empty());
-        out.add(header("ui.rpgclasses.branches_header"));
+        out.add(header("ui.rites_and_paths.branches_header"));
         for (BranchDef b : c.branches()) {
             out.add(branchName(c, b).withStyle(ChatFormatting.GOLD));
             for (EffectDef e : b.effects()) effect(e, b.maxPoints(), out);
             for (PerkDef p : b.perks()) {
                 out.add(indent(perkName(c, b, p).withStyle(ChatFormatting.LIGHT_PURPLE)
-                        .append(" ").append(Component.translatable("ui.rpgclasses.data.perk_fixed").withStyle(ChatFormatting.GRAY))));
+                        .append(" ").append(Component.translatable("ui.rites_and_paths.data.perk_fixed").withStyle(ChatFormatting.GRAY))));
                 for (EffectDef e : p.effects()) effect(e, 1, out);
             }
         }
 
         out.add(Component.empty());
-        out.add(header("ui.rpgclasses.abilities_header"));
+        out.add(header("ui.rites_and_paths.abilities_header"));
         for (MilestoneDef m : c.milestones()) abilityData(m, out);
 
         for (String subId : c.subclasses()) {
@@ -150,16 +150,16 @@ public final class ClassPages {
             out.add(Component.empty());
             out.add(Component.translatable(Ids.langKey("subclass", subId, "name")).withStyle(ChatFormatting.GOLD, ChatFormatting.BOLD));
             if (!sub.effects().isEmpty()) {
-                out.add(Component.translatable("ui.rpgclasses.data.subclass_levels").withStyle(ChatFormatting.GRAY));
+                out.add(Component.translatable("ui.rites_and_paths.data.subclass_levels").withStyle(ChatFormatting.GRAY));
                 for (EffectDef e : sub.effects()) effect(e, ProgressionRules.SUBCLASS_MAX, out);
             }
             for (MilestoneDef m : sub.milestones()) abilityData(m, out);
         }
 
         out.add(Component.empty());
-        out.add(header("ui.rpgclasses.data.xp_header"));
+        out.add(header("ui.rites_and_paths.data.xp_header"));
         double mult = xpMultiplier();
-        out.add(Component.translatable("ui.rpgclasses.data.xp_line",
+        out.add(Component.translatable("ui.rites_and_paths.data.xp_line",
                 "(80 + 6n)" + (mult == 1.0 ? "" : " x " + number(mult)),
                 XpMath.totalCost(0, 30, mult), XpMath.totalCost(30, 40, mult)));
     }
@@ -169,12 +169,12 @@ public final class ClassPages {
     private static void walls(ClassDef c, List<Component> out) {
         if (c.walls().isEmpty()) return;
         out.add(Component.empty());
-        out.add(header("ui.rpgclasses.walls_header"));
+        out.add(header("ui.rites_and_paths.walls_header"));
         for (String d : new TreeSet<>(c.walls().keySet())) {
-            out.add(Component.translatable("ui.rpgclasses.wall_line", discipline(d), percent(c.walls().get(d))).withStyle(ChatFormatting.RED));
+            out.add(Component.translatable("ui.rites_and_paths.wall_line", discipline(d), percent(c.walls().get(d))).withStyle(ChatFormatting.RED));
         }
         String example = new TreeSet<>(c.walls().keySet()).first();
-        out.add(Component.translatable("ui.rpgclasses.walls_note", 15,
+        out.add(Component.translatable("ui.rites_and_paths.walls_note", 15,
                 "-" + percent(StatMath.wallPenalty(c.walls().get(example), 15)) + " (" + discipline(example).getString() + ")")
                 .withStyle(ChatFormatting.GRAY));
     }
@@ -182,18 +182,18 @@ public final class ClassPages {
     private static void milestone(MilestoneDef m, List<Component> out) {
         AbilityDef ability = DefinitionStore.CLIENT.abilityDef(m.grants());
         boolean passive = ability != null && ability.params().has("passive") && ability.params().get("passive").getAsBoolean();
-        MutableComponent line = Component.translatable(m.subclassLevel() ? "ui.rpgclasses.unlock_sub" : "ui.rpgclasses.unlock_total", m.level())
+        MutableComponent line = Component.translatable(m.subclassLevel() ? "ui.rites_and_paths.unlock_sub" : "ui.rites_and_paths.unlock_total", m.level())
                 .withStyle(ChatFormatting.AQUA)
                 .append(Component.literal(" - ").withStyle(ChatFormatting.GRAY))
                 .append(Component.translatable(Ids.langKey("ability", m.grants(), "name")).withStyle(ChatFormatting.WHITE, ChatFormatting.BOLD));
         if (passive) {
-            line.append(Component.literal(" (").append(Component.translatable("ui.rpgclasses.passive")).append(")").withStyle(ChatFormatting.GRAY));
+            line.append(Component.literal(" (").append(Component.translatable("ui.rites_and_paths.passive")).append(")").withStyle(ChatFormatting.GRAY));
         }
         out.add(Component.empty());
         out.add(line);
         out.add(Component.translatable(Ids.langKey("ability", m.grants(), "desc")));
         if (m.upgrades() != null) {
-            out.add(Component.translatable("ui.rpgclasses.upgrades",
+            out.add(Component.translatable("ui.rites_and_paths.upgrades",
                     Component.translatable(Ids.langKey("ability", m.upgrades(), "name"))).withStyle(ChatFormatting.GRAY));
         }
     }
@@ -201,12 +201,12 @@ public final class ClassPages {
     private static void abilityData(MilestoneDef m, List<Component> out) {
         out.add(Component.translatable(Ids.langKey("ability", m.grants(), "name")).withStyle(ChatFormatting.WHITE, ChatFormatting.BOLD)
                 .append(Component.literal(" (").append(Component.translatable(
-                        m.subclassLevel() ? "ui.rpgclasses.unlock_sub" : "ui.rpgclasses.unlock_total", m.level())).append(")")
+                        m.subclassLevel() ? "ui.rites_and_paths.unlock_sub" : "ui.rites_and_paths.unlock_total", m.level())).append(")")
                         .withStyle(ChatFormatting.GRAY)));
         AbilityDef ability = DefinitionStore.CLIENT.abilityDef(m.grants());
         int before = out.size();
         if (ability != null) params(ability.params(), LEVELS, out);
-        if (out.size() == before) out.add(indent(Component.translatable("ui.rpgclasses.data.no_data").withStyle(ChatFormatting.DARK_GRAY)));
+        if (out.size() == before) out.add(indent(Component.translatable("ui.rites_and_paths.data.no_data").withStyle(ChatFormatting.DARK_GRAY)));
     }
 
     /** Una pasiva: modificadores de atributo, o los parámetros de una mecánica. */
@@ -222,7 +222,7 @@ public final class ClassPages {
                 boolean pct = isPercent(m);
                 MutableComponent line = levelValue(attributeName(m.attribute()), m.value(), pct ? "%" : "", true);
                 if (parsed.condition() != null) {
-                    line.append(" ").append(Component.translatable("ui.rpgclasses.data.condition_no_armor").withStyle(ChatFormatting.GRAY));
+                    line.append(" ").append(Component.translatable("ui.rites_and_paths.data.condition_no_armor").withStyle(ChatFormatting.GRAY));
                 }
                 out.add(indent(line));
             }
@@ -240,13 +240,13 @@ public final class ClassPages {
         for (Map.Entry<String, JsonElement> entry : params.entrySet()) {
             String key = entry.getKey();
             if (SKIPPED_PARAMS.contains(key)) continue;
-            Component label = Component.translatableWithFallback("param.rpgclasses." + key, key);
+            Component label = Component.translatableWithFallback("param.rites_and_paths." + key, key);
             String unit = units().getOrDefault(key, "");
             JsonElement v = entry.getValue();
             if (v.isJsonPrimitive() && v.getAsJsonPrimitive().isNumber()) {
-                out.add(indent2(Component.translatable("ui.rpgclasses.data.fixed", label, format(v.getAsDouble(), unit, false))));
+                out.add(indent2(Component.translatable("ui.rites_and_paths.data.fixed", label, format(v.getAsDouble(), unit, false))));
             } else if (v.isJsonArray()) {
-                out.add(indent2(Component.translatable("ui.rpgclasses.data.fixed", label, list(v.getAsJsonArray(), unit))));
+                out.add(indent2(Component.translatable("ui.rites_and_paths.data.fixed", label, list(v.getAsJsonArray(), unit))));
             } else if (v.isJsonObject()) {
                 try {
                     out.add(indent2(levelValue(label, LevelValue.fromJson(v.getAsJsonObject(), maxLevel), unit, false)));
@@ -262,20 +262,20 @@ public final class ClassPages {
         double first = value.at(1);
         double max = value.max();
         int n = value.maxLevel();
-        if (n == 1) return Component.translatable("ui.rpgclasses.data.fixed", label, format(max, unit, signed));
+        if (n == 1) return Component.translatable("ui.rites_and_paths.data.fixed", label, format(max, unit, signed));
         boolean fromZero = Math.abs(first * n - max) < 1e-9;
         boolean linear = true;
         double step = n > 1 ? (max - first) / (n - 1) : 0;
         for (int i = 1; i <= n; i++) linear &= Math.abs(value.at(i) - (first + step * (i - 1))) < 1e-9;
         if (fromZero && linear) {
-            return Component.translatable("ui.rpgclasses.data.per_point", label, format(first, unit, signed), format(max, unit, signed));
+            return Component.translatable("ui.rites_and_paths.data.per_point", label, format(first, unit, signed), format(max, unit, signed));
         }
         if (linear) {
-            return Component.translatable("ui.rpgclasses.data.range", label, format(first, unit, signed), format(max, unit, signed));
+            return Component.translatable("ui.rites_and_paths.data.range", label, format(first, unit, signed), format(max, unit, signed));
         }
         List<String> all = new ArrayList<>();
         for (int i = 1; i <= n; i++) all.add(format(value.at(i), unit, false));
-        return Component.translatable("ui.rpgclasses.data.table", label, String.join(" / ", all));
+        return Component.translatable("ui.rites_and_paths.data.table", label, String.join(" / ", all));
     }
 
     // --- Formato ---
@@ -408,11 +408,11 @@ public final class ClassPages {
         if (paramUnits == null) {
             Map<String, String> loaded = new HashMap<>();
             try (Reader reader = Minecraft.getInstance().getResourceManager()
-                    .openAsReader(RpgClasses.id("rpgclasses_param_units.json"))) {
+                    .openAsReader(RpgClasses.id("rites_and_paths_param_units.json"))) {
                 JsonObject o = JsonParser.parseReader(reader).getAsJsonObject();
                 for (Map.Entry<String, JsonElement> e : o.entrySet()) loaded.put(e.getKey(), e.getValue().getAsString());
             } catch (Exception e) {
-                RpgClasses.LOGGER.warn("[rpgclasses] No se pudieron leer las unidades de los parámetros", e);
+                RpgClasses.LOGGER.warn("[rites_and_paths] No se pudieron leer las unidades de los parámetros", e);
             }
             paramUnits = loaded;
         }

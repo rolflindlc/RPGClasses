@@ -66,7 +66,7 @@ public final class ColossusForms {
     private static final UUID STEP_ID = UUID.fromString("9a1d7c3e-4b2f-4e8a-8c61-3f0e2b7d5a04");
     private static final UUID JUMP_ID = UUID.fromString("9a1d7c3e-4b2f-4e8a-8c61-3f0e2b7d5a05");
     private static final UUID DETECTION_ID = UUID.fromString("9a1d7c3e-4b2f-4e8a-8c61-3f0e2b7d5a06");
-    private static final String MODIFIER_NAME = "rpgclasses titan form";
+    private static final String MODIFIER_NAME = "rites_and_paths titan form";
     private static final String KEY = Ids.NS + ":race_grow";
 
     // Tabla 4.2 de la adenda: lo que la forma suma a un Coloso (×2 → ×4).
@@ -131,7 +131,7 @@ public final class ColossusForms {
         double half = dims.width * ratio / 2;
         AABB box = new AABB(p.getX() - half, p.getY(), p.getZ() - half, p.getX() + half, p.getY() + dims.height * ratio, p.getZ() + half);
         if (!fits(level, box.deflate(0.01))) {
-            p.displayClientMessage(Component.translatable("message.rpgclasses.titan_no_room"), true);
+            p.displayClientMessage(Component.translatable("message.rites_and_paths.titan_no_room"), true);
             return false;
         }
         add(p, ModAttributes.SCALE.get(), SCALE_ID, SCALE_ADD);

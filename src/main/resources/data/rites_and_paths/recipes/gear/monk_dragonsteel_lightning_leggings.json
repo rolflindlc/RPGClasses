@@ -1,0 +1,21 @@
+{
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "iceandfire"
+    }
+  ],
+  "type": "minecraft:smithing_transform",
+  "template": {
+    "item": "rites_and_paths:draconic_forge_template"
+  },
+  "base": {
+    "tag": "rites_and_paths:gear/monk_dragon_leggings"
+  },
+  "addition": {
+    "tag": "rites_and_paths:iceandfire/dragonsteel_lightning"
+  },
+  "result": {
+    "item": "rites_and_paths:monk_dragonsteel_lightning_leggings"
+  }
+}

@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(Entity.class)
 public abstract class AllyEntityMixin {
     @Inject(method = "isAlliedTo(Lnet/minecraft/world/entity/Entity;)Z", at = @At("HEAD"), cancellable = true)
-    private void rpgclasses$allies(Entity other, CallbackInfoReturnable<Boolean> cir) {
+    private void rites_and_paths$allies(Entity other, CallbackInfoReturnable<Boolean> cir) {
         Boolean allied = Allies.alliedOverride((Entity) (Object) this, other);
         if (allied != null) cir.setReturnValue(allied);
     }

@@ -19,7 +19,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class IronsHealTargetMixin {
     @Inject(method = "shouldHealEntity(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/entity/Entity;)Z",
             at = @At("HEAD"), cancellable = true, require = 0, remap = false)
-    private static void rpgclasses$allies(Entity healer, Entity target, CallbackInfoReturnable<Boolean> cir) {
+    private static void rites_and_paths$allies(Entity healer, Entity target, CallbackInfoReturnable<Boolean> cir) {
         if (healer == null || target == null || healer == target) return;
         Boolean allied = Allies.alliedOverride(healer, target);
         if (allied != null) cir.setReturnValue(allied);

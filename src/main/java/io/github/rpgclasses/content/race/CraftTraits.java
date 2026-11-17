@@ -54,7 +54,7 @@ import java.util.UUID;
  */
 public final class CraftTraits {
     /** Durabilidad extra (fracción) guardada en el objeto: viaja con él aunque cambie de dueño. */
-    public static final String FORGED_TAG = "rpgclasses.forged";
+    public static final String FORGED_TAG = "rites_and_paths.forged";
 
     // ------------------------------------------------------------------ Enano Herrero
 
@@ -181,12 +181,12 @@ public final class CraftTraits {
         double speed = Races.number(p, "race_fisher", "lure_speed", 0);
         if (speed <= 0) return;
         FishingHookAccessor acc = (FishingHookAccessor) hook;
-        int t = acc.rpgclasses$getTimeUntilLured();
+        int t = acc.rites_and_paths$getTimeUntilLured();
         int[] last = LURE.get(p.getUUID());
         boolean fresh = last == null || last[0] != hook.getId() || t > last[1];
         if (t > 0 && fresh) {
             t = Math.max(1, (int) Math.round(t * (1 - speed)));
-            acc.rpgclasses$setTimeUntilLured(t);
+            acc.rites_and_paths$setTimeUntilLured(t);
         }
         LURE.put(p.getUUID(), new int[]{hook.getId(), t});
     }
@@ -208,9 +208,9 @@ public final class CraftTraits {
             if (!HEATED_THIS_TICK.add(pos)) continue; // dos fundidores no lo aceleran el doble
             if (!(level.getBlockEntity(pos) instanceof AbstractFurnaceBlockEntity furnace)) continue;
             FurnaceAccessor acc = (FurnaceAccessor) furnace;
-            int progress = acc.rpgclasses$getCookingProgress();
-            if (acc.rpgclasses$getLitTime() > 0 && progress > 0 && progress < acc.rpgclasses$getCookingTotalTime() - 1) {
-                acc.rpgclasses$setCookingProgress(progress + 1);
+            int progress = acc.rites_and_paths$getCookingProgress();
+            if (acc.rites_and_paths$getLitTime() > 0 && progress > 0 && progress < acc.rites_and_paths$getCookingTotalTime() - 1) {
+                acc.rites_and_paths$setCookingProgress(progress + 1);
             }
         }
     }

@@ -108,12 +108,12 @@ public final class RhythmGame {
     }
 
     private static double mech(String id, String key, double fallback) {
-        ActiveMechanic m = ClientSetup.localMechanic("rpgclasses:" + id);
+        ActiveMechanic m = ClientSetup.localMechanic("rites_and_paths:" + id);
         return m == null ? fallback : m.number(key, fallback);
     }
 
     private static boolean hasMech(String id) {
-        return ClientSetup.localMechanic("rpgclasses:" + id) != null;
+        return ClientSetup.localMechanic("rites_and_paths:" + id) != null;
     }
 
     private static double bpm() {
@@ -163,7 +163,7 @@ public final class RhythmGame {
                 n.judged = true;
                 send(BardState.MISS, n.lane);
                 flash(n.lane, 0xFFFF3030, now);
-                popup = new Popup(Component.translatable("hud.rpgclasses.bard.miss"), 0xFFFF5050, now + 450);
+                popup = new Popup(Component.translatable("hud.rites_and_paths.bard.miss"), 0xFFFF5050, now + 450);
             }
         }
         if (phraseEnd > 0 && now > phraseEnd + w) {
@@ -254,8 +254,8 @@ public final class RhythmGame {
         boolean perfect = Math.abs(best.time - now) <= perfectWindow();
         send(perfect ? BardState.PERFECT : BardState.HIT, lane);
         flash(lane, perfect ? 0xFFFFFFFF : LANE_COLOR[lane], now);
-        popup = perfect ? new Popup(Component.translatable("hud.rpgclasses.bard.perfect"), 0xFFFFE680, now + 350)
-                : new Popup(Component.translatable("hud.rpgclasses.bard.good"), 0xFFB0E0FF, now + 300);
+        popup = perfect ? new Popup(Component.translatable("hud.rites_and_paths.bard.perfect"), 0xFFFFE680, now + 350)
+                : new Popup(Component.translatable("hud.rites_and_paths.bard.good"), 0xFFB0E0FF, now + 300);
         playNote(lane);
     }
 
@@ -313,7 +313,7 @@ public final class RhythmGame {
         }
         // Combo, Armonía y Crescendo, debajo de la mira.
         var font = mc.font;
-        Component c = Component.translatable("hud.rpgclasses.bard.combo", combo);
+        Component c = Component.translatable("hud.rites_and_paths.bard.combo", combo);
         g.drawString(font, c, cx - font.width(c) / 2, cy + 26, combo >= 30 ? 0xFFFFD34A : combo >= 20 ? 0xFFE7A0FF : combo >= 10 ? 0xFF8FD8FF : 0xFFE0E0E0, true);
         if (stage > 0) {
             for (int i = 0; i < 5; i++) {
@@ -322,7 +322,7 @@ public final class RhythmGame {
             }
         }
         if (crescendoTicks > 0) {
-            Component cres = Component.translatable("hud.rpgclasses.bard.crescendo");
+            Component cres = Component.translatable("hud.rites_and_paths.bard.crescendo");
             g.drawString(font, cres, cx - font.width(cres) / 2, cy + 43, 0xFFFFB347, true);
         }
         if (popup != null && popup.until() > now) {

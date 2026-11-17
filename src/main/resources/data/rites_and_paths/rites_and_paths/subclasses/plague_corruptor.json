@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "class": "rites_and_paths:barbarian",
+  "display": {
+    "icon": "minecraft:rotten_flesh"
+  },
+  "effects": [
+    {
+      "type": "rites_and_paths:mechanic",
+      "id": "rites_and_paths:resistant_blood",
+      "effects": [
+        "minecraft:hunger",
+        "minecraft:poison",
+        "minecraft:wither"
+      ],
+      "duration_reduction": {
+        "to": 1.0
+      }
+    },
+    {
+      "type": "rites_and_paths:mechanic",
+      "id": "rites_and_paths:afflicting_strike",
+      "damage_per_second": 2,
+      "duration_seconds": 6,
+      "boss_factor": 0.5,
+      "contagion_radius": 5
+    }
+  ],
+  "milestones": []
+}

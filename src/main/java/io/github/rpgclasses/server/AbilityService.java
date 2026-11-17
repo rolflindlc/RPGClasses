@@ -128,13 +128,13 @@ public final class AbilityService {
         Active active = ACTIVES.get(id);
         if (active == null) {
             DebugLog.warn(player, "habilidad", "{} (ranura {}) no tiene código registrado", id, slot);
-            player.displayClientMessage(Component.translatable("msg.rpgclasses.ability_not_ready", name), true);
+            player.displayClientMessage(Component.translatable("msg.rites_and_paths.ability_not_ready", name), true);
             return;
         }
         long remaining = remainingTicks(player, id);
         if (remaining > 0) {
             DebugLog.event(player, "habilidad", "{} en enfriamiento ({} s)", id, remaining / 20.0);
-            player.displayClientMessage(Component.translatable("msg.rpgclasses.ability_cooldown", name,
+            player.displayClientMessage(Component.translatable("msg.rites_and_paths.ability_cooldown", name,
                     String.format(Locale.ROOT, "%.1f", remaining / 20.0)), true);
             return;
         }
@@ -144,7 +144,7 @@ public final class AbilityService {
             used = active.activate(player, params);
         } catch (Throwable t) {
             DebugLog.error(player, "habilidad", t, "{} lanzó una excepción al activarse (params {})", id, params);
-            player.displayClientMessage(Component.translatable("message.rpgclasses.debug.ability_error", String.valueOf(id))
+            player.displayClientMessage(Component.translatable("message.rites_and_paths.debug.ability_error", String.valueOf(id))
                     .withStyle(net.minecraft.ChatFormatting.RED), true);
             return;
         }
@@ -158,7 +158,7 @@ public final class AbilityService {
             setCooldown(player, id, (int) Math.round(levelTicks(player, params, "cooldown_seconds", 0) * factor));
             DebugLog.event(player, "habilidad", "{} usada; enfriamiento {} s (factor {})", id,
                     levelTicks(player, params, "cooldown_seconds", 0) * factor / 20.0, factor);
-            player.displayClientMessage(Component.translatable("msg.rpgclasses.ability_used", name), true);
+            player.displayClientMessage(Component.translatable("msg.rites_and_paths.ability_used", name), true);
             Net.syncPlayer(player);
         }
     }

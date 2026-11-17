@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "rites_and_paths:item/bo_dragonsteel_fire"
+  }
+}

@@ -1,4 +1,4 @@
-# RPG Classes (Forge 1.20.1)
+# Rolflin's Rites & Paths (Forge 1.20.1) — modId `rites_and_paths`
 
 Mod de clases, ramas, subclases y razas definido por datapack. Diseño funcional en
 `documento_de_diseno_de_clases_v2.md`, razas y su estado en
@@ -20,16 +20,16 @@ Todo lo siguiente está en el código y compila con sus pruebas, pero **no se ha
   (`python3 -I tools/art/make_ui.py src/main/resources`).
 - **HUD:** habilidades de clase y raciales con su tecla y enfriamiento (abajo a la derecha), conjuros gratuitos del
   Mago, barras de sigilo, salto cargado, adherencia y fusión.
-- **Configuración:** de servidor (`rpgclasses-server.toml`: coste de XP, respec, aliados, depuración) y de cliente
-  (`rpgclasses-client.toml`: intensidad del temblor del Titán).
+- **Configuración:** de servidor (`rites_and_paths-server.toml`: coste de XP, respec, aliados, depuración) y de cliente
+  (`rites_and_paths-client.toml`: intensidad del temblor del Titán).
 - **Cronomante** (sustituye al Evocador Caótico): Retroceso Temporal y Parada Temporal (esfera gris translúcida,
   compatible con shaders). Pruebas en el juego: ver "Probar el Cronomante" más abajo.
 - **Bardo** (adenda del Bardo): minijuego de ritmo con los cuatro carriles (clic izquierdo, clic derecho, Shift y
-  espacio), combo, Armonía, Contrapunto y Crescendo; escuela musical registrada en Iron's (`rpgclasses:music`) con 12
+  espacio), combo, Armonía, Contrapunto y Crescendo; escuela musical registrada en Iron's (`rites_and_paths:music`) con 12
   conjuros, 21 instrumentos más la guitarra-hacha, partituras con nivel y atril, 3 subclases. Detalle y diferencias con
   el diseño en `documento_bardo.md`. Pruebas: ver "Probar el Bardo" más abajo.
 - Red: protocolo **16** (servidor y cliente con el mismo jar). 18 mixins (3 solo de cliente).
-- Depuración: `/clases debug volcar` escribe un informe en `logs/`; `logs/rpgclasses-debug.log` lleva el registro.
+- Depuración: `/clases debug volcar` escribe un informe en `logs/`; `logs/rites_and_paths-debug.log` lleva el registro.
 
 ### Pendiente
 
@@ -59,7 +59,7 @@ Al entrar sin clase se abre la pantalla de selección.
 
 | Comando | Efecto |
 | --- | --- |
-| `/clase elegir <id>` | Elige clase, p. ej. `rpgclasses:barbarian` |
+| `/clase elegir <id>` | Elige clase, p. ej. `rites_and_paths:barbarian` |
 | `/clase punto <rama>` | Gasta un punto en una rama (cobra XP) |
 | `/clase subclase <id>` | Elige subclase (desde 15 puntos de base) |
 | `/clase subpunto` | Sube un nivel de subclase |
@@ -71,14 +71,14 @@ Al entrar sin clase se abre la pantalla de selección.
 
 Para tener XP de prueba: `/xp add @s 9000 points`.
 
-**Amuleto del Creativo** (pestaña Herramientas y utilidades del creativo, o `/give @s rpgclasses:creative_amulet`):
+**Amuleto del Creativo** (pestaña Herramientas y utilidades del creativo, o `/give @s rites_and_paths:creative_amulet`):
 mientras esté en cualquier hueco del inventario, todos los enfriamientos de clase y de raza son 0 (habilidades,
 tiempos mínimos entre usos de pasivas y perks, recargas de cargas, Salvaguarda de Bestias y robo del Goblin Ladrón).
 No tiene receta; funciona en cualquier modo de juego para poder probar en supervivencia.
 
 ## Probar el Cronomante
 
-`/clase elegir rpgclasses:mage`, sube la base a 15 puntos y `/clase subclase rpgclasses:chronomancer`; ambas
+`/clase elegir rites_and_paths:mage`, sube la base a 15 puntos y `/clase subclase rites_and_paths:chronomancer`; ambas
 habilidades se tienen desde el nivel 1 de subclase (teclas Z y X). Para probar los niveles altos, sube la subclase con
 `/clase subpunto` (cada nivel exige más puntos de base).
 
@@ -96,7 +96,7 @@ habilidades se tienen desde el nivel 1 de subclase (teclas Z y X). Para probar l
 
 ## Probar el Bardo
 
-`/clase elegir rpgclasses:bard` (con Iron's Spells instalado). El kit trae un laúd en la mano secundaria. Ritmo llega
+`/clase elegir rites_and_paths:bard` (con Iron's Spells instalado). El kit trae un laúd en la mano secundaria. Ritmo llega
 con el primer punto (`/clase punto compas`); Armonía con Nivel Total 5, Contrapunto con 15 y Crescendo (tecla Z) con 30.
 Las partituras de nivel 1 y al máximo están en la pestaña de creativo del mod.
 
@@ -116,8 +116,8 @@ Las partituras de nivel 1 y al máximo están en la pestaña de creativo del mod
 
 ## Añadir una clase
 
-1. `data/<namespace>/rpgclasses/classes/<id>.json` con 3 ramas de 10 puntos y 3 subclases.
-2. Tres archivos en `data/<namespace>/rpgclasses/subclasses/`.
+1. `data/<namespace>/rites_and_paths/classes/<id>.json` con 3 ramas de 10 puntos y 3 subclases.
+2. Tres archivos en `data/<namespace>/rites_and_paths/subclasses/`.
 3. Nombres en `assets/<namespace>/lang/`.
 4. Código Java solo si necesita una mecánica nueva.
 

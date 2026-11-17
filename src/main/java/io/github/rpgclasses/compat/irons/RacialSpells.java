@@ -45,7 +45,7 @@ public final class RacialSpells {
     /** Conjuros de agua del Moldeador (para el rito Marea Viva). */
     public static final java.util.Set<String> AQUA_IDS = java.util.Set.of("traveloptics:hydroshot", "traveloptics:overflow",
             "traveloptics:jet_steam", "traveloptics:jet_stream", "traveloptics:jetstream", "traveloptics:tidal_grasp");
-    static final String SLOT = "rpgclasses_racial";
+    static final String SLOT = "rites_and_paths_racial";
 
     private static final Map<UUID, Long> SPELL_HEAL_TICK = new HashMap<>();
 

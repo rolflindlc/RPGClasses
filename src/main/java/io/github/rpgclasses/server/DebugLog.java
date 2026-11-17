@@ -31,7 +31,7 @@ import java.util.UUID;
 /**
  * Registro de depuración del mod: qué habilidades se usan, qué pasivas se comprueban, efectos, daño, curas y errores.
  * <ul>
- *   <li>Archivo propio: {@code logs/rpgclasses-debug.log} (el de la sesión anterior queda en {@code rpgclasses-debug.prev.log}).</li>
+ *   <li>Archivo propio: {@code logs/rites_and_paths-debug.log} (el de la sesión anterior queda en {@code rites_and_paths-debug.prev.log}).</li>
  *   <li>Memoria: últimas líneas por jugador, para {@code /clases debug log} y {@code /clases debug volcar}.</li>
  *   <li>Los errores van siempre (también a latest.log); los eventos, solo si el registro está activo
  *       (config {@code debugLog} o {@code /clases debug log on|off}).</li>
@@ -40,7 +40,7 @@ import java.util.UUID;
  */
 public final class DebugLog {
     /** Logger propio: el capturador de errores lo ignora para no duplicar líneas. */
-    static final String LOGGER_NAME = "rpgclasses-debug";
+    static final String LOGGER_NAME = "rites_and_paths-debug";
     private static final Logger OUT = LoggerFactory.getLogger(LOGGER_NAME);
     private static final DateTimeFormatter TIME = DateTimeFormatter.ofPattern("HH:mm:ss.SSS");
     private static final long MAX_FILE_BYTES = 32L * 1024 * 1024;
@@ -101,14 +101,14 @@ public final class DebugLog {
     public static void warn(Player player, String source, String format, Object... args) {
         String msg = format(format, args);
         record(player, "WARN", source, msg, null);
-        OUT.warn("[rpgclasses] {}: {}", source, msg);
+        OUT.warn("[rites_and_paths] {}: {}", source, msg);
     }
 
     /** Error con excepción. Siempre se registra (archivo, memoria y latest.log). */
     public static void error(Player player, String source, Throwable error, String format, Object... args) {
         String msg = format(format, args);
         record(player, "ERROR", source, msg, error);
-        OUT.error("[rpgclasses] {}: {}", source, msg, error);
+        OUT.error("[rites_and_paths] {}: {}", source, msg, error);
     }
 
     /** Ejecuta {@code body}; si lanza, se registra y el juego sigue. */
@@ -148,13 +148,13 @@ public final class DebugLog {
             if (writer == null) {
                 Path dir = FMLPaths.GAMEDIR.get().resolve("logs");
                 Files.createDirectories(dir);
-                Path file = dir.resolve("rpgclasses-debug.log");
+                Path file = dir.resolve("rites_and_paths-debug.log");
                 if (Files.exists(file)) {
-                    Files.move(file, dir.resolve("rpgclasses-debug.prev.log"), StandardCopyOption.REPLACE_EXISTING);
+                    Files.move(file, dir.resolve("rites_and_paths-debug.prev.log"), StandardCopyOption.REPLACE_EXISTING);
                 }
                 writer = Files.newBufferedWriter(file, StandardCharsets.UTF_8,
                         StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING, StandardOpenOption.WRITE);
-                String header = "RPG Classes " + modVersion() + " — registro de depuración, " + java.time.LocalDateTime.now();
+                String header = "Rolflin's Rites & Paths " + modVersion() + " — registro de depuración, " + java.time.LocalDateTime.now();
                 writer.write(header);
                 writer.newLine();
             }
@@ -169,7 +169,7 @@ public final class DebugLog {
             }
         } catch (IOException | RuntimeException e) {
             fileBroken = true;
-            RpgClasses.LOGGER.warn("[rpgclasses] No se puede escribir logs/rpgclasses-debug.log", e);
+            RpgClasses.LOGGER.warn("[rites_and_paths] No se puede escribir logs/rites_and_paths-debug.log", e);
         }
     }
 

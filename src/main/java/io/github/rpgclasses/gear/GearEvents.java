@@ -61,8 +61,8 @@ public final class GearEvents {
     public static final TagKey<DamageType> ELEMENT_FIRE = TagKey.create(Registries.DAMAGE_TYPE, RpgClasses.id("element/fire"));
     public static final TagKey<DamageType> ELEMENT_ICE = TagKey.create(Registries.DAMAGE_TYPE, RpgClasses.id("element/ice"));
     public static final TagKey<DamageType> ELEMENT_LIGHTNING = TagKey.create(Registries.DAMAGE_TYPE, RpgClasses.id("element/lightning"));
-    private static final String WOUND_UNTIL = "rpgclasses.wound_until";
-    private static final String CRACKS = "rpgclasses.cracks.";
+    private static final String WOUND_UNTIL = "rites_and_paths.wound_until";
+    private static final String CRACKS = "rites_and_paths.cracks.";
 
     private static final class State {
         int combo;
@@ -137,7 +137,7 @@ public final class GearEvents {
         // Bo de dragonsteel: «golpe cargado» = esperar al menos 1,5 s desde el golpe anterior.
         if (p.getMainHandItem().getItem() instanceof MartialWeaponItem m && m.kind == WeaponKind.BO && m.tier.lateTier() >= 3
                 && now - st.lastSwing >= 30 && p.getAttackStrengthScale(0.5f) >= 0.95f) {
-            p.getPersistentData().putLong("rpgclasses.bo_wave", now);
+            p.getPersistentData().putLong("rites_and_paths.bo_wave", now);
         }
         st.lastSwing = now;
     }
@@ -204,9 +204,9 @@ public final class GearEvents {
             level.sendParticles(ParticleTypes.SWEEP_ATTACK, at.x, at.y, at.z, 1, 0, 0, 0, 0);
             if (bo.tier.lateTier() >= 1) GearFx.coneFx(attacker, ParticleTypes.ASH, reach, bo.sweepDegrees());
         }
-        long charged = attacker.getPersistentData().getLong("rpgclasses.bo_wave");
+        long charged = attacker.getPersistentData().getLong("rites_and_paths.bo_wave");
         if (bo.tier.lateTier() >= 3 && charged == now) {
-            attacker.getPersistentData().remove("rpgclasses.bo_wave");
+            attacker.getPersistentData().remove("rites_and_paths.bo_wave");
             for (LivingEntity e : GearFx.cone(attacker, 6, 120, null)) {
                 e.hurt(GearFx.source(attacker, GearFx.elementType(bo.tier.element)), hit * 0.6f);
                 GearFx.applyElement(attacker, e, bo.tier.element, 1);

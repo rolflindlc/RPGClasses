@@ -10,9 +10,9 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Parámetros del efecto {@code rpgclasses:attribute}:
+ * Parámetros del efecto {@code rites_and_paths:attribute}:
  * <pre>
- * { "type": "rpgclasses:attribute", "condition": "rpgclasses:no_armor",
+ * { "type": "rites_and_paths:attribute", "condition": "rites_and_paths:no_armor",
  *   "modifiers": [ { "attribute": "minecraft:generic.armor", "to": 16, "operation": "add" } ] }
  * </pre>
  */

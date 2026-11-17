@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "class": "rites_and_paths:ranger",
+  "display": {
+    "icon": "minecraft:feather"
+  },
+  "effects": [
+    {
+      "type": "rites_and_paths:attribute",
+      "modifiers": [
+        {
+          "attribute": "minecraft:generic.movement_speed",
+          "to": 0.05,
+          "operation": "multiply_base"
+        }
+      ]
+    }
+  ],
+  "milestones": [
+    {
+      "subclass_level": 1,
+      "grants": "rites_and_paths:triple_jump",
+      "upgrades": "rites_and_paths:double_jump"
+    },
+    {
+      "subclass_level": 1,
+      "grants": "rites_and_paths:wall_climb"
+    }
+  ]
+}

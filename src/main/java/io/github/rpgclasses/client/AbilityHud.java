@@ -51,7 +51,7 @@ public final class AbilityHud {
             if (id.equals(MonkAbilities.STANCES)) {
                 int stance = ClientHandlers.LOCAL_DATA.counters.getOrDefault(MonkAbilities.STANCE_COUNTER, 0);
                 if (stance >= 0 && stance < MonkAbilities.STANCE_NAMES.length) {
-                    extra = ": " + Component.translatable("stance.rpgclasses." + MonkAbilities.STANCE_NAMES[stance]).getString();
+                    extra = ": " + Component.translatable("stance.rites_and_paths." + MonkAbilities.STANCE_NAMES[stance]).getString();
                 }
             }
             String text = "[" + key.getTranslatedKeyMessage().getString() + "] " + name.getString() + extra
@@ -84,7 +84,7 @@ public final class AbilityHud {
             int left = Math.max(0, max - ClientHandlers.LOCAL_DATA.counters.getOrDefault("free_cast_used_" + slot, 0));
             net.minecraft.resources.ResourceLocation rl = net.minecraft.resources.ResourceLocation.tryParse(spell);
             String spellName = rl == null ? spell : Component.translatable("spell." + rl.getNamespace() + "." + rl.getPath()).getString();
-            String text = Component.translatable("hud.rpgclasses.free_cast", slot, spellName).getString();
+            String text = Component.translatable("hud.rites_and_paths.free_cast", slot, spellName).getString();
             int dots = max * 7;
             int width = mc.font.width(text) + 6 + dots;
             int x = screenWidth - width - 6;
@@ -145,7 +145,7 @@ public final class AbilityHud {
         int color = state == RogueAbilities.STATE_LOCKED ? 0xFFC03030 : state == RogueAbilities.STATE_ACTIVE ? 0xFF5090E0 : 0xFF8080A0;
         g.fill(x - 1, y - 1, x + w + 1, y + h + 1, 0xA0000000);
         g.fill(x, y, x + Math.round(w * Math.max(0, Math.min(1000, bar)) / 1000f), y + h, color);
-        g.drawCenteredString(mc.font, Component.translatable("hud.rpgclasses.stealth"), screenWidth / 2, y - 10, 0xFFFFFF);
+        g.drawCenteredString(mc.font, Component.translatable("hud.rites_and_paths.stealth"), screenWidth / 2, y - 10, 0xFFFFFF);
     }
 
     private AbilityHud() {}

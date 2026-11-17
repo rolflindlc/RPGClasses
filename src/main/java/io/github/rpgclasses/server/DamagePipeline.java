@@ -64,8 +64,8 @@ public final class DamagePipeline {
     /** Daño generado por el propio mod (Plaga, reflejo, réplicas...): no vuelve a pasar por el pipeline. */
     public static final TagKey<DamageType> NO_PROC = TagKey.create(Registries.DAMAGE_TYPE, RpgClasses.id("no_proc"));
 
-    private static final String TAG_FACTOR = "rpgclasses.factor";
-    private static final String TAG_CAN_CRIT = "rpgclasses.can_crit";
+    private static final String TAG_FACTOR = "rites_and_paths.factor";
+    private static final String TAG_CAN_CRIT = "rites_and_paths.can_crit";
     private static final Map<UUID, String> LAST_BREAKDOWN = new HashMap<>();
 
     /** Desglose del último golpe del jugador, para /clases debug stats. */

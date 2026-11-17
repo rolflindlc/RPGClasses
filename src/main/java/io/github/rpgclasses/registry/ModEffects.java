@@ -99,8 +99,8 @@ public final class ModEffects {
 
     private static final class BerserkerEffect extends StateEffect {
         private static final UUID ATTACK_SPEED_ID = UUID.fromString("5b0f5b1e-6d0c-4d38-9d5c-7f6a0c2b9e11");
-        /** El nombre NO empieza por "rpgclasses:" a propósito: StatEngine no debe borrarlo al recalcular. */
-        private static final String NAME = "rpgclasses_ability:berserker_rage";
+        /** El nombre NO empieza por "rites_and_paths:" a propósito: StatEngine no debe borrarlo al recalcular. */
+        private static final String NAME = "rites_and_paths_ability:berserker_rage";
 
         BerserkerEffect() {
             super(MobEffectCategory.BENEFICIAL, 0xDC3C32);

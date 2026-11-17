@@ -4,7 +4,7 @@ import os, sys
 from PIL import Image
 
 OUT = sys.argv[1]
-NS = "rpgclasses"
+NS = "rites_and_paths"
 ITEM = os.path.join(OUT, "assets", NS, "textures", "item")
 ARMOR = os.path.join(OUT, "assets", NS, "textures", "models", "armor")
 os.makedirs(ITEM, exist_ok=True)

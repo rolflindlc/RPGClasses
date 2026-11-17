@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(LocalPlayer.class)
 public abstract class LocalPlayerPushMixin {
     @Inject(method = "moveTowardsClosestSpace(DD)V", at = @At("HEAD"), cancellable = true, require = 0)
-    private void rpgclasses$noWallPush(double x, double z, CallbackInfo ci) {
+    private void rites_and_paths$noWallPush(double x, double z, CallbackInfo ci) {
         if (((LocalPlayer) (Object) this).getBbWidth() > 0.8f) ci.cancel();
     }
 }

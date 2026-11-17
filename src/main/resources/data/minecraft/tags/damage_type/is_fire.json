@@ -1,7 +1,7 @@
 {
   "replace": false,
   "values": [
-    "rpgclasses:dragon_flame",
-    "rpgclasses:breath_fire"
+    "rites_and_paths:dragon_flame",
+    "rites_and_paths:breath_fire"
   ]
 }

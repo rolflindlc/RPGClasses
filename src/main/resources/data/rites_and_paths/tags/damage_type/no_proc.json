@@ -1,0 +1,27 @@
+{
+  "replace": false,
+  "values": [
+    "rites_and_paths:charge",
+    "rites_and_paths:holy",
+    "rites_and_paths:toxin",
+    "rites_and_paths:shockwave",
+    "rites_and_paths:arrow_blast",
+    "rites_and_paths:plague",
+    "rites_and_paths:sunlight",
+    "rites_and_paths:scald",
+    "rites_and_paths:martial",
+    "rites_and_paths:dragon_flame",
+    "rites_and_paths:dragon_frost",
+    "rites_and_paths:dragon_spark",
+    "rites_and_paths:breath_fire",
+    "rites_and_paths:breath_ice",
+    "rites_and_paths:breath_lightning",
+    "rites_and_paths:breath_poison",
+    "rites_and_paths:breath_acid",
+    "rites_and_paths:breath_water",
+    "rites_and_paths:swarm",
+    "rites_and_paths:music_magic",
+    "rites_and_paths:sonic",
+    "rites_and_paths:grand_piano"
+  ]
+}

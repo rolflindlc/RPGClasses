@@ -78,8 +78,8 @@ public final class SlimeForms {
     private static final UUID SWARM_TOUGHNESS_ID = UUID.fromString("3e5b9d1f-2a7c-4c08-b6e4-8f1d0a2c4e04");
     public static final UUID MITOSIS_SCALE_ID = UUID.fromString("3e5b9d1f-2a7c-4c08-b6e4-8f1d0a2c4e05");
     private static final UUID MITOSIS_HEALTH_ID = UUID.fromString("3e5b9d1f-2a7c-4c08-b6e4-8f1d0a2c4e06");
-    private static final String SWARM_NAME = "rpgclasses swarm form";
-    private static final String MITOSIS_NAME = "rpgclasses mitosis form";
+    private static final String SWARM_NAME = "rites_and_paths swarm form";
+    private static final String MITOSIS_NAME = "rites_and_paths mitosis form";
     private static final String SWARM_KEY = Ids.NS + ":race_swarm";
     private static final String MITOSIS_KEY = Ids.NS + ":race_mitosis";
     /** Tamaño total del jugador mientras es un slime pequeño (0,3 × 1,8 ≈ 0,54 de alto, como un slime de tamaño 1). */
@@ -346,7 +346,7 @@ public final class SlimeForms {
         Rites.count(p, "mitosis_split", 1);
         level.playSound(null, p.getX(), p.getY(), p.getZ(), SoundEvents.SLIME_SQUISH, SoundSource.PLAYERS, 1.4f, 0.6f);
         level.sendParticles(ParticleTypes.ITEM_SLIME, p.getX(), p.getY() + 0.6, p.getZ(), 40, 0.5, 0.5, 0.5, 0.08);
-        p.displayClientMessage(Component.translatable("message.rpgclasses.mitosis_split"), true);
+        p.displayClientMessage(Component.translatable("message.rites_and_paths.mitosis_split"), true);
         DebugLog.event(p, "raza", "Mitosis: se divide ({} HP por copia)", p.getMaxHealth());
     }
 
@@ -363,7 +363,7 @@ public final class SlimeForms {
         Rites.count(p, "mitosis_merge", 1);
         p.serverLevel().playSound(null, p.getX(), p.getY(), p.getZ(), SoundEvents.SLIME_BLOCK_PLACE, SoundSource.PLAYERS, 1.2f, 0.7f);
         p.serverLevel().sendParticles(ParticleTypes.ITEM_SLIME, p.getX(), p.getY() + 0.8, p.getZ(), 40, 0.5, 0.6, 0.5, 0.05);
-        p.displayClientMessage(Component.translatable("message.rpgclasses.mitosis_merged"), true);
+        p.displayClientMessage(Component.translatable("message.rites_and_paths.mitosis_merged"), true);
         DebugLog.event(p, "raza", "Mitosis: se fusiona con su copia ({} HP)", p.getHealth());
     }
 
@@ -382,7 +382,7 @@ public final class SlimeForms {
             // La copia ha muerto: recupera su tamaño al acabar el enfriamiento de la división.
             st.copy = null;
             st.regrowAt = now + AbilityService.remainingTicks(p, MITOSIS_KEY);
-            p.displayClientMessage(Component.translatable("message.rpgclasses.mitosis_copy_lost"), true);
+            p.displayClientMessage(Component.translatable("message.rites_and_paths.mitosis_copy_lost"), true);
         }
         if (st.copy == null) {
             if (now >= st.regrowAt) restore(p, false);
@@ -439,7 +439,7 @@ public final class SlimeForms {
             st.copy = null;
             st.regrowAt = p.level().getGameTime() + AbilityService.remainingTicks(p, MITOSIS_KEY);
             copy.vanish();
-            p.displayClientMessage(Component.translatable("message.rpgclasses.mitosis_copy_lost"), true);
+            p.displayClientMessage(Component.translatable("message.rites_and_paths.mitosis_copy_lost"), true);
             DebugLog.event(p, "raza", "Mitosis: muere una copia; sigue con la otra");
             return;
         }

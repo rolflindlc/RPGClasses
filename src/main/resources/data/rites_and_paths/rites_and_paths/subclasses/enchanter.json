@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "class": "rites_and_paths:bard",
+  "display": {
+    "icon": "minecraft:amethyst_cluster"
+  },
+  "effects": [
+    {
+      "type": "rites_and_paths:mechanic",
+      "id": "rites_and_paths:hypnotic_voice",
+      "control_duration": {
+        "to": 0.5
+      }
+    },
+    {
+      "type": "rites_and_paths:mechanic",
+      "id": "rites_and_paths:dance_contagion",
+      "radius": 3,
+      "chance": 0.5,
+      "max_extra": 3
+    }
+  ],
+  "milestones": [
+    {
+      "subclass_level": 5,
+      "grants": "rites_and_paths:bewitch"
+    }
+  ]
+}

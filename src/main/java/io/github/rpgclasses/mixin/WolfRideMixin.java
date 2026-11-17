@@ -20,7 +20,7 @@ import org.spongepowered.asm.mixin.Unique;
 @Mixin(Wolf.class)
 public abstract class WolfRideMixin extends TamableAnimal {
     /** Ticks que el jinete lleva manteniendo el salto en el suelo. */
-    @Unique private int rpgclasses$jumpCharge;
+    @Unique private int rites_and_paths$jumpCharge;
 
     protected WolfRideMixin(EntityType<? extends TamableAnimal> type, Level level) {
         super(type, level);
@@ -42,16 +42,16 @@ public abstract class WolfRideMixin extends TamableAnimal {
         yBodyRot = getYRot();
         yHeadRot = getYRot();
         // Mantener el salto carga la fuerza (hasta 1 s); al soltarlo en el suelo, el lobo salta.
-        boolean pressed = ((LivingEntityAccessor) rider).rpgclasses$isJumping();
+        boolean pressed = ((LivingEntityAccessor) rider).rites_and_paths$isJumping();
         if (!onGround()) {
-            rpgclasses$jumpCharge = 0;
+            rites_and_paths$jumpCharge = 0;
         } else if (pressed) {
-            rpgclasses$jumpCharge = Math.min(WolfRider.CHARGE_TICKS, rpgclasses$jumpCharge + 1);
-        } else if (rpgclasses$jumpCharge > 0) {
+            rites_and_paths$jumpCharge = Math.min(WolfRider.CHARGE_TICKS, rites_and_paths$jumpCharge + 1);
+        } else if (rites_and_paths$jumpCharge > 0) {
             Vec3 v = getDeltaMovement();
-            setDeltaMovement(v.x, getJumpPower() * WolfRider.chargeFraction(rpgclasses$jumpCharge), v.z);
+            setDeltaMovement(v.x, getJumpPower() * WolfRider.chargeFraction(rites_and_paths$jumpCharge), v.z);
             hasImpulse = true;
-            rpgclasses$jumpCharge = 0;
+            rites_and_paths$jumpCharge = 0;
         }
     }
 

@@ -48,7 +48,7 @@ public final class MonkChargeFx {
     }
 
     private static ResourceLocation icon(int stance, boolean full) {
-        return new ResourceLocation("rpgclasses", "textures/gui/charges/" + NAMES[stance] + (full ? "" : "_empty") + ".png");
+        return new ResourceLocation("rites_and_paths", "textures/gui/charges/" + NAMES[stance] + (full ? "" : "_empty") + ".png");
     }
 
     // ------------------------------------------------------------------ barra sobre la vida

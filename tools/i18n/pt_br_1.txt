@@ -221,8 +221,8 @@
 220 Caveira-Troféu
 221 Tambor de Guerra
 222 Lanterna do Fogo-Fátuo
-223 Classes RPG
-224 Classes RPG
+223 Rolflin's Rites & Paths
+224 Rolflin's Rites & Paths
 225 Habilidade 1
 226 Habilidade 2
 227 Habilidade 3

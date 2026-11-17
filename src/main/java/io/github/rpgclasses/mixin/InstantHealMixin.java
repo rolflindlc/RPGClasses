@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(MobEffect.class)
 public abstract class InstantHealMixin {
     @Inject(method = "applyInstantenousEffect", at = @At("HEAD"), cancellable = true)
-    private void rpgclasses$noInstantHeal(Entity source, Entity indirectSource, LivingEntity target, int amplifier, double health, CallbackInfo ci) {
+    private void rites_and_paths$noInstantHeal(Entity source, Entity indirectSource, LivingEntity target, int amplifier, double health, CallbackInfo ci) {
         if ((Object) this == MobEffects.HEAL && target instanceof ServerPlayer player && Races.has(player, "race_lifeless")) {
             ci.cancel();
             return;
@@ -24,12 +24,12 @@ public abstract class InstantHealMixin {
     }
 
     @Inject(method = "applyInstantenousEffect", at = @At("RETURN"))
-    private void rpgclasses$instantHealEnd(Entity source, Entity indirectSource, LivingEntity target, int amplifier, double health, CallbackInfo ci) {
+    private void rites_and_paths$instantHealEnd(Entity source, Entity indirectSource, LivingEntity target, int amplifier, double health, CallbackInfo ci) {
         io.github.rpgclasses.content.race.HealSources.potionEnd();
     }
 
     @Inject(method = "applyEffectTick", at = @At("HEAD"), cancellable = true)
-    private void rpgclasses$noHealTick(LivingEntity target, int amplifier, CallbackInfo ci) {
+    private void rites_and_paths$noHealTick(LivingEntity target, int amplifier, CallbackInfo ci) {
         if ((Object) this == MobEffects.HEAL && target instanceof ServerPlayer player && Races.has(player, "race_lifeless")) {
             ci.cancel();
             return;
@@ -39,7 +39,7 @@ public abstract class InstantHealMixin {
     }
 
     @Inject(method = "applyEffectTick", at = @At("RETURN"))
-    private void rpgclasses$healTickEnd(LivingEntity target, int amplifier, CallbackInfo ci) {
+    private void rites_and_paths$healTickEnd(LivingEntity target, int amplifier, CallbackInfo ci) {
         io.github.rpgclasses.content.race.HealSources.potionEnd();
     }
 }

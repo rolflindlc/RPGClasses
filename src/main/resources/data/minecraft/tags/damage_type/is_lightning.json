@@ -1,7 +1,7 @@
 {
   "replace": false,
   "values": [
-    "rpgclasses:dragon_spark",
-    "rpgclasses:breath_lightning"
+    "rites_and_paths:dragon_spark",
+    "rites_and_paths:breath_lightning"
   ]
 }

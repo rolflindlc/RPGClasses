@@ -98,8 +98,8 @@ public final class DefinitionParser {
         List<EffectDef> all = new ArrayList<>(effects);
         for (Definitions.SubraceDef s : subraces) all.addAll(s.effects());
         for (EffectDef e : all) {
-            if ("rpgclasses:attribute".equals(e.type())) AttributeEffect.parse(e.params(), 4);
-            else if ("rpgclasses:mechanic".equals(e.type())) string(e.params(), "id");
+            if ("rites_and_paths:attribute".equals(e.type())) AttributeEffect.parse(e.params(), 4);
+            else if ("rites_and_paths:mechanic".equals(e.type())) string(e.params(), "id");
             else throw new IllegalArgumentException("tipo de efecto no admitido en razas: " + e.type());
         }
         return new Definitions.RaceDef(id, optString(display, "icon", "minecraft:barrier"), effects, List.copyOf(subraces));

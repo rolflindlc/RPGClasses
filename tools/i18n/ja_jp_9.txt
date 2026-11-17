@@ -2,5 +2,5 @@
 1 デバッグログを無効にしました(エラーは引き続き記録されます)
 2 記録されたイベントはまだありません。
 3 ダンプを書き込めませんでした:%s
-4 ダンプを書き込みました:%s(logsフォルダ)。このファイルとrpgclasses-debug.logを送ってください。
-5 %sでエラー:logs/rpgclasses-debug.logを確認してください
+4 ダンプを書き込みました:%s(logsフォルダ)。このファイルとrites_and_paths-debug.logを送ってください。
+5 %sでエラー:logs/rites_and_paths-debug.logを確認してください

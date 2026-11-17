@@ -2,5 +2,5 @@
 1 偵錯日誌已停用(錯誤仍會被記錄)
 2 尚無已記錄的事件。
 3 無法寫入傾印檔案:%s
-4 傾印已寫入:%s(logs 資料夾)。請把這個檔案和 rpgclasses-debug.log 傳給我。
-5 %s 發生錯誤:請查看 logs/rpgclasses-debug.log
+4 傾印已寫入:%s(logs 資料夾)。請把這個檔案和 rites_and_paths-debug.log 傳給我。
+5 %s 發生錯誤:請查看 logs/rites_and_paths-debug.log

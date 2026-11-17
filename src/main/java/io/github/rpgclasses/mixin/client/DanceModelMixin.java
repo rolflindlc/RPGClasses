@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(HumanoidModel.class)
 public abstract class DanceModelMixin {
     @Inject(method = "setupAnim(Lnet/minecraft/world/entity/LivingEntity;FFFFF)V", at = @At("TAIL"), require = 0)
-    private void rpgclasses$dance(LivingEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks,
+    private void rites_and_paths$dance(LivingEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks,
                                   float netHeadYaw, float headPitch, CallbackInfo ci) {
         DanceFx.pose(entity, ageInTicks, (HumanoidModel<?>) (Object) this);
     }

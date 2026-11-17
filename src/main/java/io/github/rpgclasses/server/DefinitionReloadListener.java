@@ -14,11 +14,11 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Lee data/&lt;namespace&gt;/rpgclasses/classes/*.json y .../subclasses/*.json al cargar el mundo y en /reload.
+ * Lee data/&lt;namespace&gt;/rites_and_paths/classes/*.json y .../subclasses/*.json al cargar el mundo y en /reload.
  * Un archivo erróneo desactiva su clase y deja el error en el log; nunca detiene la carga.
  */
 public final class DefinitionReloadListener extends SimpleJsonResourceReloadListener {
-    private static final String FOLDER = "rpgclasses";
+    private static final String FOLDER = "rites_and_paths";
 
     public DefinitionReloadListener() {
         super(new Gson(), FOLDER);
@@ -46,17 +46,17 @@ public final class DefinitionReloadListener extends SimpleJsonResourceReloadList
         io.github.rpgclasses.core.definition.RaceStore.SERVER.load(races);
         for (Map.Entry<String, List<String>> err : io.github.rpgclasses.core.definition.RaceStore.SERVER.errors().entrySet()) {
             for (String message : err.getValue()) {
-                RpgClasses.LOGGER.error("[rpgclasses] Raza inválida '{}': {}", err.getKey(), message);
+                RpgClasses.LOGGER.error("[rites_and_paths] Raza inválida '{}': {}", err.getKey(), message);
             }
         }
-        RpgClasses.LOGGER.info("[rpgclasses] {} razas cargadas", io.github.rpgclasses.core.definition.RaceStore.SERVER.ids().size());
+        RpgClasses.LOGGER.info("[rites_and_paths] {} razas cargadas", io.github.rpgclasses.core.definition.RaceStore.SERVER.ids().size());
 
         for (Map.Entry<String, List<String>> err : DefinitionStore.SERVER.errors().entrySet()) {
             for (String message : err.getValue()) {
-                RpgClasses.LOGGER.error("[rpgclasses] Definición inválida '{}': {}", err.getKey(), message);
+                RpgClasses.LOGGER.error("[rites_and_paths] Definición inválida '{}': {}", err.getKey(), message);
             }
         }
-        RpgClasses.LOGGER.info("[rpgclasses] {} clases cargadas, {} con errores",
+        RpgClasses.LOGGER.info("[rites_and_paths] {} clases cargadas, {} con errores",
                 DefinitionStore.SERVER.classIds().size(), DefinitionStore.SERVER.errors().size());
     }
 }

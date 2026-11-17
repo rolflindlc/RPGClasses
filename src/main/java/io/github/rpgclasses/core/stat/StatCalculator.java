@@ -208,7 +208,7 @@ public final class StatCalculator {
         }
     }
 
-    /** Todas las mecánicas activas (tipo {@code rpgclasses:mechanic}), para que el código de content/ las lea. */
+    /** Todas las mecánicas activas (tipo {@code rites_and_paths:mechanic}), para que el código de content/ las lea. */
     public static List<ActiveMechanic> mechanics(ProgressState s, ClassDef c, SubclassDef sub) {
         List<ActiveMechanic> out = new ArrayList<>();
         if (c == null || !c.id().equals(s.classId)) return out;

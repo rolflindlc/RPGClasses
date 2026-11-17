@@ -17,7 +17,7 @@ public abstract class AnvilMenuMixin {
     @Shadow @Final private DataSlot cost;
 
     @Inject(method = "createResult()V", at = @At("RETURN"))
-    private void rpgclasses$raceAnvil(CallbackInfo ci) {
+    private void rites_and_paths$raceAnvil(CallbackInfo ci) {
         AnvilMenu self = (AnvilMenu) (Object) this;
         ItemStack result = self.getSlot(2).getItem();
         int before = cost.get();

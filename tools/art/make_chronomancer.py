@@ -1,5 +1,5 @@
 # Retrato provisional del Cronomante (reloj de arena sobre una esfera de reloj).
-# Uso: python3 -I tools/art/make_chronomancer.py src/main/resources/assets/rpgclasses/textures/gui/portrait/subclass/chronomancer.png
+# Uso: python3 -I tools/art/make_chronomancer.py src/main/resources/assets/rites_and_paths/textures/gui/portrait/subclass/chronomancer.png
 from PIL import Image, ImageDraw
 import math, sys
 N=32

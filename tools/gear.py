@@ -3,7 +3,7 @@
 # Los ids y tiers deben coincidir con io.github.rpgclasses.gear.ArmorTier / WeaponTier / WeaponKind.
 import json, os
 
-NS = "rpgclasses"
+NS = "rites_and_paths"
 IAF = "iceandfire"
 IAF_COND = [{"type": "forge:mod_loaded", "modid": IAF}]
 
@@ -73,42 +73,42 @@ WEAPON_TEXT = {
 }
 
 def lang():
-    out = {"itemGroup.rpgclasses.class_gear": "RPG Classes",
-           "item.rpgclasses.cured_strap": "Correa curtida",
-           "item.rpgclasses.martial_cloth": "Tela marcial",
-           "item.rpgclasses.draconic_forge_template": "Plantilla de forja dracónica",
-           "gear.rpgclasses.set_header": "Set completo (4 piezas, solo %s):",
-           "gear.rpgclasses.exempt.barbarian": "No desactiva las pasivas desarmadas del Bárbaro.",
-           "gear.rpgclasses.exempt.monk": "No desactiva Cuerpo Marcial ni borra las cargas del Monje.",
-           "gear.rpgclasses.element.fire": "Escamas de fuego: cada pieza reduce el daño de fuego.",
-           "gear.rpgclasses.element.ice": "Escamas de hielo: cada pieza reduce el daño de hielo.",
-           "gear.rpgclasses.element.lightning": "Escamas de rayo: cada pieza reduce el daño de rayo.",
-           "gear.rpgclasses.weapon.monk": "Monje: cuenta como desarmado (cargas, perks y subclase).",
-           "gear.rpgclasses.weapon.element.fire": "Fuego: cada golpe quema.",
-           "gear.rpgclasses.weapon.element.ice": "Hielo: cada golpe ralentiza.",
-           "gear.rpgclasses.weapon.element.lightning": "Rayo: cada golpe salta a un enemigo cercano.",
-           "death.attack.rpgclasses.martial": "%1$s cayó ante el arte marcial de %2$s",
-           "death.attack.rpgclasses.martial.player": "%1$s cayó ante el arte marcial de %2$s",
-           "death.attack.rpgclasses.dragon_flame": "%1$s ardió en el fuego de dragón de %2$s",
-           "death.attack.rpgclasses.dragon_flame.player": "%1$s ardió en el fuego de dragón de %2$s",
-           "death.attack.rpgclasses.dragon_frost": "%1$s se congeló con la escarcha de dragón de %2$s",
-           "death.attack.rpgclasses.dragon_frost.player": "%1$s se congeló con la escarcha de dragón de %2$s",
-           "death.attack.rpgclasses.dragon_spark": "%1$s fue fulminado por la chispa de dragón de %2$s",
-           "death.attack.rpgclasses.dragon_spark.player": "%1$s fue fulminado por la chispa de dragón de %2$s",
-           "death.attack.rpgclasses.breath_fire": "%1$s ardió en el aliento de %2$s",
-           "death.attack.rpgclasses.breath_fire.player": "%1$s ardió en el aliento de %2$s",
-           "death.attack.rpgclasses.breath_ice": "%1$s se congeló en el aliento de %2$s",
-           "death.attack.rpgclasses.breath_ice.player": "%1$s se congeló en el aliento de %2$s",
-           "death.attack.rpgclasses.breath_lightning": "%1$s fue fulminado por el aliento de %2$s",
-           "death.attack.rpgclasses.breath_lightning.player": "%1$s fue fulminado por el aliento de %2$s",
-           "death.attack.rpgclasses.breath_poison": "%1$s se envenenó con el aliento de %2$s",
-           "death.attack.rpgclasses.breath_poison.player": "%1$s se envenenó con el aliento de %2$s",
-           "death.attack.rpgclasses.breath_acid": "%1$s se disolvió en el aliento de %2$s",
-           "death.attack.rpgclasses.breath_acid.player": "%1$s se disolvió en el aliento de %2$s",
-           "death.attack.rpgclasses.breath_water": "%1$s se ahogó en el aliento de %2$s",
-           "death.attack.rpgclasses.breath_water.player": "%1$s se ahogó en el aliento de %2$s",
-           "death.attack.rpgclasses.swarm": "%1$s fue engullido por el enjambre de %2$s",
-           "death.attack.rpgclasses.swarm.player": "%1$s fue engullido por el enjambre de %2$s"}
+    out = {"itemGroup.rites_and_paths.class_gear": "Rolflin's Rites & Paths",
+           "item.rites_and_paths.cured_strap": "Correa curtida",
+           "item.rites_and_paths.martial_cloth": "Tela marcial",
+           "item.rites_and_paths.draconic_forge_template": "Plantilla de forja dracónica",
+           "gear.rites_and_paths.set_header": "Set completo (4 piezas, solo %s):",
+           "gear.rites_and_paths.exempt.barbarian": "No desactiva las pasivas desarmadas del Bárbaro.",
+           "gear.rites_and_paths.exempt.monk": "No desactiva Cuerpo Marcial ni borra las cargas del Monje.",
+           "gear.rites_and_paths.element.fire": "Escamas de fuego: cada pieza reduce el daño de fuego.",
+           "gear.rites_and_paths.element.ice": "Escamas de hielo: cada pieza reduce el daño de hielo.",
+           "gear.rites_and_paths.element.lightning": "Escamas de rayo: cada pieza reduce el daño de rayo.",
+           "gear.rites_and_paths.weapon.monk": "Monje: cuenta como desarmado (cargas, perks y subclase).",
+           "gear.rites_and_paths.weapon.element.fire": "Fuego: cada golpe quema.",
+           "gear.rites_and_paths.weapon.element.ice": "Hielo: cada golpe ralentiza.",
+           "gear.rites_and_paths.weapon.element.lightning": "Rayo: cada golpe salta a un enemigo cercano.",
+           "death.attack.rites_and_paths.martial": "%1$s cayó ante el arte marcial de %2$s",
+           "death.attack.rites_and_paths.martial.player": "%1$s cayó ante el arte marcial de %2$s",
+           "death.attack.rites_and_paths.dragon_flame": "%1$s ardió en el fuego de dragón de %2$s",
+           "death.attack.rites_and_paths.dragon_flame.player": "%1$s ardió en el fuego de dragón de %2$s",
+           "death.attack.rites_and_paths.dragon_frost": "%1$s se congeló con la escarcha de dragón de %2$s",
+           "death.attack.rites_and_paths.dragon_frost.player": "%1$s se congeló con la escarcha de dragón de %2$s",
+           "death.attack.rites_and_paths.dragon_spark": "%1$s fue fulminado por la chispa de dragón de %2$s",
+           "death.attack.rites_and_paths.dragon_spark.player": "%1$s fue fulminado por la chispa de dragón de %2$s",
+           "death.attack.rites_and_paths.breath_fire": "%1$s ardió en el aliento de %2$s",
+           "death.attack.rites_and_paths.breath_fire.player": "%1$s ardió en el aliento de %2$s",
+           "death.attack.rites_and_paths.breath_ice": "%1$s se congeló en el aliento de %2$s",
+           "death.attack.rites_and_paths.breath_ice.player": "%1$s se congeló en el aliento de %2$s",
+           "death.attack.rites_and_paths.breath_lightning": "%1$s fue fulminado por el aliento de %2$s",
+           "death.attack.rites_and_paths.breath_lightning.player": "%1$s fue fulminado por el aliento de %2$s",
+           "death.attack.rites_and_paths.breath_poison": "%1$s se envenenó con el aliento de %2$s",
+           "death.attack.rites_and_paths.breath_poison.player": "%1$s se envenenó con el aliento de %2$s",
+           "death.attack.rites_and_paths.breath_acid": "%1$s se disolvió en el aliento de %2$s",
+           "death.attack.rites_and_paths.breath_acid.player": "%1$s se disolvió en el aliento de %2$s",
+           "death.attack.rites_and_paths.breath_water": "%1$s se ahogó en el aliento de %2$s",
+           "death.attack.rites_and_paths.breath_water.player": "%1$s se ahogó en el aliento de %2$s",
+           "death.attack.rites_and_paths.swarm": "%1$s fue engullido por el enjambre de %2$s",
+           "death.attack.rites_and_paths.swarm.player": "%1$s fue engullido por el enjambre de %2$s"}
     for c in CLASSES:
         for t in ARMOR_TIERS:
             for p in PIECES:

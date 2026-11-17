@@ -1,0 +1,305 @@
+{
+  "schema_version": 1,
+  "display": {
+    "icon": "minecraft:iron_axe"
+  },
+  "effects": [
+    {
+      "type": "rites_and_paths:attribute",
+      "modifiers": [
+        {
+          "attribute": "rites_and_paths:scale",
+          "operation": "add",
+          "values": [
+            0.1,
+            0.1,
+            0.1,
+            0.1
+          ]
+        },
+        {
+          "attribute": "minecraft:generic.max_health",
+          "operation": "multiply_base",
+          "values": [
+            0.1,
+            0.1,
+            0.1,
+            0.1
+          ]
+        }
+      ]
+    },
+    {
+      "type": "rites_and_paths:mechanic",
+      "id": "rites_and_paths:race_last_stand",
+      "invulnerable_seconds": 1
+    },
+    {
+      "type": "rites_and_paths:mechanic",
+      "id": "rites_and_paths:race_hunger",
+      "exhaustion": 0.25
+    }
+  ],
+  "subraces": [
+    {
+      "id": "stoneskin",
+      "display": {
+        "icon": "minecraft:stone"
+      },
+      "available": true,
+      "effects": [
+        {
+          "type": "rites_and_paths:mechanic",
+          "id": "rites_and_paths:race_thick_skin",
+          "flat_reduction": {
+            "values": [
+              1,
+              1.25,
+              1.5,
+              2
+            ]
+          }
+        }
+      ],
+      "rites": [
+        {
+          "id": "orc.stoneskin.1",
+          "kind": "feat",
+          "objectives": [
+            {
+              "type": "hits_taken",
+              "count": 100
+            },
+            {
+              "type": "kill",
+              "count": 30,
+              "filter": {
+                "target": "enemy"
+              }
+            }
+          ]
+        },
+        {
+          "id": "orc.stoneskin.2",
+          "kind": "craft",
+          "objectives": [
+            {
+              "type": "offer",
+              "items": [
+                {
+                  "item": "minecraft:obsidian",
+                  "count": 4
+                },
+                {
+                  "item": "minecraft:iron_ingot",
+                  "count": 16
+                },
+                {
+                  "item": "minecraft:anvil",
+                  "count": 1
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "orc.stoneskin.3",
+          "kind": "ritual",
+          "objectives": [
+            {
+              "type": "boss",
+              "boss_hits": 10
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "devourer",
+      "display": {
+        "icon": "minecraft:cooked_beef"
+      },
+      "available": true,
+      "effects": [
+        {
+          "type": "rites_and_paths:mechanic",
+          "id": "rites_and_paths:race_iron_stomach"
+        },
+        {
+          "type": "rites_and_paths:mechanic",
+          "id": "rites_and_paths:race_devour",
+          "min_rank": 1,
+          "food": 2,
+          "saturation": 1,
+          "icd_seconds": 1
+        },
+        {
+          "type": "rites_and_paths:mechanic",
+          "id": "rites_and_paths:race_hunger_immune",
+          "min_rank": 2
+        },
+        {
+          "type": "rites_and_paths:mechanic",
+          "id": "rites_and_paths:race_feast",
+          "min_rank": 3,
+          "mob_factor": 0.5,
+          "icd_seconds": 15
+        }
+      ],
+      "rites": [
+        {
+          "id": "orc.devourer.1",
+          "kind": "feat",
+          "objectives": [
+            {
+              "type": "kill",
+              "count": 20,
+              "filter": {
+                "target": "enemy"
+              }
+            },
+            {
+              "type": "kill",
+              "count": 20,
+              "filter": {
+                "target": "animal"
+              }
+            }
+          ]
+        },
+        {
+          "id": "orc.devourer.2",
+          "kind": "craft",
+          "objectives": [
+            {
+              "type": "offer",
+              "items": [
+                {
+                  "tag": "rites_and_paths:rite/cooked_meat",
+                  "count": 16,
+                  "distinct": 3
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "orc.devourer.3",
+          "kind": "ritual",
+          "objectives": [
+            {
+              "type": "boss"
+            },
+            {
+              "type": "offer",
+              "items": [
+                {
+                  "item": "*",
+                  "count": 1,
+                  "pred": "rite_drop"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "warlord",
+      "display": {
+        "icon": "minecraft:goat_horn"
+      },
+      "available": true,
+      "effects": [
+        {
+          "type": "rites_and_paths:mechanic",
+          "id": "rites_and_paths:race_warcry",
+          "radius": {
+            "values": [
+              8,
+              12,
+              12,
+              12
+            ]
+          },
+          "cooldown_seconds": {
+            "values": [
+              60,
+              60,
+              60,
+              40
+            ]
+          },
+          "immunity_seconds": {
+            "values": [
+              0,
+              0,
+              4,
+              4
+            ]
+          },
+          "effects": [
+            "minecraft:slowness",
+            "minecraft:weakness",
+            "minecraft:blindness",
+            "minecraft:mining_fatigue",
+            "minecraft:nausea",
+            "minecraft:darkness"
+          ]
+        }
+      ],
+      "rites": [
+        {
+          "id": "orc.warlord.1",
+          "kind": "feat",
+          "objectives": [
+            {
+              "type": "kill",
+              "count": 40,
+              "filter": {
+                "target": "enemy",
+                "ally_radius": 12
+              }
+            }
+          ]
+        },
+        {
+          "id": "orc.warlord.2",
+          "kind": "craft",
+          "objectives": [
+            {
+              "type": "structure",
+              "blocks": [
+                {
+                  "tag": "minecraft:campfires",
+                  "count": 1
+                },
+                {
+                  "tag": "minecraft:banners",
+                  "count": 4
+                },
+                {
+                  "tag": "minecraft:beds",
+                  "count": 2
+                }
+              ],
+              "radius": 6,
+              "dy": 3
+            }
+          ]
+        },
+        {
+          "id": "orc.warlord.3",
+          "kind": "ritual",
+          "objectives": [
+            {
+              "type": "boss",
+              "allies": 2,
+              "ally_radius": 12
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

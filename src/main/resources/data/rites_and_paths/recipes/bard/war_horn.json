@@ -1,0 +1,21 @@
+{
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "irons_spellbooks"
+    }
+  ],
+  "type": "minecraft:smithing_transform",
+  "template": {
+    "item": "rites_and_paths:resonant_shard"
+  },
+  "base": {
+    "item": "minecraft:goat_horn"
+  },
+  "addition": {
+    "tag": "rites_and_paths:bard/arcane_ingot"
+  },
+  "result": {
+    "item": "rites_and_paths:war_horn"
+  }
+}

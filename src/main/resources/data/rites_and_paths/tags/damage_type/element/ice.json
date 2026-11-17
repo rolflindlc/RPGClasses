@@ -1,0 +1,12 @@
+{
+  "replace": false,
+  "values": [
+    "#minecraft:is_freezing",
+    "rites_and_paths:dragon_frost",
+    "rites_and_paths:breath_ice",
+    {
+      "id": "iceandfire:dragon_ice",
+      "required": false
+    }
+  ]
+}

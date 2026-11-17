@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "CBC",
+    "GDG",
+    "SSS"
+  ],
+  "key": {
+    "C": {
+      "item": "minecraft:candle"
+    },
+    "B": {
+      "item": "minecraft:book"
+    },
+    "G": {
+      "item": "minecraft:gold_ingot"
+    },
+    "D": {
+      "item": "minecraft:diamond"
+    },
+    "S": {
+      "tag": "minecraft:stone_bricks"
+    }
+  },
+  "result": {
+    "item": "rites_and_paths:race_altar"
+  }
+}

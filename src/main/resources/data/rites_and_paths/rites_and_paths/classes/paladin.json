@@ -1,0 +1,340 @@
+{
+  "schema_version": 1,
+  "display": {
+    "icon": "minecraft:shield",
+    "roles": [
+      "tanque",
+      "apoyo"
+    ]
+  },
+  "starting_kit": [
+    {
+      "item": "minecraft:stone_sword",
+      "slot": "mainhand"
+    },
+    {
+      "item": "minecraft:chainmail_helmet",
+      "slot": "head"
+    },
+    {
+      "item": "minecraft:chainmail_chestplate",
+      "slot": "chest"
+    },
+    {
+      "item": "minecraft:chainmail_leggings",
+      "slot": "legs"
+    },
+    {
+      "item": "minecraft:chainmail_boots",
+      "slot": "feet"
+    }
+  ],
+  "crit_chance_bonus": 0.0,
+  "walls": {
+    "rites_and_paths:magic": 0.75,
+    "rites_and_paths:bow": 0.75
+  },
+  "magic_wall_exempt_schools": [
+    "irons_spellbooks:holy"
+  ],
+  "school_walls": {
+    "rites_and_paths:music": 1.0
+  },
+  "traits": [
+    {
+      "type": "rites_and_paths:attribute",
+      "modifiers": [
+        {
+          "attribute": "minecraft:generic.max_health",
+          "to": 0.2,
+          "operation": "multiply_base"
+        },
+        {
+          "attribute": "minecraft:generic.movement_speed",
+          "to": -0.1,
+          "operation": "multiply_base"
+        }
+      ]
+    }
+  ],
+  "branches": [
+    {
+      "id": "cuirass",
+      "max_points": 10,
+      "effects": [
+        {
+          "type": "rites_and_paths:equipped_armor_multiplier",
+          "armor": {
+            "to": 0.25
+          },
+          "toughness": {
+            "to": 0.4
+          }
+        }
+      ],
+      "perks": [
+        {
+          "id": "heavy_cuirass",
+          "effects": [
+            {
+              "type": "rites_and_paths:equipped_armor_multiplier",
+              "armor": {
+                "to": 0.2
+              },
+              "toughness": {
+                "to": 0.2
+              }
+            },
+            {
+              "type": "rites_and_paths:attribute",
+              "modifiers": [
+                {
+                  "attribute": "minecraft:generic.movement_speed",
+                  "to": -0.05,
+                  "operation": "multiply_base"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "colossal_body",
+          "effects": [
+            {
+              "type": "rites_and_paths:attribute",
+              "modifiers": [
+                {
+                  "attribute": "minecraft:generic.max_health",
+                  "to": 0.2,
+                  "operation": "multiply_base"
+                },
+                {
+                  "attribute": "minecraft:generic.movement_speed",
+                  "to": -0.05,
+                  "operation": "multiply_base"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "will",
+      "max_points": 10,
+      "effects": [
+        {
+          "type": "rites_and_paths:attribute",
+          "modifiers": [
+            {
+              "attribute": "rites_and_paths:debuff_resistance",
+              "to": 0.5,
+              "operation": "add"
+            }
+          ]
+        }
+      ],
+      "perks": [
+        {
+          "id": "will_vs_damage",
+          "effects": [
+            {
+              "type": "rites_and_paths:mechanic",
+              "id": "rites_and_paths:effect_immunity",
+              "effects": [
+                "minecraft:poison",
+                "minecraft:wither",
+                "rites_and_paths:toxin"
+              ],
+              "fire": 1,
+              "other_duration": 0.5
+            }
+          ]
+        },
+        {
+          "id": "will_vs_control",
+          "effects": [
+            {
+              "type": "rites_and_paths:mechanic",
+              "id": "rites_and_paths:effect_immunity",
+              "effects": [
+                "minecraft:slowness",
+                "minecraft:weakness",
+                "minecraft:blindness",
+                "minecraft:mining_fatigue",
+                "minecraft:nausea",
+                "minecraft:darkness"
+              ],
+              "other_duration": 0.5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "push",
+      "max_points": 10,
+      "effects": [
+        {
+          "type": "rites_and_paths:attribute",
+          "modifiers": [
+            {
+              "attribute": "minecraft:generic.knockback_resistance",
+              "to": 0.5,
+              "operation": "add"
+            },
+            {
+              "attribute": "rites_and_paths:knockback_dealt",
+              "to": 0.25,
+              "operation": "add"
+            }
+          ]
+        }
+      ],
+      "perks": [
+        {
+          "id": "shield_counter",
+          "effects": [
+            {
+              "type": "rites_and_paths:mechanic",
+              "id": "rites_and_paths:shield_counter",
+              "knockback_blocks": 3,
+              "icd_seconds": 3
+            }
+          ]
+        },
+        {
+          "id": "shockwave",
+          "effects": [
+            {
+              "type": "rites_and_paths:mechanic",
+              "id": "rites_and_paths:shockwave",
+              "every_hits": 5,
+              "radius": 3,
+              "damage_fraction": 0.3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "banner",
+      "max_points": 10,
+      "effects": [
+        {
+          "type": "rites_and_paths:mechanic",
+          "id": "rites_and_paths:banner_aura",
+          "radius": 8,
+          "aura_armor": {
+            "to": 0.1
+          },
+          "aura_debuff_duration": {
+            "to": -0.1
+          }
+        }
+      ],
+      "perks": [
+        {
+          "id": "war_banner",
+          "effects": [
+            {
+              "type": "rites_and_paths:mechanic",
+              "id": "rites_and_paths:war_banner",
+              "ally_damage": 0.08
+            },
+            {
+              "type": "rites_and_paths:attribute",
+              "modifiers": [
+                {
+                  "attribute": "minecraft:generic.armor",
+                  "to": -0.15,
+                  "operation": "multiply_total"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "life_banner",
+          "effects": [
+            {
+              "type": "rites_and_paths:mechanic",
+              "id": "rites_and_paths:life_banner",
+              "ally_heal_per_second": 0.5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "smite",
+      "max_points": 10,
+      "effects": [
+        {
+          "type": "rites_and_paths:mechanic",
+          "id": "rites_and_paths:smite",
+          "undead_nether_damage": {
+            "to": 0.25
+          },
+          "no_shield_damage": {
+            "to": 0.1
+          }
+        }
+      ],
+      "perks": [
+        {
+          "id": "judgement",
+          "effects": [
+            {
+              "type": "rites_and_paths:mechanic",
+              "id": "rites_and_paths:judgement",
+              "every_hits": 6,
+              "damage_bonus": 0.4,
+              "radius": 2
+            },
+            {
+              "type": "rites_and_paths:attribute",
+              "modifiers": [
+                {
+                  "attribute": "minecraft:generic.attack_damage",
+                  "to": -0.1,
+                  "operation": "multiply_base"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "condemn",
+          "effects": [
+            {
+              "type": "rites_and_paths:mechanic",
+              "id": "rites_and_paths:condemn",
+              "duration_seconds": 6,
+              "damage_bonus": 0.15
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "milestones": [
+    {
+      "total_level": 10,
+      "grants": "rites_and_paths:taunt"
+    },
+    {
+      "total_level": 10,
+      "grants": "rites_and_paths:steady_guard"
+    },
+    {
+      "total_level": 30,
+      "grants": "rites_and_paths:bulwark"
+    }
+  ],
+  "subclasses": [
+    "rites_and_paths:blessed_guardian",
+    "rites_and_paths:unyielding_bastion",
+    "rites_and_paths:charging_juggernaut"
+  ]
+}

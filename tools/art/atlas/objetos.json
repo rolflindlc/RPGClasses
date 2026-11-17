@@ -1,0 +1,1821 @@
+{
+ "group": "objetos",
+ "width": 326,
+ "height": 218,
+ "cell_w": 16,
+ "cell_h": 16,
+ "cols": 18,
+ "rows": 12,
+ "gutter": 2,
+ "cells": [
+  {
+   "n": 0,
+   "path": "item/abyssal_organ.png",
+   "x": 2,
+   "y": 2,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 1,
+   "path": "item/abyssal_reed.png",
+   "x": 20,
+   "y": 2,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 2,
+   "path": "item/arcane_hourglass.png",
+   "x": 38,
+   "y": 2,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 3,
+   "path": "item/arcane_thread.png",
+   "x": 56,
+   "y": 2,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 4,
+   "path": "item/archmage_prism.png",
+   "x": 74,
+   "y": 2,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 5,
+   "path": "item/bagpipe.png",
+   "x": 92,
+   "y": 2,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 6,
+   "path": "item/barbarian_chain_boots.png",
+   "x": 110,
+   "y": 2,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 7,
+   "path": "item/barbarian_chain_chestplate.png",
+   "x": 128,
+   "y": 2,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 8,
+   "path": "item/barbarian_chain_helmet.png",
+   "x": 146,
+   "y": 2,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 9,
+   "path": "item/barbarian_chain_leggings.png",
+   "x": 164,
+   "y": 2,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 10,
+   "path": "item/barbarian_diamond_boots.png",
+   "x": 182,
+   "y": 2,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 11,
+   "path": "item/barbarian_diamond_chestplate.png",
+   "x": 200,
+   "y": 2,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 12,
+   "path": "item/barbarian_diamond_helmet.png",
+   "x": 218,
+   "y": 2,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 13,
+   "path": "item/barbarian_diamond_leggings.png",
+   "x": 236,
+   "y": 2,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 14,
+   "path": "item/barbarian_dragon_fire_boots.png",
+   "x": 254,
+   "y": 2,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 15,
+   "path": "item/barbarian_dragon_fire_chestplate.png",
+   "x": 272,
+   "y": 2,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 16,
+   "path": "item/barbarian_dragon_fire_helmet.png",
+   "x": 290,
+   "y": 2,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 17,
+   "path": "item/barbarian_dragon_fire_leggings.png",
+   "x": 308,
+   "y": 2,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 18,
+   "path": "item/barbarian_dragon_ice_boots.png",
+   "x": 2,
+   "y": 20,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 19,
+   "path": "item/barbarian_dragon_ice_chestplate.png",
+   "x": 20,
+   "y": 20,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 20,
+   "path": "item/barbarian_dragon_ice_helmet.png",
+   "x": 38,
+   "y": 20,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 21,
+   "path": "item/barbarian_dragon_ice_leggings.png",
+   "x": 56,
+   "y": 20,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 22,
+   "path": "item/barbarian_dragon_lightning_boots.png",
+   "x": 74,
+   "y": 20,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 23,
+   "path": "item/barbarian_dragon_lightning_chestplate.png",
+   "x": 92,
+   "y": 20,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 24,
+   "path": "item/barbarian_dragon_lightning_helmet.png",
+   "x": 110,
+   "y": 20,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 25,
+   "path": "item/barbarian_dragon_lightning_leggings.png",
+   "x": 128,
+   "y": 20,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 26,
+   "path": "item/barbarian_dragonsteel_fire_boots.png",
+   "x": 146,
+   "y": 20,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 27,
+   "path": "item/barbarian_dragonsteel_fire_chestplate.png",
+   "x": 164,
+   "y": 20,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 28,
+   "path": "item/barbarian_dragonsteel_fire_helmet.png",
+   "x": 182,
+   "y": 20,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 29,
+   "path": "item/barbarian_dragonsteel_fire_leggings.png",
+   "x": 200,
+   "y": 20,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 30,
+   "path": "item/barbarian_dragonsteel_ice_boots.png",
+   "x": 218,
+   "y": 20,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 31,
+   "path": "item/barbarian_dragonsteel_ice_chestplate.png",
+   "x": 236,
+   "y": 20,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 32,
+   "path": "item/barbarian_dragonsteel_ice_helmet.png",
+   "x": 254,
+   "y": 20,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 33,
+   "path": "item/barbarian_dragonsteel_ice_leggings.png",
+   "x": 272,
+   "y": 20,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 34,
+   "path": "item/barbarian_dragonsteel_lightning_boots.png",
+   "x": 290,
+   "y": 20,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 35,
+   "path": "item/barbarian_dragonsteel_lightning_chestplate.png",
+   "x": 308,
+   "y": 20,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 36,
+   "path": "item/barbarian_dragonsteel_lightning_helmet.png",
+   "x": 2,
+   "y": 38,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 37,
+   "path": "item/barbarian_dragonsteel_lightning_leggings.png",
+   "x": 20,
+   "y": 38,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 38,
+   "path": "item/barbarian_gold_boots.png",
+   "x": 38,
+   "y": 38,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 39,
+   "path": "item/barbarian_gold_chestplate.png",
+   "x": 56,
+   "y": 38,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 40,
+   "path": "item/barbarian_gold_helmet.png",
+   "x": 74,
+   "y": 38,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 41,
+   "path": "item/barbarian_gold_leggings.png",
+   "x": 92,
+   "y": 38,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 42,
+   "path": "item/barbarian_iron_boots.png",
+   "x": 110,
+   "y": 38,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 43,
+   "path": "item/barbarian_iron_chestplate.png",
+   "x": 128,
+   "y": 38,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 44,
+   "path": "item/barbarian_iron_helmet.png",
+   "x": 146,
+   "y": 38,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 45,
+   "path": "item/barbarian_iron_leggings.png",
+   "x": 164,
+   "y": 38,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 46,
+   "path": "item/barbarian_leather_boots.png",
+   "x": 182,
+   "y": 38,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 47,
+   "path": "item/barbarian_leather_chestplate.png",
+   "x": 200,
+   "y": 38,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 48,
+   "path": "item/barbarian_leather_helmet.png",
+   "x": 218,
+   "y": 38,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 49,
+   "path": "item/barbarian_leather_leggings.png",
+   "x": 236,
+   "y": 38,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 50,
+   "path": "item/barbarian_netherite_boots.png",
+   "x": 254,
+   "y": 38,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 51,
+   "path": "item/barbarian_netherite_chestplate.png",
+   "x": 272,
+   "y": 38,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 52,
+   "path": "item/barbarian_netherite_helmet.png",
+   "x": 290,
+   "y": 38,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 53,
+   "path": "item/barbarian_netherite_leggings.png",
+   "x": 308,
+   "y": 38,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 54,
+   "path": "item/bo_diamond.png",
+   "x": 2,
+   "y": 56,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 55,
+   "path": "item/bo_dragonbone.png",
+   "x": 20,
+   "y": 56,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 56,
+   "path": "item/bo_dragonsteel_fire.png",
+   "x": 38,
+   "y": 56,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 57,
+   "path": "item/bo_dragonsteel_ice.png",
+   "x": 56,
+   "y": 56,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 58,
+   "path": "item/bo_dragonsteel_lightning.png",
+   "x": 74,
+   "y": 56,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 59,
+   "path": "item/bo_gold.png",
+   "x": 92,
+   "y": 56,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 60,
+   "path": "item/bo_iron.png",
+   "x": 110,
+   "y": 56,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 61,
+   "path": "item/bo_netherite.png",
+   "x": 128,
+   "y": 56,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 62,
+   "path": "item/bo_stone.png",
+   "x": 146,
+   "y": 56,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 63,
+   "path": "item/bo_wood.png",
+   "x": 164,
+   "y": 56,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 64,
+   "path": "item/bond_book.png",
+   "x": 182,
+   "y": 56,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 65,
+   "path": "item/carillon.png",
+   "x": 200,
+   "y": 56,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 66,
+   "path": "item/colossus_drum.png",
+   "x": 218,
+   "y": 56,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 67,
+   "path": "item/colossus_drumskin.png",
+   "x": 236,
+   "y": 56,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 68,
+   "path": "item/creative_amulet.png",
+   "x": 254,
+   "y": 56,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 69,
+   "path": "item/crow_cloak.png",
+   "x": 272,
+   "y": 56,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 70,
+   "path": "item/crystal_harp.png",
+   "x": 290,
+   "y": 56,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 71,
+   "path": "item/cured_strap.png",
+   "x": 308,
+   "y": 56,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 72,
+   "path": "item/cyclops_horn.png",
+   "x": 2,
+   "y": 74,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 73,
+   "path": "item/draconic_forge_template.png",
+   "x": 20,
+   "y": 74,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 74,
+   "path": "item/dragonslayer_quiver.png",
+   "x": 38,
+   "y": 74,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 75,
+   "path": "item/drum.png",
+   "x": 56,
+   "y": 74,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 76,
+   "path": "item/eternal_sun_lute.png",
+   "x": 74,
+   "y": 74,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 77,
+   "path": "item/evergreen_leaf.png",
+   "x": 92,
+   "y": 74,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 78,
+   "path": "item/fang_collar.png",
+   "x": 110,
+   "y": 74,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 79,
+   "path": "item/flute.png",
+   "x": 128,
+   "y": 74,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 80,
+   "path": "item/frost_ring.png",
+   "x": 146,
+   "y": 74,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 81,
+   "path": "item/gorgon_eye.png",
+   "x": 164,
+   "y": 74,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 82,
+   "path": "item/guild_insignia.png",
+   "x": 182,
+   "y": 74,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 83,
+   "path": "item/guitar_axe.png",
+   "x": 200,
+   "y": 74,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 84,
+   "path": "item/harp.png",
+   "x": 218,
+   "y": 74,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 85,
+   "path": "item/hermit_medallion.png",
+   "x": 236,
+   "y": 74,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 86,
+   "path": "item/hippogryph_feather.png",
+   "x": 254,
+   "y": 74,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 87,
+   "path": "item/hurdy_gurdy.png",
+   "x": 272,
+   "y": 74,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 88,
+   "path": "item/knuckles_diamond.png",
+   "x": 290,
+   "y": 74,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 89,
+   "path": "item/knuckles_dragonbone.png",
+   "x": 308,
+   "y": 74,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 90,
+   "path": "item/knuckles_dragonsteel_fire.png",
+   "x": 2,
+   "y": 92,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 91,
+   "path": "item/knuckles_dragonsteel_ice.png",
+   "x": 20,
+   "y": 92,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 92,
+   "path": "item/knuckles_dragonsteel_lightning.png",
+   "x": 38,
+   "y": 92,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 93,
+   "path": "item/knuckles_gold.png",
+   "x": 56,
+   "y": 92,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 94,
+   "path": "item/knuckles_iron.png",
+   "x": 74,
+   "y": 92,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 95,
+   "path": "item/knuckles_netherite.png",
+   "x": 92,
+   "y": 92,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 96,
+   "path": "item/knuckles_stone.png",
+   "x": 110,
+   "y": 92,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 97,
+   "path": "item/knuckles_wood.png",
+   "x": 128,
+   "y": 92,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 98,
+   "path": "item/last_breath_compass.png",
+   "x": 146,
+   "y": 92,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 99,
+   "path": "item/loaded_dice.png",
+   "x": 164,
+   "y": 92,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 100,
+   "path": "item/lute.png",
+   "x": 182,
+   "y": 92,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 101,
+   "path": "item/lyre.png",
+   "x": 200,
+   "y": 92,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 102,
+   "path": "item/magma_heart.png",
+   "x": 218,
+   "y": 92,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 103,
+   "path": "item/martial_cloth.png",
+   "x": 236,
+   "y": 92,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 104,
+   "path": "item/midnight_veil.png",
+   "x": 254,
+   "y": 92,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 105,
+   "path": "item/mine_lantern.png",
+   "x": 272,
+   "y": 92,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 106,
+   "path": "item/monk_chain_boots.png",
+   "x": 290,
+   "y": 92,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 107,
+   "path": "item/monk_chain_chestplate.png",
+   "x": 308,
+   "y": 92,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 108,
+   "path": "item/monk_chain_helmet.png",
+   "x": 2,
+   "y": 110,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 109,
+   "path": "item/monk_chain_leggings.png",
+   "x": 20,
+   "y": 110,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 110,
+   "path": "item/monk_diamond_boots.png",
+   "x": 38,
+   "y": 110,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 111,
+   "path": "item/monk_diamond_chestplate.png",
+   "x": 56,
+   "y": 110,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 112,
+   "path": "item/monk_diamond_helmet.png",
+   "x": 74,
+   "y": 110,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 113,
+   "path": "item/monk_diamond_leggings.png",
+   "x": 92,
+   "y": 110,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 114,
+   "path": "item/monk_dragon_fire_boots.png",
+   "x": 110,
+   "y": 110,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 115,
+   "path": "item/monk_dragon_fire_chestplate.png",
+   "x": 128,
+   "y": 110,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 116,
+   "path": "item/monk_dragon_fire_helmet.png",
+   "x": 146,
+   "y": 110,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 117,
+   "path": "item/monk_dragon_fire_leggings.png",
+   "x": 164,
+   "y": 110,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 118,
+   "path": "item/monk_dragon_ice_boots.png",
+   "x": 182,
+   "y": 110,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 119,
+   "path": "item/monk_dragon_ice_chestplate.png",
+   "x": 200,
+   "y": 110,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 120,
+   "path": "item/monk_dragon_ice_helmet.png",
+   "x": 218,
+   "y": 110,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 121,
+   "path": "item/monk_dragon_ice_leggings.png",
+   "x": 236,
+   "y": 110,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 122,
+   "path": "item/monk_dragon_lightning_boots.png",
+   "x": 254,
+   "y": 110,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 123,
+   "path": "item/monk_dragon_lightning_chestplate.png",
+   "x": 272,
+   "y": 110,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 124,
+   "path": "item/monk_dragon_lightning_helmet.png",
+   "x": 290,
+   "y": 110,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 125,
+   "path": "item/monk_dragon_lightning_leggings.png",
+   "x": 308,
+   "y": 110,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 126,
+   "path": "item/monk_dragonsteel_fire_boots.png",
+   "x": 2,
+   "y": 128,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 127,
+   "path": "item/monk_dragonsteel_fire_chestplate.png",
+   "x": 20,
+   "y": 128,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 128,
+   "path": "item/monk_dragonsteel_fire_helmet.png",
+   "x": 38,
+   "y": 128,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 129,
+   "path": "item/monk_dragonsteel_fire_leggings.png",
+   "x": 56,
+   "y": 128,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 130,
+   "path": "item/monk_dragonsteel_ice_boots.png",
+   "x": 74,
+   "y": 128,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 131,
+   "path": "item/monk_dragonsteel_ice_chestplate.png",
+   "x": 92,
+   "y": 128,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 132,
+   "path": "item/monk_dragonsteel_ice_helmet.png",
+   "x": 110,
+   "y": 128,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 133,
+   "path": "item/monk_dragonsteel_ice_leggings.png",
+   "x": 128,
+   "y": 128,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 134,
+   "path": "item/monk_dragonsteel_lightning_boots.png",
+   "x": 146,
+   "y": 128,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 135,
+   "path": "item/monk_dragonsteel_lightning_chestplate.png",
+   "x": 164,
+   "y": 128,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 136,
+   "path": "item/monk_dragonsteel_lightning_helmet.png",
+   "x": 182,
+   "y": 128,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 137,
+   "path": "item/monk_dragonsteel_lightning_leggings.png",
+   "x": 200,
+   "y": 128,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 138,
+   "path": "item/monk_gold_boots.png",
+   "x": 218,
+   "y": 128,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 139,
+   "path": "item/monk_gold_chestplate.png",
+   "x": 236,
+   "y": 128,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 140,
+   "path": "item/monk_gold_helmet.png",
+   "x": 254,
+   "y": 128,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 141,
+   "path": "item/monk_gold_leggings.png",
+   "x": 272,
+   "y": 128,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 142,
+   "path": "item/monk_iron_boots.png",
+   "x": 290,
+   "y": 128,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 143,
+   "path": "item/monk_iron_chestplate.png",
+   "x": 308,
+   "y": 128,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 144,
+   "path": "item/monk_iron_helmet.png",
+   "x": 2,
+   "y": 146,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 145,
+   "path": "item/monk_iron_leggings.png",
+   "x": 20,
+   "y": 146,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 146,
+   "path": "item/monk_leather_boots.png",
+   "x": 38,
+   "y": 146,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 147,
+   "path": "item/monk_leather_chestplate.png",
+   "x": 56,
+   "y": 146,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 148,
+   "path": "item/monk_leather_helmet.png",
+   "x": 74,
+   "y": 146,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 149,
+   "path": "item/monk_leather_leggings.png",
+   "x": 92,
+   "y": 146,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 150,
+   "path": "item/monk_netherite_boots.png",
+   "x": 110,
+   "y": 146,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 151,
+   "path": "item/monk_netherite_chestplate.png",
+   "x": 128,
+   "y": 146,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 152,
+   "path": "item/monk_netherite_helmet.png",
+   "x": 146,
+   "y": 146,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 153,
+   "path": "item/monk_netherite_leggings.png",
+   "x": 164,
+   "y": 146,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 154,
+   "path": "item/music_note.png",
+   "x": 182,
+   "y": 146,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 155,
+   "path": "item/nunchaku_diamond.png",
+   "x": 200,
+   "y": 146,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 156,
+   "path": "item/nunchaku_dragonbone.png",
+   "x": 218,
+   "y": 146,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 157,
+   "path": "item/nunchaku_dragonsteel_fire.png",
+   "x": 236,
+   "y": 146,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 158,
+   "path": "item/nunchaku_dragonsteel_ice.png",
+   "x": 254,
+   "y": 146,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 159,
+   "path": "item/nunchaku_dragonsteel_lightning.png",
+   "x": 272,
+   "y": 146,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 160,
+   "path": "item/nunchaku_gold.png",
+   "x": 290,
+   "y": 146,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 161,
+   "path": "item/nunchaku_iron.png",
+   "x": 308,
+   "y": 146,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 162,
+   "path": "item/nunchaku_netherite.png",
+   "x": 2,
+   "y": 164,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 163,
+   "path": "item/nunchaku_stone.png",
+   "x": 20,
+   "y": 164,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 164,
+   "path": "item/nunchaku_wood.png",
+   "x": 38,
+   "y": 164,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 165,
+   "path": "item/oath_reliquary.png",
+   "x": 56,
+   "y": 164,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 166,
+   "path": "item/ocarina.png",
+   "x": 74,
+   "y": 164,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 167,
+   "path": "item/pan_flute.png",
+   "x": 92,
+   "y": 164,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 168,
+   "path": "item/phoenix_feather.png",
+   "x": 110,
+   "y": 164,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 169,
+   "path": "item/pixie_bell.png",
+   "x": 128,
+   "y": 164,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 170,
+   "path": "item/pocket_banner.png",
+   "x": 146,
+   "y": 164,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 171,
+   "path": "item/resonant_shard.png",
+   "x": 164,
+   "y": 164,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 172,
+   "path": "item/sai_diamond.png",
+   "x": 182,
+   "y": 164,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 173,
+   "path": "item/sai_dragonbone.png",
+   "x": 200,
+   "y": 164,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 174,
+   "path": "item/sai_dragonsteel_fire.png",
+   "x": 218,
+   "y": 164,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 175,
+   "path": "item/sai_dragonsteel_ice.png",
+   "x": 236,
+   "y": 164,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 176,
+   "path": "item/sai_dragonsteel_lightning.png",
+   "x": 254,
+   "y": 164,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 177,
+   "path": "item/sai_gold.png",
+   "x": 272,
+   "y": 164,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 178,
+   "path": "item/sai_iron.png",
+   "x": 290,
+   "y": 164,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 179,
+   "path": "item/sai_netherite.png",
+   "x": 308,
+   "y": 164,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 180,
+   "path": "item/sai_stone.png",
+   "x": 2,
+   "y": 182,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 181,
+   "path": "item/sai_wood.png",
+   "x": 20,
+   "y": 182,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 182,
+   "path": "item/scale_lyre_fire.png",
+   "x": 38,
+   "y": 182,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 183,
+   "path": "item/scale_lyre_ice.png",
+   "x": 56,
+   "y": 182,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 184,
+   "path": "item/scale_lyre_lightning.png",
+   "x": 74,
+   "y": 182,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 185,
+   "path": "item/serpent_pendant.png",
+   "x": 92,
+   "y": 182,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 186,
+   "path": "item/sheet_music.png",
+   "x": 110,
+   "y": 182,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 187,
+   "path": "item/spectral_violin.png",
+   "x": 128,
+   "y": 182,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 188,
+   "path": "item/stance_rosary.png",
+   "x": 146,
+   "y": 182,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 189,
+   "path": "item/storm_talisman.png",
+   "x": 164,
+   "y": 182,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 190,
+   "path": "item/tambourine.png",
+   "x": 182,
+   "y": 182,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 191,
+   "path": "item/temple_bell.png",
+   "x": 200,
+   "y": 182,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 192,
+   "path": "item/tide_conch.png",
+   "x": 218,
+   "y": 182,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 193,
+   "path": "item/traveler_belt.png",
+   "x": 236,
+   "y": 182,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 194,
+   "path": "item/trinket_pouch.png",
+   "x": 254,
+   "y": 182,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 195,
+   "path": "item/troll_earring.png",
+   "x": 272,
+   "y": 182,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 196,
+   "path": "item/trophy_skull.png",
+   "x": 290,
+   "y": 182,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 197,
+   "path": "item/violin.png",
+   "x": 308,
+   "y": 182,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 198,
+   "path": "item/war_drum.png",
+   "x": 2,
+   "y": 200,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 199,
+   "path": "item/war_horn.png",
+   "x": 20,
+   "y": 200,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 200,
+   "path": "item/wisp_lantern.png",
+   "x": 38,
+   "y": 200,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  }
+ ]
+}

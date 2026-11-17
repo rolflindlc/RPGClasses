@@ -1,0 +1,444 @@
+{
+ "group": "armaduras",
+ "width": 398,
+ "height": 274,
+ "cell_w": 64,
+ "cell_h": 32,
+ "cols": 6,
+ "rows": 8,
+ "gutter": 2,
+ "cells": [
+  {
+   "n": 0,
+   "path": "models/armor/barbarian_chain_layer_1.png",
+   "x": 2,
+   "y": 2,
+   "w": 64,
+   "h": 32,
+   "mode": "RGBA"
+  },
+  {
+   "n": 1,
+   "path": "models/armor/barbarian_chain_layer_2.png",
+   "x": 68,
+   "y": 2,
+   "w": 64,
+   "h": 32,
+   "mode": "RGBA"
+  },
+  {
+   "n": 2,
+   "path": "models/armor/barbarian_diamond_layer_1.png",
+   "x": 134,
+   "y": 2,
+   "w": 64,
+   "h": 32,
+   "mode": "RGBA"
+  },
+  {
+   "n": 3,
+   "path": "models/armor/barbarian_diamond_layer_2.png",
+   "x": 200,
+   "y": 2,
+   "w": 64,
+   "h": 32,
+   "mode": "RGBA"
+  },
+  {
+   "n": 4,
+   "path": "models/armor/barbarian_dragon_fire_layer_1.png",
+   "x": 266,
+   "y": 2,
+   "w": 64,
+   "h": 32,
+   "mode": "RGBA"
+  },
+  {
+   "n": 5,
+   "path": "models/armor/barbarian_dragon_fire_layer_2.png",
+   "x": 332,
+   "y": 2,
+   "w": 64,
+   "h": 32,
+   "mode": "RGBA"
+  },
+  {
+   "n": 6,
+   "path": "models/armor/barbarian_dragon_ice_layer_1.png",
+   "x": 2,
+   "y": 36,
+   "w": 64,
+   "h": 32,
+   "mode": "RGBA"
+  },
+  {
+   "n": 7,
+   "path": "models/armor/barbarian_dragon_ice_layer_2.png",
+   "x": 68,
+   "y": 36,
+   "w": 64,
+   "h": 32,
+   "mode": "RGBA"
+  },
+  {
+   "n": 8,
+   "path": "models/armor/barbarian_dragon_lightning_layer_1.png",
+   "x": 134,
+   "y": 36,
+   "w": 64,
+   "h": 32,
+   "mode": "RGBA"
+  },
+  {
+   "n": 9,
+   "path": "models/armor/barbarian_dragon_lightning_layer_2.png",
+   "x": 200,
+   "y": 36,
+   "w": 64,
+   "h": 32,
+   "mode": "RGBA"
+  },
+  {
+   "n": 10,
+   "path": "models/armor/barbarian_dragonsteel_fire_layer_1.png",
+   "x": 266,
+   "y": 36,
+   "w": 64,
+   "h": 32,
+   "mode": "RGBA"
+  },
+  {
+   "n": 11,
+   "path": "models/armor/barbarian_dragonsteel_fire_layer_2.png",
+   "x": 332,
+   "y": 36,
+   "w": 64,
+   "h": 32,
+   "mode": "RGBA"
+  },
+  {
+   "n": 12,
+   "path": "models/armor/barbarian_dragonsteel_ice_layer_1.png",
+   "x": 2,
+   "y": 70,
+   "w": 64,
+   "h": 32,
+   "mode": "RGBA"
+  },
+  {
+   "n": 13,
+   "path": "models/armor/barbarian_dragonsteel_ice_layer_2.png",
+   "x": 68,
+   "y": 70,
+   "w": 64,
+   "h": 32,
+   "mode": "RGBA"
+  },
+  {
+   "n": 14,
+   "path": "models/armor/barbarian_dragonsteel_lightning_layer_1.png",
+   "x": 134,
+   "y": 70,
+   "w": 64,
+   "h": 32,
+   "mode": "RGBA"
+  },
+  {
+   "n": 15,
+   "path": "models/armor/barbarian_dragonsteel_lightning_layer_2.png",
+   "x": 200,
+   "y": 70,
+   "w": 64,
+   "h": 32,
+   "mode": "RGBA"
+  },
+  {
+   "n": 16,
+   "path": "models/armor/barbarian_gold_layer_1.png",
+   "x": 266,
+   "y": 70,
+   "w": 64,
+   "h": 32,
+   "mode": "RGBA"
+  },
+  {
+   "n": 17,
+   "path": "models/armor/barbarian_gold_layer_2.png",
+   "x": 332,
+   "y": 70,
+   "w": 64,
+   "h": 32,
+   "mode": "RGBA"
+  },
+  {
+   "n": 18,
+   "path": "models/armor/barbarian_iron_layer_1.png",
+   "x": 2,
+   "y": 104,
+   "w": 64,
+   "h": 32,
+   "mode": "RGBA"
+  },
+  {
+   "n": 19,
+   "path": "models/armor/barbarian_iron_layer_2.png",
+   "x": 68,
+   "y": 104,
+   "w": 64,
+   "h": 32,
+   "mode": "RGBA"
+  },
+  {
+   "n": 20,
+   "path": "models/armor/barbarian_leather_layer_1.png",
+   "x": 134,
+   "y": 104,
+   "w": 64,
+   "h": 32,
+   "mode": "RGBA"
+  },
+  {
+   "n": 21,
+   "path": "models/armor/barbarian_leather_layer_2.png",
+   "x": 200,
+   "y": 104,
+   "w": 64,
+   "h": 32,
+   "mode": "RGBA"
+  },
+  {
+   "n": 22,
+   "path": "models/armor/barbarian_netherite_layer_1.png",
+   "x": 266,
+   "y": 104,
+   "w": 64,
+   "h": 32,
+   "mode": "RGBA"
+  },
+  {
+   "n": 23,
+   "path": "models/armor/barbarian_netherite_layer_2.png",
+   "x": 332,
+   "y": 104,
+   "w": 64,
+   "h": 32,
+   "mode": "RGBA"
+  },
+  {
+   "n": 24,
+   "path": "models/armor/monk_chain_layer_1.png",
+   "x": 2,
+   "y": 138,
+   "w": 64,
+   "h": 32,
+   "mode": "RGBA"
+  },
+  {
+   "n": 25,
+   "path": "models/armor/monk_chain_layer_2.png",
+   "x": 68,
+   "y": 138,
+   "w": 64,
+   "h": 32,
+   "mode": "RGBA"
+  },
+  {
+   "n": 26,
+   "path": "models/armor/monk_diamond_layer_1.png",
+   "x": 134,
+   "y": 138,
+   "w": 64,
+   "h": 32,
+   "mode": "RGBA"
+  },
+  {
+   "n": 27,
+   "path": "models/armor/monk_diamond_layer_2.png",
+   "x": 200,
+   "y": 138,
+   "w": 64,
+   "h": 32,
+   "mode": "RGBA"
+  },
+  {
+   "n": 28,
+   "path": "models/armor/monk_dragon_fire_layer_1.png",
+   "x": 266,
+   "y": 138,
+   "w": 64,
+   "h": 32,
+   "mode": "RGBA"
+  },
+  {
+   "n": 29,
+   "path": "models/armor/monk_dragon_fire_layer_2.png",
+   "x": 332,
+   "y": 138,
+   "w": 64,
+   "h": 32,
+   "mode": "RGBA"
+  },
+  {
+   "n": 30,
+   "path": "models/armor/monk_dragon_ice_layer_1.png",
+   "x": 2,
+   "y": 172,
+   "w": 64,
+   "h": 32,
+   "mode": "RGBA"
+  },
+  {
+   "n": 31,
+   "path": "models/armor/monk_dragon_ice_layer_2.png",
+   "x": 68,
+   "y": 172,
+   "w": 64,
+   "h": 32,
+   "mode": "RGBA"
+  },
+  {
+   "n": 32,
+   "path": "models/armor/monk_dragon_lightning_layer_1.png",
+   "x": 134,
+   "y": 172,
+   "w": 64,
+   "h": 32,
+   "mode": "RGBA"
+  },
+  {
+   "n": 33,
+   "path": "models/armor/monk_dragon_lightning_layer_2.png",
+   "x": 200,
+   "y": 172,
+   "w": 64,
+   "h": 32,
+   "mode": "RGBA"
+  },
+  {
+   "n": 34,
+   "path": "models/armor/monk_dragonsteel_fire_layer_1.png",
+   "x": 266,
+   "y": 172,
+   "w": 64,
+   "h": 32,
+   "mode": "RGBA"
+  },
+  {
+   "n": 35,
+   "path": "models/armor/monk_dragonsteel_fire_layer_2.png",
+   "x": 332,
+   "y": 172,
+   "w": 64,
+   "h": 32,
+   "mode": "RGBA"
+  },
+  {
+   "n": 36,
+   "path": "models/armor/monk_dragonsteel_ice_layer_1.png",
+   "x": 2,
+   "y": 206,
+   "w": 64,
+   "h": 32,
+   "mode": "RGBA"
+  },
+  {
+   "n": 37,
+   "path": "models/armor/monk_dragonsteel_ice_layer_2.png",
+   "x": 68,
+   "y": 206,
+   "w": 64,
+   "h": 32,
+   "mode": "RGBA"
+  },
+  {
+   "n": 38,
+   "path": "models/armor/monk_dragonsteel_lightning_layer_1.png",
+   "x": 134,
+   "y": 206,
+   "w": 64,
+   "h": 32,
+   "mode": "RGBA"
+  },
+  {
+   "n": 39,
+   "path": "models/armor/monk_dragonsteel_lightning_layer_2.png",
+   "x": 200,
+   "y": 206,
+   "w": 64,
+   "h": 32,
+   "mode": "RGBA"
+  },
+  {
+   "n": 40,
+   "path": "models/armor/monk_gold_layer_1.png",
+   "x": 266,
+   "y": 206,
+   "w": 64,
+   "h": 32,
+   "mode": "RGBA"
+  },
+  {
+   "n": 41,
+   "path": "models/armor/monk_gold_layer_2.png",
+   "x": 332,
+   "y": 206,
+   "w": 64,
+   "h": 32,
+   "mode": "RGBA"
+  },
+  {
+   "n": 42,
+   "path": "models/armor/monk_iron_layer_1.png",
+   "x": 2,
+   "y": 240,
+   "w": 64,
+   "h": 32,
+   "mode": "RGBA"
+  },
+  {
+   "n": 43,
+   "path": "models/armor/monk_iron_layer_2.png",
+   "x": 68,
+   "y": 240,
+   "w": 64,
+   "h": 32,
+   "mode": "RGBA"
+  },
+  {
+   "n": 44,
+   "path": "models/armor/monk_leather_layer_1.png",
+   "x": 134,
+   "y": 240,
+   "w": 64,
+   "h": 32,
+   "mode": "RGBA"
+  },
+  {
+   "n": 45,
+   "path": "models/armor/monk_leather_layer_2.png",
+   "x": 200,
+   "y": 240,
+   "w": 64,
+   "h": 32,
+   "mode": "RGBA"
+  },
+  {
+   "n": 46,
+   "path": "models/armor/monk_netherite_layer_1.png",
+   "x": 266,
+   "y": 240,
+   "w": 64,
+   "h": 32,
+   "mode": "RGBA"
+  },
+  {
+   "n": 47,
+   "path": "models/armor/monk_netherite_layer_2.png",
+   "x": 332,
+   "y": 240,
+   "w": 64,
+   "h": 32,
+   "mode": "RGBA"
+  }
+ ]
+}

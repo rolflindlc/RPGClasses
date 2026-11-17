@@ -1,0 +1,237 @@
+{
+ "group": "interfaz",
+ "width": 218,
+ "height": 182,
+ "cell_w": 34,
+ "cell_h": 34,
+ "cols": 6,
+ "rows": 5,
+ "gutter": 2,
+ "cells": [
+  {
+   "n": 0,
+   "path": "gui/charges/fire.png",
+   "x": 2,
+   "y": 2,
+   "w": 9,
+   "h": 9,
+   "mode": "RGBA"
+  },
+  {
+   "n": 1,
+   "path": "gui/charges/fire_empty.png",
+   "x": 38,
+   "y": 2,
+   "w": 9,
+   "h": 9,
+   "mode": "RGBA"
+  },
+  {
+   "n": 2,
+   "path": "gui/charges/stone.png",
+   "x": 74,
+   "y": 2,
+   "w": 9,
+   "h": 9,
+   "mode": "RGBA"
+  },
+  {
+   "n": 3,
+   "path": "gui/charges/stone_empty.png",
+   "x": 110,
+   "y": 2,
+   "w": 9,
+   "h": 9,
+   "mode": "RGBA"
+  },
+  {
+   "n": 4,
+   "path": "gui/charges/water.png",
+   "x": 146,
+   "y": 2,
+   "w": 9,
+   "h": 9,
+   "mode": "RGBA"
+  },
+  {
+   "n": 5,
+   "path": "gui/charges/water_empty.png",
+   "x": 182,
+   "y": 2,
+   "w": 9,
+   "h": 9,
+   "mode": "RGBA"
+  },
+  {
+   "n": 6,
+   "path": "gui/coin_ankh.png",
+   "x": 2,
+   "y": 38,
+   "w": 34,
+   "h": 34,
+   "mode": "RGBA"
+  },
+  {
+   "n": 7,
+   "path": "gui/coin_skull.png",
+   "x": 38,
+   "y": 38,
+   "w": 34,
+   "h": 34,
+   "mode": "RGBA"
+  },
+  {
+   "n": 8,
+   "path": "gui/spell_icons/cutting_note.png",
+   "x": 74,
+   "y": 38,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 9,
+   "path": "gui/spell_icons/dissonance.png",
+   "x": 110,
+   "y": 38,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 10,
+   "path": "gui/spell_icons/elegy.png",
+   "x": 146,
+   "y": 38,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 11,
+   "path": "gui/spell_icons/final_requiem.png",
+   "x": 182,
+   "y": 38,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 12,
+   "path": "gui/spell_icons/forced_dance.png",
+   "x": 2,
+   "y": 74,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 13,
+   "path": "gui/spell_icons/grand_piano.png",
+   "x": 38,
+   "y": 74,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 14,
+   "path": "gui/spell_icons/iron_chorale.png",
+   "x": 74,
+   "y": 74,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 15,
+   "path": "gui/spell_icons/mana_cadence.png",
+   "x": 110,
+   "y": 74,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 16,
+   "path": "gui/spell_icons/march.png",
+   "x": 146,
+   "y": 74,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 17,
+   "path": "gui/spell_icons/rest_ballad.png",
+   "x": 182,
+   "y": 74,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 18,
+   "path": "gui/spell_icons/rumble.png",
+   "x": 2,
+   "y": 110,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 19,
+   "path": "gui/spell_icons/war_hymn.png",
+   "x": 38,
+   "y": 110,
+   "w": 16,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 20,
+   "path": "gui/ui/button.png",
+   "x": 74,
+   "y": 110,
+   "w": 20,
+   "h": 20,
+   "mode": "RGBA"
+  },
+  {
+   "n": 21,
+   "path": "gui/ui/button_hover.png",
+   "x": 110,
+   "y": 110,
+   "w": 20,
+   "h": 20,
+   "mode": "RGBA"
+  },
+  {
+   "n": 22,
+   "path": "gui/ui/button_selected.png",
+   "x": 146,
+   "y": 110,
+   "w": 20,
+   "h": 20,
+   "mode": "RGBA"
+  },
+  {
+   "n": 23,
+   "path": "gui/ui/header.png",
+   "x": 182,
+   "y": 110,
+   "w": 24,
+   "h": 16,
+   "mode": "RGBA"
+  },
+  {
+   "n": 24,
+   "path": "gui/ui/panel.png",
+   "x": 2,
+   "y": 146,
+   "w": 24,
+   "h": 24,
+   "mode": "RGBA"
+  }
+ ]
+}

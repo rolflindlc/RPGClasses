@@ -1,0 +1,255 @@
+{
+ "group": "efectos",
+ "width": 240,
+ "height": 138,
+ "cell_w": 32,
+ "cell_h": 32,
+ "cols": 7,
+ "rows": 4,
+ "gutter": 2,
+ "cells": [
+  {
+   "n": 0,
+   "path": "mob_effect/arcane_step.png",
+   "x": 2,
+   "y": 2,
+   "w": 32,
+   "h": 32,
+   "mode": "RGBA"
+  },
+  {
+   "n": 1,
+   "path": "mob_effect/banner.png",
+   "x": 36,
+   "y": 2,
+   "w": 32,
+   "h": 32,
+   "mode": "RGBA"
+  },
+  {
+   "n": 2,
+   "path": "mob_effect/berserker_rage.png",
+   "x": 70,
+   "y": 2,
+   "w": 32,
+   "h": 32,
+   "mode": "RGBA"
+  },
+  {
+   "n": 3,
+   "path": "mob_effect/bulwark.png",
+   "x": 104,
+   "y": 2,
+   "w": 32,
+   "h": 32,
+   "mode": "RGBA"
+  },
+  {
+   "n": 4,
+   "path": "mob_effect/charging_bulwark.png",
+   "x": 138,
+   "y": 2,
+   "w": 32,
+   "h": 32,
+   "mode": "RGBA"
+  },
+  {
+   "n": 5,
+   "path": "mob_effect/charmed.png",
+   "x": 172,
+   "y": 2,
+   "w": 18,
+   "h": 18,
+   "mode": "RGBA"
+  },
+  {
+   "n": 6,
+   "path": "mob_effect/condemned.png",
+   "x": 206,
+   "y": 2,
+   "w": 32,
+   "h": 32,
+   "mode": "RGBA"
+  },
+  {
+   "n": 7,
+   "path": "mob_effect/corrosion.png",
+   "x": 2,
+   "y": 36,
+   "w": 32,
+   "h": 32,
+   "mode": "RGBA"
+  },
+  {
+   "n": 8,
+   "path": "mob_effect/endurance.png",
+   "x": 36,
+   "y": 36,
+   "w": 32,
+   "h": 32,
+   "mode": "RGBA"
+  },
+  {
+   "n": 9,
+   "path": "mob_effect/forced_dance.png",
+   "x": 70,
+   "y": 36,
+   "w": 18,
+   "h": 18,
+   "mode": "RGBA"
+  },
+  {
+   "n": 10,
+   "path": "mob_effect/hunters_mark.png",
+   "x": 104,
+   "y": 36,
+   "w": 32,
+   "h": 32,
+   "mode": "RGBA"
+  },
+  {
+   "n": 11,
+   "path": "mob_effect/immortal_fury.png",
+   "x": 138,
+   "y": 36,
+   "w": 32,
+   "h": 32,
+   "mode": "RGBA"
+  },
+  {
+   "n": 12,
+   "path": "mob_effect/iron_chorale.png",
+   "x": 172,
+   "y": 36,
+   "w": 18,
+   "h": 18,
+   "mode": "RGBA"
+  },
+  {
+   "n": 13,
+   "path": "mob_effect/mana_cadence.png",
+   "x": 206,
+   "y": 36,
+   "w": 18,
+   "h": 18,
+   "mode": "RGBA"
+  },
+  {
+   "n": 14,
+   "path": "mob_effect/march.png",
+   "x": 2,
+   "y": 70,
+   "w": 18,
+   "h": 18,
+   "mode": "RGBA"
+  },
+  {
+   "n": 15,
+   "path": "mob_effect/plague.png",
+   "x": 36,
+   "y": 70,
+   "w": 32,
+   "h": 32,
+   "mode": "RGBA"
+  },
+  {
+   "n": 16,
+   "path": "mob_effect/requiem_fervor.png",
+   "x": 70,
+   "y": 70,
+   "w": 18,
+   "h": 18,
+   "mode": "RGBA"
+  },
+  {
+   "n": 17,
+   "path": "mob_effect/rest_ballad.png",
+   "x": 104,
+   "y": 70,
+   "w": 18,
+   "h": 18,
+   "mode": "RGBA"
+  },
+  {
+   "n": 18,
+   "path": "mob_effect/retreat.png",
+   "x": 138,
+   "y": 70,
+   "w": 32,
+   "h": 32,
+   "mode": "RGBA"
+  },
+  {
+   "n": 19,
+   "path": "mob_effect/scale_ward_fire.png",
+   "x": 172,
+   "y": 70,
+   "w": 18,
+   "h": 18,
+   "mode": "RGBA"
+  },
+  {
+   "n": 20,
+   "path": "mob_effect/scale_ward_ice.png",
+   "x": 206,
+   "y": 70,
+   "w": 18,
+   "h": 18,
+   "mode": "RGBA"
+  },
+  {
+   "n": 21,
+   "path": "mob_effect/scale_ward_lightning.png",
+   "x": 2,
+   "y": 104,
+   "w": 18,
+   "h": 18,
+   "mode": "RGBA"
+  },
+  {
+   "n": 22,
+   "path": "mob_effect/shared_step.png",
+   "x": 36,
+   "y": 104,
+   "w": 18,
+   "h": 18,
+   "mode": "RGBA"
+  },
+  {
+   "n": 23,
+   "path": "mob_effect/silenced.png",
+   "x": 70,
+   "y": 104,
+   "w": 18,
+   "h": 18,
+   "mode": "RGBA"
+  },
+  {
+   "n": 24,
+   "path": "mob_effect/taunt_guard.png",
+   "x": 104,
+   "y": 104,
+   "w": 32,
+   "h": 32,
+   "mode": "RGBA"
+  },
+  {
+   "n": 25,
+   "path": "mob_effect/toxin.png",
+   "x": 138,
+   "y": 104,
+   "w": 32,
+   "h": 32,
+   "mode": "RGBA"
+  },
+  {
+   "n": 26,
+   "path": "mob_effect/war_hymn.png",
+   "x": 172,
+   "y": 104,
+   "w": 18,
+   "h": 18,
+   "mode": "RGBA"
+  }
+ ]
+}

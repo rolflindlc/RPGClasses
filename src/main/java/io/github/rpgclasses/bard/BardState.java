@@ -156,9 +156,9 @@ public final class BardState {
         }
         if (instrument != null) {
             switch (instrument.passive) {
-                // Tambor del Coloso: cada 10 de combo, estruendo que aturde a los enemigos cercanos.
+                // Tambor del Coloso: cada 10 aciertos de combo (también pasado el tope de 30), estruendo que aturde.
                 case COLOSSUS_DRUM -> {
-                    if (before / 10 < s.combo / 10) colossusBoom(p);
+                    if (s.consecutive % 10 == 0) colossusBoom(p);
                 }
                 // Arpa de Cristal: cada 10 aciertos seguidos, el 5 % del maná.
                 case CRYSTAL_HARP -> {

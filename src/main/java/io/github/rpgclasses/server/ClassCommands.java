@@ -243,14 +243,14 @@ public final class ClassCommands {
 
     private static int setLog(CommandSourceStack source, boolean on) {
         DebugLog.setEnabled(on);
-        source.sendSuccess(() -> Component.literal("Registro de depuración " + (on ? "activado" : "desactivado (los errores se siguen registrando)")), true);
+        source.sendSuccess(() -> Component.translatable(on ? "message.rpgclasses.debug.log_on" : "message.rpgclasses.debug.log_off"), true);
         return 1;
     }
 
     private static int showLog(CommandSourceStack source, int lines) {
         ServerPlayer player = source.getPlayer();
         List<String> recent = DebugLog.recent(player == null ? null : player.getUUID(), lines);
-        if (recent.isEmpty()) source.sendSuccess(() -> Component.literal("Sin eventos registrados todavía."), false);
+        if (recent.isEmpty()) source.sendSuccess(() -> Component.translatable("message.rpgclasses.debug.log_empty"), false);
         for (String line : recent) source.sendSuccess(() -> Component.literal(line).withStyle(ChatFormatting.GRAY), false);
         return recent.size();
     }
@@ -262,7 +262,7 @@ public final class ClassCommands {
             return 1;
         } catch (Throwable t) {
             DebugLog.error(target, "volcado", t, "no se pudo escribir");
-            source.sendFailure(Component.literal("No se pudo escribir el volcado: " + t));
+            source.sendFailure(Component.translatable("message.rpgclasses.debug.dump_failed", String.valueOf(t)));
             return 0;
         }
     }

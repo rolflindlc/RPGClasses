@@ -143,11 +143,10 @@ public final class DebugDump {
     /** Mensaje de chat con la ruta; en un jugador local, al pulsarlo se abre el archivo. */
     public static Component link(Path file) {
         String path = file.toAbsolutePath().toString();
-        return Component.literal("Volcado escrito: ").append(Component.literal(file.getFileName().toString())
+        return Component.translatable("message.rpgclasses.debug.dump_written", Component.literal(file.getFileName().toString())
                 .withStyle(s -> s.withColor(ChatFormatting.AQUA).withUnderlined(true)
                         .withClickEvent(new ClickEvent(ClickEvent.Action.OPEN_FILE, path))
-                        .withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Component.literal(path)))))
-                .append(Component.literal(" (carpeta logs). Pásame este archivo y rpgclasses-debug.log."));
+                        .withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Component.literal(path)))));
     }
 
     private static String version(String modId) {

@@ -1,0 +1,6 @@
+0 Registro de depuração ativado
+1 Registro de depuração desativado (os erros continuam sendo registrados)
+2 Nenhum evento registrado ainda.
+3 Não foi possível gravar o despejo: %s
+4 Despejo gravado: %s (pasta logs). Envie-me este arquivo e o rpgclasses-debug.log.
+5 Erro em %s: veja logs/rpgclasses-debug.log

@@ -1,0 +1,6 @@
+0 Debug-Protokoll aktiviert
+1 Debug-Protokoll deaktiviert (Fehler werden weiterhin aufgezeichnet)
+2 Noch keine Ereignisse aufgezeichnet.
+3 Der Dump konnte nicht geschrieben werden: %s
+4 Dump geschrieben: %s (Ordner logs). Schick mir diese Datei und rpgclasses-debug.log.
+5 Fehler in %s: siehe logs/rpgclasses-debug.log

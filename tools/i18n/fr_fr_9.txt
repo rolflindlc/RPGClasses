@@ -1,0 +1,6 @@
+0 Journal de débogage activé
+1 Journal de débogage désactivé (les erreurs restent enregistrées)
+2 Aucun événement enregistré pour l'instant.
+3 Impossible d'écrire le vidage : %s
+4 Vidage écrit : %s (dossier logs). Envoie-moi ce fichier et rpgclasses-debug.log.
+5 Erreur dans %s : consulte logs/rpgclasses-debug.log

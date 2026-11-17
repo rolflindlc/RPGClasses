@@ -1,0 +1,6 @@
+0 Registro di debug attivato
+1 Registro di debug disattivato (gli errori continuano a essere registrati)
+2 Nessun evento registrato per ora.
+3 Impossibile scrivere il dump: %s
+4 Dump scritto: %s (cartella logs). Mandami questo file e rpgclasses-debug.log.
+5 Errore in %s: controlla logs/rpgclasses-debug.log

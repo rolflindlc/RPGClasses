@@ -1,5 +1,5 @@
 # Texturas provisionales del Bardo: instrumentos, materiales, partitura y nota (16x16), iconos de conjuro (16x16),
-# iconos de efecto (18x18) y retratos de la clase y sus subclases (32x32 escalados a 236).
+# iconos de efecto (18x18) y retratos de la clase y sus subclases (32x32 duplicados a 64x64).
 # Uso: python3 -I tools/art/make_bard.py src/main/resources
 import math, os, sys
 from PIL import Image
@@ -554,7 +554,7 @@ effect_icon(0xD9502B, "scale").save(os.path.join(TEX, "mob_effect", "scale_ward_
 effect_icon(0x86C5F0, "scale").save(os.path.join(TEX, "mob_effect", "scale_ward_ice.png"))
 effect_icon(0x9B6BE8, "scale").save(os.path.join(TEX, "mob_effect", "scale_ward_lightning.png"))
 
-# ------------------------------------------------------------------ retratos (32x32 escalados a 236, suavizados)
+# ------------------------------------------------------------------ retratos (32x32 duplicados a 64x64)
 
 def portrait(draw, bg):
     c = Canvas(32)
@@ -610,10 +610,7 @@ def minstrel_portrait(c):
 
 
 def save_portrait(c, path):
-    big = c.im.resize((236, 236), Image.NEAREST).resize((118, 118), Image.BILINEAR).resize((236, 236), Image.BILINEAR)
-    big.save(path)
-    with open(path + ".mcmeta", "w", encoding="utf-8") as f:
-        f.write('{"texture": {"blur": true}}')
+    c.im.resize((64, 64), Image.NEAREST).save(path)  # pixel art 32x32 duplicado a 64x64, sin suavizado
 
 
 save_portrait(portrait(bard_portrait, 0x3A2A4A), os.path.join(TEX, "gui", "portrait", "class", "bard.png"))

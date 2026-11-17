@@ -1,6 +1,6 @@
 """Recorta la hoja de iconos de Daniel a resolución completa, con fondo (sin reescalar).
 
-Retratos: 236x236 (centro de cada celda). Efectos: 133x133.
+Retratos de raza: 236x236 (centro de cada celda); los de clase se reducen a 64x64. Efectos: 133x133.
 Uso: python3 -I tools/art/slice_sheet.py tools/art/source/iconos.jpg <salida>
 """
 import os, sys
@@ -54,9 +54,13 @@ assert len(portrait_cells) == 56 and len(cells[7]) == 14
 for name, box in zip(PORTRAITS, portrait_cells):
     if name is None: continue
     p = os.path.join(outdir, 'gui', 'portrait', name + '.png'); os.makedirs(os.path.dirname(p), exist_ok=True)
-    crop(box, 236).save(p)
-    with open(p + '.mcmeta', 'w') as f:
-        f.write('{"texture": {"blur": true}}\n')
+    big = crop(box, 236)
+    if name.startswith(('class/', 'subclass/')):
+        big = big.resize((64, 64), Image.LANCZOS)  # retratos de clase: 64x64 como los de raza
+    big.save(p)
+    if not name.startswith(('class/', 'subclass/')):
+        with open(p + '.mcmeta', 'w') as f:
+            f.write('{"texture": {"blur": true}}\n')
 for name, box in zip(EFFECTS, cells[7]):
     if name is None: continue
     p = os.path.join(outdir, 'mob_effect', name + '.png'); os.makedirs(os.path.dirname(p), exist_ok=True)

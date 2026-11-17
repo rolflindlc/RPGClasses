@@ -81,7 +81,7 @@ Red: protocolo 16 (paquetes `BardNote`, `BardSync` y `DanceSync`).
   y −4 % de recarga).
 * Cuerno de Guerra y Órgano: +25 % de radio de las auras. Lira de Escamas: −25 % del daño de su elemento a los aliados.
 * Arpa de Cristal: +5 % del maná máximo cada 10 aciertos seguidos. Laúd del Sol: los aciertos perfectos curan 0,5 a los
-  aliados a 8 bloques (a ti 0,25; como mucho cada 0,5 s). Tambor del Coloso: aturdimiento de 1 s a 4 bloques.
+  aliados a 8 bloques (a ti 0,25; como mucho cada 0,5 s). Tambor del Coloso: cada 10 aciertos seguidos (también con el combo ya en 30), aturdimiento de 1 s a 4 bloques.
 
 ### Obtención (propuestas)
 * **Comunes:** madera y cuerda (ocarina de arcilla, pandereta de hierro y cuero). **Raros:** hierro, oro, cuero y lana.

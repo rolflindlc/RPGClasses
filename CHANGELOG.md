@@ -5,8 +5,13 @@
 First public beta of Rolflin's Rites & Paths (Minecraft Forge 1.20.1).
 
 ### Added
-- **7 classes** (Barbarian, Bard, Mage, Monk, Paladin, Ranger, Rogue) with branches, perks and **21 subclasses**, plus
-  discipline walls, custom critical hits and caps.
+- **8 classes** (Barbarian, Bard, Cleric, Mage, Monk, Paladin, Ranger, Rogue) with branches, perks and
+  **24 subclasses**, plus discipline walls, custom critical hits and caps.
+- **Cleric:** holy healer that shares the holy school with the Paladin. Healing, Blessing, Divine Reserve, Purification
+  and Aegis branches; Healer's Eye, Laying on Hands, a channeled Sanctuary and Miracle (allies who would die are
+  downed and can be lifted up with a heal). Subclasses: Angel (Angelic Form flight, Winged Grace, Halo), Martyr
+  (Sacrifice and Final Sacrifice) and Intercessor (Prayer: the camera moves to an angel beside an ally and spells are
+  cast from it).
 - **12 races** with **39 subraces** and **117 rites**, with a Race Altar and rite bosses.
 - **Bard** rhythm minigame, with its own music school for Iron's Spells 'n Spellbooks, instruments, sheet music and a
   music stand.
@@ -18,6 +23,8 @@ First public beta of Rolflin's Rites & Paths (Minecraft Forge 1.20.1).
   applied in one go (with a summary when it locks branches or picks a perk or subclass); other classes can be
   previewed. Branches can define their icon in the datapack (`display.icon`).
 - Class and racial ability HUD.
+- Magic walls are multiplicative for every class (final spell power = total power × (1 − wall)); the Barbarian has an
+  Armor wall of −25% (his class harnesses are exempt). Bard songs show colored aura rings.
 - Server and client configuration files; balance lives in datapacks.
 - Optional integration with Iron's Spells 'n Spellbooks, Epic Fight and Curios.
 - Translations: English, Spanish (all regional variants), Simplified and Traditional Chinese, Russian, Brazilian

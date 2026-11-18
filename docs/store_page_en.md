@@ -9,12 +9,15 @@ change it with datapacks.
 
 ## Features
 
-- **7 classes:** Barbarian, Bard, Mage, Monk, Paladin, Ranger and Rogue. Each has branches, perks and subclasses
-  (21 in total), and each fights in its own way.
+- **8 classes:** Barbarian, Bard, Cleric, Mage, Monk, Paladin, Ranger and Rogue. Each has branches, perks and
+  subclasses (24 in total), and each fights in its own way.
 - **12 races** with **39 subraces:** Centaur, Colossus, Draconid, Dwarf, Elf, Goblin, Human, Infernal, Orc, Slime,
   Triton and Undead. Climb your race's ranks by completing **rites** at the Race Altar, including rite bosses.
 - **Bard:** a rhythm minigame with four lanes. Land notes to build a combo and power a music school with its own
   instruments, sheet music and auras for your allies.
+- **Cleric:** a holy healer who blesses, purifies and shields allies, holds up a Sanctuary and saves them from the
+  final blow with Miracle. Fly as an Angel, heal with your own blood as a Martyr or pray through a guardian angel as
+  an Intercessor.
 - **Allies:** mark your allies (key J) and share auras and effects with them.
 - **Beast Master bonds**, a Mage with free-cast slots, a Chronomancer who rewinds and stops time, and much more.
 - **Class and race HUD** with cooldowns and key bindings.

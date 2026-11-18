@@ -1,0 +1,54 @@
+0 Trascina per muoverti · Rotella: zoom · Clic: pianifica · Clic destro: rimuovi
+1 Anteprima: trascina per muoverti e usa la rotella per lo zoom
+2 Sottoclasse
+3 Anteprima
+4 Sottoclasse: %s punti base
+5 Livello %s/%s
+6 → %s
+7 XP %s · livello massimo
+8 XP %s · prossimo %s
+9 Piano: %s modifiche · −%s XP
+10 Sottoclasse: %s/%s punti base
+11 Rami
+12 Centra la vista (Home, C o spazio)
+13 Fai clic o trascina per muoverti nell'albero
+14 Livello totale %s/%s · base %s/%s · sottoclasse %s/%s
+15 L'anello indica il Livello Totale; i rombi sono le abilità che sblocca.
+16 Quando è pieno scegli un perk: %s
+17 Con il ramo pieno:
+18 %s · punto %s/%s
+19 Usare questo ramo bloccherà: %s
+20 Perk scelto
+21 Nel piano. Clic destro: rimuovi
+22 Clic: scegli questo perk
+23 È stato scelto l'altro perk di questo ramo.
+24 Verrà bloccato alla conferma del piano.
+25 Riempi il ramo per scegliere uno dei suoi perk.
+26 Sbloccata
+27 Si sbloccherà con il piano
+28 Mancano %s livelli
+29 Livello di sottoclasse %s/%s · limite attuale %s
+30 La tua sottoclasse
+31 Clic: scegli questa sottoclasse
+32 Hai già un'altra sottoclasse. Reimpostala per cambiare.
+33 Il piano sceglie un'altra sottoclasse.
+34 %s · livello %s/%s
+35 Ti servono %s punti base per questo livello.
+36 Clic: scegli questa sottoclasse e pianifica fin qui
+37 La sottoclasse si sblocca con 15 punti base.
+38 Si sblocca al Livello Totale %s
+39 Si sblocca al livello di sottoclasse %s
+40 Acquistato
+41 Costo: %s XP
+42 Clic: aggiungi al piano
+43 Ti mancano %s XP
+44 Clic: pianifica fin qui (%s punti, %s XP)
+45 Scarta piano
+46 Conferma (%s XP)
+47 Verranno acquistati %s livelli per %s XP.
+48 Bloccati fino al reset della classe: %s.
+49 Perk (fissi fino al reset della classe): %s.
+50 Sottoclasse: %s.
+51 Applicare il piano?
+52 Piano applicato: %s modifiche (%s XP).
+53 Il piano si è fermato dopo %s di %s modifiche: %s

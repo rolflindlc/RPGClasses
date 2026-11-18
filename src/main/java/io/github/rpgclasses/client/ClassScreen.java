@@ -1,19 +1,20 @@
 package io.github.rpgclasses.client;
 
+import io.github.rpgclasses.client.tree.SkillTreeView;
+import io.github.rpgclasses.client.tree.TreePlan;
 import io.github.rpgclasses.config.ServerConfig;
 import io.github.rpgclasses.core.Ids;
 import io.github.rpgclasses.core.definition.DefinitionStore;
 import io.github.rpgclasses.core.definition.Definitions.BranchDef;
 import io.github.rpgclasses.core.definition.Definitions.ClassDef;
-import io.github.rpgclasses.core.definition.Definitions.PerkDef;
 import io.github.rpgclasses.core.progression.ProgressState;
 import io.github.rpgclasses.core.progression.ProgressionRules;
 import io.github.rpgclasses.core.progression.XpMath;
 import io.github.rpgclasses.network.Net;
 import io.github.rpgclasses.network.Packets.ClassAction;
+import io.github.rpgclasses.network.Packets.ClassPlan;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
-import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.screens.ConfirmScreen;
 import net.minecraft.client.gui.screens.PauseScreen;
 import net.minecraft.client.gui.screens.Screen;
@@ -28,8 +29,9 @@ import java.util.Locale;
 
 /**
  * Pantalla de clases. En modo selección (al entrar sin clase) no se puede cerrar hasta elegir;
- * en modo libro (tecla) consulta cualquier clase y, en la propia, permite gastar puntos, elegir
- * subclase y reiniciar. Todas las acciones se envían al servidor, que es quien las valida.
+ * en modo libro (tecla) consulta cualquier clase. La pestaña "Árbol" muestra el árbol de habilidades
+ * ({@link SkillTreeView}): de cualquier clase como vista previa y, en la propia, para planear puntos,
+ * perks y subclase y confirmarlos de una vez. Todas las acciones se envían al servidor, que las valida.
  */
 public final class ClassScreen extends Screen {
     private static final int LINE_HEIGHT = 10;
@@ -47,8 +49,9 @@ public final class ClassScreen extends Screen {
     private int scroll;
     private int panelLeft, panelTop, panelRight, panelBottom, headerTop;
     private long lastXp = -1;
-    /** Ayuda de la fila bajo el ratón en la pestaña de progreso (rama bloqueada o perk elegido). */
-    private Component pendingTooltip;
+    private final SkillTreeView tree = new SkillTreeView();
+    /** Plan con el que se construyeron los botones del pie (si cambia, se reconstruyen). */
+    private List<TreePlan.Step> footerPlan = List.of();
 
     public ClassScreen(boolean selecting) {
         super(Component.translatable(selecting ? "ui.rites_and_paths.title_select" : "ui.rites_and_paths.title_book"));
@@ -69,8 +72,8 @@ public final class ClassScreen extends Screen {
         return ClientHandlers.LOCAL_DATA.state;
     }
 
-    /** La pestaña de progreso solo existe para la clase propia y fuera del modo selección. */
-    private boolean progressAvailable() {
+    /** El árbol se puede editar solo en la clase propia y fuera del modo selección; las demás son vista previa. */
+    private boolean treeEditable() {
         return !selecting && selectedClass != null && selectedClass.equals(state().classId);
     }
 
@@ -93,7 +96,6 @@ public final class ClassScreen extends Screen {
             String own = state().classId;
             selectedClass = own != null && classIds.contains(own) ? own : (classIds.isEmpty() ? null : classIds.get(0));
         }
-        if (tab == ClassPages.Tab.PROGRESS && !progressAvailable()) tab = ClassPages.Tab.SUMMARY;
 
         Portraits.clearCache();
         panelLeft = LEFT_WIDTH + 14;
@@ -119,10 +121,7 @@ public final class ClassScreen extends Screen {
         }
 
         // Pestañas.
-        List<ClassPages.Tab> tabs = new ArrayList<>();
-        for (ClassPages.Tab t : ClassPages.Tab.values()) {
-            if (t != ClassPages.Tab.PROGRESS || progressAvailable()) tabs.add(t);
-        }
+        List<ClassPages.Tab> tabs = List.of(ClassPages.Tab.values());
         int tabWidth = (panelRight - panelLeft) / tabs.size();
         for (int i = 0; i < tabs.size(); i++) {
             ClassPages.Tab t = tabs.get(i);
@@ -142,14 +141,30 @@ public final class ClassScreen extends Screen {
             Component name = Component.translatable(Ids.langKey("class", selectedClass, "name"));
             addRenderableWidget(Button.builder(Component.translatable("ui.rites_and_paths.choose", name), btn -> confirmChoice())
                     .bounds(center - 90, footerY, 180, 20).build());
-        } else if (tab == ClassPages.Tab.PROGRESS) {
+        } else if (tab == ClassPages.Tab.PROGRESS && treeEditable()) {
             int w = Math.min(120, (panelRight - panelLeft - 8) / 3);
-            Button resetSub = Button.builder(Component.translatable("ui.rites_and_paths.respec_subclass"),
-                    btn -> confirm("ui.rites_and_paths.respec_subclass", ClassAction.Action.RESPEC_SUBCLASS, "")).bounds(center - w * 3 / 2 - 4, footerY, w, 20).build();
-            resetSub.active = state().subclassId != null;
-            addRenderableWidget(resetSub);
-            addRenderableWidget(Button.builder(Component.translatable("ui.rites_and_paths.respec_class"),
-                    btn -> confirm("ui.rites_and_paths.respec_class", ClassAction.Action.RESPEC_CLASS, "")).bounds(center - w / 2, footerY, w, 20).build());
+            ClassDef def = DefinitionStore.CLIENT.classDef(selectedClass);
+            tree.setup(def, true, panelLeft + 3, headerTop + 3, panelRight - 3, panelBottom - 3, this::availableXp, costMultiplier());
+            footerPlan = tree.plan().steps();
+            if (!tree.plan().isEmpty()) {
+                // Plan pendiente: descartarlo o confirmarlo (con aviso si bloquea ramas o elige perk o subclase).
+                TreePlan.Simulation sim = tree.simulate();
+                addRenderableWidget(Button.builder(Component.translatable("ui.rites_and_paths.tree.plan_discard"), btn -> {
+                    tree.plan().clear();
+                    rebuildWidgets();
+                }).bounds(center - w * 3 / 2 - 4, footerY, w, 20).build());
+                Button ok = Button.builder(Component.translatable("ui.rites_and_paths.tree.plan_confirm", sim.cost), btn -> confirmPlan())
+                        .bounds(center - w / 2, footerY, w, 20).build();
+                ok.active = !sim.valid.isEmpty();
+                addRenderableWidget(ok);
+            } else {
+                Button resetSub = Button.builder(Component.translatable("ui.rites_and_paths.respec_subclass"),
+                        btn -> confirm("ui.rites_and_paths.respec_subclass", ClassAction.Action.RESPEC_SUBCLASS, "")).bounds(center - w * 3 / 2 - 4, footerY, w, 20).build();
+                resetSub.active = state().subclassId != null;
+                addRenderableWidget(resetSub);
+                addRenderableWidget(Button.builder(Component.translatable("ui.rites_and_paths.respec_class"),
+                        btn -> confirm("ui.rites_and_paths.respec_class", ClassAction.Action.RESPEC_CLASS, "")).bounds(center - w / 2, footerY, w, 20).build());
+            }
             addRenderableWidget(Button.builder(Component.translatable("ui.rites_and_paths.close"), btn -> onClose())
                     .bounds(center + w / 2 + 4, footerY, w, 20).build());
         } else if (!selecting) {
@@ -159,7 +174,10 @@ public final class ClassScreen extends Screen {
 
         if (tab == ClassPages.Tab.PROGRESS) {
             lines = List.of();
-            initProgress();
+            if (!treeEditable()) {
+                tree.setup(DefinitionStore.CLIENT.classDef(selectedClass), false, panelLeft + 3, headerTop + 3, panelRight - 3, panelBottom - 3,
+                        this::availableXp, costMultiplier());
+            }
         } else {
             rebuildLines();
         }
@@ -229,138 +247,64 @@ public final class ClassScreen extends Screen {
         }
     }
 
-    private static final int BRANCH_ROW = 20;
+    // --- Plan del árbol ---
 
-    private int branchRowY(int index) {
-        return panelTop + 20 + index * BRANCH_ROW;
-    }
-
-    private int subclassRowY(int branchCount) {
-        return branchRowY(branchCount) + 10;
-    }
-
-    private int barLeft() {
-        return panelLeft + 8 + 90;
-    }
-
-    private int barRight() {
-        return panelRight - 78;
-    }
-
-    private void initProgress() {
+    /** Envía el plan; si bloquea ramas, elige perks o subclase, primero pide confirmación con el resumen. */
+    private void confirmPlan() {
+        if (minecraft == null) return;
         ClassDef def = DefinitionStore.CLIENT.classDef(selectedClass);
-        if (def == null) return;
-        ProgressState s = state();
-        boolean canPay = !ProgressionRules.isMaxed(s) && availableXp() >= ProgressionRules.nextCost(s, costMultiplier());
-
-        for (int i = 0; i < def.branches().size(); i++) {
-            BranchDef b = def.branches().get(i);
-            int y = branchRowY(i);
-            boolean locked = ProgressionRules.isBranchLocked(s, b.id());
-            Button plus = Button.builder(Component.literal("+"), btn -> send(ClassAction.Action.SPEND_BRANCH, b.id()))
-                    .bounds(panelRight - 34, y, 24, 18).build();
-            plus.active = canPay && !locked && s.pointsIn(b.id()) < b.maxPoints();
-            if (locked) plus.setTooltip(Tooltip.create(Component.translatable("ui.rites_and_paths.branch_locked")));
-            addRenderableWidget(plus);
-
-            // Rama llena sin perk: los dos perks como botones en el hueco de la barra.
-            if (ProgressionRules.perkPending(s, b) && barRight() > barLeft() + 40) {
-                int n = b.perks().size();
-                int w = (barRight() - barLeft()) / n;
-                for (int k = 0; k < n; k++) {
-                    PerkDef p = b.perks().get(k);
-                    MutableComponent name = ClassPages.perkName(def, b, p);
-                    Button pick = Button.builder(name, btn -> confirmPerk(name, b.id(), p.id()))
-                            .bounds(barLeft() + k * w, y, w - 2, 18).build();
-                    pick.setTooltip(Tooltip.create(ClassPages.perkTooltip(def, b, p)));
-                    addRenderableWidget(pick);
+        TreePlan.Simulation sim = tree.simulate();
+        if (def == null || sim.valid.isEmpty()) {
+            tree.plan().clear();
+            rebuildWidgets();
+            return;
+        }
+        List<ClassAction> actions = new ArrayList<>();
+        List<String> perks = new ArrayList<>();
+        String subclass = null;
+        for (TreePlan.Step st : sim.valid) {
+            switch (st.type()) {
+                case BRANCH -> actions.add(new ClassAction(ClassAction.Action.SPEND_BRANCH, st.branch()));
+                case PERK -> {
+                    actions.add(new ClassAction(ClassAction.Action.CHOOSE_PERK, ClassAction.perkArg(st.branch(), st.value())));
+                    BranchDef b = def.branch(st.branch());
+                    if (b != null && b.perk(st.value()) != null) perks.add(ClassPages.perkName(def, b, b.perk(st.value())).getString());
                 }
+                case CHOOSE_SUBCLASS -> {
+                    actions.add(new ClassAction(ClassAction.Action.CHOOSE_SUBCLASS, st.value()));
+                    subclass = Component.translatable(Ids.langKey("subclass", st.value(), "name")).getString();
+                }
+                case SUBCLASS -> actions.add(new ClassAction(ClassAction.Action.SPEND_SUBCLASS, ""));
             }
         }
-
-        int y = subclassRowY(def.branches().size());
-        if (s.subclassId != null) {
-            Button plus = Button.builder(Component.literal("+"), btn -> send(ClassAction.Action.SPEND_SUBCLASS, ""))
-                    .bounds(panelRight - 34, y, 24, 18).build();
-            plus.active = canPay && s.subclassLevel < ProgressionRules.subclassCap(s.basePoints());
-            addRenderableWidget(plus);
-        } else if (s.basePoints() >= ProgressionRules.SUBCLASS_UNLOCK) {
-            int count = def.subclasses().size();
-            int w = (panelRight - panelLeft - 16) / Math.max(1, count);
-            for (int i = 0; i < count; i++) {
-                String subId = def.subclasses().get(i);
-                var subDef = DefinitionStore.CLIENT.subclassDef(subId);
-                Component name = Component.translatable(Ids.langKey("subclass", subId, "name"));
-                addRenderableWidget(new PortraitButton(panelLeft + 8 + i * w, y + 10, w - 4, 22, name, Portraits.subclassTex(subId),
-                        subDef == null ? null : subDef.icon(), PortraitButton.Layout.HORIZONTAL, true,
-                        btn -> confirmNamed("ui.rites_and_paths.confirm_subclass", name, ClassAction.Action.CHOOSE_SUBCLASS, subId)));
+        List<String> locks = new ArrayList<>();
+        for (BranchDef b : def.branches()) {
+            if (!ProgressionRules.isBranchLocked(state(), b.id()) && ProgressionRules.isBranchLocked(sim.state, b.id())) {
+                locks.add(ClassPages.branchTitle(def, b).getString());
             }
         }
+        Runnable send = () -> {
+            Net.CHANNEL.sendToServer(new ClassPlan(List.copyOf(actions)));
+            tree.plan().clear();
+        };
+        if (locks.isEmpty() && perks.isEmpty() && subclass == null) {
+            send.run();
+            rebuildWidgets();
+            return;
+        }
+        MutableComponent text = Component.translatable("ui.rites_and_paths.tree.confirm_points", sim.points, sim.cost);
+        if (!locks.isEmpty()) text.append("\n").append(Component.translatable("ui.rites_and_paths.tree.confirm_locks", String.join(", ", locks)));
+        if (!perks.isEmpty()) text.append("\n").append(Component.translatable("ui.rites_and_paths.tree.confirm_perks", String.join(", ", perks)));
+        if (subclass != null) text.append("\n").append(Component.translatable("ui.rites_and_paths.tree.confirm_subclass", subclass));
+        minecraft.setScreen(new ConfirmScreen(yes -> {
+            if (yes) send.run();
+            minecraft.setScreen(this);
+        }, Component.translatable("ui.rites_and_paths.tree.confirm_title"), text));
     }
 
-    private void renderProgress(GuiGraphics g, int mouseX, int mouseY) {
-        ClassDef def = DefinitionStore.CLIENT.classDef(selectedClass);
-        if (def == null) return;
-        ProgressState s = state();
-        int x = panelLeft + 8;
-        Component cost = ProgressionRules.isMaxed(s)
-                ? Component.translatable("msg.rites_and_paths.max_level")
-                : Component.translatable("msg.rites_and_paths.next_cost", ProgressionRules.nextCost(s, costMultiplier()));
-        g.drawString(font, Component.translatable("ui.rites_and_paths.progress_header", s.totalLevel(), availableXp(), cost), x, panelTop + 7, 0xFFFF55);
-
-        Component hover = null;
-        for (int i = 0; i < def.branches().size(); i++) {
-            BranchDef b = def.branches().get(i);
-            int y = branchRowY(i);
-            boolean locked = ProgressionRules.isBranchLocked(s, b.id());
-            Component name = Component.translatable(Ids.langKey("branch", def.id() + "." + b.id(), "name"));
-            g.drawString(font, name, x + (locked ? 10 : 0), y + 5, locked ? 0x777777 : 0xFFAA00);
-            int points = s.pointsIn(b.id());
-            boolean rowHovered = mouseY >= y && mouseY < y + 18 && mouseX >= x && mouseX < panelRight - 36;
-            String perkId = s.perkIn(b.id());
-            PerkDef chosen = perkId == null ? null : b.perk(perkId);
-            if (chosen != null) {
-                // Perk elegido: su nombre ocupa el sitio de la barra (que estaría llena).
-                g.drawString(font, Component.literal("\u2605 ").append(ClassPages.perkName(def, b, chosen)), barLeft(), y + 5, 0xFF55FF);
-                if (rowHovered) hover = ClassPages.perkTooltip(def, b, chosen);
-            } else if (!ProgressionRules.perkPending(s, b) && barRight() > barLeft() + 20) {
-                g.fill(barLeft(), y + 6, barRight(), y + 12, 0xFF333333);
-                g.fill(barLeft(), y + 6, barLeft() + (barRight() - barLeft()) * points / b.maxPoints(), y + 12, 0xFFFFAA00);
-            }
-            g.drawString(font, points + "/" + b.maxPoints(), panelRight - 72, y + 5, locked ? 0x777777 : 0xFFFFFF);
-            if (locked) {
-                // Oscurecida y con candado (regla 13).
-                g.fill(x - 2, y, panelRight - 36, y + 18, 0x90000000);
-                drawLock(g, x, y + 4);
-                if (rowHovered) hover = Component.translatable("ui.rites_and_paths.branch_locked");
-            } else if (ProgressionRules.perkPending(s, b) && rowHovered && mouseX < barLeft()) {
-                hover = Component.translatable("ui.rites_and_paths.perk_choose");
-            }
-        }
-
-        int y = subclassRowY(def.branches().size());
-        if (s.subclassId != null) {
-            int cap = ProgressionRules.subclassCap(s.basePoints());
-            var subDef = DefinitionStore.CLIENT.subclassDef(s.subclassId);
-            Portraits.draw(g, Portraits.subclassTex(s.subclassId), subDef == null ? null : subDef.icon(), x, y, 18);
-            g.drawString(font, Component.translatable(Ids.langKey("subclass", s.subclassId, "name")), x + 22, y + 5, 0x55FFFF);
-            g.drawString(font, Component.translatable("ui.rites_and_paths.subclass_level", s.subclassLevel, cap), x + 140, y + 5, 0xFFFFFF);
-        } else if (s.basePoints() >= ProgressionRules.SUBCLASS_UNLOCK) {
-            g.drawString(font, Component.translatable("ui.rites_and_paths.subclass_pick"), x, y, 0x55FFFF);
-        } else {
-            g.drawString(font, Component.translatable("ui.rites_and_paths.subclass_locked", ProgressionRules.SUBCLASS_UNLOCK, s.basePoints()), x, y + 5, 0xAAAAAA);
-        }
-        pendingTooltip = hover;
-    }
-
-    /** Candado de 7x9 píxeles dibujado con rectángulos. */
-    private static void drawLock(GuiGraphics g, int x, int y) {
-        int c = 0xFFBBBBBB;
-        g.fill(x + 1, y, x + 6, y + 1, c);
-        g.fill(x + 1, y, x + 2, y + 4, c);
-        g.fill(x + 5, y, x + 6, y + 4, c);
-        g.fill(x, y + 4, x + 7, y + 9, c);
-        g.fill(x + 3, y + 5, x + 4, y + 7, 0xFF333333);
+    /** Tras un clic en el árbol: si el plan ha cambiado, los botones del pie (confirmar, coste) también. */
+    private void refreshPlanButtons() {
+        if (tab == ClassPages.Tab.PROGRESS && treeEditable() && !tree.plan().steps().equals(footerPlan)) rebuildWidgets();
     }
 
     // --- Acciones ---
@@ -371,15 +315,6 @@ public final class ClassScreen extends Screen {
 
     private void confirm(String titleKey, ClassAction.Action action, String arg) {
         confirmWith(Component.translatable(titleKey), Component.translatable("ui.rites_and_paths.respec_text", lossPercent()), action, arg);
-    }
-
-    private void confirmPerk(Component name, String branchId, String perkId) {
-        confirmWith(Component.translatable("ui.rites_and_paths.confirm_perk", name), Component.translatable("ui.rites_and_paths.confirm_perk_text"),
-                ClassAction.Action.CHOOSE_PERK, ClassAction.perkArg(branchId, perkId));
-    }
-
-    private void confirmNamed(String titleKey, Component name, ClassAction.Action action, String arg) {
-        confirmWith(Component.translatable(titleKey, name), Component.translatable("ui.rites_and_paths.confirm_subclass_text"), action, arg);
     }
 
     private void confirmWith(Component title, Component text, ClassAction.Action action, String arg) {
@@ -445,11 +380,10 @@ public final class ClassScreen extends Screen {
         }
 
         UiStyle.panel(g, panelLeft, headerTop, panelRight, panelBottom);
-        renderHeader(g);
-        pendingTooltip = null;
         if (tab == ClassPages.Tab.PROGRESS) {
-            renderProgress(g, mouseX, mouseY);
+            tree.render(g, font, mouseX, mouseY);
         } else {
+            renderHeader(g);
             g.enableScissor(panelLeft, panelTop + 4, panelRight, panelBottom - 4);
             int textY = panelTop + 4 - scroll;
             for (FormattedCharSequence line : lines) {
@@ -469,13 +403,41 @@ public final class ClassScreen extends Screen {
         }
 
         super.render(g, mouseX, mouseY, partialTick);
-        if (pendingTooltip != null) g.renderTooltip(font, font.split(pendingTooltip, 200), mouseX, mouseY);
+        if (tab == ClassPages.Tab.PROGRESS) tree.renderTooltip(g, font, mouseX, mouseY);
+    }
+
+    @Override
+    public boolean mouseClicked(double mouseX, double mouseY, int button) {
+        if (tab == ClassPages.Tab.PROGRESS && tree.mouseClicked(mouseX, mouseY, button)) return true;
+        return super.mouseClicked(mouseX, mouseY, button);
+    }
+
+    @Override
+    public boolean mouseDragged(double mouseX, double mouseY, int button, double dragX, double dragY) {
+        if (tab == ClassPages.Tab.PROGRESS && tree.mouseDragged(mouseX, mouseY, button, dragX, dragY)) return true;
+        return super.mouseDragged(mouseX, mouseY, button, dragX, dragY);
+    }
+
+    @Override
+    public boolean mouseReleased(double mouseX, double mouseY, int button) {
+        if (tab == ClassPages.Tab.PROGRESS && tree.mouseReleased(mouseX, mouseY, button)) {
+            refreshPlanButtons();
+            return true;
+        }
+        return super.mouseReleased(mouseX, mouseY, button);
     }
 
     @Override
     public boolean mouseScrolled(double mouseX, double mouseY, double delta) {
+        if (tab == ClassPages.Tab.PROGRESS) return tree.mouseScrolled(mouseX, mouseY, delta);
         scroll = Math.max(0, Math.min(maxScroll(), scroll - (int) (delta * LINE_HEIGHT * 3)));
         return true;
+    }
+
+    @Override
+    public void removed() {
+        tree.saveCamera();
+        super.removed();
     }
 
     @Override
@@ -485,6 +447,7 @@ public final class ClassScreen extends Screen {
             minecraft.setScreen(new PauseScreen(true));
             return true;
         }
+        if (tab == ClassPages.Tab.PROGRESS && tree.keyPressed(keyCode)) return true;
         if (keyCode == GLFW.GLFW_KEY_PAGE_DOWN || keyCode == GLFW.GLFW_KEY_DOWN) {
             return mouseScrolled(0, 0, keyCode == GLFW.GLFW_KEY_DOWN ? -1 : -4);
         }

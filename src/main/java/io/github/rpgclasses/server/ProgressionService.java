@@ -53,6 +53,46 @@ public final class ProgressionService {
         return result;
     }
 
+    /** Acciones que puede llevar un plan del árbol de habilidades (nada de reinicios ni de elegir clase o raza). */
+    private static final java.util.Set<Action> PLAN_ACTIONS =
+            java.util.EnumSet.of(Action.SPEND_BRANCH, Action.CHOOSE_PERK, Action.CHOOSE_SUBCLASS, Action.SPEND_SUBCLASS);
+    public static final int MAX_PLAN = 64;
+
+    /**
+     * Aplica en orden los pasos de un plan del árbol y avisa con un solo mensaje. Cada paso se valida igual que
+     * si llegara suelto; el primero que falla detiene el plan (los anteriores se quedan aplicados).
+     */
+    public static void performPlan(ServerPlayer player, java.util.List<io.github.rpgclasses.network.Packets.ClassAction> steps) {
+        PlayerClassData data = PlayerClassDataProvider.get(player);
+        if (data == null || steps.isEmpty() || steps.size() > MAX_PLAN) return;
+        for (var step : steps) if (!PLAN_ACTIONS.contains(step.action())) return;
+        ProgressState s = data.state;
+        long xpBefore = currentXp(player);
+        int done = 0;
+        Result failure = null;
+        for (var step : steps) {
+            String arg = step.arg() == null ? "" : step.arg();
+            Result r = perform(player, s, step.action(), arg);
+            DebugLog.event(player, "progreso", "plan {} '{}' → {}", step.action(), arg, r);
+            if (!r.ok()) {
+                failure = r;
+                break;
+            }
+            done++;
+        }
+        DebugLog.event(player, "progreso", "plan {}/{}; clase {}, ramas {}, perks {}, subclase {} ({})", done, steps.size(),
+                s.classId, s.branchPoints, s.perks, s.subclassId, s.subclassLevel);
+        long spent = Math.max(0, xpBefore - currentXp(player));
+        if (done > 0) {
+            player.sendSystemMessage(Component.translatable("msg.rites_and_paths.plan_applied", done, spent).withStyle(ChatFormatting.GREEN));
+        }
+        if (failure != null) {
+            player.sendSystemMessage(Component.translatable("msg.rites_and_paths.plan_partial", done, steps.size(), resultMessage(failure))
+                    .withStyle(ChatFormatting.RED));
+        }
+        StatEngine.refresh(player);
+    }
+
     private static Result perform(ServerPlayer player, ProgressState s, Action action, String arg) {
         DefinitionStore defs = DefinitionStore.SERVER;
         double mult = ServerConfig.XP_COST_MULTIPLIER.get();

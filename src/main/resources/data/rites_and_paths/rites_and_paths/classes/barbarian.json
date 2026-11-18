@@ -27,6 +27,9 @@
   "branches": [
     {
       "id": "fury",
+      "display": {
+        "icon": "minecraft:fire_charge"
+      },
       "max_points": 10,
       "effects": [
         {
@@ -74,6 +77,9 @@
     },
     {
       "id": "brutality",
+      "display": {
+        "icon": "minecraft:diamond_axe"
+      },
       "max_points": 10,
       "effects": [
         {
@@ -132,6 +138,9 @@
     },
     {
       "id": "iron_skin",
+      "display": {
+        "icon": "minecraft:iron_ingot"
+      },
       "max_points": 10,
       "effects": [
         {
@@ -213,6 +222,9 @@
     },
     {
       "id": "stampede",
+      "display": {
+        "icon": "minecraft:saddle"
+      },
       "max_points": 10,
       "effects": [
         {
@@ -253,6 +265,9 @@
     },
     {
       "id": "hardened",
+      "display": {
+        "icon": "minecraft:rabbit_hide"
+      },
       "max_points": 10,
       "effects": [
         {

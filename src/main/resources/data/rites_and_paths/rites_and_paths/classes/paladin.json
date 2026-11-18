@@ -60,6 +60,9 @@
   "branches": [
     {
       "id": "cuirass",
+      "display": {
+        "icon": "minecraft:iron_chestplate"
+      },
       "max_points": 10,
       "effects": [
         {
@@ -121,6 +124,9 @@
     },
     {
       "id": "will",
+      "display": {
+        "icon": "minecraft:milk_bucket"
+      },
       "max_points": 10,
       "effects": [
         {
@@ -173,6 +179,9 @@
     },
     {
       "id": "push",
+      "display": {
+        "icon": "minecraft:piston"
+      },
       "max_points": 10,
       "effects": [
         {
@@ -219,6 +228,9 @@
     },
     {
       "id": "banner",
+      "display": {
+        "icon": "minecraft:white_banner"
+      },
       "max_points": 10,
       "effects": [
         {
@@ -268,6 +280,9 @@
     },
     {
       "id": "smite",
+      "display": {
+        "icon": "minecraft:golden_sword"
+      },
       "max_points": 10,
       "effects": [
         {

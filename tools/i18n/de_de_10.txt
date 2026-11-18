@@ -1,0 +1,54 @@
+0 Ziehen zum Bewegen · Mausrad: Zoom · Klick: planen · Rechtsklick: entfernen
+1 Vorschau: ziehen zum Bewegen, Mausrad zum Zoomen
+2 Unterklasse
+3 Vorschau
+4 Unterklasse: %s Basispunkte
+5 Stufe %s/%s
+6 → %s
+7 EP %s · Höchststufe
+8 EP %s · nächste %s
+9 Plan: %s Änderungen · −%s EP
+10 Unterklasse: %s/%s Basispunkte
+11 Zweige
+12 Ansicht zentrieren (Pos1, C oder Leertaste)
+13 Klicken oder ziehen, um dich im Baum zu bewegen
+14 Gesamtstufe %s/%s · Basis %s/%s · Unterklasse %s/%s
+15 Der Ring zeigt die Gesamtstufe; die Rauten sind die Fähigkeiten, die sie freischaltet.
+16 Ist er voll, wählst du einen Perk: %s
+17 Mit vollem Zweig:
+18 %s · Punkt %s/%s
+19 Wenn du diesen Zweig nutzt, werden gesperrt: %s
+20 Perk gewählt
+21 Im Plan. Rechtsklick: entfernen
+22 Klick: diesen Perk wählen
+23 Der andere Perk dieses Zweigs wurde gewählt.
+24 Wird beim Bestätigen des Plans gesperrt.
+25 Fülle den Zweig, um einen seiner Perks zu wählen.
+26 Freigeschaltet
+27 Wird mit dem Plan freigeschaltet
+28 Noch %s Stufen
+29 Unterklassenstufe %s/%s · aktuelle Grenze %s
+30 Deine Unterklasse
+31 Klick: diese Unterklasse wählen
+32 Du hast schon eine andere Unterklasse. Setze sie zurück, um zu wechseln.
+33 Der Plan wählt eine andere Unterklasse.
+34 %s · Stufe %s/%s
+35 Für diese Stufe brauchst du %s Basispunkte.
+36 Klick: diese Unterklasse wählen und bis hier planen
+37 Die Unterklasse wird mit 15 Basispunkten freigeschaltet.
+38 Wird mit Gesamtstufe %s freigeschaltet
+39 Wird mit Unterklassenstufe %s freigeschaltet
+40 Gekauft
+41 Kosten: %s EP
+42 Klick: zum Plan hinzufügen
+43 Dir fehlen %s EP
+44 Klick: bis hier planen (%s Punkte, %s EP)
+45 Plan verwerfen
+46 Bestätigen (%s EP)
+47 Es werden %s Stufen für %s EP gekauft.
+48 Bis zum Zurücksetzen der Klasse gesperrt: %s.
+49 Perks (fest bis zum Zurücksetzen der Klasse): %s.
+50 Unterklasse: %s.
+51 Plan anwenden?
+52 Plan angewendet: %s Änderungen (%s EP).
+53 Der Plan stoppte nach %s von %s Änderungen: %s

@@ -63,6 +63,9 @@
   "branches": [
     {
       "id": "compas",
+      "display": {
+        "icon": "minecraft:note_block"
+      },
       "max_points": 10,
       "effects": [
         {
@@ -103,6 +106,9 @@
     },
     {
       "id": "resonance",
+      "display": {
+        "icon": "minecraft:bell"
+      },
       "max_points": 10,
       "effects": [
         {
@@ -140,6 +146,9 @@
     },
     {
       "id": "perfect_pitch",
+      "display": {
+        "icon": "minecraft:goat_horn"
+      },
       "max_points": 10,
       "effects": [
         {
@@ -182,6 +191,9 @@
     },
     {
       "id": "reverberation",
+      "display": {
+        "icon": "minecraft:echo_shard"
+      },
       "max_points": 10,
       "effects": [
         {
@@ -220,6 +232,9 @@
     },
     {
       "id": "dance",
+      "display": {
+        "icon": "minecraft:music_disc_cat"
+      },
       "max_points": 10,
       "effects": [
         {

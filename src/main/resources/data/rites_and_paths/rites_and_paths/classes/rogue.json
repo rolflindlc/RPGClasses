@@ -56,6 +56,9 @@
   "branches": [
     {
       "id": "shadow",
+      "display": {
+        "icon": "minecraft:ink_sac"
+      },
       "max_points": 10,
       "effects": [
         {
@@ -111,6 +114,9 @@
     },
     {
       "id": "edge",
+      "display": {
+        "icon": "minecraft:flint"
+      },
       "max_points": 10,
       "effects": [
         {
@@ -174,6 +180,9 @@
     },
     {
       "id": "wind",
+      "display": {
+        "icon": "minecraft:sugar"
+      },
       "max_points": 10,
       "effects": [
         {
@@ -239,6 +248,9 @@
     },
     {
       "id": "toxins",
+      "display": {
+        "icon": "minecraft:spider_eye"
+      },
       "max_points": 10,
       "effects": [
         {
@@ -282,6 +294,9 @@
     },
     {
       "id": "acrobatics",
+      "display": {
+        "icon": "minecraft:rabbit_foot"
+      },
       "max_points": 10,
       "effects": [
         {

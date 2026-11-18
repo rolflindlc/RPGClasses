@@ -1,0 +1,54 @@
+0 Glisser pour se déplacer · Molette : zoom · Clic : planifier · Clic droit : retirer
+1 Aperçu : glissez pour vous déplacer et utilisez la molette pour zoomer
+2 Sous-classe
+3 Aperçu
+4 Sous-classe : %s points de base
+5 Niveau %s/%s
+6 → %s
+7 XP %s · niveau max
+8 XP %s · suivant %s
+9 Plan : %s changements · −%s XP
+10 Sous-classe : %s/%s points de base
+11 Branches
+12 Centrer la vue (Origine, C ou espace)
+13 Cliquez ou glissez pour vous déplacer dans l'arbre
+14 Niveau total %s/%s · base %s/%s · sous-classe %s/%s
+15 L'anneau indique le niveau total ; les losanges sont les capacités qu'il débloque.
+16 Une fois remplie, vous choisissez un atout : %s
+17 Avec la branche remplie :
+18 %s · point %s/%s
+19 Utiliser cette branche verrouillera : %s
+20 Atout choisi
+21 Dans le plan. Clic droit : retirer
+22 Clic : choisir cet atout
+23 L'autre atout de cette branche a été choisi.
+24 Sera verrouillée à la confirmation du plan.
+25 Remplissez la branche pour choisir l'un de ses atouts.
+26 Débloquée
+27 Sera débloquée avec le plan
+28 Encore %s niveaux
+29 Niveau de sous-classe %s/%s · plafond actuel %s
+30 Votre sous-classe
+31 Clic : choisir cette sous-classe
+32 Vous avez déjà une autre sous-classe. Réinitialisez-la pour changer.
+33 Le plan choisit une autre sous-classe.
+34 %s · niveau %s/%s
+35 Il vous faut %s points de base pour ce niveau.
+36 Clic : choisir cette sous-classe et planifier jusqu'ici
+37 La sous-classe se débloque avec 15 points de base.
+38 Se débloque au niveau total %s
+39 Se débloque au niveau de sous-classe %s
+40 Acheté
+41 Coût : %s XP
+42 Clic : ajouter au plan
+43 Il vous manque %s XP
+44 Clic : planifier jusqu'ici (%s points, %s XP)
+45 Abandonner le plan
+46 Confirmer (%s XP)
+47 %s niveaux seront achetés pour %s XP.
+48 Verrouillées jusqu'à la réinitialisation de la classe : %s.
+49 Atouts (fixes jusqu'à la réinitialisation de la classe) : %s.
+50 Sous-classe : %s.
+51 Appliquer le plan ?
+52 Plan appliqué : %s changements (%s XP).
+53 Le plan s'est arrêté après %s changements sur %s : %s

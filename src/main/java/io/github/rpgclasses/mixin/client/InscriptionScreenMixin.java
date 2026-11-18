@@ -6,6 +6,7 @@ import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Pseudo;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -17,6 +18,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
  * pergamino para activar el botón, y manda el clic de inscribir. La inscripción la hace el servidor
  * ({@code InscriptionMenuMixin}).
  */
+// @Pseudo: la clase es de Iron's (no está en el jar de API con el que se compila) y puede no existir.
+@Pseudo
 @Mixin(targets = "io.redspace.ironsspellbooks.gui.inscription_table.InscriptionTableScreen", remap = false)
 public abstract class InscriptionScreenMixin {
     @Shadow

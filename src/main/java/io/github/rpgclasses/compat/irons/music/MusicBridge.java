@@ -55,7 +55,7 @@ import java.util.UUID;
 
 /**
  * Escuela musical del Bardo en Iron's Spells: registro de la escuela ({@code rites_and_paths:music}, con poder
- * {@code rites_and_paths:music_spell_power}) y de sus 12 conjuros, y las reglas:
+ * {@code rites_and_paths:music_spell_power}) y de sus 21 conjuros, y las reglas:
  * <ul>
  *   <li>Los conjuros musicales solo se lanzan tocando el instrumento (clic derecho): la tecla de lanzar de Iron's no
  *       sirve, ni los libros ni los pergaminos (no se pueden inscribir).</li>
@@ -85,6 +85,9 @@ public final class MusicBridge implements BardMagic {
 
     /** Lanzamiento en curso desde el instrumento (el único permitido para los conjuros musicales). */
     private static final ThreadLocal<Boolean> FROM_INSTRUMENT = ThreadLocal.withInitial(() -> false);
+    /** El conjuro del lanzamiento en curso llegó a lanzarse (no lo frenó el combo, el maná ni la recarga). */
+    private static final ThreadLocal<Boolean> CAST_FIRED = ThreadLocal.withInitial(() -> false);
+    private static final Map<UUID, Long> FREE_CAST = new HashMap<>();
 
     private static final class Recital {
         final Deque<Object[]> recent = new ArrayDeque<>();
@@ -118,14 +121,17 @@ public final class MusicBridge implements BardMagic {
         if (option != null && slot.equals(option.slot) && isMusic(option.spellData.getSpell().getSpellId())) {
             chosen = option;
         } else {
-            // Si en la rueda hay elegido otro conjuro, se toca el primero del instrumento.
-            List<SpellSelectionManager.SelectionOption> own = manager.getSpellsForSlot(slot);
-            for (SpellSelectionManager.SelectionOption o : own) {
-                if (isMusic(o.spellData.getSpell().getSpellId())) {
+            // Si en la rueda hay elegido otro conjuro, se toca el primero del instrumento que se pueda lanzar.
+            SpellSelectionManager.SelectionOption first = null;
+            for (SpellSelectionManager.SelectionOption o : manager.getSpellsForSlot(slot)) {
+                if (!isMusic(o.spellData.getSpell().getSpellId())) continue;
+                if (first == null) first = o;
+                if (MusicRotation.castable(player, o)) {
                     chosen = o;
                     break;
                 }
             }
+            if (chosen == null) chosen = first;
         }
         if (chosen == null) {
             player.displayClientMessage(Component.translatable("msg.rites_and_paths.bard.not_instrument"), true);
@@ -133,11 +139,24 @@ public final class MusicBridge implements BardMagic {
         }
         SpellData data = chosen.spellData;
         FROM_INSTRUMENT.set(true);
+        CAST_FIRED.set(false);
         try {
             data.getSpell().attemptInitiateCast(instrument, data.getLevel(), player.level(), player, CastSource.SPELLBOOK, true, slot);
         } finally {
             FROM_INSTRUMENT.set(false);
         }
+        // Tras lanzar, la selección pasa al siguiente conjuro que se pueda tocar.
+        if (CAST_FIRED.get()) MusicRotation.rotate(player, true, chosen);
+    }
+
+    @Override
+    public void rotateSpell(ServerPlayer player, boolean afterCast) {
+        MusicRotation.rotate(player, afterCast, null);
+    }
+
+    /** Solo Magistral: el siguiente conjuro (que no sea el propio Solo) no tiene recarga durante este tiempo. */
+    static void armFreeCast(ServerPlayer player, long ticks) {
+        FREE_CAST.put(player.getUUID(), player.level().getGameTime() + ticks);
     }
 
     @Override
@@ -225,6 +244,7 @@ public final class MusicBridge implements BardMagic {
     @SubscribeEvent
     public void onCast(SpellOnCastEvent event) {
         if (!(event.getEntity() instanceof ServerPlayer player) || !isMusic(event.getSpellId())) return;
+        if (FROM_INSTRUMENT.get()) CAST_FIRED.set(true);
         if (!AbilityService.has(player, Bard.RECITAL)) return;
         var params = AbilityService.params(Bard.RECITAL);
         Recital r = RECITALS.computeIfAbsent(player.getUUID(), k -> new Recital());
@@ -251,6 +271,16 @@ public final class MusicBridge implements BardMagic {
     @SubscribeEvent
     public void onCooldown(SpellCooldownAddedEvent.Pre event) {
         if (!(event.getEntity() instanceof ServerPlayer player)) return;
+        // Solo Magistral: el siguiente conjuro sale sin recarga.
+        Long freeUntil = FREE_CAST.get(player.getUUID());
+        if (freeUntil != null && isMusic(event.getSpell().getSpellId())
+                && !event.getSpell().getSpellId().equals(MusicSpellInfo.GRAND_SOLO.fullId())) {
+            FREE_CAST.remove(player.getUUID());
+            if (freeUntil >= player.level().getGameTime()) {
+                event.setEffectiveCooldown(0);
+                return;
+            }
+        }
         Recital r = RECITALS.get(player.getUUID());
         if (r == null || r.halveNext == null || !r.halveNext.equals(event.getSpell().getSpellId())) return;
         r.halveNext = null;
@@ -261,5 +291,7 @@ public final class MusicBridge implements BardMagic {
     @SubscribeEvent
     public void onLogout(PlayerEvent.PlayerLoggedOutEvent event) {
         RECITALS.remove(event.getEntity().getUUID());
+        FREE_CAST.remove(event.getEntity().getUUID());
+        MusicSpells.forget(event.getEntity().getUUID());
     }
 }

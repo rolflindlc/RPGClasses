@@ -22,7 +22,8 @@
     "WolfRideMixin",
     "irons.InscriptionBookSlotMixin",
     "irons.InscriptionMenuMixin",
-    "irons.InscriptionScrollSlotMixin"
+    "irons.InscriptionScrollSlotMixin",
+    "irons.SpellSelectionMixin"
   ],
   "client": [
     "client.CameraZoomMixin",

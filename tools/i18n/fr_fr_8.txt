@@ -259,3 +259,31 @@
 258 Placez des partitions dans les emplacements. Les emplacements gris dépassent les vôtres : ils ne peuvent qu'être vidés.
 259 Pupitre : %s
 260 Tempo par point de combo
+261 Fugue
+262 Berceuse
+263 Résolution
+264 Écho
+265 Chœur fantôme
+266 Barrière d'harmonie
+267 Chant de sirène
+268 Grand solo
+269 Berceuse éternelle
+270 Tu bondis instantanément vers l'avant (environ 7 blocs, moins s'il y a un mur) en laissant une traînée de notes : les ennemis que tu traverses sont repoussés et étourdis une demi-seconde.
+271 Un cône de chant doux devant toi : les ennemis normaux qu'il atteint s'endorment. Tout dégât les réveille. Les boss sont immunisés et les joueurs dorment deux fois moins longtemps.
+272 Un accord qui résout la tension : toi et tes alliés proches perdez tous les effets négatifs et gagnez un bouclier d'absorption pendant quelques secondes.
+273 Répète ton dernier sort musical à moitié de sa puissance, sans dépenser le mana ni le délai de récupération de ce sort. Ne fonctionne que si tu l'as lancé récemment.
+274 Trois chanteurs spectraux chantent autour de toi pendant quelques secondes : les ennemis proches cessent de te poursuivre, toi et tes alliés, viennent écouter et subissent des dégâts sonores chaque seconde.
+275 Un dôme de notes reste là où tu le lances : il absorbe les projectiles ennemis et réduit les dégâts que toi et tes alliés subissez à l'intérieur.
+276 Un chant irrésistible : les ennemis proches sont attirés vers toi pendant quelques secondes (les boss plus lentement). Parfait pour les regrouper avant un Grondement ou une Dissonance.
+277 Tu joues un solo : pendant quelques secondes ton combo est au maximum et les erreurs ne le font pas baisser, et le prochain sort que tu lances n'a pas de récupération.
+278 Une berceuse qui protège tes alliés proches : le premier coup mortel que chacun reçoit pendant sa durée ne le tue pas ; ils survivent avec une partie de leur vie et sans effets négatifs.
+279 Bond de %s blocs ; étourdit %s s
+280 Sommeil %s s (les dégâts les réveillent)
+281 Retire les effets négatifs et donne %s d'absorption pendant %s s
+282 Répète ton dernier sort à %s%% de puissance (jusqu'à %s s après)
+283 Trois chanteurs pendant %s s : %s dégâts par seconde près d'eux
+284 Absorbe les projectiles et −%s%% de dégâts subis pendant %s s
+285 Attire les ennemis vers toi pendant %s s
+286 Combo au maximum sans perte pendant %s s ; ton prochain sort sans récupération
+287 Survivent à un coup mortel avec %s%% de vie (%s s)
+288 Aucun sort récent à répéter

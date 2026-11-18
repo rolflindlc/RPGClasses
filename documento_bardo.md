@@ -17,7 +17,7 @@ juego. **[verificar]** = comprobar con el pack.
 | Auras (canciones) y su persistencia | `bard/BardAuras.java`, `bard/BardEffects.java` |
 | Golpe a compás, Cantor de Guerra, guitarra-hacha, control (baile, silencio, hechizo), botín de jefes | `bard/BardCombat.java` |
 | Instrumentos, guitarra-hacha, partituras, atril, receta de subir partituras | `bard/Instrument.java`, `InstrumentItem`, `GuitarAxeItem`, `SheetMusicItem`, `Sheets`, `MusicStandMenu`, `SheetMusicUpgradeRecipe` |
-| Escuela musical y 12 conjuros en Iron's | `compat/irons/music/MusicBridge.java`, `MusicSpells.java` |
+| Escuela musical y 21 conjuros en Iron's (12 de la adenda + 9 del 18-11) | `compat/irons/music/MusicBridge.java`, `MusicSpells.java` |
 | Nota Cortante y Piano de Cola | `bard/CuttingNoteEntity.java`, `GrandPianoEntity.java`, `client/bard/GrandPianoRenderer.java` |
 | Baile de sacudir los hombros | `client/bard/DanceFx.java`, `mixin/client/DanceModelMixin.java` |
 | Texturas provisionales | `python3 -I tools/art/make_bard.py src/main/resources` |
@@ -131,3 +131,33 @@ Red: protocolo 16 (paquetes `BardNote`, `BardSync` y `DanceSync`).
   (cliente), con `remap=false` y `require=0` (nombres SRG de Iron's 3.16.3). Lógica en `bard/InscriptionTable.java`.
 - Las partituras (nivel 1 y máximo) salen también en la pestaña «Iron's Spellbooks Scrolls» (`irons_spellbooks:spellbook_scrolls`).
 - Sin compilar ni probar en juego: lo compilará GitHub Actions.
+
+## 18-11 (3): 9 conjuros nuevos y rotación de conjuros
+Los 12 originales siguen igual. Los nuevos están en `MusicSpellInfo` (valores a nivel 1), `MusicSpells` (lógica) y
+`bard/BardZones.java` (efectos que duran: coro, barrera, sirena, sueño y protección). Texto, recetas de partitura e
+iconos provisionales en `tools/bard.py`, `tools/i18n` y `tools/art/make_bard.py`. **[MEDIR]** todos los números.
+
+| Conjuro | Combo | Niv. | Maná | Recarga | Qué hace (nivel 1) |
+| ------- | ----- | ---- | ---- | ------- | ------------------ |
+| Fuga | 10 | 10 | 40 | 14 s | Salto instantáneo de 7 bloques (menos si hay un muro) en la dirección de la mirada; lo que atraviesas queda empujado y aturdido 0,5 s (jefes, la mitad). |
+| Nana | 10 | 10 | 55 | 30 s | Cono de 8 bloques: los enemigos normales se duermen 4 s (jugadores, la mitad); el daño los despierta; jefes inmunes. |
+| Resolución | 10 | 10 | 60 | 40 s | Radio 8: aliados (y tú) pierden todos los efectos negativos y ganan absorción (4 de vida con la mitad del poder musical en buffs) 10 s. |
+| Eco | 20 | 5 | 30 | 45 s | Repite tu último conjuro musical (hasta 30 s antes) al 50 % de poder, sin gastar su maná ni su recarga. Sin conjuro reciente no se lanza. No repite Eco ni Solo. |
+| Coro Fantasma | 20 | 5 | 100 | 60 s | Tres coristas (partículas, no entidades) a 3 bloques de ti durante 8 s: los mobs a 6 bloques dejan de atacar a tu grupo y van hacia ellos; 3 de daño por segundo a menos de 3,5 bloques. Los jefes solo reciben el daño. |
+| Barrera de Armonía | 20 | 5 | 90 | 50 s | Cúpula fija de radio 5 durante 6 s: elimina los proyectiles enemigos y −30 % de daño recibido para ti y tus aliados dentro (tope 60 %). |
+| Canto de Sirena | 20 | 5 | 85 | 45 s | Durante 2,5 s los enemigos a 12 bloques son arrastrados hacia ti (jefes al 40 % de fuerza). |
+| Solo Magistral | 30 | 5 | 150 | 120 s | Combo al máximo y sin perderlo (como Crescendo) 8 s; el siguiente conjuro (que no sea el Solo) no tiene recarga. |
+| Canción de Cuna Eterna | 30 | 5 | 180 | 150 s | Aliados a 10 bloques: durante 15 s el primer golpe mortal de cada uno no lo mata; sobrevive con el 30 % de vida y sin efectos negativos. **No resucita:** revivir a un jugador ya muerto no es fiable en Forge. |
+
+Los ingredientes de sus partituras están en `SPELL_INGREDIENT` de `tools/bard.py` (pluma, lana blanca, botella de miel,
+bloque de amatista, arena de almas, fragmento de prismarina, caparazón de nautilo, diamante, tótem de la inmortalidad).
+
+### Rotación de conjuros (mecánica nueva)
+* Con un instrumento en la mano principal o secundaria, la rueda de Iron's **solo muestra los conjuros del instrumento**:
+  no salen libros, armaduras, curios ni conjuros de raza (`mixin/irons/SpellSelectionMixin` y `RacialSpells`).
+* Tras cada lanzamiento, el conjuro elegido pasa al **siguiente del instrumento que se pueda tocar**: sin recarga y con
+  el combo mínimo cubierto. Si el elegido deja de poder tocarse (entra en recarga o el combo baja de su mínimo), pasa
+  solo al siguiente que pueda; se comprueba cada 5 ticks (`BardState.onServerTick` → `BardMagic.rotateSpell`).
+* La selección se mueve en el servidor (datos sincronizados de Iron's, por reflexión: `MusicRotation`). La rueda sigue
+  pudiendo usarse a mano, pero si se elige uno que no se puede tocar, se corrige solo.
+* Si ninguno se puede tocar, la selección se queda donde está.

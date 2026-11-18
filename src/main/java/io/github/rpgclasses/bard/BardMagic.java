@@ -16,6 +16,13 @@ public interface BardMagic {
     /** Reescribe el contenedor de conjuros de Iron's del instrumento a partir de sus partituras (si ha cambiado). */
     void syncContainer(ServerPlayer holder, ItemStack instrument);
 
+    /**
+     * Rotación de conjuros: con un instrumento en la mano, el conjuro elegido pasa solo al siguiente que se pueda tocar
+     * (sin recarga y con el combo suficiente). {@code afterCast}: acaba de lanzar uno, así que avanza aunque el actual
+     * siga disponible.
+     */
+    void rotateSpell(ServerPlayer player, boolean afterCast);
+
     /** Contrapunto: todos los conjuros en recarga pierden esa fracción de lo que les queda. */
     void refundAllCooldowns(ServerPlayer player, double fraction);
 

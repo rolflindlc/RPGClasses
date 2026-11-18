@@ -4,6 +4,8 @@ import io.github.rpgclasses.bard.Bard;
 import io.github.rpgclasses.bard.BardAuras;
 import io.github.rpgclasses.bard.BardCombat;
 import io.github.rpgclasses.bard.BardEffects;
+import io.github.rpgclasses.bard.BardState;
+import io.github.rpgclasses.bard.BardZones;
 import io.github.rpgclasses.bard.CuttingNoteEntity;
 import io.github.rpgclasses.bard.GrandPianoEntity;
 import io.github.rpgclasses.bard.MusicSpellInfo;
@@ -16,6 +18,7 @@ import io.redspace.ironsspellbooks.api.config.DefaultConfig;
 import io.redspace.ironsspellbooks.api.config.SpellConfigManager;
 import io.redspace.ironsspellbooks.api.config.SpellConfigParameter;
 import io.redspace.ironsspellbooks.api.magic.MagicData;
+import io.redspace.ironsspellbooks.api.registry.SpellRegistry;
 import io.redspace.ironsspellbooks.api.spells.AbstractSpell;
 import io.redspace.ironsspellbooks.api.spells.CastSource;
 import io.redspace.ironsspellbooks.api.spells.CastType;
@@ -32,7 +35,9 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
@@ -54,7 +59,7 @@ import java.util.Map;
 import java.util.UUID;
 
 /**
- * Los 12 conjuros de la escuela musical como conjuros de Iron's (instantáneos). Los números salen de
+ * Los 21 conjuros de la escuela musical como conjuros de Iron's (instantáneos). Los números salen de
  * {@link MusicSpellInfo}; el poder es el de Iron's (poder de hechizo × poder musical × multiplicador de la config del
  * conjuro). Los buffs y debuffs reciben solo parte del poder musical (parámetro {@code buff_power_scaling} de Ritmo).
  */
@@ -70,7 +75,27 @@ final class MusicSpells {
             case GRAND_PIANO -> new GrandPiano(info);
             case FORCED_DANCE -> new ForcedDance(info);
             case FINAL_REQUIEM -> new FinalRequiem(info);
+            case FUGUE -> new Fugue(info);
+            case LULLABY -> new Lullaby(info);
+            case RESOLUTION -> new Resolution(info);
+            case ECHO -> new Echo(info);
+            case PHANTOM_CHOIR -> new PhantomChoir(info);
+            case HARMONY_BARRIER -> new HarmonyBarrier(info);
+            case SIREN_SONG -> new SirenSong(info);
+            case GRAND_SOLO -> new GrandSolo(info);
+            case ETERNAL_LULLABY -> new EternalLullaby(info);
         };
+    }
+
+    /** Último conjuro musical lanzado por cada jugador (lo repite el Eco). */
+    private record Last(MusicSpellInfo info, int level, long at) {}
+
+    private static final Map<UUID, Last> LAST = new HashMap<>();
+    /** Fracción de poder con la que se lanza el conjuro (1 = normal; el Eco lo baja). */
+    private static final ThreadLocal<Double> ECHO_SCALE = ThreadLocal.withInitial(() -> 1.0);
+
+    static void forget(UUID player) {
+        LAST.remove(player);
     }
 
     // ================================================================== base
@@ -125,7 +150,7 @@ final class MusicSpells {
 
         /** Multiplicador de poder del lanzador (1 = 100 %). */
         protected double power(LivingEntity caster) {
-            return caster == null ? 1 : getEntityPowerMultiplier(caster);
+            return (caster == null ? 1 : getEntityPowerMultiplier(caster)) * ECHO_SCALE.get();
         }
 
         /** Los buffs y debuffs reciben solo una parte del poder musical (propuesta: la mitad). */
@@ -154,7 +179,12 @@ final class MusicSpells {
 
         @Override
         public void onCast(Level level, int spellLevel, LivingEntity entity, CastSource castSource, MagicData playerMagicData) {
-            if (entity instanceof ServerPlayer player) cast(player, spellLevel);
+            if (entity instanceof ServerPlayer player) {
+                cast(player, spellLevel);
+                if (info != MusicSpellInfo.ECHO && info != MusicSpellInfo.GRAND_SOLO) {
+                    LAST.put(player.getUUID(), new Last(info, spellLevel, player.level().getGameTime()));
+                }
+            }
             super.onCast(level, spellLevel, entity, castSource, playerMagicData);
         }
 
@@ -515,6 +545,315 @@ final class MusicSpells {
             ring(lvl, p.position(), r * 0.6, ParticleTypes.NOTE, 24);
             sound(p, SoundEvents.WARDEN_SONIC_BOOM, 1.5f, 1.0f);
             sound(p, SoundEvents.NOTE_BLOCK_BELL.value(), 2f, 0.5f);
+        }
+    }
+
+    // ================================================================== Fuga
+
+    static final class Fugue extends MusicSpell {
+        Fugue(MusicSpellInfo info) {
+            super(info);
+        }
+
+        private double distance(int level) {
+            return info.value + info.areaBonus(level);
+        }
+
+        private double stunSeconds(int level) {
+            return info.duration + 0.05 * (Math.min(level, info.maxLevel) - 1);
+        }
+
+        @Override
+        protected void info(int level, LivingEntity caster, List<MutableComponent> out) {
+            out.add(Component.translatable("spell.rites_and_paths.info.dash", num(distance(level)), num(stunSeconds(level))));
+        }
+
+        @Override
+        protected void cast(ServerPlayer p, int level) {
+            ServerLevel lvl = p.serverLevel();
+            Vec3 look = p.getLookAngle();
+            Vec3 dir = new Vec3(look.x, p.onGround() ? Math.max(0, look.y) * 0.5 : look.y, look.z).normalize();
+            Vec3 start = p.position();
+            AABB box = p.getBoundingBox();
+            double max = distance(level);
+            Vec3 end = start;
+            for (double t = 0.5; t <= max + 1e-6; t += 0.5) {
+                Vec3 candidate = start.add(dir.scale(Math.min(t, max)));
+                if (!lvl.noCollision(p, box.move(candidate.subtract(start)))) break;
+                end = candidate;
+            }
+            // Lo que atraviesas queda empujado y aturdido un instante.
+            int stun = BardCombat.controlTicks(p, stunSeconds(level));
+            AABB path = box.expandTowards(end.subtract(start)).inflate(info.area);
+            for (LivingEntity e : lvl.getEntitiesOfClass(LivingEntity.class, path)) {
+                if (!Allies.isEnemy(p, e)) continue;
+                CombatAbilities.stun(e, Races.isBoss(e) ? stun / 2 : stun);
+                e.knockback(0.6, -dir.x, -dir.z);
+            }
+            double length = end.subtract(start).length();
+            for (double t = 0; t <= length; t += 0.6) {
+                Vec3 at = start.add(dir.scale(t));
+                lvl.sendParticles(ParticleTypes.NOTE, at.x, at.y + 1, at.z, 1, 0.2, 0.3, 0.2, 1);
+                lvl.sendParticles(ParticleTypes.CLOUD, at.x, at.y + 0.3, at.z, 1, 0.1, 0.1, 0.1, 0.01);
+            }
+            p.connection.teleport(end.x, end.y, end.z, p.getYRot(), p.getXRot());
+            p.fallDistance = 0;
+            sound(p, SoundEvents.NOTE_BLOCK_XYLOPHONE.value(), 1.2f, 1.5f);
+        }
+    }
+
+    // ================================================================== Nana
+
+    static final class Lullaby extends MusicSpell {
+        private static final double HALF_ANGLE_COS = Math.cos(Math.toRadians(40));
+
+        Lullaby(MusicSpellInfo info) {
+            super(info);
+        }
+
+        @Override
+        protected void info(int level, LivingEntity caster, List<MutableComponent> out) {
+            out.add(Component.translatable("spell.rites_and_paths.info.sleep", num(seconds(level))));
+            out.add(Component.translatable("spell.rites_and_paths.info.range", num(area(level))));
+        }
+
+        @Override
+        protected void cast(ServerPlayer p, int level) {
+            ServerLevel lvl = p.serverLevel();
+            double len = area(level);
+            Vec3 eye = p.getEyePosition();
+            Vec3 look = p.getLookAngle().normalize();
+            for (LivingEntity e : lvl.getEntitiesOfClass(LivingEntity.class, p.getBoundingBox().inflate(len))) {
+                if (!Allies.isEnemy(p, e) || Races.isBoss(e)) continue;
+                Vec3 to = e.getBoundingBox().getCenter().subtract(eye);
+                double d = to.length();
+                if (d > len || d < 1e-3 || to.normalize().dot(look) < HALF_ANGLE_COS) continue;
+                int ticks = BardCombat.controlTicks(p, seconds(level) * (e instanceof Player ? 0.5 : 1));
+                BardZones.sleep(e, ticks);
+                lvl.sendParticles(ParticleTypes.NOTE, e.getX(), e.getY() + e.getBbHeight() + 0.3, e.getZ(), 3, 0.3, 0.1, 0.3, 1);
+            }
+            for (int i = 1; i <= 4; i++) {
+                Vec3 at = eye.add(look.scale(len * i / 4.5));
+                lvl.sendParticles(ParticleTypes.CLOUD, at.x, at.y - 0.3, at.z, 4, 0.5, 0.3, 0.5, 0.01);
+            }
+            sound(p, SoundEvents.NOTE_BLOCK_FLUTE.value(), 1.4f, 0.6f);
+            sound(p, SoundEvents.NOTE_BLOCK_HARP.value(), 1.2f, 0.5f);
+        }
+    }
+
+    // ================================================================== Resolución
+
+    static final class Resolution extends MusicSpell {
+        Resolution(MusicSpellInfo info) {
+            super(info);
+        }
+
+        private double hearts(int level, LivingEntity caster) {
+            return info.value * info.potencyFactor(level) * buffPower(caster);
+        }
+
+        @Override
+        protected void info(int level, LivingEntity caster, List<MutableComponent> out) {
+            out.add(Component.translatable("spell.rites_and_paths.info.absorb", num(hearts(level, caster)), num(seconds(level))));
+            out.add(Component.translatable("spell.rites_and_paths.info.radius", num(area(level))));
+        }
+
+        @Override
+        protected void cast(ServerPlayer p, int level) {
+            ServerLevel lvl = p.serverLevel();
+            double r = area(level);
+            int amp = Math.max(0, Math.min(254, (int) Math.round(hearts(level, p) / 4.0) - 1));
+            int ticks = (int) Math.round(seconds(level) * 20);
+            for (LivingEntity e : lvl.getEntitiesOfClass(LivingEntity.class, p.getBoundingBox().inflate(r))) {
+                if (e.distanceToSqr(p) > r * r || !e.isAlive() || !Allies.isAlly(p, e)) continue;
+                for (MobEffectInstance inst : new ArrayList<>(e.getActiveEffects())) {
+                    if (inst.getEffect().getCategory() == MobEffectCategory.HARMFUL) e.removeEffect(inst.getEffect());
+                }
+                e.addEffect(new MobEffectInstance(MobEffects.ABSORPTION, ticks, amp, false, true, true), p);
+                lvl.sendParticles(ParticleTypes.HAPPY_VILLAGER, e.getX(), e.getY() + 1, e.getZ(), 6, 0.4, 0.5, 0.4, 0.1);
+            }
+            ring(lvl, p.position(), r, ParticleTypes.NOTE, 24);
+            sound(p, SoundEvents.NOTE_BLOCK_CHIME.value(), 1.5f, 1.3f);
+            sound(p, SoundEvents.AMETHYST_BLOCK_CHIME, 1.2f, 1.2f);
+        }
+    }
+
+    // ================================================================== Eco
+
+    static final class Echo extends MusicSpell {
+        Echo(MusicSpellInfo info) {
+            super(info);
+        }
+
+        private double fraction(int level) {
+            return info.value * info.potencyFactor(level);
+        }
+
+        private double window(int level) {
+            return info.duration + info.durationBonus(level);
+        }
+
+        @Override
+        protected void info(int level, LivingEntity caster, List<MutableComponent> out) {
+            out.add(Component.translatable("spell.rites_and_paths.info.echo", num(100 * fraction(level)), num(window(level))));
+        }
+
+        /** Sin un conjuro reciente que repetir no se lanza ni gasta maná. */
+        @Override
+        public boolean checkPreCastConditions(Level level, int spellLevel, LivingEntity entity, MagicData playerMagicData) {
+            if (!(entity instanceof ServerPlayer p)) return true;
+            Last last = LAST.get(p.getUUID());
+            if (last == null || p.level().getGameTime() - last.at() > window(spellLevel) * 20) {
+                p.displayClientMessage(Component.translatable("msg.rites_and_paths.bard.no_echo"), true);
+                return false;
+            }
+            return true;
+        }
+
+        @Override
+        protected void cast(ServerPlayer p, int level) {
+            Last last = LAST.get(p.getUUID());
+            if (last == null) return;
+            AbstractSpell spell = SpellRegistry.getSpell(last.info().rl());
+            if (!(spell instanceof MusicSpell music)) return;
+            ECHO_SCALE.set(fraction(level));
+            try {
+                music.cast(p, last.level());
+            } finally {
+                ECHO_SCALE.set(1.0);
+            }
+            ring(p.serverLevel(), p.position(), 1.5, ParticleTypes.NOTE, 12);
+            sound(p, SoundEvents.NOTE_BLOCK_BELL.value(), 1.2f, 1.8f);
+        }
+    }
+
+    // ================================================================== Coro Fantasma
+
+    static final class PhantomChoir extends MusicSpell {
+        PhantomChoir(MusicSpellInfo info) {
+            super(info);
+        }
+
+        private float damage(int level, LivingEntity caster) {
+            return (float) (info.value * info.damageFactor(level) * power(caster));
+        }
+
+        @Override
+        protected void info(int level, LivingEntity caster, List<MutableComponent> out) {
+            out.add(Component.translatable("spell.rites_and_paths.info.choir", num(seconds(level)), num(damage(level, caster))));
+            out.add(Component.translatable("spell.rites_and_paths.info.radius", num(area(level))));
+        }
+
+        @Override
+        protected void cast(ServerPlayer p, int level) {
+            BardZones.choir(p, (int) Math.round(seconds(level) * 20), area(level), damage(level, p));
+            ring(p.serverLevel(), p.position(), 3, ParticleTypes.SOUL, 18);
+            sound(p, SoundEvents.NOTE_BLOCK_BELL.value(), 1.5f, 0.5f);
+            sound(p, SoundEvents.SOUL_ESCAPE, 1.2f, 0.8f);
+        }
+    }
+
+    // ================================================================== Barrera de Armonía
+
+    static final class HarmonyBarrier extends MusicSpell {
+        HarmonyBarrier(MusicSpellInfo info) {
+            super(info);
+        }
+
+        private double reduction(int level, LivingEntity caster) {
+            return Math.min(0.6, info.value * info.potencyFactor(level) * buffPower(caster));
+        }
+
+        @Override
+        protected void info(int level, LivingEntity caster, List<MutableComponent> out) {
+            out.add(Component.translatable("spell.rites_and_paths.info.barrier", num(100 * reduction(level, caster)), num(seconds(level))));
+            out.add(Component.translatable("spell.rites_and_paths.info.radius", num(area(level))));
+        }
+
+        @Override
+        protected void cast(ServerPlayer p, int level) {
+            BardZones.barrier(p, (int) Math.round(seconds(level) * 20), area(level), reduction(level, p));
+            ring(p.serverLevel(), p.position(), area(level), ParticleTypes.END_ROD, 28);
+            sound(p, SoundEvents.NOTE_BLOCK_IRON_XYLOPHONE.value(), 1.5f, 0.8f);
+            sound(p, SoundEvents.BEACON_ACTIVATE, 0.8f, 1.5f);
+        }
+    }
+
+    // ================================================================== Canto de Sirena
+
+    static final class SirenSong extends MusicSpell {
+        SirenSong(MusicSpellInfo info) {
+            super(info);
+        }
+
+        @Override
+        protected void info(int level, LivingEntity caster, List<MutableComponent> out) {
+            out.add(Component.translatable("spell.rites_and_paths.info.siren", num(seconds(level))));
+            out.add(Component.translatable("spell.rites_and_paths.info.radius", num(area(level))));
+        }
+
+        @Override
+        protected void cast(ServerPlayer p, int level) {
+            BardZones.siren(p, BardCombat.controlTicks(p, seconds(level)), area(level), info.value * info.potencyFactor(level));
+            ring(p.serverLevel(), p.position(), area(level) * 0.6, ParticleTypes.NOTE, 28);
+            sound(p, SoundEvents.NOTE_BLOCK_FLUTE.value(), 1.6f, 1.2f);
+            sound(p, SoundEvents.NOTE_BLOCK_CHIME.value(), 1.4f, 0.9f);
+        }
+    }
+
+    // ================================================================== Solo Magistral
+
+    static final class GrandSolo extends MusicSpell {
+        GrandSolo(MusicSpellInfo info) {
+            super(info);
+        }
+
+        @Override
+        protected void info(int level, LivingEntity caster, List<MutableComponent> out) {
+            out.add(Component.translatable("spell.rites_and_paths.info.solo", num(seconds(level))));
+        }
+
+        @Override
+        protected void cast(ServerPlayer p, int level) {
+            int ticks = (int) Math.round(seconds(level) * 20);
+            BardState.solo(p, ticks);
+            MusicBridge.armFreeCast(p, ticks);
+            ring(p.serverLevel(), p.position(), 1.2, ParticleTypes.NOTE, 16);
+            sound(p, SoundEvents.NOTE_BLOCK_BELL.value(), 1.8f, 0.8f);
+            sound(p, SoundEvents.PLAYER_LEVELUP, 0.7f, 1.4f);
+        }
+    }
+
+    // ================================================================== Canción de Cuna Eterna
+
+    static final class EternalLullaby extends MusicSpell {
+        EternalLullaby(MusicSpellInfo info) {
+            super(info);
+        }
+
+        private double fraction(int level) {
+            return Math.min(0.9, info.value * info.potencyFactor(level));
+        }
+
+        @Override
+        protected void info(int level, LivingEntity caster, List<MutableComponent> out) {
+            out.add(Component.translatable("spell.rites_and_paths.info.ward", num(100 * fraction(level)), num(seconds(level))));
+            out.add(Component.translatable("spell.rites_and_paths.info.radius", num(area(level))));
+        }
+
+        @Override
+        protected void cast(ServerPlayer p, int level) {
+            ServerLevel lvl = p.serverLevel();
+            double r = area(level);
+            int ticks = (int) Math.round(seconds(level) * 20);
+            for (LivingEntity e : lvl.getEntitiesOfClass(LivingEntity.class, p.getBoundingBox().inflate(r))) {
+                if (e.distanceToSqr(p) > r * r || !e.isAlive() || !Allies.isAlly(p, e)) continue;
+                BardZones.ward(e, ticks, fraction(level));
+                lvl.sendParticles(ParticleTypes.END_ROD, e.getX(), e.getY() + 1, e.getZ(), 8, 0.4, 0.6, 0.4, 0.02);
+            }
+            ring(lvl, p.position(), r, ParticleTypes.NOTE, 32);
+            sound(p, SoundEvents.NOTE_BLOCK_HARP.value(), 1.6f, 0.5f);
+            sound(p, SoundEvents.NOTE_BLOCK_CHIME.value(), 1.6f, 0.7f);
         }
     }
 }

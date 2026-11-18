@@ -1,7 +1,7 @@
 # Bardo: estado de implementación
 
 Implementación de la *Adenda al Documento de Diseño v2: Bardo* (rev. 0.1, en el proyecto). **Estado (18-11-2026):
-programado; los cambios del 18-11 (combo, tempo, ráfagas, piano y baile) sin compilar en CI todavía. Sin probar en el juego.** Las propuestas sin confirmar de la
+programado; sin probar en el juego.** Las propuestas sin confirmar de la
 adenda se han programado tal cual y están en datos (`tools/bard.py`), así que se cambian sin tocar código.
 
 **Convenciones:** **(propuesta)** = decisión de Claude al programar, pendiente de confirmar. **[MEDIR]** = calibrar en el
@@ -161,3 +161,15 @@ bloque de amatista, arena de almas, fragmento de prismarina, caparazón de nauti
 * La selección se mueve en el servidor (datos sincronizados de Iron's, por reflexión: `MusicRotation`). La rueda sigue
   pudiendo usarse a mano, pero si se elige uno que no se puede tocar, se corrige solo.
 * Si ninguno se puede tocar, la selección se queda donde está.
+
+## 18-11 (4): arreglos de la rotación y de la mesa de inscripción
+- **Rotación de conjuros:** el servidor ya movía la selección, pero el cliente de Iron's guarda la rueda
+  (`ClientMagicData.spellSelectionManager`) y solo la rehace al cambiar de equipo, así que seguía mostrando el conjuro
+  anterior. `client/bard/SpellWheelSync` compara cada tick (con un instrumento en la mano) la selección sincronizada con
+  la de la rueda y, si no coinciden, la rehace. Por reflexión; si falla, se desactiva con un aviso en el log.
+- **Sacar partituras en la mesa de inscripción:** como con un libro, se elige un hueco del instrumento, su partitura
+  (con su nivel guardado) sale en la ranura de resultado y al cogerla se quita del instrumento. Iron's solo lo hacía con
+  libros. `InscriptionMenuMixin` (resultado y botones) e `InscriptionResultSlotMixin` (clase anónima n.º 5, `onTake`).
+- **Inscribir usa ahora el botón -2** (`InscriptionTable.INSCRIBE_BUTTON`): Iron's usa -1 también para «sin selección»
+  cada vez que cambia el objeto de la ranura del libro, y con -1 una partitura ya puesta se inscribía sola.
+- Sin probar en el juego.

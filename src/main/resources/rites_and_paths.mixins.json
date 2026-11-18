@@ -22,6 +22,7 @@
     "WolfRideMixin",
     "irons.InscriptionBookSlotMixin",
     "irons.InscriptionMenuMixin",
+    "irons.InscriptionResultSlotMixin",
     "irons.InscriptionScrollSlotMixin",
     "irons.SpellSelectionMixin"
   ],

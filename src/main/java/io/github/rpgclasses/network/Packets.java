@@ -135,7 +135,8 @@ public final class Packets {
             ServerPlayer sender = ctx.get().getSender();
             if (sender != null && !io.github.rpgclasses.content.DeathGamble.flipping(sender)
                     && !io.github.rpgclasses.content.Chronomancy.isFrozen(sender)
-                    && !io.github.rpgclasses.content.race.SlimeForms.blocksActions(sender)) AbilityService.use(sender, slot);
+                    && !io.github.rpgclasses.content.race.SlimeForms.blocksActions(sender)
+                    && !io.github.rpgclasses.cleric.Miracle.isDowned(sender)) AbilityService.use(sender, slot);
         }
     }
 
@@ -152,7 +153,8 @@ public final class Packets {
         public void handle(Supplier<NetworkEvent.Context> ctx) {
             ServerPlayer sender = ctx.get().getSender();
             if (sender != null && !io.github.rpgclasses.content.DeathGamble.flipping(sender)
-                    && !io.github.rpgclasses.content.Chronomancy.isFrozen(sender)) {
+                    && !io.github.rpgclasses.content.Chronomancy.isFrozen(sender)
+                    && !io.github.rpgclasses.cleric.Miracle.isDowned(sender)) {
                 io.github.rpgclasses.content.race.RaceAbilities.use(sender, slot);
             }
         }
@@ -529,6 +531,121 @@ public final class Packets {
 
         public void handle(Supplier<NetworkEvent.Context> ctx) {
             DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> io.github.rpgclasses.client.bard.DanceFx.onSync(this));
+        }
+    }
+
+    // ------------------------------------------------------------------ Clérigo (protocolo 18)
+
+    /** Servidor -> clientes: un jugador queda tumbado por el Milagro durante esos ticks (0 = se levanta o muere). */
+    public record ClericDowned(int entityId, int ticks) {
+        public void encode(FriendlyByteBuf buf) {
+            buf.writeVarInt(entityId);
+            buf.writeVarInt(ticks);
+        }
+
+        public static ClericDowned decode(FriendlyByteBuf buf) {
+            return new ClericDowned(buf.readVarInt(), buf.readVarInt());
+        }
+
+        public void handle(Supplier<NetworkEvent.Context> ctx) {
+            DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> io.github.rpgclasses.client.cleric.ClericClient.onDowned(this));
+        }
+    }
+
+    /** Servidor -> clientes: esfera de Santuario {@code id} anclada a una entidad; {@code ticks} restantes (0 = termina). */
+    public record SanctuarySync(int id, int anchorId, float radius, int expandTicks, int ticks) {
+        public void encode(FriendlyByteBuf buf) {
+            buf.writeVarInt(id);
+            buf.writeVarInt(anchorId);
+            buf.writeFloat(radius);
+            buf.writeVarInt(expandTicks);
+            buf.writeVarInt(ticks);
+        }
+
+        public static SanctuarySync decode(FriendlyByteBuf buf) {
+            return new SanctuarySync(buf.readVarInt(), buf.readVarInt(), buf.readFloat(), buf.readVarInt(), buf.readVarInt());
+        }
+
+        public void handle(Supplier<NetworkEvent.Context> ctx) {
+            DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> io.github.rpgclasses.client.cleric.ClericClient.onSanctuary(this));
+        }
+    }
+
+    /** Servidor -> cliente: la Plegaria empieza (cámara en el ángel del aliado {@code targetId}) o termina (-1). */
+    public record PrayerState(int targetId, float orbit) {
+        public void encode(FriendlyByteBuf buf) {
+            buf.writeVarInt(targetId + 1);
+            buf.writeFloat(orbit);
+        }
+
+        public static PrayerState decode(FriendlyByteBuf buf) {
+            return new PrayerState(buf.readVarInt() - 1, buf.readFloat());
+        }
+
+        public void handle(Supplier<NetworkEvent.Context> ctx) {
+            DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> io.github.rpgclasses.client.cleric.ClericClient.onPrayerState(this));
+        }
+    }
+
+    /** Servidor -> cliente: aliados por los que puede rezar y por quién reza ahora (o null). Abre la lista. */
+    public record PrayerList(java.util.List<Entry> entries, java.util.UUID current) {
+        public record Entry(java.util.UUID id, String name, int distance) {}
+
+        public void encode(FriendlyByteBuf buf) {
+            buf.writeVarInt(Math.min(entries.size(), 64));
+            for (int i = 0; i < Math.min(entries.size(), 64); i++) {
+                Entry e = entries.get(i);
+                buf.writeUUID(e.id());
+                buf.writeUtf(e.name(), 64);
+                buf.writeVarInt(e.distance());
+            }
+            buf.writeBoolean(current != null);
+            if (current != null) buf.writeUUID(current);
+        }
+
+        public static PrayerList decode(FriendlyByteBuf buf) {
+            int n = Math.min(64, buf.readVarInt());
+            java.util.List<Entry> list = new java.util.ArrayList<>();
+            for (int i = 0; i < n; i++) list.add(new Entry(buf.readUUID(), buf.readUtf(64), buf.readVarInt()));
+            java.util.UUID current = buf.readBoolean() ? buf.readUUID() : null;
+            return new PrayerList(list, current);
+        }
+
+        public void handle(Supplier<NetworkEvent.Context> ctx) {
+            DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> io.github.rpgclasses.client.cleric.ClericClient.onPrayerList(this));
+        }
+    }
+
+    /** Cliente -> servidor: rezar por ese aliado (o null = dejar de rezar). */
+    public record PrayerSelect(java.util.UUID ally) {
+        public void encode(FriendlyByteBuf buf) {
+            buf.writeBoolean(ally != null);
+            if (ally != null) buf.writeUUID(ally);
+        }
+
+        public static PrayerSelect decode(FriendlyByteBuf buf) {
+            return new PrayerSelect(buf.readBoolean() ? buf.readUUID() : null);
+        }
+
+        public void handle(Supplier<NetworkEvent.Context> ctx) {
+            ServerPlayer sender = ctx.get().getSender();
+            if (sender != null) io.github.rpgclasses.cleric.Prayer.select(sender, ally);
+        }
+    }
+
+    /** Cliente -> servidor: se suelta la tecla de habilidad de la ranura {@code slot} (Santuario). */
+    public record AbilityRelease(int slot) {
+        public void encode(FriendlyByteBuf buf) {
+            buf.writeByte(slot);
+        }
+
+        public static AbilityRelease decode(FriendlyByteBuf buf) {
+            return new AbilityRelease(buf.readByte());
+        }
+
+        public void handle(Supplier<NetworkEvent.Context> ctx) {
+            ServerPlayer sender = ctx.get().getSender();
+            if (sender != null) io.github.rpgclasses.cleric.Sanctuary.release(sender);
         }
     }
 }

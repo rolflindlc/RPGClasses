@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "class": "rites_and_paths:cleric",
+  "display": {
+    "icon": "minecraft:redstone"
+  },
+  "effects": [
+    {
+      "type": "rites_and_paths:attribute",
+      "modifiers": [
+        {
+          "attribute": "minecraft:generic.max_health",
+          "to": 0.1,
+          "operation": "multiply_base"
+        }
+      ]
+    },
+    {
+      "type": "rites_and_paths:mechanic",
+      "id": "rites_and_paths:martyr_resolve",
+      "damage_reduction": {
+        "to": 0.2
+      },
+      "health_threshold": 0.5
+    }
+  ],
+  "milestones": [
+    {
+      "subclass_level": 5,
+      "grants": "rites_and_paths:sacrifice"
+    }
+  ]
+}

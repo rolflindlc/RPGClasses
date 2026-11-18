@@ -1,0 +1,141 @@
+0 Per alcuni secondi voli (senza scattare in aria). All'attivazione vengono rimossi i tuoi effetti negativi e quelli degli alleati vicini, e tutti ricevete Rigenerazione II e Assorbimento I finché dura. Al termine non subisci danni da caduta.
+1 Forma angelica
+2 Vedi la salute degli alleati vicini sopra la loro testa (anche attraverso i muri). Quelli sotto il 40% brillano, e quelli atterrati dal Miracolo mostrano il loro conto alla rovescia. Lo vedi solo tu.
+3 Occhio del guaritore
+4 Curi l'alleato che stai guardando (vicino) del 30% della sua salute massima, senza spendere mana. Scala con il tuo potere sacro. Rialza un alleato atterrato.
+5 Imposizione delle mani
+6 Se un alleato stava per morire vicino a te, resta invece atterrato per alcuni secondi: non può agire né subire danni. Se un altro giocatore lo cura, si rialza; altrimenti muore. Ogni alleato può essere salvato così solo ogni tanto. Non salva te.
+7 Miracolo
+8 Scegli un alleato dalla lista: il tuo corpo resta in ginocchio e la tua visuale passa a un piccolo angelo che orbita intorno all'alleato e gli dà Rigenerazione. I tuoi incantesimi, l'Imposizione delle mani e il Santuario partono dall'angelo; gli incantesimi perdono potenza se il tuo corpo è lontano. Premi di nuovo per cambiare alleato o smettere di pregare.
+9 Preghiera
+10 Paghi parte della tua salute massima e l'alleato che stai guardando recupera parte della sua (almeno quanto hai pagato). Nessuna ricarica. Se pagare ti ucciderebbe, l'icona diventa rossa: premi due volte per dare la tua vita e curare metà della salute del tuo alleato, con un istante di invulnerabilità.
+11 Sacrificio
+12 Tieni premuto il tasto: una sfera sacra ti circonda, respinge i nemici e blocca i loro proiettili. Assorbe i danni di chiunque sia all'interno finché non si rompe. Costa mana ogni secondo; quando la rilasci dura la metà del tempo in cui l'hai tenuta. Mentre la tieni sei più lento e non puoi lanciare incantesimi.
+13 Santuario
+14 Parte delle cure in eccesso (oltre la salute massima) si trasforma in assorbimento per alcuni secondi.
+15 Egida
+16 Gli effetti benefici che dai con i tuoi incantesimi durano di più. Non influisce sulle abilità di classe.
+17 Benedizione
+18 Più mana massimo e più rigenerazione di mana.
+19 Riserva divina
+20 I tuoi incantesimi curano di più e danno più assorbimento (anche quelli lanciati su te stesso). Non influisce sulle abilità di classe.
+21 Guarigione
+22 Le tue cure accorciano gli effetti negativi di chi viene curato.
+23 Purificazione
+24 Guaritore sacro: una sorta di mago della guarigione che condivide la scuola sacra con il Paladino. La sua magia sacra non ha muro e tutte le altre scuole perdono il 35%. Molto debole con armi, armature e scudi. Cura, prolunga i buff, purifica, protegge con scudi di luce e salva gli alleati dal colpo di grazia.
+25 Chierico
+26 Tratto di classe: salute massima leggermente superiore.
+27 %1$s ha dato la vita per i suoi alleati
+28 %1$s ha dato la vita per i suoi alleati combattendo contro %2$s
+29 Forma angelica
+30 Atterrato
+31 Atterrato: %s s
+32 Sacrificio finale
+33 Assoluzione
+34 Egida
+35 Benedizione
+36 Fede cieca
+37 Egida profonda
+38 Ritorno della fede
+39 Voce lontana
+40 Benedizione superiore
+41 Aureola
+42 Guarigione
+43 Canale vitale
+44 Risolutezza
+45 Fede propria
+46 Penitenza
+47 Corpo in preghiera
+48 Purificazione
+49 Benedizione egoista
+50 Egida rapida
+51 Grazia alata
+52 %s è a terra! Curalo entro %s s.
+53 Sei a terra! Se un alleato ti cura entro %s s, ti rialzi.
+54 Sacrificio finale: premi di nuovo per dare la tua vita per %s.
+55 %s ha dato la vita per te.
+56 %s ha già la salute piena.
+57 Non hai abbastanza mana.
+58 Non stai guardando nessun alleato a portata.
+59 Smetti di pregare.
+60 La preghiera si è spezzata: %s non è più alla tua portata.
+61 Non ci sono alleati a portata per cui pregare.
+62 Preghi per %s.
+63 %s ti ha rialzato!
+64 Hai rialzato %s.
+65 Il Santuario si è rotto.
+66 Livello di Assorbimento
+67 Durata dell'assorbimento
+68 Ricarica per alleato
+69 Dura dopo il rilascio (del tempo canalizzato)
+70 Mana al secondo canalizzando
+71 Velocità canalizzando
+72 In combattimento per
+73 Tempo per confermare
+74 Eccesso convertito in assorbimento
+75 Conversione
+76 Salute massima che paghi
+77 Durata degli effetti negativi rimossa
+78 Tempo a terra
+79 Durata dei tuoi buff
+80 Durata dei tuoi buff
+81 Tempo di espansione
+82 Livelli extra dei tuoi buff
+83 Mana dei tuoi buff
+84 Riduzione del danno da caduta
+85 Cura del Sacrificio finale
+86 Invulnerabilità del Sacrificio finale
+87 Potenza piena fino a (blocchi)
+88 Distanza extra senza perdita (blocchi)
+89 Cura e assorbimento dei tuoi incantesimi
+90 Rigenerazione di mana in combattimento
+91 Brillano sotto
+92 Mana dell'incantesimo recuperato
+93 Livello massimo (0 = I)
+94 Canalizzazione massima
+95 Bersagli che contano per lancio
+96 Potenza minima a distanza
+97 Potenza minima da (blocchi)
+98 Distanza dell'angelo (blocchi)
+99 Cura sugli altri
+100 Rigenerazione di mana fuori dal combattimento
+101 Recuperi di quanto curi
+102 Riduzione del ramo x
+103 Livello di Rigenerazione
+104 Immunità al rialzarsi
+105 Salute minima al rialzarsi
+106 Cura su te stesso
+107 Salute dello scudo
+108 Rigenerazione dello scudo al secondo
+109 Caduta lenta dal livello
+110 Durata trasferita al nemico
+111 Converti molto meno eccesso in assorbimento, ma il limite sale a metà della salute massima.
+112 Egida profonda
+113 Converti più eccesso in assorbimento, ma il limite scende molto.
+114 Egida rapida
+115 I tuoi buff salgono di un livello (fino a III), ma costano più mana e durano un po' meno.
+116 Benedizione superiore
+117 I tuoi buff ad area influiscono solo su di te, ma durano molto di più.
+118 Benedizione egoista
+119 Rigeneri molto più mana fuori dal combattimento e un po' meno in combattimento.
+120 Fede cieca
+121 Meno mana massimo; curare davvero qualcun altro restituisce parte del mana dell'incantesimo.
+122 Ritorno della fede
+123 I tuoi incantesimi ti curano molto meno, ma recuperi metà di ciò che curi agli altri (fino a 3 per lancio).
+124 Canale vitale
+125 I tuoi incantesimi curano molto di più te, ma molto meno gli altri.
+126 Fede propria
+127 La prima cura su ogni alleato, ogni tanto, gli rimuove tutti gli effetti negativi, ma la riduzione del ramo si dimezza.
+128 Assoluzione
+129 Ciò che togli a un effetto negativo passa al nemico più vicino, con metà di quella durata.
+130 Penitenza
+131 Ali di luce: meno danni da caduta e caduta lenta, un'aureola che rigenera gli alleati vicini e, dal livello 5, la Forma angelica: voli per alcuni secondi mentre tu e i tuoi alleati vi rigenerate e venite purificati.
+132 Angelo
+133 Prega per un alleato anche senza vederlo: il tuo corpo resta in ginocchio e la tua vista passa a un piccolo angelo che lo accompagna. Lanci gli incantesimi dall'angelo, con meno potenza quanto più lontano è il tuo corpo.
+134 Intercessore
+135 Cura con il proprio sangue: più salute, meno danni subiti quando è gravemente ferito e, dal livello 5, il Sacrificio: paghi salute per curare un alleato, senza ricarica. Se non puoi più pagare, puoi dare la vita per lui.
+136 Martire
+137 %s (ora)
+138 %s (%s blocchi)
+139 Smetti di pregare
+140 Preghiera: per chi preghi?

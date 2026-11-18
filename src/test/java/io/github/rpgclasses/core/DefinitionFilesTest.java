@@ -52,7 +52,7 @@ public class DefinitionFilesTest {
     @Test
     public void allShippedDefinitionsAreValid() {
         assertTrue("Errores de validación: " + STORE.errors(), STORE.errors().isEmpty());
-        assertEquals(List.of("rites_and_paths:barbarian", "rites_and_paths:bard", "rites_and_paths:mage", "rites_and_paths:monk",
+        assertEquals(List.of("rites_and_paths:barbarian", "rites_and_paths:bard", "rites_and_paths:cleric", "rites_and_paths:mage", "rites_and_paths:monk",
                 "rites_and_paths:paladin", "rites_and_paths:ranger", "rites_and_paths:rogue"), List.copyOf(STORE.classIds()));
         for (String id : STORE.classIds()) {
             ClassDef c = STORE.classDef(id);
@@ -68,13 +68,13 @@ public class DefinitionFilesTest {
             assertEquals(id, 5, c.branches().size());
             for (var b : c.branches()) perks += b.perks().size();
         }
-        assertEquals(70, perks);
+        assertEquals(80, perks);
     }
 
     @Test
     public void wallTotalsMatchDesignTable() {
-        Map<String, Integer> expected = Map.of("mage", 200, "paladin", 150, "barbarian", 150,
-                "rogue", 245, "ranger", 150, "monk", 275, "bard", 245);
+        Map<String, Integer> expected = Map.of("mage", 200, "paladin", 150, "barbarian", 175,
+                "rogue", 245, "ranger", 150, "monk", 275, "bard", 245, "cleric", 235);
         for (Map.Entry<String, Integer> e : expected.entrySet()) {
             ClassDef c = STORE.classDef("rites_and_paths:" + e.getKey());
             double total = 0;

@@ -54,10 +54,22 @@ public final class AbilityHud {
                     extra = ": " + Component.translatable("stance.rites_and_paths." + MonkAbilities.STANCE_NAMES[stance]).getString();
                 }
             }
+            // Mártir: con la vida a ≤15 % el Sacrificio pasa a ser el Sacrificio final (fila roja y palpitante).
+            boolean martyrdom = id.equals(io.github.rpgclasses.cleric.Cleric.SACRIFICE)
+                    && io.github.rpgclasses.client.cleric.ClericClient.sacrificeFinal();
+            if (martyrdom) name = Component.translatable("hud.rites_and_paths.sacrifice_final");
             String text = "[" + key.getTranslatedKeyMessage().getString() + "] " + name.getString() + extra
                     + (remaining > 0 ? String.format(Locale.ROOT, "  %.0f s", Math.ceil(remaining / 20.0)) : "");
             int width = mc.font.width(text);
             int x = screenWidth - width - 6;
+            if (martyrdom) {
+                float pulse = 0.5f + 0.5f * net.minecraft.util.Mth.sin((now + partialTick) * 0.3f);
+                int alpha = 0x60 + (int) (0x80 * pulse);
+                g.fill(x - 3, y - 2, screenWidth - 3, y + ROW_HEIGHT - 3, (alpha << 24) | 0x8A0A0A);
+                g.drawString(mc.font, text, x, y, 0xFFFF4040);
+                y += ROW_HEIGHT;
+                continue;
+            }
             g.fill(x - 3, y - 2, screenWidth - 3, y + ROW_HEIGHT - 3, 0x80000000);
             g.drawString(mc.font, text, x, y, remaining > 0 ? 0xFF8888 : 0xFFFFFF);
             y += ROW_HEIGHT;

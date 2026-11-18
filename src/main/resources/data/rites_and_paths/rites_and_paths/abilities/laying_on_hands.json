@@ -1,0 +1,6 @@
+{
+  "schema_version": 1,
+  "heal_fraction": 0.3,
+  "range": 8,
+  "cooldown_seconds": 40
+}

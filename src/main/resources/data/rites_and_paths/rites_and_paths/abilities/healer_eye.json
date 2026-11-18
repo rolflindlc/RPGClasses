@@ -1,0 +1,6 @@
+{
+  "schema_version": 1,
+  "passive": true,
+  "range": 32,
+  "low_health": 0.4
+}

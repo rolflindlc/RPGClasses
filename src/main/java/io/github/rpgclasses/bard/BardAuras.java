@@ -71,6 +71,10 @@ public final class BardAuras {
         list.add(aura);
         apply(bard, aura);
         ring(bard, aura.radius());
+        // Al empezar una canción: estallido del color de la canción.
+        ServerLevel level = bard.serverLevel();
+        level.sendParticles(new net.minecraft.core.particles.DustParticleOptions(color(kind), 1.6f),
+                bard.getX(), bard.getY() + 1.0, bard.getZ(), 24, 0.6, 0.6, 0.6, 0.05);
     }
 
     public static boolean hasActive(ServerPlayer bard) {
@@ -161,6 +165,47 @@ public final class BardAuras {
         }
         if (bard.tickCount % 20 < PERIOD) {
             level.sendParticles(ParticleTypes.NOTE, bard.getX(), bard.getY() + 2.2, bard.getZ(), 1, 0.4, 0.1, 0.4, 1);
+        }
+        visuals(bard, aura, level);
+    }
+
+    // ------------------------------------------------------------------ efectos visuales (adenda del Clérigo, 11.2)
+
+    /** Color de cada canción: anillo en el borde del aura y destellos en quien la recibe. */
+    private static org.joml.Vector3f color(Kind kind) {
+        return switch (kind) {
+            case MARCH -> new org.joml.Vector3f(0.98f, 0.85f, 0.25f);
+            case WAR_HYMN -> new org.joml.Vector3f(0.92f, 0.22f, 0.18f);
+            case REST_BALLAD -> new org.joml.Vector3f(0.35f, 0.92f, 0.45f);
+            case ELEGY -> new org.joml.Vector3f(0.55f, 0.25f, 0.75f);
+            case IRON_CHORALE -> new org.joml.Vector3f(0.70f, 0.78f, 0.88f);
+            case MANA_CADENCE -> new org.joml.Vector3f(0.30f, 0.55f, 1.0f);
+        };
+    }
+
+    /**
+     * Cada refresco (medio segundo): un anillo de polvo del color de la canción que gira despacio en el borde del aura,
+     * notas que suben alrededor del Bardo y un destello del mismo color en cada aliado (o enemigo, la Elegía) afectado.
+     * Todo son partículas de vanilla enviadas por el servidor, así que las ven todos y funcionan con shaders.
+     */
+    private static void visuals(ServerPlayer bard, Aura aura, ServerLevel level) {
+        net.minecraft.core.particles.DustParticleOptions dust = new net.minecraft.core.particles.DustParticleOptions(color(aura.kind()), 1.1f);
+        double r = aura.radius();
+        int points = (int) Math.max(12, Math.min(40, r * 3));
+        double spin = (bard.tickCount % 80) / 80.0 * Math.PI * 2 + aura.kind().ordinal() * 0.4;
+        for (int i = 0; i < points; i++) {
+            double a = spin + Math.PI * 2 * i / points;
+            level.sendParticles(dust, bard.getX() + Math.cos(a) * r, bard.getY() + 0.15, bard.getZ() + Math.sin(a) * r, 1, 0, 0.02, 0, 0);
+        }
+        // Notas que suben en espiral alrededor del Bardo (color de la nota = color de la canción en la paleta de notas).
+        double a = spin * 2;
+        level.sendParticles(ParticleTypes.NOTE, bard.getX() + Math.cos(a) * 0.8, bard.getY() + 0.6 + (bard.tickCount % 20) / 20.0,
+                bard.getZ() + Math.sin(a) * 0.8, 0, aura.kind().ordinal() / 6.0, 0, 0, 1);
+        for (LivingEntity e : level.getEntitiesOfClass(LivingEntity.class, bard.getBoundingBox().inflate(r))) {
+            if (e == bard || !e.isAlive() || e.distanceToSqr(bard) > r * r || e.isInvisible()) continue;
+            boolean affected = aura.kind() == Kind.ELEGY ? enemy(bard, e) : Allies.isAlly(bard, e);
+            if (!affected) continue;
+            level.sendParticles(dust, e.getX(), e.getY() + e.getBbHeight() * 0.6, e.getZ(), 2, 0.25, 0.3, 0.25, 0);
         }
     }
 

@@ -93,6 +93,26 @@ public final class EffectRules {
         }
     }
 
+    /**
+     * Sustituye un efecto por otra instancia (p. ej. con menos duración) sin que vuelvan a aplicarse las reglas de
+     * duración de esta clase (Voluntad, Estandarte...). Lo usa la Purificación del Clérigo.
+     */
+    public static void replace(net.minecraft.world.entity.LivingEntity entity, MobEffectInstance instance) {
+        boolean before = reapplying;
+        reapplying = true;
+        try {
+            entity.removeEffect(instance.getEffect());
+            if (instance.getDuration() > 0) entity.addEffect(instance);
+        } finally {
+            reapplying = before;
+        }
+    }
+
+    /** true mientras se reaplica un efecto desde aquí (otras reglas de duración no deben tocarlo). */
+    public static boolean reapplying() {
+        return reapplying;
+    }
+
     /** Voluntad contra el Daño: inmune a la quemadura (seguir ardiendo); el fuego y la lava directos sí dañan. */
     @SubscribeEvent
     public void onAttack(LivingAttackEvent event) {

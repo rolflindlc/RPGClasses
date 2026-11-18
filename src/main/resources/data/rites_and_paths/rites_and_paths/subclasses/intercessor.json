@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "class": "rites_and_paths:cleric",
+  "display": {
+    "icon": "minecraft:end_rod"
+  },
+  "effects": [
+    {
+      "type": "rites_and_paths:mechanic",
+      "id": "rites_and_paths:far_voice",
+      "full_power_extra_blocks": {
+        "to": 10
+      },
+      "min_power": {
+        "from": 0.347,
+        "to": 0.5
+      }
+    },
+    {
+      "type": "rites_and_paths:mechanic",
+      "id": "rites_and_paths:prayer_body",
+      "damage_reduction": {
+        "to": 0.4
+      }
+    }
+  ],
+  "milestones": [
+    {
+      "subclass_level": 1,
+      "grants": "rites_and_paths:prayer"
+    }
+  ]
+}

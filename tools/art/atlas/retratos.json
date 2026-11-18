@@ -1,11 +1,11 @@
 {
  "group": "retratos",
- "width": 728,
- "height": 530,
+ "width": 794,
+ "height": 464,
  "cell_w": 64,
  "cell_h": 64,
- "cols": 11,
- "rows": 8,
+ "cols": 12,
+ "rows": 7,
  "gutter": 2,
  "cells": [
   {
@@ -28,16 +28,16 @@
   },
   {
    "n": 2,
-   "path": "gui/portrait/class/mage.png",
+   "path": "gui/portrait/class/cleric.png",
    "x": 134,
    "y": 2,
    "w": 64,
    "h": 64,
-   "mode": "RGB"
+   "mode": "RGBA"
   },
   {
    "n": 3,
-   "path": "gui/portrait/class/monk.png",
+   "path": "gui/portrait/class/mage.png",
    "x": 200,
    "y": 2,
    "w": 64,
@@ -46,7 +46,7 @@
   },
   {
    "n": 4,
-   "path": "gui/portrait/class/paladin.png",
+   "path": "gui/portrait/class/monk.png",
    "x": 266,
    "y": 2,
    "w": 64,
@@ -55,7 +55,7 @@
   },
   {
    "n": 5,
-   "path": "gui/portrait/class/ranger.png",
+   "path": "gui/portrait/class/paladin.png",
    "x": 332,
    "y": 2,
    "w": 64,
@@ -64,7 +64,7 @@
   },
   {
    "n": 6,
-   "path": "gui/portrait/class/rogue.png",
+   "path": "gui/portrait/class/ranger.png",
    "x": 398,
    "y": 2,
    "w": 64,
@@ -73,7 +73,7 @@
   },
   {
    "n": 7,
-   "path": "gui/portrait/race/centaur.png",
+   "path": "gui/portrait/class/rogue.png",
    "x": 464,
    "y": 2,
    "w": 64,
@@ -82,7 +82,7 @@
   },
   {
    "n": 8,
-   "path": "gui/portrait/race/colossus.png",
+   "path": "gui/portrait/race/centaur.png",
    "x": 530,
    "y": 2,
    "w": 64,
@@ -91,7 +91,7 @@
   },
   {
    "n": 9,
-   "path": "gui/portrait/race/draconid.png",
+   "path": "gui/portrait/race/colossus.png",
    "x": 596,
    "y": 2,
    "w": 64,
@@ -100,7 +100,7 @@
   },
   {
    "n": 10,
-   "path": "gui/portrait/race/dwarf.png",
+   "path": "gui/portrait/race/draconid.png",
    "x": 662,
    "y": 2,
    "w": 64,
@@ -109,6 +109,15 @@
   },
   {
    "n": 11,
+   "path": "gui/portrait/race/dwarf.png",
+   "x": 728,
+   "y": 2,
+   "w": 64,
+   "h": 64,
+   "mode": "RGB"
+  },
+  {
+   "n": 12,
    "path": "gui/portrait/race/elf.png",
    "x": 2,
    "y": 68,
@@ -117,7 +126,7 @@
    "mode": "RGB"
   },
   {
-   "n": 12,
+   "n": 13,
    "path": "gui/portrait/race/goblin.png",
    "x": 68,
    "y": 68,
@@ -126,7 +135,7 @@
    "mode": "RGB"
   },
   {
-   "n": 13,
+   "n": 14,
    "path": "gui/portrait/race/human.png",
    "x": 134,
    "y": 68,
@@ -135,7 +144,7 @@
    "mode": "RGB"
   },
   {
-   "n": 14,
+   "n": 15,
    "path": "gui/portrait/race/infernal.png",
    "x": 200,
    "y": 68,
@@ -144,7 +153,7 @@
    "mode": "RGB"
   },
   {
-   "n": 15,
+   "n": 16,
    "path": "gui/portrait/race/orc.png",
    "x": 266,
    "y": 68,
@@ -153,7 +162,7 @@
    "mode": "RGB"
   },
   {
-   "n": 16,
+   "n": 17,
    "path": "gui/portrait/race/slime.png",
    "x": 332,
    "y": 68,
@@ -162,7 +171,7 @@
    "mode": "RGB"
   },
   {
-   "n": 17,
+   "n": 18,
    "path": "gui/portrait/race/triton.png",
    "x": 398,
    "y": 68,
@@ -171,7 +180,7 @@
    "mode": "RGB"
   },
   {
-   "n": 18,
+   "n": 19,
    "path": "gui/portrait/race/undead.png",
    "x": 464,
    "y": 68,
@@ -180,7 +189,7 @@
    "mode": "RGB"
   },
   {
-   "n": 19,
+   "n": 20,
    "path": "gui/portrait/subclass/agile_scout.png",
    "x": 530,
    "y": 68,
@@ -189,17 +198,17 @@
    "mode": "RGB"
   },
   {
-   "n": 20,
-   "path": "gui/portrait/subclass/arcane_blade.png",
+   "n": 21,
+   "path": "gui/portrait/subclass/angel.png",
    "x": 596,
    "y": 68,
    "w": 64,
    "h": 64,
-   "mode": "RGB"
+   "mode": "RGBA"
   },
   {
-   "n": 21,
-   "path": "gui/portrait/subclass/battle_mage.png",
+   "n": 22,
+   "path": "gui/portrait/subclass/arcane_blade.png",
    "x": 662,
    "y": 68,
    "w": 64,
@@ -207,7 +216,16 @@
    "mode": "RGB"
   },
   {
-   "n": 22,
+   "n": 23,
+   "path": "gui/portrait/subclass/battle_mage.png",
+   "x": 728,
+   "y": 68,
+   "w": 64,
+   "h": 64,
+   "mode": "RGB"
+  },
+  {
+   "n": 24,
    "path": "gui/portrait/subclass/beast_master.png",
    "x": 2,
    "y": 134,
@@ -216,7 +234,7 @@
    "mode": "RGB"
   },
   {
-   "n": 23,
+   "n": 25,
    "path": "gui/portrait/subclass/blessed_guardian.png",
    "x": 68,
    "y": 134,
@@ -225,7 +243,7 @@
    "mode": "RGB"
   },
   {
-   "n": 24,
+   "n": 26,
    "path": "gui/portrait/subclass/breeze_master.png",
    "x": 134,
    "y": 134,
@@ -234,7 +252,7 @@
    "mode": "RGB"
   },
   {
-   "n": 25,
+   "n": 27,
    "path": "gui/portrait/subclass/charging_juggernaut.png",
    "x": 200,
    "y": 134,
@@ -243,7 +261,7 @@
    "mode": "RGB"
   },
   {
-   "n": 26,
+   "n": 28,
    "path": "gui/portrait/subclass/chronomancer.png",
    "x": 266,
    "y": 134,
@@ -252,7 +270,7 @@
    "mode": "RGBA"
   },
   {
-   "n": 27,
+   "n": 29,
    "path": "gui/portrait/subclass/elementalist.png",
    "x": 332,
    "y": 134,
@@ -261,7 +279,7 @@
    "mode": "RGB"
   },
   {
-   "n": 28,
+   "n": 30,
    "path": "gui/portrait/subclass/enchanter.png",
    "x": 398,
    "y": 134,
@@ -270,7 +288,7 @@
    "mode": "RGBA"
   },
   {
-   "n": 29,
+   "n": 31,
    "path": "gui/portrait/subclass/heavy_palm.png",
    "x": 464,
    "y": 134,
@@ -279,7 +297,7 @@
    "mode": "RGB"
   },
   {
-   "n": 30,
+   "n": 32,
    "path": "gui/portrait/subclass/indestructible.png",
    "x": 530,
    "y": 134,
@@ -288,8 +306,8 @@
    "mode": "RGB"
   },
   {
-   "n": 31,
-   "path": "gui/portrait/subclass/minstrel.png",
+   "n": 33,
+   "path": "gui/portrait/subclass/intercessor.png",
    "x": 596,
    "y": 134,
    "w": 64,
@@ -297,17 +315,26 @@
    "mode": "RGBA"
   },
   {
-   "n": 32,
-   "path": "gui/portrait/subclass/plague_corruptor.png",
+   "n": 34,
+   "path": "gui/portrait/subclass/martyr.png",
    "x": 662,
    "y": 134,
    "w": 64,
    "h": 64,
-   "mode": "RGB"
+   "mode": "RGBA"
   },
   {
-   "n": 33,
-   "path": "gui/portrait/subclass/shadow_illusionist.png",
+   "n": 35,
+   "path": "gui/portrait/subclass/minstrel.png",
+   "x": 728,
+   "y": 134,
+   "w": 64,
+   "h": 64,
+   "mode": "RGBA"
+  },
+  {
+   "n": 36,
+   "path": "gui/portrait/subclass/plague_corruptor.png",
    "x": 2,
    "y": 200,
    "w": 64,
@@ -315,8 +342,8 @@
    "mode": "RGB"
   },
   {
-   "n": 34,
-   "path": "gui/portrait/subclass/shadow_walker.png",
+   "n": 37,
+   "path": "gui/portrait/subclass/shadow_illusionist.png",
    "x": 68,
    "y": 200,
    "w": 64,
@@ -324,8 +351,8 @@
    "mode": "RGB"
   },
   {
-   "n": 35,
-   "path": "gui/portrait/subclass/sniper.png",
+   "n": 38,
+   "path": "gui/portrait/subclass/shadow_walker.png",
    "x": 134,
    "y": 200,
    "w": 64,
@@ -333,8 +360,8 @@
    "mode": "RGB"
   },
   {
-   "n": 36,
-   "path": "gui/portrait/subclass/suicidal_berserker.png",
+   "n": 39,
+   "path": "gui/portrait/subclass/sniper.png",
    "x": 200,
    "y": 200,
    "w": 64,
@@ -342,8 +369,8 @@
    "mode": "RGB"
   },
   {
-   "n": 37,
-   "path": "gui/portrait/subclass/triworld_guardian.png",
+   "n": 40,
+   "path": "gui/portrait/subclass/suicidal_berserker.png",
    "x": 266,
    "y": 200,
    "w": 64,
@@ -351,8 +378,8 @@
    "mode": "RGB"
   },
   {
-   "n": 38,
-   "path": "gui/portrait/subclass/unyielding_bastion.png",
+   "n": 41,
+   "path": "gui/portrait/subclass/triworld_guardian.png",
    "x": 332,
    "y": 200,
    "w": 64,
@@ -360,36 +387,9 @@
    "mode": "RGB"
   },
   {
-   "n": 39,
-   "path": "gui/portrait/subclass/war_chanter.png",
-   "x": 398,
-   "y": 200,
-   "w": 64,
-   "h": 64,
-   "mode": "RGBA"
-  },
-  {
-   "n": 40,
-   "path": "gui/portrait/subrace/centaur/pegasus.png",
-   "x": 464,
-   "y": 200,
-   "w": 64,
-   "h": 64,
-   "mode": "RGB"
-  },
-  {
-   "n": 41,
-   "path": "gui/portrait/subrace/centaur/unicorn.png",
-   "x": 530,
-   "y": 200,
-   "w": 64,
-   "h": 64,
-   "mode": "RGB"
-  },
-  {
    "n": 42,
-   "path": "gui/portrait/subrace/centaur/warrior.png",
-   "x": 596,
+   "path": "gui/portrait/subclass/unyielding_bastion.png",
+   "x": 398,
    "y": 200,
    "w": 64,
    "h": 64,
@@ -397,7 +397,34 @@
   },
   {
    "n": 43,
-   "path": "gui/portrait/subrace/colossus/porter.png",
+   "path": "gui/portrait/subclass/war_chanter.png",
+   "x": 464,
+   "y": 200,
+   "w": 64,
+   "h": 64,
+   "mode": "RGBA"
+  },
+  {
+   "n": 44,
+   "path": "gui/portrait/subrace/centaur/pegasus.png",
+   "x": 530,
+   "y": 200,
+   "w": 64,
+   "h": 64,
+   "mode": "RGB"
+  },
+  {
+   "n": 45,
+   "path": "gui/portrait/subrace/centaur/unicorn.png",
+   "x": 596,
+   "y": 200,
+   "w": 64,
+   "h": 64,
+   "mode": "RGB"
+  },
+  {
+   "n": 46,
+   "path": "gui/portrait/subrace/centaur/warrior.png",
    "x": 662,
    "y": 200,
    "w": 64,
@@ -405,7 +432,16 @@
    "mode": "RGB"
   },
   {
-   "n": 44,
+   "n": 47,
+   "path": "gui/portrait/subrace/colossus/porter.png",
+   "x": 728,
+   "y": 200,
+   "w": 64,
+   "h": 64,
+   "mode": "RGB"
+  },
+  {
+   "n": 48,
    "path": "gui/portrait/subrace/colossus/titan.png",
    "x": 2,
    "y": 266,
@@ -414,7 +450,7 @@
    "mode": "RGB"
   },
   {
-   "n": 45,
+   "n": 49,
    "path": "gui/portrait/subrace/draconid/acid.png",
    "x": 68,
    "y": 266,
@@ -423,7 +459,7 @@
    "mode": "RGB"
   },
   {
-   "n": 46,
+   "n": 50,
    "path": "gui/portrait/subrace/draconid/fire.png",
    "x": 134,
    "y": 266,
@@ -432,7 +468,7 @@
    "mode": "RGB"
   },
   {
-   "n": 47,
+   "n": 51,
    "path": "gui/portrait/subrace/draconid/ice.png",
    "x": 200,
    "y": 266,
@@ -441,7 +477,7 @@
    "mode": "RGB"
   },
   {
-   "n": 48,
+   "n": 52,
    "path": "gui/portrait/subrace/draconid/lightning.png",
    "x": 266,
    "y": 266,
@@ -450,7 +486,7 @@
    "mode": "RGB"
   },
   {
-   "n": 49,
+   "n": 53,
    "path": "gui/portrait/subrace/draconid/poison.png",
    "x": 332,
    "y": 266,
@@ -459,7 +495,7 @@
    "mode": "RGB"
   },
   {
-   "n": 50,
+   "n": 54,
    "path": "gui/portrait/subrace/draconid/water.png",
    "x": 398,
    "y": 266,
@@ -468,7 +504,7 @@
    "mode": "RGB"
   },
   {
-   "n": 51,
+   "n": 55,
    "path": "gui/portrait/subrace/dwarf/deep.png",
    "x": 464,
    "y": 266,
@@ -477,7 +513,7 @@
    "mode": "RGB"
   },
   {
-   "n": 52,
+   "n": 56,
    "path": "gui/portrait/subrace/dwarf/demolisher.png",
    "x": 530,
    "y": 266,
@@ -486,7 +522,7 @@
    "mode": "RGB"
   },
   {
-   "n": 53,
+   "n": 57,
    "path": "gui/portrait/subrace/dwarf/smith.png",
    "x": 596,
    "y": 266,
@@ -495,7 +531,7 @@
    "mode": "RGB"
   },
   {
-   "n": 54,
+   "n": 58,
    "path": "gui/portrait/subrace/elf/arcane.png",
    "x": 662,
    "y": 266,
@@ -504,54 +540,18 @@
    "mode": "RGB"
   },
   {
-   "n": 55,
-   "path": "gui/portrait/subrace/elf/dark.png",
-   "x": 2,
-   "y": 332,
-   "w": 64,
-   "h": 64,
-   "mode": "RGB"
-  },
-  {
-   "n": 56,
-   "path": "gui/portrait/subrace/elf/sylvan.png",
-   "x": 68,
-   "y": 332,
-   "w": 64,
-   "h": 64,
-   "mode": "RGB"
-  },
-  {
-   "n": 57,
-   "path": "gui/portrait/subrace/goblin/thief.png",
-   "x": 134,
-   "y": 332,
-   "w": 64,
-   "h": 64,
-   "mode": "RGB"
-  },
-  {
-   "n": 58,
-   "path": "gui/portrait/subrace/goblin/trapper.png",
-   "x": 200,
-   "y": 332,
-   "w": 64,
-   "h": 64,
-   "mode": "RGB"
-  },
-  {
    "n": 59,
-   "path": "gui/portrait/subrace/goblin/wolf_rider.png",
-   "x": 266,
-   "y": 332,
+   "path": "gui/portrait/subrace/elf/dark.png",
+   "x": 728,
+   "y": 266,
    "w": 64,
    "h": 64,
    "mode": "RGB"
   },
   {
    "n": 60,
-   "path": "gui/portrait/subrace/human/autodidact.png",
-   "x": 332,
+   "path": "gui/portrait/subrace/elf/sylvan.png",
+   "x": 2,
    "y": 332,
    "w": 64,
    "h": 64,
@@ -559,8 +559,8 @@
   },
   {
    "n": 61,
-   "path": "gui/portrait/subrace/human/polyvalent.png",
-   "x": 398,
+   "path": "gui/portrait/subrace/goblin/thief.png",
+   "x": 68,
    "y": 332,
    "w": 64,
    "h": 64,
@@ -568,8 +568,8 @@
   },
   {
    "n": 62,
-   "path": "gui/portrait/subrace/human/specialist.png",
-   "x": 464,
+   "path": "gui/portrait/subrace/goblin/trapper.png",
+   "x": 134,
    "y": 332,
    "w": 64,
    "h": 64,
@@ -577,8 +577,8 @@
   },
   {
    "n": 63,
-   "path": "gui/portrait/subrace/infernal/native.png",
-   "x": 530,
+   "path": "gui/portrait/subrace/goblin/wolf_rider.png",
+   "x": 200,
    "y": 332,
    "w": 64,
    "h": 64,
@@ -586,8 +586,8 @@
   },
   {
    "n": 64,
-   "path": "gui/portrait/subrace/infernal/pyromaniac.png",
-   "x": 596,
+   "path": "gui/portrait/subrace/human/autodidact.png",
+   "x": 266,
    "y": 332,
    "w": 64,
    "h": 64,
@@ -595,8 +595,8 @@
   },
   {
    "n": 65,
-   "path": "gui/portrait/subrace/infernal/smelter.png",
-   "x": 662,
+   "path": "gui/portrait/subrace/human/polyvalent.png",
+   "x": 332,
    "y": 332,
    "w": 64,
    "h": 64,
@@ -604,62 +604,62 @@
   },
   {
    "n": 66,
-   "path": "gui/portrait/subrace/orc/devourer.png",
-   "x": 2,
-   "y": 398,
+   "path": "gui/portrait/subrace/human/specialist.png",
+   "x": 398,
+   "y": 332,
    "w": 64,
    "h": 64,
    "mode": "RGB"
   },
   {
    "n": 67,
-   "path": "gui/portrait/subrace/orc/stoneskin.png",
-   "x": 68,
-   "y": 398,
+   "path": "gui/portrait/subrace/infernal/native.png",
+   "x": 464,
+   "y": 332,
    "w": 64,
    "h": 64,
    "mode": "RGB"
   },
   {
    "n": 68,
-   "path": "gui/portrait/subrace/orc/warlord.png",
-   "x": 134,
-   "y": 398,
+   "path": "gui/portrait/subrace/infernal/pyromaniac.png",
+   "x": 530,
+   "y": 332,
    "w": 64,
    "h": 64,
    "mode": "RGB"
   },
   {
    "n": 69,
-   "path": "gui/portrait/subrace/slime/mitotic.png",
-   "x": 200,
-   "y": 398,
+   "path": "gui/portrait/subrace/infernal/smelter.png",
+   "x": 596,
+   "y": 332,
    "w": 64,
    "h": 64,
    "mode": "RGB"
   },
   {
    "n": 70,
-   "path": "gui/portrait/subrace/slime/spring.png",
-   "x": 266,
-   "y": 398,
+   "path": "gui/portrait/subrace/orc/devourer.png",
+   "x": 662,
+   "y": 332,
    "w": 64,
    "h": 64,
    "mode": "RGB"
   },
   {
    "n": 71,
-   "path": "gui/portrait/subrace/slime/swarm.png",
-   "x": 332,
-   "y": 398,
+   "path": "gui/portrait/subrace/orc/stoneskin.png",
+   "x": 728,
+   "y": 332,
    "w": 64,
    "h": 64,
    "mode": "RGB"
   },
   {
    "n": 72,
-   "path": "gui/portrait/subrace/slime/viscous.png",
-   "x": 398,
+   "path": "gui/portrait/subrace/orc/warlord.png",
+   "x": 2,
    "y": 398,
    "w": 64,
    "h": 64,
@@ -667,8 +667,8 @@
   },
   {
    "n": 73,
-   "path": "gui/portrait/subrace/triton/abyssal.png",
-   "x": 464,
+   "path": "gui/portrait/subrace/slime/mitotic.png",
+   "x": 68,
    "y": 398,
    "w": 64,
    "h": 64,
@@ -676,8 +676,8 @@
   },
   {
    "n": 74,
-   "path": "gui/portrait/subrace/triton/fisher.png",
-   "x": 530,
+   "path": "gui/portrait/subrace/slime/spring.png",
+   "x": 134,
    "y": 398,
    "w": 64,
    "h": 64,
@@ -685,8 +685,8 @@
   },
   {
    "n": 75,
-   "path": "gui/portrait/subrace/triton/shaper.png",
-   "x": 596,
+   "path": "gui/portrait/subrace/slime/swarm.png",
+   "x": 200,
    "y": 398,
    "w": 64,
    "h": 64,
@@ -694,8 +694,8 @@
   },
   {
    "n": 76,
-   "path": "gui/portrait/subrace/undead/skeleton.png",
-   "x": 662,
+   "path": "gui/portrait/subrace/slime/viscous.png",
+   "x": 266,
    "y": 398,
    "w": 64,
    "h": 64,
@@ -703,18 +703,54 @@
   },
   {
    "n": 77,
-   "path": "gui/portrait/subrace/undead/specter.png",
-   "x": 2,
-   "y": 464,
+   "path": "gui/portrait/subrace/triton/abyssal.png",
+   "x": 332,
+   "y": 398,
    "w": 64,
    "h": 64,
    "mode": "RGB"
   },
   {
    "n": 78,
+   "path": "gui/portrait/subrace/triton/fisher.png",
+   "x": 398,
+   "y": 398,
+   "w": 64,
+   "h": 64,
+   "mode": "RGB"
+  },
+  {
+   "n": 79,
+   "path": "gui/portrait/subrace/triton/shaper.png",
+   "x": 464,
+   "y": 398,
+   "w": 64,
+   "h": 64,
+   "mode": "RGB"
+  },
+  {
+   "n": 80,
+   "path": "gui/portrait/subrace/undead/skeleton.png",
+   "x": 530,
+   "y": 398,
+   "w": 64,
+   "h": 64,
+   "mode": "RGB"
+  },
+  {
+   "n": 81,
+   "path": "gui/portrait/subrace/undead/specter.png",
+   "x": 596,
+   "y": 398,
+   "w": 64,
+   "h": 64,
+   "mode": "RGB"
+  },
+  {
+   "n": 82,
    "path": "gui/portrait/subrace/undead/vampire.png",
-   "x": 68,
-   "y": 464,
+   "x": 662,
+   "y": 398,
    "w": 64,
    "h": 64,
    "mode": "RGB"

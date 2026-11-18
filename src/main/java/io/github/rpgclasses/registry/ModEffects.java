@@ -79,6 +79,13 @@ public final class ModEffects {
                     .addAttributeModifier(Attributes.MOVEMENT_SPEED, "b51e7d2a-4c3f-4e8a-9a61-0f2d7c9e5a18", 0.30,
                             AttributeModifier.Operation.MULTIPLY_TOTAL));
 
+    /** Tumbado (Milagro del Clérigo): solo icono; la lógica está en cleric.Miracle. */
+    public static final RegistryObject<MobEffect> DOWNED =
+            EFFECTS.register("downed", () -> new StateEffect(MobEffectCategory.NEUTRAL, 0xE8D9A0));
+    /** Forma Angelical (Ángel): solo icono; el vuelo lo controla cleric.ClericSubclasses. */
+    public static final RegistryObject<MobEffect> ANGELIC_FORM =
+            EFFECTS.register("angelic_form", () -> new StateEffect(MobEffectCategory.BENEFICIAL, 0xFFF4C2));
+
     /** Efecto normal (curable con leche) sin lógica propia. */
     public static class CurableEffect extends MobEffect {
         public CurableEffect(MobEffectCategory category, int color) {

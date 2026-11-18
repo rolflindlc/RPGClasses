@@ -1,0 +1,141 @@
+0 Pendant quelques secondes, vous volez (sans sprinter en l'air). À l'activation, vos effets négatifs et ceux des alliés proches sont purgés, et vous recevez tous Régénération II et Absorption I tant qu'elle dure. À la fin, vous ne subissez pas de dégâts de chute.
+1 Forme angélique
+2 Vous voyez la santé des alliés proches au-dessus de leur tête (même à travers les murs). Ceux sous 40 % brillent, et ceux mis à terre par Miracle affichent leur compte à rebours. Vous seul le voyez.
+3 Œil du guérisseur
+4 Vous soignez l'allié que vous regardez (proche) de 30 % de sa santé maximale, sans dépenser de mana. Évolue avec votre puissance sacrée. Relève un allié à terre.
+5 Imposition des mains
+6 Si un allié allait mourir près de vous, il est mis à terre quelques secondes à la place : il ne peut rien faire ni subir de dégâts. Si un autre joueur le soigne, il se relève ; sinon, il meurt. Chaque allié ne peut être sauvé ainsi que de temps en temps. Cela ne vous sauve pas.
+7 Miracle
+8 Choisissez un allié dans la liste : votre corps reste à genoux et votre caméra passe à un petit ange qui orbite autour de l'allié et lui donne Régénération. Vos sorts, Imposition des mains et Sanctuaire partent de l'ange ; les sorts perdent en puissance si votre corps est loin. Appuyez à nouveau pour changer d'allié ou arrêter de prier.
+9 Prière
+10 Vous payez une partie de votre santé maximale et l'allié que vous regardez récupère une partie de la sienne (au moins ce que vous avez payé). Sans délai de recharge. Si payer vous tuerait, l'icône devient rouge : appuyez deux fois pour donner votre vie et soigner la moitié de la santé de votre allié, avec un instant d'invulnérabilité.
+11 Sacrifice
+12 Maintenez la touche : une sphère sacrée vous entoure, repousse les ennemis et bloque leurs projectiles. Elle absorbe les dégâts de quiconque est à l'intérieur jusqu'à se briser. Elle coûte du mana chaque seconde ; une fois relâchée, elle dure la moitié du temps maintenu. Pendant ce temps, vous êtes plus lent et ne pouvez pas lancer de sorts.
+13 Sanctuaire
+14 Une partie des soins excédentaires (au-delà de la santé maximale) se transforme en absorption pendant quelques secondes.
+15 Égide
+16 Les effets bénéfiques que vous donnez avec vos sorts durent plus longtemps. N'affecte pas les capacités de classe.
+17 Bénédiction
+18 Plus de mana maximal et plus de régénération de mana.
+19 Réserve divine
+20 Vos sorts soignent davantage et donnent plus d'absorption (aussi ceux lancés sur vous). N'affecte pas les capacités de classe.
+21 Guérison
+22 Vos soins raccourcissent les effets négatifs de la cible soignée.
+23 Purification
+24 Guérisseur sacré : une sorte de mage de soin qui partage l'école sacrée avec le Paladin. Sa magie sacrée n'a pas de mur et toutes les autres écoles perdent 35 %. Très faible avec les armes, armures et boucliers. Soigne, prolonge les buffs, purifie, protège avec des boucliers de lumière et sauve ses alliés du coup de grâce.
+25 Clerc
+26 Trait de classe : santé maximale légèrement accrue.
+27 %1$s a donné sa vie pour ses alliés
+28 %1$s a donné sa vie pour ses alliés en combattant %2$s
+29 Forme angélique
+30 À terre
+31 À terre : %s s
+32 Sacrifice ultime
+33 Absolution
+34 Égide
+35 Bénédiction
+36 Foi aveugle
+37 Égide profonde
+38 Retour de foi
+39 Voix lointaine
+40 Bénédiction majeure
+41 Auréole
+42 Guérison
+43 Canal de vie
+44 Résolution
+45 Foi personnelle
+46 Pénitence
+47 Corps en prière
+48 Purification
+49 Bénédiction égoïste
+50 Égide rapide
+51 Grâce ailée
+52 %s est à terre ! Soignez-le dans les %s s.
+53 Vous êtes à terre ! Si un allié vous soigne dans les %s s, vous vous relevez.
+54 Sacrifice ultime : appuyez à nouveau pour donner votre vie pour %s.
+55 %s a donné sa vie pour vous.
+56 %s a déjà toute sa santé.
+57 Vous n'avez pas assez de mana.
+58 Vous ne regardez aucun allié à portée.
+59 Vous cessez de prier.
+60 La prière est rompue : %s n'est plus à votre portée.
+61 Aucun allié à portée pour qui prier.
+62 Vous priez pour %s.
+63 %s vous a relevé !
+64 Vous avez relevé %s.
+65 Le Sanctuaire s'est brisé.
+66 Niveau d'Absorption
+67 Durée de l'absorption
+68 Délai par allié
+69 Dure après relâchement (du temps canalisé)
+70 Mana par seconde en canalisant
+71 Vitesse en canalisant
+72 En combat pendant
+73 Délai de confirmation
+74 Excédent converti en absorption
+75 Conversion
+76 Santé maximale payée
+77 Durée des effets négatifs retirée
+78 Temps à terre
+79 Durée de vos buffs
+80 Durée de vos buffs
+81 Temps d'expansion
+82 Niveaux supplémentaires de vos buffs
+83 Mana de vos buffs
+84 Réduction des dégâts de chute
+85 Soin du Sacrifice ultime
+86 Invulnérabilité du Sacrifice ultime
+87 Pleine puissance jusqu'à (blocs)
+88 Distance supplémentaire sans perte (blocs)
+89 Soin et absorption de vos sorts
+90 Régénération de mana en combat
+91 Brillent sous
+92 Mana du sort récupéré
+93 Niveau maximal (0 = I)
+94 Canalisation maximale
+95 Cibles comptées par lancement
+96 Puissance minimale à distance
+97 Puissance minimale à partir de (blocs)
+98 Distance de l'ange (blocs)
+99 Soin sur les autres
+100 Régénération de mana hors combat
+101 Vous récupérez de ce que vous soignez
+102 Réduction de la branche x
+103 Niveau de Régénération
+104 Immunité en se relevant
+105 Santé minimale en se relevant
+106 Soin sur vous
+107 Santé du bouclier
+108 Régénération du bouclier par seconde
+109 Chute lente à partir du niveau
+110 Durée transmise à l'ennemi
+111 Vous convertissez beaucoup moins d'excédent en absorption, mais le plafond monte à la moitié de la santé maximale.
+112 Égide profonde
+113 Vous convertissez davantage d'excédent en absorption, mais le plafond baisse beaucoup.
+114 Égide rapide
+115 Vos buffs gagnent un niveau (jusqu'à III), mais coûtent plus de mana et durent un peu moins.
+116 Bénédiction majeure
+117 Vos buffs de zone n'affectent que vous, mais durent beaucoup plus longtemps.
+118 Bénédiction égoïste
+119 Vous régénérez beaucoup plus de mana hors combat et un peu moins en combat.
+120 Foi aveugle
+121 Moins de mana maximal ; soigner réellement quelqu'un d'autre rend une partie du mana du sort.
+122 Retour de foi
+123 Vos sorts vous soignent beaucoup moins, mais vous récupérez la moitié de ce que vous soignez chez les autres (jusqu'à 3 par lancement).
+124 Canal de vie
+125 Vos sorts vous soignent beaucoup plus, mais beaucoup moins les autres.
+126 Foi personnelle
+127 Votre premier soin sur chaque allié, de temps en temps, retire tous ses effets négatifs, mais la réduction de la branche est divisée par deux.
+128 Absolution
+129 Ce que vous retirez d'un effet négatif passe à l'ennemi le plus proche, avec la moitié de cette durée.
+130 Pénitence
+131 Ailes de lumière : moins de dégâts de chute et chute lente, une auréole qui régénère les alliés proches et, dès le niveau 5, la Forme angélique : vous volez quelques secondes pendant que vous et vos alliés régénérez et êtes purifiés.
+132 Ange
+133 Prie pour un allié même sans le voir : votre corps reste à genoux et votre regard passe à un petit ange qui l'accompagne. Vous lancez vos sorts depuis l'ange, avec moins de puissance plus votre corps est loin.
+134 Intercesseur
+135 Soigne avec son propre sang : plus de santé, moins de dégâts subis quand il est grièvement blessé et, dès le niveau 5, le Sacrifice : vous payez de la santé pour soigner un allié, sans délai de recharge. Si vous ne pouvez plus payer, vous pouvez donner votre vie pour lui.
+136 Martyr
+137 %s (en cours)
+138 %s (%s blocs)
+139 Arrêter de prier
+140 Prière : pour qui priez-vous ?

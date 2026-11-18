@@ -1,16 +1,16 @@
 {
  "group": "efectos",
  "width": 142,
- "height": 82,
+ "height": 102,
  "cell_w": 18,
  "cell_h": 18,
  "cols": 7,
- "rows": 4,
+ "rows": 5,
  "gutter": 2,
  "cells": [
   {
    "n": 0,
-   "path": "mob_effect/arcane_step.png",
+   "path": "mob_effect/angelic_form.png",
    "x": 2,
    "y": 2,
    "w": 18,
@@ -19,7 +19,7 @@
   },
   {
    "n": 1,
-   "path": "mob_effect/banner.png",
+   "path": "mob_effect/arcane_step.png",
    "x": 22,
    "y": 2,
    "w": 18,
@@ -28,7 +28,7 @@
   },
   {
    "n": 2,
-   "path": "mob_effect/berserker_rage.png",
+   "path": "mob_effect/banner.png",
    "x": 42,
    "y": 2,
    "w": 18,
@@ -37,7 +37,7 @@
   },
   {
    "n": 3,
-   "path": "mob_effect/bulwark.png",
+   "path": "mob_effect/berserker_rage.png",
    "x": 62,
    "y": 2,
    "w": 18,
@@ -46,7 +46,7 @@
   },
   {
    "n": 4,
-   "path": "mob_effect/charging_bulwark.png",
+   "path": "mob_effect/bulwark.png",
    "x": 82,
    "y": 2,
    "w": 18,
@@ -55,7 +55,7 @@
   },
   {
    "n": 5,
-   "path": "mob_effect/charmed.png",
+   "path": "mob_effect/charging_bulwark.png",
    "x": 102,
    "y": 2,
    "w": 18,
@@ -64,7 +64,7 @@
   },
   {
    "n": 6,
-   "path": "mob_effect/condemned.png",
+   "path": "mob_effect/charmed.png",
    "x": 122,
    "y": 2,
    "w": 18,
@@ -73,7 +73,7 @@
   },
   {
    "n": 7,
-   "path": "mob_effect/corrosion.png",
+   "path": "mob_effect/condemned.png",
    "x": 2,
    "y": 22,
    "w": 18,
@@ -82,7 +82,7 @@
   },
   {
    "n": 8,
-   "path": "mob_effect/endurance.png",
+   "path": "mob_effect/corrosion.png",
    "x": 22,
    "y": 22,
    "w": 18,
@@ -91,7 +91,7 @@
   },
   {
    "n": 9,
-   "path": "mob_effect/forced_dance.png",
+   "path": "mob_effect/downed.png",
    "x": 42,
    "y": 22,
    "w": 18,
@@ -100,7 +100,7 @@
   },
   {
    "n": 10,
-   "path": "mob_effect/hunters_mark.png",
+   "path": "mob_effect/endurance.png",
    "x": 62,
    "y": 22,
    "w": 18,
@@ -109,7 +109,7 @@
   },
   {
    "n": 11,
-   "path": "mob_effect/immortal_fury.png",
+   "path": "mob_effect/forced_dance.png",
    "x": 82,
    "y": 22,
    "w": 18,
@@ -118,7 +118,7 @@
   },
   {
    "n": 12,
-   "path": "mob_effect/iron_chorale.png",
+   "path": "mob_effect/hunters_mark.png",
    "x": 102,
    "y": 22,
    "w": 18,
@@ -127,7 +127,7 @@
   },
   {
    "n": 13,
-   "path": "mob_effect/mana_cadence.png",
+   "path": "mob_effect/immortal_fury.png",
    "x": 122,
    "y": 22,
    "w": 18,
@@ -136,7 +136,7 @@
   },
   {
    "n": 14,
-   "path": "mob_effect/march.png",
+   "path": "mob_effect/iron_chorale.png",
    "x": 2,
    "y": 42,
    "w": 18,
@@ -145,7 +145,7 @@
   },
   {
    "n": 15,
-   "path": "mob_effect/plague.png",
+   "path": "mob_effect/mana_cadence.png",
    "x": 22,
    "y": 42,
    "w": 18,
@@ -154,7 +154,7 @@
   },
   {
    "n": 16,
-   "path": "mob_effect/requiem_fervor.png",
+   "path": "mob_effect/march.png",
    "x": 42,
    "y": 42,
    "w": 18,
@@ -163,7 +163,7 @@
   },
   {
    "n": 17,
-   "path": "mob_effect/rest_ballad.png",
+   "path": "mob_effect/plague.png",
    "x": 62,
    "y": 42,
    "w": 18,
@@ -172,7 +172,7 @@
   },
   {
    "n": 18,
-   "path": "mob_effect/retreat.png",
+   "path": "mob_effect/requiem_fervor.png",
    "x": 82,
    "y": 42,
    "w": 18,
@@ -181,7 +181,7 @@
   },
   {
    "n": 19,
-   "path": "mob_effect/scale_ward_fire.png",
+   "path": "mob_effect/rest_ballad.png",
    "x": 102,
    "y": 42,
    "w": 18,
@@ -190,7 +190,7 @@
   },
   {
    "n": 20,
-   "path": "mob_effect/scale_ward_ice.png",
+   "path": "mob_effect/retreat.png",
    "x": 122,
    "y": 42,
    "w": 18,
@@ -199,7 +199,7 @@
   },
   {
    "n": 21,
-   "path": "mob_effect/scale_ward_lightning.png",
+   "path": "mob_effect/scale_ward_fire.png",
    "x": 2,
    "y": 62,
    "w": 18,
@@ -208,7 +208,7 @@
   },
   {
    "n": 22,
-   "path": "mob_effect/shared_step.png",
+   "path": "mob_effect/scale_ward_ice.png",
    "x": 22,
    "y": 62,
    "w": 18,
@@ -217,7 +217,7 @@
   },
   {
    "n": 23,
-   "path": "mob_effect/silenced.png",
+   "path": "mob_effect/scale_ward_lightning.png",
    "x": 42,
    "y": 62,
    "w": 18,
@@ -226,7 +226,7 @@
   },
   {
    "n": 24,
-   "path": "mob_effect/taunt_guard.png",
+   "path": "mob_effect/shared_step.png",
    "x": 62,
    "y": 62,
    "w": 18,
@@ -235,7 +235,7 @@
   },
   {
    "n": 25,
-   "path": "mob_effect/toxin.png",
+   "path": "mob_effect/silenced.png",
    "x": 82,
    "y": 62,
    "w": 18,
@@ -244,9 +244,27 @@
   },
   {
    "n": 26,
-   "path": "mob_effect/war_hymn.png",
+   "path": "mob_effect/taunt_guard.png",
    "x": 102,
    "y": 62,
+   "w": 18,
+   "h": 18,
+   "mode": "RGBA"
+  },
+  {
+   "n": 27,
+   "path": "mob_effect/toxin.png",
+   "x": 122,
+   "y": 62,
+   "w": 18,
+   "h": 18,
+   "mode": "RGBA"
+  },
+  {
+   "n": 28,
+   "path": "mob_effect/war_hymn.png",
+   "x": 2,
+   "y": 82,
    "w": 18,
    "h": 18,
    "mode": "RGBA"

@@ -101,6 +101,8 @@ public final class ClientSetup {
         MinecraftForge.EVENT_BUS.addListener(ClientSetup::onMovementInput);
         MinecraftForge.EVENT_BUS.addListener(ClientSetup::onRenderPlayer);
         ChronoFx.register(modBus);
+        // Clérigo: Ojo del Sanador, tumbados, Santuario, Plegaria y Ángel.
+        io.github.rpgclasses.client.cleric.ClericClient.register(modBus);
         modBus.addListener((EntityRenderersEvent.RegisterRenderers event) -> {
             event.registerEntityRenderer(ModEntities.DECOY.get(), DecoyRenderer::new);
             event.registerEntityRenderer(ModEntities.SWARM_SLIME.get(), SwarmSlimeRenderer::new);

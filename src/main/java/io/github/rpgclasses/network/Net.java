@@ -17,7 +17,7 @@ import net.minecraftforge.network.simple.SimpleChannel;
 
 public final class Net {
     /** Cliente y servidor con versiones de protocolo distintas no se conectan. Subir al cambiar cualquier paquete. */
-    private static final String PROTOCOL = "17";
+    private static final String PROTOCOL = "18";
 
     public static final SimpleChannel CHANNEL = NetworkRegistry.newSimpleChannel(
             RpgClasses.id("main"), () -> PROTOCOL, PROTOCOL::equals, PROTOCOL::equals);
@@ -97,6 +97,25 @@ public final class Net {
         CHANNEL.messageBuilder(Packets.ClassPlan.class, id++, NetworkDirection.PLAY_TO_SERVER)
                 .encoder(Packets.ClassPlan::encode).decoder(Packets.ClassPlan::decode)
                 .consumerMainThread(Packets.ClassPlan::handle).add();
+        // Clérigo (protocolo 18).
+        CHANNEL.messageBuilder(Packets.ClericDowned.class, id++, NetworkDirection.PLAY_TO_CLIENT)
+                .encoder(Packets.ClericDowned::encode).decoder(Packets.ClericDowned::decode)
+                .consumerMainThread(Packets.ClericDowned::handle).add();
+        CHANNEL.messageBuilder(Packets.SanctuarySync.class, id++, NetworkDirection.PLAY_TO_CLIENT)
+                .encoder(Packets.SanctuarySync::encode).decoder(Packets.SanctuarySync::decode)
+                .consumerMainThread(Packets.SanctuarySync::handle).add();
+        CHANNEL.messageBuilder(Packets.PrayerState.class, id++, NetworkDirection.PLAY_TO_CLIENT)
+                .encoder(Packets.PrayerState::encode).decoder(Packets.PrayerState::decode)
+                .consumerMainThread(Packets.PrayerState::handle).add();
+        CHANNEL.messageBuilder(Packets.PrayerList.class, id++, NetworkDirection.PLAY_TO_CLIENT)
+                .encoder(Packets.PrayerList::encode).decoder(Packets.PrayerList::decode)
+                .consumerMainThread(Packets.PrayerList::handle).add();
+        CHANNEL.messageBuilder(Packets.PrayerSelect.class, id++, NetworkDirection.PLAY_TO_SERVER)
+                .encoder(Packets.PrayerSelect::encode).decoder(Packets.PrayerSelect::decode)
+                .consumerMainThread(Packets.PrayerSelect::handle).add();
+        CHANNEL.messageBuilder(Packets.AbilityRelease.class, id++, NetworkDirection.PLAY_TO_SERVER)
+                .encoder(Packets.AbilityRelease::encode).decoder(Packets.AbilityRelease::decode)
+                .consumerMainThread(Packets.AbilityRelease::handle).add();
     }
 
     public static void toPlayer(ServerPlayer player, Object message) {

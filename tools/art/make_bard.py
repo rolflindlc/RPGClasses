@@ -456,6 +456,15 @@ SPELL_STYLE = {
     "grand_piano": (0x2A2A2E, 0x0A0A0C),
     "forced_dance": (0xD0559A, 0x3A0E2A),
     "final_requiem": (0xC9A227, 0x3A2A08),
+    "fugue": (0x2E9C8A, 0x0C2E2A),
+    "lullaby": (0x4A5AA8, 0x141A3A),
+    "resolution": (0x4CB86A, 0x123A1E),
+    "echo": (0x7A5AC8, 0x201440),
+    "phantom_choir": (0x5A8AA8, 0x14222E),
+    "harmony_barrier": (0x3A7AC8, 0x0E2040),
+    "siren_song": (0x2AA0C8, 0x0A2A3A),
+    "grand_solo": (0xE0A020, 0x40280A),
+    "eternal_lullaby": (0xB070C8, 0x2E143A),
 }
 
 
@@ -523,6 +532,57 @@ def spell_icon(name, n=16):
             t = math.radians(a)
             c.line(8 + o, 8 + o, 8 + o + 6 * math.cos(t), 8 + o + 6 * math.sin(t), rgb(0xFFF0A0))
         glyph_note(c, 6 + o, 4 + o, rgb(0x3A2A08), True)
+    elif name == "fugue":
+        for dy in (-3, 0, 3):
+            c.line(3 + o, 8 + dy + o, 11 + o, 8 + dy + o, rgb(0xCFFFF4))
+        c.line(11 + o, 5 + o, 13 + o, 8 + o, W)
+        c.line(13 + o, 8 + o, 11 + o, 11 + o, W)
+    elif name == "lullaby":
+        c.ellipse(7 + o, 8 + o, 4, 4, rgb(0xF0E6A0))
+        c.ellipse(9 + o, 7 + o, 3.5, 3.5, rgb(0x4A5AA8))
+        c.line(10 + o, 10 + o, 13 + o, 10 + o, W)
+        c.line(13 + o, 10 + o, 10 + o, 13 + o, W)
+        c.line(10 + o, 13 + o, 13 + o, 13 + o, W)
+    elif name == "resolution":
+        c.line(8 + o, 3 + o, 8 + o, 13 + o, rgb(0xE8FFE8), 2)
+        c.line(3 + o, 8 + o, 13 + o, 8 + o, rgb(0xE8FFE8), 2)
+        c.set(5 + o, 5 + o, W)
+        c.set(11 + o, 5 + o, W)
+        c.set(5 + o, 11 + o, W)
+        c.set(11 + o, 11 + o, W)
+    elif name == "echo":
+        for r in (2, 4, 6):
+            for a in range(-60, 61, 12):
+                t = math.radians(a)
+                c.set(4 + o + r * math.cos(t), 8 + o + r * math.sin(t), rgb(0xD8C8FF))
+        glyph_note(c, 3 + o, 5 + o, W)
+    elif name == "phantom_choir":
+        for x in (4, 8, 12):
+            c.ellipse(x + o, 6 + o, 1.6, 1.8, rgb(0xDDEEFF))
+            c.rect(x - 1 + o, 8 + o, x + 1 + o, 12 + o, rgb(0xAAC8E8))
+            c.set(x - 1 + o, 6 + o, rgb(0x14222E))
+            c.set(x + 1 + o, 6 + o, rgb(0x14222E))
+    elif name == "harmony_barrier":
+        for a in range(180, 361, 10):
+            t = math.radians(a)
+            c.set(8 + o + 6 * math.cos(t), 12 + o + 7 * math.sin(t), rgb(0xBFE0FF))
+        c.line(2 + o, 12 + o, 14 + o, 12 + o, rgb(0xBFE0FF))
+        glyph_note(c, 6 + o, 6 + o, W)
+    elif name == "siren_song":
+        for dy in (-3, 0, 3):
+            for x in range(3, 14):
+                c.set(x + o, 8 + dy + o + 1.5 * math.sin(x * 0.9), rgb(0xB8F0FF))
+    elif name == "grand_solo":
+        for a in range(0, 360, 72):
+            t = math.radians(a - 90)
+            c.line(8 + o, 8 + o, 8 + o + 6 * math.cos(t), 8 + o + 6 * math.sin(t), rgb(0xFFE08A))
+        glyph_note(c, 6 + o, 5 + o, rgb(0x40280A), True)
+    elif name == "eternal_lullaby":
+        for a in range(0, 360, 15):
+            t = math.radians(a)
+            c.set(8 + o + 5 * math.cos(t), 6 + o + 2 * math.sin(t), rgb(0xFFF0A0))
+        c.ellipse(8 + o, 10 + o, 3, 3, rgb(0xF0D8FF))
+        c.set(8 + o, 5 + o, W)
     return c
 
 

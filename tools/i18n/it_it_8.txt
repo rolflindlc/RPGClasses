@@ -259,3 +259,31 @@
 258 Metti gli spartiti negli slot. Gli slot grigi superano i tuoi slot: si possono solo svuotare.
 259 Leggio: %s
 260 Tempo per punto di combo
+261 Fuga
+262 Ninna nanna
+263 Risoluzione
+264 Eco
+265 Coro fantasma
+266 Barriera d'armonia
+267 Canto della sirena
+268 Grande assolo
+269 Ninna nanna eterna
+270 Scatti in avanti all'istante (circa 7 blocchi, meno se c'è un muro) lasciando una scia di note: i nemici che attraversi vengono respinti e storditi per mezzo secondo.
+271 Un cono di canto dolce davanti a te: i nemici normali che colpisce si addormentano. Qualsiasi danno li sveglia. I boss sono immuni e i giocatori dormono la metà.
+272 Un accordo che risolve la tensione: tu e gli alleati vicini perdete tutti gli effetti negativi e ottenete uno scudo di assorbimento per qualche secondo.
+273 Ripete il tuo ultimo incantesimo musicale a metà potenza, senza spendere il mana né il tempo di ricarica di quell'incantesimo. Funziona solo se l'hai lanciato da poco.
+274 Tre cantori spettrali cantano intorno a te per qualche secondo: i nemici vicini smettono di inseguire te e i tuoi alleati e vengono ad ascoltare, e subiscono danni sonori ogni secondo.
+275 Una cupola di note resta dove la lanci: assorbe i proiettili nemici e riduce il danno che tu e i tuoi alleati subite al suo interno.
+276 Un canto irresistibile: i nemici vicini vengono trascinati verso di te per qualche secondo (i boss più lentamente). Perfetto per raggrupparli prima di un Rimbombo o di una Dissonanza.
+277 Suoni un assolo: per qualche secondo il tuo combo è al massimo e gli errori non lo fanno calare, e il prossimo incantesimo che lanci non ha ricarica.
+278 Una ninna nanna che protegge gli alleati vicini: il primo colpo mortale che ognuno riceve mentre dura non lo uccide; sopravvivono con parte della salute e senza effetti negativi.
+279 Scatto di %s blocchi; stordisce %s s
+280 Sonno %s s (il danno li sveglia)
+281 Rimuove gli effetti negativi e dà %s di assorbimento per %s s
+282 Ripete il tuo ultimo incantesimo al %s%% di potenza (fino a %s s dopo)
+283 Tre cantori per %s s: %s danni al secondo vicino a loro
+284 Assorbe proiettili e −%s%% di danno subito per %s s
+285 Attira i nemici verso di te per %s s
+286 Combo al massimo senza perdite per %s s; il prossimo incantesimo senza ricarica
+287 Sopravvivono a un colpo mortale con il %s%% di salute (%s s)
+288 Nessun incantesimo recente da ripetere

@@ -259,3 +259,31 @@
 258 Coloque partituras nos espaços. Os espaços cinzas excedem os seus: só podem ser esvaziados.
 259 Estante de partitura: %s
 260 Andamento por ponto de combo
+261 Fuga
+262 Canção de Ninar
+263 Resolução
+264 Eco
+265 Coro Fantasma
+266 Barreira de Harmonia
+267 Canto da Sereia
+268 Grande Solo
+269 Canção de Ninar Eterna
+270 Você avança instantaneamente (cerca de 7 blocos, menos se houver uma parede) deixando um rastro de notas: os inimigos que você atravessa são empurrados e atordoados por meio segundo.
+271 Um cone de canto suave à sua frente: os inimigos normais que ele alcança adormecem. Qualquer dano os acorda. Chefes são imunes e jogadores dormem metade do tempo.
+272 Um acorde que resolve a tensão: você e seus aliados próximos perdem todos os efeitos negativos e ganham um escudo de absorção por alguns segundos.
+273 Repete seu último feitiço musical com metade do poder, sem gastar a mana nem a recarga desse feitiço. Só funciona se você o lançou há pouco.
+274 Três cantores espectrais cantam ao seu redor por alguns segundos: os inimigos próximos param de perseguir você e seus aliados e vêm escutar, e sofrem dano sônico a cada segundo.
+275 Uma cúpula de notas fica onde você a lança: absorve projéteis inimigos e reduz o dano que você e seus aliados sofrem dentro dela.
+276 Um canto irresistível: os inimigos próximos são puxados para você por alguns segundos (chefes mais devagar). Perfeito para reuni-los antes de um Estrondo ou de uma Dissonância.
+277 Você toca um solo: por alguns segundos seu combo fica no máximo e os erros não o reduzem, e o próximo feitiço que você lançar não tem recarga.
+278 Uma canção de ninar que protege seus aliados próximos: o primeiro golpe letal que cada um sofrer enquanto durar não os mata; eles sobrevivem com parte da vida e sem efeitos negativos.
+279 Avanço de %s blocos; atordoa %s s
+280 Sono %s s (o dano os acorda)
+281 Remove efeitos negativos e dá %s de absorção por %s s
+282 Repete seu último feitiço com %s%% do poder (até %s s depois)
+283 Três cantores por %s s: %s de dano por segundo perto deles
+284 Absorve projéteis e −%s%% de dano recebido por %s s
+285 Puxa os inimigos até você por %s s
+286 Combo no máximo sem perdas por %s s; seu próximo feitiço sem recarga
+287 Sobrevivem a um golpe letal com %s%% de vida (%s s)
+288 Não há nenhum feitiço recente para repetir

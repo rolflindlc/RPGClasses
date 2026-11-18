@@ -186,6 +186,15 @@ SPELLS = {
     "grand_piano": ("Piano de Cola", "Una sombra crece bajo tu objetivo y lo sigue; al final se queda quieta y cae un piano. ¡Apártate!"),
     "forced_dance": ("Baile Forzado", "Tu objetivo se pone a bailar: no puede atacar, lanzar conjuros ni usar objetos. Los jefes son inmunes."),
     "final_requiem": ("Réquiem Final", "El gran final: daño sónico enorme a tu alrededor y más daño para tus aliados durante unos segundos."),
+    "fugue": ("Fuga", "Das un salto instantáneo hacia delante (unos 7 bloques, menos si hay un muro) dejando una estela de notas: los enemigos que atraviesas quedan empujados y aturdidos medio segundo."),
+    "lullaby": ("Nana", "Un cono de canto suave delante de ti: los enemigos normales que alcanza se duermen. Cualquier daño los despierta. Los jefes son inmunes y los jugadores duermen la mitad."),
+    "resolution": ("Resolución", "Un acorde que resuelve la tensión: tú y tus aliados cercanos perdéis todos los efectos negativos y ganáis un escudo de absorción durante unos segundos."),
+    "echo": ("Eco", "Repite tu último conjuro musical con la mitad de su poder, sin gastar el maná ni la recarga de ese conjuro. Solo sirve si lo lanzaste hace poco."),
+    "phantom_choir": ("Coro Fantasma", "Tres coristas espectrales cantan a tu alrededor unos segundos: los enemigos cercanos dejan de ir a por ti y tus aliados y se acercan a escuchar, y reciben daño sónico cada segundo."),
+    "harmony_barrier": ("Barrera de Armonía", "Una cúpula de notas se queda donde la lanzas: absorbe los proyectiles enemigos y reduce el daño que reciben tú y tus aliados dentro de ella."),
+    "siren_song": ("Canto de Sirena", "Un canto irresistible: los enemigos cercanos son arrastrados hacia ti durante unos segundos (los jefes, más despacio). Perfecto para juntarlos antes de un Estruendo o una Disonancia."),
+    "grand_solo": ("Solo Magistral", "Tocas un solo: durante unos segundos tu combo está al máximo y no se pierde con los fallos, y el siguiente conjuro que lances no tiene recarga."),
+    "eternal_lullaby": ("Canción de Cuna Eterna", "Una nana que protege a tus aliados cercanos: el primer golpe mortal que reciba cada uno mientras dura no los mata; sobreviven con parte de su vida y sin efectos negativos."),
 }
 SPELL_INFO = {
     "spell.rites_and_paths.info.damage": "Daño: %s",
@@ -204,6 +213,15 @@ SPELL_INFO = {
     "spell.rites_and_paths.info.dance": "Baile %s s (jugadores %s s)",
     "spell.rites_and_paths.info.second_piano": "Cae un segundo piano con la mitad de daño",
     "spell.rites_and_paths.info.requiem": "+%s%% de daño a tus aliados durante %s s",
+    "spell.rites_and_paths.info.dash": "Salto de %s bloques; aturde %s s",
+    "spell.rites_and_paths.info.sleep": "Sueño %s s (el daño los despierta)",
+    "spell.rites_and_paths.info.absorb": "Quita efectos negativos y da %s de absorción durante %s s",
+    "spell.rites_and_paths.info.echo": "Repite tu último conjuro al %s%% de poder (hasta %s s después)",
+    "spell.rites_and_paths.info.choir": "Tres coristas durante %s s: %s de daño por segundo cerca de ellos",
+    "spell.rites_and_paths.info.barrier": "Absorbe proyectiles y −%s%% de daño recibido durante %s s",
+    "spell.rites_and_paths.info.siren": "Atrae a los enemigos durante %s s",
+    "spell.rites_and_paths.info.solo": "Combo al máximo y sin pérdida durante %s s; el siguiente conjuro sin recarga",
+    "spell.rites_and_paths.info.ward": "Sobreviven a un golpe mortal con el %s%% de vida (%s s)",
 }
 
 # ------------------------------------------------------------------ instrumentos (deben coincidir con bard/Instrument)
@@ -264,6 +282,7 @@ ITEM_UI = {
     "msg.rites_and_paths.bard.not_instrument": "Elige en la rueda un conjuro de tu instrumento",
     "msg.rites_and_paths.bard.use_instrument": "Los conjuros musicales se lanzan tocando el instrumento (clic derecho)",
     "msg.rites_and_paths.bard.no_target": "No hay ningún objetivo a la vista",
+    "msg.rites_and_paths.bard.no_echo": "No hay ningún conjuro reciente que repetir",
     "msg.rites_and_paths.bard.no_irons": "Los conjuros musicales necesitan Iron's Spells 'n Spellbooks",
     "msg.rites_and_paths.bard.crescendo": "¡Crescendo!",
     "msg.rites_and_paths.bard.recital": "Recital: tu siguiente conjuro es gratis",
@@ -327,10 +346,16 @@ SPELL_INGREDIENT = {
     "iron_chorale": item("minecraft:iron_block"), "mana_cadence": item("minecraft:lapis_block"),
     "dissonance": item("minecraft:echo_shard"), "grand_piano": item("minecraft:anvil"),
     "forced_dance": item("minecraft:rabbit_foot"), "final_requiem": item("minecraft:wither_rose"),
+    "fugue": item("minecraft:feather"), "lullaby": item("minecraft:white_wool"), "resolution": item("minecraft:honey_bottle"),
+    "echo": item("minecraft:amethyst_block"), "phantom_choir": item("minecraft:soul_sand"),
+    "harmony_barrier": item("minecraft:prismarine_shard"), "siren_song": item("minecraft:nautilus_shell"),
+    "grand_solo": item("minecraft:diamond"), "eternal_lullaby": item("minecraft:totem_of_undying"),
 }
 SPELL_COMBO = {"cutting_note": 0, "march": 0, "war_hymn": 10, "rest_ballad": 10, "elegy": 10, "rumble": 10,
                "iron_chorale": 20, "mana_cadence": 20, "dissonance": 20, "grand_piano": 20, "forced_dance": 20,
-               "final_requiem": 30}
+               "final_requiem": 30,
+               "fugue": 10, "lullaby": 10, "resolution": 10, "echo": 20, "phantom_choir": 20, "harmony_barrier": 20,
+               "siren_song": 20, "grand_solo": 30, "eternal_lullaby": 30}
 
 
 def recipes():

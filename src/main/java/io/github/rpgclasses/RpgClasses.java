@@ -111,6 +111,7 @@ public class RpgClasses {
         MinecraftForge.EVENT_BUS.register(new io.github.rpgclasses.bard.BardState());
         MinecraftForge.EVENT_BUS.register(new io.github.rpgclasses.bard.BardAuras());
         MinecraftForge.EVENT_BUS.register(new io.github.rpgclasses.bard.BardCombat());
+        MinecraftForge.EVENT_BUS.register(new io.github.rpgclasses.bard.BardZones());
         // Puente con Epic Fight (Acrobacia del Pícaro): solo si el mod está instalado.
         if (net.minecraftforge.fml.ModList.get().isLoaded("epicfight")) {
             io.github.rpgclasses.compat.epicfight.EpicFightCompat.init();

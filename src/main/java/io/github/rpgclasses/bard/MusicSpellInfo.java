@@ -4,7 +4,7 @@ import io.github.rpgclasses.RpgClasses;
 import net.minecraft.resources.ResourceLocation;
 
 /**
- * Los 12 conjuros de la escuela musical (adenda del Bardo, sección 7), sin dependencias de Iron's: los usan las
+ * Los 21 conjuros de la escuela musical (los 12 de la adenda del Bardo, sección 7, y 9 añadidos el 18-11), sin dependencias de Iron's: los usan las
  * partituras, el atril, las auras y, con Iron's instalado, los conjuros registrados en {@code compat.irons.music}.
  * Valores a nivel 1 y poder musical 100 %. Los ids deben coincidir con tools/bard.py.
  *
@@ -24,9 +24,22 @@ public enum MusicSpellInfo {
     DISSONANCE("dissonance",      20, 5, 90, 50, Kind.AREA, 3, 1, 6),
     GRAND_PIANO("grand_piano",    20, 5, 120, 70, Kind.TARGET, 22, 1, 2),
     FORCED_DANCE("forced_dance",  20, 5, 100, 60, Kind.TARGET, 0, 4, 24),
-    FINAL_REQUIEM("final_requiem", 30, 5, 200, 120, Kind.AREA, 30, 6, 8);
+    FINAL_REQUIEM("final_requiem", 30, 5, 200, 120, Kind.AREA, 30, 6, 8),
+    // Añadidos el 18-11. Valor: Fuga = distancia (bloques); Resolución = absorción (vida); Eco = fracción de poder que
+    // repite; Coro = daño por segundo; Barrera = fracción de daño que absorbe; Sirena = fuerza de la atracción;
+    // Canción de Cuna Eterna = fracción de vida con la que se sobrevive. Duración: Fuga = aturdimiento; Nana = sueño;
+    // Eco = tiempo máximo desde el último conjuro; Solo = duración; el resto, lo que dura su efecto.
+    FUGUE("fugue",                10, 10, 40, 14, Kind.DASH, 7, 0.5, 1.5),
+    LULLABY("lullaby",            10, 10, 55, 30, Kind.CONE, 0, 4, 8),
+    RESOLUTION("resolution",      10, 10, 60, 40, Kind.PULSE, 4, 10, 8),
+    ECHO("echo",                  20, 5, 30, 45, Kind.SELF, 0.5, 30, 0),
+    PHANTOM_CHOIR("phantom_choir", 20, 5, 100, 60, Kind.ZONE, 3, 8, 6),
+    HARMONY_BARRIER("harmony_barrier", 20, 5, 90, 50, Kind.ZONE, 0.30, 6, 5),
+    SIREN_SONG("siren_song",      20, 5, 85, 45, Kind.AREA, 0.35, 2.5, 12),
+    GRAND_SOLO("grand_solo",      30, 5, 150, 120, Kind.SELF, 0, 8, 0),
+    ETERNAL_LULLABY("eternal_lullaby", 30, 5, 180, 150, Kind.PULSE, 0.30, 15, 10);
 
-    public enum Kind { PROJECTILE, AURA, CONE, AREA, TARGET }
+    public enum Kind { PROJECTILE, AURA, CONE, AREA, TARGET, DASH, PULSE, ZONE, SELF }
 
     public final String id;
     public final int combo;

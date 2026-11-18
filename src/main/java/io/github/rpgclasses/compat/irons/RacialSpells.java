@@ -51,6 +51,8 @@ public final class RacialSpells {
 
     @SubscribeEvent
     public void onSpellSelection(SpellSelectionManager.SpellSelectionEvent event) {
+        // Un Bardo con instrumento en la mano solo ve los conjuros del instrumento.
+        if (io.github.rpgclasses.bard.Bard.isBard(event.getEntity()) && io.github.rpgclasses.bard.Bard.instrumentHand(event.getEntity()) != null) return;
         int index = 0;
         for (Map.Entry<String, String[][]> group : SPELLS.entrySet()) {
             ActiveMechanic m = Races.find(event.getEntity(), group.getKey());

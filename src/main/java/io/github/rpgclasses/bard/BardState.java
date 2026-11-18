@@ -68,6 +68,18 @@ public final class BardState {
 
     private static final Map<UUID, S> STATES = new HashMap<>();
 
+    /** Solo Magistral: el combo al máximo y sin perderlo (Crescendo) durante unos segundos. */
+    public static void solo(ServerPlayer p, int ticks) {
+        if (!Bard.isBard(p)) return;
+        S s = STATES.computeIfAbsent(p.getUUID(), k -> new S());
+        long now = p.level().getGameTime();
+        s.combo = Math.max(s.combo, (int) Bard.number(Bard.RHYTHM, "max_combo", 30));
+        s.crescendoUntil = Math.max(s.crescendoUntil, now + ticks);
+        s.lastHolding = now;
+        s.dirty = true;
+        update(p, s, now);
+    }
+
     // ------------------------------------------------------------------ consultas
 
     public static int combo(ServerPlayer p) {
@@ -267,6 +279,8 @@ public final class BardState {
                 s.dirty = true;
             }
             if (tick % 20 == 0) s.groupBonus = groupBonus(p);
+            // Rotación de conjuros: si el elegido ya no se puede tocar (recarga, o el combo bajó), pasa al siguiente.
+            if (Bard.magic != null && Bard.instrumentHand(p) != null) Bard.magic.rotateSpell(p, false);
             update(p, s, now);
         }
     }

@@ -259,3 +259,31 @@
 258 Lege Notenblätter in die Plätze. Graue Plätze übersteigen deine Plätze: Sie können nur geleert werden.
 259 Notenständer: %s
 260 Tempo pro Kombopunkt
+261 Fuge
+262 Wiegenlied
+263 Auflösung
+264 Echo
+265 Phantomchor
+266 Harmoniebarriere
+267 Sirenengesang
+268 Großes Solo
+269 Ewiges Wiegenlied
+270 Du stürmst sofort nach vorn (etwa 7 Blöcke, weniger bei einer Wand) und hinterlässt eine Notenspur: Gegner, durch die du hindurchstürmst, werden zurückgestoßen und eine halbe Sekunde betäubt.
+271 Ein Kegel sanften Gesangs vor dir: normale Gegner, die er trifft, schlafen ein. Jeder Schaden weckt sie auf. Bosse sind immun, Spieler schlafen nur halb so lang.
+272 Ein Akkord, der die Spannung auflöst: Du und deine Verbündeten in der Nähe verlieren alle negativen Effekte und erhalten für einige Sekunden einen Absorptionsschild.
+273 Wiederholt deinen letzten Musikzauber mit halber Stärke, ohne dessen Mana oder Abklingzeit zu verbrauchen. Funktioniert nur, wenn du ihn kürzlich gewirkt hast.
+274 Drei Geistersänger singen einige Sekunden lang um dich herum: Gegner in der Nähe jagen dich und deine Verbündeten nicht mehr, sondern kommen zum Zuhören und erleiden jede Sekunde Schallschaden.
+275 Eine Kuppel aus Noten bleibt dort, wo du sie wirkst: Sie absorbiert gegnerische Projektile und verringert den Schaden, den du und deine Verbündeten darin erleiden.
+276 Ein unwiderstehliches Lied: Gegner in der Nähe werden einige Sekunden lang zu dir gezogen (Bosse langsamer). Perfekt, um sie vor einem Grollen oder einer Dissonanz zu bündeln.
+277 Du spielst ein Solo: Einige Sekunden lang ist deine Kombo am Maximum und Fehler kosten sie nichts, und der nächste Zauber hat keine Abklingzeit.
+278 Ein Wiegenlied, das deine Verbündeten in der Nähe schützt: Der erste tödliche Treffer, den jeder von ihnen währenddessen erleidet, tötet sie nicht; sie überleben mit einem Teil ihrer Gesundheit und ohne negative Effekte.
+279 Sprung von %s Blöcken; betäubt %s s
+280 Schlaf %s s (Schaden weckt sie auf)
+281 Entfernt negative Effekte und gibt %s Absorption für %s s
+282 Wiederholt deinen letzten Zauber mit %s%% Stärke (bis zu %s s danach)
+283 Drei Sänger für %s s: %s Schaden pro Sekunde in ihrer Nähe
+284 Absorbiert Projektile und −%s%% erlittener Schaden für %s s
+285 Zieht Gegner %s s lang zu dir
+286 Kombo am Maximum ohne Verlust für %s s; dein nächster Zauber hat keine Abklingzeit
+287 Überleben einen tödlichen Treffer mit %s%% Gesundheit (%s s)
+288 Es gibt keinen kürzlichen Zauber zum Wiederholen

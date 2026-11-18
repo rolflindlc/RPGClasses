@@ -97,6 +97,13 @@ public final class ClericClient {
             DOWNED.clear();
         });
         modBus.addListener((RegisterGuiOverlaysEvent event) -> event.registerAboveAll("cleric_downed", ClericClient::renderHud));
+        // Rezando, la cámara está en el ángel: ni la mano en primera persona ni el contorno del bloque al que mira el cuerpo.
+        MinecraftForge.EVENT_BUS.addListener((net.minecraftforge.client.event.RenderHandEvent event) -> {
+            if (prayerTarget >= 0) event.setCanceled(true);
+        });
+        MinecraftForge.EVENT_BUS.addListener((net.minecraftforge.client.event.RenderHighlightEvent.Block event) -> {
+            if (prayerTarget >= 0) event.setCanceled(true);
+        });
     }
 
     private static void reset() {

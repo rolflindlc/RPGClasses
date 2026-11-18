@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
+    "#minecraft:music_discs",
     "minecraft:note_block",
     "minecraft:jukebox"
   ]

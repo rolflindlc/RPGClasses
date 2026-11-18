@@ -24,6 +24,7 @@
     "irons.InscriptionMenuMixin",
     "irons.InscriptionResultSlotMixin",
     "irons.InscriptionScrollSlotMixin",
+    "irons.ScrollForgeMenuMixin",
     "irons.SpellSelectionMixin"
   ],
   "client": [

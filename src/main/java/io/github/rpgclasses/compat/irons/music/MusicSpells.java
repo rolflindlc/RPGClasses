@@ -114,7 +114,7 @@ final class MusicSpells {
             SpellRarity rarity = info.combo >= 30 ? SpellRarity.EPIC : info.combo >= 20 ? SpellRarity.RARE
                     : info.combo >= 10 ? SpellRarity.UNCOMMON : SpellRarity.COMMON;
             this.config = new DefaultConfig().setMinRarity(rarity).setSchoolResource(MusicBridge.SCHOOL_ID)
-                    .setMaxLevel(info.maxLevel).setCooldownSeconds(info.cooldownSeconds).setAllowCrafting(false).build();
+                    .setMaxLevel(info.maxLevel).setCooldownSeconds(info.cooldownSeconds).setAllowCrafting(true).build();
         }
 
         @Override

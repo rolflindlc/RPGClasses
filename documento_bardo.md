@@ -31,12 +31,12 @@ Red: protocolo 16 (paquetes `BardNote`, `BardSync` y `DanceSync`).
   el combo, lo limita (como mucho 10 aciertos por segundo) y lo devuelve. Los carriles son las teclas de vanilla
   (atacar, usar, agacharse, saltar), así que se configuran en Controles.
 * **Ráfagas (18-11):** las notas salen una por pulso en ráfagas de 3-4 notas, descanso de 1,5 s, 3-5 notas, descanso de
-  1,5 s, 4-7 notas y descanso de 2 a 4 s, y vuelta a empezar (19-11: más cortas y con más descanso que el 18-11). Esas tres ráfagas son un ciclo y cuentan como una *frase*
+  1,5 s, 4-7 notas y descanso de 2 a 4 s, y vuelta a empezar (18-11: más cortas y con más descanso que el 18-11). Esas tres ráfagas son un ciclo y cuentan como una *frase*
   para la Armonía. El patrón es la constante `BURST_NOTES` / `BURST_REST_MS` de `RhythmGame.java` ([MEDIR]).
-* **Tempo (19-11):** base 90 ppm, **+1 % por punto de combo** (`tempo_per_combo`), tope 140 ppm; las notas se ven venir al menos 1,1 s antes. La Armonía ya no
+* **Tempo (18-11):** base 90 ppm, **+1 % por punto de combo** (`tempo_per_combo`), tope 140 ppm; las notas se ven venir al menos 1,1 s antes. La Armonía ya no
   acelera: solo sube la potencia de las auras. Tempo Largo recorta la subida por combo. Ventana de acierto ±140 ms
   (perfecto ±70 ms), nunca más del 45 % del pulso.
-* **Fallos (18-11):** un fallo quita la **mitad** del combo; **(19-11)** los fallos que vienen en los 2 s siguientes (`miss_grace_seconds`) no vuelven a quitarlo ni a bajar la Armonía, para que una ráfaga fallada entera no deje el combo en cero (`miss_keep` 0,5 de Ritmo). Oído Absoluto sube lo que
+* **Fallos (18-11):** un fallo quita la **mitad** del combo; **(18-11)** los fallos que vienen en los 2 s siguientes (`miss_grace_seconds`) no vuelven a quitarlo ni a bajar la Armonía, para que una ráfaga fallada entera no deje el combo en cero (`miss_keep` 0,5 de Ritmo). Oído Absoluto sube lo que
   conservas de 52,5 % (1 punto) a **75 %** (10 puntos): pierdes un cuarto. El Violín Espectral reduce a la mitad lo que pierdes (un 50 % menos de pérdida).
 * **Reparto de carriles (propuesta):** clic izquierdo 40 %, Shift 22 %, espacio 23 %, clic derecho 15 %. El clic derecho
   no se repite antes de 1,5 s (lanza conjuros) y el espacio no se pide dos pulsos seguidos.
@@ -101,8 +101,11 @@ Red: protocolo 16 (paquetes `BardNote`, `BardSync` y `DanceSync`).
   mesa de herrería con un fragmento resonante. Los jefes van por tags de entidad (`rites_and_paths:bard/*`) **[LEER: ids]**.
 * **Materiales nuevos:** fragmento resonante (2 fragmentos de amatista + bloque musical + polvo de piedra luminosa → 2),
   hilo arcano (3 cuerdas + esencia arcana de Iron's o lapislázuli → 3).
-* **Partituras de nivel 1:** papel + tinta + bloque musical + un ingrediente propio de cada conjuro (+ 1 o 2 fragmentos
-  resonantes los de combo 20 y 30). **Subir de nivel:** partitura + una tinta de Iron's cuya rareza depende del nivel de
+* **Partituras (18-11):** se hacen en la **forja de pergaminos de Iron's**, como los demás conjuros: papel + tinta de Iron's + un foco de
+  la escuela musical (cualquier **disco de música**, bloque musical o gramola; tag `rites_and_paths:items/music_focus`). Se elige el conjuro en la
+  interfaz y en la ranura de resultado sale la partitura en lugar del pergamino (`mixin/irons/ScrollForgeMenuMixin` → `MusicForge.toSheet`); el nivel
+  lo da la rareza de la tinta, sin pasar del máximo del conjuro. Ya no hay recetas de crafteo por conjuro (**[verificar]** en el juego: si el mixin no
+  se aplica, la forja daría un pergamino que no se puede usar). **Subir de nivel:** partitura + una tinta de Iron's cuya rareza depende del nivel de
   destino (10 niveles: 2 común, 3-4 poco común, 5-6 rara, 7-8 épica, 9-10 legendaria).
 
 ### Cambios del 18-11 que sustituyen a la adenda (rev. 0.1)
@@ -158,7 +161,7 @@ bloque de amatista, arena de almas, fragmento de prismarina, caparazón de nauti
 * Tras cada lanzamiento, el conjuro elegido pasa al **siguiente del instrumento que se pueda tocar**: sin recarga y con
   el combo mínimo cubierto. Si el elegido deja de poder tocarse (entra en recarga o el combo baja de su mínimo), pasa
   solo al siguiente que pueda; se comprueba cada 5 ticks (`BardState.onServerTick` → `BardMagic.rotateSpell`).
-* La selección se mueve en el servidor (datos sincronizados de Iron's, por reflexión: `MusicRotation`). **(19-11)** Iron's no lanza el conjuro dentro de `attemptInitiateCast`, lo completa un tick después: la rotación se hace al recibir `SpellOnCastEvent` (antes se miraba justo tras iniciar el lanzamiento y nunca avanzaba). La rueda sigue
+* La selección se mueve en el servidor (datos sincronizados de Iron's, por reflexión: `MusicRotation`). **(18-11)** Iron's no lanza el conjuro dentro de `attemptInitiateCast`, lo completa un tick después: la rotación se hace al recibir `SpellOnCastEvent` (antes se miraba justo tras iniciar el lanzamiento y nunca avanzaba). La rueda sigue
   pudiendo usarse a mano, pero si se elige uno que no se puede tocar, se corrige solo.
 * Si ninguno se puede tocar, la selección se queda donde está.
 

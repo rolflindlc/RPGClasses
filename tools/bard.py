@@ -338,26 +338,6 @@ PL, ST, SI = tag("minecraft:planks"), item("minecraft:string"), item("minecraft:
 SHARD = item(R("resonant_shard"))
 ARCANE_INGOT = tag(R("bard/arcane_ingot"))
 
-# Ingrediente propio de cada partitura (nivel 1). Las de combo 20 y 30 llevan además un fragmento resonante.
-SPELL_INGREDIENT = {
-    "cutting_note": item("minecraft:amethyst_shard"), "march": item("minecraft:sugar"),
-    "war_hymn": item("minecraft:blaze_powder"), "rest_ballad": item("minecraft:glistering_melon_slice"),
-    "elegy": item("minecraft:fermented_spider_eye"), "rumble": item("minecraft:gunpowder"),
-    "iron_chorale": item("minecraft:iron_block"), "mana_cadence": item("minecraft:lapis_block"),
-    "dissonance": item("minecraft:echo_shard"), "grand_piano": item("minecraft:anvil"),
-    "forced_dance": item("minecraft:rabbit_foot"), "final_requiem": item("minecraft:wither_rose"),
-    "fugue": item("minecraft:feather"), "lullaby": item("minecraft:white_wool"), "resolution": item("minecraft:honey_bottle"),
-    "echo": item("minecraft:amethyst_block"), "phantom_choir": item("minecraft:soul_sand"),
-    "harmony_barrier": item("minecraft:prismarine_shard"), "siren_song": item("minecraft:nautilus_shell"),
-    "grand_solo": item("minecraft:diamond"), "eternal_lullaby": item("minecraft:totem_of_undying"),
-}
-SPELL_COMBO = {"cutting_note": 0, "march": 0, "war_hymn": 10, "rest_ballad": 10, "elegy": 10, "rumble": 10,
-               "iron_chorale": 20, "mana_cadence": 20, "dissonance": 20, "grand_piano": 20, "forced_dance": 20,
-               "final_requiem": 30,
-               "fugue": 10, "lullaby": 10, "resolution": 10, "echo": 20, "phantom_choir": 20, "harmony_barrier": 20,
-               "siren_song": 20, "grand_solo": 30, "eternal_lullaby": 30}
-
-
 def recipes():
     out = {}
     out["resonant_shard"] = shapeless([item("minecraft:amethyst_shard"), item("minecraft:amethyst_shard"),
@@ -390,13 +370,7 @@ def recipes():
     # Legendarios mejorados con el material de un jefe.
     out["abyssal_organ"] = smithing(SHARD, item(R("hurdy_gurdy")), item(R("abyssal_reed")), R("abyssal_organ"))
     out["colossus_drum"] = smithing(SHARD, item(R("drum")), item(R("colossus_drumskin")), R("colossus_drum"))
-    # Partituras de nivel 1 (solo con Iron's).
-    for sid, ing in SPELL_INGREDIENT.items():
-        ings = [item("minecraft:paper"), item("minecraft:ink_sac"), item("minecraft:note_block"), ing]
-        if SPELL_COMBO[sid] >= 20: ings.append(SHARD)
-        if SPELL_COMBO[sid] >= 30: ings.append(SHARD)
-        out[f"sheet_music_{sid}"] = shapeless(ings, R("sheet_music"), conditions=IRONS_COND,
-                                              nbt={"rites_and_paths_spell": R(sid), "rites_and_paths_level": 1})
+    # Las partituras de nivel 1 salen de la forja de pergaminos de Iron's (ScrollForgeMenuMixin): papel + tinta + disco.
     out["sheet_music_upgrade"] = {"type": R("sheet_music_upgrade"), "category": "misc"}
     return out
 
@@ -404,7 +378,8 @@ def recipes():
 def tags():
     t = {
         "items/instruments": [R(i) for i in INSTRUMENTS] + [R("guitar_axe")],
-        "items/music_focus": ["minecraft:note_block", "minecraft:jukebox"],
+        # Foco de la escuela musical (forja de pergaminos de Iron's): cualquier disco, el bloque musical o la gramola.
+        "items/music_focus": ["#minecraft:music_discs", "minecraft:note_block", "minecraft:jukebox"],
         "items/bard/arcane_ingot": [opt(IR + "arcane_ingot")],
         "items/bard/arcane_essence": [opt(IR + "arcane_essence"), "minecraft:lapis_lazuli"],
         "items/bard/ink_common": [opt(IR + "common_ink")],

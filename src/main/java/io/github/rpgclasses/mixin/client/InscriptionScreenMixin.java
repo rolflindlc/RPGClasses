@@ -15,8 +15,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 /**
  * Pantalla de la mesa de inscripción de Iron's (cliente): reconoce un instrumento como libro y una partitura como
- * pergamino para activar el botón, y manda el clic de inscribir. La inscripción la hace el servidor
- * ({@code InscriptionMenuMixin}).
+ * pergamino para activar el botón, y manda el clic de inscribir ({@link InscriptionTable#INSCRIBE_BUTTON}, no el -1
+ * de Iron's). La inscripción y el sacar partituras los hace el servidor ({@code InscriptionMenuMixin}).
  */
 // @Pseudo: la clase es de Iron's (no está en el jar de API con el que se compila) y puede no existir.
 @Pseudo
@@ -58,7 +58,7 @@ public abstract class InscriptionScreenMixin {
                 || !InscriptionTable.isSheet(menu.slots.get(InscriptionTable.SCROLL_SLOT).getItem())) return;
         isDirty = true;
         mc.getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.BOOK_PAGE_TURN, 1f));
-        mc.gameMode.handleInventoryButtonClick(menu.containerId, -1);
+        mc.gameMode.handleInventoryButtonClick(menu.containerId, InscriptionTable.INSCRIBE_BUTTON);
         ci.cancel();
     }
 }

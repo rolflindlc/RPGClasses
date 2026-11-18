@@ -177,6 +177,17 @@ public final class MusicBridge implements BardMagic {
         ISpellContainer.set(instrument, m.toImmutable());
     }
 
+    @Override
+    public MusicSpellInfo spellAt(ItemStack instrument, int index) {
+        if (index < 0 || !ISpellContainer.isSpellContainer(instrument)) return null;
+        ISpellContainer c = ISpellContainer.get(instrument);
+        if (c == null || index >= c.getMaxSpellCount()) return null;
+        SpellData data = c.getSpellAtIndex(index);
+        if (data == null || data == SpellData.EMPTY) return null;
+        String id = data.getSpell().getSpellId();
+        return isMusic(id) ? MusicSpellInfo.byId(id) : null;
+    }
+
     private static boolean same(ISpellContainer c, List<Sheets.Entry> active, int capacity) {
         if (c.getMaxSpellCount() != capacity || !c.isSpellWheel() || c.mustEquip()) return false;
         List<SpellSlot> slots = c.getActiveSpells();

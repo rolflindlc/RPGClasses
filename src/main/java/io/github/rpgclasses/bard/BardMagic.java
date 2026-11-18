@@ -17,6 +17,12 @@ public interface BardMagic {
     void syncContainer(ServerPlayer holder, ItemStack instrument);
 
     /**
+     * Conjuro musical del hueco {@code index} del contenedor de Iron's del instrumento (los huecos que dibuja la mesa de
+     * inscripción), o null si está vacío.
+     */
+    MusicSpellInfo spellAt(ItemStack instrument, int index);
+
+    /**
      * Rotación de conjuros: con un instrumento en la mano, el conjuro elegido pasa solo al siguiente que se pueda tocar
      * (sin recarga y con el combo suficiente). {@code afterCast}: acaba de lanzar uno, así que avanza aunque el actual
      * siga disponible.

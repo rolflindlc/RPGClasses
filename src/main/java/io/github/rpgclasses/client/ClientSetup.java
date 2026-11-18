@@ -135,6 +135,7 @@ public final class ClientSetup {
         MinecraftForge.EVENT_BUS.addListener(io.github.rpgclasses.client.bard.RhythmGame::onClientTick);
         MinecraftForge.EVENT_BUS.addListener(io.github.rpgclasses.client.bard.RhythmGame::onMouse);
         MinecraftForge.EVENT_BUS.addListener(io.github.rpgclasses.client.bard.RhythmGame::onKey);
+        MinecraftForge.EVENT_BUS.addListener(io.github.rpgclasses.client.bard.SpellWheelSync::onClientTick);
         MinecraftForge.EVENT_BUS.addListener(io.github.rpgclasses.client.bard.DanceFx::onClientTick);
         MinecraftForge.EVENT_BUS.addListener(net.minecraftforge.eventbus.api.EventPriority.LOWEST, false,
                 net.minecraftforge.client.event.RenderLivingEvent.Pre.class, io.github.rpgclasses.client.bard.DanceFx::onRenderPre);

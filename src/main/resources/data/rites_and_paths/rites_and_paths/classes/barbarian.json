@@ -17,7 +17,8 @@
   "walls": {
     "rites_and_paths:magic": 0.6,
     "rites_and_paths:bow": 0.45,
-    "rites_and_paths:light": 0.45
+    "rites_and_paths:light": 0.45,
+    "rites_and_paths:armor": 0.25
   },
   "school_walls": {
     "irons_spellbooks:holy": 1.0,

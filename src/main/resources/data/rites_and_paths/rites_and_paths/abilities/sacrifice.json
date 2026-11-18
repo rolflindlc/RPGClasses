@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "cost_fraction": 0.15,
+  "heal_fraction": 0.2,
+  "range": 12,
+  "cooldown_seconds": 0.5,
+  "final_heal_fraction": 0.5,
+  "final_immunity_seconds": 2,
+  "confirm_seconds": 5
+}

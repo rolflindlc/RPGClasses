@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "class": "rites_and_paths:cleric",
+  "display": {
+    "icon": "minecraft:elytra"
+  },
+  "effects": [
+    {
+      "type": "rites_and_paths:mechanic",
+      "id": "rites_and_paths:winged_grace",
+      "fall_reduction": {
+        "to": 1.0
+      },
+      "slow_fall_level": 5
+    },
+    {
+      "type": "rites_and_paths:mechanic",
+      "id": "rites_and_paths:halo",
+      "radius": 8,
+      "ally_heal_per_second": {
+        "to": 0.5
+      }
+    }
+  ],
+  "milestones": [
+    {
+      "subclass_level": 5,
+      "grants": "rites_and_paths:angelic_form"
+    }
+  ]
+}

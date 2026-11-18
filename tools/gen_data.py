@@ -5,6 +5,7 @@ import races
 import allies
 import bonds
 import bard
+import cleric
 out = sys.argv[1]
 NS = "rites_and_paths"
 def R(x): return f"{NS}:{x}"
@@ -42,7 +43,7 @@ classes = {
    milestones=[ms(10,"taunt"), ms(10,"steady_guard"), ms(30,"bulwark")],
    subs=["blessed_guardian","unyielding_bastion","charging_juggernaut"]),
  "barbarian": dict(icon="minecraft:iron_axe", roles=["melee","daño"], kit="barbarian", crit=0.05, armor_rule=True,
-   walls=dict(magic=.6, bow=.45, light=.45),
+   walls=dict(magic=.6, bow=.45, light=.45, armor=.25),  # Adenda del Clérigo, 11.1: Armadura −25 % (antes n/a)
    branches=[("fury",[{"type":R("wound_fury"),"per_missing_health_pct":{"from":.001,"to":.01},"cap":.75}]),
              ("brutality",[attr([(R("crit_damage"), to(.5))])]),
              ("iron_skin",[attr([(MC+"armor", to(16)), (MC+"armor_toughness", to(6)), (MC+"movement_speed", to(.25,"multiply_base"))], NOARM)])],
@@ -163,6 +164,11 @@ classes["bard"] = dict(bard.CLASS)
 TRAITS["bard"] = bard.TRAITS
 EXTRA_BRANCHES["bard"] = bard.EXTRA_BRANCHES
 for _b, _ps in bard.PERKS.items(): PERKS[("bard", _b)] = _ps
+# Clérigo (adenda del Clérigo): clase, rasgos, ramas extra y perks desde tools/cleric.py.
+classes["cleric"] = dict(cleric.CLASS)
+TRAITS["cleric"] = cleric.TRAITS
+EXTRA_BRANCHES["cleric"] = cleric.EXTRA_BRANCHES
+for _b, _ps in cleric.PERKS.items(): PERKS[("cleric", _b)] = _ps
 for cid, extra in EXTRA_BRANCHES.items(): classes[cid]["branches"] = classes[cid]["branches"] + extra
 for cid, c in classes.items():
     for b, _ in c["branches"]: assert (cid, b) in PERKS, (cid, b)
@@ -232,6 +238,7 @@ subs = {
 }
 
 for _sid, (_icon, _effects, _miles) in bard.SUBS.items(): subs[_sid] = ("bard", _icon, _effects, _miles)
+for _sid, (_icon, _effects, _miles) in cleric.SUBS.items(): subs[_sid] = ("cleric", _icon, _effects, _miles)
 
 def armor(material): return [{"item": f"minecraft:{material}_{piece}", "slot": slot} for piece, slot in
                          (("helmet","head"),("chestplate","chest"),("leggings","legs"),("boots","feet"))]
@@ -242,6 +249,7 @@ KITS = {
  "rogue": [{"item": "minecraft:iron_sword", "slot": "mainhand"}] + armor("leather"),
  "ranger": [{"item": "minecraft:bow", "slot": "mainhand"}, {"item": "minecraft:arrow", "count": 64, "slot": "inventory"}] + armor("leather"),
  "bard": bard.KIT,
+ "cleric": cleric.KIT,
 }
 
 # Icono de cada rama en el árbol de habilidades (objetos vanilla, que siempre existen).
@@ -260,6 +268,7 @@ BRANCH_ICONS = {
  ("monk","stance_mastery"): "minecraft:amethyst_shard", ("monk","meditation"): "minecraft:candle",
  ("bard","compas"): "minecraft:note_block", ("bard","resonance"): "minecraft:bell", ("bard","perfect_pitch"): "minecraft:goat_horn",
  ("bard","reverberation"): "minecraft:echo_shard", ("bard","dance"): "minecraft:music_disc_cat",
+ **{("cleric", _b): _i for _b, _i in cleric.BRANCH_ICONS.items()},
 }
 for cid, c in classes.items():
     for b, _ in c["branches"]: assert (cid, b) in BRANCH_ICONS, ("falta icono de rama", cid, b)
@@ -278,7 +287,8 @@ for cid, c in classes.items():
     # Regla 14: la escuela sagrada de Iron's solo es del Paladín; su muro de Magia no la toca.
     # Adenda del Bardo: la escuela musical es exclusiva del Bardo (−100 % fijo para el resto) y su muro de Magia
     # (−35 %) no la toca: su poder sale solo de Compás, el combo y el instrumento.
-    if cid == "paladin":
+    # Adenda del Clérigo, 2.1: la sagrada es del Paladín y del Clérigo (sin muro de Magia para ninguno de los dos).
+    if cid in ("paladin", "cleric"):
         o["magic_wall_exempt_schools"] = [IR + "holy"]
         o["school_walls"] = {bard.MUSIC: 1.0}
     elif cid == "bard":
@@ -298,7 +308,7 @@ for sid, (parent, icon, effects, miles) in subs.items():
          {"schema_version": 1, "class": R(parent), "display": {"icon": icon}, "effects": effects, "milestones": miles})
 
 names = {
- "class": {"mage":"Mago","paladin":"Paladín","barbarian":"Bárbaro","rogue":"Pícaro","ranger":"Ranger","monk":"Monje","bard":bard.CLASS_NAME},
+ "class": {"mage":"Mago","paladin":"Paladín","barbarian":"Bárbaro","rogue":"Pícaro","ranger":"Ranger","monk":"Monje","bard":bard.CLASS_NAME,"cleric":cleric.CLASS_NAME},
  "subclass": {"chronomancer":"Cronomante","elementalist":"Elementalista","battle_mage":"Mago de Batalla",
    "blessed_guardian":"Guardián Bendito","unyielding_bastion":"Bastión Inflexible","charging_juggernaut":"Juggernaut de Carga",
    "indestructible":"Indestructible","suicidal_berserker":"Berserker Suicida","plague_corruptor":"Corruptor de Plagas",
@@ -312,7 +322,7 @@ branch_names = {"mage":{"power":"Poder","reserve":"Reserva","cadence":"Cadencia"
  "rogue":{"shadow":"Sombra","edge":"Filo","wind":"Viento"},
  "ranger":{"aim":"Puntería","cadence":"Cadencia","range":"Alcance"},
  "monk":{"fist":"Puño","wind":"Viento","skin":"Piel"},
- "bard":dict(bard.BRANCH_NAMES)}
+ "bard":dict(bard.BRANCH_NAMES), "cleric":dict(cleric.BRANCH_NAMES)}
 for (cid, bid), name in texts.EXTRA_BRANCH_NAMES.items(): branch_names[cid][bid] = name
 for _sid, _name in bard.SUB_NAMES.items(): names["subclass"][_sid] = _name
 # Textos del Bardo en las tablas comunes (habilidades, ramas, perks, mecánicas y parámetros).
@@ -329,6 +339,23 @@ for _m, _n in bard.MECHANIC_NAMES.items():
     assert _m not in texts.MECHANIC_NAMES, _m
     texts.MECHANIC_NAMES[_m] = _n
 for _k, _v in bard.PARAMS.items():
+    assert _k not in texts.PARAMS, _k
+    texts.PARAMS[_k] = _v
+# Textos del Clérigo en las mismas tablas.
+for _sid, _name in cleric.SUB_NAMES.items(): names["subclass"][_sid] = _name
+for _aid, _p in cleric.ABILITIES.items():
+    assert _aid not in texts.ABILITIES, _aid
+    texts.ABILITIES[_aid] = _p
+texts.ABILITY_TEXT.update(cleric.ABILITY_TEXT)
+texts.CLASS_DESC["cleric"] = cleric.CLASS_DESC
+texts.TRAIT_DESC["cleric"] = cleric.TRAIT_DESC
+for _b, _d in cleric.BRANCH_DESC.items(): texts.BRANCH_DESC[("cleric", _b)] = _d
+for (_b, _p), _t in cleric.PERK_TEXT.items(): texts.PERK_TEXT[("cleric", _b, _p)] = _t
+texts.SUBCLASS_DESC.update(cleric.SUB_DESC)
+for _m, _n in cleric.MECHANIC_NAMES.items():
+    assert _m not in texts.MECHANIC_NAMES, _m
+    texts.MECHANIC_NAMES[_m] = _n
+for _k, _v in cleric.PARAMS.items():
     assert _k not in texts.PARAMS, _k
     texts.PARAMS[_k] = _v
 lang = {}
@@ -400,6 +427,10 @@ lang.update(gear_lang)
 bard_lang = bard.build(dump, out)
 for key in bard_lang: assert key not in lang, key
 lang.update(bard_lang)
+# Clérigo: tipo de daño del Sacrificio final y textos de interfaz.
+cleric_lang = cleric.build(dump, out)
+for key in cleric_lang: assert key not in lang, key
+lang.update(cleric_lang)
 # Unidades de los parámetros, para que el cliente sepa formatearlos: "%" porcentaje, "s" segundos.
 dump(os.path.join(out, "assets", NS, "rites_and_paths_param_units.json"),
      {k: v.split("|")[1] for k, v in sorted(texts.PARAMS.items()) if "|" in v})

@@ -122,6 +122,9 @@ public final class IronsCompat {
         KitService.spellInscriber = IronsCompat::inscribe;
         MinecraftForge.EVENT_BUS.register(new RacialSpells());
         MinecraftForge.EVENT_BUS.register(new Pyromaniac());
+        // Clérigo: curación de conjuros, Bendición y Plegaria.
+        MinecraftForge.EVENT_BUS.register(new ClericSpells());
+        ClericSpells.init();
         installChronoBridge();
         // Aliento del Dracónido (adenda de razas 0.7): gasta maná de Iron's.
         io.github.rpgclasses.content.race.DraconicBreath.manaBridge = (player, cost) -> {
@@ -143,7 +146,9 @@ public final class IronsCompat {
                 || io.github.rpgclasses.content.Chronomancy.isFrozen(player) // Parada Temporal: paralizado
                 || io.github.rpgclasses.content.race.SlimeForms.blocksActions(player) // Enjambre dividido: sin conjuros
                 || io.github.rpgclasses.bard.BardCombat.dancing(player) // Baile Forzado
-                || io.github.rpgclasses.bard.BardCombat.silenced(player)) { // Disonancia
+                || io.github.rpgclasses.bard.BardCombat.silenced(player) // Disonancia
+                || io.github.rpgclasses.cleric.Miracle.isDowned(player) // Milagro: tumbado
+                || io.github.rpgclasses.cleric.Sanctuary.channeling(player)) { // Santuario: canalizando
             event.setCanceled(true);
             return;
         }

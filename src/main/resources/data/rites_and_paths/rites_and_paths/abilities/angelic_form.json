@@ -1,0 +1,8 @@
+{
+  "schema_version": 1,
+  "duration_seconds": 10,
+  "radius": 10,
+  "regen_level": 2,
+  "absorption_level": 1,
+  "cooldown_seconds": 120
+}

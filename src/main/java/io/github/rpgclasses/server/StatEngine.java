@@ -79,12 +79,18 @@ public final class StatEngine {
         //    Es aditivo sobre lo que aportan las piezas, así que no toca la defensa desarmada ni las pociones.
         double[] cuirass = StatCalculator.equippedArmorBonus(s, classDef);
         double armorWall = StatCalculator.wall(s, classDef, subDef, race, Ids.ARMOR);
-        double pieceArmor = equippedTotal(player, Attributes.ARMOR);
-        double pieceToughness = equippedTotal(player, Attributes.ARMOR_TOUGHNESS);
-        applyTo(player, Attributes.ARMOR, "equipped", AttributeModifier.Operation.ADDITION, pieceArmor * (cuirass[0] - armorWall));
-        applyTo(player, Attributes.ARMOR_TOUGHNESS, "equipped", AttributeModifier.Operation.ADDITION, pieceToughness * (cuirass[1] - armorWall));
+        double pieceArmor = equippedTotal(player, Attributes.ARMOR, false);
+        double pieceToughness = equippedTotal(player, Attributes.ARMOR_TOUGHNESS, false);
+        // Adenda del Clérigo, 11.1: las piezas del equipo de la propia clase (tag class_armor/<clase>) no sufren el muro
+        // de Armadura (el del Bárbaro): sus valores ya están calculados para su clase.
+        double wallArmor = equippedTotal(player, Attributes.ARMOR, true);
+        double wallToughness = equippedTotal(player, Attributes.ARMOR_TOUGHNESS, true);
+        applyTo(player, Attributes.ARMOR, "equipped", AttributeModifier.Operation.ADDITION, pieceArmor * cuirass[0] - wallArmor * armorWall);
+        applyTo(player, Attributes.ARMOR_TOUGHNESS, "equipped", AttributeModifier.Operation.ADDITION, pieceToughness * cuirass[1] - wallToughness * armorWall);
 
         // 3. Muro de Magia: multiplicador total sobre el poder de hechizo de Iron's (si está instalado).
+        //    Adenda del Clérigo, 2.2: es multiplicativo para todas las clases (MULTIPLY_TOTAL se aplica después de
+        //    todos los bonus): poder final = poder con equipo, ramas y libros × (1 − muro).
         double magicWall = StatCalculator.wall(s, classDef, subDef, race, Ids.MAGIC);
         Attribute spellPower = ForgeRegistries.ATTRIBUTES.getValue(IRONS_SPELL_POWER);
         if (spellPower != null) {
@@ -235,11 +241,13 @@ public final class StatEngine {
         };
     }
 
-    private static double equippedTotal(ServerPlayer player, Attribute attribute) {
+    /** Suma de la armadura (o dureza) aditiva de las piezas puestas; {@code wallOnly}: sin las exentas del muro. */
+    private static double equippedTotal(ServerPlayer player, Attribute attribute, boolean wallOnly) {
         double total = 0;
         for (EquipmentSlot slot : ARMOR_SLOTS) {
             ItemStack stack = player.getItemBySlot(slot);
             if (stack.isEmpty()) continue;
+            if (wallOnly && io.github.rpgclasses.gear.GearRules.exempt(player, stack)) continue;
             for (AttributeModifier m : stack.getAttributeModifiers(slot).get(attribute)) {
                 if (m.getOperation() == AttributeModifier.Operation.ADDITION) total += m.getAmount();
             }

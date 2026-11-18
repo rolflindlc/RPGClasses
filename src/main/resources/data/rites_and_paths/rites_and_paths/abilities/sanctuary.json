@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "radius": 3,
+  "expand_seconds": 0.5,
+  "shield_health": 50,
+  "shield_regen_per_second": 5,
+  "max_channel_seconds": 6,
+  "channel_linger": 0.5,
+  "channel_mana_per_second": 28,
+  "channel_speed": -0.5,
+  "cooldown_seconds": 40
+}

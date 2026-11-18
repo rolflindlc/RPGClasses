@@ -1,0 +1,141 @@
+0 Durante alguns segundos você voa (sem correr no ar). Ao ativar, seus efeitos negativos e os dos aliados próximos são purgados, e todos recebem Regeneração II e Absorção I enquanto dura. Ao terminar, você não sofre dano de queda.
+1 Forma Angelical
+2 Você vê a vida dos aliados próximos acima de suas cabeças (até através de paredes). Os que ficam abaixo de 40% brilham, e os caídos pelo Milagre mostram sua contagem regressiva. Só você vê.
+3 Olho do Curandeiro
+4 Você cura o aliado para o qual olha (perto) em 30% da vida máxima dele, sem gastar mana. Escala com seu poder sagrado. Levanta um aliado caído.
+5 Imposição de Mãos
+6 Se um aliado ia morrer perto de você, ele fica caído por alguns segundos: não pode fazer nada nem receber dano. Se outro jogador o curar, ele se levanta; se não, morre. Cada aliado só pode ser salvo assim de tempos em tempos. Não salva você.
+7 Milagre
+8 Escolha um aliado da lista: seu corpo fica ajoelhado e sua câmera passa para um pequeno anjo que orbita o aliado e lhe dá Regeneração. Seus feitiços, a Imposição de Mãos e o Santuário saem do anjo; os feitiços perdem poder se seu corpo estiver longe. Pressione de novo para trocar de aliado ou parar de rezar.
+9 Prece
+10 Você paga parte da sua vida máxima e o aliado para o qual olha recupera parte da dele (pelo menos o que você pagou). Sem recarga. Se pagar o mataria, o ícone fica vermelho: pressione duas vezes para dar sua vida e curar metade da vida do aliado, com um instante de invulnerabilidade.
+11 Sacrifício
+12 Segure a tecla: uma esfera sagrada envolve você, empurra os inimigos para fora e bloqueia seus projéteis. Ela absorve o dano de quem está dentro até se romper. Custa mana a cada segundo; ao soltar, dura metade do tempo que você a segurou. Enquanto a segura, você fica mais lento e não lança feitiços.
+13 Santuário
+14 Parte da cura excedente (acima da vida máxima) se converte em absorção por alguns segundos.
+15 Égide
+16 Os efeitos benéficos que você dá com seus feitiços duram mais. Não afeta as habilidades de classe.
+17 Bênção
+18 Mais mana máxima e mais regeneração de mana.
+19 Reserva Divina
+20 Seus feitiços curam mais e dão mais absorção (também os que lança em si mesmo). Não afeta as habilidades de classe.
+21 Cura
+22 Suas curas encurtam os efeitos negativos de quem é curado.
+23 Purificação
+24 Curandeiro sagrado: uma espécie de mago de cura que compartilha a escola sagrada com o Paladino. Sua magia sagrada não tem muro e as demais escolas perdem 35%. É muito fraco com armas, armaduras e escudos. Cura, prolonga buffs, purifica, protege com escudos de luz e salva os aliados do golpe final.
+25 Clérigo
+26 Traço de classe: um pouco mais de vida máxima.
+27 %1$s deu a vida pelos aliados
+28 %1$s deu a vida pelos aliados lutando contra %2$s
+29 Forma Angelical
+30 Caído
+31 Caído: %s s
+32 Sacrifício final
+33 Absolvição
+34 Égide
+35 Bênção
+36 Fé Cega
+37 Égide Profunda
+38 Retorno de Fé
+39 Voz Distante
+40 Bênção Maior
+41 Auréola
+42 Cura
+43 Canal de Vida
+44 Determinação
+45 Fé Própria
+46 Penitência
+47 Corpo em Oração
+48 Purificação
+49 Bênção Egoísta
+50 Égide Veloz
+51 Graça Alada
+52 %s caiu! Cure-o em %s s.
+53 Você caiu! Se um aliado curar você em %s s, você se levanta.
+54 Sacrifício final: pressione de novo para dar sua vida por %s.
+55 %s deu a vida por você.
+56 %s já está com a vida cheia.
+57 Você não tem mana suficiente.
+58 Você não está olhando para nenhum aliado ao alcance.
+59 Você para de rezar.
+60 A prece se rompeu: %s não está mais ao seu alcance.
+61 Não há aliados ao alcance por quem rezar.
+62 Você reza por %s.
+63 %s levantou você!
+64 Você levantou %s.
+65 O Santuário se rompeu.
+66 Nível de Absorção
+67 Duração da absorção
+68 Recarga por aliado
+69 Dura após soltar (do tempo canalizado)
+70 Mana por segundo canalizando
+71 Velocidade canalizando
+72 Em combate durante
+73 Tempo para confirmar
+74 Excedente convertido em absorção
+75 Conversão
+76 Vida máxima que você paga
+77 Duração dos efeitos negativos removida
+78 Tempo caído
+79 Duração dos seus buffs
+80 Duração dos seus buffs
+81 Tempo de expansão
+82 Níveis extras dos seus buffs
+83 Mana dos seus buffs
+84 Redução do dano de queda
+85 Cura do Sacrifício final
+86 Invulnerabilidade do Sacrifício final
+87 Poder total até (blocos)
+88 Distância extra sem perda (blocos)
+89 Cura e absorção dos seus feitiços
+90 Regeneração de mana em combate
+91 Brilham abaixo de
+92 Mana do feitiço recuperada
+93 Nível máximo (0 = I)
+94 Canalização máxima
+95 Alvos que contam por lançamento
+96 Poder mínimo à distância
+97 Poder mínimo a partir de (blocos)
+98 Distância do anjo (blocos)
+99 Cura em outros
+100 Regeneração de mana fora de combate
+101 Você recupera do que cura
+102 Redução do ramo x
+103 Nível de Regeneração
+104 Imunidade ao se levantar
+105 Vida mínima ao se levantar
+106 Cura em você
+107 Vida do escudo
+108 Regeneração do escudo por segundo
+109 Queda lenta a partir do nível
+110 Duração passada ao inimigo
+111 Você converte muito menos excedente em absorção, mas o limite sobe para metade da vida máxima.
+112 Égide Profunda
+113 Você converte mais excedente em absorção, mas o limite cai muito.
+114 Égide Veloz
+115 Seus buffs sobem um nível (até III), mas custam mais mana e duram um pouco menos.
+116 Bênção Maior
+117 Seus buffs em área só afetam você, mas duram muito mais.
+118 Bênção Egoísta
+119 Você regenera muito mais mana fora de combate e um pouco menos em combate.
+120 Fé Cega
+121 Menos mana máxima; ao curar de verdade outra pessoa, você recupera parte da mana do feitiço.
+122 Retorno de Fé
+123 Seus feitiços curam muito menos você, mas você recupera metade do que cura nos outros (até 3 por lançamento).
+124 Canal de Vida
+125 Seus feitiços curam muito mais você, mas muito menos os outros.
+126 Fé Própria
+127 A primeira cura em cada aliado de tempos em tempos remove todos os efeitos negativos dele, mas a redução do ramo cai pela metade.
+128 Absolvição
+129 O que você encurta de um efeito negativo passa para o inimigo mais próximo, com metade dessa duração.
+130 Penitência
+131 Asas de luz: menos dano de queda e queda lenta, uma auréola que regenera os aliados próximos e, a partir do nível 5, a Forma Angelical: você voa por alguns segundos enquanto você e seus aliados regeneram e são purificados.
+132 Anjo
+133 Reza por um aliado mesmo sem vê-lo: seu corpo fica ajoelhado e sua visão passa a um pequeno anjo que o acompanha. Você lança seus feitiços a partir do anjo, com menos poder quanto mais longe estiver seu corpo.
+134 Intercessor
+135 Cura com o próprio sangue: mais vida, menos dano recebido quando está muito ferido e, a partir do nível 5, o Sacrifício: você paga vida para curar um aliado, sem recarga. Se não puder mais pagar, pode dar sua vida por ele.
+136 Mártir
+137 %s (agora)
+138 %s (%s blocos)
+139 Parar de rezar
+140 Prece: por quem você reza?

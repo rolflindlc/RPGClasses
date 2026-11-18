@@ -1,0 +1,324 @@
+{
+  "schema_version": 1,
+  "display": {
+    "icon": "minecraft:beacon",
+    "roles": [
+      "apoyo",
+      "curación"
+    ]
+  },
+  "starting_kit": [
+    {
+      "item": "irons_spellbooks:copper_spell_book",
+      "slot": "inventory",
+      "spells": [
+        {
+          "id": "irons_spellbooks:heal",
+          "level": 1
+        }
+      ]
+    },
+    {
+      "item": "minecraft:leather_helmet",
+      "slot": "head"
+    },
+    {
+      "item": "minecraft:leather_chestplate",
+      "slot": "chest"
+    },
+    {
+      "item": "minecraft:leather_leggings",
+      "slot": "legs"
+    },
+    {
+      "item": "minecraft:leather_boots",
+      "slot": "feet"
+    }
+  ],
+  "crit_chance_bonus": 0.0,
+  "walls": {
+    "rites_and_paths:magic": 0.35,
+    "rites_and_paths:bow": 0.25,
+    "rites_and_paths:heavy": 0.5,
+    "rites_and_paths:light": 0.5,
+    "rites_and_paths:armor": 0.25,
+    "rites_and_paths:shield": 0.5
+  },
+  "magic_wall_exempt_schools": [
+    "irons_spellbooks:holy"
+  ],
+  "school_walls": {
+    "rites_and_paths:music": 1.0
+  },
+  "traits": [
+    {
+      "type": "rites_and_paths:attribute",
+      "modifiers": [
+        {
+          "attribute": "minecraft:generic.max_health",
+          "to": 0.1,
+          "operation": "multiply_base"
+        }
+      ]
+    }
+  ],
+  "branches": [
+    {
+      "id": "healing",
+      "display": {
+        "icon": "minecraft:glistering_melon_slice"
+      },
+      "max_points": 10,
+      "effects": [
+        {
+          "type": "rites_and_paths:mechanic",
+          "id": "rites_and_paths:healing_power",
+          "heal_bonus": {
+            "to": 0.5
+          }
+        }
+      ],
+      "perks": [
+        {
+          "id": "life_channel",
+          "effects": [
+            {
+              "type": "rites_and_paths:mechanic",
+              "id": "rites_and_paths:life_channel",
+              "self_heal": -0.75,
+              "recovery": 0.5,
+              "max_targets": 3
+            }
+          ]
+        },
+        {
+          "id": "own_faith",
+          "effects": [
+            {
+              "type": "rites_and_paths:mechanic",
+              "id": "rites_and_paths:own_faith",
+              "self_heal": 0.5,
+              "others_heal": -0.75
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "blessing",
+      "display": {
+        "icon": "minecraft:golden_apple"
+      },
+      "max_points": 10,
+      "effects": [
+        {
+          "type": "rites_and_paths:mechanic",
+          "id": "rites_and_paths:blessing_duration",
+          "duration_bonus": {
+            "to": 0.5
+          }
+        }
+      ],
+      "perks": [
+        {
+          "id": "greater_blessing",
+          "effects": [
+            {
+              "type": "rites_and_paths:mechanic",
+              "id": "rites_and_paths:greater_blessing",
+              "extra_levels": 1,
+              "max_amplifier": 2,
+              "extra_mana_cost": 0.2,
+              "duration_change": -0.25
+            }
+          ]
+        },
+        {
+          "id": "selfish_blessing",
+          "effects": [
+            {
+              "type": "rites_and_paths:mechanic",
+              "id": "rites_and_paths:selfish_blessing",
+              "duration_change": 0.5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "divine_reserve",
+      "display": {
+        "icon": "minecraft:lapis_block"
+      },
+      "max_points": 10,
+      "effects": [
+        {
+          "type": "rites_and_paths:attribute",
+          "modifiers": [
+            {
+              "attribute": "irons_spellbooks:max_mana",
+              "to": 300,
+              "operation": "add"
+            },
+            {
+              "attribute": "irons_spellbooks:mana_regen",
+              "values": [
+                -0.2,
+                -0.325,
+                -0.411,
+                -0.473,
+                -0.52,
+                -0.557,
+                -0.587,
+                -0.612,
+                -0.632,
+                -0.65
+              ],
+              "operation": "multiply_base"
+            }
+          ]
+        }
+      ],
+      "perks": [
+        {
+          "id": "faith_return",
+          "effects": [
+            {
+              "type": "rites_and_paths:attribute",
+              "modifiers": [
+                {
+                  "attribute": "irons_spellbooks:max_mana",
+                  "to": -100,
+                  "operation": "add"
+                }
+              ]
+            },
+            {
+              "type": "rites_and_paths:mechanic",
+              "id": "rites_and_paths:faith_return",
+              "mana_refund": 0.15,
+              "icd_seconds": 2
+            }
+          ]
+        },
+        {
+          "id": "blind_faith",
+          "effects": [
+            {
+              "type": "rites_and_paths:mechanic",
+              "id": "rites_and_paths:blind_faith",
+              "out_of_combat_regen": 0.8,
+              "in_combat_regen": -0.25,
+              "combat_seconds": 8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "purification",
+      "display": {
+        "icon": "minecraft:water_bucket"
+      },
+      "max_points": 10,
+      "effects": [
+        {
+          "type": "rites_and_paths:mechanic",
+          "id": "rites_and_paths:purification",
+          "debuff_reduction": {
+            "to": 0.5
+          }
+        }
+      ],
+      "perks": [
+        {
+          "id": "absolution",
+          "effects": [
+            {
+              "type": "rites_and_paths:mechanic",
+              "id": "rites_and_paths:absolution",
+              "icd_seconds": 12,
+              "reduction_factor": 0.5
+            }
+          ]
+        },
+        {
+          "id": "penance",
+          "effects": [
+            {
+              "type": "rites_and_paths:mechanic",
+              "id": "rites_and_paths:penance",
+              "radius": 8,
+              "transfer": 0.5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "aegis",
+      "display": {
+        "icon": "minecraft:golden_chestplate"
+      },
+      "max_points": 10,
+      "effects": [
+        {
+          "type": "rites_and_paths:mechanic",
+          "id": "rites_and_paths:aegis",
+          "conversion": {
+            "to": 0.5
+          },
+          "cap_health_fraction": 0.25,
+          "absorption_seconds": 10
+        }
+      ],
+      "perks": [
+        {
+          "id": "deep_aegis",
+          "effects": [
+            {
+              "type": "rites_and_paths:mechanic",
+              "id": "rites_and_paths:deep_aegis",
+              "conversion_factor": -0.75,
+              "cap_health_fraction": 0.5
+            }
+          ]
+        },
+        {
+          "id": "swift_aegis",
+          "effects": [
+            {
+              "type": "rites_and_paths:mechanic",
+              "id": "rites_and_paths:swift_aegis",
+              "conversion_factor": 0.5,
+              "cap_health_fraction": 0.15
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "milestones": [
+    {
+      "total_level": 5,
+      "grants": "rites_and_paths:healer_eye"
+    },
+    {
+      "total_level": 5,
+      "grants": "rites_and_paths:laying_on_hands"
+    },
+    {
+      "total_level": 15,
+      "grants": "rites_and_paths:sanctuary"
+    },
+    {
+      "total_level": 30,
+      "grants": "rites_and_paths:miracle"
+    }
+  ],
+  "subclasses": [
+    "rites_and_paths:angel",
+    "rites_and_paths:martyr",
+    "rites_and_paths:intercessor"
+  ]
+}

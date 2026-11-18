@@ -20,6 +20,7 @@
     "PlayerPassengerMixin",
     "PlayerSizeMixin",
     "WolfRideMixin",
+    "irons.CastSpellMixin",
     "irons.InscriptionBookSlotMixin",
     "irons.InscriptionMenuMixin",
     "irons.InscriptionResultSlotMixin",
@@ -32,7 +33,9 @@
     "client.ArmorLegsMixin",
     "client.LocalPlayerPushMixin",
     "client.DanceModelMixin",
-    "client.InscriptionScreenMixin"
+    "client.InscriptionScreenMixin",
+    "client.PrayerCameraMixin",
+    "client.HealerGlowMixin"
   ],
   "injectors": {
     "defaultRequire": 1

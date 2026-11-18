@@ -154,6 +154,8 @@ public class RpgClasses {
         MinecraftForge.EVENT_BUS.register(new io.github.rpgclasses.content.race.PorterBelt());
         MinecraftForge.EVENT_BUS.register(new io.github.rpgclasses.content.race.SlimeForms());
         MinecraftForge.EVENT_BUS.register(io.github.rpgclasses.content.race.Rites.listener());
+        // Clérigo (adenda del Clérigo). Después de las razas: Milagro actúa tras las supervivencias propias (regla 10).
+        io.github.rpgclasses.cleric.Cleric.register();
     }
 
     private void commonSetup(FMLCommonSetupEvent event) {

@@ -338,6 +338,9 @@ public final class DamagePipeline {
         double beforeSkin = factor;
         factor = MonkPerks.spiritSkinFactor(victim, event.getSource(), factor);
         if (factor != beforeSkin) log.append(String.format(Locale.ROOT, " | piel espiritual %.2f→%.2f", beforeSkin, factor));
+        double cleric = io.github.rpgclasses.cleric.ClericSubclasses.damageFactor(victim);
+        factor *= cleric;
+        if (cleric != 1) log.append(String.format(Locale.ROOT, " | resolución/oración x%.2f", cleric));
         double tenacity = PaladinSubclasses.tenacityFactor(victim);
         factor *= tenacity;
         if (tenacity != 1) log.append(String.format(Locale.ROOT, " | tenacidad x%.2f", tenacity));

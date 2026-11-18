@@ -6,6 +6,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.Slot;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Pseudo;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
@@ -14,6 +15,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
  * Mesa de inscripción de Iron's: el botón de inscribir (id negativo) con un instrumento y una partitura la hace
  * {@link InscriptionTable}; con un libro y un pergamino sigue el camino de Iron's.
  */
+// @Pseudo: la clase es de Iron's (no está en el jar de API con el que se compila) y puede no existir.
+@Pseudo
 @Mixin(targets = "io.redspace.ironsspellbooks.gui.inscription_table.InscriptionTableMenu", remap = false)
 public abstract class InscriptionMenuMixin {
     @Inject(method = {"m_6366_(Lnet/minecraft/world/entity/player/Player;I)Z", "clickMenuButton(Lnet/minecraft/world/entity/player/Player;I)Z"},

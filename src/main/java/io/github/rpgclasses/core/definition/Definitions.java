@@ -20,8 +20,9 @@ public final class Definitions {
     /**
      * Rama: cada punto sube a la vez todos sus efectos; todos llegan al máximo con maxPoints.
      * {@code perks}: las opciones que se eligen al llenarla (2 en el diseño).
+     * {@code icon}: objeto que la representa en el árbol de habilidades (null = el de la clase).
      */
-    public record BranchDef(String id, int maxPoints, List<EffectDef> effects, List<PerkDef> perks) {
+    public record BranchDef(String id, int maxPoints, List<EffectDef> effects, List<PerkDef> perks, String icon) {
         public PerkDef perk(String perkId) {
             for (PerkDef p : perks) if (p.id().equals(perkId)) return p;
             return null;

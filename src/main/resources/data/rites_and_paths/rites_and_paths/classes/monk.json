@@ -47,6 +47,9 @@
   "branches": [
     {
       "id": "fist",
+      "display": {
+        "icon": "minecraft:blaze_powder"
+      },
       "max_points": 10,
       "effects": [
         {
@@ -84,6 +87,9 @@
     },
     {
       "id": "wind",
+      "display": {
+        "icon": "minecraft:prismarine_shard"
+      },
       "max_points": 10,
       "effects": [
         {
@@ -130,6 +136,9 @@
     },
     {
       "id": "skin",
+      "display": {
+        "icon": "minecraft:cobblestone"
+      },
       "max_points": 10,
       "effects": [
         {
@@ -183,6 +192,9 @@
     },
     {
       "id": "stance_mastery",
+      "display": {
+        "icon": "minecraft:amethyst_shard"
+      },
       "max_points": 10,
       "effects": [
         {
@@ -231,6 +243,9 @@
     },
     {
       "id": "meditation",
+      "display": {
+        "icon": "minecraft:candle"
+      },
       "max_points": 10,
       "effects": [
         {

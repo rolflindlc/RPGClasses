@@ -244,6 +244,26 @@ KITS = {
  "bard": bard.KIT,
 }
 
+# Icono de cada rama en el árbol de habilidades (objetos vanilla, que siempre existen).
+BRANCH_ICONS = {
+ ("mage","power"): "minecraft:blaze_powder", ("mage","reserve"): "minecraft:lapis_lazuli", ("mage","cadence"): "minecraft:clock",
+ ("mage","summoning"): "minecraft:skeleton_skull", ("mage","fluidity"): "minecraft:feather",
+ ("paladin","cuirass"): "minecraft:iron_chestplate", ("paladin","will"): "minecraft:milk_bucket", ("paladin","push"): "minecraft:piston",
+ ("paladin","banner"): "minecraft:white_banner", ("paladin","smite"): "minecraft:golden_sword",
+ ("barbarian","fury"): "minecraft:fire_charge", ("barbarian","brutality"): "minecraft:diamond_axe", ("barbarian","iron_skin"): "minecraft:iron_ingot",
+ ("barbarian","stampede"): "minecraft:saddle", ("barbarian","hardened"): "minecraft:rabbit_hide",
+ ("rogue","shadow"): "minecraft:ink_sac", ("rogue","edge"): "minecraft:flint", ("rogue","wind"): "minecraft:sugar",
+ ("rogue","toxins"): "minecraft:spider_eye", ("rogue","acrobatics"): "minecraft:rabbit_foot",
+ ("ranger","aim"): "minecraft:target", ("ranger","cadence"): "minecraft:string", ("ranger","range"): "minecraft:spectral_arrow",
+ ("ranger","special_arrows"): "minecraft:tipped_arrow", ("ranger","retreat"): "minecraft:leather_boots",
+ ("monk","fist"): "minecraft:blaze_powder", ("monk","wind"): "minecraft:prismarine_shard", ("monk","skin"): "minecraft:cobblestone",
+ ("monk","stance_mastery"): "minecraft:amethyst_shard", ("monk","meditation"): "minecraft:candle",
+ ("bard","compas"): "minecraft:note_block", ("bard","resonance"): "minecraft:bell", ("bard","perfect_pitch"): "minecraft:goat_horn",
+ ("bard","reverberation"): "minecraft:echo_shard", ("bard","dance"): "minecraft:music_disc_cat",
+}
+for cid, c in classes.items():
+    for b, _ in c["branches"]: assert (cid, b) in BRANCH_ICONS, ("falta icono de rama", cid, b)
+
 def dump(path, obj):
     os.makedirs(os.path.dirname(path), exist_ok=True)
     with open(path, "w", encoding="utf-8") as f:
@@ -268,7 +288,7 @@ for cid, c in classes.items():
         o["school_walls"] = {IR + "holy": 1.0, bard.MUSIC: 1.0}
     if TRAITS.get(cid): o["traits"] = TRAITS[cid]
     if c.get("armor_rule"): o["armor_rule"] = "disables_unarmored_passives"
-    o["branches"] = [{"id": b, "max_points": 10, "effects": e,
+    o["branches"] = [{"id": b, "display": {"icon": BRANCH_ICONS[(cid, b)]}, "max_points": 10, "effects": e,
                       "perks": [{"id": pid, "effects": pe} for pid, pe in PERKS[(cid, b)]]} for b, e in c["branches"]]
     o["milestones"] = c["milestones"]
     o["subclasses"] = [R(s) for s in c["subs"]]

@@ -270,7 +270,7 @@
 269 Choisissez votre sous-classe :
 270 Branches et capacités
 271 Données exactes
-272 Progression
+272 Arbre
 273 Sous-classes
 274 Résumé
 275 Classes

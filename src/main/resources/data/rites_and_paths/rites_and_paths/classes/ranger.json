@@ -48,6 +48,9 @@
   "branches": [
     {
       "id": "aim",
+      "display": {
+        "icon": "minecraft:target"
+      },
       "max_points": 10,
       "effects": [
         {
@@ -94,6 +97,9 @@
     },
     {
       "id": "cadence",
+      "display": {
+        "icon": "minecraft:string"
+      },
       "max_points": 10,
       "effects": [
         {
@@ -143,6 +149,9 @@
     },
     {
       "id": "range",
+      "display": {
+        "icon": "minecraft:spectral_arrow"
+      },
       "max_points": 10,
       "effects": [
         {
@@ -185,6 +194,9 @@
     },
     {
       "id": "special_arrows",
+      "display": {
+        "icon": "minecraft:tipped_arrow"
+      },
       "max_points": 10,
       "effects": [
         {
@@ -233,6 +245,9 @@
     },
     {
       "id": "retreat",
+      "display": {
+        "icon": "minecraft:leather_boots"
+      },
       "max_points": 10,
       "effects": [
         {

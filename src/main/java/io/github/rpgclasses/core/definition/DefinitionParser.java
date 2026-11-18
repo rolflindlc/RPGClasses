@@ -38,11 +38,13 @@ public final class DefinitionParser {
                     perks.add(new Definitions.PerkDef(string(p, "id"), effects(p)));
                 }
             }
+            JsonObject branchDisplay = b.has("display") ? b.getAsJsonObject("display") : new JsonObject();
             branches.add(new BranchDef(
                     string(b, "id"),
                     b.has("max_points") ? b.get("max_points").getAsInt() : 10,
                     effects(b),
-                    List.copyOf(perks)));
+                    List.copyOf(perks),
+                    optString(branchDisplay, "icon", null)));
         }
         List<String> subclasses = new ArrayList<>();
         for (JsonElement se : array(o, "subclasses")) subclasses.add(se.getAsString());

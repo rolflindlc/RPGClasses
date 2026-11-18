@@ -270,7 +270,7 @@
 269 Scegli la tua sottoclasse:
 270 Rami e abilità
 271 Dati esatti
-272 Progresso
+272 Albero
 273 Sottoclassi
 274 Riepilogo
 275 Classi

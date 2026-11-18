@@ -98,6 +98,29 @@ public final class Packets {
         }
     }
 
+    /** Cliente -> servidor: plan del árbol de habilidades (varias acciones de progresión en orden, un solo aviso). */
+    public record ClassPlan(java.util.List<ClassAction> steps) {
+        public void encode(FriendlyByteBuf buf) {
+            buf.writeVarInt(steps.size());
+            for (ClassAction step : steps) step.encode(buf);
+        }
+
+        public static ClassPlan decode(FriendlyByteBuf buf) {
+            int n = buf.readVarInt();
+            if (n < 0 || n > io.github.rpgclasses.server.ProgressionService.MAX_PLAN) {
+                throw new io.netty.handler.codec.DecoderException("plan demasiado largo: " + n);
+            }
+            java.util.List<ClassAction> steps = new java.util.ArrayList<>(n);
+            for (int i = 0; i < n; i++) steps.add(ClassAction.decode(buf));
+            return new ClassPlan(java.util.List.copyOf(steps));
+        }
+
+        public void handle(Supplier<NetworkEvent.Context> ctx) {
+            ServerPlayer sender = ctx.get().getSender();
+            if (sender != null) ProgressionService.performPlan(sender, steps);
+        }
+    }
+
     /** Cliente -> servidor: tecla de habilidad pulsada (ranura 0, 1, 2). */
     public record UseAbility(int slot) {
         public void encode(FriendlyByteBuf buf) {

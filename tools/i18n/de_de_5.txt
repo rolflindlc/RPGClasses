@@ -270,7 +270,7 @@
 269 Wähle deine Unterklasse:
 270 Zweige und Fähigkeiten
 271 Genaue Daten
-272 Fortschritt
+272 Talentbaum
 273 Unterklassen
 274 Übersicht
 275 Klassen

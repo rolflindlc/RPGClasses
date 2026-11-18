@@ -12,6 +12,11 @@ First public beta of Rolflin's Rites & Paths (Minecraft Forge 1.20.1).
   music stand.
 - **Chronomancer** subclass (Time Rewind and Time Stop).
 - **Allies** system (key J), the Bond Book for the Beast Master, and a custom class and race interface.
+- **Skill tree** tab in the class book: a draggable, zoomable star map with one arm per branch, its perks at the tip,
+  abilities set in the core ring and the subclass island across a bridge. The tree itself enforces the 3-branch limit
+  (locked arms turn dark, and hovering a third branch previews which ones will lock). Clicks build a **plan** that is
+  applied in one go (with a summary when it locks branches or picks a perk or subclass); other classes can be
+  previewed. Branches can define their icon in the datapack (`display.icon`).
 - Class and racial ability HUD.
 - Server and client configuration files; balance lives in datapacks.
 - Optional integration with Iron's Spells 'n Spellbooks, Epic Fight and Curios.

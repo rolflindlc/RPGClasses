@@ -62,6 +62,9 @@
   "branches": [
     {
       "id": "power",
+      "display": {
+        "icon": "minecraft:blaze_powder"
+      },
       "max_points": 10,
       "effects": [
         {
@@ -106,6 +109,9 @@
     },
     {
       "id": "reserve",
+      "display": {
+        "icon": "minecraft:lapis_lazuli"
+      },
       "max_points": 10,
       "effects": [
         {
@@ -180,6 +186,9 @@
     },
     {
       "id": "cadence",
+      "display": {
+        "icon": "minecraft:clock"
+      },
       "max_points": 10,
       "effects": [
         {
@@ -229,6 +238,9 @@
     },
     {
       "id": "summoning",
+      "display": {
+        "icon": "minecraft:skeleton_skull"
+      },
       "max_points": 10,
       "effects": [
         {
@@ -271,6 +283,9 @@
     },
     {
       "id": "fluidity",
+      "display": {
+        "icon": "minecraft:feather"
+      },
       "max_points": 10,
       "effects": [
         {

@@ -345,18 +345,79 @@ public final class ClassPages {
         return Component.translatable(Ids.langKey("discipline", id, "name"));
     }
 
+    /**
+     * Valores de unos efectos en un nivel concreto, para la ayuda de cada nodo del árbol. Con {@code delta}
+     * (y nivel > 1) muestra "antes → ahora". De las mecánicas solo salen los parámetros que escalan: los fijos
+     * están en "Datos exactos".
+     */
+    public static List<Component> levelLines(List<EffectDef> effects, int maxLevel, int level, boolean delta) {
+        List<Component> out = new ArrayList<>();
+        boolean showDelta = delta && level > 1;
+        for (EffectDef e : effects) {
+            if (Ids.EFFECT_ATTRIBUTE.equals(e.type())) {
+                AttributeEffect parsed;
+                try {
+                    parsed = AttributeEffect.parse(e.params(), maxLevel);
+                } catch (RuntimeException ex) {
+                    continue;
+                }
+                for (AttributeEffect.Modifier m : parsed.modifiers()) {
+                    out.add(valueLine(attributeName(m.attribute()), m.value(), level, isPercent(m) ? "%" : "", true, showDelta));
+                }
+                continue;
+            }
+            if (Ids.EFFECT_MECHANIC.equals(e.type()) && e.params().has("id")) {
+                out.add(Component.translatable(Ids.langKey("mechanic", e.params().get("id").getAsString(), "name")).withStyle(ChatFormatting.WHITE));
+            }
+            for (Map.Entry<String, JsonElement> entry : e.params().entrySet()) {
+                if (SKIPPED_PARAMS.contains(entry.getKey()) || !entry.getValue().isJsonObject()) continue;
+                LevelValue value;
+                try {
+                    value = LevelValue.fromJson(entry.getValue().getAsJsonObject(), maxLevel);
+                } catch (RuntimeException ignored) {
+                    continue;
+                }
+                Component label = Component.translatableWithFallback("param.rites_and_paths." + entry.getKey(), entry.getKey());
+                out.add(Component.literal("  ").append(valueLine(label, value, level, units().getOrDefault(entry.getKey(), ""), false, showDelta)));
+            }
+        }
+        return out;
+    }
+
+    private static MutableComponent valueLine(Component label, LevelValue value, int level, String unit, boolean signed, boolean showDelta) {
+        MutableComponent line = Component.empty().append(label.copy().withStyle(ChatFormatting.GRAY)).append(Component.literal(": ").withStyle(ChatFormatting.GRAY));
+        if (showDelta) {
+            line.append(Component.literal(format(value.at(level - 1), unit, signed) + " → ").withStyle(ChatFormatting.DARK_GRAY));
+        }
+        return line.append(Component.literal(format(value.at(level), unit, signed)).withStyle(ChatFormatting.GREEN));
+    }
+
+    public static MutableComponent branchTitle(ClassDef c, BranchDef b) {
+        return Component.translatable(branchKey(c, b, "name"));
+    }
+
+    public static Component branchDesc(ClassDef c, BranchDef b) {
+        return Component.translatable(branchKey(c, b, "desc"));
+    }
+
     /** Texto de ayuda de un perk: nombre, descripción y sus números exactos, separados por saltos de línea. */
     public static Component perkTooltip(ClassDef c, BranchDef b, PerkDef p) {
-        List<Component> lines = new ArrayList<>();
-        lines.add(perkName(c, b, p).withStyle(ChatFormatting.LIGHT_PURPLE));
-        lines.add(Component.translatable(perkKey(c, b, p, "desc")));
-        for (EffectDef e : p.effects()) effect(e, 1, lines);
+        List<Component> lines = perkLines(c, b, p);
         MutableComponent out = Component.empty();
         for (int i = 0; i < lines.size(); i++) {
             if (i > 0) out.append("\n");
             out.append(lines.get(i));
         }
         return out;
+    }
+
+    /** Líneas de la ayuda de un perk: nombre, descripción y números exactos. */
+    public static List<Component> perkLines(ClassDef c, BranchDef b, PerkDef p) {
+        List<Component> lines = new ArrayList<>();
+        lines.add(perkName(c, b, p).withStyle(ChatFormatting.LIGHT_PURPLE));
+        lines.add(Component.translatable(perkKey(c, b, p, "desc")));
+        for (EffectDef e : p.effects()) effect(e, 1, lines);
+        return lines;
     }
 
     public static MutableComponent perkName(ClassDef c, BranchDef b, PerkDef p) {

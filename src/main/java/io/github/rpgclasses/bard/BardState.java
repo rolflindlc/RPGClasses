@@ -192,8 +192,10 @@ public final class BardState {
         s.consecutive = 0;
         s.phraseMisses++;
         if (s.crescendoUntil <= now) {
-            double keep = Bard.mech(p, Bard.TIMING_WINDOW, "miss_keep", 0);
-            if (Bard.instrument(p) != null && Bard.instrument(p).passive == Instrument.Passive.SPECTRAL_VIOLIN) keep = Math.max(keep, 2.0 / 3.0);
+            // Un fallo quita la mitad del combo; Oído Absoluto (por puntos de rama) lo deja en un cuarto con 10 puntos.
+            double keep = Math.max(Bard.number(Bard.RHYTHM, "miss_keep", 0.5), Bard.mech(p, Bard.TIMING_WINDOW, "miss_keep", 0));
+            // Violín Espectral: pierdes la mitad de lo que perderías (50 % menos de pérdida).
+            if (Bard.instrument(p) != null && Bard.instrument(p).passive == Instrument.Passive.SPECTRAL_VIOLIN) keep = 1 - (1 - keep) * 0.5;
             s.combo = (int) Math.floor(s.combo * Math.max(0, Math.min(1, keep)));
         }
         loseStages(p, s);

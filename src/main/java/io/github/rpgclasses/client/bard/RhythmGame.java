@@ -35,8 +35,11 @@ import java.util.List;
  * centro desde el lado de su carril (izquierda: clic izquierdo; derecha: clic derecho; arriba: espacio; abajo: Shift).
  *
  * <p>Ritmo: solo es fallo no pulsar a tiempo el carril pedido; pulsar otros carriles no penaliza el combo, pero sí
- * rompe la Armonía. El tempo sube con la Armonía (hasta el tope) y lo cambian Tempo Presto y Tempo Largo; las notas de
+ * rompe la Armonía. El tempo sube con el combo (hasta el tope) y lo cambian Tempo Presto y Tempo Largo; las notas de
  * clic izquierdo nunca llegan más rápido que el ciclo de ataque del arma.
+ *
+ * <p>Las notas llegan en ráfagas (una nota por pulso) separadas por descansos, y tres ráfagas forman un ciclo que el
+ * servidor cuenta como una frase para la Armonía: {@link #BURST_NOTES} y {@link #BURST_REST_MS}.
  */
 public final class RhythmGame {
     private static final int[] LANE_COLOR = {0xFFE0533D, 0xFF4E8FE8, 0xFFF2C94C, 0xFF6FD07A};
@@ -53,6 +56,9 @@ public final class RhythmGame {
         }
     }
 
+    /** Ráfaga de notas ya generada: tiempo de la primera y la última nota y duración del pulso (ms). */
+    private record Burst(long start, long end, double beat) {}
+
     private record Flash(int lane, int color, long until) {}
 
     private record Popup(Component text, int color, long until) {}
@@ -64,12 +70,19 @@ public final class RhythmGame {
     private static final List<Note> NOTES = new ArrayList<>();
     private static final List<Flash> FLASHES = new ArrayList<>();
     private static Popup popup;
+    private static final List<Burst> BURSTS = new ArrayList<>();
     private static final RandomSource RNG = RandomSource.create();
     private static boolean active;
-    private static long phraseStart, phraseEnd, nextPhrase;
     private static double beatMs = 600;
+    /** Cuándo empieza la siguiente ráfaga; cuándo acaba la última de un ciclo (0 = ya contado). */
+    private static long nextBurst, closeAt;
+    private static int burstIndex;
     private static long lastBeatSound;
-    private static int phraseNotes;
+    private static long lastAttackNote, lastUseNote, lastJumpNote;
+
+    /** Patrón de un ciclo: notas seguidas [mín, máx] de cada ráfaga y descanso [mín, máx] (ms) hasta la siguiente. */
+    private static final int[][] BURST_NOTES = {{3, 4}, {3, 6}, {6, 10}};
+    private static final int[][] BURST_REST_MS = {{1000, 1000}, {1000, 1000}, {1500, 4000}};
 
     private RhythmGame() {}
 
@@ -92,6 +105,7 @@ public final class RhythmGame {
     private static void stop() {
         active = false;
         NOTES.clear();
+        BURSTS.clear();
         FLASHES.clear();
         popup = null;
     }
@@ -116,13 +130,13 @@ public final class RhythmGame {
         return ClientSetup.localMechanic("rites_and_paths:" + id) != null;
     }
 
+    /** Tempo: sube con el combo (ya no con la Armonía); Tempo Largo también recorta esa subida. */
     private static double bpm() {
         JsonObject r = params();
-        AbilityDef h = DefinitionStore.CLIENT.abilityDef(Bard.HARMONY);
-        double perStage = h == null ? 0.1 : p(h.params(), "tempo_per_stage", 0.1);
+        double perCombo = p(r, "tempo_per_combo", 0.015);
         double base = p(r, "base_bpm", 100) * (1 + mech(Bard.TEMPO_PRESTO, "tempo_bonus", 0) + mech(Bard.TEMPO_LARGO, "tempo_bonus", 0));
-        double stageFactor = 1 + perStage * stage * (hasMech(Bard.TEMPO_LARGO) ? 1 + mech(Bard.TEMPO_LARGO, "tempo_bonus", -0.2) : 1);
-        return Math.max(40, Math.min(p(r, "max_bpm", 180), base * stageFactor));
+        double comboFactor = 1 + perCombo * combo * (hasMech(Bard.TEMPO_LARGO) ? 1 + mech(Bard.TEMPO_LARGO, "tempo_bonus", -0.2) : 1);
+        return Math.max(40, Math.min(p(r, "max_bpm", 180), base * comboFactor));
     }
 
     /** Ventana de acierto (ms) a cada lado de la nota, sin pasar del 45 % del pulso. */
@@ -152,9 +166,12 @@ public final class RhythmGame {
         if (!active) {
             active = true;
             NOTES.clear();
+            BURSTS.clear();
             beatMs = 60000.0 / bpm();
-            nextPhrase = now + (long) (beatMs * 2); // cuenta de entrada
-            phraseEnd = 0;
+            nextBurst = now + (long) (beatMs * 2); // cuenta de entrada
+            closeAt = 0;
+            burstIndex = 0;
+            lastAttackNote = lastUseNote = lastJumpNote = Long.MIN_VALUE / 2;
         }
         // Fallos: notas que ya han pasado sin pulsarse.
         double w = window();
@@ -166,44 +183,46 @@ public final class RhythmGame {
                 popup = new Popup(Component.translatable("hud.rites_and_paths.bard.miss"), 0xFFFF5050, now + 450);
             }
         }
-        if (phraseEnd > 0 && now > phraseEnd + w) {
-            if (phraseNotes > 0) send(BardState.PHRASE, 0);
-            phraseEnd = 0;
-            NOTES.removeIf(n -> n.judged);
+        // Al acabar la tercera ráfaga se cierra el ciclo (la frase de la Armonía).
+        if (closeAt > 0 && now > closeAt + w) {
+            send(BardState.PHRASE, 0);
+            closeAt = 0;
         }
-        if (phraseEnd == 0 && now >= nextPhrase - beatMs * 2) newPhrase(Math.max(now + (long) beatMs, nextPhrase), player);
+        BURSTS.removeIf(b -> now > b.end() + 2000);
+        if (now >= nextBurst - beatMs * 2) newBurst(Math.max(now + (long) beatMs, nextBurst), player);
         NOTES.removeIf(n -> n.judged && now > n.time + 1000);
         FLASHES.removeIf(f -> f.until() < now);
     }
 
-    private static void newPhrase(long start, LocalPlayer player) {
-        JsonObject r = params();
+    /** Genera una ráfaga (una nota por pulso) con el tempo de ahora y decide cuándo empieza la siguiente. */
+    private static void newBurst(long start, LocalPlayer player) {
         beatMs = 60000.0 / bpm();
-        int beats = (int) p(r, "phrase_beats", 16), rest = (int) p(r, "rest_beats", 4);
-        double density = p(r, "note_density", 0.6);
+        int[] size = BURST_NOTES[burstIndex];
+        int count = size[0] + RNG.nextInt(size[1] - size[0] + 1);
         double speed = player.getAttributeValue(Attributes.ATTACK_SPEED);
         double attackPeriod = 1000.0 / Math.max(0.25, speed);
-        long lastAttack = Long.MIN_VALUE / 2, lastUse = Long.MIN_VALUE / 2, lastJump = Long.MIN_VALUE / 2;
-        phraseNotes = 0;
-        for (int b = 0; b < beats; b++) {
-            if (b > 0 && RNG.nextDouble() >= density) continue;
-            long t = start + Math.round(b * beatMs);
+        long last = start;
+        for (int i = 0; i < count; i++) {
+            long t = start + Math.round(i * beatMs);
             int lane = pickLane();
-            if (lane == Bard.LANE_ATTACK && t - lastAttack < attackPeriod * 0.95) lane = Bard.LANE_SNEAK;
-            if (lane == Bard.LANE_USE && t - lastUse < Math.max(1500, beatMs * 4)) lane = Bard.LANE_SNEAK;
-            if (lane == Bard.LANE_JUMP && t - lastJump < beatMs * 2) lane = Bard.LANE_SNEAK;
+            if (lane == Bard.LANE_ATTACK && t - lastAttackNote < attackPeriod * 0.95) lane = Bard.LANE_SNEAK;
+            if (lane == Bard.LANE_USE && t - lastUseNote < Math.max(1500, beatMs * 4)) lane = Bard.LANE_SNEAK;
+            if (lane == Bard.LANE_JUMP && t - lastJumpNote < beatMs * 2) lane = Bard.LANE_SNEAK;
             switch (lane) {
-                case Bard.LANE_ATTACK -> lastAttack = t;
-                case Bard.LANE_USE -> lastUse = t;
-                case Bard.LANE_JUMP -> lastJump = t;
+                case Bard.LANE_ATTACK -> lastAttackNote = t;
+                case Bard.LANE_USE -> lastUseNote = t;
+                case Bard.LANE_JUMP -> lastJumpNote = t;
                 default -> { }
             }
             NOTES.add(new Note(t, lane));
-            phraseNotes++;
+            last = t;
         }
-        phraseStart = start;
-        phraseEnd = start + Math.round((beats - 1) * beatMs);
-        nextPhrase = start + Math.round((beats + rest) * beatMs);
+        BURSTS.add(new Burst(start, last, beatMs));
+        int[] rest = BURST_REST_MS[burstIndex];
+        long restMs = rest[0] + (rest[1] > rest[0] ? RNG.nextInt(rest[1] - rest[0] + 1) : 0);
+        nextBurst = last + Math.max(restMs, Math.round(beatMs * 1.5));
+        if (burstIndex == BURST_NOTES.length - 1) closeAt = last;
+        burstIndex = (burstIndex + 1) % BURST_NOTES.length;
     }
 
     private static int pickLane() {
@@ -245,9 +264,10 @@ public final class RhythmGame {
             if (best == null || Math.abs(n.time - now) < Math.abs(best.time - now)) best = n;
         }
         if (best == null) {
-            // Pulsación de más: no penaliza el combo, pero rompe la Armonía. En el descanso entre frases no cuenta.
-            boolean inPhrase = phraseEnd > 0 && now >= phraseStart - w && now <= phraseEnd + w;
-            if (inPhrase) send(BardState.EXTRA, lane);
+            // Pulsación de más: no penaliza el combo, pero rompe la Armonía. En los descansos entre ráfagas no cuenta.
+            boolean inBurst = false;
+            for (Burst b : BURSTS) if (now >= b.start() - w && now <= b.end() + w) inBurst = true;
+            if (inBurst) send(BardState.EXTRA, lane);
             return;
         }
         best.judged = true;
@@ -285,10 +305,11 @@ public final class RhythmGame {
         int cx = width / 2, cy = height / 2;
         double lead = beatMs * 2;
 
-        // Metrónomo suave en cada pulso de la frase.
-        if (phraseEnd > 0 && now >= phraseStart) {
-            long beat = (long) Math.floor((now - phraseStart) / beatMs);
-            long beatTime = phraseStart + Math.round(beat * beatMs);
+        // Metrónomo suave en cada pulso de una ráfaga.
+        for (Burst b : BURSTS) {
+            if (now < b.start() || now > b.end() + 60) continue;
+            long beat = (long) Math.floor((now - b.start()) / b.beat());
+            long beatTime = b.start() + Math.round(beat * b.beat());
             if (beatTime > lastBeatSound && now - beatTime < 60) {
                 lastBeatSound = beatTime;
                 mc.getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.NOTE_BLOCK_HAT.value(), 1.6f, 0.12f));

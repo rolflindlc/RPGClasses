@@ -16,6 +16,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.tags.TagKey;
+import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.effect.MobEffect;
@@ -234,7 +235,33 @@ public final class BardCombat {
         ((ServerLevel) mob.level()).sendParticles(ParticleTypes.HEART, mob.getX(), mob.getY() + mob.getBbHeight(), mob.getZ(), 3, 0.3, 0.2, 0.3, 0);
     }
 
-    /** Bailarines quietos en su sitio; hechizados buscando otro mob al que pegar. */
+    /** Yaw con el que empezó a bailar cada criatura: el balanceo del torso gira alrededor de él. */
+    private static final Map<UUID, Float> DANCE_YAW = new HashMap<>();
+    /** Un pulso del baile en ticks (el mismo ritmo que el cliente: 0,55 rad por tick). */
+    private static final int DANCE_BEAT = 11;
+
+    /**
+     * Baile de una criatura, en el servidor (así se ve con cualquier renderizador, también el de Epic Fight, que
+     * ignora las poses de vanilla): se queda en su sitio, no persigue a nadie, da un saltito a cada pulso y mueve el
+     * torso de lado a lado, con una nota musical por pulso.
+     */
+    private static void danceStep(ServerLevel level, Mob mob) {
+        mob.getNavigation().stop();
+        mob.setTarget(null);
+        int phase = mob.tickCount % DANCE_BEAT;
+        double y = mob.getDeltaMovement().y;
+        if (phase == 0 && mob.onGround() && !mob.isNoGravity()) y = 0.21;
+        else if (phase > 3) y = Math.min(0, y);
+        mob.setDeltaMovement(0, y, 0);
+        float base = DANCE_YAW.computeIfAbsent(mob.getUUID(), k -> mob.getYRot());
+        float yaw = base + Mth.sin(mob.tickCount * 0.55f) * 35f;
+        mob.setYRot(yaw);
+        mob.setYBodyRot(yaw);
+        mob.setYHeadRot(yaw);
+        if (phase == 0) level.sendParticles(ParticleTypes.NOTE, mob.getX(), mob.getY() + mob.getBbHeight() + 0.4, mob.getZ(), 1, 0.2, 0.1, 0.2, 1);
+    }
+
+    /** Bailarines quietos en su sitio, bailando; hechizados buscando otro mob al que pegar. */
     @SubscribeEvent
     public void onServerTick(TickEvent.ServerTickEvent event) {
         if (event.phase != TickEvent.Phase.END) return;
@@ -244,10 +271,8 @@ public final class BardCombat {
         for (ServerLevel level : server.getAllLevels()) {
             for (UUID id : java.util.List.copyOf(CONTROLLER.keySet())) {
                 Entity e = level.getEntity(id);
-                if (e instanceof Mob mob && dancing(mob)) {
-                    mob.getNavigation().stop();
-                    mob.setDeltaMovement(0, Math.min(0, mob.getDeltaMovement().y), 0);
-                }
+                if (e instanceof Mob mob && dancing(mob)) danceStep(level, mob);
+                else if (e != null) DANCE_YAW.remove(id);
             }
             if (!retarget) continue;
             for (UUID id : java.util.List.copyOf(CHARMER.keySet())) {
@@ -280,6 +305,7 @@ public final class BardCombat {
             }
             return server.getTickCount() % 100 == 0;
         });
+        DANCE_YAW.keySet().retainAll(CONTROLLER.keySet());
     }
 
     // ------------------------------------------------------------------ botín de jefes

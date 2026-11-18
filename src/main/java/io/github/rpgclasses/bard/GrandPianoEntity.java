@@ -81,7 +81,7 @@ public class GrandPianoEntity extends Entity {
         entityData.define(SIZE, 2f);
     }
 
-    /** Edad efectiva (ticks desde que empieza la sombra; negativa durante el retraso del segundo piano). */
+    /** Edad efectiva (ticks desde que empieza la sombra; negativa durante el retraso, si lo hay). */
     public int age() {
         return entityData.get(AGE);
     }
@@ -104,9 +104,6 @@ public class GrandPianoEntity extends Entity {
                 Vec3 g = ground(level, t.position());
                 setPos(g.x, g.y, g.z);
             }
-        }
-        if (age == SHADOW) {
-            level.playSound(null, getX(), getY() + 8, getZ(), SoundEvents.NOTE_BLOCK_HARP.value(), SoundSource.PLAYERS, 1.5f, 0.5f);
         }
         if (age == SHADOW + FALL) impact(level);
         if (age > SHADOW + FALL + LINGER) discard();

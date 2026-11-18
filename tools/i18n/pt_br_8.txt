@@ -4,11 +4,11 @@
 3 Contraponto
 4 Por alguns segundos, erros não reduzem seu combo e cada acerto conta em dobro.
 5 Crescendo
-6 Se você tocar perfeitamente (cada nota e nenhum toque extra), cada frase sobe um estágio: suas auras ficam mais fortes e o andamento acelera. Um erro ou toque extra derruba dois estágios.
+6 Se você tocar perfeitamente (cada nota e nenhum toque extra), cada ciclo de rajadas sobe um estágio e suas auras ficam mais fortes. Um erro ou toque extra derruba dois estágios.
 7 Harmonia
 8 Depois de lançar três feitiços diferentes do seu instrumento em pouco tempo, o próximo não custa mana e perde metade da recarga (com um tempo mínimo entre usos).
 9 Recital
-10 Com um instrumento na mão você joga um minijogo de ritmo: cada nota pede clique esquerdo, clique direito, Shift ou Espaço, e a ação realmente acontece. Só não apertar a faixa pedida a tempo conta como erro (apertar outras faixas não é punido). Cada acerto aumenta seu combo e dá poder musical; um erro o zera. Um clique esquerdo no tempo causa dano extra. Cada feitiço musical precisa de um combo mínimo para ser lançado.
+10 Com um instrumento na mão você joga um minijogo de ritmo: cada nota pede clique esquerdo, clique direito, Shift ou Espaço, e a ação realmente acontece. Só não apertar a faixa pedida a tempo conta como erro (apertar outras faixas não é punido). Cada acerto aumenta seu combo, dá poder musical e acelera o andamento; um erro tira metade do seu combo. As notas vêm em rajadas, com pausas entre elas. Um clique esquerdo no tempo causa dano extra. Cada feitiço musical precisa de um combo mínimo para ser lançado.
 11 Ritmo
 12 Com Harmonia no estágio 3 ou mais, você causa mais dano corpo a corpo.
 13 Fúria Rítmica
@@ -18,7 +18,7 @@
 17 Compasso
 18 Tocar não te desacelera mais, e você corre mais rápido enquanto uma das suas músicas toca (conta para o limite de velocidade).
 19 Dança
-20 Uma janela de acerto maior e, com mais pontos, um erro não zera mais seu combo: só o reduz.
+20 Uma janela de acerto maior e, com mais pontos, um erro tira menos combo (até apenas um quarto).
 21 Ouvido Absoluto
 22 Aumenta o raio das suas auras.
 23 Ressonância
@@ -168,7 +168,7 @@
 167 Marcha Perfeita
 168 Aliados dentro da sua aura recebem metade do bônus de velocidade da sua Dança; você recebe um pouco menos.
 169 Passo Compartilhado
-170 Andamento mais lento (incluindo seu aumento pela Harmonia) e uma janela de acerto ainda maior, ao custo de parte do poder musical.
+170 Andamento mais lento (incluindo seu aumento pelo combo) e uma janela de acerto ainda maior, ao custo de parte do poder musical.
 171 Tempo Largo
 172 Um toque extra por frase não quebra a Harmonia, mas o andamento base é mais rápido.
 173 Tempo Presto
@@ -242,7 +242,7 @@
 241 Suas auras dão resistência a fogo aos seus aliados.
 242 Suas auras dão resistência a gelo aos seus aliados.
 243 Suas auras dão resistência a raio aos seus aliados.
-244 Um erro derruba só um terço do seu combo.
+244 Um erro tira metade do combo que tiraria normalmente.
 245 Suas auras têm um raio maior.
 246 +%s%% de poder musical
 247 Comum
@@ -258,3 +258,4 @@
 257 Nível %s de %s
 258 Coloque partituras nos espaços. Os espaços cinzas excedem os seus: só podem ser esvaziados.
 259 Estante de partitura: %s
+260 Andamento por ponto de combo

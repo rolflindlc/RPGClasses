@@ -4,11 +4,11 @@
 3 Kontrapunkt
 4 Einige Sekunden lang senken Fehler deine Kombo nicht, und jeder Treffer zählt doppelt.
 5 Crescendo
-6 Wenn du perfekt spielst (jede Note und keine zusätzlichen Eingaben), steigt jede Phrase eine Stufe: Deine Auren werden stärker und das Tempo zieht an. Ein Fehler oder eine zusätzliche Eingabe senkt um zwei Stufen.
+6 Wenn du perfekt spielst (jede Note und keine zusätzlichen Eingaben), steigt jeder Salvenzyklus eine Stufe und deine Auren werden stärker. Ein Fehler oder eine zusätzliche Eingabe senkt um zwei Stufen.
 7 Harmonie
 8 Nachdem du in kurzer Zeit drei verschiedene Zauber deines Instruments gewirkt hast, kostet der nächste kein Mana und verliert die Hälfte seiner Abklingzeit (mit einer Mindestzeit zwischen den Anwendungen).
 9 Rezital
-10 Mit einem Instrument in der Hand spielst du ein Rhythmus-Minispiel: Jede Note verlangt Linksklick, Rechtsklick, Shift oder Leertaste, und die Aktion geschieht wirklich. Nur die verlangte Spur nicht rechtzeitig zu drücken, ist ein Fehler (andere Spuren zu drücken wird nicht bestraft). Jeder Treffer erhöht deine Kombo und gibt musikalische Kraft; ein Fehler setzt sie zurück. Ein Linksklick im Takt verursacht zusätzlichen Schaden. Jeder musikalische Zauber braucht eine Mindestkombo zum Wirken.
+10 Mit einem Instrument in der Hand spielst du ein Rhythmus-Minispiel: Jede Note verlangt Linksklick, Rechtsklick, Shift oder Leertaste, und die Aktion geschieht wirklich. Nur die verlangte Spur nicht rechtzeitig zu drücken, ist ein Fehler (andere Spuren zu drücken wird nicht bestraft). Jeder Treffer erhöht deine Kombo, gibt musikalische Kraft und beschleunigt das Tempo; ein Fehler kostet dich die Hälfte deiner Kombo. Die Noten kommen in Salven mit Pausen dazwischen. Ein Linksklick im Takt verursacht zusätzlichen Schaden. Jeder musikalische Zauber braucht eine Mindestkombo zum Wirken.
 11 Rhythmus
 12 Bei Harmonie auf Stufe 3 oder höher verursachst du mehr Nahkampfschaden.
 13 Rhythmische Wut
@@ -18,7 +18,7 @@
 17 Takt
 18 Spielen bremst dich nicht mehr aus, und du rennst schneller, solange eines deiner Lieder spielt (zählt zur Tempogrenze).
 19 Tanz
-20 Ein größeres Trefferfenster, und mit mehr Punkten setzt ein Fehler deine Kombo nicht mehr zurück: Er senkt sie nur.
+20 Ein größeres Trefferfenster, und mit mehr Punkten kostet ein Fehler weniger Kombo (bis hinunter zu einem Viertel).
 21 Absolutes Gehör
 22 Erhöht den Radius deiner Auren.
 23 Resonanz
@@ -168,7 +168,7 @@
 167 Perfekter Marsch
 168 Verbündete in deiner Aura erhalten die Hälfte deines Tanz-Tempobonus; du erhältst etwas weniger.
 169 Geteilter Schritt
-170 Langsameres Tempo (einschließlich seines Anstiegs durch die Harmonie) und ein noch größeres Trefferfenster, auf Kosten von etwas musikalischer Kraft.
+170 Langsameres Tempo (einschließlich seines Anstiegs durch die Kombo) und ein noch größeres Trefferfenster, auf Kosten von etwas musikalischer Kraft.
 171 Tempo Largo
 172 Eine zusätzliche Eingabe pro Phrase bricht die Harmonie nicht, aber das Basistempo ist schneller.
 173 Tempo Presto
@@ -242,7 +242,7 @@
 241 Deine Auren verleihen deinen Verbündeten Feuerresistenz.
 242 Deine Auren verleihen deinen Verbündeten Eisresistenz.
 243 Deine Auren verleihen deinen Verbündeten Blitzresistenz.
-244 Ein Fehler senkt nur ein Drittel deiner Kombo.
+244 Ein Fehler kostet nur halb so viel Kombo.
 245 Deine Auren haben einen größeren Radius.
 246 +%s %% musikalische Kraft
 247 Gewöhnlich
@@ -258,3 +258,4 @@
 257 Stufe %s von %s
 258 Lege Notenblätter in die Plätze. Graue Plätze übersteigen deine Plätze: Sie können nur geleert werden.
 259 Notenständer: %s
+260 Tempo pro Kombopunkt

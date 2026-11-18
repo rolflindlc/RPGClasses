@@ -213,6 +213,7 @@
   "switch_cooldown_change": "s",
   "switch_cooldown_seconds": "s",
   "tempo_bonus": "%",
+  "tempo_per_combo": "%",
   "tempo_per_stage": "%",
   "thresholds_seconds": "s",
   "tnt_radius": "+%",

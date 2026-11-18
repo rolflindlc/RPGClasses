@@ -4,11 +4,11 @@
 3 Contrappunto
 4 Per qualche secondo gli errori non abbassano il combo e ogni colpo conta il doppio.
 5 Crescendo
-6 Se suoni alla perfezione (ogni nota e nessuna pressione extra), ogni frase sale di una fase: le tue aure si rafforzano e il tempo accelera. Un errore o una pressione extra fa scendere di due fasi.
+6 Se suoni alla perfezione (ogni nota e nessuna pressione extra), ogni ciclo di raffiche sale di una fase e le tue aure si rafforzano. Un errore o una pressione extra fa scendere di due fasi.
 7 Armonia
 8 Dopo aver lanciato tre incantesimi diversi dal tuo strumento in poco tempo, il successivo non costa mana e perde metà della ricarica (con un tempo minimo tra un uso e l'altro).
 9 Recital
-10 Con uno strumento in mano giochi a un minigioco di ritmo: ogni nota richiede clic sinistro, clic destro, Maiusc o Spazio, e l'azione avviene davvero. Sbaglia solo chi non preme in tempo la corsia richiesta (premere altre corsie non è penalizzato). Ogni colpo a segno aumenta il combo e dà potenza musicale; un errore lo azzera. Un clic sinistro a tempo infligge danno extra. Ogni incantesimo musicale richiede un combo minimo per essere lanciato.
+10 Con uno strumento in mano giochi a un minigioco di ritmo: ogni nota richiede clic sinistro, clic destro, Maiusc o Spazio, e l'azione avviene davvero. Sbaglia solo chi non preme in tempo la corsia richiesta (premere altre corsie non è penalizzato). Ogni colpo a segno aumenta il combo, dà potenza musicale e accelera il tempo; un errore ti toglie metà del combo. Le note arrivano a raffiche, con pause tra l'una e l'altra. Un clic sinistro a tempo infligge danno extra. Ogni incantesimo musicale richiede un combo minimo per essere lanciato.
 11 Ritmo
 12 Con Armonia alla fase 3 o superiore, infliggi più danno in mischia.
 13 Furia ritmica
@@ -18,7 +18,7 @@
 17 Battuta
 18 Suonare non ti rallenta più e corri più veloce mentre suona una delle tue canzoni (conta per il limite di velocità).
 19 Danza
-20 Una finestra di colpo più ampia e, con più punti, un errore non azzera più il combo: lo abbassa soltanto.
+20 Una finestra di colpo più ampia e, con più punti, un errore toglie meno combo (fino a un solo quarto).
 21 Orecchio assoluto
 22 Aumenta il raggio delle tue aure.
 23 Risonanza
@@ -168,7 +168,7 @@
 167 Marcia perfetta
 168 Gli alleati dentro la tua aura ricevono metà del bonus di velocità di Danza; tu ne ricevi un po' meno.
 169 Passo condiviso
-170 Tempo più lento (compreso il suo aumento con Armonia) e una finestra di colpo ancora più ampia, al costo di un po' di potenza musicale.
+170 Tempo più lento (compreso il suo aumento con il combo) e una finestra di colpo ancora più ampia, al costo di un po' di potenza musicale.
 171 Tempo largo
 172 Una pressione extra per frase non spezza Armonia, ma il tempo base è più veloce.
 173 Tempo presto
@@ -242,7 +242,7 @@
 241 Le tue aure danno ai tuoi alleati resistenza al fuoco.
 242 Le tue aure danno ai tuoi alleati resistenza al ghiaccio.
 243 Le tue aure danno ai tuoi alleati resistenza ai fulmini.
-244 Un errore abbassa solo un terzo del tuo combo.
+244 Un errore toglie metà del combo che toglierebbe normalmente.
 245 Le tue aure hanno un raggio maggiore.
 246 +%s%% di potenza musicale
 247 Comune
@@ -258,3 +258,4 @@
 257 Livello %s di %s
 258 Metti gli spartiti negli slot. Gli slot grigi superano i tuoi slot: si possono solo svuotare.
 259 Leggio: %s
+260 Tempo per punto di combo

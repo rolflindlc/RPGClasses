@@ -123,10 +123,7 @@ public final class ClientSetup {
     private static void registerBard(IEventBus modBus) {
         io.github.rpgclasses.bard.Bard.clientIsBard = player -> {
             if (player != Minecraft.getInstance().player) return false;
-            var s = ClientHandlers.LOCAL_DATA.state;
-            var c = DefinitionStore.CLIENT.classDef(s.classId);
-            return c != null && UnlockResolver.unlocked(s, c, DefinitionStore.CLIENT.subclassDef(s.subclassId))
-                    .contains(io.github.rpgclasses.bard.Bard.RHYTHM);
+            return io.github.rpgclasses.bard.Bard.CLASS.equals(ClientHandlers.LOCAL_DATA.state.classId);
         };
         io.github.rpgclasses.bard.Bard.clientExtraSlots = player -> {
             var m = player == Minecraft.getInstance().player ? localMechanic("rites_and_paths:" + io.github.rpgclasses.bard.Bard.EXTENDED_REPERTOIRE) : null;

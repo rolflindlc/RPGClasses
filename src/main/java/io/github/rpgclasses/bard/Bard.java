@@ -1,6 +1,8 @@
 package io.github.rpgclasses.bard;
 
 import com.google.gson.JsonObject;
+import io.github.rpgclasses.player.PlayerClassData;
+import io.github.rpgclasses.player.PlayerClassDataProvider;
 import io.github.rpgclasses.server.AbilityService;
 import io.github.rpgclasses.server.MechanicService;
 import net.minecraft.server.level.ServerPlayer;
@@ -55,8 +57,18 @@ public final class Bard {
 
     private Bard() {}
 
+    /** Id de la clase Bardo. */
+    public static final String CLASS = "rites_and_paths:bard";
+
+    /**
+     * ¿Es Bardo? Basta con tener la clase elegida: Ritmo se desbloquea con el primer punto, pero con 0 puntos ya se
+     * puede tocar (antes el instrumento decía «solo un Bardo» hasta gastar un punto).
+     */
     public static boolean isBard(Player player) {
-        if (player instanceof ServerPlayer sp) return AbilityService.has(sp, RHYTHM);
+        if (player instanceof ServerPlayer sp) {
+            PlayerClassData data = PlayerClassDataProvider.get(sp);
+            return data != null && CLASS.equals(data.state.classId);
+        }
         return player != null && player.level().isClientSide && clientIsBard.test(player);
     }
 

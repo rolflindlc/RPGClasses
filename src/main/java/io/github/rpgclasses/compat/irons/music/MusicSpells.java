@@ -414,7 +414,6 @@ final class MusicSpells {
         protected void info(int level, LivingEntity caster, List<MutableComponent> out) {
             out.add(Component.translatable("spell.rites_and_paths.info.damage", num(damage(level, caster))));
             out.add(Component.translatable("spell.rites_and_paths.info.radius", num(area(level))));
-            if (level >= info.maxLevel) out.add(Component.translatable("spell.rites_and_paths.info.second_piano"));
         }
 
         @Override
@@ -424,7 +423,6 @@ final class MusicSpells {
             float dmg = damage(level, p);
             int stun = (int) Math.round(info.duration * 20);
             GrandPianoEntity.drop(p, t, dmg, area(level), stun, 0);
-            if (level >= info.maxLevel) GrandPianoEntity.drop(p, t, dmg / 2, area(level), stun, 12);
             sound(p, SoundEvents.NOTE_BLOCK_HARP.value(), 1.2f, 0.7f);
         }
     }

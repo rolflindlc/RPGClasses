@@ -19,13 +19,17 @@
     "PlayerEnchantMixin",
     "PlayerPassengerMixin",
     "PlayerSizeMixin",
-    "WolfRideMixin"
+    "WolfRideMixin",
+    "irons.InscriptionBookSlotMixin",
+    "irons.InscriptionMenuMixin",
+    "irons.InscriptionScrollSlotMixin"
   ],
   "client": [
     "client.CameraZoomMixin",
     "client.ArmorLegsMixin",
     "client.LocalPlayerPushMixin",
-    "client.DanceModelMixin"
+    "client.DanceModelMixin",
+    "client.InscriptionScreenMixin"
   ],
   "injectors": {
     "defaultRequire": 1

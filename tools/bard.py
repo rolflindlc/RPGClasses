@@ -28,8 +28,8 @@ CLASS = dict(icon=R("lute"), roles=["apoyo", "híbrido"], kit="bard", crit=0.0,
                  ("compas", [mech("music_power", music_bonus={"to": .30})]),
                  # Resonancia: radio de las auras de 8 a 12 bloques.
                  ("resonance", [mech("aura_radius", extra_blocks={"to": 4})]),
-                 # Oído Absoluto: ventana de acierto +40 %; un fallo solo reduce el combo a la mitad (con 10 puntos).
-                 ("perfect_pitch", [mech("timing_window", window_bonus={"to": .40}, miss_keep={"to": .50})]),
+                 # Oído Absoluto: ventana de acierto +40 %; un fallo quita un cuarto del combo con 10 puntos (sin la rama, la mitad).
+                 ("perfect_pitch", [mech("timing_window", window_bonus={"to": .40}, miss_keep={"from": .525, "to": .75})]),
              ],
              milestones=[ms(1, "rhythm"), ms(5, "harmony"), ms(15, "counterpoint"), ms(30, "crescendo")],
              subs=["war_chanter", "enchanter", "minstrel"])
@@ -82,11 +82,11 @@ KIT = [{"item": R("lute"), "slot": "offhand"}, {"item": "minecraft:iron_sword", 
 ABILITIES = {
     # Ritmo (nivel 1): el minijuego y el combo. Poder musical por acierto según el Nivel Total (1 / 15 / 30).
     "rhythm": dict(passive=True, max_combo=30, power_per_hit=.01, power_per_hit_15=.02, power_per_hit_30=.03,
-                   beat_bonus=.15, base_bpm=100, max_bpm=180, window_ms=110, perfect_ms=50, phrase_beats=16, rest_beats=4,
-                   note_density=.6, music_power_cap=1.5, buff_power_scaling=.5, play_slow=-.10, aura_radius=8,
+                   beat_bonus=.15, base_bpm=100, max_bpm=180, tempo_per_combo=.015, miss_keep=.5, window_ms=110, perfect_ms=50,
+                   music_power_cap=1.5, buff_power_scaling=.5, play_slow=-.10, aura_radius=8,
                    idle_reset_seconds=3, aura_refresh_seconds=1.25),
     # Armonía (nivel 5): etapas por frase perfecta.
-    "harmony": dict(passive=True, max_stage=5, buff_per_stage=.06, tempo_per_stage=.10, stage_loss=2),
+    "harmony": dict(passive=True, max_stage=5, buff_per_stage=.06, stage_loss=2),
     # Contrapunto (nivel 15): al cruzar 10, 20 y 30 de combo, los conjuros en recarga pierden el 50 % de lo que les queda.
     "counterpoint": dict(passive=True, refund=.5),
     # Crescendo (nivel 30, activa).
@@ -109,7 +109,7 @@ BRANCH_NAMES = {"compas": "Compás", "resonance": "Resonancia", "perfect_pitch":
 BRANCH_DESC = {
     "compas": "Aumenta el poder de la escuela musical.",
     "resonance": "Aumenta el radio de tus auras.",
-    "perfect_pitch": "Ventana de acierto más amplia y, con más puntos, un fallo ya no pone el combo a cero: solo lo reduce.",
+    "perfect_pitch": "Ventana de acierto más amplia y, con más puntos, un fallo te quita menos combo (hasta solo un cuarto).",
     "reverberation": "Los efectos de tus auras siguen unos segundos después de salir de ellas o de que termine la canción.",
     "dance": "Tocar ya no te ralentiza, y corres más mientras suena una de tus canciones (cuenta para el tope de velocidad).",
 }
@@ -119,7 +119,7 @@ PERK_TEXT = {
     ("resonance", "far_echo"): ("Eco Lejano", "Tus auras llegan mucho más lejos, pero sus efectos son algo más débiles."),
     ("resonance", "inner_circle"): ("Círculo Íntimo", "Tus auras abarcan menos, pero sus efectos son bastante más fuertes."),
     ("perfect_pitch", "tempo_presto"): ("Tempo Presto", "Una pulsación de más por frase no rompe la Armonía, pero el tempo base es más rápido."),
-    ("perfect_pitch", "tempo_largo"): ("Tempo Largo", "Tempo más lento (también su subida por Armonía) y ventana de acierto aún mayor, a cambio de algo de poder musical."),
+    ("perfect_pitch", "tempo_largo"): ("Tempo Largo", "Tempo más lento (también su subida por combo) y ventana de acierto aún mayor, a cambio de algo de poder musical."),
     ("reverberation", "trail"): ("Estela", "Los efectos persisten más tiempo tras el aura, pero durante la persistencia son más débiles."),
     ("reverberation", "last_note"): ("Última Nota", "Al terminar un aura suelta una onda que empuja y hace un poco de daño sónico a los enemigos cercanos."),
     ("dance", "shared_step"): ("Paso Compartido", "Tus aliados dentro del aura reciben la mitad de tu bonus de velocidad de Danza; tú recibes algo menos."),
@@ -132,8 +132,8 @@ SUB_DESC = {
     "minstrel": "El más versátil: más ranuras de partitura en tus instrumentos, conjuros con menos combo mínimo y, desde el nivel 5, el Recital: tras tres conjuros distintos seguidos, el siguiente es gratis y se recarga antes.",
 }
 ABILITY_TEXT = {
-    "rhythm": ("Ritmo", "Con un instrumento en la mano juegas un minijuego de ritmo: cada nota pide clic izquierdo, clic derecho, Shift o espacio, y la acción se hace de verdad. Solo es fallo no pulsar a tiempo el carril que pide la nota (pulsar otros no penaliza). Cada acierto sube el combo y da poder musical; un fallo lo pone a cero. Un clic izquierdo a compás hace más daño. Cada conjuro musical pide un combo mínimo al lanzarlo."),
-    "harmony": ("Armonía", "Si tocas perfecto (todas las notas y ninguna pulsación de más), cada frase sube una etapa: tus auras son más fuertes y el tempo se acelera. Un fallo o una pulsación de más baja dos etapas."),
+    "rhythm": ("Ritmo", "Con un instrumento en la mano juegas un minijuego de ritmo: cada nota pide clic izquierdo, clic derecho, Shift o espacio, y la acción se hace de verdad. Solo es fallo no pulsar a tiempo el carril que pide la nota (pulsar otros no penaliza). Cada acierto sube el combo, da poder musical y acelera el tempo; un fallo te quita la mitad del combo. Las notas llegan en ráfagas con descansos entre ellas. Un clic izquierdo a compás hace más daño. Cada conjuro musical pide un combo mínimo al lanzarlo."),
+    "harmony": ("Armonía", "Si tocas perfecto (todas las notas y ninguna pulsación de más), cada ciclo de ráfagas sube una etapa y tus auras son más fuertes. Un fallo o una pulsación de más baja dos etapas."),
     "counterpoint": ("Contrapunto", "Cada vez que el combo cruza 10, 20 o 30, todos tus conjuros en recarga pierden la mitad de lo que les queda."),
     "crescendo": ("Crescendo", "Durante unos segundos el combo no baja con los fallos y cada acierto cuenta doble."),
     "rhythmic_fury": ("Furia Rítmica", "Con la Armonía en la etapa 3 o más, haces más daño cuerpo a cuerpo."),
@@ -160,7 +160,7 @@ PARAMS = {
     "extra_slots": "Ranuras de partitura extra", "combo_reduction": "Combo mínimo menos",
     "max_combo": "Combo máximo", "power_per_hit": "Poder musical por acierto (Nivel Total 1)|%",
     "power_per_hit_15": "Poder musical por acierto (Nivel Total 15)|%", "power_per_hit_30": "Poder musical por acierto (Nivel Total 30)|%",
-    "beat_bonus": "Daño del golpe a compás|%", "base_bpm": "Tempo base (pulsos por minuto)", "max_bpm": "Tempo máximo (pulsos por minuto)",
+    "beat_bonus": "Daño del golpe a compás|%", "base_bpm": "Tempo base (pulsos por minuto)", "max_bpm": "Tempo máximo (pulsos por minuto)", "tempo_per_combo": "Tempo por punto de combo|%",
     "window_ms": "Ventana de acierto (ms)", "perfect_ms": "Ventana de acierto perfecto (ms)", "phrase_beats": "Pulsos por frase",
     "rest_beats": "Descanso entre frases (pulsos)", "note_density": "Pulsos con nota|%", "music_power_cap": "Tope de poder musical|%",
     "buff_power_scaling": "Parte del poder musical que reciben buffs y debuffs|%", "play_slow": "Velocidad mientras tocas|%",
@@ -223,7 +223,7 @@ INSTRUMENT_NAMES = {
 PASSIVES = {
     "crystal_harp": "Cada 10 aciertos seguidos recuperas parte de tu maná.",
     "war_horn": "Tus auras tienen más radio.",
-    "spectral_violin": "Un fallo solo hace caer un tercio del combo.",
+    "spectral_violin": "Un fallo te quita la mitad de combo que de normal.",
     "scale_lyre_fire": "Tus auras dan resistencia al fuego a tus aliados.",
     "scale_lyre_ice": "Tus auras dan resistencia al hielo a tus aliados.",
     "scale_lyre_lightning": "Tus auras dan resistencia al rayo a tus aliados.",

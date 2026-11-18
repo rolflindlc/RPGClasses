@@ -20,9 +20,10 @@ import java.util.Set;
 
 /**
  * Baile Forzado en el cliente: el baile de sacudir los hombros (torso de lado a lado, brazos doblados y rebote
- * vertical). El rebote y el balanceo del cuerpo valen para cualquier criatura; los brazos, para los modelos humanoides
- * (mixin en {@code HumanoidModel.setupAnim}). Si el jugador local baila, no puede moverse, atacar ni usar objetos.
- * Las criaturas que Epic Fight dibuja con su propio animador solo se quedan quietas [verificar en el juego].
+ * vertical). El rebote y el balanceo del cuerpo se dibujan aquí solo para jugadores; los brazos, para los modelos
+ * humanoides (mixin en {@code HumanoidModel.setupAnim}). Las demás criaturas bailan en el servidor
+ * ({@code BardCombat.danceStep}: saltito y giro del torso reales). Si el jugador local baila, no puede moverse, atacar
+ * ni usar objetos.
  */
 public final class DanceFx {
     /** Entidad → tick de juego (cliente) en que deja de bailar. */
@@ -67,10 +68,13 @@ public final class DanceFx {
         return (e.tickCount + partial) * 0.55f;
     }
 
-    /** Rebote y balanceo del cuerpo entero. */
+    /**
+     * Rebote y balanceo del cuerpo entero, solo para jugadores: las criaturas bailan en el servidor (salto y giro del
+     * torso reales), así se ven también con Epic Fight, que se salta este evento.
+     */
     public static void onRenderPre(RenderLivingEvent.Pre<?, ?> event) {
         LivingEntity e = event.getEntity();
-        if (!dancing(e)) return;
+        if (!(e instanceof net.minecraft.world.entity.player.Player) || !dancing(e)) return;
         float t = time(e, event.getPartialTick());
         PoseStack pose = event.getPoseStack();
         pose.pushPose();

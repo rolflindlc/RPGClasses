@@ -34,6 +34,13 @@ public final class ModBlocks {
             () -> new io.github.rpgclasses.content.CreativeAmuletItem(new Item.Properties()));
 
     public static void onCreativeTab(BuildCreativeModeTabContentsEvent event) {
+        // Las partituras del Bardo, junto a los pergaminos de Iron's.
+        if (event.getTabKey().location().equals(new net.minecraft.resources.ResourceLocation("irons_spellbooks", "spellbook_scrolls"))) {
+            for (io.github.rpgclasses.bard.MusicSpellInfo s : io.github.rpgclasses.bard.MusicSpellInfo.values()) {
+                event.accept(io.github.rpgclasses.bard.Sheets.sheet(s, 1));
+                event.accept(io.github.rpgclasses.bard.Sheets.sheet(s, s.maxLevel));
+            }
+        }
         if (event.getTabKey() == CreativeModeTabs.FUNCTIONAL_BLOCKS) event.accept(RACE_ALTAR_ITEM);
         if (event.getTabKey() == CreativeModeTabs.TOOLS_AND_UTILITIES) {
             event.accept(BOND_BOOK);

@@ -1,7 +1,7 @@
 # Bardo: estado de implementación
 
-Implementación de la *Adenda al Documento de Diseño v2: Bardo* (rev. 0.1, en el proyecto). **Estado (17-11-2026):
-programado; compila y pasa las pruebas en GitHub Actions. Sin probar en el juego.** Las propuestas sin confirmar de la
+Implementación de la *Adenda al Documento de Diseño v2: Bardo* (rev. 0.1, en el proyecto). **Estado (18-11-2026):
+programado; los cambios del 18-11 (combo, tempo, ráfagas, piano y baile) sin compilar en CI todavía. Sin probar en el juego.** Las propuestas sin confirmar de la
 adenda se han programado tal cual y están en datos (`tools/bard.py`), así que se cambian sin tocar código.
 
 **Convenciones:** **(propuesta)** = decisión de Claude al programar, pendiente de confirmar. **[MEDIR]** = calibrar en el
@@ -30,13 +30,19 @@ Red: protocolo 16 (paquetes `BardNote`, `BardSync` y `DanceSync`).
 * El **cliente juzga** las notas (la latencia no permite hacerlo en el servidor) y manda cada resultado; el servidor lleva
   el combo, lo limita (como mucho 10 aciertos por segundo) y lo devuelve. Los carriles son las teclas de vanilla
   (atacar, usar, agacharse, saltar), así que se configuran en Controles.
-* **Frases:** 16 pulsos con nota en el ~60 % (el primero siempre), descanso de 4 pulsos. Tempo base 100 ppm, tope 180
-  (propuesta, [MEDIR]). Ventana de acierto ±110 ms (perfecto ±50 ms), nunca más del 45 % del pulso.
+* **Ráfagas (18-11):** las notas salen una por pulso en ráfagas de 3-4 notas, descanso de 1 s, 3-6 notas, descanso de
+  1 s, 6-10 notas y descanso de 1,5 a 4 s, y vuelta a empezar. Esas tres ráfagas son un ciclo y cuentan como una *frase*
+  para la Armonía. El patrón es la constante `BURST_NOTES` / `BURST_REST_MS` de `RhythmGame.java` ([MEDIR]).
+* **Tempo (18-11):** base 100 ppm, **+1,5 % por punto de combo** (`tempo_per_combo`), tope 180 ppm. La Armonía ya no
+  acelera: solo sube la potencia de las auras. Tempo Largo recorta la subida por combo. Ventana de acierto ±110 ms
+  (perfecto ±50 ms), nunca más del 45 % del pulso.
+* **Fallos (18-11):** un fallo quita la **mitad** del combo (`miss_keep` 0,5 de Ritmo). Oído Absoluto sube lo que
+  conservas de 52,5 % (1 punto) a **75 %** (10 puntos): pierdes un cuarto. El Violín Espectral reduce a la mitad lo que pierdes (un 50 % menos de pérdida).
 * **Reparto de carriles (propuesta):** clic izquierdo 40 %, Shift 22 %, espacio 23 %, clic derecho 15 %. El clic derecho
   no se repite antes de 1,5 s (lanza conjuros) y el espacio no se pide dos pulsos seguidos.
 * **Guía:** cada nota viene hacia la mira desde el lado de su carril (izquierda, clic izquierdo; derecha, clic derecho;
   arriba, espacio; abajo, Shift). Debajo de la mira, el combo, las etapas de Armonía y Crescendo. Metrónomo suave.
-* **Pulsaciones de más** en el descanso entre frases no cuentan para la Armonía (propuesta).
+* **Pulsaciones de más** en los descansos entre ráfagas no cuentan para la Armonía (propuesta).
 * **Guardar el instrumento** más de 3 s pone el combo y la Armonía a 0 (propuesta). Morir también.
 * Con un menú abierto, el juego en pausa o bailando, el minijuego se detiene sin contar fallos.
 
@@ -69,10 +75,12 @@ Red: protocolo 16 (paquetes `BardNote`, `BardSync` y `DanceSync`).
 ### Conjuros
 * Piano de Cola y Baile Forzado necesitan un enemigo a la vista (24 bloques, con ayuda de puntería de 6°); sin él no se
   lanzan ni gastan maná. Baile Forzado no apunta a jefes.
-* Piano: sombra de 1,8 s (los últimos 0,8 s, fija) y caída de 0,3 s desde 9 bloques. El segundo piano cae 0,6 s después.
+* Piano: sombra de 1,8 s (los últimos 0,8 s, fija) y caída de 0,3 s desde 9 bloques. Cae un solo piano (18-11: se quitó el segundo del nivel máximo) con un solo ruido, el del golpe.
 * Disonancia: el silencio bloquea conjuros de Iron's a los jugadores; a los mobs solo les afecta el aturdimiento.
 * Baile Forzado: el bailarín no hace daño de ninguna forma, se queda quieto y, si es jugador, no puede moverse, atacar,
-  usar objetos ni lanzar conjuros.
+  usar objetos ni lanzar conjuros. **(18-11)** Las criaturas bailan en el servidor (`BardCombat.danceStep`): sin objetivo,
+  saltito a cada pulso (11 ticks), torso girando ±35° y una nota musical por pulso; así se ve también con Epic Fight. En
+  los jugadores, rebote y brazos siguen siendo del cliente (`DanceFx`).
 
 ### Instrumentos (propuestas)
 * Bonus secundarios de Épicos y Legendarios: los del instrumento del que salen, multiplicados por su rareza
@@ -97,13 +105,29 @@ Red: protocolo 16 (paquetes `BardNote`, `BardSync` y `DanceSync`).
   resonantes los de combo 20 y 30). **Subir de nivel:** partitura + una tinta de Iron's cuya rareza depende del nivel de
   destino (10 niveles: 2 común, 3-4 poco común, 5-6 rara, 7-8 épica, 9-10 legendaria).
 
+### Cambios del 18-11 que sustituyen a la adenda (rev. 0.1)
+* Ritmo: un fallo ya no pone el combo a 0, quita la mitad. Oído Absoluto: de «a la mitad» pasa a «un cuarto».
+* Armonía: ya no da +10 % de tempo por etapa (era hasta +50 %); el tempo sube con el combo. Sigue dando +6 % a los buffs.
+* Frases: ya no son 16 pulsos con densidad del 60 %; son ciclos de tres ráfagas (ver Minijuego).
+* Piano de Cola: el nivel máximo ya no deja caer un segundo piano con la mitad de daño.
+* Baile Forzado: las criaturas bailan de verdad en el servidor (antes solo se quedaban quietas con Epic Fight).
+
 ## 3. Pendiente
 
 1. **Probar en el juego** todo; las texturas son provisionales.
 2. **[verificar]** con Epic Fight: el clic derecho del modo batalla (guardia) frente al instrumento en la mano
-   secundaria; las criaturas que dibuja Epic Fight bailan quietas (sin brazos ni rebote); el moveset de espadón de la
+   secundaria; el baile servidor (salto y giro) de las criaturas que dibuja Epic Fight; el moveset de espadón de la
    guitarra-hacha.
-3. **[MEDIR]** tempo, ventanas, densidad de notas, poder musical total, la mitad de poder en buffs, daño del Cantor de
+3. **[MEDIR]** tempo (1,5 % por combo), patrón de ráfagas, ventanas, poder musical total, la mitad de poder en buffs, daño del Cantor de
    Guerra con combo 30, Última Nota y la tabla de balance.
 4. **[LEER]** ids de Barako/Umvuthi, el Leviatán y la Monstruosidad de Netherita en el pack.
 5. Integrar la adenda en el documento v2 (regla 14 y tabla de muros).
+
+## 18-11 (2): mesa de inscripción, pestaña y clase
+- `isBard` se decide por la clase del jugador (no por nivel): ya no dice «no eres Bardo» a nivel 1.
+- Mesa de inscripción de Iron's: el instrumento va en la ranura del libro y una partitura en la del pergamino; el botón
+  la guarda en el primer hueco libre (misma regla que el atril: sin repetir conjuro, nivel limitado por el instrumento,
+  capacidad del jugador). Mixins: `mixin/irons/Inscription*Mixin` (servidor) y `mixin/client/InscriptionScreenMixin`
+  (cliente), con `remap=false` y `require=0` (nombres SRG de Iron's 3.16.3). Lógica en `bard/InscriptionTable.java`.
+- Las partituras (nivel 1 y máximo) salen también en la pestaña «Iron's Spellbooks Scrolls» (`irons_spellbooks:spellbook_scrolls`).
+- Sin compilar ni probar en juego: lo compilará GitHub Actions.

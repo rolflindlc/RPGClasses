@@ -4,11 +4,11 @@
 3 Contrepoint
 4 Pendant quelques secondes, les ratés n'abaissent pas votre combo et chaque coup compte double.
 5 Crescendo
-6 Si vous jouez parfaitement (chaque note et aucune pression en trop), chaque phrase monte d'un palier : vos auras se renforcent et le tempo s'accélère. Un raté ou une pression en trop fait perdre deux paliers.
+6 Si vous jouez parfaitement (chaque note et aucune pression en trop), chaque cycle de rafales monte d'un palier et vos auras se renforcent. Un raté ou une pression en trop fait perdre deux paliers.
 7 Harmonie
 8 Après avoir lancé trois sorts différents de votre instrument en peu de temps, le suivant ne coûte pas de mana et perd la moitié de sa recharge (avec un délai minimal entre les utilisations).
 9 Récital
-10 Avec un instrument en main, vous jouez à un mini-jeu de rythme : chaque note demande clic gauche, clic droit, Maj ou Espace, et l'action a vraiment lieu. Seul le fait de ne pas appuyer à temps sur la voie demandée est un raté (appuyer sur d'autres voies n'est pas puni). Chaque coup augmente votre combo et donne de la puissance musicale ; un raté la remet à zéro. Un clic gauche sur le temps inflige des dégâts supplémentaires. Chaque sort musical nécessite un combo minimal pour être lancé.
+10 Avec un instrument en main, vous jouez à un mini-jeu de rythme : chaque note demande clic gauche, clic droit, Maj ou Espace, et l'action a vraiment lieu. Seul le fait de ne pas appuyer à temps sur la voie demandée est un raté (appuyer sur d'autres voies n'est pas puni). Chaque coup augmente votre combo, donne de la puissance musicale et accélère le tempo ; un raté vous fait perdre la moitié du combo. Les notes arrivent par rafales, avec des pauses entre elles. Un clic gauche sur le temps inflige des dégâts supplémentaires. Chaque sort musical nécessite un combo minimal pour être lancé.
 11 Rythme
 12 Avec l'Harmonie au palier 3 ou plus, vous infligez plus de dégâts de mêlée.
 13 Fureur rythmique
@@ -18,7 +18,7 @@
 17 Mesure
 18 Jouer ne vous ralentit plus, et vous courez plus vite tant que l'un de vos morceaux joue (compte dans le plafond de vitesse).
 19 Danse
-20 Une fenêtre de frappe plus large et, avec plus de points, un raté ne remet plus votre combo à zéro : il ne fait que le baisser.
+20 Une fenêtre de frappe plus large et, avec plus de points, un raté fait perdre moins de combo (jusqu'à un quart seulement).
 21 Oreille absolue
 22 Augmente le rayon de vos auras.
 23 Résonance
@@ -168,7 +168,7 @@
 167 Marche parfaite
 168 Les alliés dans votre aura reçoivent la moitié du bonus de vitesse de votre Danse ; vous en recevez un peu moins.
 169 Pas partagé
-170 Tempo plus lent (y compris son augmentation par l'Harmonie) et fenêtre de frappe encore plus large, au prix d'un peu de puissance musicale.
+170 Tempo plus lent (y compris son augmentation avec le combo) et fenêtre de frappe encore plus large, au prix d'un peu de puissance musicale.
 171 Tempo Largo
 172 Une pression en trop par phrase ne brise pas l'Harmonie, mais le tempo de base est plus rapide.
 173 Tempo Presto
@@ -242,7 +242,7 @@
 241 Vos auras donnent à vos alliés une résistance au feu.
 242 Vos auras donnent à vos alliés une résistance à la glace.
 243 Vos auras donnent à vos alliés une résistance à la foudre.
-244 Un raté ne fait perdre qu'un tiers de votre combo.
+244 Un raté fait perdre deux fois moins de combo.
 245 Vos auras ont un rayon plus grand.
 246 +%s %% de puissance musicale
 247 Commun
@@ -258,3 +258,4 @@
 257 Niveau %s sur %s
 258 Placez des partitions dans les emplacements. Les emplacements gris dépassent les vôtres : ils ne peuvent qu'être vidés.
 259 Pupitre : %s
+260 Tempo par point de combo

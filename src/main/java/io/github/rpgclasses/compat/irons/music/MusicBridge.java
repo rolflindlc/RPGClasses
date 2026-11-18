@@ -85,8 +85,14 @@ public final class MusicBridge implements BardMagic {
 
     /** Lanzamiento en curso desde el instrumento (el único permitido para los conjuros musicales). */
     private static final ThreadLocal<Boolean> FROM_INSTRUMENT = ThreadLocal.withInitial(() -> false);
-    /** El conjuro del lanzamiento en curso llegó a lanzarse (no lo frenó el combo, el maná ni la recarga). */
-    private static final ThreadLocal<Boolean> CAST_FIRED = ThreadLocal.withInitial(() -> false);
+    /**
+     * Lanzamiento iniciado desde el instrumento que aún no se ha completado. Iron's no lanza el conjuro dentro de
+     * {@code attemptInitiateCast}: lo deja iniciado y lo completa en un tick posterior (evento {@code SpellOnCastEvent}),
+     * así que la rotación de la selección se hace entonces y no justo después de iniciarlo.
+     */
+    private record Pending(String spellId, SpellSelectionManager.SelectionOption option, long tick) {}
+
+    private static final Map<UUID, Pending> PENDING = new HashMap<>();
     private static final Map<UUID, Long> FREE_CAST = new HashMap<>();
 
     private static final class Recital {
@@ -139,14 +145,15 @@ public final class MusicBridge implements BardMagic {
         }
         SpellData data = chosen.spellData;
         FROM_INSTRUMENT.set(true);
-        CAST_FIRED.set(false);
+        boolean started = false;
         try {
-            data.getSpell().attemptInitiateCast(instrument, data.getLevel(), player.level(), player, CastSource.SPELLBOOK, true, slot);
+            started = data.getSpell().attemptInitiateCast(instrument, data.getLevel(), player.level(), player, CastSource.SPELLBOOK, true, slot);
         } finally {
             FROM_INSTRUMENT.set(false);
         }
-        // Tras lanzar, la selección pasa al siguiente conjuro que se pueda tocar.
-        if (CAST_FIRED.get()) MusicRotation.rotate(player, true, chosen);
+        // Cuando Iron's complete el lanzamiento (onCast), la selección pasa al siguiente conjuro que se pueda tocar.
+        if (started) PENDING.put(player.getUUID(), new Pending(data.getSpell().getSpellId(), chosen, player.level().getGameTime()));
+        else PENDING.remove(player.getUUID());
     }
 
     @Override
@@ -255,7 +262,11 @@ public final class MusicBridge implements BardMagic {
     @SubscribeEvent
     public void onCast(SpellOnCastEvent event) {
         if (!(event.getEntity() instanceof ServerPlayer player) || !isMusic(event.getSpellId())) return;
-        if (FROM_INSTRUMENT.get()) CAST_FIRED.set(true);
+        // Rotación: el conjuro tocado desde el instrumento ya está lanzado; la selección avanza al siguiente que se pueda tocar.
+        Pending pending = PENDING.remove(player.getUUID());
+        if (pending != null && pending.spellId().equals(event.getSpellId()) && player.level().getGameTime() - pending.tick() <= 40) {
+            MusicRotation.rotate(player, true, pending.option());
+        }
         if (!AbilityService.has(player, Bard.RECITAL)) return;
         var params = AbilityService.params(Bard.RECITAL);
         Recital r = RECITALS.computeIfAbsent(player.getUUID(), k -> new Recital());
@@ -302,6 +313,7 @@ public final class MusicBridge implements BardMagic {
     @SubscribeEvent
     public void onLogout(PlayerEvent.PlayerLoggedOutEvent event) {
         RECITALS.remove(event.getEntity().getUUID());
+        PENDING.remove(event.getEntity().getUUID());
         FREE_CAST.remove(event.getEntity().getUUID());
         MusicSpells.forget(event.getEntity().getUUID());
     }

@@ -30,13 +30,13 @@ Red: protocolo 16 (paquetes `BardNote`, `BardSync` y `DanceSync`).
 * El **cliente juzga** las notas (la latencia no permite hacerlo en el servidor) y manda cada resultado; el servidor lleva
   el combo, lo limita (como mucho 10 aciertos por segundo) y lo devuelve. Los carriles son las teclas de vanilla
   (atacar, usar, agacharse, saltar), así que se configuran en Controles.
-* **Ráfagas (18-11):** las notas salen una por pulso en ráfagas de 3-4 notas, descanso de 1 s, 3-6 notas, descanso de
-  1 s, 6-10 notas y descanso de 1,5 a 4 s, y vuelta a empezar. Esas tres ráfagas son un ciclo y cuentan como una *frase*
+* **Ráfagas (18-11):** las notas salen una por pulso en ráfagas de 3-4 notas, descanso de 1,5 s, 3-5 notas, descanso de
+  1,5 s, 4-7 notas y descanso de 2 a 4 s, y vuelta a empezar (19-11: más cortas y con más descanso que el 18-11). Esas tres ráfagas son un ciclo y cuentan como una *frase*
   para la Armonía. El patrón es la constante `BURST_NOTES` / `BURST_REST_MS` de `RhythmGame.java` ([MEDIR]).
-* **Tempo (18-11):** base 100 ppm, **+1,5 % por punto de combo** (`tempo_per_combo`), tope 180 ppm. La Armonía ya no
-  acelera: solo sube la potencia de las auras. Tempo Largo recorta la subida por combo. Ventana de acierto ±110 ms
-  (perfecto ±50 ms), nunca más del 45 % del pulso.
-* **Fallos (18-11):** un fallo quita la **mitad** del combo (`miss_keep` 0,5 de Ritmo). Oído Absoluto sube lo que
+* **Tempo (19-11):** base 90 ppm, **+1 % por punto de combo** (`tempo_per_combo`), tope 140 ppm; las notas se ven venir al menos 1,1 s antes. La Armonía ya no
+  acelera: solo sube la potencia de las auras. Tempo Largo recorta la subida por combo. Ventana de acierto ±140 ms
+  (perfecto ±70 ms), nunca más del 45 % del pulso.
+* **Fallos (18-11):** un fallo quita la **mitad** del combo; **(19-11)** los fallos que vienen en los 2 s siguientes (`miss_grace_seconds`) no vuelven a quitarlo ni a bajar la Armonía, para que una ráfaga fallada entera no deje el combo en cero (`miss_keep` 0,5 de Ritmo). Oído Absoluto sube lo que
   conservas de 52,5 % (1 punto) a **75 %** (10 puntos): pierdes un cuarto. El Violín Espectral reduce a la mitad lo que pierdes (un 50 % menos de pérdida).
 * **Reparto de carriles (propuesta):** clic izquierdo 40 %, Shift 22 %, espacio 23 %, clic derecho 15 %. El clic derecho
   no se repite antes de 1,5 s (lanza conjuros) y el espacio no se pide dos pulsos seguidos.
@@ -158,7 +158,7 @@ bloque de amatista, arena de almas, fragmento de prismarina, caparazón de nauti
 * Tras cada lanzamiento, el conjuro elegido pasa al **siguiente del instrumento que se pueda tocar**: sin recarga y con
   el combo mínimo cubierto. Si el elegido deja de poder tocarse (entra en recarga o el combo baja de su mínimo), pasa
   solo al siguiente que pueda; se comprueba cada 5 ticks (`BardState.onServerTick` → `BardMagic.rotateSpell`).
-* La selección se mueve en el servidor (datos sincronizados de Iron's, por reflexión: `MusicRotation`). La rueda sigue
+* La selección se mueve en el servidor (datos sincronizados de Iron's, por reflexión: `MusicRotation`). **(19-11)** Iron's no lanza el conjuro dentro de `attemptInitiateCast`, lo completa un tick después: la rotación se hace al recibir `SpellOnCastEvent` (antes se miraba justo tras iniciar el lanzamiento y nunca avanzaba). La rueda sigue
   pudiendo usarse a mano, pero si se elige uno que no se puede tocar, se corrige solo.
 * Si ninguno se puede tocar, la selección se queda donde está.
 

@@ -25,7 +25,7 @@ final class MusicRotation {
 
     private static Method getCooldowns, isOnCooldown, getSynced, getSelection, makeSelection, setSelection, doSync;
     private static Constructor<?> selectionCtor;
-    private static boolean resolved, failed;
+    private static boolean resolved, failed, selectWarned;
 
     private static boolean resolve() {
         if (resolved) return !failed;
@@ -101,7 +101,10 @@ final class MusicRotation {
             setSelection.invoke(synced, selection);
             doSync.invoke(synced);
         } catch (ReflectiveOperationException | RuntimeException e) {
-            io.github.rpgclasses.RpgClasses.LOGGER.debug("[rites_and_paths] No se pudo mover la selección de conjuro: {}", e.toString());
+            if (!selectWarned) {
+                selectWarned = true;
+                io.github.rpgclasses.RpgClasses.LOGGER.warn("[rites_and_paths] No se pudo mover la selección de conjuro del Bardo: {}", e.toString());
+            }
         }
     }
 }

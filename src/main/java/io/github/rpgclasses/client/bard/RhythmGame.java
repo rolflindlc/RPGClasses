@@ -43,7 +43,7 @@ import java.util.List;
  */
 public final class RhythmGame {
     private static final int[] LANE_COLOR = {0xFFE0533D, 0xFF4E8FE8, 0xFFF2C94C, 0xFF6FD07A};
-    private static final int LANE_DIST = 14, TRAVEL = 46;
+    private static final int LANE_DIST = 16, TRAVEL = 56;
 
     private static final class Note {
         final long time;
@@ -81,10 +81,15 @@ public final class RhythmGame {
     private static long lastAttackNote, lastUseNote, lastJumpNote;
 
     /** Patrón de un ciclo: notas seguidas [mín, máx] de cada ráfaga y descanso [mín, máx] (ms) hasta la siguiente. */
-    private static final int[][] BURST_NOTES = {{3, 4}, {3, 6}, {6, 10}};
-    private static final int[][] BURST_REST_MS = {{1000, 1000}, {1000, 1000}, {1500, 4000}};
+    private static final int[][] BURST_NOTES = {{3, 4}, {3, 5}, {4, 7}};
+    private static final int[][] BURST_REST_MS = {{1500, 1500}, {1500, 1500}, {2000, 4000}};
 
     private RhythmGame() {}
+
+    /** Cuánto antes se ve venir una nota (ms): dos pulsos, pero nunca menos de 1,1 s aunque el tempo sea alto. */
+    private static double lead() {
+        return Math.max(beatMs * 2, 1100);
+    }
 
     // ------------------------------------------------------------------ servidor
 
@@ -168,7 +173,7 @@ public final class RhythmGame {
             NOTES.clear();
             BURSTS.clear();
             beatMs = 60000.0 / bpm();
-            nextBurst = now + (long) (beatMs * 2); // cuenta de entrada
+            nextBurst = now + (long) lead(); // cuenta de entrada
             closeAt = 0;
             burstIndex = 0;
             lastAttackNote = lastUseNote = lastJumpNote = Long.MIN_VALUE / 2;
@@ -189,7 +194,7 @@ public final class RhythmGame {
             closeAt = 0;
         }
         BURSTS.removeIf(b -> now > b.end() + 2000);
-        if (now >= nextBurst - beatMs * 2) newBurst(Math.max(now + (long) beatMs, nextBurst), player);
+        if (now >= nextBurst - lead()) newBurst(Math.max(now + (long) beatMs, nextBurst), player);
         NOTES.removeIf(n -> n.judged && now > n.time + 1000);
         FLASHES.removeIf(f -> f.until() < now);
     }
@@ -207,7 +212,7 @@ public final class RhythmGame {
             int lane = pickLane();
             if (lane == Bard.LANE_ATTACK && t - lastAttackNote < attackPeriod * 0.95) lane = Bard.LANE_SNEAK;
             if (lane == Bard.LANE_USE && t - lastUseNote < Math.max(1500, beatMs * 4)) lane = Bard.LANE_SNEAK;
-            if (lane == Bard.LANE_JUMP && t - lastJumpNote < beatMs * 2) lane = Bard.LANE_SNEAK;
+            if (lane == Bard.LANE_JUMP && t - lastJumpNote < beatMs * 3) lane = Bard.LANE_SNEAK;
             switch (lane) {
                 case Bard.LANE_ATTACK -> lastAttackNote = t;
                 case Bard.LANE_USE -> lastUseNote = t;
@@ -227,8 +232,8 @@ public final class RhythmGame {
 
     private static int pickLane() {
         double r = RNG.nextDouble();
-        if (r < 0.40) return Bard.LANE_ATTACK;
-        if (r < 0.62) return Bard.LANE_SNEAK;
+        if (r < 0.45) return Bard.LANE_ATTACK;
+        if (r < 0.67) return Bard.LANE_SNEAK;
         if (r < 0.85) return Bard.LANE_JUMP;
         return Bard.LANE_USE;
     }
@@ -303,7 +308,7 @@ public final class RhythmGame {
         if (mc.options.hideGui) return;
         long now = Util.getMillis();
         int cx = width / 2, cy = height / 2;
-        double lead = beatMs * 2;
+        double lead = lead();
 
         // Metrónomo suave en cada pulso de una ráfaga.
         for (Burst b : BURSTS) {
@@ -321,7 +326,7 @@ public final class RhythmGame {
             int[] t = target(cx, cy, lane, 0);
             int color = LANE_COLOR[lane] & 0x80FFFFFF;
             for (Flash f : FLASHES) if (f.lane() == lane) color = f.color();
-            frame(g, t[0] - 4, t[1] - 4, t[0] + 4, t[1] + 4, color);
+            frame(g, t[0] - 5, t[1] - 5, t[0] + 5, t[1] + 5, color);
         }
         // Notas que se acercan.
         for (Note n : NOTES) {
@@ -370,8 +375,8 @@ public final class RhythmGame {
     }
 
     private static void diamond(GuiGraphics g, int x, int y, int color) {
-        for (int i = -3; i <= 3; i++) {
-            int half = 3 - Math.abs(i);
+        for (int i = -4; i <= 4; i++) {
+            int half = 4 - Math.abs(i);
             g.fill(x - half, y + i, x + half + 1, y + i + 1, color);
         }
     }

@@ -82,7 +82,7 @@ KIT = [{"item": R("lute"), "slot": "offhand"}, {"item": "minecraft:iron_sword", 
 ABILITIES = {
     # Ritmo (nivel 1): el minijuego y el combo. Poder musical por acierto según el Nivel Total (1 / 15 / 30).
     "rhythm": dict(passive=True, max_combo=30, power_per_hit=.01, power_per_hit_15=.02, power_per_hit_30=.03,
-                   beat_bonus=.15, base_bpm=100, max_bpm=180, tempo_per_combo=.015, miss_keep=.5, window_ms=110, perfect_ms=50,
+                   beat_bonus=.15, base_bpm=90, max_bpm=140, tempo_per_combo=.01, miss_keep=.5, miss_grace_seconds=2, window_ms=140, perfect_ms=70,
                    music_power_cap=1.5, buff_power_scaling=.5, play_slow=-.10, aura_radius=8,
                    idle_reset_seconds=3, aura_refresh_seconds=1.25),
     # Armonía (nivel 5): etapas por frase perfecta.

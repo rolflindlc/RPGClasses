@@ -60,6 +60,8 @@ public final class BardState {
     private static final class S {
         int combo, stage, consecutive, phraseMisses, phraseExtras, attackHits;
         long crescendoUntil, onBeatUntil, lastHolding, lastSecond, sunLuteReady;
+        /** Cuándo (tick) se perdió combo por última vez; los fallos de la misma racha no vuelven a quitarlo. */
+        long lastLoss = Long.MIN_VALUE / 2;
         int hitsThisSecond;
         boolean resonantPending, dirty = true;
         double groupBonus;
@@ -203,6 +205,11 @@ public final class BardState {
         long now = p.level().getGameTime();
         s.consecutive = 0;
         s.phraseMisses++;
+        // Racha de fallos: una ráfaga fallada entera cuenta como un solo fallo para el combo y la Armonía; si no,
+        // cuatro notas seguidas sin pulsar dejaban el combo en la dieciseisava parte.
+        long grace = AbilityService.ticks(Bard.params(Bard.RHYTHM), "miss_grace_seconds", 2);
+        if (now - s.lastLoss < grace) return;
+        s.lastLoss = now;
         if (s.crescendoUntil <= now) {
             // Un fallo quita la mitad del combo; Oído Absoluto (por puntos de rama) lo deja en un cuarto con 10 puntos.
             double keep = Math.max(Bard.number(Bard.RHYTHM, "miss_keep", 0.5), Bard.mech(p, Bard.TIMING_WINDOW, "miss_keep", 0));

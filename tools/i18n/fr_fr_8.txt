@@ -230,31 +230,31 @@
 229 +%s %% de vitesse d'incantation
 230 −%s %% de recharge des sorts
 231 Instrument %s (Barde uniquement) :
-232 Clic droit : lance le sort sélectionné dans la roue d'Iron's. Maj + clic droit (hors combat, en main principale) : pupitre.
+232 Clic droit : lance le sort sélectionné dans la roue d'Iron's. Maj + clic droit (hors combat, en main principale) : pupitre. On peut aussi ajouter des partitions à la table d'inscription d'Iron's.
 233 +%s %% de régénération de mana
 234 +%s de mana max.
 235 Passif : %s
-236 Rayon d'aura plus grand et dégâts doublés sur la Dernière note.
-237 Tous les 10 de combo, libère un grondement qui étourdit les ennemis proches.
-238 Tous les 10 coups d'affilée, vous récupérez une partie de votre mana.
-239 Les coups parfaits soignent vos alliés proches.
+236 Vos auras ont 25 % de rayon en plus, et Dernière note inflige le double de dégâts avec 25 % de rayon en plus.
+237 Tous les 10 coups réussis d'affilée, libère un grondement qui étourdit 1 s les ennemis à 4 blocs (sauf les boss).
+238 Tous les 10 coups réussis d'affilée, vous récupérez 5 % de votre mana maximal.
+239 Les coups parfaits soignent de 0,5 santé les alliés à 8 blocs et de 0,25 vous-même (au plus toutes les demi-secondes).
 240 Hache à deux mains dont on peut aussi jouer. Le Barde n'a pas le mur des Armes lourdes avec elle ; les autres classes l'utilisent comme une hache normale.
-241 Vos auras donnent à vos alliés une résistance au feu.
-242 Vos auras donnent à vos alliés une résistance à la glace.
-243 Vos auras donnent à vos alliés une résistance à la foudre.
-244 Un raté fait perdre deux fois moins de combo.
-245 Vos auras ont un rayon plus grand.
+241 Vos auras réduisent de 25 % les dégâts de feu pour vous et vos alliés.
+242 Vos auras réduisent de 25 % les dégâts de glace pour vous et vos alliés.
+243 Vos auras réduisent de 25 % les dégâts de foudre pour vous et vos alliés.
+244 Les ratés vous font perdre deux fois moins de combo que d'habitude.
+245 Vos auras ont 25 % de rayon en plus.
 246 +%s %% de puissance musicale
 247 Commun
 248 Épique
 249 Légendaire
 250 Rare
-251 Partitions : %s/%s · niveau max. de partition : %s %%
+251 Partitions : %s/%s · joue chaque partition jusqu'à %s %% de son niveau max.
 252  ♪ %s (niveau %s)
 253  ♪ %s (niveau %s, plafonné à %s)
 254 Combo minimal : %s
 255 Partition vierge
-256 Rangée dans un instrument (pupitre). Montez-la de niveau avec de l'encre sur un établi.
+256 Se range dans un instrument (pupitre ou table d'inscription d'Iron's). Monte de niveau avec de l'encre à l'établi.
 257 Niveau %s sur %s
 258 Placez des partitions dans les emplacements. Les emplacements gris dépassent les vôtres : ils ne peuvent qu'être vidés.
 259 Pupitre : %s

@@ -230,31 +230,31 @@
 229 +%s%% di velocità di lancio
 230 −%s%% di ricarica degli incantesimi
 231 Strumento %s (solo Bardo):
-232 Clic destro: lancia l'incantesimo selezionato nella ruota di Iron's. Maiusc + clic destro (fuori dal combattimento, nella mano principale): leggio.
+232 Clic destro: lancia l'incantesimo selezionato nella ruota di Iron's. Maiusc + clic destro (fuori dal combattimento, nella mano principale): leggio. Gli spartiti si possono inserire anche al tavolo d'iscrizione di Iron's.
 233 +%s%% di rigenerazione del mana
 234 +%s di mana massimo
 235 Passiva: %s
-236 Raggio dell'aura maggiore e danno doppio dell'Ultima nota.
-237 Ogni 10 di combo rilascia un boato che stordisce i nemici vicini.
-238 Ogni 10 colpi di fila recuperi parte del tuo mana.
-239 I colpi perfetti curano i tuoi alleati vicini.
+236 Le tue aure hanno il 25% di raggio in più, e l'Ultima nota infligge il doppio dei danni con il 25% di raggio in più.
+237 Ogni 10 colpi riusciti di fila rilascia un boato che stordisce per 1 s i nemici entro 4 blocchi (non i boss).
+238 Ogni 10 colpi riusciti di fila recuperi il 5% del tuo mana massimo.
+239 I colpi perfetti curano 0,5 di salute agli alleati entro 8 blocchi e 0,25 a te (al massimo ogni mezzo secondo).
 240 Ascia a due mani che si può anche suonare. Il Bardo con essa non ha il muro Armi pesanti; le altre classi la usano come una normale ascia.
-241 Le tue aure danno ai tuoi alleati resistenza al fuoco.
-242 Le tue aure danno ai tuoi alleati resistenza al ghiaccio.
-243 Le tue aure danno ai tuoi alleati resistenza ai fulmini.
-244 Un errore toglie metà del combo che toglierebbe normalmente.
-245 Le tue aure hanno un raggio maggiore.
+241 Le tue aure riducono del 25% i danni da fuoco per te e i tuoi alleati.
+242 Le tue aure riducono del 25% i danni da ghiaccio per te e i tuoi alleati.
+243 Le tue aure riducono del 25% i danni da fulmine per te e i tuoi alleati.
+244 Gli errori ti tolgono metà del combo rispetto al solito.
+245 Le tue aure hanno il 25% di raggio in più.
 246 +%s%% di potenza musicale
 247 Comune
 248 Epico
 249 Leggendario
 250 Raro
-251 Spartiti: %s/%s · livello massimo dello spartito: %s%%
+251 Spartiti: %s/%s · suona ogni spartito fino al %s%% del suo livello massimo
 252  ♪ %s (livello %s)
 253  ♪ %s (livello %s, limitato a %s)
 254 Combo minimo: %s
 255 Spartito vuoto
-256 Si conserva in uno strumento (leggio). Fallo salire di livello con l'inchiostro su un banco da lavoro.
+256 Si conserva in uno strumento (leggio o tavolo d'iscrizione di Iron's). Sale di livello con l'inchiostro al banco da lavoro.
 257 Livello %s di %s
 258 Metti gli spartiti negli slot. Gli slot grigi superano i tuoi slot: si possono solo svuotare.
 259 Leggio: %s

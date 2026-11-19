@@ -230,31 +230,31 @@
 229 +%s %% Zaubertempo
 230 −%s %% Zauber-Abklingzeit
 231 %s-Instrument (nur Barde):
-232 Rechtsklick: Wirkt den im Iron's-Rad gewählten Zauber. Shift + Rechtsklick (außerhalb des Kampfes, in der Haupthand): Notenständer.
+232 Rechtsklick: Wirkt den im Iron's-Rad gewählten Zauber. Shift + Rechtsklick (außerhalb des Kampfes, in der Haupthand): Notenständer. Notenblätter lassen sich auch am Inschriftentisch von Iron's einsetzen.
 233 +%s %% Manaregeneration
 234 +%s max. Mana
 235 Passiv: %s
-236 Größerer Aurenradius und doppelter Schaden beim Letzten Ton.
-237 Alle 10 Kombo setzt es ein Dröhnen frei, das Feinde in der Nähe betäubt.
-238 Alle 10 Treffer in Folge erholst du etwas von deinem Mana.
-239 Perfekte Treffer heilen deine Verbündeten in der Nähe.
+236 Deine Auren haben 25 % mehr Radius, und Letzter Ton verursacht doppelten Schaden mit 25 % mehr Radius.
+237 Alle 10 Treffer in Folge setzt es ein Dröhnen frei, das Feinde im Umkreis von 4 Blöcken 1 s betäubt (keine Bosse).
+238 Alle 10 Treffer in Folge erhältst du 5 % deines maximalen Manas zurück.
+239 Perfekte Treffer heilen Verbündete im Umkreis von 8 Blöcken um 0,5 Gesundheit und dich um 0,25 (höchstens jede halbe Sekunde).
 240 Zweihändige Axt, die man auch spielen kann. Der Barde hat damit keine Schwere-Waffen-Mauer; andere Klassen benutzen sie als normale Axt.
-241 Deine Auren verleihen deinen Verbündeten Feuerresistenz.
-242 Deine Auren verleihen deinen Verbündeten Eisresistenz.
-243 Deine Auren verleihen deinen Verbündeten Blitzresistenz.
-244 Ein Fehler kostet nur halb so viel Kombo.
-245 Deine Auren haben einen größeren Radius.
+241 Deine Auren verringern den Feuerschaden für dich und deine Verbündeten um 25 %.
+242 Deine Auren verringern den Eisschaden für dich und deine Verbündeten um 25 %.
+243 Deine Auren verringern den Blitzschaden für dich und deine Verbündeten um 25 %.
+244 Fehler kosten dich nur halb so viel Kombo wie sonst.
+245 Deine Auren haben 25 % mehr Radius.
 246 +%s %% musikalische Kraft
 247 Gewöhnlich
 248 Episch
 249 Legendär
 250 Selten
-251 Notenblätter: %s/%s · max. Notenblattstufe: %s %%
+251 Notenblätter: %s/%s · spielt jedes Notenblatt bis %s %% seiner Höchststufe
 252  ♪ %s (Stufe %s)
 253  ♪ %s (Stufe %s, begrenzt auf %s)
 254 Mindestkombo: %s
 255 Leeres Notenblatt
-256 In einem Instrument gespeichert (Notenständer). Verbessere es mit Tinte an einer Werkbank.
+256 Wird in einem Instrument verwahrt (Notenständer oder Inschriftentisch von Iron's). Mit Tinte an der Werkbank aufwerten.
 257 Stufe %s von %s
 258 Lege Notenblätter in die Plätze. Graue Plätze übersteigen deine Plätze: Sie können nur geleert werden.
 259 Notenständer: %s

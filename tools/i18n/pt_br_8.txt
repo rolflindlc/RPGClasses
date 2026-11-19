@@ -230,31 +230,31 @@
 229 +%s%% de velocidade de lançamento
 230 −%s%% de recarga de feitiços
 231 Instrumento %s (somente Bardo):
-232 Clique direito: lança o feitiço selecionado na roda do Iron's. Shift + clique direito (fora de combate, na mão principal): estante de partitura.
+232 Clique direito: lança o feitiço selecionado na roda do Iron's. Shift + clique direito (fora de combate, na mão principal): estante de partitura. Também dá para pôr partituras na mesa de inscrição do Iron's.
 233 +%s%% de regeneração de mana
 234 +%s de mana máx.
 235 Passiva: %s
-236 Maior raio das auras e dano dobrado na Última Nota.
-237 A cada 10 de combo libera um estrondo que atordoa inimigos próximos.
-238 A cada 10 acertos seguidos você recupera parte da sua mana.
-239 Acertos perfeitos curam seus aliados próximos.
+236 Suas auras têm 25% a mais de raio, e a Última Nota causa o dobro de dano com 25% a mais de raio.
+237 A cada 10 acertos seguidos libera um estrondo que atordoa por 1 s os inimigos a até 4 blocos (exceto chefes).
+238 A cada 10 acertos seguidos você recupera 5% da sua mana máxima.
+239 Acertos perfeitos curam 0,5 de vida dos aliados a até 8 blocos e 0,25 da sua (no máximo a cada meio segundo).
 240 Machado de duas mãos que também pode ser tocado. O Bardo não tem a muralha de Armas Pesadas com ele; outras classes o usam como um machado normal.
-241 Suas auras dão resistência a fogo aos seus aliados.
-242 Suas auras dão resistência a gelo aos seus aliados.
-243 Suas auras dão resistência a raio aos seus aliados.
-244 Um erro tira metade do combo que tiraria normalmente.
-245 Suas auras têm um raio maior.
+241 Suas auras reduzem em 25% o dano de fogo para você e seus aliados.
+242 Suas auras reduzem em 25% o dano de gelo para você e seus aliados.
+243 Suas auras reduzem em 25% o dano de raio para você e seus aliados.
+244 Os erros tiram metade do combo que tirariam normalmente.
+245 Suas auras têm 25% a mais de raio.
 246 +%s%% de poder musical
 247 Comum
 248 Épico
 249 Lendário
 250 Raro
-251 Partituras: %s/%s · nível máx. da partitura: %s%%
+251 Partituras: %s/%s · toca cada partitura até %s%% do nível máximo
 252  ♪ %s (nível %s)
 253  ♪ %s (nível %s, limitado a %s)
 254 Combo mínimo: %s
 255 Partitura em branco
-256 Guardada em um instrumento (estante de partitura). Suba o nível com tinta numa bancada de trabalho.
+256 Guarda-se em um instrumento (estante ou mesa de inscrição do Iron's). Sobe de nível com tinta na bancada de trabalho.
 257 Nível %s de %s
 258 Coloque partituras nos espaços. Os espaços cinzas excedem os seus: só podem ser esvaziados.
 259 Estante de partitura: %s

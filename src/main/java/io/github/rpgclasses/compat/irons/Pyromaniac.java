@@ -69,7 +69,10 @@ public final class Pyromaniac {
         if (!(projectile.getOwner() instanceof ServerPlayer p) || !Races.has(p, "race_piercing_fire") || !racialSelected(p)) return;
         if (FIREBOLT.equals(type)) {
             int pierce = (int) Races.number(p, "race_piercing_fire", "pierce", 0);
-            if (pierce > 0 && setPierce(projectile, pierce)) DebugLog.event(p, "raza", "Fuego Penetrante: atraviesa {}", pierce);
+            if (pierce > 0 && setPierce(projectile, pierce)) {
+                projectile.getPersistentData().putBoolean(io.github.rpgclasses.cleric.Sanctuary.PIERCING_MARK, true); // atraviesa el Santuario
+                DebugLog.event(p, "raza", "Fuego Penetrante: atraviesa {}", pierce);
+            }
         } else if (MAGMA.equals(type) && Races.has(p, "race_lava_pool")) {
             TRACKED.put(projectile.getId(), new Tracked(p.getUUID(), true));
         } else if (MAGMA.equals(type) && Races.has(p, "race_flame_pool")) {

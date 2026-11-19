@@ -10,7 +10,7 @@
 9 Prière
 10 Vous payez une partie de votre santé maximale et l'allié que vous regardez récupère une partie de la sienne (au moins ce que vous avez payé). Sans délai de recharge. Si payer vous tuerait, l'icône devient rouge : appuyez deux fois pour donner votre vie ; votre allié récupère toute la santé qui lui manque, gagne autant de cœurs dorés que la santé qu'il avait et devient invulnérable un instant. Ses soins sont des soins purs : rien ne peut les augmenter ni les réduire.
 11 Sacrifice
-12 Maintenez la touche : une sphère sacrée vous entoure, repousse les ennemis et bloque leurs projectiles (sauf les perforants). Elle absorbe les dégâts de quiconque est à l'intérieur et les coups des ennemis qui la frappent jusqu'à se briser ; elle se fissure en s'affaiblissant. Elle coûte du mana chaque seconde ; une fois relâchée, elle dure la moitié du temps maintenu. Pendant ce temps, vous êtes plus lent et ne pouvez pas lancer de sorts.
+12 Maintenez la touche : une sphère sacrée vous entoure, repousse les ennemis et bloque leurs projectiles (sauf les perforants). Elle bloque les dégâts de zone (explosions, sorts et nuages) pour quiconque est à l'intérieur, que seul le bouclier encaisse, et reçoit les coups des ennemis qui la touchent ; elle se fissure en s'affaiblissant et finit par se briser. Elle coûte du mana chaque seconde ; une fois relâchée, elle dure la moitié du temps maintenu. Pendant ce temps, vous êtes plus lent et ne pouvez pas lancer de sorts.
 13 Sanctuaire
 14 Une partie des soins excédentaires (au-delà de la santé maximale) se transforme en absorption pendant quelques secondes.
 15 Égide

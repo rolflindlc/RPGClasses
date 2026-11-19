@@ -10,7 +10,7 @@
 9 Preghiera
 10 Paghi parte della tua salute massima e l'alleato che stai guardando recupera parte della sua (almeno quanto hai pagato). Nessuna ricarica. Se pagare ti ucciderebbe, l'icona diventa rossa: premi due volte per dare la tua vita; il tuo alleato recupera tutta la salute che gli manca, ottiene tanti cuori dorati quanta salute aveva ed è invulnerabile per un istante. La cura è una cura pura: nulla può aumentarla né ridurla.
 11 Sacrificio
-12 Tieni premuto il tasto: una sfera sacra ti circonda, respinge i nemici e blocca i loro proiettili (tranne quelli perforanti). Assorbe i danni di chiunque sia all'interno e i colpi dei nemici che la colpiscono finché non si rompe; si crepa man mano che si indebolisce. Costa mana ogni secondo; quando la rilasci dura la metà del tempo in cui l'hai tenuta. Mentre la tieni sei più lento e non puoi lanciare incantesimi.
+12 Tieni premuto il tasto: una sfera sacra ti circonda, respinge i nemici e blocca i loro proiettili (tranne quelli perforanti). Blocca i danni ad area (esplosioni, incantesimi e nubi) per chiunque sia all'interno, assorbendoli solo con lo scudo, e incassa i colpi dei nemici che la toccano; si crepa man mano che si indebolisce e alla fine si rompe. Costa mana ogni secondo; quando la rilasci dura la metà del tempo in cui l'hai tenuta. Mentre la tieni sei più lento e non puoi lanciare incantesimi.
 13 Santuario
 14 Parte delle cure in eccesso (oltre la salute massima) si trasforma in assorbimento per alcuni secondi.
 15 Egida

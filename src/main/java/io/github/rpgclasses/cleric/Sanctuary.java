@@ -26,7 +26,7 @@ import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.event.entity.living.LivingDamageEvent;
+import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
@@ -47,8 +47,9 @@ import java.util.UUID;
  *   <li><b>Barrera:</b> empuja fuera a los enemigos (no a los jefes) y desvía los proyectiles que no son de aliados,
  *       salvo los que tienen penetración (Perforación o el tag {@code rites_and_paths:sanctuary_piercing}).
  *       Los mobs agresivos que la tocan la golpean con su daño de ataque (una vez por segundo cada uno).</li>
- *   <li><b>Vida compartida:</b> 50 × poder sagrado; lo que llegue a quien esté dentro (aliado del Clérigo) resta primero
- *       de la vida del escudo. Regenera 5/s mientras se canaliza. Si llega a 0, se rompe.</li>
+ *   <li><b>Vida del escudo:</b> 50 × poder sagrado. Bloquea el daño de área a quien está dentro (el escudo se lo lleva
+ *       entero, una vez por golpe) y recibe los golpes de los mobs que lo tocan. El resto de daño a quien está dentro no
+ *       lo toca. Regenera 5/s mientras se canaliza. Si llega a 0, se rompe.</li>
  *   <li><b>Duración:</b> mientras se canaliza (máx. 6 s) y, al soltar, la mitad del tiempo canalizado.</li>
  *   <li><b>Coste:</b> 28 de maná por segundo mientras se canaliza (sin maná, se suelta sola). Canalizando: −50 % de
  *       velocidad y sin conjuros. El cooldown (40 s) empieza al terminar.</li>
@@ -66,6 +67,9 @@ public final class Sanctuary {
         double shield;
         /** Vida del escudo (0-1) que conocen los clientes. */
         float syncedShield = 1;
+        /** Último daño de área bloqueado (para cobrarlo una sola vez aunque alcance a varios). */
+        long lastAreaTick = -1;
+        String lastAreaKey = "";
         /** Siguiente golpe permitido de cada mob al escudo (id de entidad → tick). */
         final Map<Integer, Long> nextHit = new HashMap<>();
 
@@ -294,40 +298,91 @@ public final class Sanctuary {
     public static final net.minecraft.tags.TagKey<net.minecraft.world.entity.EntityType<?>> PIERCING =
             net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.ENTITY_TYPE, io.github.rpgclasses.RpgClasses.id("sanctuary_piercing"));
 
-    /** Flechas con Perforación (nivel de penetración > 0) o proyectiles del tag {@code rites_and_paths:sanctuary_piercing}. */
+    /** Marca que ponen las habilidades del mod en sus proyectiles que atraviesan (Perforante, Fuego Penetrante). */
+    public static final String PIERCING_MARK = "rites_and_paths:sanctuary_piercing";
+
+    /**
+     * Proyectiles con penetración: flechas con Perforación o el perk Perforante del Ranger (nivel de penetración > 0),
+     * proyectiles de Iron's con penetración (Fuego Penetrante del Infernal Pirómano), los marcados por el mod y los del
+     * tag {@code rites_and_paths:sanctuary_piercing}.
+     */
     private static boolean piercing(Projectile proj) {
         if (proj instanceof net.minecraft.world.entity.projectile.AbstractArrow arrow && arrow.getPierceLevel() > 0) return true;
-        return proj.getType().is(PIERCING);
+        if (proj.getPersistentData().getBoolean(PIERCING_MARK) || proj.getType().is(PIERCING)) return true;
+        try {
+            Object level = proj.getClass().getMethod("getPierceLevel").invoke(proj);
+            return level instanceof Number n && n.intValue() > 0;
+        } catch (ReflectiveOperationException | RuntimeException | LinkageError e) {
+            return false;
+        }
     }
 
-    /** La vida del escudo absorbe primero el daño de quien está dentro (aliados del Clérigo). */
+    /** Tipos de daño de área que el Santuario bloquea (además de las explosiones). Ampliable con datapacks. */
+    public static final net.minecraft.tags.TagKey<net.minecraft.world.damagesource.DamageType> AREA =
+            net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.DAMAGE_TYPE, io.github.rpgclasses.RpgClasses.id("sanctuary_area"));
+
+    /**
+     * Daño de área: explosiones, los tipos del tag {@code rites_and_paths:sanctuary_area} (magia indirecta, aliento de
+     * dragón, rayos...), lo que hace una nube o zona (AreaEffectCloud, zonas de Iron's) o un conjuro lanzado desde
+     * fuera de la esfera sin proyectil (conos, rayos y áreas de Iron's). Los golpes cuerpo a cuerpo y los proyectiles
+     * no son de área.
+     */
+    private static boolean areaDamage(DamageSource source, Vec3 c, double r) {
+        if (source.is(DamageTypeTags.IS_EXPLOSION) || source.is(AREA)) return true;
+        Entity direct = source.getDirectEntity();
+        if (direct instanceof net.minecraft.world.entity.AreaEffectCloud || isIronsArea(direct)) return true;
+        if (direct instanceof Projectile) return false;
+        String ns = source.typeHolder().unwrapKey().map(k -> k.location().getNamespace()).orElse("");
+        boolean spell = ns.equals("irons_spellbooks") || ns.equals("traveloptics");
+        return spell && direct != null && direct.position().add(0, direct.getBbHeight() / 2, 0).distanceTo(c) > r + 0.5;
+    }
+
+    private static boolean isIronsArea(Entity e) {
+        for (Class<?> k = e == null ? null : e.getClass(); k != null && k != Object.class; k = k.getSuperclass()) {
+            if (k.getName().equals("io.redspace.ironsspellbooks.entity.spells.AoeEntity")) return true;
+        }
+        return false;
+    }
+
+    /**
+     * El escudo bloquea el daño de área a quien está dentro (aliados del Clérigo): el aliado no recibe nada y el
+     * escudo se lo lleva una sola vez por golpe (aunque alcance a varios). El resto de daño (cuerpo a cuerpo de los
+     * jefes, proyectiles con penetración) llega normal y no gasta el escudo.
+     */
     @SubscribeEvent(priority = EventPriority.HIGH)
-    public void onDamage(LivingDamageEvent event) {
+    public void onAttack(LivingAttackEvent event) {
         if (ZONES.isEmpty() || event.getAmount() <= 0) return;
         LivingEntity victim = event.getEntity();
         DamageSource source = event.getSource();
-        if (victim.level().isClientSide() || source.is(DamageTypeTags.BYPASSES_INVULNERABILITY)
-                || source.is(DamageTypes.FALL) || source.is(DamageTypes.STARVE) || source.is(DamageTypes.DROWN)
-                || source.is(DamageTypes.IN_WALL) || source.is(DamageTypes.FLY_INTO_WALL)) return;
+        if (victim.level().isClientSide() || source.is(DamageTypeTags.BYPASSES_INVULNERABILITY)) return;
         MinecraftServer server = victim.getServer();
         if (server == null) return;
+        long now = victim.level().getGameTime();
         for (Zone z : new ArrayList<>(ZONES.values())) {
             ServerPlayer owner = server.getPlayerList().getPlayer(z.owner);
             if (owner == null || owner.level() != victim.level() || !Cleric.ally(owner, victim)) continue;
             Entity attacker = source.getEntity();
             if (attacker != null && attacker != victim && Allies.isAlly(owner, attacker)) continue;
             Entity anchor = anchor(owner);
-            double r = z.radiusAt(victim.level().getGameTime());
+            double r = z.radiusAt(now);
             Vec3 c = anchor.position().add(0, anchor.getBbHeight() / 2, 0);
             if (victim.position().add(0, victim.getBbHeight() / 2, 0).distanceTo(c) > r + victim.getBbWidth() / 2) continue;
-            float absorbed = (float) Math.min(z.shield, event.getAmount());
-            z.shield -= absorbed;
-            event.setAmount(event.getAmount() - absorbed);
+            if (!areaDamage(source, c, r)) continue;
+            event.setCanceled(true);
+            // Una sola vez por golpe: la misma fuente en el mismo tick solo gasta el escudo con el primero que alcanza.
+            Entity direct = source.getDirectEntity();
+            String key = source.getMsgId() + "|" + (direct == null ? (source.getSourcePosition() == null ? "-" : source.getSourcePosition().toString()) : direct.getId());
+            if (now == z.lastAreaTick && key.equals(z.lastAreaKey)) return;
+            z.lastAreaTick = now;
+            z.lastAreaKey = key;
+            z.shield -= event.getAmount();
             if (victim.level() instanceof ServerLevel sl) {
-                sl.sendParticles(io.github.rpgclasses.content.ClassFx.GOLD, victim.getX(), victim.getY() + victim.getBbHeight() * 0.5, victim.getZ(), 6, 0.3, 0.4, 0.3, 0);
+                sl.sendParticles(io.github.rpgclasses.content.ClassFx.GOLD, victim.getX(), victim.getY() + victim.getBbHeight() * 0.5, victim.getZ(), 8, 0.4, 0.4, 0.4, 0);
+                sl.playSound(null, c.x, c.y, c.z, SoundEvents.GLASS_HIT, SoundSource.PLAYERS, 1.0f, 0.8f);
             }
+            DebugLog.event(owner, "clérigo", "Santuario bloquea daño de área ({}): {}", source.getMsgId(), event.getAmount());
             if (z.shield <= 1.0E-3) end(owner, z, true);
-            if (event.getAmount() <= 0) return;
+            return;
         }
     }
 

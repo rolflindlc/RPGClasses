@@ -39,7 +39,9 @@ First public beta of Rolflin's Rites & Paths (Minecraft Forge 1.20.1).
   0-40). Netherite only appears at T = 40 and rarely. No effect within 96 blocks of any player's respawn point, on
   mobs with more than 80 base health or on bosses (`rites_and_paths:difficulty_exempt` tag). Kills give extra
   Looting; XP does not change. Each lever can be switched off on its own, and `/clases dificultad` shows the
-  current T and effects where you stand.
+  current T and effects where you stand. **Potions of Tranquility** (-20% per level of your class level when T is
+  calculated) and **Challenge** (+20% per level), levels I-IV, brewed from an awkward potion with a cornflower or
+  rotten flesh and raised with glowstone dust. Challenge never unlocks netherite gear.
 
 ### Known issues and notes
 - Beta: balance values are still being calibrated.

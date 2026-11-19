@@ -44,6 +44,7 @@ public final class ServerConfig {
     public static final ForgeConfigSpec.IntValue DIFFICULTY_EXTRA_PER_TICK;
     public static final ForgeConfigSpec.IntValue DIFFICULTY_LOCAL_MOB_CAP;
     public static final ForgeConfigSpec.DoubleValue DIFFICULTY_LOOT_STEP;
+    public static final ForgeConfigSpec.DoubleValue DIFFICULTY_POTION_STEP;
 
     static {
         ForgeConfigSpec.Builder b = new ForgeConfigSpec.Builder();
@@ -145,6 +146,9 @@ public final class ServerConfig {
         DIFFICULTY_LOOT_STEP = b
                 .comment("Un nivel de Saqueo efectivo por cada tantos puntos de T (con 15: 0 a 2).")
                 .defineInRange("lootingStep", 15.0, 1.0, 40.0);
+        DIFFICULTY_POTION_STEP = b
+                .comment("Pociones de Tranquilidad y de Desafío: cada nivel del efecto resta o suma esta fracción al nivel de clase del jugador al calcular T (0,2 = 20 % por nivel).")
+                .defineInRange("potionStep", 0.20, 0.0, 1.0);
         b.pop();
         b.push("debug");
         DEBUG_LOG = b

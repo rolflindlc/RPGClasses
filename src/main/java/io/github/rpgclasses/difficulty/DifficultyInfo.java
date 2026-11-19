@@ -20,13 +20,16 @@ public final class DifficultyInfo {
         double t = zone.threat();
         send(source, "Dificultad por zona: " + (ServerConfig.DIFFICULTY_ENABLED.get() ? "activada" : "DESACTIVADA (difficulty.enabled)"));
         send(source, String.format(Locale.ROOT, "Amenaza T aquí: %.1f (cuentan %d jugadores en %d bloques)", t, zone.players(), ServerConfig.DIFFICULTY_RADIUS.get()));
+        if (Math.abs(zone.baseThreat() - t) > 0.05) {
+            send(source, String.format(Locale.ROOT, "Sin pociones de Tranquilidad ni de Desafío sería T = %.1f.", zone.baseThreat()));
+        }
         send(source, "Zona protegida (punto de reaparición a menos de " + ServerConfig.DIFFICULTY_SAFE_RADIUS.get() + " bloques): " + (safe ? "sí, los mobs aquí no reciben dificultad" : "no"));
         send(source, "Los mobs con más de " + ServerConfig.DIFFICULTY_HEALTH_EXEMPT.get() + " de vida base y los del tag difficulty_exempt quedan siempre fuera.");
         if (t < ServerConfig.DIFFICULTY_MIN_THREAT.get()) {
             send(source, String.format(Locale.ROOT, "T por debajo de %.0f: todo vanilla.", ServerConfig.DIFFICULTY_MIN_THREAT.get()));
             return 1;
         }
-        double[] w = GearRoller.weightsFor(t);
+        double[] w = GearRoller.weightsFor(t, GearRoller.allowsNetherite(zone));
         double total = 0;
         for (double v : w) total += v;
         double slot = Math.min(ServerConfig.DIFFICULTY_EQUIP_MAX.get(),

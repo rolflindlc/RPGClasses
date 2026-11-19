@@ -1,0 +1,10 @@
+0 Desafio
+1 Tranquilidade
+2 Poção Persistente de Desafio
+3 Poção Persistente de Tranquilidade
+4 Poção de Desafio
+5 Poção de Tranquilidade
+6 Poção Arremessável de Desafio
+7 Poção Arremessável de Tranquilidade
+8 Flecha de Desafio
+9 Flecha de Tranquilidade

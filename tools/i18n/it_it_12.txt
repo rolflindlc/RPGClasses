@@ -1,0 +1,10 @@
+0 Sfida
+1 Tranquillità
+2 Pozione Persistente di Sfida
+3 Pozione Persistente di Tranquillità
+4 Pozione di Sfida
+5 Pozione di Tranquillità
+6 Pozione Esplosiva di Sfida
+7 Pozione Esplosiva di Tranquillità
+8 Freccia di Sfida
+9 Freccia di Tranquillità

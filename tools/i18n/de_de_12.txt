@@ -1,0 +1,10 @@
+0 Herausforderung
+1 Gelassenheit
+2 Verweiltrank der Herausforderung
+3 Verweiltrank der Gelassenheit
+4 Trank der Herausforderung
+5 Trank der Gelassenheit
+6 Wurftrank der Herausforderung
+7 Wurftrank der Gelassenheit
+8 Pfeil der Herausforderung
+9 Pfeil der Gelassenheit

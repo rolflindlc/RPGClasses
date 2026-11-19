@@ -47,9 +47,9 @@ public final class ThreatService {
         for (ServerPlayer player : level.players()) {
             if (player.distanceToSqr(pos) > radiusSq || !counts(player, now)) continue;
             PlayerClassData data = PlayerClassDataProvider.get(player);
-            int level = data.state.totalLevel();
-            sumBase += level;
-            sum += level * potionFactor(player);
+            int classLevel = data.state.totalLevel();
+            sumBase += classLevel;
+            sum += classLevel * potionFactor(player);
             count++;
         }
         if (count == 0) return Result.NONE;

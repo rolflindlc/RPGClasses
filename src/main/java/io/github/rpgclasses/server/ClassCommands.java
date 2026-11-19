@@ -117,7 +117,7 @@ public final class ClassCommands {
                             return 1;
                         })))
                 .then(Commands.literal("validar").executes(c -> validate(c.getSource())))
-                .then(Commands.literal("dificultad").executes(c -> io.github.rpgclasses.difficulty.DifficultyInfo.show(c.getSource())))
+                .then(io.github.rpgclasses.difficulty.DifficultyMenu.command())
                 .then(Commands.literal("debug")
                         .then(Commands.literal("item").executes(c -> debugItem(c.getSource())))
                         .then(Commands.literal("stats").executes(c -> debugStats(c.getSource())))

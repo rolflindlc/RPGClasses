@@ -50,6 +50,12 @@ public final class ServerConfig {
     public static final ForgeConfigSpec.DoubleValue DIFFICULTY_MAX_THREAT;
     public static final ForgeConfigSpec.IntValue DIFFICULTY_LOOT_MAX;
     public static final ForgeConfigSpec.IntValue DIFFICULTY_ENCHANT_MAX_LEVEL;
+    public static final ForgeConfigSpec.EnumValue<io.github.rpgclasses.difficulty.DifficultySettings.Mode> DIFFICULTY_MODE;
+    public static final ForgeConfigSpec.EnumValue<io.github.rpgclasses.difficulty.DifficultySettings.Intensity> DIFFICULTY_INTENSITY;
+    public static final ForgeConfigSpec.DoubleValue DIFFICULTY_DISTANCE_START;
+    public static final ForgeConfigSpec.DoubleValue DIFFICULTY_DISTANCE_PER_T;
+    public static final ForgeConfigSpec.DoubleValue DIFFICULTY_DISTANCE_MAX;
+    public static final ForgeConfigSpec.DoubleValue DIFFICULTY_MIXED_PLAYER_WEIGHT;
     public static final ForgeConfigSpec.BooleanValue DIFFICULTY_TRAITS;
     public static final ForgeConfigSpec.DoubleValue DIFFICULTY_FULL_START;
     public static final ForgeConfigSpec.DoubleValue DIFFICULTY_FULL_REF_THREAT;
@@ -196,6 +202,27 @@ public final class ServerConfig {
         DIFFICULTY_ENCHANT_MAX_LEVEL = b
                 .comment("Tope del nivel de encantamiento del equipo de los mobs (el nivel es 10 + T/2).")
                 .defineInRange("enchantMaxLevel", 40, 1, 100);
+        DIFFICULTY_MODE = b
+                .comment("De qué depende la amenaza T: PLAYERS (nivel de clase de los jugadores cercanos), DISTANCE (solo la distancia al spawn del mundo)",
+                        "o MIXED (media ponderada de los dos). Se cambia en la partida con /clases dificultad ajustes.")
+                .defineEnum("mode", io.github.rpgclasses.difficulty.DifficultySettings.Mode.PLAYERS);
+        DIFFICULTY_INTENSITY = b
+                .comment("Cuánto pesan los incrementos de dificultad del mod: OFF los desactiva, EASY los divide por dos, NORMAL los deja como están planeados",
+                        "y HARD los duplica (vida, daño, equipo, mobs extra, élites y set de netherita). Se cambia en la partida con /clases dificultad ajustes.")
+                .defineEnum("intensity", io.github.rpgclasses.difficulty.DifficultySettings.Intensity.NORMAL);
+        DIFFICULTY_DISTANCE_START = b
+                .comment("Modos DISTANCE y MIXED: distancia al spawn del mundo (bloques) hasta la cual T es 0.")
+                .defineInRange("distanceStart", 500.0, 0.0, 1.0E7);
+        DIFFICULTY_DISTANCE_PER_T = b
+                .comment("Modos DISTANCE y MIXED: bloques que hay que alejarse del spawn por cada punto de T (con 100: T = 10 a 1.500 bloques, 40 a 4.500).",
+                        "En el Nether la distancia cuenta por 8, como las coordenadas.")
+                .defineInRange("distancePerThreat", 100.0, 1.0, 1.0E6);
+        DIFFICULTY_DISTANCE_MAX = b
+                .comment("Tope de la T por distancia (40, como el nivel máximo de clase). Por encima solo se llega con pociones de Desafío.")
+                .defineInRange("distanceMaxThreat", 40.0, 0.0, 1000.0);
+        DIFFICULTY_MIXED_PLAYER_WEIGHT = b
+                .comment("Modo MIXED: peso del nivel de los jugadores en la media (0,5 = mitad y mitad; el resto es la distancia).")
+                .defineInRange("mixedPlayerWeight", 0.5, 0.0, 1.0);
         DIFFICULTY_TRAITS = b
                 .comment("Palanca de rasgos de élite: efectos especiales de los mobs a partir de eliteStartThreat.")
                 .define("scaleTraits", true);

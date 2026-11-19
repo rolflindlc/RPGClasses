@@ -19,7 +19,7 @@ final class ExtraSpawner {
     static double expected(double threat, int players) {
         double perPlayer = Math.min(ServerConfig.DIFFICULTY_SPAWN_PLAYER_CAP.get(),
                 ServerConfig.DIFFICULTY_SPAWN_PER_PLAYER.get() * Math.max(0, players - 1));
-        return ServerConfig.DIFFICULTY_SPAWN_PER_T.get() * threat + perPlayer;
+        return (ServerConfig.DIFFICULTY_SPAWN_PER_T.get() * threat + perPlayer) * DifficultySettings.factor();
     }
 
     /** @return cuántos mobs extra se han creado, para que quien llama lleve la cuenta del presupuesto por tick. */

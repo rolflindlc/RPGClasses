@@ -51,7 +51,7 @@ public final class DifficultyEvents {
 
     @SubscribeEvent
     public void onFinalizeSpawn(MobSpawnEvent.FinalizeSpawn event) {
-        if (!ServerConfig.DIFFICULTY_ENABLED.get() || !SCALED.contains(event.getSpawnType())) return;
+        if (!DifficultySettings.active() || !SCALED.contains(event.getSpawnType())) return;
         event.getEntity().getPersistentData().putString(KEY_SPAWN, event.getSpawnType().name());
     }
 
@@ -62,7 +62,7 @@ public final class DifficultyEvents {
         if (!data.contains(KEY_SPAWN)) return;
         String spawnType = data.getString(KEY_SPAWN);
         data.remove(KEY_SPAWN);
-        if (!ServerConfig.DIFFICULTY_ENABLED.get() || data.contains(KEY_THREAT)) return;
+        if (!DifficultySettings.active() || data.contains(KEY_THREAT)) return;
 
         if (ExemptionRules.check(mob, level, mob.position()) != ExemptionRules.Reason.NONE) {
             data.putFloat(KEY_THREAT, 0.0f);
@@ -103,7 +103,7 @@ public final class DifficultyEvents {
     /** Recompensa: Saqueo efectivo extra al matar, con un jugador, mobs que recibieron dificultad. */
     @SubscribeEvent
     public void onLooting(LootingLevelEvent event) {
-        if (!ServerConfig.DIFFICULTY_ENABLED.get() || !ServerConfig.DIFFICULTY_LOOT.get()) return;
+        if (!DifficultySettings.active() || !ServerConfig.DIFFICULTY_LOOT.get()) return;
         LivingEntity victim = event.getEntity();
         if (!victim.getPersistentData().contains(KEY_THREAT)) return;
         if (event.getDamageSource() == null || !(event.getDamageSource().getEntity() instanceof Player)) return;
@@ -156,7 +156,9 @@ public final class DifficultyEvents {
 
     @SubscribeEvent
     public void onLogin(PlayerEvent.PlayerLoggedInEvent event) {
-        if (event.getEntity() instanceof ServerPlayer player) RespawnIndex.get(player.server).update(player);
+        if (!(event.getEntity() instanceof ServerPlayer player)) return;
+        RespawnIndex.get(player.server).update(player);
+        WelcomeMessage.sendOnce(player);
     }
 
     @SubscribeEvent
@@ -164,7 +166,7 @@ public final class DifficultyEvents {
         if (event.phase != TickEvent.Phase.END) return;
         extrasThisTick = 0;
         MinecraftServer server = ServerLifecycleHooks.getCurrentServer();
-        if (server == null || server.getTickCount() % RESPAWN_REFRESH_TICKS != 0 || !ServerConfig.DIFFICULTY_ENABLED.get()) return;
+        if (server == null || server.getTickCount() % RESPAWN_REFRESH_TICKS != 0 || !DifficultySettings.active()) return;
         RespawnIndex index = RespawnIndex.get(server);
         for (ServerPlayer player : server.getPlayerList().getPlayers()) index.update(player);
     }

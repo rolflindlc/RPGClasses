@@ -18,7 +18,10 @@ public final class DifficultyInfo {
         ThreatService.Result zone = ThreatService.compute(level, pos);
         boolean safe = ExemptionRules.isInSafeZone(level, pos);
         double t = zone.threat();
-        send(source, "Dificultad por zona: " + (ServerConfig.DIFFICULTY_ENABLED.get() ? "activada" : "DESACTIVADA (difficulty.enabled)"));
+        send(source, "Dificultad por zona: " + (!ServerConfig.DIFFICULTY_ENABLED.get() ? "DESACTIVADA (difficulty.enabled)"
+                : DifficultySettings.active() ? "activada" : "APAGADA (intensidad Apagado)")
+                + " | modo " + DifficultySettings.mode().literal + " | intensidad " + DifficultySettings.intensity().literal
+                + " (x" + DifficultySettings.factor() + "). Ajustes: " + DifficultyMenu.COMMAND);
         send(source, String.format(Locale.ROOT, "Amenaza T aquí: %.1f (cuentan %d jugadores en %d bloques)", t, zone.players(), ServerConfig.DIFFICULTY_RADIUS.get()));
         if (Math.abs(zone.baseThreat() - t) > 0.05) {
             send(source, String.format(Locale.ROOT, "Sin pociones de Tranquilidad ni de Desafío sería T = %.1f.", zone.baseThreat()));
@@ -32,11 +35,11 @@ public final class DifficultyInfo {
         double[] w = GearRoller.weightsFor(t);
         double total = 0;
         for (double v : w) total += v;
-        double slot = Math.min(ServerConfig.DIFFICULTY_EQUIP_MAX.get(),
-                ServerConfig.DIFFICULTY_EQUIP_BASE.get() + ServerConfig.DIFFICULTY_EQUIP_PER_T.get() * t);
+        double slot = GearRoller.slotChance(t);
         send(source, String.format(Locale.ROOT, "Equipo: %.0f %% por ranura, netherita %.1f %% de las piezas. Vida x%.2f, daño x%.2f.",
                 slot * 100, total > 0 ? w[5] / total * 100 : 0.0,
-                1 + ServerConfig.DIFFICULTY_HEALTH_PER_T.get() * t, 1 + ServerConfig.DIFFICULTY_DAMAGE_PER_T.get() * t));
+                1 + ServerConfig.DIFFICULTY_HEALTH_PER_T.get() * t * DifficultySettings.factor(),
+                1 + ServerConfig.DIFFICULTY_DAMAGE_PER_T.get() * t * DifficultySettings.factor()));
         send(source, String.format(Locale.ROOT, "Mobs extra: +%.2f por mob natural. Saqueo efectivo: +%d.",
                 ExtraSpawner.expected(t, zone.players()),
                 Math.min(ServerConfig.DIFFICULTY_LOOT_MAX.get(), (int) (t / ServerConfig.DIFFICULTY_LOOT_STEP.get()))));

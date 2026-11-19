@@ -1,0 +1,23 @@
+0 Willkommen bei Rolflin's Rites & Paths!
+1 Wähle eine Klasse und ein Volk, steige auf und schalte Zweige, Fähigkeiten und Unterklassen frei. Öffne das Klassenbuch mit %s.
+2 Die Gegner passen sich an: je nach Stufe der Spieler oder Entfernung zum Spawn tragen sie bessere Ausrüstung, haben mehr Leben und Schaden, erscheinen in größerer Zahl und können Elite-Gegner mit besonderen Eigenschaften sein. Tränke der Gelassenheit und der Herausforderung passen diesen Schwierigkeitsgrad an.
+3 Denk daran, den Schwierigkeitsgrad vor dem Start einzustellen:
+4 [Schwierigkeitseinstellungen]
+5 Klicken, um die Schwierigkeitseinstellungen zu öffnen
+6 Schwierigkeitseinstellungen
+7 Modus:
+8 Intensität:
+9 Spieler
+10 Entfernung
+11 Gemischt
+12 Der Schwierigkeitsgrad hängt von der Klassenstufe der Spieler in der Nähe ab.
+13 Der Schwierigkeitsgrad steigt nur, je weiter du vom Weltspawn entfernt bist.
+14 Ein Mittelwert aus der Stufe der Spieler und der Entfernung zum Spawn.
+15 Aus
+16 Leicht
+17 Normal
+18 Schwer
+19 Die Mod erhöht den Schwierigkeitsgrad nicht.
+20 Die Steigerungen des Schwierigkeitsgrads werden halbiert.
+21 Die Steigerungen entsprechen den Vorgaben der Mod.
+22 Die Steigerungen des Schwierigkeitsgrads werden verdoppelt.

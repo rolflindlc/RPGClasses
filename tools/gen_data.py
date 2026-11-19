@@ -279,6 +279,11 @@ def dump(path, obj):
     with open(path, "w", encoding="utf-8") as f:
         json.dump(obj, f, ensure_ascii=False, indent=2); f.write("\n")
 
+# Conjuros de Iron's (sin el espacio de nombres) exentos del muro de Magia, por clase.
+MAGIC_WALL_EXEMPT_SPELLS = {
+    "ranger": ["magic_arrow", "arrow_volley"],  # Flecha Mágica (Ender) y Lluvia de Flechas (Evocación)
+}
+
 base = os.path.join(out, "data", NS, NS)
 for cid, c in classes.items():
     o = {"schema_version": 1, "display": {"icon": c["icon"], "roles": c["roles"]}}
@@ -297,6 +302,8 @@ for cid, c in classes.items():
         o["school_walls"] = {IR + "holy": 1.0}
     else:
         o["school_walls"] = {IR + "holy": 1.0, bard.MUSIC: 1.0}
+    # Conjuros concretos que se lanzan sin el muro de Magia (por conjuro, no por escuela): el Ranger y las flechas mágicas.
+    if cid in MAGIC_WALL_EXEMPT_SPELLS: o["magic_wall_exempt_spells"] = [IR + s for s in MAGIC_WALL_EXEMPT_SPELLS[cid]]
     if TRAITS.get(cid): o["traits"] = TRAITS[cid]
     if c.get("armor_rule"): o["armor_rule"] = "disables_unarmored_passives"
     o["branches"] = [{"id": b, "display": {"icon": BRANCH_ICONS[(cid, b)]}, "max_points": 10, "effects": e,

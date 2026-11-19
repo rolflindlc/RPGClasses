@@ -45,6 +45,10 @@
     "irons_spellbooks:holy": 1.0,
     "rites_and_paths:music": 1.0
   },
+  "magic_wall_exempt_spells": [
+    "irons_spellbooks:magic_arrow",
+    "irons_spellbooks:arrow_volley"
+  ],
   "branches": [
     {
       "id": "aim",

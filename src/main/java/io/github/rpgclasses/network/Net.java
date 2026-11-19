@@ -136,5 +136,11 @@ public final class Net {
         if (data.state.classId == null) toPlayer(player, new OpenClassSelection());
     }
 
+    /** Envía el progreso sin pedir selecciones: para el avance de los ritos, que la pestaña Raza enseña en directo. */
+    public static void syncProgress(ServerPlayer player) {
+        PlayerClassData data = PlayerClassDataProvider.get(player);
+        if (data != null) toPlayer(player, new SyncPlayerData(data.save()));
+    }
+
     private Net() {}
 }

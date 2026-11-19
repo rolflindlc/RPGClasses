@@ -42,7 +42,7 @@ import java.util.TreeSet;
  * Los números de "Datos exactos" salen de los mismos JSON que usa el servidor: no pueden desfasarse.
  */
 public final class ClassPages {
-    public enum Tab { PROGRESS, SUMMARY, BRANCHES, SUBCLASSES, DATA }
+    public enum Tab { PROGRESS, RACE, SUMMARY, DATA }
 
     static final Set<String> SKIPPED_PARAMS = Set.of("type", "id", "schema_version", "passive", "condition", "modifiers");
     private static final int LEVELS = 10;
@@ -51,10 +51,8 @@ public final class ClassPages {
     public static List<Component> build(ClassDef c, Tab tab) {
         List<Component> out = new ArrayList<>();
         switch (tab) {
-            case PROGRESS -> { } // la dibuja ClassScreen con botones
+            case PROGRESS, RACE -> { } // las dibuja ClassScreen: el árbol de habilidades y el de raza
             case SUMMARY -> summary(c, out);
-            case BRANCHES -> branches(c, out);
-            case SUBCLASSES -> subclasses(c, out);
             case DATA -> data(c, out);
         }
         return out;
@@ -84,37 +82,6 @@ public final class ClassPages {
             for (EffectDef e : c.traits()) effect(e, 1, out);
         }
         walls(c, out);
-    }
-
-    private static void branches(ClassDef c, List<Component> out) {
-        out.add(header("ui.rites_and_paths.branches_header"));
-        for (BranchDef b : c.branches()) {
-            out.add(Component.empty());
-            out.add(branchName(c, b).withStyle(ChatFormatting.GOLD));
-            out.add(Component.translatable(branchKey(c, b, "desc")));
-            if (!b.perks().isEmpty()) {
-                out.add(Component.translatable("ui.rites_and_paths.perks_line").withStyle(ChatFormatting.GRAY));
-                for (PerkDef p : b.perks()) {
-                    out.add(indent(Component.translatable("ui.rites_and_paths.perk_option",
-                            perkName(c, b, p).withStyle(ChatFormatting.LIGHT_PURPLE), Component.translatable(perkKey(c, b, p, "desc")))));
-                }
-            }
-        }
-        out.add(Component.empty());
-        out.add(header("ui.rites_and_paths.abilities_header"));
-        for (MilestoneDef m : c.milestones()) milestone(m, out);
-    }
-
-    private static void subclasses(ClassDef c, List<Component> out) {
-        out.add(Component.translatable("ui.rites_and_paths.subclass_note").withStyle(ChatFormatting.GRAY));
-        for (String subId : c.subclasses()) {
-            SubclassDef sub = DefinitionStore.CLIENT.subclassDef(subId);
-            if (sub == null) continue;
-            out.add(Component.empty());
-            out.add(Component.translatable(Ids.langKey("subclass", subId, "name")).withStyle(ChatFormatting.GOLD, ChatFormatting.BOLD));
-            out.add(Component.translatable(Ids.langKey("subclass", subId, "desc")));
-            for (MilestoneDef m : sub.milestones()) milestone(m, out);
-        }
     }
 
     private static void data(ClassDef c, List<Component> out) {
@@ -177,25 +144,6 @@ public final class ClassPages {
         out.add(Component.translatable("ui.rites_and_paths.walls_note", 15,
                 "-" + percent(StatMath.wallPenalty(c.walls().get(example), 15)) + " (" + discipline(example).getString() + ")")
                 .withStyle(ChatFormatting.GRAY));
-    }
-
-    private static void milestone(MilestoneDef m, List<Component> out) {
-        AbilityDef ability = DefinitionStore.CLIENT.abilityDef(m.grants());
-        boolean passive = ability != null && ability.params().has("passive") && ability.params().get("passive").getAsBoolean();
-        MutableComponent line = Component.translatable(m.subclassLevel() ? "ui.rites_and_paths.unlock_sub" : "ui.rites_and_paths.unlock_total", m.level())
-                .withStyle(ChatFormatting.AQUA)
-                .append(Component.literal(" - ").withStyle(ChatFormatting.GRAY))
-                .append(Component.translatable(Ids.langKey("ability", m.grants(), "name")).withStyle(ChatFormatting.WHITE, ChatFormatting.BOLD));
-        if (passive) {
-            line.append(Component.literal(" (").append(Component.translatable("ui.rites_and_paths.passive")).append(")").withStyle(ChatFormatting.GRAY));
-        }
-        out.add(Component.empty());
-        out.add(line);
-        out.add(Component.translatable(Ids.langKey("ability", m.grants(), "desc")));
-        if (m.upgrades() != null) {
-            out.add(Component.translatable("ui.rites_and_paths.upgrades",
-                    Component.translatable(Ids.langKey("ability", m.upgrades(), "name"))).withStyle(ChatFormatting.GRAY));
-        }
     }
 
     private static void abilityData(MilestoneDef m, List<Component> out) {

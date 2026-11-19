@@ -233,6 +233,7 @@ public final class Rites {
         if (RiteProgress.done(o, i, prog)) return;
         if (sub != null) RiteProgress.addSub(prog, i, sub, amount);
         else RiteProgress.add(prog, i, amount);
+        io.github.rpgclasses.network.Net.syncProgress(p);
         int value = Math.min(RiteProgress.value(o, i, prog), RiteProgress.target(o));
         p.displayClientMessage(Component.translatable("msg.rites_and_paths.rite.progress", objectiveName(c.rite(), i), value,
                 RiteProgress.target(o)).withStyle(ChatFormatting.GOLD), true);
@@ -242,6 +243,7 @@ public final class Rites {
     private static void markDone(ServerPlayer p, Current c, int i) {
         if (RiteProgress.done(c.rite().objectives().get(i), i, c.data().state.riteProgress)) return;
         RiteProgress.markDone(c.data().state.riteProgress, i);
+        io.github.rpgclasses.network.Net.syncProgress(p);
         objectiveDone(p, c, i);
     }
 

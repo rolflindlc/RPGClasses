@@ -140,3 +140,14 @@
 139 %s (%s Blöcke)
 140 Aufhören zu beten
 141 Gebet: Für wen betest du?
+142 Rasse
+143 Rang %s/%s
+144 Ziehen zum Bewegen · Mausrad: Zoom · Mauszeiger über einen Knoten: Details
+145 Attribute
+146 Höchster Rang erreicht
+147 Ritual abgeschlossen
+148 Ritual läuft
+149 Schließe das vorherige Ritual ab, um dieses zu beginnen.
+150 Neue Fähigkeiten: %s
+151 Verbesserungen auf diesem Rang:
+152 Wird auf Rang %s freigeschaltet

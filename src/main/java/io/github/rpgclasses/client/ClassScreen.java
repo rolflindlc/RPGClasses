@@ -31,7 +31,9 @@ import java.util.Locale;
  * Pantalla de clases. En modo selección (al entrar sin clase) no se puede cerrar hasta elegir;
  * en modo libro (tecla) consulta cualquier clase. La pestaña "Árbol" muestra el árbol de habilidades
  * ({@link SkillTreeView}): de cualquier clase como vista previa y, en la propia, para planear puntos,
- * perks y subclase y confirmarlos de una vez. Todas las acciones se envían al servidor, que las valida.
+ * perks y subclase y confirmarlos de una vez; en su ayuda de cada nodo está toda la información de ramas, perks,
+ * habilidades y subclases. La pestaña "Raza" muestra el progreso de la raza propia ({@link RaceTreeView}): sus
+ * ritos y las habilidades que da cada Rango. Todas las acciones se envían al servidor, que las valida.
  */
 public final class ClassScreen extends Screen {
     private static final int LINE_HEIGHT = 10;
@@ -50,6 +52,8 @@ public final class ClassScreen extends Screen {
     private int panelLeft, panelTop, panelRight, panelBottom, headerTop;
     private long lastXp = -1;
     private final SkillTreeView tree = new SkillTreeView();
+    /** Árbol de progreso de la raza propia (pestaña Raza). */
+    private final RaceTreeView raceTree = new RaceTreeView();
     /** Plan con el que se construyeron los botones del pie (si cambia, se reconstruyen). */
     private List<TreePlan.Step> footerPlan = List.of();
 
@@ -98,6 +102,9 @@ public final class ClassScreen extends Screen {
         }
 
         Portraits.clearCache();
+        // Sin raza (o con una que el cliente no conoce) no hay árbol de raza que enseñar.
+        boolean hasRace = RaceTreeView.available();
+        if (tab == ClassPages.Tab.RACE && !hasRace) tab = selecting ? ClassPages.Tab.SUMMARY : ClassPages.Tab.PROGRESS;
         panelLeft = LEFT_WIDTH + 14;
         header = height >= 330 ? 46 : 24;
         headerTop = TABS_Y + 24;
@@ -121,7 +128,8 @@ public final class ClassScreen extends Screen {
         }
 
         // Pestañas.
-        List<ClassPages.Tab> tabs = List.of(ClassPages.Tab.values());
+        List<ClassPages.Tab> tabs = new ArrayList<>(List.of(ClassPages.Tab.values()));
+        if (!hasRace) tabs.remove(ClassPages.Tab.RACE);
         int tabWidth = (panelRight - panelLeft) / tabs.size();
         for (int i = 0; i < tabs.size(); i++) {
             ClassPages.Tab t = tabs.get(i);
@@ -172,7 +180,10 @@ public final class ClassScreen extends Screen {
                     .bounds(center - 50, footerY, 100, 20).build());
         }
 
-        if (tab == ClassPages.Tab.PROGRESS) {
+        if (tab == ClassPages.Tab.RACE) {
+            lines = List.of();
+            raceTree.setup(panelLeft + 3, headerTop + 3, panelRight - 3, panelBottom - 3);
+        } else if (tab == ClassPages.Tab.PROGRESS) {
             lines = List.of();
             if (!treeEditable()) {
                 tree.setup(DefinitionStore.CLIENT.classDef(selectedClass), false, panelLeft + 3, headerTop + 3, panelRight - 3, panelBottom - 3,
@@ -336,6 +347,7 @@ public final class ClassScreen extends Screen {
 
     private void select(String id) {
         selectedClass = id;
+        if (tab == ClassPages.Tab.RACE) tab = ClassPages.Tab.PROGRESS; // la raza es la tuya: elegir una clase vuelve a su árbol
         scroll = 0;
         rebuildWidgets();
     }
@@ -382,6 +394,8 @@ public final class ClassScreen extends Screen {
         UiStyle.panel(g, panelLeft, headerTop, panelRight, panelBottom);
         if (tab == ClassPages.Tab.PROGRESS) {
             tree.render(g, font, mouseX, mouseY);
+        } else if (tab == ClassPages.Tab.RACE) {
+            raceTree.render(g, font, mouseX, mouseY);
         } else {
             renderHeader(g);
             g.enableScissor(panelLeft, panelTop + 4, panelRight, panelBottom - 4);
@@ -404,17 +418,20 @@ public final class ClassScreen extends Screen {
 
         super.render(g, mouseX, mouseY, partialTick);
         if (tab == ClassPages.Tab.PROGRESS) tree.renderTooltip(g, font, mouseX, mouseY);
+        else if (tab == ClassPages.Tab.RACE) raceTree.renderTooltip(g, font, mouseX, mouseY);
     }
 
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
         if (tab == ClassPages.Tab.PROGRESS && tree.mouseClicked(mouseX, mouseY, button)) return true;
+        if (tab == ClassPages.Tab.RACE && raceTree.mouseClicked(mouseX, mouseY, button)) return true;
         return super.mouseClicked(mouseX, mouseY, button);
     }
 
     @Override
     public boolean mouseDragged(double mouseX, double mouseY, int button, double dragX, double dragY) {
         if (tab == ClassPages.Tab.PROGRESS && tree.mouseDragged(mouseX, mouseY, button, dragX, dragY)) return true;
+        if (tab == ClassPages.Tab.RACE && raceTree.mouseDragged(mouseX, mouseY, button, dragX, dragY)) return true;
         return super.mouseDragged(mouseX, mouseY, button, dragX, dragY);
     }
 
@@ -424,12 +441,14 @@ public final class ClassScreen extends Screen {
             refreshPlanButtons();
             return true;
         }
+        if (tab == ClassPages.Tab.RACE && raceTree.mouseReleased(mouseX, mouseY, button)) return true;
         return super.mouseReleased(mouseX, mouseY, button);
     }
 
     @Override
     public boolean mouseScrolled(double mouseX, double mouseY, double delta) {
         if (tab == ClassPages.Tab.PROGRESS) return tree.mouseScrolled(mouseX, mouseY, delta);
+        if (tab == ClassPages.Tab.RACE) return raceTree.mouseScrolled(mouseX, mouseY, delta);
         scroll = Math.max(0, Math.min(maxScroll(), scroll - (int) (delta * LINE_HEIGHT * 3)));
         return true;
     }
@@ -437,6 +456,7 @@ public final class ClassScreen extends Screen {
     @Override
     public void removed() {
         tree.saveCamera();
+        raceTree.saveCamera();
         super.removed();
     }
 
@@ -448,6 +468,7 @@ public final class ClassScreen extends Screen {
             return true;
         }
         if (tab == ClassPages.Tab.PROGRESS && tree.keyPressed(keyCode)) return true;
+        if (tab == ClassPages.Tab.RACE && raceTree.keyPressed(keyCode)) return true;
         if (keyCode == GLFW.GLFW_KEY_PAGE_DOWN || keyCode == GLFW.GLFW_KEY_DOWN) {
             return mouseScrolled(0, 0, keyCode == GLFW.GLFW_KEY_DOWN ? -1 : -4);
         }

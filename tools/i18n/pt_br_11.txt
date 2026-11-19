@@ -140,3 +140,14 @@
 139 %s (%s blocos)
 140 Parar de rezar
 141 Prece: por quem você reza?
+142 Raça
+143 Rank %s/%s
+144 Arraste para se mover · Roda: zoom · Passe o mouse sobre um nó para ver detalhes
+145 Atributos
+146 Rank máximo alcançado
+147 Rito concluído
+148 Rito em andamento
+149 Conclua o rito anterior para iniciar este.
+150 Novas habilidades: %s
+151 Melhorias neste Rank:
+152 Desbloqueia no Rank %s

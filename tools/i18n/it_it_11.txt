@@ -140,3 +140,14 @@
 139 %s (%s blocchi)
 140 Smetti di pregare
 141 Preghiera: per chi preghi?
+142 Razza
+143 Rango %s/%s
+144 Trascina per muoverti · Rotella: zoom · Passa il mouse su un nodo per i dettagli
+145 Attributi
+146 Rango massimo raggiunto
+147 Rito completato
+148 Rito in corso
+149 Completa il rito precedente per iniziare questo.
+150 Nuove abilità: %s
+151 Miglioramenti a questo Rango:
+152 Si sblocca al Rango %s

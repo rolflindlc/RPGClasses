@@ -102,7 +102,7 @@ public final class McCanvas implements Canvas {
                 g.renderItem(stack, -8, -8);
             }
         } else {
-            ResourceLocation tex = "class".equals(icon.kind()) ? Portraits.classTex(icon.id()) : Portraits.subclassTex(icon.id());
+            ResourceLocation tex = portrait(icon);
             float s = size / 32f;
             g.pose().scale(s, s, 1);
             RenderSystem.enableBlend();
@@ -110,6 +110,18 @@ public final class McCanvas implements Canvas {
             RenderSystem.disableBlend();
         }
         g.pose().popPose();
+    }
+
+    private static ResourceLocation portrait(IconRef icon) {
+        return switch (icon.kind()) {
+            case "class" -> Portraits.classTex(icon.id());
+            case "race" -> Portraits.raceTex(icon.id());
+            case "subrace" -> {
+                int cut = icon.id().lastIndexOf('#');
+                yield cut < 0 ? null : Portraits.subraceTex(icon.id().substring(0, cut), icon.id().substring(cut + 1));
+            }
+            default -> Portraits.subclassTex(icon.id());
+        };
     }
 
     private ItemStack stack(String id) {

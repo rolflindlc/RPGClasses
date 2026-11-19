@@ -102,6 +102,8 @@ public class RpgClasses {
         MinecraftForge.EVENT_BUS.register(new EffectRules());
         MinecraftForge.EVENT_BUS.register(io.github.rpgclasses.server.Allies.listener());
         MinecraftForge.EVENT_BUS.register(new io.github.rpgclasses.content.DeathGamble());
+        // Dificultad por zona (adenda de dificultad por zona): se apaga con difficulty.enabled en la config del servidor.
+        MinecraftForge.EVENT_BUS.register(new io.github.rpgclasses.difficulty.DifficultyEvents());
         // Puente con Iron's: la clase solo se carga si el mod está instalado.
         if (net.minecraftforge.fml.ModList.get().isLoaded("irons_spellbooks")) {
             io.github.rpgclasses.compat.irons.IronsCompat.init();

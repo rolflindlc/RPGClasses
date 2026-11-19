@@ -34,6 +34,12 @@ First public beta of Rolflin's Rites & Paths (Minecraft Forge 1.20.1).
 - Translations: English, Spanish (all regional variants), Simplified and Traditional Chinese, Russian, Brazilian
   Portuguese, European Portuguese, German, French, Japanese and Italian.
 - Debug tools: `/clases debug` and `logs/rites_and_paths-debug.log`.
+- **Zone difficulty** (optional, `difficulty.enabled` in the server config): hostile mobs get varied armor and weapons,
+  more health and damage, and larger groups depending on the average class level of the players nearby (threat T,
+  0-40). Netherite only appears at T = 40 and rarely. No effect within 96 blocks of any player's respawn point, on
+  mobs with more than 80 base health or on bosses (`rites_and_paths:difficulty_exempt` tag). Kills give extra
+  Looting; XP does not change. Each lever can be switched off on its own, and `/clases dificultad` shows the
+  current T and effects where you stand.
 
 ### Known issues and notes
 - Beta: balance values are still being calibrated.

@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:magic",
+    "minecraft:indirect_magic",
+    "minecraft:dragon_breath",
+    "minecraft:lightning_bolt",
+    "minecraft:sonic_boom",
+    "minecraft:fireworks"
+  ]
+}

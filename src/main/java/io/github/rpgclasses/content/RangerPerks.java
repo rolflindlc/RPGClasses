@@ -109,6 +109,7 @@ public final class RangerPerks {
         ActiveMechanic piercing = MechanicService.find(shooter, PIERCING);
         if (piercing != null) {
             arrow.setPierceLevel((byte) (arrow.getPierceLevel() + (int) Math.round(piercing.number("extra_targets", 1))));
+            arrow.getPersistentData().putBoolean(io.github.rpgclasses.cleric.Sanctuary.PIERCING_MARK, true); // atraviesa el Santuario
         }
         ActiveMechanic explosive = MechanicService.find(shooter, EXPLOSIVE);
         if (explosive != null && isPlainArrow(arrow)) {

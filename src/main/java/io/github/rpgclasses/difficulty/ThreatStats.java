@@ -22,9 +22,9 @@ public final class ThreatStats {
     public static void apply(Mob mob, double threat) {
         if (threat < ServerConfig.DIFFICULTY_MIN_THREAT.get()) return;
         boolean health = add(mob, Attributes.MAX_HEALTH, HEALTH_ID, "rites_and_paths threat health",
-                ServerConfig.DIFFICULTY_HEALTH_PER_T.get() * threat);
+                ServerConfig.DIFFICULTY_HEALTH_PER_T.get() * threat * DifficultySettings.factor());
         add(mob, Attributes.ATTACK_DAMAGE, DAMAGE_ID, "rites_and_paths threat damage",
-                ServerConfig.DIFFICULTY_DAMAGE_PER_T.get() * threat);
+                ServerConfig.DIFFICULTY_DAMAGE_PER_T.get() * threat * DifficultySettings.factor());
         if (health) mob.setHealth(mob.getMaxHealth());
     }
 

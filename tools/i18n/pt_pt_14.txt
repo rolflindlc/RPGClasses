@@ -1,0 +1,23 @@
+0 Bem-vindo a Rolflin's Rites & Paths!
+1 Escolhe uma classe e uma raça, sobe de nível e desbloqueia ramos, habilidades e subclasses. Abre o livro de classe com %s.
+2 Os inimigos adaptam-se: consoante o nível dos jogadores ou a distância ao spawn, usam melhor equipamento, têm mais vida e dano, aparecem em maior número e podem ser elites com traços especiais. As poções de Tranquilidade e de Desafio ajustam essa dificuldade.
+3 Lembra-te de configurar a dificuldade antes de começar:
+4 [Definições de dificuldade]
+5 Clica para abrir as definições de dificuldade
+6 Definições de dificuldade
+7 Modo:
+8 Intensidade:
+9 Jogadores
+10 Distância
+11 Misto
+12 A dificuldade depende do nível de classe dos jogadores próximos.
+13 A dificuldade só aumenta quanto mais longe estiveres do spawn do mundo.
+14 Uma média entre o nível dos jogadores e a distância ao spawn.
+15 Desligado
+16 Fácil
+17 Normal
+18 Difícil
+19 O mod não aumenta a dificuldade.
+20 Os aumentos de dificuldade são reduzidos para metade.
+21 Os aumentos são os previstos pelo mod.
+22 Os aumentos de dificuldade são duplicados.

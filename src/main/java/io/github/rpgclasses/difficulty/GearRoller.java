@@ -76,8 +76,7 @@ public final class GearRoller {
         }
 
         double[] weights = weightsFor(threat);
-        double slotChance = Math.min(ServerConfig.DIFFICULTY_EQUIP_MAX.get(),
-                ServerConfig.DIFFICULTY_EQUIP_BASE.get() + ServerConfig.DIFFICULTY_EQUIP_PER_T.get() * threat);
+        double slotChance = slotChance(threat);
 
         if (wearsArmor(mob)) {
             for (int i = 0; i < ARMOR_SLOTS.length; i++) {
@@ -94,13 +93,19 @@ public final class GearRoller {
         }
     }
 
+    /** Probabilidad de que una ranura lleve equipo (con la intensidad aplicada). */
+    static double slotChance(double threat) {
+        return Math.min(ServerConfig.DIFFICULTY_EQUIP_MAX.get(),
+                (ServerConfig.DIFFICULTY_EQUIP_BASE.get() + ServerConfig.DIFFICULTY_EQUIP_PER_T.get() * threat) * DifficultySettings.factor());
+    }
+
     /** Probabilidad de set completo de netherita encantada: 0 en el umbral y el valor de referencia en la T de referencia (lineal). */
     static double fullNetheriteChance(double threat) {
         double start = ServerConfig.DIFFICULTY_FULL_START.get();
         double ref = ServerConfig.DIFFICULTY_FULL_REF_THREAT.get();
         if (threat < start) return 0.0;
         double t = ref > start ? (threat - start) / (ref - start) : 1.0;
-        return Math.max(0.0, Math.min(1.0, ServerConfig.DIFFICULTY_FULL_REF_CHANCE.get() * t));
+        return Math.max(0.0, Math.min(1.0, ServerConfig.DIFFICULTY_FULL_REF_CHANCE.get() * t * DifficultySettings.factor()));
     }
 
     private static void give(Mob mob, EquipmentSlot slot, ItemStack stack, int tier, double threat, RandomSource random, boolean forceEnchant) {
@@ -119,14 +124,16 @@ public final class GearRoller {
         double max = ServerConfig.DIFFICULTY_ENCHANT_MAX_CHANCE.get();
         double top = ThreatService.CLASS_MAX_LEVEL;
         if (threat <= start) return 0.0;
-        if (threat <= top) return max * (threat - start) / Math.max(1e-6, top - start);
-        return Math.min(1.0, max + (1.0 - max) * (threat - top) / top);
+        double chance = threat <= top ? max * (threat - start) / Math.max(1e-6, top - start)
+                : max + (1.0 - max) * (threat - top) / top;
+        return Math.min(1.0, chance * DifficultySettings.factor());
     }
 
     /** Pesos del tramo de T (a partir de 40 el último tramo), con el peso de la netherita recortado para que su probabilidad no pase del tope. */
     static double[] weightsFor(double threat) {
         int band = threat >= ThreatService.CLASS_MAX_LEVEL ? 3 : (int) Math.min(2, Math.max(0, (threat - 10) / 10));
         double[] w = WEIGHTS[band].clone();
+        w[NETHERITE] *= DifficultySettings.factor();
         double cap = ServerConfig.DIFFICULTY_NETHERITE_MAX.get();
         double others = 0;
         for (int i = 0; i < NETHERITE; i++) others += w[i];

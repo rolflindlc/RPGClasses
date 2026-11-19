@@ -64,7 +64,7 @@ public final class EliteTraits {
     public static double eliteChance(double threat) {
         double start = ServerConfig.DIFFICULTY_ELITE_START.get();
         if (threat < start) return 0.0;
-        return Math.min(1.0, ServerConfig.DIFFICULTY_ELITE_BASE.get() + ServerConfig.DIFFICULTY_ELITE_PER_T.get() * (threat - start));
+        return Math.min(1.0, (ServerConfig.DIFFICULTY_ELITE_BASE.get() + ServerConfig.DIFFICULTY_ELITE_PER_T.get() * (threat - start)) * DifficultySettings.factor());
     }
 
     /** Rasgos que puede salir con esta T: activados y ya desbloqueados. */

@@ -47,6 +47,11 @@ First public beta of Rolflin's Rites & Paths (Minecraft Forge 1.20.1).
   (`difficulty.traits.<id>`): swift, poisonous, igneous, regenerating, crippling, volatile, vampiric, teleporting,
   deflecting (projectiles bounce) and colossus (bigger, +50% health, -25% speed; dies in a visual explosion and drops
   3 equal mobs without traits).
+- **Welcome message** the first time each player joins a world, with a short explanation and (for operators and the
+  owner of a single-player world) a clickable link to the difficulty settings. **Difficulty settings menu**
+  (`/clases dificultad ajustes`, clickable): mode **Players** (class level), **Distance** (only grows away from the world
+  spawn) or **Mixed** (weighted average), and intensity **Off** (no increases), **Easy** (half), **Normal** or **Hard**
+  (double).
 
 ### Known issues and notes
 - Beta: balance values are still being calibrated.

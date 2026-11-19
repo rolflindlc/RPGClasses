@@ -8,7 +8,7 @@
 7 Wunder
 8 Wähle einen Verbündeten aus der Liste: Dein Körper bleibt knien und deine Kamera wechselt zu einem kleinen Engel, der den Verbündeten umkreist und ihm Regeneration gibt. Deine Zauber, Handauflegen und Heiligtum gehen vom Engel aus; Zauber verlieren an Macht, wenn dein Körper weit weg ist. Drücke erneut, um den Verbündeten zu wechseln oder aufzuhören zu beten.
 9 Gebet
-10 Du zahlst einen Teil deiner maximalen Gesundheit, und der Verbündete, den du ansiehst, erhält einen Teil seiner zurück (mindestens das Gezahlte). Keine Abklingzeit. Würde dich die Zahlung töten, wird das Symbol rot: Drücke zweimal, um dein Leben zu geben und deinen Verbündeten um die Hälfte seiner Gesundheit zu heilen, mit einem Moment der Unverwundbarkeit.
+10 Du zahlst einen Teil deiner maximalen Gesundheit, und der Verbündete, den du ansiehst, erhält einen Teil seiner zurück (mindestens das Gezahlte). Keine Abklingzeit. Würde dich die Zahlung töten, wird das Symbol rot: Drücke zweimal, um dein Leben zu geben; dein Verbündeter erhält seine gesamte fehlende Gesundheit zurück, bekommt so viele goldene Herzen, wie er Gesundheit hatte, und ist einen Moment unverwundbar.
 11 Opfer
 12 Halte die Taste: Eine heilige Kugel umgibt dich, drängt Feinde hinaus und hält ihre Geschosse ab. Sie absorbiert Schaden an allen darin, bis sie zerbricht. Kostet jede Sekunde Mana; nach dem Loslassen hält sie halb so lange, wie du sie gehalten hast. Während du sie hältst, bist du langsamer und kannst nicht zaubern.
 13 Heiligtum
@@ -83,59 +83,60 @@
 82 Zusätzliche Stufen deiner Buffs
 83 Mana deiner Buffs
 84 Fallschadenverringerung
-85 Heilung des Letzten Opfers
+85 Goldene Herzen (von der vorhandenen Gesundheit)
 86 Unverwundbarkeit des Letzten Opfers
-87 Volle Macht bis (Blöcke)
-88 Zusätzliche Distanz ohne Verlust (Blöcke)
-89 Heilung und Absorption deiner Zauber
-90 Mana-Regeneration im Kampf
-91 Leuchten unter
-92 Zurückgewonnenes Zaubermana
-93 Höchststufe (0 = I)
-94 Maximale Kanalisierung
-95 Zählende Ziele pro Wirken
-96 Mindestmacht auf Distanz
-97 Mindestmacht ab (Blöcke)
-98 Abstand des Engels (Blöcke)
-99 Heilung bei anderen
-100 Mana-Regeneration außerhalb des Kampfes
-101 Du erhältst vom Geheilten zurück
-102 Astverringerung x
-103 Regenerationsstufe
-104 Immunität beim Aufstehen
-105 Mindestgesundheit beim Aufstehen
-106 Heilung bei dir
-107 Schildgesundheit
-108 Schildregeneration pro Sekunde
-109 Langsamer Fall ab Stufe
-110 An den Feind weitergegebene Dauer
-111 Du wandelst viel weniger Überschuss in Absorption um, aber die Obergrenze steigt auf die Hälfte der maximalen Gesundheit.
-112 Tiefe Ägide
-113 Du wandelst mehr Überschuss in Absorption um, aber die Obergrenze sinkt stark.
-114 Schnelle Ägide
-115 Deine Buffs steigen um eine Stufe (bis III), kosten aber mehr Mana und halten etwas kürzer.
-116 Großer Segen
-117 Deine Flächen-Buffs wirken nur auf dich, halten aber viel länger.
-118 Selbstsüchtiger Segen
-119 Außerhalb des Kampfes regenerierst du viel mehr Mana, im Kampf etwas weniger.
-120 Blinder Glaube
-121 Weniger maximales Mana; heilst du wirklich jemand anderen, erhältst du einen Teil des Zaubermanas zurück.
-122 Rückkehr des Glaubens
-123 Deine Zauber heilen dich viel weniger, aber du erhältst die Hälfte dessen zurück, was du anderen heilst (bis zu 3 pro Wirken).
-124 Lebenskanal
-125 Deine Zauber heilen dich viel mehr, andere aber viel weniger.
-126 Eigener Glaube
-127 Deine erste Heilung jedes Verbündeten entfernt von Zeit zu Zeit all seine negativen Effekte, aber die Verringerung des Astes wird halbiert.
-128 Absolution
-129 Was du von einem negativen Effekt abziehst, geht mit halber Dauer auf den nächsten Feind über.
-130 Buße
-131 Flügel aus Licht: weniger Fallschaden und langsamer Fall, ein Heiligenschein, der Verbündete in der Nähe regeneriert, und ab Stufe 5 die Engelsgestalt: Du fliegst einige Sekunden, während du und deine Verbündeten regeneriert und geläutert werdet.
-132 Engel
-133 Betet für einen Verbündeten, auch ohne ihn zu sehen: Dein Körper bleibt knien und dein Blick wechselt zu einem kleinen Engel, der ihn begleitet. Du wirkst deine Zauber vom Engel aus, mit weniger Macht, je weiter dein Körper entfernt ist.
-134 Fürsprecher
-135 Heilt mit seinem eigenen Blut: mehr Gesundheit, weniger erlittener Schaden bei schweren Wunden und ab Stufe 5 das Opfer: Du zahlst Gesundheit, um einen Verbündeten zu heilen, ohne Abklingzeit. Kannst du nicht mehr zahlen, kannst du dein Leben für ihn geben.
-136 Märtyrer
-137 %s (jetzt)
-138 %s (%s Blöcke)
-139 Aufhören zu beten
-140 Gebet: Für wen betest du?
+87 Wiederhergestellte fehlende Gesundheit (Letztes Opfer)
+88 Volle Macht bis (Blöcke)
+89 Zusätzliche Distanz ohne Verlust (Blöcke)
+90 Heilung und Absorption deiner Zauber
+91 Mana-Regeneration im Kampf
+92 Leuchten unter
+93 Zurückgewonnenes Zaubermana
+94 Höchststufe (0 = I)
+95 Maximale Kanalisierung
+96 Zählende Ziele pro Wirken
+97 Mindestmacht auf Distanz
+98 Mindestmacht ab (Blöcke)
+99 Abstand des Engels (Blöcke)
+100 Heilung bei anderen
+101 Mana-Regeneration außerhalb des Kampfes
+102 Du erhältst vom Geheilten zurück
+103 Astverringerung x
+104 Regenerationsstufe
+105 Immunität beim Aufstehen
+106 Mindestgesundheit beim Aufstehen
+107 Heilung bei dir
+108 Schildgesundheit
+109 Schildregeneration pro Sekunde
+110 Langsamer Fall ab Stufe
+111 An den Feind weitergegebene Dauer
+112 Du wandelst viel weniger Überschuss in Absorption um, aber die Obergrenze steigt auf die Hälfte der maximalen Gesundheit.
+113 Tiefe Ägide
+114 Du wandelst mehr Überschuss in Absorption um, aber die Obergrenze sinkt stark.
+115 Schnelle Ägide
+116 Deine Buffs steigen um eine Stufe (bis III), kosten aber mehr Mana und halten etwas kürzer.
+117 Großer Segen
+118 Deine Flächen-Buffs wirken nur auf dich, halten aber viel länger.
+119 Selbstsüchtiger Segen
+120 Außerhalb des Kampfes regenerierst du viel mehr Mana, im Kampf etwas weniger.
+121 Blinder Glaube
+122 Weniger maximales Mana; heilst du wirklich jemand anderen, erhältst du einen Teil des Zaubermanas zurück.
+123 Rückkehr des Glaubens
+124 Deine Zauber heilen dich viel weniger, aber du erhältst die Hälfte dessen zurück, was du anderen heilst (bis zu 3 pro Wirken).
+125 Lebenskanal
+126 Deine Zauber heilen dich viel mehr, andere aber viel weniger.
+127 Eigener Glaube
+128 Deine erste Heilung jedes Verbündeten entfernt von Zeit zu Zeit all seine negativen Effekte, aber die Verringerung des Astes wird halbiert.
+129 Absolution
+130 Was du von einem negativen Effekt abziehst, geht mit halber Dauer auf den nächsten Feind über.
+131 Buße
+132 Flügel aus Licht: weniger Fallschaden und langsamer Fall, ein Heiligenschein, der Verbündete in der Nähe regeneriert, und ab Stufe 5 die Engelsgestalt: Du fliegst einige Sekunden, während du und deine Verbündeten regeneriert und geläutert werdet.
+133 Engel
+134 Betet für einen Verbündeten, auch ohne ihn zu sehen: Dein Körper bleibt knien und dein Blick wechselt zu einem kleinen Engel, der ihn begleitet. Du wirkst deine Zauber vom Engel aus, mit weniger Macht, je weiter dein Körper entfernt ist.
+135 Fürsprecher
+136 Heilt mit seinem eigenen Blut: mehr Gesundheit, weniger erlittener Schaden bei schweren Wunden und ab Stufe 5 das Opfer: Du zahlst Gesundheit, um einen Verbündeten zu heilen, ohne Abklingzeit. Kannst du nicht mehr zahlen, kannst du dein Leben für ihn geben.
+137 Märtyrer
+138 %s (jetzt)
+139 %s (%s Blöcke)
+140 Aufhören zu beten
+141 Gebet: Für wen betest du?

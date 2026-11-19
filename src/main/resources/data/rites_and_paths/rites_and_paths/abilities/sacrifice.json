@@ -4,7 +4,8 @@
   "heal_fraction": 0.2,
   "range": 12,
   "cooldown_seconds": 0.5,
-  "final_heal_fraction": 0.5,
+  "final_missing_heal": 1.0,
+  "final_absorption": 1.0,
   "final_immunity_seconds": 2,
   "confirm_seconds": 5
 }

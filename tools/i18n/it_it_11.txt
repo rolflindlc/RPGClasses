@@ -8,7 +8,7 @@
 7 Miracolo
 8 Scegli un alleato dalla lista: il tuo corpo resta in ginocchio e la tua visuale passa a un piccolo angelo che orbita intorno all'alleato e gli dà Rigenerazione. I tuoi incantesimi, l'Imposizione delle mani e il Santuario partono dall'angelo; gli incantesimi perdono potenza se il tuo corpo è lontano. Premi di nuovo per cambiare alleato o smettere di pregare.
 9 Preghiera
-10 Paghi parte della tua salute massima e l'alleato che stai guardando recupera parte della sua (almeno quanto hai pagato). Nessuna ricarica. Se pagare ti ucciderebbe, l'icona diventa rossa: premi due volte per dare la tua vita e curare metà della salute del tuo alleato, con un istante di invulnerabilità.
+10 Paghi parte della tua salute massima e l'alleato che stai guardando recupera parte della sua (almeno quanto hai pagato). Nessuna ricarica. Se pagare ti ucciderebbe, l'icona diventa rossa: premi due volte per dare la tua vita; il tuo alleato recupera tutta la salute che gli manca, ottiene tanti cuori dorati quanta salute aveva ed è invulnerabile per un istante.
 11 Sacrificio
 12 Tieni premuto il tasto: una sfera sacra ti circonda, respinge i nemici e blocca i loro proiettili. Assorbe i danni di chiunque sia all'interno finché non si rompe. Costa mana ogni secondo; quando la rilasci dura la metà del tempo in cui l'hai tenuta. Mentre la tieni sei più lento e non puoi lanciare incantesimi.
 13 Santuario
@@ -83,59 +83,60 @@
 82 Livelli extra dei tuoi buff
 83 Mana dei tuoi buff
 84 Riduzione del danno da caduta
-85 Cura del Sacrificio finale
+85 Cuori dorati (della salute che aveva)
 86 Invulnerabilità del Sacrificio finale
-87 Potenza piena fino a (blocchi)
-88 Distanza extra senza perdita (blocchi)
-89 Cura e assorbimento dei tuoi incantesimi
-90 Rigenerazione di mana in combattimento
-91 Brillano sotto
-92 Mana dell'incantesimo recuperato
-93 Livello massimo (0 = I)
-94 Canalizzazione massima
-95 Bersagli che contano per lancio
-96 Potenza minima a distanza
-97 Potenza minima da (blocchi)
-98 Distanza dell'angelo (blocchi)
-99 Cura sugli altri
-100 Rigenerazione di mana fuori dal combattimento
-101 Recuperi di quanto curi
-102 Riduzione del ramo x
-103 Livello di Rigenerazione
-104 Immunità al rialzarsi
-105 Salute minima al rialzarsi
-106 Cura su te stesso
-107 Salute dello scudo
-108 Rigenerazione dello scudo al secondo
-109 Caduta lenta dal livello
-110 Durata trasferita al nemico
-111 Converti molto meno eccesso in assorbimento, ma il limite sale a metà della salute massima.
-112 Egida profonda
-113 Converti più eccesso in assorbimento, ma il limite scende molto.
-114 Egida rapida
-115 I tuoi buff salgono di un livello (fino a III), ma costano più mana e durano un po' meno.
-116 Benedizione superiore
-117 I tuoi buff ad area influiscono solo su di te, ma durano molto di più.
-118 Benedizione egoista
-119 Rigeneri molto più mana fuori dal combattimento e un po' meno in combattimento.
-120 Fede cieca
-121 Meno mana massimo; curare davvero qualcun altro restituisce parte del mana dell'incantesimo.
-122 Ritorno della fede
-123 I tuoi incantesimi ti curano molto meno, ma recuperi metà di ciò che curi agli altri (fino a 3 per lancio).
-124 Canale vitale
-125 I tuoi incantesimi curano molto di più te, ma molto meno gli altri.
-126 Fede propria
-127 La prima cura su ogni alleato, ogni tanto, gli rimuove tutti gli effetti negativi, ma la riduzione del ramo si dimezza.
-128 Assoluzione
-129 Ciò che togli a un effetto negativo passa al nemico più vicino, con metà di quella durata.
-130 Penitenza
-131 Ali di luce: meno danni da caduta e caduta lenta, un'aureola che rigenera gli alleati vicini e, dal livello 5, la Forma angelica: voli per alcuni secondi mentre tu e i tuoi alleati vi rigenerate e venite purificati.
-132 Angelo
-133 Prega per un alleato anche senza vederlo: il tuo corpo resta in ginocchio e la tua vista passa a un piccolo angelo che lo accompagna. Lanci gli incantesimi dall'angelo, con meno potenza quanto più lontano è il tuo corpo.
-134 Intercessore
-135 Cura con il proprio sangue: più salute, meno danni subiti quando è gravemente ferito e, dal livello 5, il Sacrificio: paghi salute per curare un alleato, senza ricarica. Se non puoi più pagare, puoi dare la vita per lui.
-136 Martire
-137 %s (ora)
-138 %s (%s blocchi)
-139 Smetti di pregare
-140 Preghiera: per chi preghi?
+87 Salute mancante recuperata (Sacrificio finale)
+88 Potenza piena fino a (blocchi)
+89 Distanza extra senza perdita (blocchi)
+90 Cura e assorbimento dei tuoi incantesimi
+91 Rigenerazione di mana in combattimento
+92 Brillano sotto
+93 Mana dell'incantesimo recuperato
+94 Livello massimo (0 = I)
+95 Canalizzazione massima
+96 Bersagli che contano per lancio
+97 Potenza minima a distanza
+98 Potenza minima da (blocchi)
+99 Distanza dell'angelo (blocchi)
+100 Cura sugli altri
+101 Rigenerazione di mana fuori dal combattimento
+102 Recuperi di quanto curi
+103 Riduzione del ramo x
+104 Livello di Rigenerazione
+105 Immunità al rialzarsi
+106 Salute minima al rialzarsi
+107 Cura su te stesso
+108 Salute dello scudo
+109 Rigenerazione dello scudo al secondo
+110 Caduta lenta dal livello
+111 Durata trasferita al nemico
+112 Converti molto meno eccesso in assorbimento, ma il limite sale a metà della salute massima.
+113 Egida profonda
+114 Converti più eccesso in assorbimento, ma il limite scende molto.
+115 Egida rapida
+116 I tuoi buff salgono di un livello (fino a III), ma costano più mana e durano un po' meno.
+117 Benedizione superiore
+118 I tuoi buff ad area influiscono solo su di te, ma durano molto di più.
+119 Benedizione egoista
+120 Rigeneri molto più mana fuori dal combattimento e un po' meno in combattimento.
+121 Fede cieca
+122 Meno mana massimo; curare davvero qualcun altro restituisce parte del mana dell'incantesimo.
+123 Ritorno della fede
+124 I tuoi incantesimi ti curano molto meno, ma recuperi metà di ciò che curi agli altri (fino a 3 per lancio).
+125 Canale vitale
+126 I tuoi incantesimi curano molto di più te, ma molto meno gli altri.
+127 Fede propria
+128 La prima cura su ogni alleato, ogni tanto, gli rimuove tutti gli effetti negativi, ma la riduzione del ramo si dimezza.
+129 Assoluzione
+130 Ciò che togli a un effetto negativo passa al nemico più vicino, con metà di quella durata.
+131 Penitenza
+132 Ali di luce: meno danni da caduta e caduta lenta, un'aureola che rigenera gli alleati vicini e, dal livello 5, la Forma angelica: voli per alcuni secondi mentre tu e i tuoi alleati vi rigenerate e venite purificati.
+133 Angelo
+134 Prega per un alleato anche senza vederlo: il tuo corpo resta in ginocchio e la tua vista passa a un piccolo angelo che lo accompagna. Lanci gli incantesimi dall'angelo, con meno potenza quanto più lontano è il tuo corpo.
+135 Intercessore
+136 Cura con il proprio sangue: più salute, meno danni subiti quando è gravemente ferito e, dal livello 5, il Sacrificio: paghi salute per curare un alleato, senza ricarica. Se non puoi più pagare, puoi dare la vita per lui.
+137 Martire
+138 %s (ora)
+139 %s (%s blocchi)
+140 Smetti di pregare
+141 Preghiera: per chi preghi?

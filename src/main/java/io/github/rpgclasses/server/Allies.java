@@ -144,6 +144,27 @@ public final class Allies {
         return source.isAlliedTo(target);
     }
 
+    /** ¿Es una mascota con dueño jugador (domesticada: lobos, gatos, loros, caballos...)? */
+    public static boolean isPet(Entity e) {
+        return e instanceof OwnableEntity pet && !(e instanceof Player) && pet.getOwnerUUID() != null;
+    }
+
+    /**
+     * Aliados vivos de {@code source} a {@code radius} bloques: jugadores (no espectadores) y entidades con dueño
+     * jugador aliado (mascotas propias y de los aliados, invocaciones). {@code includeSelf}: incluir a {@code source}.
+     */
+    public static java.util.List<LivingEntity> alliesAround(Entity source, double radius, boolean includeSelf) {
+        java.util.List<LivingEntity> out = new ArrayList<>();
+        double r2 = radius * radius;
+        for (LivingEntity e : source.level().getEntitiesOfClass(LivingEntity.class, source.getBoundingBox().inflate(radius))) {
+            if (!e.isAlive() || e.distanceToSqr(source) > r2 || (e == source && !includeSelf)) continue;
+            if (e instanceof Player p && (p.isSpectator() || p instanceof FakePlayer)) continue;
+            if (!(e instanceof Player) && ownerOf(e) == null) continue;
+            if (e == source || isAlly(source, e)) out.add(e);
+        }
+        return out;
+    }
+
     /** Variante con el dueño por UUID (trampas, nubes...: el dueño puede estar desconectado). */
     public static boolean isAllyOf(MinecraftServer server, UUID owner, Entity target) {
         if (owner == null || target == null) return false;

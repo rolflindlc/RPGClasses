@@ -338,8 +338,9 @@ public final class BardState {
         String id = soloist ? Bard.SOLOIST : Bard.CHORUS;
         double r = Bard.mech(p, id, "radius", soloist ? 12 : 9);
         int allies = 0;
-        for (ServerPlayer other : p.serverLevel().players()) {
-            if (other != p && other.isAlive() && !other.isSpectator() && other.distanceToSqr(p) <= r * r && Allies.isAlly(p, other)) allies++;
+        // Jugadores aliados y mascotas (propias o de aliados); las invocaciones no cuentan.
+        for (net.minecraft.world.entity.LivingEntity other : Allies.alliesAround(p, r, false)) {
+            if (other instanceof net.minecraft.world.entity.player.Player || Allies.isPet(other)) allies++;
         }
         if (soloist) return allies == 0 ? Bard.mech(p, id, "alone_bonus", 0.2) : Bard.mech(p, id, "crowd_penalty", -0.1);
         if (allies == 0) return Bard.mech(p, id, "alone_penalty", -0.12);

@@ -5,6 +5,7 @@ import io.github.rpgclasses.registry.ModEffects;
 import io.github.rpgclasses.server.MechanicService;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -26,7 +27,8 @@ import java.util.UUID;
  *   <li>Estandarte de Guerra: +daño a los aliados (no al Paladín; lo aplica DamagePipeline).</li>
  *   <li>Estandarte de Vida: regenera a los aliados (no al Paladín).</li>
  * </ul>
- * Aliados = los jugadores que el Paladín tiene como aliados (sistema de aliados, /aliados).
+ * Aliados = los jugadores que el Paladín tiene como aliados (sistema de aliados, /aliados) y las mascotas e
+ * invocaciones suyas y de esos aliados.
  */
 public final class BannerAura {
     public static final String AURA = "banner_aura";
@@ -46,20 +48,22 @@ public final class BannerAura {
     }
 
     private static final Map<UUID, Aura> ACTIVE = new HashMap<>();
+    /** Entidades que reciben el aura (jugadores y mascotas), para quitársela al salir. */
+    private static final Map<UUID, LivingEntity> HOLDERS = new HashMap<>();
 
     /** Aura que afecta al jugador ahora mismo (o null). */
-    public static Aura of(ServerPlayer player) {
+    public static Aura of(LivingEntity player) {
         return ACTIVE.get(player.getUUID());
     }
 
     /** Cambio de duración de los efectos negativos por el aura (negativo = más cortos). */
-    public static double debuffDurationChange(ServerPlayer player) {
+    public static double debuffDurationChange(LivingEntity player) {
         Aura a = ACTIVE.get(player.getUUID());
         return a == null ? 0 : a.debuffDuration();
     }
 
     /** Estandarte de Guerra: bonus de daño del aliado. */
-    public static double damageBonus(ServerPlayer player) {
+    public static double damageBonus(LivingEntity player) {
         Aura a = ACTIVE.get(player.getUUID());
         return a == null ? 0 : a.damage();
     }
@@ -71,6 +75,7 @@ public final class BannerAura {
         if (server.getTickCount() % PERIOD_TICKS != 0) return;
 
         Map<UUID, Aura> next = new HashMap<>();
+        Map<UUID, LivingEntity> holders = new HashMap<>();
         for (ServerPlayer paladin : server.getPlayerList().getPlayers()) {
             if (paladin instanceof FakePlayer || !paladin.isAlive() || paladin.isSpectator()) continue;
             ActiveMechanic aura = MechanicService.find(paladin, AURA);
@@ -80,26 +85,25 @@ public final class BannerAura {
             double debuff = aura.number("aura_debuff_duration", 0);
             double allyDamage = MechanicService.number(paladin, WAR, "ally_damage", 0);
             double allyRegen = MechanicService.number(paladin, LIFE, "ally_heal_per_second", 0);
-            for (ServerPlayer target : paladin.serverLevel().players()) {
-                if (target instanceof FakePlayer || !target.isAlive() || target.isSpectator()) continue;
+            for (LivingEntity target : io.github.rpgclasses.server.Allies.alliesAround(paladin, radius, true)) {
                 boolean self = target == paladin;
-                if (!self && (!isAlly(paladin, target) || target.distanceToSqr(paladin) > radius * radius)) continue;
                 Aura given = new Aura(armor, debuff, self ? 0 : allyDamage, self ? 0 : allyRegen);
                 next.merge(target.getUUID(), given, Aura::max);
+                holders.put(target.getUUID(), target);
             }
         }
 
         // Quitar el aura a quien ya no la recibe.
-        for (UUID id : ACTIVE.keySet()) {
-            if (next.containsKey(id)) continue;
-            ServerPlayer p = server.getPlayerList().getPlayer(id);
-            if (p != null) setArmor(p, 0);
+        for (Map.Entry<UUID, LivingEntity> old : HOLDERS.entrySet()) {
+            if (!next.containsKey(old.getKey()) && old.getValue() != null) setArmor(old.getValue(), 0);
         }
         ACTIVE.clear();
         ACTIVE.putAll(next);
+        HOLDERS.clear();
+        HOLDERS.putAll(holders);
         for (Map.Entry<UUID, Aura> e : next.entrySet()) {
-            ServerPlayer p = server.getPlayerList().getPlayer(e.getKey());
-            if (p == null) continue;
+            LivingEntity p = holders.get(e.getKey());
+            if (p == null || !p.isAlive()) continue;
             Aura a = e.getValue();
             setArmor(p, a.armor());
             if (a.regen() > 0 && p.getHealth() < p.getMaxHealth()) p.heal((float) (a.regen() * PERIOD_TICKS / 20.0));
@@ -112,7 +116,7 @@ public final class BannerAura {
         return io.github.rpgclasses.server.Allies.isAlly(paladin, other);
     }
 
-    private static void setArmor(ServerPlayer player, double fraction) {
+    private static void setArmor(LivingEntity player, double fraction) {
         AttributeInstance armor = player.getAttribute(Attributes.ARMOR);
         if (armor == null) return;
         armor.removeModifier(ARMOR_ID);
@@ -124,5 +128,14 @@ public final class BannerAura {
     @SubscribeEvent
     public void onLogout(PlayerEvent.PlayerLoggedOutEvent event) {
         ACTIVE.remove(event.getEntity().getUUID());
+        HOLDERS.remove(event.getEntity().getUUID());
+    }
+
+    /** Estandarte de Guerra en las mascotas (el de los jugadores lo aplica DamagePipeline). */
+    @SubscribeEvent
+    public void onPetHurt(net.minecraftforge.event.entity.living.LivingHurtEvent event) {
+        if (ACTIVE.isEmpty() || !(event.getSource().getEntity() instanceof LivingEntity pet) || pet instanceof net.minecraft.world.entity.player.Player) return;
+        double war = damageBonus(pet);
+        if (war != 0) event.setAmount((float) (event.getAmount() * (1 + war)));
     }
 }

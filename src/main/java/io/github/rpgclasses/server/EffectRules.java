@@ -50,7 +50,13 @@ public final class EffectRules {
 
     @SubscribeEvent
     public void onApplicable(MobEffectEvent.Applicable event) {
-        if (reapplying || !(event.getEntity() instanceof ServerPlayer player) || player instanceof FakePlayer) return;
+        if (reapplying) return;
+        // Mascotas e invocaciones aliadas: solo el Estandarte del Paladín acorta sus efectos negativos.
+        if (!(event.getEntity() instanceof net.minecraft.world.entity.player.Player) && !event.getEntity().level().isClientSide()) {
+            petBanner(event);
+            return;
+        }
+        if (!(event.getEntity() instanceof ServerPlayer player) || player instanceof FakePlayer) return;
         MobEffectInstance instance = event.getEffectInstance();
         MobEffect effect = instance.getEffect();
         // Las marcas del propio mod (Condena...) no son debuffs normales: su duración la controla quien las pone.
@@ -87,6 +93,22 @@ public final class EffectRules {
         reapplying = true;
         try {
             player.addEffect(new MobEffectInstance(effect, duration, instance.getAmplifier(), instance.isAmbient(),
+                    instance.isVisible(), instance.showIcon()));
+        } finally {
+            reapplying = false;
+        }
+    }
+
+    private static void petBanner(MobEffectEvent.Applicable event) {
+        net.minecraft.world.entity.LivingEntity pet = event.getEntity();
+        double change = BannerAura.debuffDurationChange(pet);
+        MobEffectInstance instance = event.getEffectInstance();
+        if (change == 0 || !isNegative(instance.getEffect()) || instance.isInfiniteDuration() || instance.getDuration() <= 1) return;
+        int duration = Math.max(1, (int) Math.round(instance.getDuration() * Math.max(0, 1 + change)));
+        event.setResult(Event.Result.DENY);
+        reapplying = true;
+        try {
+            pet.addEffect(new MobEffectInstance(instance.getEffect(), duration, instance.getAmplifier(), instance.isAmbient(),
                     instance.isVisible(), instance.showIcon()));
         } finally {
             reapplying = false;

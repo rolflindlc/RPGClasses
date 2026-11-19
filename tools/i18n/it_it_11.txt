@@ -4,11 +4,11 @@
 3 Occhio del guaritore
 4 Curi l'alleato che stai guardando (vicino) del 30% della sua salute massima, senza spendere mana. Scala con il tuo potere sacro. Rialza un alleato atterrato.
 5 Imposizione delle mani
-6 Se un alleato stava per morire vicino a te, resta invece atterrato per alcuni secondi: non può agire né subire danni. Se un altro giocatore lo cura, si rialza; altrimenti muore. Ogni alleato può essere salvato così solo ogni tanto. Non salva te.
+6 Se un alleato (anche un animale domestico) stava per morire vicino a te, resta invece atterrato per alcuni secondi: non può agire né subire danni. Se un altro giocatore lo cura, si rialza; altrimenti muore. Ogni alleato può essere salvato così solo ogni tanto. Non salva te.
 7 Miracolo
 8 Scegli un alleato dalla lista: il tuo corpo resta in ginocchio e la tua visuale passa a un piccolo angelo che orbita intorno all'alleato e gli dà Rigenerazione. I tuoi incantesimi, l'Imposizione delle mani e il Santuario partono dall'angelo; gli incantesimi perdono potenza se il tuo corpo è lontano. Premi di nuovo per cambiare alleato o smettere di pregare.
 9 Preghiera
-10 Paghi parte della tua salute massima e l'alleato che stai guardando recupera parte della sua (almeno quanto hai pagato). Nessuna ricarica. Se pagare ti ucciderebbe, l'icona diventa rossa: premi due volte per dare la tua vita; il tuo alleato recupera tutta la salute che gli manca, ottiene tanti cuori dorati quanta salute aveva ed è invulnerabile per un istante.
+10 Paghi parte della tua salute massima e l'alleato che stai guardando recupera parte della sua (almeno quanto hai pagato). Nessuna ricarica. Se pagare ti ucciderebbe, l'icona diventa rossa: premi due volte per dare la tua vita; il tuo alleato recupera tutta la salute che gli manca, ottiene tanti cuori dorati quanta salute aveva ed è invulnerabile per un istante. La cura è una cura pura: nulla può aumentarla né ridurla.
 11 Sacrificio
 12 Tieni premuto il tasto: una sfera sacra ti circonda, respinge i nemici e blocca i loro proiettili. Assorbe i danni di chiunque sia all'interno finché non si rompe. Costa mana ogni secondo; quando la rilasci dura la metà del tempo in cui l'hai tenuta. Mentre la tieni sei più lento e non puoi lanciare incantesimi.
 13 Santuario

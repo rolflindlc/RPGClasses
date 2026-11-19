@@ -34,7 +34,7 @@ import java.util.UUID;
 /**
  * Plegaria (Intercesor, desde el nivel 1 de subclase).
  * <ul>
- *   <li>La tecla abre una lista de aliados (jugadores de la misma dimensión, dentro del alcance de carga del servidor),
+ *   <li>La tecla abre una lista de aliados (jugadores y mascotas de la misma dimensión, dentro del alcance de carga del servidor),
  *       aunque no se vean. Elegir uno empieza a rezar; con la Plegaria activa la lista permite cambiar de aliado o
  *       dejar de rezar.</li>
  *   <li>El cuerpo se queda quieto y agachado; la cámara del cliente pasa a un ángel que orbita al aliado
@@ -67,9 +67,15 @@ public final class Prayer {
     /** Aliado por el que reza (o null). */
     public static LivingEntity target(ServerPlayer player) {
         UUID id = PRAYING.get(player.getUUID());
-        if (id == null) return null;
-        MinecraftServer server = player.getServer();
-        return server == null ? null : server.getPlayerList().getPlayer(id);
+        return id == null ? null : find(player, id);
+    }
+
+    /** Aliado (jugador o mascota) por UUID en la dimensión del Clérigo. */
+    private static LivingEntity find(ServerPlayer cleric, UUID id) {
+        MinecraftServer server = cleric.getServer();
+        ServerPlayer p = server == null ? null : server.getPlayerList().getPlayer(id);
+        if (p != null) return p;
+        return cleric.serverLevel().getEntity(id) instanceof LivingEntity l ? l : null;
     }
 
     /** Posición del ángel (o null si no reza). */
@@ -87,12 +93,14 @@ public final class Prayer {
         return (chunks - 1) * 16.0;
     }
 
-    private static boolean eligible(ServerPlayer cleric, ServerPlayer ally) {
-        return ally != cleric && ally.isAlive() && !ally.isSpectator() && ally.level() == cleric.level()
-                && Cleric.ally(cleric, ally) && horizontalDistance(cleric, ally) <= range(cleric);
+    /** Jugadores aliados y mascotas (propias o de aliados) de la misma dimensión y dentro del alcance. */
+    private static boolean eligible(ServerPlayer cleric, LivingEntity ally) {
+        if (ally == null || ally == cleric || !ally.isAlive() || ally.isRemoved() || ally.level() != cleric.level()) return false;
+        if (ally instanceof Player p ? p.isSpectator() : !io.github.rpgclasses.server.Allies.isPet(ally)) return false;
+        return Cleric.ally(cleric, ally) && horizontalDistance(cleric, ally) <= range(cleric);
     }
 
-    private static double horizontalDistance(Player a, Player b) {
+    private static double horizontalDistance(net.minecraft.world.entity.Entity a, net.minecraft.world.entity.Entity b) {
         double dx = a.getX() - b.getX(), dz = a.getZ() - b.getZ();
         return Math.sqrt(dx * dx + dz * dz);
     }
@@ -102,9 +110,9 @@ public final class Prayer {
     /** Tecla de la Plegaria: manda la lista de aliados al cliente (no gasta nada). */
     static boolean open(ServerPlayer player, JsonObject p) {
         List<Packets.PrayerList.Entry> entries = new ArrayList<>();
-        for (Player other : player.level().players()) {
-            if (other instanceof ServerPlayer ally && eligible(player, ally)) {
-                entries.add(new Packets.PrayerList.Entry(ally.getUUID(), ally.getGameProfile().getName(), (int) Math.round(ally.distanceTo(player))));
+        for (LivingEntity ally : io.github.rpgclasses.server.Allies.alliesAround(player, range(player), false)) {
+            if (eligible(player, ally)) {
+                entries.add(new Packets.PrayerList.Entry(ally.getUUID(), ally.getDisplayName().getString(), (int) Math.round(ally.distanceTo(player))));
             }
         }
         entries.sort(java.util.Comparator.comparingInt(Packets.PrayerList.Entry::distance));
@@ -124,9 +132,8 @@ public final class Prayer {
             return;
         }
         if (!AbilityService.has(player, Cleric.PRAYER) || !player.isAlive() || Miracle.isDowned(player)) return;
-        MinecraftServer server = player.getServer();
-        ServerPlayer ally = server == null ? null : server.getPlayerList().getPlayer(allyId);
-        if (ally == null || !eligible(player, ally)) return;
+        LivingEntity ally = find(player, allyId);
+        if (!eligible(player, ally)) return;
         PRAYING.put(player.getUUID(), allyId);
         Cleric.setModifier(player, Attributes.MOVEMENT_SPEED, FREEZE_ID, "rites_and_paths_cleric:prayer_body", -1.0, AttributeModifier.Operation.MULTIPLY_TOTAL);
         player.stopUsingItem();
@@ -135,7 +142,7 @@ public final class Prayer {
         Net.toPlayer(player, new Packets.PrayerState(ally.getId(), (float) Cleric.number(Cleric.PRAYER, "orbit_distance", 3)));
         player.displayClientMessage(Component.translatable("message.rites_and_paths.cleric.prayer_start", ally.getDisplayName()), true);
         player.level().playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.AMETHYST_BLOCK_RESONATE, SoundSource.PLAYERS, 1.0f, 1.5f);
-        DebugLog.event(player, "clérigo", "Plegaria por {}", ally.getGameProfile().getName());
+        DebugLog.event(player, "clérigo", "Plegaria por {}", ally.getName().getString());
     }
 
     private static void stop(ServerPlayer player, Component reason) {
@@ -212,7 +219,7 @@ public final class Prayer {
                 PRAYING.remove(e.getKey());
                 continue;
             }
-            ServerPlayer ally = server.getPlayerList().getPlayer(e.getValue());
+            LivingEntity ally = find(cleric, e.getValue());
             if (!cleric.isAlive() || Miracle.isDowned(cleric) || !AbilityService.has(cleric, Cleric.PRAYER)) {
                 stop(cleric, null);
                 continue;

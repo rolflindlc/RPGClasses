@@ -189,9 +189,8 @@ public final class ClericBuffs {
         double perSecond = m.number("ally_heal_per_second", 0);
         if (perSecond <= 0) return;
         ServerLevel level = angel.serverLevel();
-        for (Player other : level.players()) {
-            if (other == angel || !(other instanceof ServerPlayer target) || !target.isAlive() || target.isSpectator()) continue;
-            if (target.distanceToSqr(angel) > radius * radius || !Cleric.ally(angel, target) || Miracle.isDowned(target)) continue;
+        for (LivingEntity target : io.github.rpgclasses.server.Allies.alliesAround(angel, radius, false)) {
+            if (Miracle.isDowned(target)) continue;
             BannerAura.Aura banner = BannerAura.of(target);
             double extra = perSecond - (banner == null ? 0 : banner.regen()); // no se suma al Estandarte de Vida
             if (extra > 0 && target.getHealth() < target.getMaxHealth()) {

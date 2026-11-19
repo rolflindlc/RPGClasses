@@ -47,7 +47,7 @@ import java.util.UUID;
 /**
  * Milagro (Clérigo, Nivel Total 30, pasiva).
  * <ul>
- *   <li>Si un aliado (no el Clérigo) iba a morir a ≤10 bloques de un Clérigo con Milagro, queda <b>tumbado</b> 10 s con
+ *   <li>Si un aliado (jugador o mascota; no el Clérigo) iba a morir a ≤10 bloques de un Clérigo con Milagro, queda <b>tumbado</b> 10 s con
  *       medio corazón: inmóvil, sin poder hacer nada, invulnerable (también en PvP) e ignorado por los mobs.</li>
  *   <li>Si otro jugador le cura (conjuro o habilidad), se levanta con lo curado, mínimo el 25 % de su vida, y 2 s de
  *       inmunidad. Su regeneración o sus pociones no le levantan.</li>
@@ -59,9 +59,11 @@ import java.util.UUID;
  * </ul>
  */
 public final class Miracle {
-    private record Downed(UUID cleric, long endTick, DamageSource source) {}
+    private record Downed(UUID cleric, long endTick, DamageSource source, LivingEntity entity) {}
 
     private static final Map<UUID, Downed> DOWNED = new HashMap<>();
+    /** Recarga de 90 s de las mascotas (la de los jugadores se guarda en sus datos). */
+    private static final Map<UUID, Long> PET_COOLDOWN = new HashMap<>();
     private static final Map<UUID, Long> IMMUNE_UNTIL = new HashMap<>();
     private static final String ALLY_CD = "rites_and_paths:miracle_ally";
     private static final UUID FREEZE_ID = UUID.fromString("4e2a9c71-3b5d-4f08-a6e1-9d7c2b0f5a36");
@@ -89,16 +91,28 @@ public final class Miracle {
 
     // ------------------------------------------------------------------ caer
 
+    /** Jugadores y mascotas con dueño jugador pueden quedar tumbados. */
+    private static boolean eligible(LivingEntity e) {
+        return e instanceof ServerPlayer p ? !(p instanceof FakePlayer) : io.github.rpgclasses.server.Allies.isPet(e);
+    }
+
+    private static boolean onCooldown(LivingEntity victim) {
+        if (victim instanceof ServerPlayer p) return AbilityService.remainingTicks(p, ALLY_CD) > 0;
+        Long until = PET_COOLDOWN.get(victim.getUUID());
+        return until != null && victim.level().getGameTime() < until;
+    }
+
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public void onDamage(LivingDamageEvent event) {
-        if (expiring || !(event.getEntity() instanceof ServerPlayer victim) || victim instanceof FakePlayer) return;
+        LivingEntity victim = event.getEntity();
+        if (expiring || victim.level().isClientSide() || !eligible(victim)) return;
         DamageSource source = event.getSource();
         if (source.is(DamageTypeTags.BYPASSES_INVULNERABILITY) || event.getAmount() < victim.getHealth()) return;
         if (isDowned(victim)) { // seguro: nada le mata mientras está tumbado
             event.setAmount(0);
             return;
         }
-        if (AbilityService.remainingTicks(victim, ALLY_CD) > 0) return;
+        if (onCooldown(victim)) return;
         ServerPlayer cleric = clericFor(victim);
         if (cleric == null) return;
         event.setAmount(Math.max(0, victim.getHealth() - 1));
@@ -106,7 +120,7 @@ public final class Miracle {
     }
 
     /** El Clérigo con Milagro más cercano que tiene a la víctima como aliado (ni ella misma, ni tumbado). */
-    private static ServerPlayer clericFor(ServerPlayer victim) {
+    private static ServerPlayer clericFor(LivingEntity victim) {
         ServerPlayer best = null;
         double bestDist = Double.MAX_VALUE;
         for (Player other : victim.level().players()) {
@@ -123,11 +137,17 @@ public final class Miracle {
         return best;
     }
 
-    private static void down(ServerPlayer victim, ServerPlayer cleric, DamageSource source) {
+    private static void down(LivingEntity victim, ServerPlayer cleric, DamageSource source) {
         int ticks = (int) Math.round(Cleric.number(Cleric.MIRACLE, "downed_seconds", 10) * 20);
         long now = victim.level().getGameTime();
-        DOWNED.put(victim.getUUID(), new Downed(cleric.getUUID(), now + ticks, source));
-        AbilityService.setCooldown(victim, ALLY_CD, (int) Math.round(Cleric.number(Cleric.MIRACLE, "ally_cooldown_seconds", 90) * 20));
+        DOWNED.put(victim.getUUID(), new Downed(cleric.getUUID(), now + ticks, source, victim));
+        int cd = (int) Math.round(Cleric.number(Cleric.MIRACLE, "ally_cooldown_seconds", 90) * 20);
+        if (victim instanceof ServerPlayer p) AbilityService.setCooldown(p, ALLY_CD, cd);
+        else PET_COOLDOWN.put(victim.getUUID(), now + cd);
+        if (victim instanceof Mob pet) {
+            pet.setTarget(null);
+            pet.getNavigation().stop();
+        }
         victim.addEffect(new MobEffectInstance(ModEffects.DOWNED.get(), ticks, 0, false, false, true));
         AttributeInstance speed = victim.getAttribute(Attributes.MOVEMENT_SPEED);
         if (speed != null && speed.getModifier(FREEZE_ID) == null) {
@@ -139,44 +159,44 @@ public final class Miracle {
         victim.hurtMarked = true;
         dropAggro(victim);
         sync(victim, ticks);
-        ServerLevel level = victim.serverLevel();
+        ServerLevel level = (ServerLevel) victim.level();
         level.playSound(null, victim.getX(), victim.getY(), victim.getZ(), SoundEvents.BEACON_DEACTIVATE, SoundSource.PLAYERS, 1.0f, 1.4f);
         level.sendParticles(ParticleTypes.END_ROD, victim.getX(), victim.getY() + 0.5, victim.getZ(), 30, 0.4, 0.4, 0.4, 0.08);
-        victim.displayClientMessage(Component.translatable("message.rites_and_paths.cleric.downed", ticks / 20), true);
+        if (victim instanceof ServerPlayer p) p.displayClientMessage(Component.translatable("message.rites_and_paths.cleric.downed", ticks / 20), true);
         cleric.displayClientMessage(Component.translatable("message.rites_and_paths.cleric.ally_downed", victim.getDisplayName(), ticks / 20), true);
-        DebugLog.event(victim, "clérigo", "Milagro: tumbado {} s gracias a {}", ticks / 20, cleric.getGameProfile().getName());
+        DebugLog.event(cleric, "clérigo", "Milagro: {} tumbado {} s", victim.getName().getString(), ticks / 20);
     }
 
     // ------------------------------------------------------------------ levantarse
 
     /** Le cura otro jugador: se levanta. Devuelve la curación a aplicar (mínimo el 25 % de su vida máxima). */
-    public static float revive(ServerPlayer victim, ServerPlayer healer, float amount) {
+    public static float revive(LivingEntity victim, ServerPlayer healer, float amount) {
         if (DOWNED.remove(victim.getUUID()) == null) return amount;
         clearState(victim);
         float min = (float) (victim.getMaxHealth() * Cleric.number(Cleric.MIRACLE, "revive_min_health", 0.25)) - victim.getHealth();
         grantImmunity(victim, (int) Math.round(Cleric.number(Cleric.MIRACLE, "revive_immunity_seconds", 2) * 20));
-        ServerLevel level = victim.serverLevel();
+        ServerLevel level = (ServerLevel) victim.level();
         level.playSound(null, victim.getX(), victim.getY(), victim.getZ(), SoundEvents.TOTEM_USE, SoundSource.PLAYERS, 0.6f, 1.5f);
         level.sendParticles(ParticleTypes.TOTEM_OF_UNDYING, victim.getX(), victim.getY() + 1, victim.getZ(), 30, 0.4, 0.6, 0.4, 0.3);
-        victim.displayClientMessage(Component.translatable("message.rites_and_paths.cleric.revived", healer.getDisplayName()), true);
+        if (victim instanceof ServerPlayer p) p.displayClientMessage(Component.translatable("message.rites_and_paths.cleric.revived", healer.getDisplayName()), true);
         healer.displayClientMessage(Component.translatable("message.rites_and_paths.cleric.revived_other", victim.getDisplayName()), true);
-        DebugLog.event(victim, "clérigo", "Milagro: levantado por {}", healer.getGameProfile().getName());
+        DebugLog.event(healer, "clérigo", "Milagro: levanta a {}", victim.getName().getString());
         return Math.max(amount, min);
     }
 
-    private static void clearState(ServerPlayer victim) {
+    private static void clearState(LivingEntity victim) {
         victim.removeEffect(ModEffects.DOWNED.get());
         AttributeInstance speed = victim.getAttribute(Attributes.MOVEMENT_SPEED);
         if (speed != null) speed.removeModifier(FREEZE_ID);
         sync(victim, 0);
     }
 
-    private static void sync(ServerPlayer victim, int ticks) {
+    private static void sync(LivingEntity victim, int ticks) {
         Net.CHANNEL.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> victim), new Packets.ClericDowned(victim.getId(), ticks));
     }
 
     /** Los mobs que le persiguen se olvidan de él. */
-    private static void dropAggro(ServerPlayer victim) {
+    private static void dropAggro(LivingEntity victim) {
         for (Mob mob : victim.level().getEntitiesOfClass(Mob.class, victim.getBoundingBox().inflate(48), m -> m.getTarget() == victim)) {
             mob.setTarget(null);
         }
@@ -190,8 +210,8 @@ public final class Miracle {
         MinecraftServer server = event.getServer();
         List<UUID> expired = new ArrayList<>();
         for (Map.Entry<UUID, Downed> e : DOWNED.entrySet()) {
-            ServerPlayer victim = server.getPlayerList().getPlayer(e.getKey());
-            if (victim == null || !victim.isAlive()) {
+            LivingEntity victim = e.getValue().entity();
+            if (victim == null || !victim.isAlive() || victim.isRemoved()) {
                 expired.add(e.getKey());
                 continue;
             }
@@ -205,21 +225,29 @@ public final class Miracle {
                 victim.setDeltaMovement(0, Math.min(0, v.y), 0);
                 victim.hurtMarked = true;
             }
+            if (victim instanceof Mob pet) {
+                pet.setTarget(null);
+                pet.getNavigation().stop();
+            }
             if (now % 10 == 0) dropAggro(victim);
-            if (now % 20 == 0) victim.serverLevel().sendParticles(ParticleTypes.END_ROD, victim.getX(), victim.getY() + 0.3, victim.getZ(), 3, 0.5, 0.1, 0.5, 0.01);
+            if (now % 20 == 0) ((ServerLevel) victim.level()).sendParticles(ParticleTypes.END_ROD, victim.getX(), victim.getY() + 0.3, victim.getZ(), 3, 0.5, 0.1, 0.5, 0.01);
         }
         for (UUID id : expired) {
             Downed d = DOWNED.remove(id);
-            ServerPlayer victim = server.getPlayerList().getPlayer(id);
-            if (victim == null || d == null) continue;
+            if (d == null || d.entity() == null) continue;
+            LivingEntity victim = d.entity();
+            if (victim.isRemoved()) continue;
             clearState(victim);
             if (victim.isAlive()) die(victim, d.source());
+        }
+        if (server.getTickCount() % 200 == 0) {
+            long now = server.overworld().getGameTime();
+            PET_COOLDOWN.values().removeIf(t -> t < now);
         }
     }
 
     /** Se acabó el tiempo: muere por el flujo normal (con el daño que le tumbó). */
-    private static void die(ServerPlayer victim, DamageSource source) {
-        DebugLog.event(victim, "clérigo", "Milagro: nadie le curó a tiempo");
+    private static void die(LivingEntity victim, DamageSource source) {
         expiring = true;
         try {
             victim.invulnerableTime = 0;
@@ -255,9 +283,22 @@ public final class Miracle {
 
     @SubscribeEvent
     public void onDeath(LivingDeathEvent event) {
-        if (!(event.getEntity() instanceof ServerPlayer p)) return;
-        if (DOWNED.remove(p.getUUID()) != null) clearState(p);
-        IMMUNE_UNTIL.remove(p.getUUID());
+        LivingEntity e = event.getEntity();
+        if (e.level().isClientSide()) return;
+        if (DOWNED.remove(e.getUUID()) != null) clearState(e);
+        IMMUNE_UNTIL.remove(e.getUUID());
+    }
+
+    /** Una mascota tumbada que se descarga (chunk, dimensión) deja de estarlo; vuelve con medio corazón. */
+    @SubscribeEvent
+    public void onLeaveLevel(net.minecraftforge.event.entity.EntityLeaveLevelEvent event) {
+        if (event.getLevel().isClientSide() || event.getEntity() instanceof Player) return;
+        Downed d = DOWNED.remove(event.getEntity().getUUID());
+        if (d != null && d.entity() != null) {
+            AttributeInstance speed = d.entity().getAttribute(Attributes.MOVEMENT_SPEED);
+            if (speed != null) speed.removeModifier(FREEZE_ID);
+            d.entity().removeEffect(ModEffects.DOWNED.get());
+        }
     }
 
     /** No se puede huir desconectándose: se aplica ya la muerte. */
@@ -274,7 +315,11 @@ public final class Miracle {
 
     @SubscribeEvent
     public void onChangeDimension(PlayerEvent.PlayerChangedDimensionEvent event) {
-        if (event.getEntity() instanceof ServerPlayer p && isDowned(p)) sync(p, (int) Math.max(1, DOWNED.get(p.getUUID()).endTick() - p.level().getGameTime()));
+        if (event.getEntity() instanceof ServerPlayer p && isDowned(p)) {
+            Downed d = DOWNED.get(p.getUUID());
+            DOWNED.put(p.getUUID(), new Downed(d.cleric(), d.endTick(), d.source(), p));
+            sync(p, (int) Math.max(1, d.endTick() - p.level().getGameTime()));
+        }
     }
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)

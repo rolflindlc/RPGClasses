@@ -74,7 +74,7 @@ public final class ClericSubclasses {
             player.displayClientMessage(Component.translatable("message.rites_and_paths.cleric.no_target"), true);
             return false;
         }
-        boolean downed = target instanceof ServerPlayer sp && Miracle.isDowned(sp);
+        boolean downed = Miracle.isDowned(target);
         if (!downed && target.getHealth() >= target.getMaxHealth()) {
             player.displayClientMessage(Component.translatable("message.rites_and_paths.cleric.full_health", target.getDisplayName()), true);
             return false;
@@ -108,9 +108,7 @@ public final class ClericSubclasses {
         player.setDeltaMovement(player.getDeltaMovement().add(0, 0.4, 0));
         player.hurtMarked = true;
         ServerLevel level = player.serverLevel();
-        for (Player other : level.players()) {
-            if (!(other instanceof ServerPlayer target) || !target.isAlive() || target.isSpectator()) continue;
-            if (target != player && (target.distanceToSqr(player) > radius * radius || !Cleric.ally(player, target))) continue;
+        for (LivingEntity target : io.github.rpgclasses.server.Allies.alliesAround(player, radius, true)) {
             purge(target);
             target.addEffect(new MobEffectInstance(MobEffects.REGENERATION, ticks, regen), player);
             target.addEffect(new MobEffectInstance(MobEffects.ABSORPTION, ticks, absorption), player);
@@ -186,14 +184,14 @@ public final class ClericSubclasses {
             player.displayClientMessage(Component.translatable("message.rites_and_paths.cleric.no_target"), true);
             return false;
         }
-        boolean downed = target instanceof ServerPlayer sp && Miracle.isDowned(sp);
+        boolean downed = Miracle.isDowned(target);
         if (!downed && target.getHealth() >= target.getMaxHealth()) {
             player.displayClientMessage(Component.translatable("message.rites_and_paths.cleric.full_health", target.getDisplayName()), true);
             return false;
         }
         player.setHealth((float) (player.getHealth() - cost));
         float heal = (float) Math.max(target.getMaxHealth() * AbilityService.number(p, "heal_fraction", 0.2), cost);
-        ClericHealing.abilityHeal(player, target, heal);
+        trueHeal(player, target, heal);
         ServerLevel level = player.serverLevel();
         level.sendParticles(ClassFx.BLOOD, player.getX(), player.getY() + 1.2, player.getZ(), 12, 0.3, 0.4, 0.3, 0);
         ClassFx.line(player, target, ClassFx.RED, 12);
@@ -220,9 +218,8 @@ public final class ClericSubclasses {
         // Recupera toda la vida que le falta y gana tantos corazones dorados (absorción) como vida tenía. Ignora toda
         // alteración de la curación: no pasa por el evento de curación (ni perks, ni otros mods, ni Purificación/Égida).
         float had = target.getHealth();
-        if (target instanceof ServerPlayer downed && Miracle.isDowned(downed)) Miracle.revive(downed, player, 0);
         float missing = Math.max(0, target.getMaxHealth() - had);
-        target.setHealth(had + (float) (missing * AbilityService.number(p, "final_missing_heal", 1.0)));
+        trueHeal(player, target, (float) (missing * AbilityService.number(p, "final_missing_heal", 1.0)));
         float golden = (float) (had * AbilityService.number(p, "final_absorption", 1.0));
         if (golden > 0) target.setAbsorptionAmount(target.getAbsorptionAmount() + golden);
         Miracle.grantImmunity(target, AbilityService.ticks(p, "final_immunity_seconds", 2));
@@ -234,6 +231,15 @@ public final class ClericSubclasses {
         player.hurt(new DamageSource(player.level().registryAccess().registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(MARTYRDOM)), Float.MAX_VALUE);
         if (player.isAlive()) player.hurt(player.damageSources().genericKill(), Float.MAX_VALUE);
         return true;
+    }
+
+    /**
+     * Curación verdadera del Mártir (Sacrificio y Sacrificio final): un valor fijo que nada puede aumentar ni reducir.
+     * No pasa por el evento de curación (ni perks, ni Sanación, ni efectos, ni otros mods); levanta a un tumbado.
+     */
+    private static void trueHeal(ServerPlayer martyr, LivingEntity target, float amount) {
+        if (Miracle.isDowned(target)) Miracle.revive(target, martyr, 0);
+        target.setHealth(Math.min(target.getMaxHealth(), target.getHealth() + Math.max(0, amount)));
     }
 
     /** Explosión de sangre: solo visual y sonora. */

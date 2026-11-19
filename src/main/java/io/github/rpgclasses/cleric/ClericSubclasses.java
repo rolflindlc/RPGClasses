@@ -217,10 +217,12 @@ public final class ClericSubclasses {
             return false;
         }
         ARMED.remove(player.getUUID());
-        // Recupera toda la vida que le falta y gana tantos corazones dorados (absorción) como vida tenía.
+        // Recupera toda la vida que le falta y gana tantos corazones dorados (absorción) como vida tenía. Ignora toda
+        // alteración de la curación: no pasa por el evento de curación (ni perks, ni otros mods, ni Purificación/Égida).
         float had = target.getHealth();
+        if (target instanceof ServerPlayer downed && Miracle.isDowned(downed)) Miracle.revive(downed, player, 0);
         float missing = Math.max(0, target.getMaxHealth() - had);
-        ClericHealing.abilityHeal(player, target, (float) (missing * AbilityService.number(p, "final_missing_heal", 1.0)));
+        target.setHealth(had + (float) (missing * AbilityService.number(p, "final_missing_heal", 1.0)));
         float golden = (float) (had * AbilityService.number(p, "final_absorption", 1.0));
         if (golden > 0) target.setAbsorptionAmount(target.getAbsorptionAmount() + golden);
         Miracle.grantImmunity(target, AbilityService.ticks(p, "final_immunity_seconds", 2));

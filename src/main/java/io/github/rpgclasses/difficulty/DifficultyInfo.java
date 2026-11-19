@@ -29,7 +29,7 @@ public final class DifficultyInfo {
             send(source, String.format(Locale.ROOT, "T por debajo de %.0f: todo vanilla.", ServerConfig.DIFFICULTY_MIN_THREAT.get()));
             return 1;
         }
-        double[] w = GearRoller.weightsFor(t, GearRoller.allowsNetherite(zone));
+        double[] w = GearRoller.weightsFor(t);
         double total = 0;
         for (double v : w) total += v;
         double slot = Math.min(ServerConfig.DIFFICULTY_EQUIP_MAX.get(),
@@ -38,7 +38,15 @@ public final class DifficultyInfo {
                 slot * 100, total > 0 ? w[5] / total * 100 : 0.0,
                 1 + ServerConfig.DIFFICULTY_HEALTH_PER_T.get() * t, 1 + ServerConfig.DIFFICULTY_DAMAGE_PER_T.get() * t));
         send(source, String.format(Locale.ROOT, "Mobs extra: +%.2f por mob natural. Saqueo efectivo: +%d.",
-                ExtraSpawner.expected(t, zone.players()), (int) (t / ServerConfig.DIFFICULTY_LOOT_STEP.get())));
+                ExtraSpawner.expected(t, zone.players()),
+                Math.min(ServerConfig.DIFFICULTY_LOOT_MAX.get(), (int) (t / ServerConfig.DIFFICULTY_LOOT_STEP.get()))));
+        double full = GearRoller.fullNetheriteChance(t);
+        if (full > 0) send(source, String.format(Locale.ROOT, "Set completo de netherita encantada: %.1f %% de los mobs con armadura.", full * 100));
+        int traits = EliteTraits.traitCount(t);
+        if (traits > 0 && ServerConfig.DIFFICULTY_TRAITS.get()) {
+            send(source, String.format(Locale.ROOT, "Mobs de élite: %.0f %% de los mobs, con %d rasgo(s) cada uno (regeneración, fuego, vampirismo, lentitud, explosión).",
+                    EliteTraits.eliteChance(t) * 100, traits));
+        }
         return 1;
     }
 

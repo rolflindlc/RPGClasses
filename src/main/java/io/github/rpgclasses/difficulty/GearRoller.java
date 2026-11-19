@@ -55,15 +55,27 @@ public final class GearRoller {
         return mob instanceof Zombie && !(mob instanceof Drowned);
     }
 
-    /**
-     * @param zone amenaza de la zona. La netherita solo sale si la media real de niveles es 40: una poción de
-     *             Desafío puede subir T pero no desbloquea la netherita.
-     */
+    /** Pieza de netherita de cada ranura de armadura (misma posición que {@link #ARMOR_SLOTS}). */
+    private static final Item[] FULL_ARMOR = {Items.NETHERITE_HELMET, Items.NETHERITE_CHESTPLATE, Items.NETHERITE_LEGGINGS, Items.NETHERITE_BOOTS};
+
     public static void roll(Mob mob, ThreatService.Result zone) {
         double threat = zone.threat();
         if (threat < ServerConfig.DIFFICULTY_MIN_THREAT.get()) return;
         RandomSource random = mob.getRandom();
-        double[] weights = weightsFor(threat, allowsNetherite(zone));
+
+        // Set completo de netherita, todo encantado: sustituye al reparto normal (T = 80: 30 % por defecto).
+        if (wearsArmor(mob) && random.nextDouble() < fullNetheriteChance(threat)) {
+            for (int i = 0; i < ARMOR_SLOTS.length; i++) {
+                give(mob, ARMOR_SLOTS[i], new ItemStack(FULL_ARMOR[i]), NETHERITE, threat, random, true);
+            }
+            if (usesMelee(mob)) {
+                Item weapon = (random.nextFloat() < 0.3f ? AXES : SWORDS)[NETHERITE];
+                give(mob, EquipmentSlot.MAINHAND, new ItemStack(weapon), NETHERITE, threat, random, true);
+            }
+            return;
+        }
+
+        double[] weights = weightsFor(threat);
         double slotChance = Math.min(ServerConfig.DIFFICULTY_EQUIP_MAX.get(),
                 ServerConfig.DIFFICULTY_EQUIP_BASE.get() + ServerConfig.DIFFICULTY_EQUIP_PER_T.get() * threat);
 
@@ -72,40 +84,49 @@ public final class GearRoller {
                 EquipmentSlot slot = ARMOR_SLOTS[i];
                 if (!mob.getItemBySlot(slot).isEmpty() || random.nextDouble() >= slotChance) continue;
                 int tier = pickTier(weights, random);
-                give(mob, slot, new ItemStack(ARMOR[i][tier]), tier, threat, random);
+                give(mob, slot, new ItemStack(ARMOR[i][tier]), tier, threat, random, false);
             }
         }
         if (usesMelee(mob) && mob.getItemBySlot(EquipmentSlot.MAINHAND).isEmpty() && random.nextDouble() < slotChance) {
             int tier = pickTier(weights, random);
             Item weapon = (random.nextFloat() < 0.3f ? AXES : SWORDS)[tier];
-            give(mob, EquipmentSlot.MAINHAND, new ItemStack(weapon), tier, threat, random);
+            give(mob, EquipmentSlot.MAINHAND, new ItemStack(weapon), tier, threat, random, false);
         }
     }
 
-    private static void give(Mob mob, EquipmentSlot slot, ItemStack stack, int tier, double threat, RandomSource random) {
-        double start = ServerConfig.DIFFICULTY_ENCHANT_START.get();
-        if (threat > start && random.nextDouble() < enchantChance(threat, start)) {
-            stack = EnchantmentHelper.enchantItem(random, stack, (int) (10 + threat / 2), false);
+    /** Probabilidad de set completo de netherita encantada: 0 en el umbral y el valor de referencia en la T de referencia (lineal). */
+    static double fullNetheriteChance(double threat) {
+        double start = ServerConfig.DIFFICULTY_FULL_START.get();
+        double ref = ServerConfig.DIFFICULTY_FULL_REF_THREAT.get();
+        if (threat < start) return 0.0;
+        double t = ref > start ? (threat - start) / (ref - start) : 1.0;
+        return Math.max(0.0, Math.min(1.0, ServerConfig.DIFFICULTY_FULL_REF_CHANCE.get() * t));
+    }
+
+    private static void give(Mob mob, EquipmentSlot slot, ItemStack stack, int tier, double threat, RandomSource random, boolean forceEnchant) {
+        if (forceEnchant || (threat > ServerConfig.DIFFICULTY_ENCHANT_START.get() && random.nextDouble() < enchantChance(threat))) {
+            int level = Math.min(ServerConfig.DIFFICULTY_ENCHANT_MAX_LEVEL.get(), (int) (10 + threat / 2));
+            stack = EnchantmentHelper.enchantItem(random, stack, level, false);
         }
         mob.setItemSlot(slot, stack);
         // La netherita que pone el sistema no se suelta (evita granjas de netherita). El resto, como en vanilla.
         mob.setDropChance(slot, tier == NETHERITE ? 0.0f : 0.085f);
     }
 
-    private static double enchantChance(double threat, double start) {
-        double span = Math.max(1e-6, ThreatService.MAX_THREAT - start);
-        return ServerConfig.DIFFICULTY_ENCHANT_MAX_CHANCE.get() * Math.min(1.0, (threat - start) / span);
+    /** Hasta T = 40 sube hasta enchantMaxChance (50 %) desde enchantStartThreat; de 40 a 80 sube hasta el 100 %. */
+    static double enchantChance(double threat) {
+        double start = ServerConfig.DIFFICULTY_ENCHANT_START.get();
+        double max = ServerConfig.DIFFICULTY_ENCHANT_MAX_CHANCE.get();
+        double top = ThreatService.CLASS_MAX_LEVEL;
+        if (threat <= start) return 0.0;
+        if (threat <= top) return max * (threat - start) / Math.max(1e-6, top - start);
+        return Math.min(1.0, max + (1.0 - max) * (threat - top) / top);
     }
 
-    static boolean allowsNetherite(ThreatService.Result zone) {
-        return zone.baseThreat() >= ThreatService.MAX_THREAT - 1e-9;
-    }
-
-    /** Pesos del tramo de T, con el peso de la netherita recortado para que su probabilidad no pase del tope. */
-    static double[] weightsFor(double threat, boolean netherite) {
-        int band = threat >= ThreatService.MAX_THREAT - 1e-9 ? 3 : (int) Math.min(2, Math.max(0, (threat - 10) / 10));
+    /** Pesos del tramo de T (a partir de 40 el último tramo), con el peso de la netherita recortado para que su probabilidad no pase del tope. */
+    static double[] weightsFor(double threat) {
+        int band = threat >= ThreatService.CLASS_MAX_LEVEL ? 3 : (int) Math.min(2, Math.max(0, (threat - 10) / 10));
         double[] w = WEIGHTS[band].clone();
-        if (!netherite) w[NETHERITE] = 0;
         double cap = ServerConfig.DIFFICULTY_NETHERITE_MAX.get();
         double others = 0;
         for (int i = 0; i < NETHERITE; i++) others += w[i];

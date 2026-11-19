@@ -42,8 +42,11 @@ First public beta of Rolflin's Rites & Paths (Minecraft Forge 1.20.1).
   current T and effects where you stand. **Potions of Tranquility** (-20% per level of your class level when T is
   calculated) and **Challenge** (+25% per level), levels I-IV, brewed from an awkward potion with a cornflower or
   rotten flesh and raised with glowstone dust. T is no longer capped at 40: with Challenge it can reach 80 (the cap is
-  configurable). From T = 40 mobs can wear a full set of enchanted netherite (30% at T = 80) and become **elites** with
-  special traits (regeneration, fire, vampirism, slowing hits, explosion on death), up to three at T = 80.
+  configurable). From T = 40 mobs can wear a full set of enchanted netherite (30% at T = 80). From T = 10 (0% below)
+  mobs can become **elites** with 1 to 3 traits, each with its own unlock T, particles and config section
+  (`difficulty.traits.<id>`): swift, poisonous, igneous, regenerating, crippling, volatile, vampiric, teleporting,
+  deflecting (projectiles bounce) and colossus (bigger, +50% health, -25% speed; dies in a visual explosion and drops
+  3 equal mobs without traits).
 
 ### Known issues and notes
 - Beta: balance values are still being calibrated.

@@ -3,18 +3,17 @@ package io.github.rpgclasses.difficulty;
 import io.github.rpgclasses.RpgClasses;
 import io.github.rpgclasses.config.ServerConfig;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.EntityHitResult;
 import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.entity.EntityEvent;
+import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
@@ -82,14 +81,23 @@ public final class DifficultyEvents {
 
     /** Marca un mob extra como procesado y le aplica las palancas con el T del original. */
     static void markAndApply(Mob mob, ThreatService.Result zone) {
+        markAndApply(mob, zone, true);
+    }
+
+    /** {@code traits = false} para los mobs soltados por un Coloso: mismo equipo y stats, pero nunca rasgos. */
+    static void markAndApply(Mob mob, ThreatService.Result zone, boolean traits) {
         mob.getPersistentData().putFloat(KEY_THREAT, (float) zone.threat());
-        applyLevers(mob, zone);
+        applyLevers(mob, zone, traits);
     }
 
     private static void applyLevers(Mob mob, ThreatService.Result zone) {
+        applyLevers(mob, zone, true);
+    }
+
+    private static void applyLevers(Mob mob, ThreatService.Result zone, boolean traits) {
         if (ServerConfig.DIFFICULTY_GEAR.get()) GearRoller.roll(mob, zone);
         if (ServerConfig.DIFFICULTY_STATS.get()) ThreatStats.apply(mob, zone.threat());
-        if (ServerConfig.DIFFICULTY_TRAITS.get()) EliteTraits.roll(mob, zone.threat());
+        if (traits && ServerConfig.DIFFICULTY_TRAITS.get()) EliteTraits.roll(mob, zone.threat());
     }
 
     /** Recompensa: Saqueo efectivo extra al matar, con un jugador, mobs que recibieron dificultad. */
@@ -104,38 +112,46 @@ public final class DifficultyEvents {
         if (bonus > 0) event.setLootingLevel(event.getLootingLevel() + bonus);
     }
 
-    /** Rasgos de élite al golpear: fuego, lentitud y debilidad, y vampirismo (sobre el daño final). */
+    /** Rasgos de élite al golpear: veneno, fuego, lentitud y debilidad, y vampirismo (sobre el daño final). */
     @SubscribeEvent
     public void onDamage(LivingDamageEvent event) {
         if (!(event.getSource().getEntity() instanceof Mob attacker) || !attacker.getPersistentData().contains(EliteTraits.KEY_TRAITS)) return;
         LivingEntity target = event.getEntity();
         if (event.getAmount() <= 0 || target == attacker) return;
-        if (EliteTraits.has(attacker, EliteTraits.Trait.IGNEOUS)) target.setSecondsOnFire(5);
-        if (EliteTraits.has(attacker, EliteTraits.Trait.CRIPPLING)) {
-            target.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 60, 1), attacker);
-            target.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 60, 0), attacker);
-        }
-        if (EliteTraits.has(attacker, EliteTraits.Trait.VAMPIRIC)) attacker.heal(event.getAmount() * 0.3f);
+        TraitBehaviors.onHit(attacker, target, event.getAmount());
     }
 
-    /** Rasgo explosivo: al morir explota sin romper bloques. */
+    /** Rasgos al morir: explosión (Explosivo) y explosión visual con mobs sueltos (Coloso). */
     @SubscribeEvent
     public void onDeath(LivingDeathEvent event) {
         LivingEntity dead = event.getEntity();
         if (!(dead.level() instanceof ServerLevel level) || !dead.getPersistentData().contains(EliteTraits.KEY_TRAITS)) return;
-        if (EliteTraits.has(dead, EliteTraits.Trait.VOLATILE)) {
-            level.explode(dead, dead.getX(), dead.getY() + dead.getBbHeight() / 2, dead.getZ(), 2.5f, Level.ExplosionInteraction.NONE);
-        }
+        TraitBehaviors.onDeath(dead, level);
     }
 
-    /** Señal visible de los mobs de élite: una llama de alma cada segundo. */
+    /** Partículas propias de cada rasgo de élite y su lógica periódica (teletransporte). */
     @SubscribeEvent
     public void onLivingTick(LivingEvent.LivingTickEvent event) {
         LivingEntity entity = event.getEntity();
-        if (entity.tickCount % 20 != 0 || !(entity.level() instanceof ServerLevel level) || !(entity instanceof Mob)
+        if (entity.tickCount % TraitBehaviors.PARTICLE_INTERVAL != 0 || !(entity.level() instanceof ServerLevel level) || !(entity instanceof Mob mob)
                 || !entity.getPersistentData().contains(EliteTraits.KEY_TRAITS)) return;
-        level.sendParticles(ParticleTypes.SOUL_FIRE_FLAME, entity.getX(), entity.getY() + entity.getBbHeight() / 2, entity.getZ(),
-                4, entity.getBbWidth() / 2, entity.getBbHeight() / 3, entity.getBbWidth() / 2, 0.01);
+        TraitBehaviors.tick(mob, level);
+    }
+
+    /** Rasgo Deflector: los proyectiles que le impactan rebotan y no le hacen daño. */
+    @SubscribeEvent
+    public void onProjectileImpact(ProjectileImpactEvent event) {
+        if (!(event.getRayTraceResult() instanceof EntityHitResult hit) || !(hit.getEntity() instanceof Mob mob)
+                || !EliteTraits.has(mob, EliteTraits.Trait.DEFLECTING)) return;
+        if (TraitBehaviors.deflect(event.getProjectile(), mob)) event.setCanceled(true);
+    }
+
+    /** Rasgo Coloso: caja de colisión más grande (servidor y cliente leen el tamaño del efecto de gigantismo). */
+    @SubscribeEvent
+    public void onSize(EntityEvent.Size event) {
+        if (!(event.getEntity() instanceof LivingEntity living)) return;
+        float scale = TraitBehaviors.sizeScale(living);
+        if (scale != 1.0f) event.setNewSize(event.getNewSize().scale(scale), true);
     }
 
     @SubscribeEvent

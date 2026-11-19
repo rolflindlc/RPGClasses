@@ -1,0 +1,314 @@
+0 Corpo de Centauro
+1 %1$s se dissolveu no sopro de %2$s
+2 %1$s se dissolveu no sopro de %2$s
+3 %1$s queimou no sopro de %2$s
+4 %1$s queimou no sopro de %2$s
+5 %1$s congelou no sopro de %2$s
+6 %1$s congelou no sopro de %2$s
+7 %1$s foi fulminado pelo sopro de %2$s
+8 %1$s foi fulminado pelo sopro de %2$s
+9 %1$s foi envenenado pelo sopro de %2$s
+10 %1$s foi envenenado pelo sopro de %2$s
+11 %1$s se afogou no sopro de %2$s
+12 %1$s se afogou no sopro de %2$s
+13 Corrosão
+14 Imune ao efeito de Fome e aos efeitos negativos da comida.
+15 Estômago Ácido
+16 Quebra blocos em um cubo (um de cada vez se estiver agachado). Nunca contentores.
+17 Mãos de Gigante
+18 Blocos utilitários que carrega consigo e passageiros aliados.
+19 Cinto
+20 Recebe mais cura de poções e feitiços.
+21 Abençoado
+22 Sem dano de queda; ressalta ao pousar em qualquer bloco (agachar impede).
+23 Corpo Elástico
+24 Cone canalizado do seu elemento (tecla racial 1). Custa mana e sofre a muralha de Magia.
+25 Sopro
+26 Seu sopro aplica Corrosão: menos armadura e resistência.
+27 Sopro Ácido
+28 Seu sopro incendeia o alvo.
+29 Sopro de Fogo
+30 Seu sopro deixa lento.
+31 Sopro de Gelo
+32 O raio do seu sopro salta para inimigos próximos.
+33 Sopro de Tempestade
+34 Seu sopro envenena (Lentidão contra mortos-vivos).
+35 Sopro Tóxico
+36 Seu sopro empurra e apaga o fogo.
+37 Sopro de Água
+38 Aceleração, investida, salto carregado e passageiros aliados.
+39 Corpo de Cavalo
+40 Seu ar dura mais.
+41 Guelras
+42 Criaturas selvagens do seu elemento (dragões de Ice and Fire, serpentes marinhas, górgonas ou hidras) não o atacam a menos que sejam provocadas.
+43 Sangue de Dragão
+44 Menos dano do seu elemento.
+45 Escamas
+46 Sobrevive a quedas mais altas sem dano.
+47 Passada Longa
+48 Ao cair de grande altura plana sem dano.
+49 Asas
+50 Dobra de tamanho e ganha uma segunda barra de vida.
+51 Crescer
+52 Não sabe nadar: afunda e anda pelo fundo.
+53 Peso de Pedra
+54 No ar, desliza lentamente pelas paredes.
+55 Parede de Mel
+56 Sua investida causa mais dano.
+57 Chifre
+58 Aliados próximos regeneram mana mais rápido (não o afeta).
+59 Aura de Mana
+60 Quando um inimigo desfere um golpe fatal, se divide em duas cópias em vez de morrer.
+61 Mitose
+62 Não pode montar animais nem barcos.
+63 Sem Montaria
+64 Imune ao efeito de Veneno.
+65 Sangue Tóxico
+66 Seus golpes corpo a corpo aplicam Lentidão (menos em chefes).
+67 Golpe Viscoso
+68 Sofre mais empurrão dos golpes.
+69 Corpo Mole
+70 Salto carregado agachado que o lança para onde olha.
+71 Salto de Mola
+72 Agachado, cola em paredes e entidades enquanto a barra durar.
+73 Aderência
+74 Divide-se em pequenos slimes que o seguem; se todos morrerem, morre.
+75 Enxame
+76 Quebra plantações ao pisar nelas (não agachado).
+77 Pisão
+78 Dano corpo a corpo baseado na sua velocidade; a investida o desacelera menos.
+79 Galope de Guerra
+80 Seu cinto não tem espaço para mais blocos
+81 Mana insuficiente para o seu sopro
+82 Segunda barra de vida
+83 Tempo até a velocidade máxima
+84 Controle no ar
+85 Ar x
+86 Ressalto x
+87 Queda mín. para ressaltar (blocos)
+88 Empurrão do sopro
+89 Dano dos saltos
+90 Saltos de raio
+91 Canalização máx.
+92 Carga máx.
+93 Corrosão
+94 Corrosão
+95 Elemento
+96 Queda segura (blocos)
+97 Bater de asas: recarga
+98 Aderência
+99 Cura recebida
+100 Carga do salto
+101 Empurrão sofrido
+102 Distância máx. (blocos)
+103 Mana por segundo
+104 Regeneração de mana dos aliados
+105 Máx. de slimes
+106 Velocidade máx. racial
+107 Vida após fundir
+108 Tempo de fusão
+109 Carga mín.
+110 Planar a partir de (blocos)
+111 Velocidade por passageiro
+112 Passageiros
+113 Poder (Correnteza)
+114 Dano da investida
+115 Investida máx.
+116 Empurrão da investida (blocos)
+117 Velocidade perdida ao investir
+118 Investida a partir de
+119 Liberado por um golpe de (PV)
+120 Raio do tremor (blocos)
+121 Deslize (blocos/tick)
+122 Velocidade dos slimes
+123 Slimes por coração
+124 Espaços do cinto
+125 Limite técnico de velocidade x
+126 Velocidade
+127 Dano de contacto
+128 Veneno
+129 Ressalto em parede e chão x
+130 Corpo de cavalo: acelera gradualmente ao correr em linha reta e, acima de 40% da velocidade máxima, investe contra tudo o que acerta (perdendo velocidade ao fazê-lo). Salto carregado como um cavalo (segure saltar) e um aliado pode montar nas suas costas. Não passa por vãos de 1 bloco e não pode montar animais nem barcos.
+131 Centauro
+132 O dobro do tamanho e o dobro da vida (sem limite). Quebra blocos em um cubo 2×2×2 (um de cada vez se estiver agachado), e seu alcance, passo, salto e queda segura crescem com o tamanho. Em troca: mais fome, não sabe nadar (afunda), os monstros o detetam de mais longe, pisoteia plantações e não pode montar animais nem barcos.
+133 Colosso
+134 Descendente de dragões: resiste ao dano do seu elemento e sopra um sopro desse elemento (tecla racial 1), que custa mana e sofre a muralha de Magia da sua classe. Dragões selvagens do seu elemento (Ice and Fire) não o atacam a menos que sejam provocados. Usa mais fome.
+135 Draconato
+136 Não sofre dano de queda, ressalta ao pousar em qualquer bloco (agachar impede) e salta o dobro da altura. Em troca, menos vida e é empurrado mais longe.
+137 Slime
+138 Montaria Alada
+139 Derrote 20 inimigos com sua investida e faça 20 quedas lentas de pelo menos 8 blocos.
+140 Inimigos derrotados com a investida
+141 Planadas de 8 blocos
+142 Plumagem
+143 Ofereça 64 penas, 16 membranas de phantom e 8 foguetes de fogos de artifício.
+144 Penas, membranas e foguetes
+145 Topo do Mundo
+146 Com o altar na altura 150 ou mais, derrote um chefe de rito planando pelo menos 3 vezes durante a luta.
+147 Chefe derrotado no alto com 3 planadas
+148 Chifre de Prata
+149 Derrote 30 inimigos com sua investida.
+150 Inimigos derrotados com a investida
+151 Oferenda Lunar
+152 Ofereça 4 maçãs douradas, 8 fragmentos de ametista, 16 lingotes de ouro e 8 flores de pelo menos 4 tipos.
+153 Maçãs douradas, ametista, ouro e flores
+154 Aura Radiante
+155 Derrote um chefe de rito com pelo menos 2 aliados dentro da sua aura, causando pelo menos 40% do dano com sua investida.
+156 Chefe derrotado com aliados na aura
+157 Investida de Guerra
+158 Derrote 30 inimigos com ataques corpo a corpo a não menos de 40% da sua velocidade máxima.
+159 Inimigos derrotados a galope
+160 Panóplia
+161 Ofereça um conjunto completo de armadura de ferro, 1 arma de ferro, 8 couros e 16 lingotes de ferro.
+162 Armadura e arma de ferro, couro e ferro
+163 Galope Ininterrupto
+164 Derrote um chefe de rito encadeando pelo menos 10 golpes corpo a corpo sem cair abaixo de 40% da sua velocidade.
+165 Chefe derrotado com 10 golpes a galope
+166 Carga Pesada
+167 Derrote 30 inimigos com pelo menos 3 espaços do cinto preenchidos.
+168 Inimigos derrotados com o cinto carregado
+169 Cinto de Couro
+170 Ofereça 4 baús, 2 fornalhas, 1 bancada de trabalho, 16 couros e 16 lingotes de ferro.
+171 Baús, fornalhas, bancada, couro e ferro
+172 Caravana
+173 Derrote um chefe de rito com um aliado montado em si que cause pelo menos 25% do dano.
+174 Chefe derrotado com um passageiro
+175 Passos Pesados
+176 Derrote 20 inimigos e quebre 200 blocos com a quebra em área (em pé).
+177 Inimigos derrotados
+178 Blocos quebrados em área
+179 Pedra sobre Pedra
+180 Ofereça 4 blocos de ferro, 8 obsidianas, 64 pedregulhos e 1 bigorna.
+181 Ferro, obsidiana, pedregulho e bigorna
+182 Rugido do Titã
+183 Derrote um chefe de rito com a forma de Titã ativa e cause pelo menos 50% do dano nessa forma.
+184 Chefe derrotado na forma de Titã
+185 Corrosão
+186 Derrote 30 inimigos blindados corroídos pelo seu sopro.
+187 Inimigos blindados corroídos derrotados
+188 Alquimia Corrosiva
+189 Ofereça 4 poções de Dano, 16 olhos de aranha e 16 bolas de slime.
+190 Poções de dano, olhos de aranha e slime
+191 Derreter Ferro
+192 Derrote um chefe de rito aplicando Corrosão nele pelo menos 5 vezes.
+193 Chefe derrotado com 5 corrosões
+194 Sopro Ardente
+195 Derrote 30 inimigos com seu sopro.
+196 Inimigos derrotados com o sopro
+197 Brasas
+198 Ofereça 8 bastões de blaze, 16 carvões e 4 baldes de lava.
+199 Blaze, carvão e lava
+200 Pira do Dragão
+201 Com o altar no Nether, derrote um chefe de rito causando pelo menos 50% do dano com seu sopro.
+202 Chefe derrotado com o sopro (Nether)
+203 Sopro Gélido
+204 Derrote 30 inimigos com seu sopro.
+205 Inimigos derrotados com o sopro
+206 Geada
+207 Ofereça 64 blocos de neve, 16 gelos compactos e 4 gelos azuis.
+208 Neve e gelo
+209 Inverno Eterno
+210 Com o altar em um bioma nevado ou congelado, derrote um chefe de rito causando pelo menos 50% do dano com seu sopro.
+211 Chefe derrotado com o sopro (neve)
+212 Sopro de Tempestade
+213 Derrote 30 inimigos com seu sopro (os saltos de raio contam).
+214 Inimigos derrotados com o sopro
+215 Para-raios
+216 Ofereça 4 para-raios, 32 lingotes de cobre e 16 redstones.
+217 Para-raios, cobre e redstone
+218 Tempestade Ritual
+219 Invoque um chefe de rito durante uma tempestade com trovões, com o altar a céu aberto, e derrote-o causando pelo menos 50% do dano com seu sopro.
+220 Chefe derrotado com o sopro (tempestade)
+221 Sopro Tóxico
+222 Derrote 30 inimigos envenenados pelo seu sopro (mortos-vivos não contam).
+223 Inimigos envenenados derrotados
+224 Antídoto
+225 Ofereça 16 olhos de aranha, 4 poções de Veneno, 8 batatas venenosas e 4 baiacus.
+226 Olhos de aranha, veneno, batatas e baiacus
+227 Veneno Mortal
+228 Derrote um chefe de rito envenenando-o com seu sopro pelo menos 5 vezes.
+229 Chefe derrotado com 5 envenenamentos
+230 Sopro do Mar
+231 Derrote 30 inimigos com seu sopro, 10 deles enquanto estiver submerso.
+232 Inimigos derrotados com o sopro
+233 Derrotados com o sopro submerso
+234 Oferenda da Maré
+235 Ofereça 16 peixes de pelo menos 3 tipos, 32 algas e 8 poções de Respiração Aquática.
+236 Peixes, algas e poções
+237 Corte do Oceano
+238 Com o altar debaixo d'água (pelo menos 3 blocos de profundidade), derrote um chefe de rito causando pelo menos 50% do dano com seu sopro.
+239 Chefe derrotado com o sopro (debaixo d'água)
+240 não completou as ações do rito durante a luta
+241 sobraram slimes de menos
+242 pouco dano com seu traço racial
+243 sob pelo menos 3 blocos de água
+244 na altura 150 ou mais
+245 em um bioma nevado ou congelado
+246 a céu aberto durante uma tempestade
+247 Dois em Um
+248 Divida-se (por um golpe de inimigo) e funda-se de novo com sua cópia 2 vezes.
+249 Divisões com fusão
+250 Forma de Gelatina
+251 Ofereça 2 itens idênticos de cada um de 6 tipos diferentes de qualidade ferro ou melhor.
+252 6 pares de itens de ferro ou melhor
+253 Gémeos
+254 Derrote um chefe de rito depois de se dividir durante a luta e funda-se com sua cópia viva no final.
+255 Chefe derrotado após dividir e fundir
+256 Lançado
+257 Faça 40 lançamentos com pelo menos 2 s de carga e derrote 15 inimigos com o impacto de um lançamento.
+258 Lançamentos carregados
+259 Inimigos derrotados com o impacto
+260 Molas
+261 Ofereça 8 pistões, 4 pistões aderentes, 16 bolas de slime e 4 blocos de slime.
+262 Pistões e slime
+263 Salto Gigante
+264 Derrote um chefe de rito acertando-o com pelo menos 3 impactos de lançamento durante a luta.
+265 Chefe derrotado com 3 impactos
+266 Primeira Divisão
+267 Derrote 30 inimigos com o contacto dos seus pequenos slimes.
+268 Inimigos derrotados pelos seus slimes
+269 Ninhada de Gelatina
+270 Ofereça 32 bolas de slime, 4 blocos de slime e 3 poções de Cura.
+271 Slime e poções de cura
+272 Maré de Gelatina
+273 Derrote um chefe de rito dividido, com pelo menos 6 slimes vivos no final e pelo menos 50% do dano por contacto.
+274 Chefe derrotado pelo Enxame
+275 Pegajoso
+276 Derrote 20 inimigos enquanto estiver colado em uma parede ou entidade.
+277 Inimigos derrotados colado
+278 Seiva e Mel
+279 Ofereça 8 blocos de mel, 16 garrafas de mel, 16 bolas de slime e 8 teias de aranha.
+280 Mel, slime e teias de aranha
+281 Carrapato
+282 Derrote um chefe de rito tendo ficado colado nele por pelo menos 10 s no total e com pelo menos 20 golpes que aplicam Lentidão.
+283 Chefe derrotado colado nele
+284 Ao cair de grande altura plana devagar e sem dano; com os ranks, de alturas menores, com controle no ar e batida de asas.
+285 Pégaso
+286 Aliados próximos regeneram mana mais rápido, recebe mais cura de poções e feitiços, e seu chifre investe com mais força.
+287 Unicórnio
+288 Com 40% da velocidade máxima ou mais ataca sem desacelerar (Epic Fight) e causa mais dano corpo a corpo quanto mais rápido for. A investida o desacelera menos.
+289 Guerreiro
+290 Carrega um cinto de baús, fornalhas e bancadas que pode usar enquanto anda (tecla racial 1; aliados o abrem agachando e clicando com o botão direito em si), e seus aliados podem montar em si. Um pouco mais lento, e mais ainda com passageiros.
+291 Carregador
+292 Crescer (tecla racial 1): dobra de tamanho de novo com uma segunda barra de vida, quebra em 3×3×3 e o chão treme a cada passo.
+293 Titã
+294 Resiste a ácido, a comida nunca o faz mal e seu sopro corrói a armadura do alvo. Hidras selvagens não o atacam a menos que sejam provocadas.
+295 Ácido
+296 Resiste a fogo e seu sopro incendeia inimigos. Dragões de fogo selvagens não o atacam a menos que sejam provocados.
+297 Fogo
+298 Resiste a gelo e congelamento, e seu sopro deixa lento. Dragões de gelo selvagens não o atacam a menos que sejam provocados.
+299 Gelo
+300 Resiste a raios e o raio do seu sopro salta para inimigos próximos. Dragões de raio selvagens não o atacam a menos que sejam provocados.
+301 Raio
+302 Resiste a dano tóxico (imune a Veneno a partir do Rank 2) e seu sopro envenena. Górgonas selvagens não o atacam a menos que sejam provocadas.
+303 Venenoso
+304 Resiste a água e afogamento, seu ar dura o triplo (respira debaixo d'água a partir do Rank 2) e seu sopro empurra e apaga o fogo. Serpentes marinhas selvagens não o atacam a menos que sejam provocadas.
+305 Água
+306 Ainda menos vida, mas quando um inimigo desfere um golpe fatal se divide em duas cópias de meio tamanho. Agache-se ao lado da sua cópia para fundir.
+307 Mitótico
+308 Agache-se para carregar um salto; ao saltar é lançado para onde olha (como Correnteza), sem dano de impacto e ressaltando em chão e paredes.
+309 Mola
+310 Tecla racial 1: divide-se em um pequeno slime por coração (máx. 25) que só causam dano de contacto. Cada golpe mata um slime e o dano excedente não passa adiante. Curar-se dividido gera novos slimes. Pressione de novo para fundir.
+311 Enxame
+312 Agache-se contra uma parede ou entidade para colar nela. Desliza devagar pelas paredes como se fosse mel e seus golpes aplicam Lentidão.
+313 Viscoso

@@ -457,7 +457,7 @@ dump(os.path.join(out, "assets", NS, "lang", "en_us.json"), dict(sorted(en.items
 # Idiomas traducidos desde el inglés: tools/i18n/<locale>_<n>.txt tiene una línea "<índice> <texto>"
 # por cada clave de en_<n>.json (en el orden del archivo). Se valida que no falte ninguna cadena y
 # que los marcadores %s/%d coincidan con el inglés.
-for locale in ("zh_cn", "ru_ru", "pt_br", "de_de", "fr_fr", "zh_tw", "ja_jp", "it_it"):
+for locale in ("zh_cn", "ru_ru", "pt_br", "pt_pt", "de_de", "fr_fr", "zh_tw", "ja_jp", "it_it"):
     tr = {}
     for f in sorted(_glob.glob(os.path.join(os.path.dirname(os.path.abspath(__file__)), "i18n", "en_*.json"))):
         part = os.path.basename(f)[3:-5]

@@ -1,0 +1,278 @@
+0 Reduz a muralha escolhida e os traços base negativos da sua classe.
+1 Adaptável
+2 A bigorna custa menos níveis para si.
+3 Mão de Bigorna
+4 Minera debaixo d'água em velocidade normal e enxerga debaixo d'água. O fogo o magoa mais.
+5 Criatura Aquática
+6 Mesa de encantamento aprimorada e Fusão Arcana.
+7 Saber Arcano
+8 Os minérios que minera saem fundidos.
+9 Toque Fundidor
+10 Chance de a troca com piglins render o dobro.
+11 Acordo Infernal
+12 As explosões que causa não o magoam.
+13 À Prova de Explosão
+14 Esqueletos neutros e menos dano de projéteis.
+15 Ossos
+16 Invisível debaixo d'água enquanto estiver parado.
+17 Camuflagem
+18 Visão noturna sem luz do céu; imune à Escuridão.
+19 Olhos de Caverna
+20 O frio (congelamento e feitiços de gelo) e a água (feitiços de água do T.O Magic 'n Extras) o magoam mais.
+21 Sangue Flamejante
+22 Visão noturna com pouca luz.
+23 Visão no Escuro
+24 Regenera vida constantemente; para quando recebe dano.
+25 Regeneração dos Mortos
+26 Matar um inimigo concede fome e saturação.
+27 Devorar
+28 Guardiões próximos atacam seus inimigos.
+29 Escolta
+30 Não pode sofrer dano nem atacar.
+31 Forma Etérea
+32 Ao matar um monstro hostil ou um chefe, ganha aleatoriamente Força, Resistência ou Regeneração I por tantos segundos quanto sua vida máxima (chefes) ou uma fração dela (outros).
+33 Banquete
+34 Imune a fogo e lava (não ao dano de fogo mágico). O leite não remove.
+35 Pele de Brasa
+36 Melhorias na pesca.
+37 Pesca Especializada
+38 Sua fome não sobe nem desce e não tem saturação.
+39 Fome Fixa
+40 Sua Bomba de Magma racial deixa chamas que queimam inimigos.
+41 Poça de Chamas
+42 A XP perdida ao reiniciar é reduzida pela percentagem de Adaptável.
+43 Reinício Flexível
+44 A partir do Rank 2, tem Regeneração I em biomas de floresta.
+45 Seiva
+46 Fornalhas próximas funcionam mais rápido.
+47 Calor da Forja
+48 O que fabrica ou repara dura mais; no Rank 3 o que fabrica sai com Inquebrável extra.
+49 Forja Anã
+50 A partir do Rank 2, cada peça de armadura que fabricou e veste dá +0,5 de resistência.
+51 Armadura Forjada
+52 Nível de Fortuna em minérios (nunca com Toque Suave).
+53 Fortuna Racial
+54 Clique direito com a mão vazia: farinha de osso grátis em uma plantação.
+55 Toque Verde
+56 Rendimento extra de plantações maduras.
+57 Colheita Farta
+58 Gasta mais fome.
+59 Apetite de Orc
+60 Imune ao efeito de Fome.
+61 Estômago Calejado
+62 Carne e peixe crus sem efeitos negativos; eles saciam como se estivessem cozidos.
+63 Estômago de Ferro
+64 Sobrevive a um golpe letal com 1 PV, uma vez por vida. Resolve depois das habilidades de classe e antes do Totem.
+65 Última Resistência
+66 Sua Bomba de Magma racial deixa lava que queima e deixa os inimigos lentos.
+67 Poça de Lava
+68 Anda sobre lava (agachar o afunda).
+69 Andarilho da Lava
+70 Atravessa folhas e as escala.
+71 Andarilho das Folhas
+72 Poções de cura e feitiços de cura não o curam.
+73 Corpo sem Vida
+74 Chance de roubar ao acertar corpo a corpo.
+75 Dedos Ágeis
+76 Nível de Pilhagem (vale o maior entre este e o encantamento).
+77 Pilhagem Racial
+78 Velocidade extra ao quebrar pedra e minérios.
+79 Minerador
+80 Localiza a fortaleza ou o bastião mais próximo.
+81 Bússola Infernal
+82 Piglins, brutos e hoglins neutros.
+83 Nativo do Nether
+84 No Nether tem Fraqueza.
+85 Longe do Mar
+86 Não pode comer carne nem peixe.
+87 Dieta Élfica
+88 Golens de ferro são sempre hostis e os aldeões cobram mais.
+89 Marcado
+90 Seu Disparo de Fogo racial perfura os inimigos.
+91 Fogo Perfurante
+92 Comida que não é carne nem peixe sacia mais.
+93 Dieta Vegetal
+94 Funde instantaneamente o que segura na mão usando combustível do seu inventário.
+95 Fornalha Portátil
+96 Nível de cada feitiço de fogo racial (0 = ainda não o tem). Requer Iron's Spells.
+97 Feitiços Raciais
+98 A partir do Rank 2, os inimigos que derrota dão 15% a mais de experiência.
+99 Erudito
+100 Afogados e guardiões neutros.
+101 Amigo do Mar
+102 A partir do Rank 2, seus golpes corpo a corpo incendeiam o alvo por 2 s.
+103 Golpes Escaldantes
+104 Uma segunda muralha recebe parte da redução.
+105 Segunda Muralha
+106 Uma nuvem que deixa invisível tudo dentro dela.
+107 Nuvem de Fumaça
+108 Uma armadilha que nunca expira: o primeiro inimigo a pisar nela sofre dano e fica imobilizado. Só o jogador a vê.
+109 Armadilha
+110 Destaca minérios e lava próximos.
+111 Sentido da Pedra
+112 A luz solar direta o causa dano (ignora armadura) e cancela sua regeneração.
+113 Luz do Sol
+114 Dano subtraído de cada golpe que recebe.
+115 Pele Grossa
+116 Cura ao matar e roubo de vida.
+117 Sede
+118 A partir do Rank 2, o tridente (corpo a corpo ou lançado) causa 25% a mais de dano.
+119 Maestria do Tridente
+120 Agachado, minera pedra em um túnel 3×3 com maior custo de fome.
+121 Túnel
+122 Ao quebrar um minério, quebra os minérios conectados do mesmo tipo.
+123 Veios
+124 Multiplica a redução da muralha principal.
+125 Maestria de Muralha
+126 Remove Lentidão, Fraqueza, Cegueira, Fadiga, Náusea e Escuridão no raio.
+127 Voz do Senhor da Guerra
+128 Não gasta ar debaixo d'água.
+129 Respiração Aquática
+130 Enquanto está na água, queima lentamente.
+131 Chama Minguante
+132 Sem dano de queda e queda lenta.
+133 Sem Peso
+134 Imune a Wither.
+135 Sangue de Cinzas
+136 O lobo que monta morde o que acertar.
+137 Mordida
+138 Monta seus lobos domados (clique direito com a mão vazia).
+139 Cavaleiro
+140 O lobo que monta tem Regeneração.
+141 Vínculo
+142 Seus lobos têm mais vida.
+143 Lobos Fortes
+144 Sangue Resistente
+145 Retirada
+146 Impulso da Corrida
+147 Contra-ataque com Escudo
+148 Onda de Choque
+149 Castigo
+150 Pele Espiritual
+151 Afinidade Corporal de Postura
+152 Eficácia de Descarga e Efeito de Postura
+153 Chama Constante
+154 Atirador Constante
+155 Dreno de Furtividade
+156 Flecha Pegajosa
+157 Eco da Pedra
+158 Potência das Cargas de Pedra
+159 Invocações Reforçadas
+160 Invocações por Feitiço
+161 Tenacidade
+162 Toxina
+163 Dose de Toxina
+164 Golpe Traiçoeiro
+165 Concentração Inquebrável
+166 Investida Imparável
+167 Harmonia (reduz muralhas)
+168 Estandarte de Guerra
+169 Potência das Cargas de Água
+170 Vínculo Selvagem
+171 Rompeu o vínculo com %s
+172 Vínculo Selvagem com %s
+173 Carnívoro: só pode comer carne
+174 Bússola Infernal: estrutura em X %s, Z %s (a %s blocos)
+175 A Bússola Infernal só funciona no Nether
+176 Não há fortaleza ou bastião por perto
+177 Ankh! Sobrevive à Aposta com a Morte (próxima: %s)
+178 Caveira: a Morte vence a aposta
+179 Detonação de %s!
+180 %s: %s/%s cargas
+181 Elfos não comem carne nem peixe
+182 O espaço %s já tem %s vinculado (muda quando reinicia sua classe)
+183 %s vinculado ao espaço %s (grátis se seu custo for no máximo %s de mana)
+184 Esse feitiço já está vinculado a outro espaço
+185 Ainda não tem o espaço de Lançamento Livre %s
+186 Primeiro selecione um feitiço na roda do Iron's
+187 Lançamento livre (espaço %s): restam %s/%s cargas
+188 Fornalha Portátil: não tem combustível suficiente
+189 Última Fúria! Mate %s antes que acabe
+190 Última Resistência! Sobrevive com meio coração
+191 Sua sub-raça não tem habilidade ativa (ou ainda não tem o Rank)
+192 %s roubou um item de si!
+193 Sua classe não pode usar a escola %s
+194 Roubou: %s
+195 Sentido da Pedra: %s blocos destacados
+196 %s: %s s
+197 %s ainda não está disponível nesta versão do mod.
+198 %s
+199 %s agora é seu aliado.
+200 %s já é seu aliado.
+201 Removeu seus %s aliados.
+202 Já tem o número máximo de aliados (%s).
+203  Aliados dele: %s
+204  Tem ele como aliado: %s
+205 Aliados de %s (%s):
+206  ★ = aliado mútuo. /aliados agregar|quitar <jogador>, /aliados limpiar ou a tecla J.
+207 [Marcar como aliado]
+208 %s marcou como aliado.
+209 ninguém
+210 %s não é seu aliado.
+211 %s não é mais seu aliado: conta como inimigo.
+212 Não pode marcar a si mesmo: já conta como seu próprio aliado.
+213 %s não tem mais como aliado.
+214 Já tem o número máximo de vínculos (%s).
+215 Recebeu o Livro dos Vínculos.
+216 Aproxime-se do animal (menos de %s blocos).
+217 Só o Mestre das Feras pode usar este livro.
+218 Ponto %s salvo aqui.
+219 Escolha sua classe (clique em uma):
+220 %s: +%s%% de dano
+221 Classe: %s | Base: %s/30 | Subclasse: %s (%s/%s) | %s
+222 Eco Marcial: seu próximo feitiço custa menos mana
+223 Nível máximo alcançado
+224 Efeito de postura pronto: seu próximo golpe desarmado gasta as cargas
+225 Próximo nível: %s de XP
+226 nenhum
+227 %s — Raça: %s | Sub-raça: %s | Rank %s%s
+228 %s ainda não escolheu uma raça.
+229 A classe de %s foi reiniciada.
+230 Já tem uma classe. Reinicie-a para escolher outra.
+231 Já tem uma raça: ela é permanente.
+232 Já tem uma subclasse. Reinicie-a para escolher outra.
+233 Esse ramo já tem 10 pontos.
+234 Já usa 3 ramos: os outros ficam bloqueados até reiniciar sua classe.
+235 Essa classe está desativada neste servidor.
+236 Não pode fazer isso em combate.
+237 Ainda não escolheu uma classe.
+238 Precisa escolher uma raça antes de escolher uma classe.
+239 Ainda não escolheu uma subclasse.
+240 Não tem XP suficiente.
+241 Só humanos escolhem uma muralha.
+242 Pronto.
+243 Já escolheu o perk desse ramo. Ele só muda quando reinicia sua classe.
+244 Preencha o ramo (10 pontos) para escolher o perk dele.
+245 Precisa de mais pontos de classe base para subir o nível da subclasse.
+246 A subclasse é liberada com 15 pontos de classe base.
+247 Essa sub-raça ainda não está disponível.
+248 Esse ramo não existe na sua classe.
+249 Essa classe não existe ou está desativada.
+250 Esse perk não existe nesse ramo.
+251 Essa raça ou sub-raça não existe.
+252 Essa subclasse não pertence à sua classe.
+253 Essa sub-raça não pertence a essa raça.
+254 Essa muralha não pode ser escolhida (sua classe não a tem ou já a escolheu).
+255 Já escolheu suas muralhas. Elas mudam quando reinicia sua classe.
+256 O chefe do seu rito ainda está vivo.
+257 Ainda não pode invocar outro chefe de rito (%s s).
+258 O chefe do rito caiu, mas a condição não foi cumprida: %s
+259 O chefe do seu rito desapareceu.
+260 Agache e clique com o botão direito no altar para invocar o chefe do rito.
+261 Chefe do rito: %s
+262 Não há espaço livre ao lado do altar para o chefe.
+263 Nenhum chefe de rito disponível.
+264 %s atende ao seu chamado! Ele só conta para si.
+265 Rito concluído: %s! Agora é Rank %s.
+266 ✔
+267 Rito para o Rank %s: %s
+268 Ritos: clique com o botão direito no Altar de Raça para ver o rito e entregar oferendas; agache + clique para invocar o chefe.
+269 Falta para a oferenda: %s
+270 O altar não está no lugar que o rito exige: %s
+271 Não tem ritos pendentes (sem raça ou Rank máximo).
+272 Este rito não precisa de um chefe agora.
+273  %s %s: %s/%s
+274 Rito: %s ✔
+275 Oferenda aceita: %s
+276 %s: %s/%s
+277 Estrutura aceita: %s

@@ -1,0 +1,6 @@
+0 Registo de depuração ativado
+1 Registo de depuração desativado (os erros continuam sendo registados)
+2 Nenhum evento registado ainda.
+3 Não foi possível gravar o despejo: %s
+4 Despejo gravado: %s (pasta logs). Envie-me este ficheiro e o rites_and_paths-debug.log.
+5 Erro em %s: veja logs/rites_and_paths-debug.log

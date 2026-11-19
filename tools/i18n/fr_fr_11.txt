@@ -4,11 +4,11 @@
 3 Œil du guérisseur
 4 Vous soignez l'allié que vous regardez (proche) de 30 % de sa santé maximale, sans dépenser de mana. Évolue avec votre puissance sacrée. Relève un allié à terre.
 5 Imposition des mains
-6 Si un allié allait mourir près de vous, il est mis à terre quelques secondes à la place : il ne peut rien faire ni subir de dégâts. Si un autre joueur le soigne, il se relève ; sinon, il meurt. Chaque allié ne peut être sauvé ainsi que de temps en temps. Cela ne vous sauve pas.
+6 Si un allié (familiers compris) allait mourir près de vous, il est mis à terre quelques secondes à la place : il ne peut rien faire ni subir de dégâts. Si un autre joueur le soigne, il se relève ; sinon, il meurt. Chaque allié ne peut être sauvé ainsi que de temps en temps. Cela ne vous sauve pas.
 7 Miracle
 8 Choisissez un allié dans la liste : votre corps reste à genoux et votre caméra passe à un petit ange qui orbite autour de l'allié et lui donne Régénération. Vos sorts, Imposition des mains et Sanctuaire partent de l'ange ; les sorts perdent en puissance si votre corps est loin. Appuyez à nouveau pour changer d'allié ou arrêter de prier.
 9 Prière
-10 Vous payez une partie de votre santé maximale et l'allié que vous regardez récupère une partie de la sienne (au moins ce que vous avez payé). Sans délai de recharge. Si payer vous tuerait, l'icône devient rouge : appuyez deux fois pour donner votre vie ; votre allié récupère toute la santé qui lui manque, gagne autant de cœurs dorés que la santé qu'il avait et devient invulnérable un instant.
+10 Vous payez une partie de votre santé maximale et l'allié que vous regardez récupère une partie de la sienne (au moins ce que vous avez payé). Sans délai de recharge. Si payer vous tuerait, l'icône devient rouge : appuyez deux fois pour donner votre vie ; votre allié récupère toute la santé qui lui manque, gagne autant de cœurs dorés que la santé qu'il avait et devient invulnérable un instant. Ses soins sont des soins purs : rien ne peut les augmenter ni les réduire.
 11 Sacrifice
 12 Maintenez la touche : une sphère sacrée vous entoure, repousse les ennemis et bloque leurs projectiles. Elle absorbe les dégâts de quiconque est à l'intérieur jusqu'à se briser. Elle coûte du mana chaque seconde ; une fois relâchée, elle dure la moitié du temps maintenu. Pendant ce temps, vous êtes plus lent et ne pouvez pas lancer de sorts.
 13 Sanctuaire

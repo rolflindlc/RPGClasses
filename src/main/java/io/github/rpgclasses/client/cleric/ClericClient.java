@@ -54,7 +54,7 @@ import java.util.Map;
 /**
  * Cliente del Clérigo.
  * <ul>
- *   <li><b>Ojo del Sanador:</b> vida de los aliados a 32 bloques sobre sus cabezas (se ve a través de las paredes) y brillo
+ *   <li><b>Ojo del Sanador:</b> vida de los aliados (jugadores y mascotas) a 32 bloques sobre sus cabezas (se ve a través de las paredes) y brillo
  *       (contorno) de los que bajan del 40 %. Los tumbados muestran su cuenta atrás. Solo lo ve el Clérigo.</li>
  *   <li><b>Tumbado (Milagro):</b> el jugador se dibuja acostado (postura de dormir sin cama), no puede moverse ni
  *       actuar, y su pantalla muestra la cuenta atrás.</li>
@@ -168,8 +168,8 @@ public final class ClericClient {
 
     /** Contorno brillante (Ojo del Sanador): aliado a 32 bloques por debajo del 40 % de vida. */
     public static boolean glows(Entity e) {
-        if (!healerEye || !(e instanceof Player p) || p == Minecraft.getInstance().player) return false;
-        if (!ClientHandlers.isAlly(p.getUUID())) return false;
+        if (!healerEye || !(e instanceof LivingEntity p) || p == Minecraft.getInstance().player) return false;
+        if (!ClientHandlers.isAllyEntity(p)) return false;
         Minecraft mc = Minecraft.getInstance();
         double range = number(Cleric.HEALER_EYE, "range", 32);
         if (mc.player == null || p.distanceToSqr(mc.player) > range * range) return false;
@@ -283,9 +283,10 @@ public final class ClericClient {
     // ------------------------------------------------------------------ dibujo: Ojo del Sanador
 
     private static void onRenderLiving(RenderLivingEvent.Post<?, ?> event) {
-        if (!healerEye || !(event.getEntity() instanceof Player target)) return;
+        if (!healerEye) return;
+        LivingEntity target = event.getEntity();
         Minecraft mc = Minecraft.getInstance();
-        if (target == mc.player || mc.player == null || target.isInvisible() || !ClientHandlers.isAlly(target.getUUID())) return;
+        if (target == mc.player || mc.player == null || target.isInvisible() || !ClientHandlers.isAllyEntity(target)) return;
         double range = number(Cleric.HEALER_EYE, "range", 32);
         if (target.distanceToSqr(mc.player) > range * range) return;
         MutableComponent line;

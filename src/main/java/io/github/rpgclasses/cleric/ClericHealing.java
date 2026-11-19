@@ -115,8 +115,8 @@ public final class ClericHealing {
         boolean self = healer == target;
 
         // Levantar a un tumbado: curación de otro jugador (conjuro o habilidad). Lo suyo propio no le levanta.
-        if (!self && target instanceof ServerPlayer downed && Miracle.isDowned(downed)) {
-            event.setAmount(Miracle.revive(downed, healer, event.getAmount()));
+        if (!self && Miracle.isDowned(target)) {
+            event.setAmount(Miracle.revive(target, healer, event.getAmount()));
         }
         if (!Cleric.isCleric(healer)) return;
 

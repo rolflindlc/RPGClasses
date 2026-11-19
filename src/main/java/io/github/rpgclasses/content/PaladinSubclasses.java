@@ -95,18 +95,15 @@ public final class PaladinSubclasses {
         double radius = AbilityService.number(p, "radius", 12);
         int maxAllies = (int) AbilityService.number(p, "max_allies", 6);
         paladin.heal(heal);
-        List<ServerPlayer> allies = new ArrayList<>();
-        for (ServerPlayer other : paladin.serverLevel().players()) {
-            if (other == paladin || other instanceof FakePlayer || !other.isAlive() || other.isSpectator()) continue;
-            if (!BannerAura.isAlly(paladin, other) || other.distanceToSqr(paladin) > radius * radius) continue;
-            if (other.getHealth() >= other.getMaxHealth()) continue;
-            allies.add(other);
+        List<net.minecraft.world.entity.LivingEntity> allies = new ArrayList<>();
+        for (net.minecraft.world.entity.LivingEntity other : io.github.rpgclasses.server.Allies.alliesAround(paladin, radius, false)) {
+            if (other.getHealth() < other.getMaxHealth()) allies.add(other); // jugadores y mascotas aliadas
         }
         allies.sort(Comparator.comparingDouble(o -> o.distanceToSqr(paladin)));
         for (int i = 0; i < Math.min(maxAllies, allies.size()); i++) {
-            ServerPlayer ally = allies.get(i);
+            net.minecraft.world.entity.LivingEntity ally = allies.get(i);
             ally.heal(heal);
-            ally.serverLevel().sendParticles(ParticleTypes.HEART, ally.getX(), ally.getY() + 1.8, ally.getZ(), 1, 0.2, 0.1, 0.2, 0);
+            ((net.minecraft.server.level.ServerLevel) ally.level()).sendParticles(ParticleTypes.HEART, ally.getX(), ally.getY() + 1.8, ally.getZ(), 1, 0.2, 0.1, 0.2, 0);
         }
     }
 

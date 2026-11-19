@@ -91,6 +91,21 @@ public final class ClientHandlers {
         return false;
     }
 
+    /**
+     * Aliado visto desde el cliente: un jugador de la lista de aliados, o una mascota (u otra entidad con dueño) del
+     * jugador local o de uno de sus aliados.
+     */
+    public static boolean isAllyEntity(net.minecraft.world.entity.Entity e) {
+        if (e == null) return false;
+        Minecraft mc = Minecraft.getInstance();
+        if (e instanceof net.minecraft.world.entity.player.Player) return e == mc.player || isAlly(e.getUUID());
+        if (e instanceof net.minecraft.world.entity.OwnableEntity pet && pet.getOwnerUUID() != null) {
+            java.util.UUID owner = pet.getOwnerUUID();
+            return mc.player != null && owner.equals(mc.player.getUUID()) || isAlly(owner);
+        }
+        return false;
+    }
+
     public static boolean isAlliedBy(java.util.UUID id) {
         for (var e : ALLIED_BY) if (e.id().equals(id)) return true;
         return false;

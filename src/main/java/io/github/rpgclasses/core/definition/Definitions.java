@@ -53,6 +53,8 @@ public final class Definitions {
             Map<String, Double> schoolWalls,
             /** Escuelas de Iron's a las que no afecta el muro de Magia (Paladín: sagrada). */
             List<String> magicWallExemptSchools,
+            /** Conjuros concretos de Iron's que se lanzan sin el muro de Magia (Ranger: los de flechas mágicas). */
+            List<String> magicWallExemptSpells,
             /** Rasgos base (regla 12): efectos fijos, completos desde que se elige la clase. */
             List<EffectDef> traits,
             boolean armorDisablesPassives,

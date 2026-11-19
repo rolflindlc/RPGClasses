@@ -257,6 +257,9 @@ public final class IronsCompat {
         if (!(event.getEntity() instanceof ServerPlayer player)) return;
         String spellId = event.getSpellId();
 
+        // Conjuros exentos del muro de Magia de la clase (Ranger: flechas mágicas); se restablece al acabar castSpell.
+        SpellExemptions.begin(player, spellId);
+
         // Élite: los conjuros de invocar cuestan más maná.
         ActiveMechanic count = MechanicService.find(player, "summon_count");
         if (count != null) {
@@ -571,6 +574,7 @@ public final class IronsCompat {
             for (ServerPlayer p : event.getServer().getPlayerList().getPlayers()) bloodForContinuous(p);
             return;
         }
+        SpellExemptions.end(); // red de seguridad por si castSpell no llegó a su final
         if (!LOANS.isEmpty()) {
             // Préstamos que no llegaron a un intento de lanzamiento (p. ej. conjuro en cooldown): se devuelven.
             for (Iterator<Map.Entry<UUID, Loan>> it = LOANS.entrySet().iterator(); it.hasNext(); ) {

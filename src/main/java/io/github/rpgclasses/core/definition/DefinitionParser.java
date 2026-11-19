@@ -58,6 +58,7 @@ public final class DefinitionParser {
                 Map.copyOf(walls),
                 schoolWalls(o),
                 o.has("magic_wall_exempt_schools") ? strings(o, "magic_wall_exempt_schools") : List.of(),
+                o.has("magic_wall_exempt_spells") ? strings(o, "magic_wall_exempt_spells") : List.of(),
                 effects(o, "traits"),
                 "disables_unarmored_passives".equals(optString(o, "armor_rule", "")),
                 List.copyOf(branches),

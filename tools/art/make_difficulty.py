@@ -1,4 +1,4 @@
-# Texturas provisionales de la dificultad por zona: iconos de efecto (18x18) de Tranquilidad y de Desafío.
+# Texturas provisionales de la dificultad por zona: iconos de efecto (18x18) de Tranquilidad, Desafío y Gigantismo.
 # El arte final será de Laira.
 # Uso: python3 -I tools/art/make_difficulty.py src/main/resources
 import os, sys
@@ -40,5 +40,16 @@ def challenge():
     return im
 
 
+def gigantism():
+    im = frame(((150, 120, 96), (92, 70, 56)), (48, 34, 26, 255))
+    px, white = im.load(), (240, 228, 210, 255)
+    # Cuatro flechas hacia las esquinas: crece.
+    for d in range(4):
+        for (cx, cy, sx, sy) in ((5, 5, -1, -1), (12, 5, 1, -1), (5, 12, -1, 1), (12, 12, 1, 1)):
+            px[cx + sx * d, cy + sy * d] = white
+    return im
+
+
 tranquility().save(os.path.join(TEX, "tranquility.png"))
 challenge().save(os.path.join(TEX, "challenge.png"))
+gigantism().save(os.path.join(TEX, "gigantism.png"))

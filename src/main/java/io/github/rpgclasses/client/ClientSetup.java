@@ -56,6 +56,7 @@ public final class ClientSetup {
         io.github.rpgclasses.content.race.Races.clientLookup = (player, id) ->
                 player == Minecraft.getInstance().player ? localMechanic(id) : null;
         registerBard(modBus);
+        MinecraftForge.EVENT_BUS.register(new TraitRender());
         MinecraftForge.EVENT_BUS.addListener(net.minecraftforge.eventbus.api.EventPriority.LOWEST, ClientSetup::onRenderScaledPre);
         MinecraftForge.EVENT_BUS.addListener(net.minecraftforge.eventbus.api.EventPriority.HIGHEST, ClientSetup::onRenderScaledPost);
         modBus.addListener((RegisterGuiOverlaysEvent event) -> event.registerAboveAll("abilities", AbilityHud::render));

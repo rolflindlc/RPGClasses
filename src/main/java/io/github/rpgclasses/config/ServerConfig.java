@@ -1,5 +1,6 @@
 package io.github.rpgclasses.config;
 
+import io.github.rpgclasses.difficulty.EliteTraits.Trait;
 import net.minecraftforge.common.ForgeConfigSpec;
 
 import java.util.List;
@@ -58,6 +59,26 @@ public final class ServerConfig {
     public static final ForgeConfigSpec.DoubleValue DIFFICULTY_ELITE_PER_T;
     public static final ForgeConfigSpec.DoubleValue DIFFICULTY_ELITE_TRAIT_STEP;
     public static final ForgeConfigSpec.IntValue DIFFICULTY_ELITE_MAX_TRAITS;
+    public static final ForgeConfigSpec.BooleanValue DIFFICULTY_TRAIT_PARTICLES;
+    /** Por rasgo: activado y amenaza T mínima a partir de la cual puede salir (difficulty.traits.<id>). */
+    public static final java.util.Map<io.github.rpgclasses.difficulty.EliteTraits.Trait, ForgeConfigSpec.BooleanValue> TRAIT_ENABLED =
+            new java.util.EnumMap<>(io.github.rpgclasses.difficulty.EliteTraits.Trait.class);
+    public static final java.util.Map<io.github.rpgclasses.difficulty.EliteTraits.Trait, ForgeConfigSpec.DoubleValue> TRAIT_UNLOCK =
+            new java.util.EnumMap<>(io.github.rpgclasses.difficulty.EliteTraits.Trait.class);
+    public static final ForgeConfigSpec.DoubleValue TRAIT_SWIFT_SPEED;
+    public static final ForgeConfigSpec.IntValue TRAIT_POISON_SECONDS;
+    public static final ForgeConfigSpec.IntValue TRAIT_IGNEOUS_SECONDS;
+    public static final ForgeConfigSpec.DoubleValue TRAIT_VAMPIRIC_HEAL;
+    public static final ForgeConfigSpec.IntValue TRAIT_CRIPPLING_SECONDS;
+    public static final ForgeConfigSpec.DoubleValue TRAIT_VOLATILE_POWER;
+    public static final ForgeConfigSpec.DoubleValue TRAIT_TELEPORT_CHANCE;
+    public static final ForgeConfigSpec.DoubleValue TRAIT_TELEPORT_MIN_DISTANCE;
+    public static final ForgeConfigSpec.DoubleValue TRAIT_TELEPORT_MAX_DISTANCE;
+    public static final ForgeConfigSpec.DoubleValue TRAIT_DEFLECT_SPEED;
+    public static final ForgeConfigSpec.DoubleValue TRAIT_COLOSSUS_SCALE;
+    public static final ForgeConfigSpec.DoubleValue TRAIT_COLOSSUS_HEALTH;
+    public static final ForgeConfigSpec.DoubleValue TRAIT_COLOSSUS_SLOW;
+    public static final ForgeConfigSpec.IntValue TRAIT_COLOSSUS_SPAWNS;
 
     static {
         ForgeConfigSpec.Builder b = new ForgeConfigSpec.Builder();
@@ -188,20 +209,67 @@ public final class ServerConfig {
                 .comment("...la probabilidad de set completo de netherita encantada es esta (por defecto 0,30). Crece linealmente desde fullNetheriteStartThreat.")
                 .defineInRange("fullNetheriteReferenceChance", 0.30, 0.0, 1.0);
         DIFFICULTY_ELITE_START = b
-                .comment("Amenaza T a partir de la cual los mobs pueden ser de élite: llevan rasgos especiales (regeneración, fuego, vampirismo...).")
-                .defineInRange("eliteStartThreat", 40.0, 0.0, 1000.0);
+                .comment("Amenaza T a partir de la cual los mobs pueden ser de élite y llevar rasgos especiales. Por debajo, 0 %.")
+                .defineInRange("eliteStartThreat", 10.0, 0.0, 1000.0);
         DIFFICULTY_ELITE_BASE = b
                 .comment("Probabilidad de ser de élite con T = eliteStartThreat.")
-                .defineInRange("eliteBaseChance", 0.20, 0.0, 1.0);
+                .defineInRange("eliteBaseChance", 0.05, 0.0, 1.0);
         DIFFICULTY_ELITE_PER_T = b
-                .comment("Probabilidad de ser de élite que se suma por cada punto de T por encima de eliteStartThreat (0,015 da 80 % con T = 80).")
-                .defineInRange("eliteChancePerThreat", 0.015, 0.0, 1.0);
+                .comment("Probabilidad de ser de élite que se suma por cada punto de T por encima de eliteStartThreat (0,0107 da 80 % con T = 80 partiendo de 5 % con T = 10).")
+                .defineInRange("eliteChancePerThreat", 0.0107, 0.0, 1.0);
         DIFFICULTY_ELITE_TRAIT_STEP = b
-                .comment("Un rasgo más cada tantos puntos de T por encima de eliteStartThreat (con 20: 1 rasgo con T = 40, 2 con 60, 3 con 80).")
-                .defineInRange("eliteThreatPerTrait", 20.0, 1.0, 1000.0);
+                .comment("Un rasgo más cada tantos puntos de T por encima de eliteStartThreat (con 30: 1 rasgo con T = 10, 2 con 40, 3 con 70).")
+                .defineInRange("eliteThreatPerTrait", 30.0, 1.0, 1000.0);
         DIFFICULTY_ELITE_MAX_TRAITS = b
                 .comment("Máximo de rasgos de un mob de élite.")
-                .defineInRange("eliteMaxTraits", 3, 1, 5);
+                .defineInRange("eliteMaxTraits", 3, 1, 10);
+        DIFFICULTY_TRAIT_PARTICLES = b
+                .comment("Cada rasgo de élite suelta partículas propias para reconocerlo de lejos. Desactívalo si molesta o por rendimiento.")
+                .define("traitParticles", true);
+        b.comment("Un apartado por rasgo: enabled lo permite o no, unlockThreat es la T mínima para que pueda salir.").push("traits");
+        traitHeader(b, Trait.REGENERATING); b.pop();
+        traitHeader(b, Trait.IGNEOUS);
+        TRAIT_IGNEOUS_SECONDS = b.comment("Segundos de fuego con cada golpe.").defineInRange("seconds", 5, 1, 120);
+        b.pop();
+        traitHeader(b, Trait.VAMPIRIC);
+        TRAIT_VAMPIRIC_HEAL = b.comment("Fracción del daño causado que el mob se cura.").defineInRange("healFraction", 0.3, 0.0, 5.0);
+        b.pop();
+        traitHeader(b, Trait.CRIPPLING);
+        TRAIT_CRIPPLING_SECONDS = b.comment("Segundos de Lentitud II y Debilidad I con cada golpe.").defineInRange("seconds", 3, 1, 120);
+        b.pop();
+        traitHeader(b, Trait.VOLATILE);
+        TRAIT_VOLATILE_POWER = b.comment("Potencia de la explosión al morir (no rompe bloques; la de un creeper es 3).")
+                .defineInRange("power", 2.5, 0.5, 10.0);
+        b.pop();
+        traitHeader(b, Trait.POISONOUS);
+        TRAIT_POISON_SECONDS = b.comment("Segundos de Veneno con cada golpe.").defineInRange("seconds", 5, 1, 120);
+        b.pop();
+        traitHeader(b, Trait.SWIFT);
+        TRAIT_SWIFT_SPEED = b.comment("Bonus de velocidad de movimiento (0,5 = +50 %).").defineInRange("speedBonus", 0.5, 0.0, 5.0);
+        b.pop();
+        traitHeader(b, Trait.TELEPORTING);
+        TRAIT_TELEPORT_CHANCE = b.comment("Probabilidad por segundo de teletransportarse junto a su objetivo.")
+                .defineInRange("chancePerSecond", 0.2, 0.0, 1.0);
+        TRAIT_TELEPORT_MIN_DISTANCE = b.comment("Solo se teletransporta si el objetivo está al menos a esta distancia (bloques).")
+                .defineInRange("minDistance", 6.0, 1.0, 64.0);
+        TRAIT_TELEPORT_MAX_DISTANCE = b.comment("...y como mucho a esta distancia (bloques).")
+                .defineInRange("maxDistance", 32.0, 2.0, 128.0);
+        b.pop();
+        traitHeader(b, Trait.DEFLECTING);
+        TRAIT_DEFLECT_SPEED = b.comment("Fracción de la velocidad con la que rebota el proyectil (0,6 = vuelve al 60 %).")
+                .defineInRange("bounceSpeed", 0.6, 0.0, 3.0);
+        b.pop();
+        traitHeader(b, Trait.COLOSSUS);
+        TRAIT_COLOSSUS_SCALE = b.comment("Tamaño del mob (modelo y caja de colisión; 1,5 = 50 % más grande).")
+                .defineInRange("scale", 1.5, 1.0, 4.0);
+        TRAIT_COLOSSUS_HEALTH = b.comment("Vida extra como fracción de la base (0,5 = +50 %).")
+                .defineInRange("healthBonus", 0.5, 0.0, 10.0);
+        TRAIT_COLOSSUS_SLOW = b.comment("Velocidad de movimiento que pierde (0,25 = -25 %).")
+                .defineInRange("speedPenalty", 0.25, 0.0, 0.9);
+        TRAIT_COLOSSUS_SPAWNS = b.comment("Mobs iguales, sin rasgos, que suelta al morir.")
+                .defineInRange("spawnsOnDeath", 3, 0, 10);
+        b.pop();
+        b.pop();
         b.pop();
         b.push("debug");
         DEBUG_LOG = b
@@ -210,6 +278,13 @@ public final class ServerConfig {
                 .define("debugLog", true);
         b.pop();
         SPEC = b.build();
+    }
+
+    /** Abre el apartado del rasgo con sus dos opciones comunes; quien llama añade las suyas y hace b.pop(). */
+    private static void traitHeader(ForgeConfigSpec.Builder b, Trait trait) {
+        b.push(trait.id);
+        TRAIT_ENABLED.put(trait, b.define("enabled", true));
+        TRAIT_UNLOCK.put(trait, b.defineInRange("unlockThreat", trait.defaultUnlock, 0.0, 1000.0));
     }
 
     private ServerConfig() {}

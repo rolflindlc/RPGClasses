@@ -68,6 +68,10 @@ public final class ModEffects {
     public static final RegistryObject<MobEffect> CHALLENGE =
             EFFECTS.register("challenge", () -> new CurableEffect(MobEffectCategory.HARMFUL, 0xD2492B));
 
+    /** Gigantismo (rasgo Coloso de los mobs de élite): invisible; su amplificación es el tamaño en décimas (15 = x1,5) y lo leen el servidor y el cliente. */
+    public static final RegistryObject<MobEffect> GIGANTISM =
+            EFFECTS.register("gigantism", () -> new StateEffect(MobEffectCategory.NEUTRAL, 0x6B5B4B));
+
     /** Icono del aura de Estandarte (los valores los aplica content.BannerAura). */
     public static final RegistryObject<MobEffect> BANNER =
             EFFECTS.register("banner", () -> new StateEffect(MobEffectCategory.BENEFICIAL, 0xE6C35A));

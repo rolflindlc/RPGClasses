@@ -19,10 +19,11 @@ EXEMPT = [
 ]
 
 
-# Pociones de Tranquilidad y de Desafío (niveles I a IV). El nombre del objeto es el mismo en todos los niveles.
+# Pociones de Tranquilidad y de Desafío (niveles I a IV) y efecto invisible de gigantismo (rasgo Coloso). El nombre del objeto es el mismo en todos los niveles.
 LANG = {
     f"effect.{NS}.tranquility": "Tranquilidad",
     f"effect.{NS}.challenge": "Desafío",
+    f"effect.{NS}.gigantism": "Gigantismo",
     "item.minecraft.potion.effect.tranquility": "Poción de Tranquilidad",
     "item.minecraft.splash_potion.effect.tranquility": "Poción arrojadiza de Tranquilidad",
     "item.minecraft.lingering_potion.effect.tranquility": "Poción persistente de Tranquilidad",

@@ -44,8 +44,16 @@ public final class DifficultyInfo {
         if (full > 0) send(source, String.format(Locale.ROOT, "Set completo de netherita encantada: %.1f %% de los mobs con armadura.", full * 100));
         int traits = EliteTraits.traitCount(t);
         if (traits > 0 && ServerConfig.DIFFICULTY_TRAITS.get()) {
-            send(source, String.format(Locale.ROOT, "Mobs de élite: %.0f %% de los mobs, con %d rasgo(s) cada uno (regeneración, fuego, vampirismo, lentitud, explosión).",
+            send(source, String.format(Locale.ROOT, "Mobs de élite: %.0f %% de los mobs, con %d rasgo(s) cada uno.",
                     EliteTraits.eliteChance(t) * 100, traits));
+            StringBuilder list = new StringBuilder();
+            for (EliteTraits.Trait trait : EliteTraits.available(t)) {
+                if (list.length() > 0) list.append(", ");
+                list.append(trait.id);
+            }
+            send(source, "Rasgos posibles aquí: " + list);
+        } else if (ServerConfig.DIFFICULTY_TRAITS.get()) {
+            send(source, String.format(Locale.ROOT, "Mobs de élite: 0 %% (empiezan con T = %.0f).", ServerConfig.DIFFICULTY_ELITE_START.get()));
         }
         return 1;
     }

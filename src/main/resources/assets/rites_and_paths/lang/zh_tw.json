@@ -59,7 +59,7 @@
   "ability.rites_and_paths.rhythmic_fury.name": "節奏狂怒",
   "ability.rites_and_paths.sacrifice.desc": "你支付部分最大生命值,你注視的盟友恢復其部分生命值(至少等於你支付的量)。無冷卻。若支付會讓你死亡,圖示會變紅:按兩次即可獻出生命;盟友恢復全部已損失的生命值,獲得與其原有生命值等量的金色心,並短暫無敵。其治療為真實治療:任何效果都無法增加或減少。",
   "ability.rites_and_paths.sacrifice.name": "犧牲",
-  "ability.rites_and_paths.sanctuary.desc": "按住按鍵:一個神聖球體包圍你,將敵人推出並阻擋其投射物。它會吸收內部所有人受到的傷害以及敵人對它的攻擊,直到破碎;越虛弱裂痕越多。每秒消耗法力;放開後持續時間為按住時間的一半。按住期間你移動變慢且無法施法。",
+  "ability.rites_and_paths.sanctuary.desc": "按住按鍵:一個神聖球體包圍你,將敵人推出並阻擋其投射物(穿透投射物除外)。它會吸收內部所有人受到的傷害以及敵人對它的攻擊,直到破碎;越虛弱裂痕越多。每秒消耗法力;放開後持續時間為按住時間的一半。按住期間你移動變慢且無法施法。",
   "ability.rites_and_paths.sanctuary.name": "聖所",
   "ability.rites_and_paths.shadow_step.desc": "你會傳送到所注視敵人的身後(最遠 10 格)。在 8 秒內,你對該敵人的攻擊必定暴擊,若在此期間將其擊殺,該技能會立即冷卻完畢。",
   "ability.rites_and_paths.shadow_step.name": "暗影步",

@@ -59,7 +59,7 @@
   "ability.rites_and_paths.rhythmic_fury.name": "Rhythmic Fury",
   "ability.rites_and_paths.sacrifice.desc": "You pay part of your maximum health and the ally you are looking at recovers part of theirs (at least what you paid). No cooldown. If paying would kill you, the icon turns red: press twice to give your life; your ally recovers all their missing health, gains as many golden hearts as the health they had and is invulnerable for a moment. Its healing is true healing: nothing can increase or reduce it.",
   "ability.rites_and_paths.sacrifice.name": "Sacrifice",
-  "ability.rites_and_paths.sanctuary.desc": "Hold the key: a holy sphere surrounds you, pushes enemies out and blocks their projectiles. It absorbs damage to anyone inside, and the blows of enemies that hit it, until it breaks; it cracks as it weakens. It costs mana every second; when released it lasts half as long as you held it. While holding it you move slower and cannot cast spells.",
+  "ability.rites_and_paths.sanctuary.desc": "Hold the key: a holy sphere surrounds you, pushes enemies out and blocks their projectiles (except piercing ones). It absorbs damage to anyone inside, and the blows of enemies that hit it, until it breaks; it cracks as it weakens. It costs mana every second; when released it lasts half as long as you held it. While holding it you move slower and cannot cast spells.",
   "ability.rites_and_paths.sanctuary.name": "Sanctuary",
   "ability.rites_and_paths.shadow_step.desc": "You teleport behind the enemy you are looking at (up to 10 blocks). For 8 s your hits against that enemy are guaranteed critical hits and, if you kill it in that time, the ability recharges instantly.",
   "ability.rites_and_paths.shadow_step.name": "Shadow Step",

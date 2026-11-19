@@ -136,7 +136,7 @@ SUB_DESC = {
 ABILITY_TEXT = {
     "healer_eye": ("Ojo del Sanador", "Ves la vida de tus aliados cercanos sobre sus cabezas (también a través de las paredes). Los que bajan del 40 % brillan, y los tumbados por el Milagro muestran su cuenta atrás. Solo lo ves tú."),
     "laying_on_hands": ("Imposición de Manos", "Curas al aliado al que miras (cerca) un 30 % de su vida máxima, sin gastar maná. Escala con tu poder sagrado. Levanta a un aliado tumbado."),
-    "sanctuary": ("Santuario", "Mantén la tecla: una esfera sagrada te rodea, empuja fuera a los enemigos y no deja pasar sus proyectiles. Absorbe el daño de quien está dentro y los golpes de los enemigos que la tocan hasta romperse, y se agrieta a medida que se debilita. Cuesta maná cada segundo; al soltar dura la mitad de lo que la mantuviste. Mientras la mantienes vas más lento y no lanzas conjuros."),
+    "sanctuary": ("Santuario", "Mantén la tecla: una esfera sagrada te rodea, empuja fuera a los enemigos y no deja pasar sus proyectiles (salvo los que tienen penetración). Absorbe el daño de quien está dentro y los golpes de los enemigos que la tocan hasta romperse, y se agrieta a medida que se debilita. Cuesta maná cada segundo; al soltar dura la mitad de lo que la mantuviste. Mientras la mantienes vas más lento y no lanzas conjuros."),
     "miracle": ("Milagro", "Si un aliado (también una mascota) iba a morir cerca de ti, queda tumbado unos segundos: no puede hacer nada ni recibir daño. Si otro jugador lo cura, se levanta; si no, muere. Cada aliado solo puede salvarse así cada cierto tiempo. No te salva a ti."),
     "angelic_form": ("Forma Angelical", "Durante unos segundos vuelas (sin correr en el aire). Al activarla se purgan tus efectos negativos y los de tus aliados cercanos, y todos recibís Regeneración II y Absorción I mientras dura. Al terminar no sufres daño de caída."),
     "sacrifice": ("Sacrificio", "Pagas parte de tu vida máxima y el aliado al que miras recupera parte de la suya (al menos lo que has pagado). Sin recarga. Si pagar te mataría, el icono se pone rojo: pulsa dos veces para dar tu vida: tu aliado recupera toda la vida que le falta, gana tantos corazones dorados como vida tenía y es invulnerable un instante. Su curación es verdadera: nada puede aumentarla ni reducirla."),
@@ -211,6 +211,8 @@ def build(dump, out_dir):
         cur = json.load(open(path, encoding="utf-8")) if os.path.exists(path) else {"replace": False, "values": []}
         if R("martyrdom") not in cur["values"]: cur["values"].append(R("martyrdom"))
         dump(path, cur)
+    # Proyectiles de otros mods que atraviesan el Santuario como las flechas con Perforación (vacío por defecto).
+    dump(os.path.join(data, NS, "tags", "entity_types", "sanctuary_piercing.json"), {"replace": False, "values": []})
     no_proc = os.path.join(data, NS, "tags", "damage_type", "no_proc.json")
     cur = json.load(open(no_proc, encoding="utf-8")) if os.path.exists(no_proc) else {"replace": False, "values": []}
     if R("martyrdom") not in cur["values"]: cur["values"].append(R("martyrdom"))

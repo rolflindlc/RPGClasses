@@ -59,7 +59,7 @@
   "ability.rites_and_paths.rhythmic_fury.name": "律動の怒り",
   "ability.rites_and_paths.sacrifice.desc": "最大体力の一部を支払い、見ている味方が自分の体力の一部を回復する(少なくとも支払った分)。クールダウンなし。支払うと死ぬ場合はアイコンが赤くなる:2 回押すと命を捧げる。味方は失った体力をすべて回復し、元の体力と同じだけの金色のハートを得て、一瞬無敵になる。この回復は真の回復で、何によっても増減しない。",
   "ability.rites_and_paths.sacrifice.name": "犠牲",
-  "ability.rites_and_paths.sanctuary.desc": "キーを押し続ける:聖なる球体が自分を包み、敵を押し出して投射物を防ぐ。壊れるまで中にいる者へのダメージと、敵が球体に与える攻撃を吸収する。弱るほどひびが入る。毎秒マナを消費し、離すと押していた時間の半分だけ持続する。押している間は移動が遅くなり、呪文を唱えられない。",
+  "ability.rites_and_paths.sanctuary.desc": "キーを押し続ける:聖なる球体が自分を包み、敵を押し出して投射物を防ぐ(貫通するものは除く)。壊れるまで中にいる者へのダメージと、敵が球体に与える攻撃を吸収する。弱るほどひびが入る。毎秒マナを消費し、離すと押していた時間の半分だけ持続する。押している間は移動が遅くなり、呪文を唱えられない。",
   "ability.rites_and_paths.sanctuary.name": "聖域",
   "ability.rites_and_paths.shadow_step.desc": "見ている敵の背後(最大10ブロック)へテレポートする。8秒間、その敵への攻撃は必ずクリティカルになり、その間に倒せば能力が即座に再使用可能になる。",
   "ability.rites_and_paths.shadow_step.name": "影歩き",

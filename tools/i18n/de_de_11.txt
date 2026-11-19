@@ -10,7 +10,7 @@
 9 Gebet
 10 Du zahlst einen Teil deiner maximalen Gesundheit, und der Verbündete, den du ansiehst, erhält einen Teil seiner zurück (mindestens das Gezahlte). Keine Abklingzeit. Würde dich die Zahlung töten, wird das Symbol rot: Drücke zweimal, um dein Leben zu geben; dein Verbündeter erhält seine gesamte fehlende Gesundheit zurück, bekommt so viele goldene Herzen, wie er Gesundheit hatte, und ist einen Moment unverwundbar. Die Heilung ist wahre Heilung: Nichts kann sie erhöhen oder verringern.
 11 Opfer
-12 Halte die Taste: Eine heilige Kugel umgibt dich, drängt Feinde hinaus und hält ihre Geschosse ab. Sie absorbiert Schaden an allen darin und die Schläge von Feinden, die sie treffen, bis sie zerbricht; je schwächer sie wird, desto mehr Risse bekommt sie. Kostet jede Sekunde Mana; nach dem Loslassen hält sie halb so lange, wie du sie gehalten hast. Während du sie hältst, bist du langsamer und kannst nicht zaubern.
+12 Halte die Taste: Eine heilige Kugel umgibt dich, drängt Feinde hinaus und hält ihre Geschosse ab (außer durchschlagenden). Sie absorbiert Schaden an allen darin und die Schläge von Feinden, die sie treffen, bis sie zerbricht; je schwächer sie wird, desto mehr Risse bekommt sie. Kostet jede Sekunde Mana; nach dem Loslassen hält sie halb so lange, wie du sie gehalten hast. Während du sie hältst, bist du langsamer und kannst nicht zaubern.
 13 Heiligtum
 14 Ein Teil der überschüssigen Heilung (über der maximalen Gesundheit) wird für einige Sekunden zu Absorption.
 15 Ägide

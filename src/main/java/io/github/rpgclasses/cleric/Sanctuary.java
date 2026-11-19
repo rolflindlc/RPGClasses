@@ -44,7 +44,8 @@ import java.util.UUID;
  * Santuario (Clérigo, Nivel Total 15). Se mantiene la tecla: una esfera sagrada se expande hasta 3 bloques en 0,5 s y
  * sigue al Clérigo (con la Plegaria, al aliado por el que reza: el ángel está a su lado).
  * <ul>
- *   <li><b>Barrera:</b> empuja fuera a los enemigos (no a los jefes) y desvía los proyectiles que no son de aliados.
+ *   <li><b>Barrera:</b> empuja fuera a los enemigos (no a los jefes) y desvía los proyectiles que no son de aliados,
+ *       salvo los que tienen penetración (Perforación o el tag {@code rites_and_paths:sanctuary_piercing}).
  *       Los mobs agresivos que la tocan la golpean con su daño de ataque (una vez por segundo cada uno).</li>
  *   <li><b>Vida compartida:</b> 50 × poder sagrado; lo que llegue a quien esté dentro (aliado del Clérigo) resta primero
  *       de la vida del escudo. Regenera 5/s mientras se canaliza. Si llega a 0, se rompe.</li>
@@ -263,6 +264,7 @@ public final class Sanctuary {
         for (Projectile proj : level.getEntitiesOfClass(Projectile.class, box)) {
             Entity owner = proj.getOwner();
             if (owner != null && Allies.isAlly(player, owner)) continue;
+            if (piercing(proj)) continue; // con penetración atraviesa la esfera (el daño a quien está dentro lo absorbe el escudo)
             Vec3 pos = proj.position();
             Vec3 v = proj.getDeltaMovement();
             Vec3 next = pos.add(v);
@@ -286,6 +288,16 @@ public final class Sanctuary {
             }
         }
         return true;
+    }
+
+    /** Tag de tipos de proyectil que siempre atraviesan el Santuario (para proyectiles de otros mods). */
+    public static final net.minecraft.tags.TagKey<net.minecraft.world.entity.EntityType<?>> PIERCING =
+            net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.ENTITY_TYPE, io.github.rpgclasses.RpgClasses.id("sanctuary_piercing"));
+
+    /** Flechas con Perforación (nivel de penetración > 0) o proyectiles del tag {@code rites_and_paths:sanctuary_piercing}. */
+    private static boolean piercing(Projectile proj) {
+        if (proj instanceof net.minecraft.world.entity.projectile.AbstractArrow arrow && arrow.getPierceLevel() > 0) return true;
+        return proj.getType().is(PIERCING);
     }
 
     /** La vida del escudo absorbe primero el daño de quien está dentro (aliados del Clérigo). */

@@ -6,6 +6,7 @@ import allies
 import bonds
 import bard
 import cleric
+import difficulty
 out = sys.argv[1]
 NS = "rites_and_paths"
 def R(x): return f"{NS}:{x}"
@@ -431,6 +432,8 @@ lang.update(bard_lang)
 cleric_lang = cleric.build(dump, out)
 for key in cleric_lang: assert key not in lang, key
 lang.update(cleric_lang)
+# Dificultad por zona: tag de mobs que nunca la reciben.
+difficulty.build(dump, out)
 # Unidades de los parámetros, para que el cliente sepa formatearlos: "%" porcentaje, "s" segundos.
 dump(os.path.join(out, "assets", NS, "rites_and_paths_param_units.json"),
      {k: v.split("|")[1] for k, v in sorted(texts.PARAMS.items()) if "|" in v})

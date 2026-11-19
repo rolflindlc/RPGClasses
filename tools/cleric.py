@@ -95,8 +95,8 @@ ABILITIES = {
                     ally_cooldown_seconds=90),
     # Subclases.
     "angelic_form": dict(duration_seconds=10, radius=10, regen_level=2, absorption_level=1, cooldown_seconds=120),
-    "sacrifice": dict(cost_fraction=.15, heal_fraction=.20, range=12, cooldown_seconds=.5, final_heal_fraction=.50,
-                      final_immunity_seconds=2, confirm_seconds=5),
+    "sacrifice": dict(cost_fraction=.15, heal_fraction=.20, range=12, cooldown_seconds=.5, final_missing_heal=1.0,
+                      final_absorption=1.0, final_immunity_seconds=2, confirm_seconds=5),
     "prayer": dict(orbit_distance=3, full_power_blocks=10, min_power=.33, min_power_blocks=50, regen_level=1),
 }
 
@@ -139,7 +139,7 @@ ABILITY_TEXT = {
     "sanctuary": ("Santuario", "Mantén la tecla: una esfera sagrada te rodea, empuja fuera a los enemigos y no deja pasar sus proyectiles. Absorbe el daño de quien está dentro hasta romperse. Cuesta maná cada segundo; al soltar dura la mitad de lo que la mantuviste. Mientras la mantienes vas más lento y no lanzas conjuros."),
     "miracle": ("Milagro", "Si un aliado iba a morir cerca de ti, queda tumbado unos segundos: no puede hacer nada ni recibir daño. Si otro jugador lo cura, se levanta; si no, muere. Cada aliado solo puede salvarse así cada cierto tiempo. No te salva a ti."),
     "angelic_form": ("Forma Angelical", "Durante unos segundos vuelas (sin correr en el aire). Al activarla se purgan tus efectos negativos y los de tus aliados cercanos, y todos recibís Regeneración II y Absorción I mientras dura. Al terminar no sufres daño de caída."),
-    "sacrifice": ("Sacrificio", "Pagas parte de tu vida máxima y el aliado al que miras recupera parte de la suya (al menos lo que has pagado). Sin recarga. Si pagar te mataría, el icono se pone rojo: pulsa dos veces para dar tu vida y curar a tu aliado la mitad de su vida, con un instante de invulnerabilidad."),
+    "sacrifice": ("Sacrificio", "Pagas parte de tu vida máxima y el aliado al que miras recupera parte de la suya (al menos lo que has pagado). Sin recarga. Si pagar te mataría, el icono se pone rojo: pulsa dos veces para dar tu vida: tu aliado recupera toda la vida que le falta, gana tantos corazones dorados como vida tenía y es invulnerable un instante."),
     "prayer": ("Plegaria", "Eliges a un aliado de la lista: tu cuerpo se queda arrodillado y tu cámara pasa a un pequeño ángel que orbita a tu aliado y le da Regeneración. Tus conjuros, la Imposición de Manos y el Santuario salen desde el ángel; los conjuros pierden poder si tu cuerpo está lejos. Vuelve a pulsar para cambiar de aliado o dejar de rezar."),
 }
 MECHANIC_NAMES = {
@@ -168,7 +168,8 @@ PARAMS = {
     "downed_seconds": "Tiempo tumbado|s", "revive_min_health": "Vida mínima al levantarse|%",
     "revive_immunity_seconds": "Inmunidad al levantarse|s", "ally_cooldown_seconds": "Recarga por aliado|s",
     "regen_level": "Nivel de Regeneración", "absorption_level": "Nivel de Absorción", "cost_fraction": "Vida máxima que pagas|%",
-    "final_heal_fraction": "Curación del Sacrificio final|%", "final_immunity_seconds": "Invulnerabilidad del Sacrificio final|s",
+    "final_missing_heal": "Vida que le falta que recupera (Sacrificio final)|%",
+    "final_absorption": "Corazones dorados (de la vida que tenía)|%", "final_immunity_seconds": "Invulnerabilidad del Sacrificio final|s",
     "confirm_seconds": "Tiempo para confirmar|s", "orbit_distance": "Distancia del ángel (bloques)",
     "full_power_blocks": "Poder completo hasta (bloques)", "min_power_blocks": "Poder mínimo desde (bloques)",
 }

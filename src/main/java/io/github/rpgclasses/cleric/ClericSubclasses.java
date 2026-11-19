@@ -47,7 +47,8 @@ import java.util.UUID;
  *   <li><b>Forma Angelical</b> (Ángel 5): vuelo 10 s a velocidad de caminar, purga y Regeneración II + Absorción I para ti
  *       y tus aliados a 10 bloques; sin daño de caída al terminar. <b>Gracia Alada</b>: −10 % de daño de caída por nivel.</li>
  *   <li><b>Sacrificio</b> (Mártir 5): pagas el 15 % de tu vida máxima y el aliado al que miras recupera el 20 % de la suya
- *       (mínimo lo pagado). Con la vida ≤ 15 %, el Sacrificio final (dos pulsaciones). <b>Resolución</b>: menos daño
+ *       (mínimo lo pagado). Con la vida ≤ 15 %, el Sacrificio final (dos pulsaciones): el aliado recupera toda la vida
+ *       que le falta y gana tantos corazones dorados como vida tenía. <b>Resolución</b>: menos daño
  *       recibido por debajo del 50 % de vida.</li>
  * </ul>
  */
@@ -216,7 +217,12 @@ public final class ClericSubclasses {
             return false;
         }
         ARMED.remove(player.getUUID());
-        ClericHealing.abilityHeal(player, target, (float) (target.getMaxHealth() * AbilityService.number(p, "final_heal_fraction", 0.5)));
+        // Recupera toda la vida que le falta y gana tantos corazones dorados (absorción) como vida tenía.
+        float had = target.getHealth();
+        float missing = Math.max(0, target.getMaxHealth() - had);
+        ClericHealing.abilityHeal(player, target, (float) (missing * AbilityService.number(p, "final_missing_heal", 1.0)));
+        float golden = (float) (had * AbilityService.number(p, "final_absorption", 1.0));
+        if (golden > 0) target.setAbsorptionAmount(target.getAbsorptionAmount() + golden);
         Miracle.grantImmunity(target, AbilityService.ticks(p, "final_immunity_seconds", 2));
         if (target instanceof ServerPlayer sp) sp.displayClientMessage(Component.translatable("message.rites_and_paths.cleric.final_done", player.getDisplayName()), true);
         bloodBurst(player);

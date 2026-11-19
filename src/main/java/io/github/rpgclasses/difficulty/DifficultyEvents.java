@@ -3,15 +3,22 @@ package io.github.rpgclasses.difficulty;
 import io.github.rpgclasses.RpgClasses;
 import io.github.rpgclasses.config.ServerConfig;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
+import net.minecraftforge.event.entity.living.LivingDamageEvent;
+import net.minecraftforge.event.entity.living.LivingDeathEvent;
+import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LootingLevelEvent;
 import net.minecraftforge.event.entity.living.MobSpawnEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -82,6 +89,7 @@ public final class DifficultyEvents {
     private static void applyLevers(Mob mob, ThreatService.Result zone) {
         if (ServerConfig.DIFFICULTY_GEAR.get()) GearRoller.roll(mob, zone);
         if (ServerConfig.DIFFICULTY_STATS.get()) ThreatStats.apply(mob, zone.threat());
+        if (ServerConfig.DIFFICULTY_TRAITS.get()) EliteTraits.roll(mob, zone.threat());
     }
 
     /** Recompensa: Saqueo efectivo extra al matar, con un jugador, mobs que recibieron dificultad. */
@@ -91,8 +99,43 @@ public final class DifficultyEvents {
         LivingEntity victim = event.getEntity();
         if (!victim.getPersistentData().contains(KEY_THREAT)) return;
         if (event.getDamageSource() == null || !(event.getDamageSource().getEntity() instanceof Player)) return;
-        int bonus = (int) (victim.getPersistentData().getFloat(KEY_THREAT) / ServerConfig.DIFFICULTY_LOOT_STEP.get());
+        int bonus = Math.min(ServerConfig.DIFFICULTY_LOOT_MAX.get(),
+                (int) (victim.getPersistentData().getFloat(KEY_THREAT) / ServerConfig.DIFFICULTY_LOOT_STEP.get()));
         if (bonus > 0) event.setLootingLevel(event.getLootingLevel() + bonus);
+    }
+
+    /** Rasgos de élite al golpear: fuego, lentitud y debilidad, y vampirismo (sobre el daño final). */
+    @SubscribeEvent
+    public void onDamage(LivingDamageEvent event) {
+        if (!(event.getSource().getEntity() instanceof Mob attacker) || !attacker.getPersistentData().contains(EliteTraits.KEY_TRAITS)) return;
+        LivingEntity target = event.getEntity();
+        if (event.getAmount() <= 0 || target == attacker) return;
+        if (EliteTraits.has(attacker, EliteTraits.Trait.IGNEOUS)) target.setSecondsOnFire(5);
+        if (EliteTraits.has(attacker, EliteTraits.Trait.CRIPPLING)) {
+            target.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 60, 1), attacker);
+            target.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 60, 0), attacker);
+        }
+        if (EliteTraits.has(attacker, EliteTraits.Trait.VAMPIRIC)) attacker.heal(event.getAmount() * 0.3f);
+    }
+
+    /** Rasgo explosivo: al morir explota sin romper bloques. */
+    @SubscribeEvent
+    public void onDeath(LivingDeathEvent event) {
+        LivingEntity dead = event.getEntity();
+        if (!(dead.level() instanceof ServerLevel level) || !dead.getPersistentData().contains(EliteTraits.KEY_TRAITS)) return;
+        if (EliteTraits.has(dead, EliteTraits.Trait.VOLATILE)) {
+            level.explode(dead, dead.getX(), dead.getY() + dead.getBbHeight() / 2, dead.getZ(), 2.5f, Level.ExplosionInteraction.NONE);
+        }
+    }
+
+    /** Señal visible de los mobs de élite: una llama de alma cada segundo. */
+    @SubscribeEvent
+    public void onLivingTick(LivingEvent.LivingTickEvent event) {
+        LivingEntity entity = event.getEntity();
+        if (entity.tickCount % 20 != 0 || !(entity.level() instanceof ServerLevel level) || !(entity instanceof Mob)
+                || !entity.getPersistentData().contains(EliteTraits.KEY_TRAITS)) return;
+        level.sendParticles(ParticleTypes.SOUL_FIRE_FLAME, entity.getX(), entity.getY() + entity.getBbHeight() / 2, entity.getZ(),
+                4, entity.getBbWidth() / 2, entity.getBbHeight() / 3, entity.getBbWidth() / 2, 0.01);
     }
 
     @SubscribeEvent

@@ -11,22 +11,29 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.phys.Vec3;
 
 /**
- * Amenaza T de una zona: media del nivel de clase (0-40) de los jugadores válidos cercanos.
+ * Amenaza T de una zona: media del nivel de clase (0-40) de los jugadores válidos cercanos, con las pociones de
+ * Tranquilidad y de Desafío aplicadas a la parte de cada jugador. Sin pociones nunca pasa de 40; con Desafío puede
+ * llegar al tope configurable ({@code maxThreat}, por defecto 80).
  * Es una función pura de la posición y de los jugadores conectados; no guarda estado.
  */
 public final class ThreatService {
-    public static final double MAX_THREAT = 40.0;
+    /** Nivel de clase máximo (30 base + 10 subclase) y, por tanto, la T máxima sin pociones. */
+    public static final double CLASS_MAX_LEVEL = 40.0;
 
     /**
      * @param threat     T final: media de niveles con las pociones aplicadas (0 si no hay jugadores válidos);
      * @param players    jugadores que cuentan;
-     * @param baseThreat media de niveles sin pociones (la netherita solo depende de esta).
+     * @param baseThreat media de niveles sin pociones.
      */
     public record Result(double threat, int players, double baseThreat) {
         public static final Result NONE = new Result(0.0, 0, 0.0);
     }
 
     private ThreatService() {}
+
+    public static double maxThreat() {
+        return ServerConfig.DIFFICULTY_MAX_THREAT.get();
+    }
 
     /** Un jugador cuenta si tiene clase, no está en creativo ni espectador y no lleva demasiado inactivo. */
     public static boolean counts(ServerPlayer player, long nowMillis) {
@@ -57,18 +64,20 @@ public final class ThreatService {
     }
 
     /**
-     * Pociones del jugador: cada nivel de Tranquilidad resta y cada nivel de Desafío suma {@code potionStep}
-     * (20 %) a su nivel de clase. Actúa sobre la parte de ese jugador en la media, así que en grupo un solo
-     * bebedor no cambia por sí solo toda la zona.
+     * Pociones del jugador: cada nivel de Tranquilidad resta {@code tranquilityStep} (20 %) y cada nivel de
+     * Desafío suma {@code challengeStep} (25 %) a su nivel de clase. Actúa sobre la parte de ese jugador en la
+     * media, así que en grupo un solo bebedor no cambia por sí solo toda la zona.
      */
     static double potionFactor(ServerPlayer player) {
         MobEffectInstance calm = player.getEffect(ModEffects.TRANQUILITY.get());
         MobEffectInstance challenge = player.getEffect(ModEffects.CHALLENGE.get());
-        int levels = (challenge == null ? 0 : challenge.getAmplifier() + 1) - (calm == null ? 0 : calm.getAmplifier() + 1);
-        return Math.max(0.0, 1.0 + ServerConfig.DIFFICULTY_POTION_STEP.get() * levels);
+        int calmLevels = calm == null ? 0 : calm.getAmplifier() + 1;
+        int challengeLevels = challenge == null ? 0 : challenge.getAmplifier() + 1;
+        return Math.max(0.0, 1.0 + ServerConfig.DIFFICULTY_CHALLENGE_STEP.get() * challengeLevels
+                - ServerConfig.DIFFICULTY_TRANQUILITY_STEP.get() * calmLevels);
     }
 
     private static double clamp(double t) {
-        return Math.max(0.0, Math.min(MAX_THREAT, t));
+        return Math.max(0.0, Math.min(maxThreat(), t));
     }
 }

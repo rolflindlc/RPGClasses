@@ -40,8 +40,10 @@ First public beta of Rolflin's Rites & Paths (Minecraft Forge 1.20.1).
   mobs with more than 80 base health or on bosses (`rites_and_paths:difficulty_exempt` tag). Kills give extra
   Looting; XP does not change. Each lever can be switched off on its own, and `/clases dificultad` shows the
   current T and effects where you stand. **Potions of Tranquility** (-20% per level of your class level when T is
-  calculated) and **Challenge** (+20% per level), levels I-IV, brewed from an awkward potion with a cornflower or
-  rotten flesh and raised with glowstone dust. Challenge never unlocks netherite gear.
+  calculated) and **Challenge** (+25% per level), levels I-IV, brewed from an awkward potion with a cornflower or
+  rotten flesh and raised with glowstone dust. T is no longer capped at 40: with Challenge it can reach 80 (the cap is
+  configurable). From T = 40 mobs can wear a full set of enchanted netherite (30% at T = 80) and become **elites** with
+  special traits (regeneration, fire, vampirism, slowing hits, explosion on death), up to three at T = 80.
 
 ### Known issues and notes
 - Beta: balance values are still being calibrated.

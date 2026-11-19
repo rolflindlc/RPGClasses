@@ -44,7 +44,20 @@ public final class ServerConfig {
     public static final ForgeConfigSpec.IntValue DIFFICULTY_EXTRA_PER_TICK;
     public static final ForgeConfigSpec.IntValue DIFFICULTY_LOCAL_MOB_CAP;
     public static final ForgeConfigSpec.DoubleValue DIFFICULTY_LOOT_STEP;
-    public static final ForgeConfigSpec.DoubleValue DIFFICULTY_POTION_STEP;
+    public static final ForgeConfigSpec.DoubleValue DIFFICULTY_TRANQUILITY_STEP;
+    public static final ForgeConfigSpec.DoubleValue DIFFICULTY_CHALLENGE_STEP;
+    public static final ForgeConfigSpec.DoubleValue DIFFICULTY_MAX_THREAT;
+    public static final ForgeConfigSpec.IntValue DIFFICULTY_LOOT_MAX;
+    public static final ForgeConfigSpec.IntValue DIFFICULTY_ENCHANT_MAX_LEVEL;
+    public static final ForgeConfigSpec.BooleanValue DIFFICULTY_TRAITS;
+    public static final ForgeConfigSpec.DoubleValue DIFFICULTY_FULL_START;
+    public static final ForgeConfigSpec.DoubleValue DIFFICULTY_FULL_REF_THREAT;
+    public static final ForgeConfigSpec.DoubleValue DIFFICULTY_FULL_REF_CHANCE;
+    public static final ForgeConfigSpec.DoubleValue DIFFICULTY_ELITE_START;
+    public static final ForgeConfigSpec.DoubleValue DIFFICULTY_ELITE_BASE;
+    public static final ForgeConfigSpec.DoubleValue DIFFICULTY_ELITE_PER_T;
+    public static final ForgeConfigSpec.DoubleValue DIFFICULTY_ELITE_TRAIT_STEP;
+    public static final ForgeConfigSpec.IntValue DIFFICULTY_ELITE_MAX_TRAITS;
 
     static {
         ForgeConfigSpec.Builder b = new ForgeConfigSpec.Builder();
@@ -146,9 +159,49 @@ public final class ServerConfig {
         DIFFICULTY_LOOT_STEP = b
                 .comment("Un nivel de Saqueo efectivo por cada tantos puntos de T (con 15: 0 a 2).")
                 .defineInRange("lootingStep", 15.0, 1.0, 40.0);
-        DIFFICULTY_POTION_STEP = b
-                .comment("Pociones de Tranquilidad y de Desafío: cada nivel del efecto resta o suma esta fracción al nivel de clase del jugador al calcular T (0,2 = 20 % por nivel).")
-                .defineInRange("potionStep", 0.20, 0.0, 1.0);
+        DIFFICULTY_TRANQUILITY_STEP = b
+                .comment("Poción de Tranquilidad: cada nivel del efecto resta esta fracción al nivel de clase del jugador al calcular T (0,2 = 20 % por nivel).")
+                .defineInRange("tranquilityStep", 0.20, 0.0, 1.0);
+        DIFFICULTY_CHALLENGE_STEP = b
+                .comment("Poción de Desafío: cada nivel del efecto suma esta fracción al nivel de clase del jugador al calcular T (0,25 = 25 % por nivel).")
+                .defineInRange("challengeStep", 0.25, 0.0, 5.0);
+        DIFFICULTY_MAX_THREAT = b
+                .comment("Tope de la amenaza T. Los jugadores llegan a 40 como mucho; por encima de 40 solo se llega con pociones de Desafío",
+                        "(con la poción de nivel IV y todos los jugadores en nivel 40, T = 80).")
+                .defineInRange("maxThreat", 80.0, 40.0, 1000.0);
+        DIFFICULTY_LOOT_MAX = b
+                .comment("Tope del Saqueo efectivo extra por la dificultad.")
+                .defineInRange("lootingMaxBonus", 3, 0, 20);
+        DIFFICULTY_ENCHANT_MAX_LEVEL = b
+                .comment("Tope del nivel de encantamiento del equipo de los mobs (el nivel es 10 + T/2).")
+                .defineInRange("enchantMaxLevel", 40, 1, 100);
+        DIFFICULTY_TRAITS = b
+                .comment("Palanca de rasgos de élite: efectos especiales de los mobs a partir de eliteStartThreat.")
+                .define("scaleTraits", true);
+        DIFFICULTY_FULL_START = b
+                .comment("Amenaza T a partir de la cual un mob con armadura puede salir con el set completo de netherita, todo encantado.")
+                .defineInRange("fullNetheriteStartThreat", 40.0, 0.0, 1000.0);
+        DIFFICULTY_FULL_REF_THREAT = b
+                .comment("Punto de referencia del set completo: con esta T (por defecto 80)...")
+                .defineInRange("fullNetheriteReferenceThreat", 80.0, 1.0, 1000.0);
+        DIFFICULTY_FULL_REF_CHANCE = b
+                .comment("...la probabilidad de set completo de netherita encantada es esta (por defecto 0,30). Crece linealmente desde fullNetheriteStartThreat.")
+                .defineInRange("fullNetheriteReferenceChance", 0.30, 0.0, 1.0);
+        DIFFICULTY_ELITE_START = b
+                .comment("Amenaza T a partir de la cual los mobs pueden ser de élite: llevan rasgos especiales (regeneración, fuego, vampirismo...).")
+                .defineInRange("eliteStartThreat", 40.0, 0.0, 1000.0);
+        DIFFICULTY_ELITE_BASE = b
+                .comment("Probabilidad de ser de élite con T = eliteStartThreat.")
+                .defineInRange("eliteBaseChance", 0.20, 0.0, 1.0);
+        DIFFICULTY_ELITE_PER_T = b
+                .comment("Probabilidad de ser de élite que se suma por cada punto de T por encima de eliteStartThreat (0,015 da 80 % con T = 80).")
+                .defineInRange("eliteChancePerThreat", 0.015, 0.0, 1.0);
+        DIFFICULTY_ELITE_TRAIT_STEP = b
+                .comment("Un rasgo más cada tantos puntos de T por encima de eliteStartThreat (con 20: 1 rasgo con T = 40, 2 con 60, 3 con 80).")
+                .defineInRange("eliteThreatPerTrait", 20.0, 1.0, 1000.0);
+        DIFFICULTY_ELITE_MAX_TRAITS = b
+                .comment("Máximo de rasgos de un mob de élite.")
+                .defineInRange("eliteMaxTraits", 3, 1, 5);
         b.pop();
         b.push("debug");
         DEBUG_LOG = b

@@ -1,0 +1,245 @@
+0 Cada disparo de arco ou besta tem uma chance de não consumir munição.
+1 Economia de Munição
+2 Por alguns segundos ataca mais rápido e com mais força, mas também recebe mais dano. Ao ativar, enfraquece os inimigos próximos.
+3 Fúria do Berserker
+4 Toda vez que mata um inimigo, recupera parte da sua vida máxima.
+5 Sede de Sangue
+6 Por alguns segundos reduz muito todo o dano que recebe.
+7 Baluarte
+8 Avança em linha reta e se choca contra o primeiro inimigo: ele sofre pouco dano, é empurrado e atordoado, e rebate.
+9 Investida
+10 Durante o Baluarte corre sem parar em grande velocidade, deixando um rastro de vento, e causa dano e empurrão a tudo que pisotear. Atravessa blocos frágeis (folhas, vidro, portas, cercas, alçapões de madeira...), mas cada um o magoa um pouco conforme sua dureza.
+11 Baluarte Impetuoso
+12 Quando fica invisível, deixa para trás um clone com seu equipamento que atrai os inimigos e foge.
+13 Isca
+14 Automática, com recarga. Reduz o dano de um projétil em um valor igual ao seu Nível Total. Se o reduzir a zero, o devolve. Concede cargas: +1 em Fogo, +3 em Água e +1 em Pedra.
+15 Desvio de Projéteis
+16 Prima saltar de novo no ar para dar um segundo salto.
+17 Salto Duplo
+18 Escolha um feitiço (selecione-o na roda e use /clase conjuro 1) que fica fixo neste espaço para sempre. Enquanto tiver cargas, lançá-lo custa uma carga em vez de mana.
+19 Lançamento Livre I
+20 Segundo espaço de lançamento livre, com mais cargas e um limite de custo maior.
+21 Lançamento Livre II
+22 Terceiro espaço de lançamento livre, com o maior custo permitido.
+23 Lançamento Livre III
+24 Enquanto o Baluarte está ativo, parte do dano que mitiga cura os aliados próximos e a si mesmo.
+25 Baluarte Curativo
+26 Manter o arco totalmente esticado aumenta o dano do disparo em degraus de tempo.
+27 Disparo Pesado
+28 Melhora o Disparo Pesado: os degraus chegam mais cedo e o último é muito mais forte.
+29 Disparo Letal
+30 O Baluarte remove todos os seus efeitos negativos e o deixa imune a novos enquanto durar.
+31 Baluarte Incorruptível
+32 Não sofre dano de queda e anda sobre a água. Na Postura de Fogo também anda sobre lava.
+33 Passo Leve
+34 Teletransporta-se para as costas do inimigo que está a olhar (até 10 blocos). Por 8 s seus golpes contra ele são críticos garantidos e, se o matar nesse tempo, a habilidade recarrega na hora.
+35 Passo Sombrio
+36 Cada toque troca para a próxima postura (Água, Pedra, Fogo). Só acumula cargas da postura ativa: Fogo a cada golpe desarmado (mais dano), Pedra ao receber golpes (mais armadura) e Água ao correr, esquivar ou desviar (mais velocidade e salto). No máximo, ou com Shift + golpe (ou agachar + esta tecla) a partir de 10 cargas, seu próximo golpe desarmado gasta todas: Golpe Flamejante, atordoamento ou Contracorrente. Trocar de postura libera as cargas da postura anterior como efeito em área. As cargas se dissipam aos poucos quando para de ganhá-las e quando veste armadura.
+37 Posturas Elementais
+38 Causa mais dano a inimigos que estão a apontar para si.
+39 Guarda Firme
+40 Ao se agachar fica realmente invisível enquanto tiver barra de Furtividade. Atacar ou lançar um feitiço gasta grande parte da barra.
+41 Furtividade
+42 Obriga os monstros próximos a o atacar, os deixa lentos e reduz o dano que recebe por alguns segundos.
+43 Provocação
+44 Adiciona um terceiro salto no ar.
+45 Salto Triplo
+46 Agachado junto a uma parede se agarra a ela e pode escalá-la. Se esticar um arco, solta.
+47 Escalada de Parede
+48 Uma investida horizontal no ar, com cargas que se recuperam sozinhas.
+49 Investida do Vento
+50 Dano Crítico a partir da Invisibilidade
+51 Dano com Arco
+52 Chance de Acerto Crítico
+53 Dano Crítico
+54 Resistência a Efeitos Negativos
+55 Velocidade de Disparo do Arco
+56 Cura Recebida
+57 Altura do Salto
+58 Empurrão Causado
+59 Andarilho das Folhas
+60 Alcance de Deteção dos Monstros
+61 Velocidade dos Projéteis
+62 Tamanho
+63 Velocidade Agachado
+64 Tamanho dos Feitiços
+65 Dano Desarmado
+66 Empurrão Desarmado
+67 Zoom
+68 Altar de Raça
+69 Seus acertos críticos causam muito mais dano.
+70 Brutalidade
+71 Fúria das Feridas: causa mais dano quanto mais vida estiver a faltar.
+72 Fúria
+73 Sofre menos dano de queda, fogo e explosões, e perde menos fome.
+74 Enrijecido
+75 Sem armadura, ganha armadura, resistência e velocidade de movimento.
+76 Pele de Ferro
+77 A Investida alcança mais longe e recarrega mais rápido. Inativa até ter Investida.
+78 Debandada
+79 Reduz a recarga dos seus feitiços.
+80 Cadência
+81 Move-se mais rápido; com o ramo completo, lançar feitiços não o deixa lento.
+82 Fluidez
+83 Aumenta o poder de todos os seus feitiços.
+84 Poder
+85 Aumenta sua mana máxima e a rapidez com que a recupera (+40% de mana por segundo com 10 pontos). O Iron's regenera com base na mana máxima, então o atributo de regeneração é reduzido para compensar.
+86 Reserva
+87 Suas invocações têm mais vida e causam mais dano.
+88 Invocação
+89 Potencializa as cargas de Fogo: mais dano por carga e uma onda de descarga mais forte.
+90 Punho
+91 Agachado e parado por alguns segundos, se cura devagar até um limite de vida. Sofrer dano interrompe. Ao parar de meditar, ganha 4 cargas da sua postura que não se dissipam por 10 s.
+92 Meditação
+93 Potencializa as cargas de Pedra: mais armadura e resistência por carga e mais absorção na descarga.
+94 Pele
+95 Suas descargas ao trocar de postura e os efeitos da sua própria postura ficam mais fortes: +20% com 5 pontos e +40% com 10 (o máximo de cargas continua 10).
+96 Maestria de Postura
+97 Potencializa as cargas de Água: mais velocidade e salto por carga e uma descarga mais forte.
+98 Vento
+99 Uma aura ao seu redor: o jogador e seus aliados ganham armadura e os efeitos negativos duram menos em si. Não se acumula com a de outro Paladino.
+100 Estandarte
+101 Multiplica a armadura e a resistência concedidas pelas peças que veste.
+102 Couraça
+103 É empurrado menos e empurra mais os inimigos.
+104 Empurrão
+105 Mais dano contra mortos-vivos e monstros do Nether e um pouco mais de dano em geral se não carregar escudo.
+106 Castigo
+107 Os efeitos negativos duram menos em si.
+108 Vontade
+109 Mais dano com arcos e bestas, e zoom ao se agachar com o arco na mão ou enquanto o estica.
+110 Mira
+111 Estica o arco mais rápido.
+112 Cadência
+113 Seus projéteis voam mais rápido e vão mais longe. Não aumenta o dano.
+114 Alcance
+115 Com o ramo completo, depois de receber um golpe corpo a corpo corre mais rápido por alguns segundos.
+116 Retirada
+117 Os efeitos das suas flechas de poção duram mais e são mais fortes.
+118 Flechas Especiais
+119 A esquiva do Epic Fight gasta menos resistência física e sua invulnerabilidade dura mais.
+120 Acrobacia
+121 Ataca mais rápido e seus acertos críticos causam mais dano.
+122 Fio
+123 Os monstros o detetam de mais perto, e seus acertos críticos a partir da invisibilidade causam mais dano.
+124 Sombra
+125 Seus golpes podem envenenar com Toxina, um dano lento que não se acumula.
+126 Toxinas
+127 Move-se mais rápido.
+128 Vento
+129 Um guerreiro sem armadura com armas pesadas. Quanto menos vida ele tem, mais dano causa, e seus acertos críticos são os mais fortes. Vestir qualquer peça de armadura desliga sua defesa natural, exceto os arreios de Bárbaro (o equipamento da classe).
+130 Bárbaro
+131 Conjurador que usa o Iron's Spells. Muito dano à distância e utilidade em troca de pouquíssima resistência. Seus ramos aumentam o poder dos feitiços, a mana e a velocidade de recarga.
+132 Mago
+133 Traço de classe: menos vida máxima.
+134 Um lutador desarmado e sem armadura. Seu nível dá uma base de dano e defesa; o resto é conquistado em combate acumulando cargas de Fogo, Pedra ou Água. Vestir armadura desliga suas passivas e zera as cargas, exceto as túnicas de Monge (o equipamento da classe). Nunchaku, sai, bo e soqueiras contam como desarmado.
+135 Monge
+136 Corpo Marcial: sem armadura (as túnicas de Monge não contam), dano desarmado, armadura e resistência que crescem com seus pontos de classe base (completo em 30). O Fogo subtrai 25% dessa armadura e a Água 25% desse dano.
+137 O tanque do grupo. Aguenta mais que qualquer um com armadura e escudo, atrai os inimigos e protege os aliados. Causa pouco dano sozinho.
+138 Paladino
+139 Traço de classe: mais vida máxima e um pouco menos de velocidade.
+140 Atirador de arco. Dano à distância constante, flechas rápidas de longo alcance e boa mobilidade. Pode vestir armadura sem penalidade.
+141 Patrulheiro
+142 Um assassino ágil com armas leves. Fica invisível, ataca de surpresa com críticos garantidos e se move muito rápido. Muito frágil se for pego.
+143 Ladino
+144 Traço de classe: menos vida máxima.
+145 Quando sua vida cai abaixo de 30%, os projéteis a até 6 blocos ficam mais lentos (60 s).
+146 A cada 5º feitiço de dano ele se refrata: 30% dele salta para outro inimigo próximo.
+147 Quando sai da invisibilidade, um bando de corvos cega os inimigos a até 3 blocos por 1 s (15 s).
+148 Quando entra em combate o corno soa: os inimigos a até 16 blocos brilham por 8 s e seus aliados ganham Força por 8 s (90 s).
+149 Cada 11ª flecha é uma flecha de osso de dragão: +50% de dano e atravessa um inimigo.
+150 Dentro de folhas regenera vida e os monstros a mais de 8 blocos não o escolhem como alvo.
+151 Cada monstro hostil que mata adiciona uma presa (máx. 10, perdidas ao morrer): +1% de dano corpo a corpo por presa.
+152 Congela a água por onde anda.
+153 Encarar um monstro que não é chefe por 2 s o petrifica por 2 s (30 s).
+154 Ao trocar para uma arma de outra disciplina, +10% de dano corpo a corpo por 3 s (6 s).
+155 Atrai itens e orbes de experiência a até 6 blocos.
+156 Esticar um arco no ar faz-o planar.
+157 Quando morre, uma coluna de luz marca o lugar onde caiu por 10 min.
+158 Cada acerto crítico rola um dado: com 6 causa um ×1,5 extra; com 1 vira um golpe normal.
+159 Ao receber um golpe corpo a corpo, 15% de chance de incendiar o atacante. Deixa pegadas brilhantes.
+160 O sol causa metade do dano em si.
+161 Minérios a até 4 blocos cintilam.
+162 Quem acertar um monstro que o está a perseguir (o jogador ou seus aliados) cura 1 PV (uma vez por segundo).
+163 Um golpe letal faz-o renascer em chamas com 30% de vida (20 min). Resolve depois das habilidades de classe e raça.
+164 Agachado no ar, flutua por 3 s (recarga de 10 s).
+165 Carrega um estandarte dourado nas costas.
+166 Comum
+167 Épico
+168 Raro
+169 Relíquia
+170 Só pode usar uma Relíquia por vez.
+171 Somente %s
+172 Somente raça %s
+173 Nada mais rápido e, ao sair da água, corre mais rápido por 5 s.
+174 Ao trocar de postura com 8 ou mais cargas, as contas ressaltam entre 3 inimigos.
+175 Ao receber um golpe corpo a corpo, 10% de chance de um raio atingir o atacante (8 s).
+176 Quando termina de meditar, seus aliados a até 8 blocos perdem um efeito negativo.
+177 Debaixo d'água, seus aliados a até 5 blocos recuperam ar. Em terra, se estiver a apanhar fogo, apaga o fogo (10 s).
+178 Abaixo de 6 coxinhas de fome só come comida do seu inventário (sem efeitos).
+179 5% de chance de duplicar um drop comum ao matar.
+180 Quando sua Última Resistência ativa, os monstros a até 6 blocos fogem.
+181 Quando mata um chefe, a caveira guarda seu troféu e o concede uma característica desse chefe até o próximo (imunidade a fogo, imunidade a lentidão, imunidade a Wither... ou +10% de dano).
+182 A caveira guarda o troféu de %s
+183 A Fúria do Berserker toca os tambores: seus aliados a até 10 blocos atacam mais rápido por 10 s.
+184 A cada 30 s, um fogo-fátuo voa até o baú ou gerador mais próximo a até 24 blocos.
+185 %1$s foi lançado ao céu por uma flecha de %2$s
+186 %1$s foi lançado ao céu por uma flecha de %2$s
+187 %1$s foi pisoteado por %2$s
+188 %1$s foi pisoteado por %2$s
+189 %1$s queimou no fogo de dragão de %2$s
+190 %1$s queimou no fogo de dragão de %2$s
+191 %1$s congelou na geada de dragão de %2$s
+192 %1$s congelou na geada de dragão de %2$s
+193 %1$s foi fulminado pelo raio de dragão de %2$s
+194 %1$s foi fulminado pelo raio de dragão de %2$s
+195 %1$s foi julgado por %2$s
+196 %1$s foi julgado por %2$s
+197 %1$s caiu diante das artes marciais de %2$s
+198 %1$s caiu diante das artes marciais de %2$s
+199 %1$s sucumbiu à praga
+200 %1$s sucumbiu à praga de %2$s
+201 %1$s foi apagado pela água
+202 %1$s foi derrubado pela onda de choque de %2$s
+203 %1$s foi derrubado pela onda de choque de %2$s
+204 %1$s definhou sob o sol
+205 %1$s morreu envenenado por uma toxina
+206 %1$s morreu envenenado por uma toxina ao fugir de %2$s
+207 Armadura
+208 Arco
+209 Armas Pesadas
+210 Armas Leves
+211 Magia
+212 Escudos
+213 Passo Arcano
+214 Estandarte
+215 Fúria do Berserker
+216 Baluarte
+217 Baluarte Impetuoso
+218 Condenado
+219 Resistência
+220 Marca do Caçador
+221 Última Fúria
+222 Praga
+223 Retirada
+224 Provocação
+225 Toxina
+226 Água
+227 Sangue
+228 Sobrenatural
+229 Ender
+230 Evocação
+231 Fogo
+232 Gelo
+233 Raio
+234 Natureza
+235 Isca
+236 Escamas de fogo: cada peça reduz o dano de fogo.
+237 Escamas de gelo: cada peça reduz o dano de gelo.
+238 Escamas de raio: cada peça reduz o dano de raio.
+239 Não desativa as passivas desarmadas do Bárbaro.
+240 Não desativa o Corpo Marcial nem zera as cargas do Monge.
+241 Estrépito de Guerra: o primeiro golpe após 2 s correndo empurra com mais força.
+242 Arreio de Cota de Malha
+243 Estalo: seus acertos críticos deixam o alvo lento por 1 s (uma vez a cada 3 s por alvo).
+244 Arreio Quebra-Ossos

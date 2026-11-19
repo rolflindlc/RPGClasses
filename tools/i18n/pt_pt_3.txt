@@ -1,0 +1,286 @@
+0 Estrutura incompleta (%s): %s de %s
+1 •
+2 Nenhum inimigo à vista ou sem espaço atrás dele.
+3 Passo Sombrio recarregado!
+4 Escudo desativado por %s s
+5 Postura: %s
+6 Postura favorita: %s
+7 Sua classe não existe mais neste servidor. Use /clase reiniciar clase.
+8 Todas as definições são válidas (%s classes).
+9 Gastou %s de XP. Próximo nível: %s de XP.
+10 Gastou %s de XP. Alcançou o nível máximo.
+11 Reinício concluído. %s de XP foram devolvidos (uma parte se perde a cada reinício).
+12 Multiplicador de absorção
+13 Reserva máxima
+14 Reserva por segundo
+15 Custo de atacar ou lançar um feitiço
+16 Dano aos aliados
+17 Cura por segundo aos aliados
+18 Nível do efeito (0 = I)
+19 Raio: dano do arco
+20 Raio: alcance do arco (blocos)
+21 Raio: inimigos atingidos
+22 Dano em área
+23 Armadura das peças
+24 Armadura ignorada
+25 Menos dano de projéteis
+26 Velocidade de ataque
+27 Armadura na aura
+28 Duração de efeitos negativos na aura
+29 Distância atrás (blocos)
+30 Sangue: o extra cura-o
+31 Bónus
+32 Contra chefes x
+33 Gelo: congelamento contra chefes
+34 Enraizamento em chefes
+35 Rebote no impacto
+36 Mudança no bónus por carga
+37 Limite de queima
+38 Queima
+39 Limite
+40 Limite do escudo (vida máxima)
+41 Limite de cura por segundo (PV)
+42 Chance
+43 Chance máxima
+44 Chance por ponto de mana gasto
+45 Chance em cada ativação
+46 Cargas
+47 Dano de frio extra recebido
+48 Limite de redução combinada
+49 Dano de pisoteio
+50 Raio de contágio (blocos)
+51 Mudança na recarga
+52 Recarga
+53 Quantidade
+54 Invocações por feitiço
+55 Chance de acerto crítico
+56 Dano do animal
+57 Bónus de dano
+58 Bónus de dano por degrau
+59 Dano (do golpe)
+60 Dano por 1% de vida perdida
+61 Dano por segundo
+62 Redução do dano recebido
+63 Redução de dano (máxima)
+64 Redução de dano (mínima)
+65 Dano extra recebido
+66 Força da investida
+67 Começa a se dissipar após
+68 Perda por segundo (do máximo)
+69 Perda de cargas mais lenta
+70 Tempo parado antes de começar
+71 Dano direto
+72 Muralhas afetadas
+73 Desconto
+74 Distância (blocos)
+75 Distância extra
+76 Distância da esquiva
+77 Duração da invulnerabilidade ao esquivar
+78 Dreno de furtividade
+79 Barra gasta por segundo
+80 Durabilidade extra
+81 Duração (máxima)
+82 Duração (mínima)
+83 Redução de duração
+84 Duração
+85 Efeitos
+86 Nível extra da mesa
+87 Cargas ao final
+88 Ender: dano
+89 Ender: distância do teletransporte (blocos)
+90 Mãos Vazias: roubos de equipamento de monstros
+91 Mãos Vazias: roubos de equipamento de jogadores
+92 A cada N golpes
+93 Fome extra
+94 Fome extra por bloco
+95 Rede: pesca extra
+96 Chance de dobrar
+97 Cargas máximas extras
+98 Inimigos perfurados
+99 Fator x
+100 Invocação: presas
+101 Longe: a partir de (blocos)
+102 Dano à distância
+103 Bónus da postura favorita
+104 Cargas na favorita
+105 Limite do efeito de postura
+106 Imune a queimar
+107 Fogo: armadura e resistência x
+108 Raio de Fogo (nível)
+109 Dano de fogo extra recebido
+110 Fogo: dano desarmado x
+111 Fogo: redução de dano de fogo
+112 Fogo: dano da explosão
+113 Fogo: raio da explosão (blocos)
+114 Fogo: tempo de queima
+115 Dano ao primeiro
+116 Dano subtraído por golpe (PV)
+117 Fome (pontos)
+118 Velocidade base de disparo removida
+119 Gelo: Tumba de Gelo
+120 Velocidade da fornalha
+121 Fusão Arcana
+122 Custo da fusão (níveis)
+123 Raio do golem (blocos)
+124 Redução de dano de queda, fogo e explosão
+125 Cura x
+126 Vida máxima recuperada
+127 Dano mitigado convertido em cura (máximo)
+128 Dano mitigado convertido em cura (mínimo)
+129 Cura por segundo
+130 Cura por segundo
+131 Cura recebida por 1% de vida perdida
+132 Vida do animal
+133 Até a vida
+134 Abaixo da vida
+135 Dano ao acertar
+136 Tempo mínimo entre golpes no mesmo inimigo (ticks)
+137 Dano mínimo para ganhar uma carga
+138 Tempo sem perdê-las
+139 Redução do consumo de fome
+140 Tempo mínimo entre usos
+141 Tempo mínimo entre ativações (ticks)
+142 Tempo sem ordens
+143 Dano extra por carga de Golpe Flamejante
+144 Fogo: tempo de queima
+145 Imunidade depois
+146 Intervalo
+147 Invulnerável depois
+148 Força do salto x
+149 Cargas mantidas
+150 Cura por abate (PV)
+151 Empurrão (blocos)
+152 Empurrão extra
+153 Raio do empurrão (blocos)
+154 Força do empurrão
+155 Salto (blocos)
+156 Sangue: dano extra que cura-o
+157 Nível
+158 Roubo de vida
+159 Efeito da postura anterior
+160 A postura anterior persiste
+161 Bloqueio ao esgotar, até
+162 Sorte do Mar racial
+163 Mordidas mais rápidas
+164 Redução de dano mágico e elemental
+165 Bomba de Magma (nível)
+166 Mana gasta convertida em escudo
+167 Mana por ponto de vida
+168 Duração da marca (s)
+169 Máximo de aliados curados
+170 Blocos conectados
+171 Cargas máximas
+172 Itens por uso
+173 Custo máximo de mana
+174 Máximo de animais afetados
+175 Duração máxima
+176 Cargas máximas
+177 Saturação da carne
+178 Pedra: redução de dano corpo a corpo
+179 Chance mínima
+180 Mínimo de invocações
+181 Vida mínima
+182 Com pontos no ramo
+183 Duração mínima
+184 Velocidade de mineração extra
+185 Redução da muralha
+186 Chance contra monstros
+187 Monstros que não são chefes x
+188 Dano em movimento
+189 Dano em movimento ou no ar
+190 Perto: até (blocos)
+191 Dano de perto
+192 Dano sem escudo
+193 Duração de outros efeitos negativos
+194 Saturação de outras comidas
+195 Bónus das outras posturas
+196 Cargas nas outras
+197 Interrupção ao receber dano
+198 Dano por 1% de vida perdida
+199 Inimigos perfurados
+200 Chance contra jogadores
+201 Recarga por jogador
+202 Natureza: nível do veneno
+203 Natureza: veneno
+204 Potência extra
+205 Duração e potência do efeito
+206 Preços dos aldeões
+207 Água: redução de dano de projéteis
+208 Remove um efeito a cada
+209 Água: empurrão
+210 Contra jogadores x
+211 PvP: sem o atacar por
+212 Raio (blocos)
+213 Inferno Desencadeado (nível)
+214 Alcance (blocos)
+215 Alcance de ataque (blocos)
+216 Recarga por carga
+217 Redução de dano
+218 Duração da redução
+219 Pedra: dano físico refletido
+220 Renova o contador a partir do nível
+221 Interrupção da regeneração
+222 Barra recuperada por segundo
+223 Enraizamento
+224 Saturação
+225 Dano de água
+226 Dano ao segundo
+227 Lado da área de quebra (blocos)
+228 Duração da lentidão
+229 Lentidão nos inimigos (nível)
+230 Nível de lentidão
+231 Duração da lentidão
+232 Sobrenatural: dano da onda (do extra)
+233 Sobrenatural: alcance da onda (blocos)
+234 Velocidade do animal
+235 Velocidade extra
+236 Velocidade do lobo x
+237 Nível de velocidade
+238 Correndo por
+239 Custo de resistência física ao esquivar
+240 Bónus de cada postura
+241 Efeito de cada postura
+242 Roubos por monstro
+243 Custo da barra de furtividade
+244 Duração da furtividade
+245 Altura extra de degrau (blocos)
+246 Dano parado
+247 Dano parado
+248 Parado por
+249 Pedra: armadura x
+250 Pedra: velocidade e salto x
+251 Força do empurrão
+252 Atordoamento x
+253 Dano da invocação
+254 Vida da invocação
+255 Custo de mana da invocação
+256 Vida e dano da invocação
+257 Água: velocidade de nado
+258 Recarga extra de troca
+259 Recarga ao trocar de postura
+260 Limite de cargas
+261 Degraus de disparo
+262 Raio do seu TNT
+263 Resistência das peças
+264 Resistência por peça
+265 Dano de toxina por tick
+266 Dano da armadilha
+267 Armadilhas simultâneas
+268 Tesouro extra
+269 Dano desarmado
+270 Inquebrável extra
+271 Dano contra mortos-vivos e Nether
+272 Dano máximo do feitiço
+273 Dano mínimo do feitiço
+274 Sobrenatural: implosão nos outros
+275 Sobrenatural: implosão contra chefes
+276 Sobrenatural: dano inicial armazenado
+277 Sobrenatural: atração
+278 Sobrenatural: raio da implosão (blocos)
+279 Sobrenatural: duração da Marca
+280 Sobrenatural: dano recebido armazenado pela Marca
+281 Redução de muralha e traço base
+282 Dano de água extra recebido
+283 Água: dano desarmado x
+284 Água: velocidade e salto x
+285 Água: dano da onda

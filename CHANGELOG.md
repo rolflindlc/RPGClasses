@@ -32,7 +32,7 @@ First public beta of Rolflin's Rites & Paths (Minecraft Forge 1.20.1).
 - Server and client configuration files; balance lives in datapacks.
 - Optional integration with Iron's Spells 'n Spellbooks, Epic Fight and Curios.
 - Translations: English, Spanish (all regional variants), Simplified and Traditional Chinese, Russian, Brazilian
-  Portuguese, German, French, Japanese and Italian.
+  Portuguese, European Portuguese, German, French, Japanese and Italian.
 - Debug tools: `/clases debug` and `logs/rites_and_paths-debug.log`.
 
 ### Known issues and notes

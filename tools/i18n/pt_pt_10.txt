@@ -1,0 +1,54 @@
+0 Arraste para mover · Roda: zoom · Clique: planear · Botão direito: remover
+1 Prévia: arraste para mover e use a roda para dar zoom
+2 Subclasse
+3 Prévia
+4 Subclasse: %s pontos de base
+5 Nível %s/%s
+6 → %s
+7 XP %s · nível máximo
+8 XP %s · próximo %s
+9 Plano: %s mudanças · −%s XP
+10 Subclasse: %s/%s pontos de base
+11 Ramos
+12 Centralizar a vista (Home, C ou espaço)
+13 Clique ou arraste para se mover pela árvore
+14 Nível total %s/%s · base %s/%s · subclasse %s/%s
+15 O anel mostra o Nível Total; os losangos são as habilidades que ele desbloqueia.
+16 Ao completá-lo escolhe um perk: %s
+17 Com o ramo completo:
+18 %s · ponto %s/%s
+19 Usar este ramo vai bloquear: %s
+20 Perk escolhido
+21 No plano. Botão direito: remover
+22 Clique: escolher este perk
+23 O outro perk deste ramo foi escolhido.
+24 Será bloqueado ao confirmar o plano.
+25 Complete o ramo para escolher um de seus perks.
+26 Desbloqueada
+27 Será desbloqueada com o plano
+28 Faltam %s níveis
+29 Nível de subclasse %s/%s · limite atual %s
+30 Sua subclasse
+31 Clique: escolher esta subclasse
+32 Já tem outra subclasse. Reinicie-a para trocar.
+33 O plano escolhe outra subclasse.
+34 %s · nível %s/%s
+35 Precisa de %s pontos de base para este nível.
+36 Clique: escolher esta subclasse e planear até aqui
+37 A subclasse é desbloqueada com 15 pontos de base.
+38 Desbloqueia no Nível Total %s
+39 Desbloqueia no nível de subclasse %s
+40 Comprado
+41 Custo: %s XP
+42 Clique: adicionar ao plano
+43 Faltam %s XP
+44 Clique: planear até aqui (%s pontos, %s XP)
+45 Descartar plano
+46 Confirmar (%s XP)
+47 Serão comprados %s níveis por %s XP.
+48 Ficarão bloqueados até reiniciar a classe: %s.
+49 Perks (fixos até reiniciar a classe): %s.
+50 Subclasse: %s.
+51 Aplicar o plano?
+52 Plano aplicado: %s mudanças (%s XP).
+53 O plano parou após %s de %s mudanças: %s

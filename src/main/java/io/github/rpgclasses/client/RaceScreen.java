@@ -236,19 +236,9 @@ public final class RaceScreen extends Screen {
     }
 
     /** Un rasgo con sus datos exactos; lo que cambia con el rango se muestra como R0 / R1 / R2 / R3. */
-    private static void effect(EffectDef e, List<Component> out) {
+    static void effect(EffectDef e, List<Component> out) {
         if (Ids.EFFECT_ATTRIBUTE.equals(e.type())) {
-            AttributeEffect parsed;
-            try {
-                parsed = AttributeEffect.parse(e.params(), StatCalculator.RACE_RANKS);
-            } catch (RuntimeException ex) {
-                return;
-            }
-            for (AttributeEffect.Modifier m : parsed.modifiers()) {
-                if (m.attribute().equals(Ids.NS + ":leaf_walker")) continue; // bandera interna
-                out.add(Component.literal("  ").append(Component.translatable("ui.rites_and_paths.data.fixed",
-                        ClassPages.attributeName(m.attribute()), ranks(m.value(), ClassPages.isPercent(m) ? "%" : "", true))));
-            }
+            attributeLines(e, out);
             return;
         }
         JsonObject p = e.params();
@@ -257,6 +247,26 @@ public final class RaceScreen extends Screen {
         if (p.has("min_rank")) name.append(Component.translatable("ui.rites_and_paths.race.from_rank", p.get("min_rank").getAsInt()).withStyle(ChatFormatting.GRAY));
         out.add(Component.literal("  ").append(name));
         out.add(Component.literal("    ").append(Component.translatable(Ids.langKey("mechanic", id, "desc"))).withStyle(ChatFormatting.GRAY));
+        paramLines(p, out);
+    }
+
+    /** Los modificadores de un efecto de atributos, con su valor por Rango (no muestra la bandera interna del Elfo). */
+    static void attributeLines(EffectDef e, List<Component> out) {
+        AttributeEffect parsed;
+        try {
+            parsed = AttributeEffect.parse(e.params(), StatCalculator.RACE_RANKS);
+        } catch (RuntimeException ex) {
+            return;
+        }
+        for (AttributeEffect.Modifier m : parsed.modifiers()) {
+            if (m.attribute().equals(Ids.NS + ":leaf_walker")) continue; // bandera interna
+            out.add(Component.literal("  ").append(Component.translatable("ui.rites_and_paths.data.fixed",
+                    ClassPages.attributeName(m.attribute()), ranks(m.value(), ClassPages.isPercent(m) ? "%" : "", true))));
+        }
+    }
+
+    /** Los parámetros numéricos de una mecánica, con su nombre, unidad y valor por Rango. */
+    static void paramLines(JsonObject p, List<Component> out) {
         Map<String, String> units = ClassPages.units();
         for (Map.Entry<String, JsonElement> entry : p.entrySet()) {
             String key = entry.getKey();
@@ -277,7 +287,7 @@ public final class RaceScreen extends Screen {
         }
     }
 
-    private static String ranks(LevelValue value, String unit, boolean signed) {
+    static String ranks(LevelValue value, String unit, boolean signed) {
         boolean constant = true;
         for (int i = 2; i <= StatCalculator.RACE_RANKS; i++) constant &= value.at(i) == value.at(1);
         if (constant) return ClassPages.format(value.at(1), unit, signed);

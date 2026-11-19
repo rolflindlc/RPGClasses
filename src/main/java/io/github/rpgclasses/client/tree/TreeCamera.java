@@ -5,6 +5,25 @@ package io.github.rpgclasses.client.tree;
  * largos (centrar, minimapa) se animan suavemente. Lógica pura.
  */
 public final class TreeCamera {
+    /** Límites del árbol que la cámara respeta: el rectángulo total y el de la isla principal (encuadre inicial). */
+    public interface Bounds {
+        float minX();
+
+        float minY();
+
+        float maxX();
+
+        float maxY();
+
+        float baseMinX();
+
+        float baseMinY();
+
+        float baseMaxX();
+
+        float baseMaxY();
+    }
+
     public static final float MIN_ZOOM = 0.35f, MAX_ZOOM = 1.75f;
 
     public float x, y, zoom = 1;
@@ -63,7 +82,7 @@ public final class TreeCamera {
     }
 
     /** Arrastre en píxeles de pantalla. */
-    public void pan(double dx, double dy, TreeLayout layout) {
+    public void pan(double dx, double dy, Bounds layout) {
         x -= (float) dx / zoom;
         y -= (float) dy / zoom;
         gliding = false;
@@ -95,7 +114,7 @@ public final class TreeCamera {
     }
 
     /** Avanza las animaciones; {@code dt} en segundos. */
-    public void update(float dt, TreeLayout layout) {
+    public void update(float dt, Bounds layout) {
         float k = 1 - (float) Math.exp(-dt * 14);
         if (Math.abs(targetZoom - zoom) > 1e-4f) {
             zoom += (targetZoom - zoom) * k;
@@ -121,21 +140,21 @@ public final class TreeCamera {
     }
 
     /** El centro de la vista no puede salir del rectángulo del árbol. */
-    public void clamp(TreeLayout layout) {
+    public void clamp(Bounds layout) {
         if (layout == null) return;
-        x = Math.max(layout.minX, Math.min(layout.maxX, x));
-        y = Math.max(layout.minY, Math.min(layout.maxY, y));
+        x = Math.max(layout.minX(), Math.min(layout.maxX(), x));
+        y = Math.max(layout.minY(), Math.min(layout.maxY(), y));
     }
 
     /** Zoom con el que cabe en la vista la isla de clase base con todos sus brazos. */
-    public float fitZoom(TreeLayout layout) {
+    public float fitZoom(Bounds layout) {
         float w = Math.max(1, viewX1 - viewX0 - 24), h = Math.max(1, viewY1 - viewY0 - 24);
-        return clampZoom(Math.min(w / (layout.baseMaxX - layout.baseMinX), h / (layout.baseMaxY - layout.baseMinY)));
+        return clampZoom(Math.min(w / (layout.baseMaxX() - layout.baseMinX()), h / (layout.baseMaxY() - layout.baseMinY())));
     }
 
     /** Encuadre inicial: la isla de clase base entera. */
-    public void home(TreeLayout layout, boolean animate) {
-        float cx = (layout.baseMinX + layout.baseMaxX) / 2, cy = (layout.baseMinY + layout.baseMaxY) / 2;
+    public void home(Bounds layout, boolean animate) {
+        float cx = (layout.baseMinX() + layout.baseMaxX()) / 2, cy = (layout.baseMinY() + layout.baseMaxY()) / 2;
         if (animate) glideTo(cx, cy, fitZoom(layout));
         else set(cx, cy, fitZoom(layout));
     }

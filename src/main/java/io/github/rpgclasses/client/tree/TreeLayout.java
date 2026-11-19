@@ -17,7 +17,7 @@ import java.util.List;
  * unida por un puente, con un brazo por subclase. Todo se deriva de la definición: una clase de un datapack
  * con otro número de ramas o subclases se dibuja igual. Lógica pura (sin Minecraft).
  */
-public final class TreeLayout {
+public final class TreeLayout implements TreeCamera.Bounds {
     public enum Kind { CORE, KEYSTONE, POINT, PERK, GEM, SUB_HUB, SUB_KEY, SUB_POINT }
 
     /** Colores de los brazos de rama, por índice. */
@@ -234,6 +234,15 @@ public final class TreeLayout {
         Collections.reverse(out);
         return out;
     }
+
+    @Override public float minX() { return minX; }
+    @Override public float minY() { return minY; }
+    @Override public float maxX() { return maxX; }
+    @Override public float maxY() { return maxY; }
+    @Override public float baseMinX() { return baseMinX; }
+    @Override public float baseMinY() { return baseMinY; }
+    @Override public float baseMaxX() { return baseMaxX; }
+    @Override public float baseMaxY() { return baseMaxY; }
 
     public float centerX() {
         return (minX + maxX) / 2;

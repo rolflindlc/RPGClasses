@@ -140,3 +140,14 @@
 139 %s (%s blocs)
 140 Arrêter de prier
 141 Prière : pour qui priez-vous ?
+142 Race
+143 Rang %s/%s
+144 Faites glisser pour vous déplacer · Molette : zoom · Survolez un nœud pour les détails
+145 Attributs
+146 Rang maximal atteint
+147 Rite accompli
+148 Rite en cours
+149 Accomplissez le rite précédent pour commencer celui-ci.
+150 Nouvelles capacités : %s
+151 Améliorations à ce Rang :
+152 Se débloque au Rang %s

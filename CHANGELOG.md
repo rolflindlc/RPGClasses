@@ -22,6 +22,10 @@ First public beta of Rolflin's Rites & Paths (Minecraft Forge 1.20.1).
   (locked arms turn dark, and hovering a third branch previews which ones will lock). Clicks build a **plan** that is
   applied in one go (with a summary when it locks branches or picks a perk or subclass); other classes can be
   previewed. Branches can define their icon in the datapack (`display.icon`).
+- **Race tab** in the class book: your race as a star map in the same style as the skill tree. The race core, the
+  subrace and the three rites that raise your Rank, with the rite in progress and the progress of each objective
+  (it updates live), and, at each Rank, the new abilities and the values that improve. The old "Branches and
+  abilities" and "Subclasses" tabs are gone: the skill tree tooltips already show all of that information.
 - Class and racial ability HUD.
 - Magic walls are multiplicative for every class (final spell power = total power × (1 − wall)); the Barbarian has an
   Armor wall of −25% (his class harnesses are exempt). Bard songs show colored aura rings.

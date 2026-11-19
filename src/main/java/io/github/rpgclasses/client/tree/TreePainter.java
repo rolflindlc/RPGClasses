@@ -36,23 +36,13 @@ public final class TreePainter {
     private record Label(float cx, float cy, List<Seg> segs, int bg, boolean lock, boolean leftAligned, boolean rightAligned) {}
 
     private final Map<Node, Float> hoverT = new IdentityHashMap<>();
-    private final float[] stars;
+    private final TreeBackdrop backdrop = new TreeBackdrop();
 
     /** Rectángulo del minimapa en pantalla (x0, y0, x1, y1) y su transformación (escala, origen x, origen y). */
     public final float[] minimap = new float[4];
     public final float[] minimapMap = new float[3];
     /** Botón de centrar la vista. */
     public final float[] home = new float[4];
-
-    public TreePainter() {
-        // Estrellas deterministas: x, y (0..1 de la losa), tamaño, fase.
-        stars = new float[150 * 4];
-        long seed = 0x5DEECE66DL;
-        for (int i = 0; i < stars.length; i++) {
-            seed = (seed * 0x5DEECE66DL + 0xBL) & ((1L << 48) - 1);
-            stars[i] = (float) ((seed >>> 17) & 0xFFFFFF) / 0xFFFFFF;
-        }
-    }
 
     /** Anima el realce de los nodos bajo el ratón. */
     public void update(float dt, Node hover) {
@@ -117,36 +107,14 @@ public final class TreePainter {
     // --- Fondo ---
 
     private void background(Canvas c, TreeLayout layout, TreeCamera cam, float time) {
-        float x0 = cam.viewX0, y0 = cam.viewY0, x1 = cam.viewX1, y1 = cam.viewY1;
-        Gfx.rectV(c, x0, y0, x1, y1, 0xFF15112A, 0xFF07060D);
-        float z = cam.zoom;
         // Nebulosas en coordenadas del árbol (se mueven con él).
-        nebula(c, cam, 0, 0, 430 * z, 0xFF7A4FD0, 0.17f);
-        nebula(c, cam, -260, 250, 270 * z, 0xFF3050C0, 0.10f);
-        nebula(c, cam, 240, -280, 250 * z, 0xFFA03A90, 0.08f);
-        if (layout.subHub != null) nebula(c, cam, layout.subHub.x, 0, 320 * z, 0xFF1FA59A, 0.12f);
-        // Estrellas con paralaje.
-        float tile = 360, par = 0.3f;
-        float ox = -cam.x * z * par, oy = -cam.y * z * par;
-        for (int i = 0; i < stars.length; i += 4) {
-            float u = stars[i] * tile + ox, v = stars[i + 1] * tile + oy;
-            float bx = x0 + ((u % tile) + tile) % tile - tile, by = y0 + ((v % tile) + tile) % tile - tile;
-            float s = 0.5f + stars[i + 2] * 1.1f;
-            float a = 0.25f + 0.45f * (0.5f + 0.5f * (float) Math.sin(time * (0.8f + stars[i + 3] * 2.2f) + stars[i + 3] * 40));
-            int col = Gfx.withAlpha(stars[i + 3] > 0.8f ? 0xFFBFD8FF : stars[i + 3] > 0.6f ? 0xFFFFE6C4 : 0xFFFFFFFF, a);
-            for (float yy = by; yy < y1; yy += tile) {
-                if (yy < y0 - 2) continue;
-                for (float xx = bx; xx < x1; xx += tile) {
-                    if (xx < x0 - 2) continue;
-                    Gfx.rect(c, xx, yy, xx + s, yy + s, col);
-                    if (s > 1.3f) Gfx.glow(c, xx + s / 2, yy + s / 2, 0, s * 2.5f, col, a * 0.35f);
-                }
-            }
+        if (layout.subHub != null) {
+            backdrop.paint(c, cam, time, new TreeBackdrop.Nebula(0, 0, 430, 0xFF7A4FD0, 0.17f), new TreeBackdrop.Nebula(-260, 250, 270, 0xFF3050C0, 0.10f),
+                    new TreeBackdrop.Nebula(240, -280, 250, 0xFFA03A90, 0.08f), new TreeBackdrop.Nebula(layout.subHub.x, 0, 320, 0xFF1FA59A, 0.12f));
+        } else {
+            backdrop.paint(c, cam, time, new TreeBackdrop.Nebula(0, 0, 430, 0xFF7A4FD0, 0.17f), new TreeBackdrop.Nebula(-260, 250, 270, 0xFF3050C0, 0.10f),
+                    new TreeBackdrop.Nebula(240, -280, 250, 0xFFA03A90, 0.08f));
         }
-    }
-
-    private static void nebula(Canvas c, TreeCamera cam, float tx, float ty, float r, int color, float a) {
-        Gfx.ringGradient(c, cam.sx(tx), cam.sy(ty), 0, r, Gfx.withAlpha(color, a), Gfx.withAlpha(color, 0));
     }
 
     // --- Puente entre las islas ---

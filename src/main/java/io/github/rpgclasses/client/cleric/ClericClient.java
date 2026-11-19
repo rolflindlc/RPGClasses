@@ -59,6 +59,7 @@ import java.util.Map;
  *   <li><b>Tumbado (Milagro):</b> el jugador se dibuja acostado (postura de dormir sin cama), no puede moverse ni
  *       actuar, y su pantalla muestra la cuenta atrás.</li>
  *   <li><b>Santuario:</b> esfera dorada translúcida, sin postprocesado (funciona con shaders), que sigue a su ancla.
+ *       Se agrieta (y parpadea al final) a medida que pierde vida.
  *       Al soltar la tecla de la ranura del Santuario se avisa al servidor.</li>
  *   <li><b>Plegaria:</b> la cámara pasa al ángel que orbita al aliado ({@code mixin.client.PrayerCameraMixin}); el ratón
  *       la gira y el cuerpo queda quieto y agachado. La lista de aliados es {@link PrayerScreen}.</li>
@@ -70,7 +71,7 @@ public final class ClericClient {
     /** Tumbados: id de entidad → tick (del cliente) en que acaba. */
     private static final Map<Integer, Long> DOWNED = new HashMap<>();
 
-    private record Sphere(int anchorId, float radius, long start, int expandTicks, long end) {}
+    private record Sphere(int anchorId, float radius, long start, int expandTicks, long end, float shield, List<float[][]> cracks) {}
 
     private static final Map<Integer, Sphere> SPHERES = new HashMap<>();
     private static int prayerTarget = -1;
@@ -132,7 +133,9 @@ public final class ClericClient {
         long now = mc.level.getGameTime();
         Sphere old = SPHERES.get(msg.id());
         long start = old != null ? old.start() : now;
-        SPHERES.put(msg.id(), new Sphere(msg.anchorId(), msg.radius(), start, Math.max(1, msg.expandTicks()), now + msg.ticks() + SAFETY_TICKS));
+        List<float[][]> cracks = old != null ? old.cracks() : cracks(msg.id());
+        SPHERES.put(msg.id(), new Sphere(msg.anchorId(), msg.radius(), start, Math.max(1, msg.expandTicks()),
+                now + msg.ticks() + SAFETY_TICKS, Mth.clamp(msg.shield(), 0f, 1f), cracks));
     }
 
     public static void onPrayerState(Packets.PrayerState msg) {
@@ -343,9 +346,13 @@ public final class ClericClient {
             Vec3 c = anchor.getPosition(partial).add(0, anchor.getBbHeight() / 2, 0);
             boolean inside = cam.distanceToSqr(c) < (double) r * r;
             float pulse = 0.85f + 0.15f * Mth.sin(now * 0.25f);
+            // Con poca vida el escudo parpadea y se ve más tenue.
+            float damage = 1 - s.shield();
+            float flicker = damage > 0.6f ? 0.75f + 0.25f * Mth.sin(now * (1.2f + damage)) : 1f;
             pose.pushPose();
             pose.translate(c.x - cam.x, c.y - cam.y, c.z - cam.z);
-            drawShell(pose.last().pose(), r, inside, 0.22f * fade * pulse);
+            drawShell(pose.last().pose(), r, inside, 0.22f * fade * pulse * flicker * (1 - 0.35f * damage));
+            drawCracks(pose.last().pose(), r, s, fade);
             pose.popPose();
         }
         RenderSystem.depthMask(true);
@@ -353,6 +360,70 @@ public final class ClericClient {
     }
 
     private static final int LAT = 16, LON = 28;
+    private static final int MAX_CRACKS = 28;
+
+    /**
+     * Grietas de una esfera: polilíneas sobre la superficie (ángulos θ, φ), siempre las mismas para el mismo Santuario.
+     * Cada una tiene un tronco de 5 a 9 tramos y a veces una rama.
+     */
+    private static List<float[][]> cracks(int seed) {
+        java.util.Random rnd = new java.util.Random(seed * 31L + 7);
+        List<float[][]> out = new java.util.ArrayList<>();
+        while (out.size() < MAX_CRACKS) {
+            int n = 5 + rnd.nextInt(5);
+            float[][] line = new float[n + 1][2];
+            float theta = 0.25f + rnd.nextFloat() * (Mth.PI - 0.5f), phi = rnd.nextFloat() * Mth.TWO_PI;
+            float heading = rnd.nextFloat() * Mth.TWO_PI;
+            line[0] = new float[] {theta, phi};
+            for (int i = 1; i <= n; i++) {
+                heading += (rnd.nextFloat() - 0.5f) * 1.4f;
+                float step = 0.07f + rnd.nextFloat() * 0.09f;
+                theta = Mth.clamp(theta + Mth.cos(heading) * step, 0.05f, Mth.PI - 0.05f);
+                phi += Mth.sin(heading) * step / Math.max(0.2f, Mth.sin(theta));
+                line[i] = new float[] {theta, phi};
+            }
+            out.add(line);
+            if (rnd.nextFloat() < 0.5f && out.size() < MAX_CRACKS) {
+                int from = 1 + rnd.nextInt(n - 1);
+                float[][] branch = new float[4][2];
+                branch[0] = line[from];
+                float bt = line[from][0], bp = line[from][1], bh = heading + (rnd.nextBoolean() ? 1.2f : -1.2f);
+                for (int i = 1; i < 4; i++) {
+                    float step = 0.05f + rnd.nextFloat() * 0.06f;
+                    bt = Mth.clamp(bt + Mth.cos(bh) * step, 0.05f, Mth.PI - 0.05f);
+                    bp += Mth.sin(bh) * step / Math.max(0.2f, Mth.sin(bt));
+                    branch[i] = new float[] {bt, bp};
+                }
+                out.add(branch);
+            }
+        }
+        return out;
+    }
+
+    /** Más grietas cuanta menos vida le queda al escudo (ninguna con la vida llena; todas casi roto). */
+    private static void drawCracks(Matrix4f m, float r, Sphere s, float fade) {
+        float damage = 1 - s.shield();
+        int visible = Math.min(s.cracks().size(), Math.round(damage * damage * 0.4f * MAX_CRACKS + damage * 0.6f * MAX_CRACKS));
+        if (visible <= 0) return;
+        float alpha = Mth.clamp(0.45f + damage * 0.55f, 0f, 1f) * fade;
+        BufferBuilder bb = Tesselator.getInstance().getBuilder();
+        bb.begin(VertexFormat.Mode.DEBUG_LINES, DefaultVertexFormat.POSITION_COLOR);
+        for (int k = 0; k < visible; k++) {
+            float[][] line = s.cracks().get(k);
+            for (int i = 0; i + 1 < line.length; i++) {
+                crackVertex(bb, m, r * 1.004f, line[i], alpha);
+                crackVertex(bb, m, r * 1.004f, line[i + 1], alpha);
+            }
+        }
+        RenderSystem.lineWidth(2.0f);
+        BufferUploader.drawWithShader(bb.end());
+        RenderSystem.lineWidth(1.0f);
+    }
+
+    private static void crackVertex(BufferBuilder bb, Matrix4f m, float r, float[] p, float alpha) {
+        float sin = Mth.sin(p[0]);
+        bb.vertex(m, r * sin * Mth.cos(p[1]), r * Mth.cos(p[0]), r * sin * Mth.sin(p[1])).color(1.0f, 0.97f, 0.85f, alpha).endVertex();
+    }
 
     private static void drawShell(Matrix4f m, float r, boolean inside, float alpha) {
         BufferBuilder bb = Tesselator.getInstance().getBuilder();

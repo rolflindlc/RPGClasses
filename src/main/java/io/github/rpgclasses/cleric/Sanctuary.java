@@ -44,7 +44,8 @@ import java.util.UUID;
  * Santuario (Clérigo, Nivel Total 15). Se mantiene la tecla: una esfera sagrada se expande hasta 3 bloques en 0,5 s y
  * sigue al Clérigo (con la Plegaria, al aliado por el que reza: el ángel está a su lado).
  * <ul>
- *   <li><b>Barrera:</b> empuja fuera a los enemigos (no a los jefes) y desvía los proyectiles que no son de aliados.</li>
+ *   <li><b>Barrera:</b> empuja fuera a los enemigos (no a los jefes) y desvía los proyectiles que no son de aliados.
+ *       Los mobs agresivos que la tocan la golpean con su daño de ataque (una vez por segundo cada uno).</li>
  *   <li><b>Vida compartida:</b> 50 × poder sagrado; lo que llegue a quien esté dentro (aliado del Clérigo) resta primero
  *       de la vida del escudo. Regenera 5/s mientras se canaliza. Si llega a 0, se rompe.</li>
  *   <li><b>Duración:</b> mientras se canaliza (máx. 6 s) y, al soltar, la mitad del tiempo canalizado.</li>
@@ -62,6 +63,10 @@ public final class Sanctuary {
         boolean channeling = true;
         long end = Long.MAX_VALUE;
         double shield;
+        /** Vida del escudo (0-1) que conocen los clientes. */
+        float syncedShield = 1;
+        /** Siguiente golpe permitido de cada mob al escudo (id de entidad → tick). */
+        final Map<Integer, Long> nextHit = new HashMap<>();
 
         Zone(UUID owner, int id, long start, JsonObject p, double power) {
             this.owner = owner;
@@ -107,7 +112,7 @@ public final class Sanctuary {
         Cleric.setModifier(player, Attributes.MOVEMENT_SPEED, SLOW_ID, "rites_and_paths_cleric:sanctuary",
                 AbilityService.number(p, "channel_speed", -0.5), AttributeModifier.Operation.MULTIPLY_TOTAL);
         Entity anchor = anchor(player);
-        sync(player, z, anchor, z.maxChannelTicks + (int) Math.round(z.maxChannelTicks * z.lingerFactor));
+        sync(player, z, anchor, remaining(z, now));
         player.level().playSound(null, anchor.getX(), anchor.getY(), anchor.getZ(), SoundEvents.BEACON_ACTIVATE, SoundSource.PLAYERS, 1.0f, 1.3f);
         DebugLog.event(player, "clérigo", "Santuario: escudo {} (regenera {}/s)", z.maxShield, z.regenPerTick * 20);
         return true;
@@ -122,7 +127,7 @@ public final class Sanctuary {
         long channeled = Math.max(0, now - z.start);
         z.end = now + Math.round(channeled * z.lingerFactor);
         player.getAttribute(Attributes.MOVEMENT_SPEED).removeModifier(SLOW_ID);
-        sync(player, z, anchor(player), (int) Math.max(1, z.end - now));
+        sync(player, z, anchor(player), remaining(z, now));
     }
 
     /** Ancla de la esfera: el aliado de la Plegaria (el ángel está con él) o el propio Clérigo. */
@@ -140,14 +145,28 @@ public final class Sanctuary {
         Net.syncPlayer(player);
         sync(player, z, anchor(player), 0);
         if (broken) {
+            Entity a = anchor(player);
+            player.serverLevel().sendParticles(io.github.rpgclasses.content.ClassFx.GOLD, a.getX(), a.getY() + a.getBbHeight() / 2, a.getZ(), 40, z.radius * 0.6, z.radius * 0.6, z.radius * 0.6, 0);
             player.displayClientMessage(Component.translatable("message.rites_and_paths.cleric.sanctuary_broken"), true);
             player.level().playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.GLASS_BREAK, SoundSource.PLAYERS, 1.0f, 1.2f);
         }
     }
 
     private static void sync(ServerPlayer player, Zone z, Entity anchor, int ticks) {
+        z.syncedShield = shieldFraction(z);
         Net.CHANNEL.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> player),
-                new Packets.SanctuarySync(z.id, anchor.getId(), (float) z.radius, z.expandTicks, ticks));
+                new Packets.SanctuarySync(z.id, anchor.getId(), (float) z.radius, z.expandTicks, ticks, z.syncedShield));
+    }
+
+    private static float shieldFraction(Zone z) {
+        return z.maxShield <= 0 ? 0 : (float) Math.max(0, Math.min(1, z.shield / z.maxShield));
+    }
+
+    /** Ticks que le quedan como mucho (canalizando: hasta el máximo más lo que duraría al soltar). */
+    private static int remaining(Zone z, long now) {
+        if (!z.channeling) return (int) Math.max(1, z.end - now);
+        long channeled = Math.max(0, z.maxChannelTicks - (now - z.start));
+        return (int) Math.max(1, channeled + Math.round(z.maxChannelTicks * z.lingerFactor));
     }
 
     @SubscribeEvent
@@ -180,12 +199,21 @@ public final class Sanctuary {
                 end(player, z, false);
                 continue;
             }
-            barrier(player, z, anchor, now);
+            if (!barrier(player, z, anchor, now)) continue; // roto a golpes
+            // Grietas: los clientes saben cuánta vida le queda (cada 4 % o cada medio segundo si ha cambiado).
+            float frac = shieldFraction(z);
+            if (Math.abs(frac - z.syncedShield) >= 0.04f || (frac != z.syncedShield && now % 10 == 0)) {
+                sync(player, z, anchor, remaining(z, now));
+            }
         }
     }
 
-    /** Empuja fuera a los enemigos y desvía sus proyectiles. */
-    private static void barrier(ServerPlayer player, Zone z, Entity anchor, long now) {
+    /**
+     * Empuja fuera a los enemigos y desvía sus proyectiles. Los mobs hostiles que tocan la esfera la golpean (su daño
+     * de ataque, como mucho una vez por segundo cada uno), así que en PvE también se puede romper. Devuelve false si
+     * se ha roto.
+     */
+    private static boolean barrier(ServerPlayer player, Zone z, Entity anchor, long now) {
         ServerLevel level = player.serverLevel();
         double r = z.radiusAt(now);
         Vec3 c = anchor.position().add(0, anchor.getBbHeight() / 2, 0);
@@ -206,6 +234,32 @@ public final class Sanctuary {
             e.hurtMarked = true;
             e.hasImpulse = true;
         }
+        // Golpes al escudo: mobs agresivos (no jugadores ni jefes, que ya dañan a quien está dentro) pegados a la esfera.
+        for (net.minecraft.world.entity.Mob mob : level.getEntitiesOfClass(net.minecraft.world.entity.Mob.class, box, m -> m.isAlive())) {
+            if (!Allies.isEnemy(player, mob) || Races.isBoss(mob)) continue;
+            if (!(mob instanceof net.minecraft.world.entity.monster.Enemy) && mob.getTarget() == null) continue;
+            var attack = mob.getAttribute(Attributes.ATTACK_DAMAGE);
+            if (attack == null || attack.getValue() <= 0) continue;
+            Vec3 mc = mob.position().add(0, mob.getBbHeight() / 2, 0);
+            double dist = mc.distanceTo(c);
+            if (dist > r + mob.getBbWidth() / 2 + 1.2) continue;
+            Long next = z.nextHit.get(mob.getId());
+            if (next != null && now < next) continue;
+            z.nextHit.put(mob.getId(), now + 20);
+            double damage = attack.getValue();
+            z.shield -= damage;
+            mob.swing(net.minecraft.world.InteractionHand.MAIN_HAND);
+            Vec3 dir = dist < 1.0E-3 ? new Vec3(1, 0, 0) : mc.subtract(c).scale(1 / dist);
+            Vec3 hit = c.add(dir.scale(r));
+            level.sendParticles(ParticleTypes.CRIT, hit.x, hit.y, hit.z, 6, 0.15, 0.15, 0.15, 0.2);
+            level.sendParticles(io.github.rpgclasses.content.ClassFx.GOLD, hit.x, hit.y, hit.z, 4, 0.2, 0.2, 0.2, 0);
+            level.playSound(null, hit.x, hit.y, hit.z, SoundEvents.GLASS_HIT, SoundSource.PLAYERS, 0.9f, 0.7f + 0.6f * (float) (z.shield / Math.max(1, z.maxShield)));
+            if (z.shield <= 1.0E-3) {
+                end(player, z, true);
+                return false;
+            }
+        }
+        if (now % 40 == 0) z.nextHit.values().removeIf(t -> t < now);
         for (Projectile proj : level.getEntitiesOfClass(Projectile.class, box)) {
             Entity owner = proj.getOwner();
             if (owner != null && Allies.isAlly(player, owner)) continue;
@@ -231,6 +285,7 @@ public final class Sanctuary {
                 level.sendParticles(ParticleTypes.END_ROD, c.x + Math.cos(a) * r, c.y + Math.sin(now * 0.1 + i) * r * 0.6, c.z + Math.sin(a) * r, 1, 0, 0, 0, 0);
             }
         }
+        return true;
     }
 
     /** La vida del escudo absorbe primero el daño de quien está dentro (aliados del Clérigo). */

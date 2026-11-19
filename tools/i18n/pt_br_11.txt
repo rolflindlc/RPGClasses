@@ -10,7 +10,7 @@
 9 Prece
 10 Você paga parte da sua vida máxima e o aliado para o qual olha recupera parte da dele (pelo menos o que você pagou). Sem recarga. Se pagar o mataria, o ícone fica vermelho: pressione duas vezes para dar sua vida; seu aliado recupera toda a vida que lhe falta, ganha tantos corações dourados quanto a vida que tinha e fica invulnerável por um instante. A cura é verdadeira: nada pode aumentá-la nem reduzi-la.
 11 Sacrifício
-12 Segure a tecla: uma esfera sagrada envolve você, empurra os inimigos para fora e bloqueia seus projéteis. Ela absorve o dano de quem está dentro até se romper. Custa mana a cada segundo; ao soltar, dura metade do tempo que você a segurou. Enquanto a segura, você fica mais lento e não lança feitiços.
+12 Segure a tecla: uma esfera sagrada envolve você, empurra os inimigos para fora e bloqueia seus projéteis. Ela absorve o dano de quem está dentro e os golpes dos inimigos que a atingem até se romper; racha conforme enfraquece. Custa mana a cada segundo; ao soltar, dura metade do tempo que você a segurou. Enquanto a segura, você fica mais lento e não lança feitiços.
 13 Santuário
 14 Parte da cura excedente (acima da vida máxima) se converte em absorção por alguns segundos.
 15 Égide

@@ -552,18 +552,19 @@ public final class Packets {
         }
     }
 
-    /** Servidor -> clientes: esfera de Santuario {@code id} anclada a una entidad; {@code ticks} restantes (0 = termina). */
-    public record SanctuarySync(int id, int anchorId, float radius, int expandTicks, int ticks) {
+    /** Servidor -> clientes: esfera de Santuario {@code id} anclada a una entidad; {@code ticks} restantes (0 = termina); {@code shield}: vida que le queda (0-1). */
+    public record SanctuarySync(int id, int anchorId, float radius, int expandTicks, int ticks, float shield) {
         public void encode(FriendlyByteBuf buf) {
             buf.writeVarInt(id);
             buf.writeVarInt(anchorId);
             buf.writeFloat(radius);
             buf.writeVarInt(expandTicks);
             buf.writeVarInt(ticks);
+            buf.writeFloat(shield);
         }
 
         public static SanctuarySync decode(FriendlyByteBuf buf) {
-            return new SanctuarySync(buf.readVarInt(), buf.readVarInt(), buf.readFloat(), buf.readVarInt(), buf.readVarInt());
+            return new SanctuarySync(buf.readVarInt(), buf.readVarInt(), buf.readFloat(), buf.readVarInt(), buf.readVarInt(), buf.readFloat());
         }
 
         public void handle(Supplier<NetworkEvent.Context> ctx) {

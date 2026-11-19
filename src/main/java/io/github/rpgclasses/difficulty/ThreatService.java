@@ -3,9 +3,11 @@ package io.github.rpgclasses.difficulty;
 import io.github.rpgclasses.config.ServerConfig;
 import io.github.rpgclasses.player.PlayerClassData;
 import io.github.rpgclasses.player.PlayerClassDataProvider;
+import io.github.rpgclasses.registry.ModEffects;
 import net.minecraft.Util;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.phys.Vec3;
 
 /**
@@ -15,9 +17,13 @@ import net.minecraft.world.phys.Vec3;
 public final class ThreatService {
     public static final double MAX_THREAT = 40.0;
 
-    /** @param threat media de niveles (0 si no hay jugadores válidos); @param players jugadores que cuentan. */
-    public record Result(double threat, int players) {
-        public static final Result NONE = new Result(0.0, 0);
+    /**
+     * @param threat     T final: media de niveles con las pociones aplicadas (0 si no hay jugadores válidos);
+     * @param players    jugadores que cuentan;
+     * @param baseThreat media de niveles sin pociones (la netherita solo depende de esta).
+     */
+    public record Result(double threat, int players, double baseThreat) {
+        public static final Result NONE = new Result(0.0, 0, 0.0);
     }
 
     private ThreatService() {}
@@ -37,13 +43,32 @@ public final class ThreatService {
         long now = Util.getMillis();
         int count = 0;
         double sum = 0;
+        double sumBase = 0;
         for (ServerPlayer player : level.players()) {
             if (player.distanceToSqr(pos) > radiusSq || !counts(player, now)) continue;
             PlayerClassData data = PlayerClassDataProvider.get(player);
-            sum += data.state.totalLevel();
+            int level = data.state.totalLevel();
+            sumBase += level;
+            sum += level * potionFactor(player);
             count++;
         }
         if (count == 0) return Result.NONE;
-        return new Result(Math.max(0.0, Math.min(MAX_THREAT, sum / count)), count);
+        return new Result(clamp(sum / count), count, clamp(sumBase / count));
+    }
+
+    /**
+     * Pociones del jugador: cada nivel de Tranquilidad resta y cada nivel de Desafío suma {@code potionStep}
+     * (20 %) a su nivel de clase. Actúa sobre la parte de ese jugador en la media, así que en grupo un solo
+     * bebedor no cambia por sí solo toda la zona.
+     */
+    static double potionFactor(ServerPlayer player) {
+        MobEffectInstance calm = player.getEffect(ModEffects.TRANQUILITY.get());
+        MobEffectInstance challenge = player.getEffect(ModEffects.CHALLENGE.get());
+        int levels = (challenge == null ? 0 : challenge.getAmplifier() + 1) - (calm == null ? 0 : calm.getAmplifier() + 1);
+        return Math.max(0.0, 1.0 + ServerConfig.DIFFICULTY_POTION_STEP.get() * levels);
+    }
+
+    private static double clamp(double t) {
+        return Math.max(0.0, Math.min(MAX_THREAT, t));
     }
 }

@@ -55,10 +55,15 @@ public final class GearRoller {
         return mob instanceof Zombie && !(mob instanceof Drowned);
     }
 
-    public static void roll(Mob mob, double threat) {
+    /**
+     * @param zone amenaza de la zona. La netherita solo sale si la media real de niveles es 40: una poción de
+     *             Desafío puede subir T pero no desbloquea la netherita.
+     */
+    public static void roll(Mob mob, ThreatService.Result zone) {
+        double threat = zone.threat();
         if (threat < ServerConfig.DIFFICULTY_MIN_THREAT.get()) return;
         RandomSource random = mob.getRandom();
-        double[] weights = weightsFor(threat);
+        double[] weights = weightsFor(threat, allowsNetherite(zone));
         double slotChance = Math.min(ServerConfig.DIFFICULTY_EQUIP_MAX.get(),
                 ServerConfig.DIFFICULTY_EQUIP_BASE.get() + ServerConfig.DIFFICULTY_EQUIP_PER_T.get() * threat);
 
@@ -92,10 +97,15 @@ public final class GearRoller {
         return ServerConfig.DIFFICULTY_ENCHANT_MAX_CHANCE.get() * Math.min(1.0, (threat - start) / span);
     }
 
+    static boolean allowsNetherite(ThreatService.Result zone) {
+        return zone.baseThreat() >= ThreatService.MAX_THREAT - 1e-9;
+    }
+
     /** Pesos del tramo de T, con el peso de la netherita recortado para que su probabilidad no pase del tope. */
-    static double[] weightsFor(double threat) {
+    static double[] weightsFor(double threat, boolean netherite) {
         int band = threat >= ThreatService.MAX_THREAT - 1e-9 ? 3 : (int) Math.min(2, Math.max(0, (threat - 10) / 10));
         double[] w = WEIGHTS[band].clone();
+        if (!netherite) w[NETHERITE] = 0;
         double cap = ServerConfig.DIFFICULTY_NETHERITE_MAX.get();
         double others = 0;
         for (int i = 0; i < NETHERITE; i++) others += w[i];

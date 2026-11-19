@@ -56,6 +56,7 @@ public class RpgClasses {
         modBus.addListener(PlayerClassDataProvider::registerCapability);
         ModAttributes.ATTRIBUTES.register(modBus);
         ModEffects.EFFECTS.register(modBus);
+        io.github.rpgclasses.difficulty.ThreatPotions.POTIONS.register(modBus);
         CombatAbilities.register();
         MonkAbilities.register();
         MonkSubclasses.register();
@@ -162,6 +163,7 @@ public class RpgClasses {
 
     private void commonSetup(FMLCommonSetupEvent event) {
         event.enqueueWork(Net::register);
+        event.enqueueWork(io.github.rpgclasses.difficulty.ThreatPotions::registerBrewing);
         if (net.minecraftforge.fml.ModList.get().isLoaded("curios")) {
             event.enqueueWork(io.github.rpgclasses.compat.curios.CuriosCompat::registerCurios);
         }

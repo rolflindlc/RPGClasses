@@ -19,6 +19,22 @@ EXEMPT = [
 ]
 
 
+# Pociones de Tranquilidad y de Desafío (niveles I a IV). El nombre del objeto es el mismo en todos los niveles.
+LANG = {
+    f"effect.{NS}.tranquility": "Tranquilidad",
+    f"effect.{NS}.challenge": "Desafío",
+    "item.minecraft.potion.effect.tranquility": "Poción de Tranquilidad",
+    "item.minecraft.splash_potion.effect.tranquility": "Poción arrojadiza de Tranquilidad",
+    "item.minecraft.lingering_potion.effect.tranquility": "Poción persistente de Tranquilidad",
+    "item.minecraft.tipped_arrow.effect.tranquility": "Flecha de Tranquilidad",
+    "item.minecraft.potion.effect.challenge": "Poción de Desafío",
+    "item.minecraft.splash_potion.effect.challenge": "Poción arrojadiza de Desafío",
+    "item.minecraft.lingering_potion.effect.challenge": "Poción persistente de Desafío",
+    "item.minecraft.tipped_arrow.effect.challenge": "Flecha de Desafío",
+}
+
+
 def build(dump, out_dir):
     data = os.path.join(out_dir, "data")
     dump(os.path.join(data, NS, "tags", "entity_types", "difficulty_exempt.json"), {"replace": False, "values": EXEMPT})
+    return dict(LANG)

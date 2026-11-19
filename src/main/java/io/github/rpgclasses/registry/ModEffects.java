@@ -61,6 +61,13 @@ public final class ModEffects {
     public static final RegistryObject<MobEffect> CONDEMNED =
             EFFECTS.register("condemned", () -> new StateEffect(MobEffectCategory.HARMFUL, 0xFFF0A0));
 
+    /** Tranquilidad (poción): resta un 20 % por nivel al nivel de clase del jugador al calcular la amenaza T. Lo lee difficulty.ThreatService. */
+    public static final RegistryObject<MobEffect> TRANQUILITY =
+            EFFECTS.register("tranquility", () -> new CurableEffect(MobEffectCategory.BENEFICIAL, 0x7FC8E8));
+    /** Desafío (poción): suma un 20 % por nivel al nivel de clase del jugador al calcular la amenaza T. Lo lee difficulty.ThreatService. */
+    public static final RegistryObject<MobEffect> CHALLENGE =
+            EFFECTS.register("challenge", () -> new CurableEffect(MobEffectCategory.HARMFUL, 0xD2492B));
+
     /** Icono del aura de Estandarte (los valores los aplica content.BannerAura). */
     public static final RegistryObject<MobEffect> BANNER =
             EFFECTS.register("banner", () -> new StateEffect(MobEffectCategory.BENEFICIAL, 0xE6C35A));

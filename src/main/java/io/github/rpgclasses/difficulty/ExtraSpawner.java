@@ -45,7 +45,7 @@ final class ExtraSpawner {
                 continue;
             }
             extra.finalizeSpawn(level, level.getCurrentDifficultyAt(extra.blockPosition()), MobSpawnType.NATURAL, null, null);
-            DifficultyEvents.markAndApply(extra, zone.threat());
+            DifficultyEvents.markAndApply(extra, zone);
             level.addFreshEntityWithPassengers(extra);
             created++;
         }

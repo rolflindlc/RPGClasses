@@ -66,7 +66,7 @@ public final class DifficultyEvents {
         data.putFloat(KEY_THREAT, (float) zone.threat());
         if (zone.threat() < ServerConfig.DIFFICULTY_MIN_THREAT.get()) return;
 
-        applyLevers(mob, zone.threat());
+        applyLevers(mob, zone);
         // Los mobs extra solo acompañan a las apariciones naturales (no a spawners ni a incursiones).
         if (ServerConfig.DIFFICULTY_SPAWN.get() && MobSpawnType.NATURAL.name().equals(spawnType)) {
             extrasThisTick += ExtraSpawner.spawn(level, mob, zone, ServerConfig.DIFFICULTY_EXTRA_PER_TICK.get() - extrasThisTick);
@@ -74,14 +74,14 @@ public final class DifficultyEvents {
     }
 
     /** Marca un mob extra como procesado y le aplica las palancas con el T del original. */
-    static void markAndApply(Mob mob, double threat) {
-        mob.getPersistentData().putFloat(KEY_THREAT, (float) threat);
-        applyLevers(mob, threat);
+    static void markAndApply(Mob mob, ThreatService.Result zone) {
+        mob.getPersistentData().putFloat(KEY_THREAT, (float) zone.threat());
+        applyLevers(mob, zone);
     }
 
-    private static void applyLevers(Mob mob, double threat) {
-        if (ServerConfig.DIFFICULTY_GEAR.get()) GearRoller.roll(mob, threat);
-        if (ServerConfig.DIFFICULTY_STATS.get()) ThreatStats.apply(mob, threat);
+    private static void applyLevers(Mob mob, ThreatService.Result zone) {
+        if (ServerConfig.DIFFICULTY_GEAR.get()) GearRoller.roll(mob, zone);
+        if (ServerConfig.DIFFICULTY_STATS.get()) ThreatStats.apply(mob, zone.threat());
     }
 
     /** Recompensa: Saqueo efectivo extra al matar, con un jugador, mobs que recibieron dificultad. */

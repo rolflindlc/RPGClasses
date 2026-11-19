@@ -1,0 +1,10 @@
+0 Défi
+1 Tranquillité
+2 Potion persistante de défi
+3 Potion persistante de tranquillité
+4 Potion de défi
+5 Potion de tranquillité
+6 Potion jetable de défi
+7 Potion jetable de tranquillité
+8 Flèche de défi
+9 Flèche de tranquillité

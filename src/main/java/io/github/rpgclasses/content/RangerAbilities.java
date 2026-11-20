@@ -40,10 +40,10 @@ public final class RangerAbilities {
     private record PendingShot(int tick, double damageBonus, boolean ammoConserved) {}
 
     /** Datos del disparo en curso: se escriben al soltar el arco y los recoge la flecha al aparecer, en el mismo tick. */
-    private static final Map<UUID, PendingShot> PENDING = new HashMap<>();
-    private static final Map<UUID, Integer> AIR_JUMPS_USED = new HashMap<>();
+    private static final Map<UUID, PendingShot> PENDING = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
+    private static final Map<UUID, Integer> AIR_JUMPS_USED = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
     /** Arco tensado al máximo: {tick de servidor en que se alcanzó, tramos ya anunciados}. */
-    private static final Map<UUID, int[]> FULL_DRAW = new HashMap<>();
+    private static final Map<UUID, int[]> FULL_DRAW = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
 
     // --- Disparo ---
 
@@ -102,7 +102,7 @@ public final class RangerAbilities {
 
     private static final String CONSERVED_TAG = "rites_and_paths.conserved_shot";
     private record CrossbowLoad(ItemStack crossbow, ItemStack ammo) {}
-    private static final Map<UUID, CrossbowLoad> CROSSBOW_LOADS = new HashMap<>();
+    private static final Map<UUID, CrossbowLoad> CROSSBOW_LOADS = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
 
     /** Al soltar una ballesta sin cargar se recuerda qué munición iba a gastar. */
     @SubscribeEvent

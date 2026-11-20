@@ -44,18 +44,18 @@ public final class ClericHealing {
     /** Curación de conjuro anunciada por Iron's: objetivo → lanzador y tick (Iron's cura justo después). */
     private record Pending(UUID caster, long tick) {}
 
-    private static final Map<UUID, Pending> SPELL_HEALS = new HashMap<>();
+    private static final Map<UUID, Pending> SPELL_HEALS = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
     /** Curación de una habilidad del Clérigo en curso (la pone {@link #abilityHeal}). */
     private static ServerPlayer abilityHealer;
     /** Curaciones internas (Canal de Vida): no vuelven a pasar por aquí. */
     private static boolean internal;
     /** Canal de Vida: objetivos que ya han contado este tick por lanzador. */
-    private static final Map<UUID, Integer> CHANNEL_COUNT = new HashMap<>();
+    private static final Map<UUID, Integer> CHANNEL_COUNT = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
     private static long channelTick;
     /** Absolución: último tick en que cada Clérigo limpió a cada objetivo ("clérigo|objetivo"). */
     private static final Map<String, Long> ABSOLVED = new HashMap<>();
     /** Égida: absorción propia de cada objetivo (aparte de la de manzanas, etc.) y cuándo caduca. */
-    private static final Map<UUID, Aegis> AEGIS = new HashMap<>();
+    private static final Map<UUID, Aegis> AEGIS = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
     private static final String FAITH_RETURN_CD = "rites_and_paths:faith_return_icd";
 
     private static final class Aegis {

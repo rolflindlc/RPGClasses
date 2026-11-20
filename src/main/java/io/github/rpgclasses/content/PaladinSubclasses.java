@@ -51,9 +51,9 @@ public final class PaladinSubclasses {
     private static final UUID CHARGE_STEP_ID = UUID.fromString("3c1f6e2a-8b47-4d5e-9a02-7f4b1c8d6e93");
 
     /** Tenacidad: tick en que se abrió la ventana de reducción. */
-    private static final Map<UUID, Long> TENACITY_OPENED = new HashMap<>();
+    private static final Map<UUID, Long> TENACITY_OPENED = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
     /** Baluarte de Embestida: último tick en que cada entidad fue arrollada, por Paladín. */
-    private static final Map<UUID, Map<Integer, Long>> TRAMPLED = new HashMap<>();
+    private static final Map<UUID, Map<Integer, Long>> TRAMPLED = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
 
     /** Llamado al activar Baluarte (ya aplicado su efecto). */
     public static void onBulwark(ServerPlayer player, int ticks) {

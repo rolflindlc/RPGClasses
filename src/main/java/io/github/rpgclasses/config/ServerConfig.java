@@ -301,8 +301,9 @@ public final class ServerConfig {
         b.push("debug");
         DEBUG_LOG = b
                 .comment("Registro de depuración en logs/rites_and_paths-debug.log: habilidades, pasivas, efectos, daño y curas.",
-                        "Los errores se registran siempre. También se cambia en partida con /clases debug log on|off.")
-                .define("debugLog", true);
+                        "Los errores se registran siempre. También se cambia en partida con /clases debug log on|off.",
+                        "Apagado por defecto: activarlo cuesta rendimiento (escribe en disco y formatea cada golpe y cada pasiva).")
+                .define("debugLog", false);
         b.pop();
         SPEC = b.build();
     }

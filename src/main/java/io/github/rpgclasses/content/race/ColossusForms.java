@@ -89,7 +89,7 @@ public final class ColossusForms {
         double walked;
     }
 
-    private static final Map<UUID, Form> FORMS = new HashMap<>();
+    private static final Map<UUID, Form> FORMS = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
 
     public ColossusForms() {
         Rites.STATE_SOURCES.put("titan", p -> FORMS.containsKey(p.getUUID()));

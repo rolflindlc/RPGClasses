@@ -49,8 +49,8 @@ public final class Pyromaniac {
     private record Pool(ResourceKey<Level> dim, Vec3 center, UUID owner, long end, double radius, int burnSeconds,
                         int slowness, boolean lava) {}
 
-    private static final Map<Integer, Tracked> TRACKED = new HashMap<>();
-    private static final List<Pool> POOLS = new ArrayList<>();
+    private static final Map<Integer, Tracked> TRACKED = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
+    private static final List<Pool> POOLS = io.github.rpgclasses.server.SessionState.track(new ArrayList<>());
 
     private static boolean racialSelected(ServerPlayer p) {
         try {

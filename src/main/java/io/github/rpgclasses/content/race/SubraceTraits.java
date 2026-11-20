@@ -82,12 +82,12 @@ public final class SubraceTraits {
     private static final UUID FISHER_LUCK = UUID.fromString("5b0f6f0e-2c57-4f63-9d0b-6a1f0c9e7a11");
     private static final String STEAL_TAG = "rites_and_paths.stolen";
 
-    private static final Map<UUID, Vec3> LAST_POSITION = new HashMap<>();
+    private static final Map<UUID, Vec3> LAST_POSITION = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
     /** Vampiro: [segundo de juego, curado en ese segundo] para el tope por segundo. */
-    private static final Map<UUID, double[]> THIRST_WINDOW = new HashMap<>();
+    private static final Map<UUID, double[]> THIRST_WINDOW = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
     private static final Map<String, Long> STEAL_COOLDOWN = new HashMap<>();
     /** Cooldown general de Mano Larga por ladrón (tras cada robo con éxito). */
-    private static final Map<UUID, Long> THIEF_COOLDOWN = new HashMap<>();
+    private static final Map<UUID, Long> THIEF_COOLDOWN = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
 
     /** Una vez por segundo y jugador, desde {@link RaceTraits}. */
     static void secondTick(ServerPlayer p) {

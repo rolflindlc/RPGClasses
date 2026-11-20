@@ -49,11 +49,11 @@ public final class BattleMage {
         boolean echoReady;
     }
 
-    private static final Map<UUID, State> STATES = new HashMap<>();
+    private static final Map<UUID, State> STATES = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
 
     /** Golpe Sónico pendiente (se dispara un tic después para no dañar dentro del propio golpe). */
     private record Sonic(UUID owner, ServerLevel level, Vec3 from, Vec3 dir, double length, double damage, long at) {}
-    private static final List<Sonic> SONICS = new ArrayList<>();
+    private static final List<Sonic> SONICS = io.github.rpgclasses.server.SessionState.track(new ArrayList<>());
 
     /** Instancia solo para el bus de eventos. */
     public BattleMage() {}

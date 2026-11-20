@@ -47,9 +47,9 @@ public final class BannerAura {
         }
     }
 
-    private static final Map<UUID, Aura> ACTIVE = new HashMap<>();
+    private static final Map<UUID, Aura> ACTIVE = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
     /** Entidades que reciben el aura (jugadores y mascotas), para quitársela al salir. */
-    private static final Map<UUID, LivingEntity> HOLDERS = new HashMap<>();
+    private static final Map<UUID, LivingEntity> HOLDERS = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
 
     /** Aura que afecta al jugador ahora mismo (o null). */
     public static Aura of(LivingEntity player) {

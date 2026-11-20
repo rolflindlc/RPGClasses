@@ -33,10 +33,16 @@ import java.util.UUID;
 public final class SlimeTraits {
     private static final String SPRING_KEY = Ids.NS + ":race_spring";
     /** Viscoso: a qué está pegado cada jugador (id de entidad, o -1 si es una pared). */
-    private static final Map<UUID, Integer> STUCK = new HashMap<>();
+    /**
+     * Tick en que el servidor vio al jugador empezar a agacharse. El Resorte lo calcula el cliente, pero los ticks de
+     * carga que manda no pueden superar lo que el servidor ha visto agachado (más un margen por la latencia).
+     */
+    private static final Map<UUID, Long> CROUCH_SINCE = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
+    private static final int CROUCH_LAG_TICKS = 6;
+    private static final Map<UUID, Integer> STUCK = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
     /** Resorte: hasta cuándo dura el lanzamiento y a quién ha golpeado ya en él. */
-    private static final Map<UUID, Long> LAUNCH_UNTIL = new HashMap<>();
-    private static final Map<UUID, Set<UUID>> LAUNCH_HITS = new HashMap<>();
+    private static final Map<UUID, Long> LAUNCH_UNTIL = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
+    private static final Map<UUID, Set<UUID>> LAUNCH_HITS = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
 
     public SlimeTraits() {
         Rites.STATE_SOURCES.put("sticky", p -> STUCK.containsKey(p.getUUID()));
@@ -68,7 +74,9 @@ public final class SlimeTraits {
         ActiveMechanic m = Races.find(p, "race_spring");
         if (m == null || AbilityService.remainingTicks(p, SPRING_KEY) > 0) return;
         int max = (int) Math.round(m.number("charge_seconds", 3) * 20);
-        int ticks = Math.max(0, Math.min(max, chargeTicks));
+        Long since = CROUCH_SINCE.get(p.getUUID());
+        int seen = since == null ? 0 : (int) Math.min(Integer.MAX_VALUE, p.level().getGameTime() - since);
+        int ticks = Math.max(0, Math.min(Math.min(max, chargeTicks), seen + CROUCH_LAG_TICKS));
         if (ticks < m.number("min_charge_seconds", 0.5) * 20) return;
         AbilityService.setCooldown(p, SPRING_KEY, (int) Math.round(m.number("cooldown_seconds", 10) * 20));
         io.github.rpgclasses.network.Net.syncPlayer(p);
@@ -105,6 +113,17 @@ public final class SlimeTraits {
         }
     }
 
+    /** Cuánto lleva agachado cada Slime Resorte, visto desde el servidor. */
+    @SubscribeEvent
+    public void onCrouchTick(TickEvent.PlayerTickEvent event) {
+        if (event.phase != TickEvent.Phase.END || !(event.player instanceof ServerPlayer p)) return;
+        if (!p.isShiftKeyDown()) {
+            CROUCH_SINCE.remove(p.getUUID());
+        } else if (!CROUCH_SINCE.containsKey(p.getUUID()) && Races.has(p, "race_spring")) {
+            CROUCH_SINCE.put(p.getUUID(), p.level().getGameTime());
+        }
+    }
+
     @SubscribeEvent
     public void onTick(TickEvent.PlayerTickEvent event) {
         if (event.phase != TickEvent.Phase.END || !(event.player instanceof ServerPlayer p) || p.tickCount % 20 != 0) return;
@@ -125,6 +144,7 @@ public final class SlimeTraits {
     public void onLogout(PlayerEvent.PlayerLoggedOutEvent event) {
         UUID id = event.getEntity().getUUID();
         STUCK.remove(id);
+        CROUCH_SINCE.remove(id);
         LAUNCH_UNTIL.remove(id);
         LAUNCH_HITS.remove(id);
     }

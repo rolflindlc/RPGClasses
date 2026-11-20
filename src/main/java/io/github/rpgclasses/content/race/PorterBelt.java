@@ -41,7 +41,7 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.GameRules;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.event.entity.living.LivingDeathEvent;
+import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.player.PlayerContainerEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -77,14 +77,14 @@ public final class PorterBelt {
 
     enum Kind { CHEST, BARREL, ENDER, FURNACE, BLAST, SMOKER, CRAFTING, ENCHANTING, ANVIL, LOOM, STONECUTTER, GRINDSTONE, SMITHING, CARTOGRAPHY }
 
-    private static final Map<UUID, Belt> BELTS = new HashMap<>();
+    private static final Map<UUID, Belt> BELTS = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
     /** Menú de un bloque abierto desde el cinturón: al cerrarlo (Esc) se vuelve al menú del cinturón. */
     private record Back(net.minecraft.world.inventory.AbstractContainerMenu menu, UUID owner, boolean manage) {}
-    private static final Map<UUID, Back> BACK = new HashMap<>();
+    private static final Map<UUID, Back> BACK = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
     /** Volver al cinturón en el próximo tick (no se puede abrir un menú mientras se cierra el otro). */
-    private static final Map<UUID, Back> REOPEN = new HashMap<>();
+    private static final Map<UUID, Back> REOPEN = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
     /** Tick de juego hasta el que se ignora el clic derecho (el gesto de guardar en el cinturón ya lo gastó). */
-    private static final Map<UUID, Long> SUPPRESS_USE = new HashMap<>();
+    private static final Map<UUID, Long> SUPPRESS_USE = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
 
     public PorterBelt() {
         Rites.BELT_ITEMS = PorterBelt::used;
@@ -134,6 +134,11 @@ public final class PorterBelt {
     public static final class BeltStorage extends SimpleContainer {
         private final UUID owner;
         private final Runnable onChange;
+        /**
+         * Ya no forma parte del cinturón (se quitó o cambió el bloque, o el dueño murió). Quien aún lo tenga abierto
+         * (un aliado) ve cómo se le cierra el menú: si no, lo que metiera ahí se perdería, porque ya no se guarda.
+         */
+        private boolean retired;
 
         BeltStorage(UUID owner, int size, Runnable onChange) {
             super(size);
@@ -147,9 +152,13 @@ public final class PorterBelt {
             if (onChange != null) onChange.run();
         }
 
+        void retire() {
+            retired = true;
+        }
+
         @Override
         public boolean stillValid(Player player) {
-            return canUse(player, owner);
+            return !retired && canUse(player, owner);
         }
     }
 
@@ -163,6 +172,8 @@ public final class PorterBelt {
         final String[] signature = new String[MAX_SLOTS];
         ServerPlayer ownerRef;
         boolean dirty;
+        /** Han cambiado objetos (no solo el progreso de los hornos): se guarda en este mismo tick. */
+        boolean urgent;
         /** Hay que enviar a los clientes los bloques que se ven en el cuerpo. */
         boolean visualDirty = true;
         private boolean loading;
@@ -174,12 +185,15 @@ public final class PorterBelt {
 
         private void onBlocksChanged() {
             dirty = true;
+            urgent = true;
             visualDirty = true;
             if (!loading) reconcile();
         }
 
+        /** Cambio de objetos dentro de un bloque (cofre, barril u horno). */
         void markDirty() {
             dirty = true;
+            urgent = true;
         }
 
         /** Compara cada hueco con lo que había: si cambia el bloque, su contenido vuelve al dueño y se crea uno nuevo. */
@@ -196,11 +210,13 @@ public final class PorterBelt {
                     if (old.getContainerSize() != size) {
                         BeltStorage resized = newStorage(size);
                         for (int s = 0; s < old.getContainerSize(); s++) {
-                            ItemStack st = old.getItem(s);
+                            // Se saca del viejo: el mismo ItemStack no puede quedar en dos contenedores a la vez.
+                            ItemStack st = old.removeItemNoUpdate(s);
                             if (st.isEmpty()) continue;
                             if (s < size) resized.setItem(s, st);
                             else spill(st);
                         }
+                        old.retire();
                         parts[i] = resized;
                     }
                 } else {
@@ -231,9 +247,10 @@ public final class PorterBelt {
 
         /** Lo que hay dentro del bloque del hueco i vuelve al dueño (inventario o el suelo). */
         void spillPart(int i) {
-            Container c = parts[i] instanceof VirtualFurnace f ? f.items : parts[i] instanceof BeltStorage s ? s : null;
+            BeltStorage c = parts[i] instanceof VirtualFurnace f ? f.items : parts[i] instanceof BeltStorage s ? s : null;
             if (c != null) {
                 for (int s = 0; s < c.getContainerSize(); s++) spill(c.removeItemNoUpdate(s));
+                c.retire();
             }
             parts[i] = null;
         }
@@ -250,10 +267,13 @@ public final class PorterBelt {
             loading = true;
             try {
                 for (int i = 0; i < MAX_SLOTS; i++) {
-                    Container c = parts[i] instanceof VirtualFurnace f ? f.items : parts[i] instanceof BeltStorage s ? s : null;
-                    if (c != null) for (int s = 0; s < c.getContainerSize(); s++) {
-                        ItemStack st = c.removeItemNoUpdate(s);
-                        if (!st.isEmpty()) out.add(st);
+                    BeltStorage c = parts[i] instanceof VirtualFurnace f ? f.items : parts[i] instanceof BeltStorage s ? s : null;
+                    if (c != null) {
+                        for (int s = 0; s < c.getContainerSize(); s++) {
+                            ItemStack st = c.removeItemNoUpdate(s);
+                            if (!st.isEmpty()) out.add(st);
+                        }
+                        c.retire();
                     }
                     parts[i] = null;
                     ItemStack block = blocks.removeItemNoUpdate(i);
@@ -344,6 +364,7 @@ public final class PorterBelt {
         root.put(TAG, b.save());
         data.put(Player.PERSISTED_NBT_TAG, root);
         b.dirty = false;
+        b.urgent = false;
     }
 
     /** Huecos del cinturón según el Rango (0 si no es Porteador). */
@@ -568,7 +589,7 @@ public final class PorterBelt {
         // Hornos: cocinan con el tick del dueño (también mientras camina).
         for (Object part : b.parts) {
             if (part instanceof VirtualFurnace f) {
-                if (f.tick(p.level())) b.markDirty();
+                if (f.tick(p.level())) b.dirty = true; // solo progreso: basta con guardarlo cada segundo
                 if (f.xp >= 1) {
                     int whole = (int) f.xp;
                     p.giveExperiencePoints(whole);
@@ -576,6 +597,9 @@ public final class PorterBelt {
                 }
             }
         }
+        // Los cambios de objetos se guardan en el mismo tick: el autoguardado del servidor (que va después de los ticks de
+        // los jugadores) nunca escribe un cinturón más viejo que el inventario del jugador.
+        if (b.urgent) save(p, b);
         if (b.visualDirty) {
             b.visualDirty = false;
             io.github.rpgclasses.network.Net.CHANNEL.send(net.minecraftforge.network.PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> p),
@@ -639,9 +663,13 @@ public final class PorterBelt {
         }
     }
 
-    /** Al morir caen al suelo los bloques del cinturón y lo que contienen (salvo con keepInventory). */
-    @SubscribeEvent(priority = EventPriority.LOWEST)
-    public void onDeath(LivingDeathEvent event) {
+    /**
+     * Al morir caen los bloques del cinturón y lo que contienen (salvo con keepInventory). Van a la lista de objetos que
+     * suelta el jugador (LivingDropsEvent, prioridad alta), así que los mods de tumbas (Corpse, Gravestone...) los
+     * recogen junto al resto del inventario.
+     */
+    @SubscribeEvent(priority = EventPriority.HIGHEST)
+    public void onDrops(LivingDropsEvent event) {
         if (!(event.getEntity() instanceof ServerPlayer p) || p instanceof FakePlayer) return;
         if (p.level().getGameRules().getBoolean(GameRules.RULE_KEEPINVENTORY)) return;
         Belt b = BELTS.containsKey(p.getUUID()) || p.getPersistentData().getCompound(Player.PERSISTED_NBT_TAG).contains(TAG) ? belt(p) : null;
@@ -652,7 +680,7 @@ public final class PorterBelt {
             ItemEntity item = new ItemEntity(p.level(), p.getX(), p.getY() + 0.5, p.getZ(), st);
             item.setDeltaMovement((p.getRandom().nextDouble() - 0.5) * 0.2, 0.2, (p.getRandom().nextDouble() - 0.5) * 0.2);
             item.setDefaultPickUpDelay();
-            p.level().addFreshEntity(item);
+            event.getDrops().add(item);
         }
         save(p, b);
         io.github.rpgclasses.network.Net.CHANNEL.send(net.minecraftforge.network.PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> p),

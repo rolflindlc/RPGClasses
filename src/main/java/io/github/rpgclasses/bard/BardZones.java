@@ -57,11 +57,11 @@ public final class BardZones {
         double radius, value;
     }
 
-    private static final List<Zone> ZONES = new ArrayList<>();
+    private static final List<Zone> ZONES = io.github.rpgclasses.server.SessionState.track(new ArrayList<>());
     /** Criaturas dormidas: hasta qué tick del servidor. */
-    private static final Map<UUID, Long> SLEEP = new HashMap<>();
+    private static final Map<UUID, Long> SLEEP = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
     /** Protección de la Canción de Cuna Eterna: {tick de fin, fracción de vida}. */
-    private static final Map<UUID, double[]> WARDS = new HashMap<>();
+    private static final Map<UUID, double[]> WARDS = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
 
     // ------------------------------------------------------------------ crear
 

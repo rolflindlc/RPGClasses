@@ -92,7 +92,7 @@ public final class Sanctuary {
         }
     }
 
-    private static final Map<UUID, Zone> ZONES = new HashMap<>();
+    private static final Map<UUID, Zone> ZONES = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
     private static int nextId = 1;
     private static final UUID SLOW_ID = UUID.fromString("c3f81e5a-7a2d-4b96-8e14-5d0b9a6c2e71");
 

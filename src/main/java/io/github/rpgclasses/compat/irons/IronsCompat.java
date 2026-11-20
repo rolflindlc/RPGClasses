@@ -94,21 +94,21 @@ public final class IronsCompat {
 
     private static long tick;
     /** Magia de Sangre: maná prestado este tick a cambio de vida; se devuelve si el conjuro no llega a empezar. */
-    private static final Map<UUID, Loan> LOANS = new HashMap<>();
+    private static final Map<UUID, Loan> LOANS = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
     /** Jugadores con Legión/Élite que han lanzado un conjuro este tick, para ajustar sus invocaciones nuevas. */
-    private static final Map<UUID, Long> SUMMON_CASTS = new HashMap<>();
+    private static final Map<UUID, Long> SUMMON_CASTS = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
     /** Invocaciones que acaban de recibir dueño, pendientes de procesar al final del tick (tras initSummon). */
-    private static final List<Entity[]> NEW_SUMMONS = new ArrayList<>();
+    private static final List<Entity[]> NEW_SUMMONS = io.github.rpgclasses.server.SessionState.track(new ArrayList<>());
     /** Conjuro Gratuito aceptado por Iron's, pendiente de lanzarse (se cobra la carga al lanzar). */
-    private static final Map<UUID, FreeCast> FREE_PENDING = new HashMap<>();
+    private static final Map<UUID, FreeCast> FREE_PENDING = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
     /** Maná de Magia de Sangre del conjuro en curso: no cuenta como gastado (Escudo Arcano). */
-    private static final Map<UUID, Float> BLOOD_MANA = new HashMap<>();
+    private static final Map<UUID, Float> BLOOD_MANA = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
     /** Escudo Arcano: absorción propia de cada jugador (aparte de la de manzanas, etc.). */
-    private static final Map<UUID, Shield> SHIELDS = new HashMap<>();
+    private static final Map<UUID, Shield> SHIELDS = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
     /** Emboscada Arcana preparada: conjuro y tick de caducidad. */
-    private static final Map<UUID, Ambush> AMBUSHES = new HashMap<>();
+    private static final Map<UUID, Ambush> AMBUSHES = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
     /** Invocaciones extra de Legión → su original (desaparecen con ella). */
-    private static final Map<UUID, Clone> CLONES = new HashMap<>();
+    private static final Map<UUID, Clone> CLONES = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
 
     /** Maná adelantado para pasar la comprobación de Iron's: con vida (Magia de Sangre) o por una carga gratuita (slot > 0). */
     private record Loan(long tick, String spellId, float mana, float health, int slot) {}

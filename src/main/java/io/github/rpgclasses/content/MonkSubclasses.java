@@ -60,8 +60,8 @@ public final class MonkSubclasses {
     private static final String SWIM_NAME = "rites_and_paths_ability:elemental_manifest";
     private static final String TAG_FIST_UNTIL = "rites_and_paths.disabling_fist.";
     /** Golpe desarmado de este tick: el empuje se multiplica en LivingKnockBackEvent. */
-    private static final Map<Integer, Double> KNOCKBACK = new HashMap<>();
-    private static final Map<UUID, Boolean> REFLECTING = new HashMap<>();
+    private static final Map<Integer, Double> KNOCKBACK = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
+    private static final Map<UUID, Boolean> REFLECTING = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
 
     public static void register() {
         AbilityService.register(WIND_DASH, MonkSubclasses::windDash);
@@ -90,10 +90,10 @@ public final class MonkSubclasses {
     public static final String IMPACT = "palm_impact";
 
     /** Palma Pesada: ticks seguidos agachado (carga del Golpe Cargado). */
-    private static final Map<UUID, Integer> CROUCH = new HashMap<>();
+    private static final Map<UUID, Integer> CROUCH = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
     /** Objetivos lanzados por la Palma: pueden chocar contra un bloque u otro enemigo durante un momento. */
     private record Thrown(UUID attacker, long until, double hit) {}
-    private static final Map<Integer, Thrown> THROWN = new HashMap<>();
+    private static final Map<Integer, Thrown> THROWN = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
 
     /**
      * Llamado por DamagePipeline tras un golpe desarmado del Monje. Devuelve el factor de daño (Golpe Cargado de

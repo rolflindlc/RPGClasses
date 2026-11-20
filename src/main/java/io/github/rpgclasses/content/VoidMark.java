@@ -35,7 +35,7 @@ public final class VoidMark {
         double stored, storeFraction, radius, pull, bossFactor, areaFraction;
     }
 
-    private static final Map<UUID, Mark> MARKS = new HashMap<>();
+    private static final Map<UUID, Mark> MARKS = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
     private static boolean imploding;
 
     /** Instancia solo para el bus de eventos. */

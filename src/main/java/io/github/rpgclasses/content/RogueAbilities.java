@@ -56,7 +56,7 @@ public final class RogueAbilities {
         int lastSyncedState = STATE_OFF;
     }
 
-    private static final Map<UUID, State> STATES = new HashMap<>();
+    private static final Map<UUID, State> STATES = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
 
     public static void register() {
         AbilityService.register(SHADOW_STEP, RogueAbilities::shadowStep);
@@ -237,7 +237,7 @@ public final class RogueAbilities {
     /** Marca del Paso de Sombra: objetivo y tick en que acaba (críticos seguros contra él y recarga al matarlo). */
     private record Mark(UUID target, long until) {}
 
-    private static final Map<UUID, Mark> MARKS = new HashMap<>();
+    private static final Map<UUID, Mark> MARKS = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
 
     /** ¿Tiene {@code attacker} la marca del Paso de Sombra sobre {@code target}? (golpe crítico seguro) */
     public static boolean hasShadowMark(ServerPlayer attacker, Entity target) {

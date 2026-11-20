@@ -84,6 +84,8 @@ public class RpgClasses {
 
         io.github.rpgclasses.server.DebugEvents.install();
         MinecraftForge.EVENT_BUS.register(new io.github.rpgclasses.server.DebugEvents());
+        // Estado en memoria de la partida: se vacía al cerrar el mundo (en un jugador no se arrastra al siguiente).
+        MinecraftForge.EVENT_BUS.addListener(io.github.rpgclasses.server.SessionState::onStopped);
         MinecraftForge.EVENT_BUS.register(new ServerEvents());
         MinecraftForge.EVENT_BUS.register(new CombatTracker());
         MinecraftForge.EVENT_BUS.register(new DamagePipeline());
@@ -158,6 +160,7 @@ public class RpgClasses {
         MinecraftForge.EVENT_BUS.register(new io.github.rpgclasses.content.race.SlimeForms());
         MinecraftForge.EVENT_BUS.register(io.github.rpgclasses.content.race.Rites.listener());
         // Clérigo (adenda del Clérigo). Después de las razas: Milagro actúa tras las supervivencias propias (regla 10).
+        // Después de las razas: el Milagro es el último salvavidas a prioridad LOWEST (ver Miracle.onDamage).
         io.github.rpgclasses.cleric.Cleric.register();
     }
 

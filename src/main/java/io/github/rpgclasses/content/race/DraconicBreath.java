@@ -65,7 +65,7 @@ public final class DraconicBreath {
     public static ToDoubleBiFunction<ServerPlayer, Double> manaBridge = (p, cost) -> 1;
 
     private record Channel(String element, long end) {}
-    private static final Map<UUID, Channel> CHANNELS = new HashMap<>();
+    private static final Map<UUID, Channel> CHANNELS = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
 
     public DraconicBreath() {}
 

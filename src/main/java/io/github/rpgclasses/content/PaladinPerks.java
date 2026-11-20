@@ -52,7 +52,7 @@ public final class PaladinPerks {
 
     /** Paladín -> marca de Condena activa. */
     private record Mark(UUID target, long untilTick) {}
-    private static final Map<UUID, Mark> MARKS = new HashMap<>();
+    private static final Map<UUID, Mark> MARKS = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
 
     /** Castigo: +daño contra no-muertos y mobs del Nether, y +daño general sin escudo en las manos. */
     public static double smiteBonus(ServerPlayer attacker, LivingEntity target) {

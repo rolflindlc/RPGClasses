@@ -68,7 +68,7 @@ public final class BardState {
         String speedKey = "";
     }
 
-    private static final Map<UUID, S> STATES = new HashMap<>();
+    private static final Map<UUID, S> STATES = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
 
     /** Solo Magistral: el combo al máximo y sin perderlo (Crescendo) durante unos segundos. */
     public static void solo(ServerPlayer p, int ticks) {

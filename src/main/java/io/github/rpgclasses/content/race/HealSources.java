@@ -13,7 +13,7 @@ import java.util.UUID;
  */
 public final class HealSources {
     private static final ThreadLocal<Boolean> POTION = ThreadLocal.withInitial(() -> false);
-    private static final Map<UUID, Long> SPELL_TICK = new HashMap<>();
+    private static final Map<UUID, Long> SPELL_TICK = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
 
     private HealSources() {}
 

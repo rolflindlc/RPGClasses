@@ -102,8 +102,8 @@ public final class SlimeForms {
         long regrowAt = Long.MAX_VALUE;
     }
 
-    private static final Map<UUID, Swarm> SWARMS = new HashMap<>();
-    private static final Map<UUID, Mitosis> SPLITS = new HashMap<>();
+    private static final Map<UUID, Swarm> SWARMS = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
+    private static final Map<UUID, Mitosis> SPLITS = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
 
     public SlimeForms() {
         Rites.swarmAlive = SlimeForms::alive;

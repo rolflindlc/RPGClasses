@@ -50,7 +50,7 @@ public final class BardAuras {
     /** Una canción sonando. {@code potency}: valor ya escalado por nivel y poder (fracción, multiplicador o vida/s). */
     private record Aura(Kind kind, long end, double potency, double radius) {}
 
-    private static final Map<UUID, List<Aura>> ACTIVE = new HashMap<>();
+    private static final Map<UUID, List<Aura>> ACTIVE = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
 
     public BardAuras() {}
 

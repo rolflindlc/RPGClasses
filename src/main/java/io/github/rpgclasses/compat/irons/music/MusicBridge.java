@@ -92,8 +92,8 @@ public final class MusicBridge implements BardMagic {
      */
     private record Pending(String spellId, SpellSelectionManager.SelectionOption option, long tick) {}
 
-    private static final Map<UUID, Pending> PENDING = new HashMap<>();
-    private static final Map<UUID, Long> FREE_CAST = new HashMap<>();
+    private static final Map<UUID, Pending> PENDING = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
+    private static final Map<UUID, Long> FREE_CAST = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
 
     private static final class Recital {
         final Deque<Object[]> recent = new ArrayDeque<>();
@@ -102,7 +102,7 @@ public final class MusicBridge implements BardMagic {
         long icdUntil;
     }
 
-    private static final Map<UUID, Recital> RECITALS = new HashMap<>();
+    private static final Map<UUID, Recital> RECITALS = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
 
     public static void init(IEventBus modBus) {
         SCHOOLS.register(modBus);

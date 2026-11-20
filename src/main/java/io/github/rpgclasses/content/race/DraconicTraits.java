@@ -42,8 +42,8 @@ import java.util.UUID;
  * inmunidades de las subrazas Venenoso y Ácido y el aire largo del Dracónido de Agua. El aliento va aparte.
  */
 public final class DraconicTraits {
-    private static final Map<UUID, Set<UUID>> PROVOKED = new HashMap<>(); // dragón -> jugadores que lo provocaron
-    private static final Map<UUID, Integer> LAST_AIR = new HashMap<>();
+    private static final Map<UUID, Set<UUID>> PROVOKED = io.github.rpgclasses.server.SessionState.track(new HashMap<>()); // dragón -> jugadores que lo provocaron
+    private static final Map<UUID, Integer> LAST_AIR = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
 
     private static TagKey<DamageType> elementTag(String element) {
         return TagKey.create(Registries.DAMAGE_TYPE, RpgClasses.id("element/" + element));

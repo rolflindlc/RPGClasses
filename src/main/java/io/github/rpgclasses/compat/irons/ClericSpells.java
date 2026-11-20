@@ -25,7 +25,7 @@ import java.util.UUID;
 public final class ClericSpells {
     private record LastCast(float mana, long tick) {}
 
-    private static final Map<UUID, LastCast> LAST = new HashMap<>();
+    private static final Map<UUID, LastCast> LAST = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
 
     public static void init() {
         ClericHealing.manaInfo = player -> {

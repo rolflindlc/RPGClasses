@@ -132,7 +132,7 @@ public final class Chronomancy {
         }
     }
 
-    private static final Map<UUID, History> HISTORY = new HashMap<>();
+    private static final Map<UUID, History> HISTORY = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
 
     /** Iron's avisa de cada conjuro lanzado (para devolver recargas en los niveles altos). */
     public static void recordCast(ServerPlayer player, String spellId) {
@@ -351,8 +351,8 @@ public final class Chronomancy {
 
     private record Frozen(ResourceKey<Level> dim, long until) {}
 
-    private static final List<Sphere> SPHERES = new ArrayList<>();
-    private static final Map<UUID, Frozen> FROZEN = new HashMap<>();
+    private static final List<Sphere> SPHERES = io.github.rpgclasses.server.SessionState.track(new ArrayList<>());
+    private static final Map<UUID, Frozen> FROZEN = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
     private static int nextSphereId = 1;
 
     /** ¿Está paralizada por una Parada Temporal? (no puede atacar, moverse, usar objetos, conjuros ni habilidades) */

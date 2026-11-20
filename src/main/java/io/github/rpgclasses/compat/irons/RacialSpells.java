@@ -47,7 +47,7 @@ public final class RacialSpells {
             "traveloptics:jet_steam", "traveloptics:jet_stream", "traveloptics:jetstream", "traveloptics:tidal_grasp");
     static final String SLOT = "rites_and_paths_racial";
 
-    private static final Map<UUID, Long> SPELL_HEAL_TICK = new HashMap<>();
+    private static final Map<UUID, Long> SPELL_HEAL_TICK = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
 
     @SubscribeEvent
     public void onSpellSelection(SpellSelectionManager.SpellSelectionEvent event) {

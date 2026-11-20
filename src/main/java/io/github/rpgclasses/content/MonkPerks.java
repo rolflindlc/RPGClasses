@@ -51,7 +51,7 @@ public final class MonkPerks {
         long lastDamageTick = -1000;
         Vec3 lastPos;
     }
-    private static final Map<UUID, State> STATES = new HashMap<>();
+    private static final Map<UUID, State> STATES = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
 
     private static State state(ServerPlayer player) {
         return STATES.computeIfAbsent(player.getUUID(), k -> new State());

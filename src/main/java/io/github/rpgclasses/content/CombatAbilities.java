@@ -57,7 +57,7 @@ public final class CombatAbilities {
     /** Estado de una Embestida en curso. */
     private record Charging(int untilTick, Vec3 direction, double speed, Set<Integer> alreadyHit) {}
 
-    private static final Map<UUID, Charging> CHARGING = new HashMap<>();
+    private static final Map<UUID, Charging> CHARGING = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
     private static final int CHARGE_WINDOW_TICKS = 12;
     private static final int STUN_TICKS = 40;
 

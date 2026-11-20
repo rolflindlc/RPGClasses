@@ -56,7 +56,7 @@ public final class ClericBuffs {
     private record Captured(LivingEntity target, MobEffectInstance instance) {}
 
     private static Cast current;
-    private static final Map<Cast, List<Captured>> PENDING = new LinkedHashMap<>();
+    private static final Map<Cast, List<Captured>> PENDING = io.github.rpgclasses.server.SessionState.track(new LinkedHashMap<>());
     private static boolean reapplying;
 
     private static final UUID BLIND_FAITH_ID = UUID.fromString("a7c2e1d4-5b3f-4e8a-9c61-2f0d7b8e4a19");

@@ -57,6 +57,21 @@ First public beta of Rolflin's Rites & Paths (Minecraft Forge 1.20.1).
   spawn) or **Mixed** (weighted average), and intensity **Off** (no increases), **Easy** (half), **Normal** or **Hard**
   (double).
 
+### Fixed (general review)
+- **Performance:** the debug log is now **off by default** (`debugLog = false`). When on, it groups its disk writes
+  (once per second; warnings and errors still at once). With it off, hits and passive checks no longer build any
+  debug text.
+- **Porter's belt:** if the Porter removes or swaps a block, or dies, while an ally has it open, the ally's menu now
+  closes (items put there were lost). The belt's items now go into the player's death drops, so grave mods (Corpse,
+  Gravestone...) pick them up, and item changes are saved in the same tick.
+- **Singleplayer:** zones, traps, marks and other in-memory state are cleared when the world closes, so they no
+  longer carry over into the next world opened in the same session.
+- **Elite Colossus trait** now also looks bigger on mobs drawn by Epic Fight.
+- **Spring Slime:** the server checks the launch charge against how long it saw you crouching.
+- **Choosing race/class:** while protected (`protectUnclassed`), you can no longer attack, break, place or use
+  things either; with no classes or races defined, nothing has to be chosen.
+- Extra mobs from zone difficulty fire Forge's spawn event, so other spawn-control mods see them.
+
 ### Known issues and notes
 - Beta: balance values are still being calibrated.
 - Class gear curios are disabled in this version, and some textures are provisional.

@@ -112,7 +112,7 @@ public final class Prayer {
         }
     }
 
-    private static final Map<UUID, State> PRAYING = new HashMap<>();
+    private static final Map<UUID, State> PRAYING = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
     /** Cliente: id de entidad de los jugadores que rezan (cabezas) → tamaño. Lo rellena {@link Packets.PrayerState}. */
     public static final Map<Integer, Float> CLIENT_SPIRITS = new ConcurrentHashMap<>();
     private static final UUID POWER_ID = UUID.fromString("2b6e9a14-c3d7-4f1e-8a52-7e0c4d9b1f63");

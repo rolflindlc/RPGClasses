@@ -74,9 +74,9 @@ public final class RangerSubclasses {
     public static final String TAG_BONDED = "rites_and_paths.bonded";
 
     /** Mascotas con bonus, por Ranger (para quitarlo cuando dejan de estar entre las 8 o el Ranger lo pierde). */
-    private static final Map<UUID, Set<UUID>> BOOSTED = new HashMap<>();
+    private static final Map<UUID, Set<UUID>> BOOSTED = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
     /** Mascotas salvadas pendientes de teletransporte (se hace al final del tick, fuera del evento de daño). */
-    private static final List<Rescue> RESCUES = new ArrayList<>();
+    private static final List<Rescue> RESCUES = io.github.rpgclasses.server.SessionState.track(new ArrayList<>());
     private record Rescue(LivingEntity pet, UUID owner) {}
 
     // --- Vínculo Salvaje ---

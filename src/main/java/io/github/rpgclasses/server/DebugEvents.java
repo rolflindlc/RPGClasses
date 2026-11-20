@@ -29,7 +29,7 @@ import java.util.UUID;
  */
 public final class DebugEvents {
     /** Curación acumulada por jugador; se vuelca cada 2 s para no escribir una línea por tick de regeneración. */
-    private static final Map<UUID, float[]> HEALS = new HashMap<>();
+    private static final Map<UUID, float[]> HEALS = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
     private int tick;
 
     public static void install() {
@@ -123,8 +123,15 @@ public final class DebugEvents {
     }
 
     @SubscribeEvent
+    public void onStopped(net.minecraftforge.event.server.ServerStoppedEvent event) {
+        DebugLog.flush();
+    }
+
+    @SubscribeEvent
     public void onTick(TickEvent.ServerTickEvent event) {
-        if (event.phase != TickEvent.Phase.END || ++tick % 40 != 0 || HEALS.isEmpty()) return;
+        if (event.phase != TickEvent.Phase.END) return;
+        if (++tick % 20 == 0) DebugLog.flush(); // las líneas del registro se vuelcan al disco agrupadas
+        if (tick % 40 != 0 || HEALS.isEmpty()) return;
         net.minecraft.server.MinecraftServer server = net.minecraftforge.server.ServerLifecycleHooks.getCurrentServer();
         for (Map.Entry<UUID, float[]> e : HEALS.entrySet()) {
             ServerPlayer player = server == null ? null : server.getPlayerList().getPlayer(e.getKey());

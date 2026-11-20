@@ -73,11 +73,11 @@ public final class RangerPerks {
     private static final String CD_QUICK = "rites_and_paths:quick_counter";
 
     /** Último tick de servidor en que el jugador se movió en horizontal, y su posición anterior. */
-    private static final Map<UUID, Long> LAST_MOVED = new HashMap<>();
-    private static final Map<UUID, Vec3> LAST_POS = new HashMap<>();
+    private static final Map<UUID, Long> LAST_MOVED = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
+    private static final Map<UUID, Vec3> LAST_POS = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
     /** Contraataque Veloz: fin de la ventana tras el golpe, y si la próxima flecha sale de un tensado instantáneo. */
-    private static final Map<UUID, Long> QUICK_WINDOW = new HashMap<>();
-    private static final Map<UUID, Boolean> QUICK_ARMED = new HashMap<>();
+    private static final Map<UUID, Long> QUICK_WINDOW = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
+    private static final Map<UUID, Boolean> QUICK_ARMED = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
     /** Golpe de flecha en curso: los efectos que aplica vanilla justo después son los de la flecha (Flechas Especiales). */
     private static UUID arrowHitShooter;
     private static int arrowHitTarget = -1;
@@ -85,7 +85,7 @@ public final class RangerPerks {
     private static boolean reapplying;
 
     private record Trap(ServerLevel level, Vec3 pos, long untilTick, UUID owner, int amplifier) {}
-    private static final List<Trap> TRAPS = new ArrayList<>();
+    private static final List<Trap> TRAPS = io.github.rpgclasses.server.SessionState.track(new ArrayList<>());
 
     // --- Disparo e impacto (llamados desde DamagePipeline) ---
 

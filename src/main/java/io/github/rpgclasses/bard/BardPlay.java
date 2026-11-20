@@ -23,7 +23,7 @@ import java.util.UUID;
 public final class BardPlay {
     /** Mantener pulsado el clic derecho repite el uso cada 4 ticks: solo cuenta la primera pulsación. */
     private static final int HOLD_TICKS = 5;
-    private static final Map<UUID, Long> LAST_USE = new HashMap<>();
+    private static final Map<UUID, Long> LAST_USE = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
 
     private BardPlay() {}
 

@@ -31,7 +31,7 @@ import java.util.UUID;
 public final class SpellExemptions {
     private static final ResourceLocation SPELL_POWER = new ResourceLocation("irons_spellbooks", "spell_power");
     private static final UUID MODIFIER_ID = UUID.fromString("b3f2a6c0-4d1e-4b7a-9c58-2e6d0a7f1c93");
-    private static final Set<UUID> ACTIVE = new HashSet<>();
+    private static final Set<UUID> ACTIVE = io.github.rpgclasses.server.SessionState.track(new HashSet<>());
 
     private SpellExemptions() {}
 

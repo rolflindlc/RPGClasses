@@ -66,11 +66,36 @@ public final class DamagePipeline {
 
     private static final String TAG_FACTOR = "rites_and_paths.factor";
     private static final String TAG_CAN_CRIT = "rites_and_paths.can_crit";
-    private static final Map<UUID, String> LAST_BREAKDOWN = new HashMap<>();
+    private static final Map<UUID, String> LAST_BREAKDOWN = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
 
     /** Desglose del último golpe del jugador, para /clases debug stats. */
     public static String lastBreakdown(ServerPlayer player) {
         return LAST_BREAKDOWN.get(player.getUUID());
+    }
+
+    /**
+     * Desglose de un golpe para el registro de depuración. Con el registro apagado no hace nada: formatear texto en
+     * cada golpe de cada jugador cuesta más que el propio cálculo del daño.
+     */
+    private static final class Breakdown {
+        private final StringBuilder text;
+
+        Breakdown(String format, Object... args) {
+            text = DebugLog.enabled() ? new StringBuilder(String.format(Locale.ROOT, format, args)) : null;
+        }
+
+        boolean on() {
+            return text != null;
+        }
+
+        void add(String format, Object... args) {
+            if (text != null) text.append(String.format(Locale.ROOT, format, args));
+        }
+
+        @Override
+        public String toString() {
+            return text == null ? "" : text.toString();
+        }
     }
 
     /** Con clase, el crítico es el del mod: se anula el crítico vanilla por salto para que no se acumulen. */
@@ -156,7 +181,7 @@ public final class DamagePipeline {
         Entity direct = source.getDirectEntity();
 
         double damage = event.getAmount();
-        StringBuilder log = new StringBuilder(String.format(Locale.ROOT, "base %.2f", damage));
+        Breakdown log = new Breakdown("base %.2f", damage);
         boolean canCrit;
 
         if (direct instanceof Projectile projectile) {
@@ -164,7 +189,7 @@ public final class DamagePipeline {
             if (!tag.contains(TAG_FACTOR)) return;
             double hit = RangerPerks.hitFactor(attacker, projectile);
             damage *= tag.getDouble(TAG_FACTOR) * hit;
-            log.append(String.format(Locale.ROOT, " | proyectil (arco + muro + perks) x%.2f", tag.getDouble(TAG_FACTOR) * hit));
+            log.add(" | proyectil (arco + muro + perks) x%.2f", tag.getDouble(TAG_FACTOR) * hit);
             canCrit = tag.getBoolean(TAG_CAN_CRIT);
         } else if (direct == attacker) {
             WeaponClassifier.Classification weapon = WeaponClassifier.classify(attacker.getMainHandItem());
@@ -173,26 +198,26 @@ public final class DamagePipeline {
                 // Rev. 2.20: para el Monje, el arma marcial cuenta como desarmado (cargas, perks y subclase).
                 double f = io.github.rpgclasses.gear.GearRules.monkMartialFactor(attacker, martial);
                 damage *= f;
-                log.append(String.format(Locale.ROOT, " | arma marcial del Monje x%.2f", f));
+                log.add(" | arma marcial del Monje x%.2f", f);
                 double charges = MonkPerks.unarmedFactor(attacker, target);
                 if (charges != 1) {
                     damage *= charges;
-                    log.append(String.format(Locale.ROOT, " | cargas/impulso x%.2f", charges));
+                    log.add(" | cargas/impulso x%.2f", charges);
                 }
             } else if (weapon.unarmed()) {
                 double flat = ModAttributes.value(attacker, ModAttributes.UNARMED_DAMAGE)
                         + io.github.rpgclasses.gear.GearRules.knucklesBonus(attacker, isMonk);
                 damage += flat;
-                log.append(String.format(Locale.ROOT, " | desarmado +%.2f", flat));
+                log.add(" | desarmado +%.2f", flat);
                 double palm = MonkSubclasses.onUnarmedHit(attacker, target, damage);
                 if (palm != 1) {
                     damage *= palm;
-                    log.append(String.format(Locale.ROOT, " | golpe cargado x%.2f", palm));
+                    log.add(" | golpe cargado x%.2f", palm);
                 }
                 double monk = MonkPerks.unarmedFactor(attacker, target);
                 if (monk != 1) {
                     damage *= monk;
-                    log.append(String.format(Locale.ROOT, " | cargas/impulso x%.2f", monk));
+                    log.add(" | cargas/impulso x%.2f", monk);
                 }
             } else if (weapon.discipline() != null) {
                 double wall = StatCalculator.wall(s, classDef, subDef, StatEngine.race(s), weapon.discipline());
@@ -200,19 +225,19 @@ public final class DamagePipeline {
                 double wallFactor = io.github.rpgclasses.bard.BardCombat.wallFactor(attacker, attacker.getMainHandItem(),
                         weapon.discipline(), StatMath.wallDamageFactor(wall));
                 damage *= wallFactor;
-                log.append(String.format(Locale.ROOT, " | muro %s x%.2f", weapon.discipline(), wallFactor));
+                log.add(" | muro %s x%.2f", weapon.discipline(), wallFactor);
             }
             // Bardo: golpe a compás y Furia Rítmica.
             double beat = io.github.rpgclasses.bard.BardCombat.meleeBonus(attacker);
             if (beat != 1) {
                 damage *= beat;
-                log.append(String.format(Locale.ROOT, " | a compás x%.2f", beat));
+                log.add(" | a compás x%.2f", beat);
             }
             // Mago de Batalla: Eco Marcial cuenta golpes y Filo Imbuido añade daño de la escuela del último conjuro.
             double imbued = io.github.rpgclasses.content.BattleMage.onMeleeHit(attacker, target, damage);
             if (imbued != 1) {
                 damage *= imbued;
-                log.append(String.format(Locale.ROOT, " | filo imbuido x%.2f", imbued));
+                log.add(" | filo imbuido x%.2f", imbued);
             }
             canCrit = true;
         } else {
@@ -224,50 +249,50 @@ public final class DamagePipeline {
                 + BarbarianPerks.furyPerkBonus(attacker);
         if (fury != 0) {
             damage *= Math.max(0.1, 1 + fury);
-            log.append(String.format(Locale.ROOT, " | furia x%.2f", Math.max(0.1, 1 + fury)));
+            log.add(" | furia x%.2f", Math.max(0.1, 1 + fury));
         }
         double smite = PaladinPerks.smiteBonus(attacker, target);
         if (smite != 0) {
             damage *= 1 + smite;
-            log.append(String.format(Locale.ROOT, " | castigo x%.2f", 1 + smite));
+            log.add(" | castigo x%.2f", 1 + smite);
         }
         double war = BannerAura.damageBonus(attacker);
         if (war != 0) {
             damage *= 1 + war;
-            log.append(String.format(Locale.ROOT, " | estandarte x%.2f", 1 + war));
+            log.add(" | estandarte x%.2f", 1 + war);
         }
         double treacherous = RoguePerks.treacherousBonus(attacker, target);
         if (treacherous != 0) {
             damage *= 1 + treacherous;
-            log.append(String.format(Locale.ROOT, " | traición x%.2f", 1 + treacherous));
+            log.add(" | traición x%.2f", 1 + treacherous);
         }
         double counter = RoguePerks.takeDodgeCounter(attacker);
         if (counter != 0) {
             damage *= 1 + counter;
-            log.append(String.format(Locale.ROOT, " | contraataque x%.2f", 1 + counter));
+            log.add(" | contraataque x%.2f", 1 + counter);
         }
         double condemn = PaladinPerks.condemnBonus(attacker, target);
         if (condemn != 0) {
             damage *= 1 + condemn;
-            log.append(String.format(Locale.ROOT, " | condena x%.2f", 1 + condemn));
+            log.add(" | condena x%.2f", 1 + condemn);
         }
         boolean melee = direct == attacker;
         double judgement = melee ? PaladinPerks.judgementBonus(attacker) : 0;
         double holyDamage = damage * judgement;
         if (judgement > 0) {
             damage += holyDamage;
-            log.append(String.format(Locale.ROOT, " | juicio +%.2f sagrado", holyDamage));
+            log.add(" | juicio +%.2f sagrado", holyDamage);
         }
 
         if (attacker.hasEffect(ModEffects.BERSERKER_RAGE.get())) {
             double bonus = AbilityService.number(AbilityService.params(CombatAbilities.BERSERKER_RAGE), "damage_bonus", 0.25);
             damage *= 1 + bonus;
-            log.append(String.format(Locale.ROOT, " | berserker x%.2f", 1 + bonus));
+            log.add(" | berserker x%.2f", 1 + bonus);
         }
         if (target instanceof Mob mob && mob.getTarget() == attacker && AbilityService.has(attacker, CombatAbilities.STEADY_GUARD)) {
             double bonus = AbilityService.number(AbilityService.params(CombatAbilities.STEADY_GUARD), "damage_bonus", 0.15);
             damage *= 1 + bonus;
-            log.append(String.format(Locale.ROOT, " | guardia firme x%.2f", 1 + bonus));
+            log.add(" | guardia firme x%.2f", 1 + bonus);
         }
 
         if (canCrit) {
@@ -284,10 +309,10 @@ public final class DamagePipeline {
                 damage *= multiplier * io.github.rpgclasses.gear.CurioEffects.critRoll(attacker, multiplier);
                 attacker.crit(target);
                 io.github.rpgclasses.gear.SetEffects.onCrit(attacker, target, damage, melee);
-                log.append(String.format(Locale.ROOT, backstab ? " | CRÍTICO SEGURO (sigilo) x%.2f" : marked ? " | CRÍTICO SEGURO (paso de sombra) x%.2f" : " | CRÍTICO (%.0f%%) x%.2f",
-                        backstab || marked ? new Object[] {multiplier} : new Object[] {chance * 100, multiplier}));
+                log.add(backstab ? " | CRÍTICO SEGURO (sigilo) x%.2f" : marked ? " | CRÍTICO SEGURO (paso de sombra) x%.2f" : " | CRÍTICO (%.0f%%) x%.2f",
+                        backstab || marked ? new Object[] {multiplier} : new Object[] {chance * 100, multiplier});
             } else {
-                log.append(String.format(Locale.ROOT, " | sin crítico (%.0f%%)", chance * 100));
+                log.add(" | sin crítico (%.0f%%)", chance * 100);
             }
         }
 
@@ -295,20 +320,22 @@ public final class DamagePipeline {
             double pierce = RoguePerks.armorPierceFactor(attacker, target, source, damage);
             if (pierce != 1) {
                 damage *= pierce;
-                log.append(String.format(Locale.ROOT, " | estocada x%.2f", pierce));
+                log.add(" | estocada x%.2f", pierce);
             }
             double ignite = io.github.rpgclasses.content.MonkCharges.armorIgnoreFactor(attacker, target, source, damage);
             if (ignite != 1) {
                 damage *= ignite;
-                log.append(String.format(Locale.ROOT, " | golpe ígneo (armadura) x%.2f", ignite));
+                log.add(" | golpe ígneo (armadura) x%.2f", ignite);
             }
         }
         float result = StatMath.sanitizeDamage(damage);
-        log.append(String.format(Locale.ROOT, " = %.2f (antes de armadura)", result));
-        LAST_BREAKDOWN.put(attacker.getUUID(), log.toString());
-        DebugLog.event(attacker, "golpe", "{} → {} ({}, {}): {}", attacker.getGameProfile().getName(), DebugLog.describe(target),
-                melee ? "cuerpo a cuerpo con " + attacker.getMainHandItem().getItem() : "proyectil " + DebugLog.describe(direct),
-                source.getMsgId(), log);
+        log.add(" = %.2f (antes de armadura)", result);
+        if (log.on()) LAST_BREAKDOWN.put(attacker.getUUID(), log.toString());
+        if (log.on()) {
+            DebugLog.event(attacker, "golpe", "{} → {} ({}, {}): {}", attacker.getGameProfile().getName(), DebugLog.describe(target),
+                    melee ? "cuerpo a cuerpo con " + attacker.getMainHandItem().getItem() : "proyectil " + DebugLog.describe(direct),
+                    source.getMsgId(), log);
+        }
         event.setAmount(result);
 
         if (judgement > 0) DebugLog.guard(attacker, "Juicio (área)", () -> PaladinPerks.judgementArea(attacker, target, (float) holyDamage));
@@ -328,43 +355,43 @@ public final class DamagePipeline {
     public void onDefend(LivingHurtEvent event) {
         if (!(event.getEntity() instanceof ServerPlayer victim) || victim instanceof FakePlayer || event.getAmount() <= 0) return;
         if (event.getSource().is(DamageTypeTags.BYPASSES_INVULNERABILITY)) return;
-        StringBuilder log = new StringBuilder(String.format(Locale.ROOT, "recibe %.2f (%s de %s)", event.getAmount(),
-                event.getSource().getMsgId(), DebugLog.describe(event.getSource().getEntity())));
+        Breakdown log = new Breakdown("recibe %.2f (%s de %s)", event.getAmount(),
+                event.getSource().getMsgId(), DebugLog.describe(event.getSource().getEntity()));
         double hazard = BarbarianPerks.hazardFactor(victim, event.getSource());
         double endurance = BarbarianPerks.enduranceFactor(victim);
         double factor = hazard * endurance;
-        if (hazard != 1) log.append(String.format(Locale.ROOT, " | peligros x%.2f", hazard));
-        if (endurance != 1) log.append(String.format(Locale.ROOT, " | aguante x%.2f", endurance));
+        if (hazard != 1) log.add(" | peligros x%.2f", hazard);
+        if (endurance != 1) log.add(" | aguante x%.2f", endurance);
         double beforeSkin = factor;
         factor = MonkPerks.spiritSkinFactor(victim, event.getSource(), factor);
-        if (factor != beforeSkin) log.append(String.format(Locale.ROOT, " | piel espiritual %.2f→%.2f", beforeSkin, factor));
+        if (factor != beforeSkin) log.add(" | piel espiritual %.2f→%.2f", beforeSkin, factor);
         double cleric = io.github.rpgclasses.cleric.ClericSubclasses.damageFactor(victim);
         factor *= cleric;
-        if (cleric != 1) log.append(String.format(Locale.ROOT, " | resolución/oración x%.2f", cleric));
+        if (cleric != 1) log.add(" | resolución/oración x%.2f", cleric);
         double tenacity = PaladinSubclasses.tenacityFactor(victim);
         factor *= tenacity;
-        if (tenacity != 1) log.append(String.format(Locale.ROOT, " | tenacidad x%.2f", tenacity));
+        if (tenacity != 1) log.add(" | tenacidad x%.2f", tenacity);
         if (victim.hasEffect(ModEffects.BULWARK.get())) {
             double reduction = CombatAbilities.bulwarkReduction(victim);
             // Baluarte Sanador: cura con lo que Baluarte ha quitado de este golpe.
             float prevented = (float) (event.getAmount() * factor * reduction);
             DebugLog.guard(victim, "Baluarte Sanador", () -> PaladinSubclasses.healingBulwark(victim, prevented));
             factor *= 1 - reduction;
-            log.append(String.format(Locale.ROOT, " | baluarte -%.0f%%", reduction * 100));
+            log.add(" | baluarte -%.0f%%", reduction * 100);
         }
         if (victim.hasEffect(ModEffects.TAUNT_GUARD.get())) {
             double reduction = AbilityService.number(AbilityService.params(CombatAbilities.TAUNT), "damage_reduction", 0.2);
             factor *= 1 - reduction;
-            log.append(String.format(Locale.ROOT, " | provocar -%.0f%%", reduction * 100));
+            log.add(" | provocar -%.0f%%", reduction * 100);
         }
         if (victim.hasEffect(ModEffects.BERSERKER_RAGE.get())) {
             double extra = AbilityService.number(AbilityService.params(CombatAbilities.BERSERKER_RAGE), "damage_taken", 0.2);
             factor *= 1 + extra;
-            log.append(String.format(Locale.ROOT, " | berserker +%.0f%%", extra * 100));
+            log.add(" | berserker +%.0f%%", extra * 100);
         }
         if (factor != 1) event.setAmount(StatMath.sanitizeDamage(event.getAmount() * factor));
-        log.append(String.format(Locale.ROOT, " = %.2f (antes de armadura)", event.getAmount()));
-        DebugLog.event(victim, "defensa", "{}", log);
+        log.add(" = %.2f (antes de armadura)", event.getAmount());
+        if (log.on()) DebugLog.event(victim, "defensa", "{}", log);
     }
 
     @SubscribeEvent

@@ -41,7 +41,7 @@ public final class RoguePerks {
     private static final String CD_EVASION = "rites_and_paths:evasion";
 
     /** Víctima -> (atacante -> tick de servidor del último golpe que el atacante le dio). Solo entre jugadores. */
-    private static final Map<UUID, Map<UUID, Long>> PLAYER_HITS = new HashMap<>();
+    private static final Map<UUID, Map<UUID, Long>> PLAYER_HITS = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
 
     /** Factor sobre el drenaje de la barra de Sigilo: duración (Golpe a Traición, Sigilo Profundo) y Ligereza. */
     public static double stealthDrainFactor(ServerPlayer player) {
@@ -58,7 +58,7 @@ public final class RoguePerks {
     // --- Contraataque (Acrobacia A, Epic Fight) ---
 
     private record Counter(double bonus, long until) {}
-    private static final Map<UUID, Counter> DODGE_COUNTERS = new HashMap<>();
+    private static final Map<UUID, Counter> DODGE_COUNTERS = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
 
     /** Tras una esquiva con éxito: el siguiente golpe en {@code ticks} hace +{@code bonus}. */
     public static void armDodgeCounter(ServerPlayer player, double bonus, int ticks) {

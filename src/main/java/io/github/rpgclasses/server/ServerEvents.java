@@ -100,17 +100,69 @@ public final class ServerEvents {
         if (player instanceof ServerPlayer sp && !(player instanceof FakePlayer)) StatEngine.refresh(sp);
     }
 
-    /** Mientras no elige clase, el jugador no recibe daño (configurable). */
+    /**
+     * Mientras elige raza y clase (la pantalla no se puede cerrar), el jugador ni recibe daño ni actúa sobre el mundo
+     * (configurable con protectUnclassed). Sin lo segundo, un cliente modificado podría cerrar la pantalla y jugar
+     * invulnerable. Si el servidor no tiene clases (o razas) definidas, no se exige elegirlas.
+     */
+    public static boolean choosing(Player player) {
+        if (!(player instanceof ServerPlayer sp) || sp instanceof FakePlayer || !ServerConfig.PROTECT_UNCLASSED.get()) return false;
+        PlayerClassData data = PlayerClassDataProvider.get(sp);
+        if (data == null) return false;
+        boolean noClass = data.state.classId == null && !io.github.rpgclasses.core.definition.DefinitionStore.SERVER.classIds().isEmpty();
+        boolean noRace = data.state.raceId == null && !io.github.rpgclasses.core.definition.RaceStore.SERVER.ids().isEmpty();
+        return noClass || noRace;
+    }
+
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void onAttack(LivingAttackEvent event) {
-        if (!(event.getEntity() instanceof ServerPlayer player) || player instanceof FakePlayer) return;
         if (event.getSource().is(net.minecraft.tags.DamageTypeTags.BYPASSES_INVULNERABILITY)) return;
-        PlayerClassData data = PlayerClassDataProvider.get(player);
-        boolean choosing = data != null && (data.state.classId == null
-                || (data.state.raceId == null && !io.github.rpgclasses.core.definition.RaceStore.SERVER.ids().isEmpty()));
-        if (choosing && ServerConfig.PROTECT_UNCLASSED.get()) {
+        // No recibe daño ni lo hace (también con proyectiles o mascotas que lancen a su nombre).
+        Player victim = event.getEntity() instanceof Player v ? v : null;
+        Player attacker = event.getSource().getEntity() instanceof Player a ? a : null;
+        if (choosing(victim) || choosing(attacker)) {
             event.setCanceled(true);
         }
+    }
+
+    @SubscribeEvent(priority = EventPriority.HIGHEST)
+    public void onAttackEntity(net.minecraftforge.event.entity.player.AttackEntityEvent event) {
+        if (choosing(event.getEntity())) event.setCanceled(true);
+    }
+
+    @SubscribeEvent(priority = EventPriority.HIGHEST)
+    public void onRightClickBlock(net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickBlock event) {
+        if (choosing(event.getEntity())) event.setCanceled(true);
+    }
+
+    @SubscribeEvent(priority = EventPriority.HIGHEST)
+    public void onRightClickItem(net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickItem event) {
+        if (choosing(event.getEntity())) event.setCanceled(true);
+    }
+
+    @SubscribeEvent(priority = EventPriority.HIGHEST)
+    public void onLeftClickBlock(net.minecraftforge.event.entity.player.PlayerInteractEvent.LeftClickBlock event) {
+        if (choosing(event.getEntity())) event.setCanceled(true);
+    }
+
+    @SubscribeEvent(priority = EventPriority.HIGHEST)
+    public void onInteractEntity(net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteract event) {
+        if (choosing(event.getEntity())) event.setCanceled(true);
+    }
+
+    @SubscribeEvent(priority = EventPriority.HIGHEST)
+    public void onInteractEntitySpecific(net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteractSpecific event) {
+        if (choosing(event.getEntity())) event.setCanceled(true);
+    }
+
+    @SubscribeEvent(priority = EventPriority.HIGHEST)
+    public void onBreak(net.minecraftforge.event.level.BlockEvent.BreakEvent event) {
+        if (choosing(event.getPlayer())) event.setCanceled(true);
+    }
+
+    @SubscribeEvent(priority = EventPriority.HIGHEST)
+    public void onPlace(net.minecraftforge.event.level.BlockEvent.EntityPlaceEvent event) {
+        if (choosing(event.getEntity() instanceof Player p ? p : null)) event.setCanceled(true);
     }
 
     @SubscribeEvent

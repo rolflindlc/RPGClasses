@@ -65,12 +65,12 @@ public final class RaceTraits {
     private static final int NIGHT_VISION_TICKS = 420;
 
     private static final Map<Player, Float> LAST_SCALE = Collections.synchronizedMap(new WeakHashMap<>());
-    private static final Map<UUID, Float> LAST_EXHAUSTION = new HashMap<>();
-    private static final Map<UUID, Long> INVULNERABLE_UNTIL = new HashMap<>();
-    private static final Map<UUID, Long> REGEN_PAUSED_UNTIL = new HashMap<>();
-    private static final Set<UUID> NIGHT_VISION = new HashSet<>();
+    private static final Map<UUID, Float> LAST_EXHAUSTION = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
+    private static final Map<UUID, Long> INVULNERABLE_UNTIL = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
+    private static final Map<UUID, Long> REGEN_PAUSED_UNTIL = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
+    private static final Set<UUID> NIGHT_VISION = io.github.rpgclasses.server.SessionState.track(new HashSet<>());
     /** Segundos seguidos del Infernal en el agua. */
-    private static final Map<UUID, Integer> WET_SECONDS = new HashMap<>();
+    private static final Map<UUID, Integer> WET_SECONDS = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
 
     // ------------------------------------------------------------------ tamaño
 

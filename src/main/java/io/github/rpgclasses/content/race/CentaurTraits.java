@@ -37,11 +37,11 @@ public final class CentaurTraits {
     private static final double GALLOP_MIN = 0.4;
 
     /** Pegaso: jugadores planeando ahora mismo (para los ritos y para quitar el efecto al aterrizar). */
-    private static final Set<UUID> GLIDING = new HashSet<>();
+    private static final Set<UUID> GLIDING = io.github.rpgclasses.server.SessionState.track(new HashSet<>());
     /** Unicornio: aliados que llevan ahora el bono de maná del aura. */
-    private static final Set<UUID> IN_AURA = new HashSet<>();
+    private static final Set<UUID> IN_AURA = io.github.rpgclasses.server.SessionState.track(new HashSet<>());
     /** Guerrero: golpes seguidos al galope. */
-    private static final Map<UUID, Integer> CHAIN = new HashMap<>();
+    private static final Map<UUID, Integer> CHAIN = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
 
     public static boolean gliding(Player p) {
         return GLIDING.contains(p.getUUID());

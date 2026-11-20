@@ -53,7 +53,7 @@ final class ElementalDebuffs {
     }
 
     /** Objetivo → lanzador → cargas por elemento (cada Elementalista lleva sus propias cargas). */
-    private static final Map<UUID, Map<UUID, EnumMap<School, Stacks>>> STACKS = new HashMap<>();
+    private static final Map<UUID, Map<UUID, EnumMap<School, Stacks>>> STACKS = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
 
     private ElementalDebuffs() {}
 

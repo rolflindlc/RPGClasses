@@ -59,9 +59,9 @@ public final class EpicFightCompat {
 
     /** Esquiva en curso en el servidor: tick de inicio y duración en ticks. */
     private record Dodge(long start, int duration, double factor) {}
-    private static final Map<UUID, Dodge> DODGES = new HashMap<>();
+    private static final Map<UUID, Dodge> DODGES = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
     /** Fin (tick de juego) de la invulnerabilidad extra tras la esquiva. */
-    private static final Map<UUID, Long> EXTRA_UNTIL = new HashMap<>();
+    private static final Map<UUID, Long> EXTRA_UNTIL = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
 
     public static void init() {
         // Aturdimientos de las habilidades del mod: el estado de aturdimiento real de Epic Fight.

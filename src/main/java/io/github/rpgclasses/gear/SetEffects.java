@@ -65,7 +65,7 @@ public final class SetEffects {
 
     private record Seal(Vec3 pos, int stance, int charges, long end) {}
 
-    private static final Map<UUID, State> STATES = new HashMap<>();
+    private static final Map<UUID, State> STATES = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
 
     private static State state(ServerPlayer p) {
         return STATES.computeIfAbsent(p.getUUID(), k -> new State());

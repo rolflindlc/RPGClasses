@@ -14,7 +14,7 @@ import java.util.UUID;
 
 /** "En combate" = ha dado o recibido daño de otra entidad hace menos de N segundos. Solo servidor. */
 public final class CombatTracker {
-    private static final Map<UUID, Long> LAST_COMBAT_TICK = new HashMap<>();
+    private static final Map<UUID, Long> LAST_COMBAT_TICK = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
 
     public static boolean inCombat(ServerPlayer player) {
         Long last = LAST_COMBAT_TICK.get(player.getUUID());

@@ -61,19 +61,19 @@ public final class BodyTraits {
     private static final double VANILLA_SPRINT = 0.13;
 
     /** Fracción de la velocidad racial máxima del Centauro (0–1), por jugador (servidor). */
-    private static final Map<UUID, Double> GALLOP = new HashMap<>();
-    private static final Map<UUID, Vec3> LAST_DIR = new HashMap<>();
+    private static final Map<UUID, Double> GALLOP = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
+    private static final Map<UUID, Vec3> LAST_DIR = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
     /**
      * Última posición vista de cada Centauro. En el servidor el movimiento del jugador llega por paquetes entre ticks
      * (xo/zo ya valen la posición actual en el tick y getDeltaMovement no lo refleja): se compara con la anterior.
      */
-    private static final Map<UUID, Vec3> LAST_POS = new HashMap<>();
+    private static final Map<UUID, Vec3> LAST_POS = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
     /** Tick en que se movió por última vez (los paquetes de movimiento no llegan siempre cada tick). */
-    private static final Map<UUID, Long> LAST_MOVED = new HashMap<>();
+    private static final Map<UUID, Long> LAST_MOVED = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
     /** Guerrero: tick de su último ataque al galope (el ataque vanilla corta la carrera; aquí se mantiene). */
-    private static final Map<UUID, Long> WAR_ATTACK = new HashMap<>();
+    private static final Map<UUID, Long> WAR_ATTACK = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
     /** Embestida: último golpe a cada víctima (para no golpearla cada tick). */
-    private static final Map<UUID, Map<UUID, Long>> RAM_HITS = new HashMap<>();
+    private static final Map<UUID, Map<UUID, Long>> RAM_HITS = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
     private static final ThreadLocal<Boolean> AREA_BREAKING = ThreadLocal.withInitial(() -> false);
 
     // ------------------------------------------------------------------ consultas

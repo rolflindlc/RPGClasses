@@ -39,7 +39,7 @@ public final class BarbarianPerks {
     private static final String ENDURANCE_COOLDOWN = "rites_and_paths:endurance";
 
     /** Agotamiento (hambre) del tic anterior, para descontar una parte del que se acumula. */
-    private static final Map<UUID, Float> LAST_EXHAUSTION = new HashMap<>();
+    private static final Map<UUID, Float> LAST_EXHAUSTION = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
 
     /** Curtido: reducción del daño de caída, fuego y explosiones que recibe. */
     public static double hazardFactor(ServerPlayer victim, DamageSource source) {

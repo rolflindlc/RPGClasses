@@ -90,7 +90,7 @@ final class MusicSpells {
     /** Último conjuro musical lanzado por cada jugador (lo repite el Eco). */
     private record Last(MusicSpellInfo info, int level, long at) {}
 
-    private static final Map<UUID, Last> LAST = new HashMap<>();
+    private static final Map<UUID, Last> LAST = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
     /** Fracción de poder con la que se lanza el conjuro (1 = normal; el Eco lo baja). */
     private static final ThreadLocal<Double> ECHO_SCALE = ThreadLocal.withInitial(() -> 1.0);
 
@@ -373,7 +373,7 @@ final class MusicSpells {
     // ================================================================== objetivo (Piano de Cola y Baile Forzado)
 
     abstract static class Targeted extends MusicSpell {
-        private static final Map<UUID, Integer> TARGETS = new HashMap<>();
+        private static final Map<UUID, Integer> TARGETS = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
         private static final double RANGE = 24;
 
         Targeted(MusicSpellInfo info) {

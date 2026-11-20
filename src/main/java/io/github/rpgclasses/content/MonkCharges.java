@@ -99,7 +99,7 @@ public final class MonkCharges {
         double fireFraction;
     }
 
-    private static final Map<UUID, State> STATES = new HashMap<>();
+    private static final Map<UUID, State> STATES = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
 
     /** Instancia solo para el bus de eventos. */
     public MonkCharges() {}

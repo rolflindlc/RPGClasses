@@ -27,7 +27,7 @@ public final class ShieldWall {
     /** Daño mínimo bloqueado a partir del cual vanilla desgasta el escudo. */
     private static final float VANILLA_WEAR_THRESHOLD = 3.0f;
 
-    private static final Map<UUID, Boolean> WAS_ON_COOLDOWN = new HashMap<>();
+    private static final Map<UUID, Boolean> WAS_ON_COOLDOWN = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
 
     /**
      * Vanilla no avisa cuando desactiva un escudo, así que se detecta el tick en que empieza su cooldown

@@ -79,7 +79,7 @@ public final class GearEvents {
         float ghostDamage;
     }
 
-    private static final Map<UUID, State> STATES = new HashMap<>();
+    private static final Map<UUID, State> STATES = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
 
     private static State state(Player p) {
         return STATES.computeIfAbsent(p.getUUID(), k -> new State());

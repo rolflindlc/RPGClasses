@@ -61,10 +61,10 @@ import java.util.UUID;
 public final class Miracle {
     private record Downed(UUID cleric, long endTick, DamageSource source, LivingEntity entity) {}
 
-    private static final Map<UUID, Downed> DOWNED = new HashMap<>();
+    private static final Map<UUID, Downed> DOWNED = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
     /** Recarga de 90 s de las mascotas (la de los jugadores se guarda en sus datos). */
-    private static final Map<UUID, Long> PET_COOLDOWN = new HashMap<>();
-    private static final Map<UUID, Long> IMMUNE_UNTIL = new HashMap<>();
+    private static final Map<UUID, Long> PET_COOLDOWN = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
+    private static final Map<UUID, Long> IMMUNE_UNTIL = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
     private static final String ALLY_CD = "rites_and_paths:miracle_ally";
     private static final UUID FREEZE_ID = UUID.fromString("4e2a9c71-3b5d-4f08-a6e1-9d7c2b0f5a36");
     /** Mientras se le aplica la muerte al acabar el tiempo: Milagro no vuelve a saltar. */
@@ -102,6 +102,12 @@ public final class Miracle {
         return until != null && victim.level().getGameTime() < until;
     }
 
+    /**
+     * Último salvavidas: va con la prioridad más baja y, dentro de ella, después de los de raza (Último Aliento del
+     * Orco, Mitosis del Slime), porque Cleric.register() se llama después de registrar las razas en RpgClasses.
+     * Así el aliado gasta antes lo suyo y el Milagro (y su enfriamiento de 90 s) solo salta si nada más le salva.
+     * Si se cambia el orden de registro, hay que mantener esto.
+     */
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public void onDamage(LivingDamageEvent event) {
         LivingEntity victim = event.getEntity();

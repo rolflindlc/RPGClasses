@@ -44,7 +44,14 @@ final class ExtraSpawner {
                 extra.discard();
                 continue;
             }
-            extra.finalizeSpawn(level, level.getCurrentDifficultyAt(extra.blockPosition()), MobSpawnType.NATURAL, null, null);
+            // Con el evento de Forge, como una aparición natural: otros mods que ajustan o vetan apariciones también ven
+            // a los extras. Nuestro propio FinalizeSpawn los marca, pero onJoin los salta porque ya llevan su T.
+            net.minecraftforge.event.ForgeEventFactory.onFinalizeSpawn(extra, level, level.getCurrentDifficultyAt(extra.blockPosition()),
+                    MobSpawnType.NATURAL, null, null);
+            if (extra.isSpawnCancelled()) {
+                extra.discard();
+                continue;
+            }
             DifficultyEvents.markAndApply(extra, zone);
             level.addFreshEntityWithPassengers(extra);
             created++;

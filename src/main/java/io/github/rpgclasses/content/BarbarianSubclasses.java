@@ -67,7 +67,7 @@ public final class BarbarianSubclasses {
 
     /** Última Furia en curso: agresor que hay que matar y tick en que termina. */
     private record Fury(UUID target, long endTick) {}
-    private static final Map<UUID, Fury> FURY = new HashMap<>();
+    private static final Map<UUID, Fury> FURY = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
 
     // --- Supervivencia ---
 

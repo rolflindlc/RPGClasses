@@ -62,11 +62,11 @@ public final class BardCombat {
     private static final TagKey<EntityType<?>> COLOSSUS_DRUMSKIN = TagKey.create(Registries.ENTITY_TYPE, RpgClasses.id("bard/colossus_drumskin"));
 
     /** Golpe Resonante pendiente del golpe en curso (lo marca {@link #meleeBonus} y lo suelta {@link #afterMelee}). */
-    private static final Set<UUID> WAVE = new java.util.HashSet<>();
+    private static final Set<UUID> WAVE = io.github.rpgclasses.server.SessionState.track(new java.util.HashSet<>());
     /** Quién bailó o silenció a cada criatura (para Hechizar): entidad → Bardo. */
-    private static final Map<UUID, UUID> CONTROLLER = new HashMap<>();
+    private static final Map<UUID, UUID> CONTROLLER = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
     /** Quién hechizó a cada mob: mob → Bardo. */
-    private static final Map<UUID, UUID> CHARMER = new HashMap<>();
+    private static final Map<UUID, UUID> CHARMER = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
 
     // ------------------------------------------------------------------ golpes (llamado desde DamagePipeline)
 
@@ -236,7 +236,7 @@ public final class BardCombat {
     }
 
     /** Yaw con el que empezó a bailar cada criatura: el balanceo del torso gira alrededor de él. */
-    private static final Map<UUID, Float> DANCE_YAW = new HashMap<>();
+    private static final Map<UUID, Float> DANCE_YAW = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
     /** Un pulso del baile en ticks (el mismo ritmo que el cliente: 0,55 rad por tick). */
     private static final int DANCE_BEAT = 11;
 

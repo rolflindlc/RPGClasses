@@ -53,10 +53,10 @@ import java.util.UUID;
 public final class DeathGamble {
     private record Flip(boolean win, long resolveTick, DamageSource source, ActiveMechanic mechanic, int uses) {}
 
-    private static final Map<UUID, Flip> FLIPS = new HashMap<>();
-    private static final Map<UUID, Long> IMMORTAL_UNTIL = new HashMap<>();
+    private static final Map<UUID, Flip> FLIPS = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
+    private static final Map<UUID, Long> IMMORTAL_UNTIL = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
     /** Jugadores a los que se está aplicando la calavera: la Apuesta no vuelve a saltar en ese golpe. */
-    private static final Set<UUID> RESOLVING = new HashSet<>();
+    private static final Set<UUID> RESOLVING = io.github.rpgclasses.server.SessionState.track(new HashSet<>());
     private static final UUID FREEZE_ID = UUID.fromString("6b1f3c55-2f6a-4d0e-9b8e-2a7c1d0c0f31");
 
     public DeathGamble() {}

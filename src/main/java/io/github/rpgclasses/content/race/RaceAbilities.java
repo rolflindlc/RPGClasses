@@ -101,15 +101,13 @@ public final class RaceAbilities {
     private record Cloud(ResourceKey<Level> dim, Vec3 center, double radius, long end, UUID owner, int slowness) {}
     private record Trap(ResourceKey<Level> dim, Vec3 pos, UUID owner, long end, double seconds, double bossSeconds, double pvpFactor,
                         double damage) {}
-    private record WaterKey(ResourceKey<Level> dim, BlockPos pos) {}
     private record Immunity(long end, Set<MobEffect> effects) {}
 
-    private static final List<Cloud> CLOUDS = new ArrayList<>();
-    private static final List<Trap> TRAPS = new ArrayList<>();
-    private static final Map<WaterKey, Long> TEMP_WATER = new HashMap<>();
-    private static final Map<Entity, Long> TEMP_ENTITIES = new HashMap<>();
-    private static final Map<UUID, Immunity> CONTROL_IMMUNE = new HashMap<>();
-    private static final Map<UUID, Long> ETHEREAL = new HashMap<>();
+    private static final List<Cloud> CLOUDS = io.github.rpgclasses.server.SessionState.track(new ArrayList<>());
+    private static final List<Trap> TRAPS = io.github.rpgclasses.server.SessionState.track(new ArrayList<>());
+    private static final Map<Entity, Long> TEMP_ENTITIES = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
+    private static final Map<UUID, Immunity> CONTROL_IMMUNE = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
+    private static final Map<UUID, Long> ETHEREAL = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
 
     /** El jugador pulsa una tecla racial. Todo se valida aquí. */
     public static void use(ServerPlayer player, int slot) {
@@ -434,15 +432,6 @@ public final class RaceAbilities {
 
         if (time % 2 == 0) TRAPS.removeIf(t -> time >= t.end() || tickTrap(server, t, time));
 
-        for (Iterator<Map.Entry<WaterKey, Long>> it = TEMP_WATER.entrySet().iterator(); it.hasNext(); ) {
-            Map.Entry<WaterKey, Long> e = it.next();
-            if (time < e.getValue()) continue;
-            ServerLevel level = server.getLevel(e.getKey().dim());
-            if (level != null && level.isLoaded(e.getKey().pos()) && level.getBlockState(e.getKey().pos()).is(Blocks.WATER)) {
-                level.setBlockAndUpdate(e.getKey().pos(), Blocks.AIR.defaultBlockState());
-            }
-            it.remove();
-        }
         for (Iterator<Map.Entry<Entity, Long>> it = TEMP_ENTITIES.entrySet().iterator(); it.hasNext(); ) {
             Map.Entry<Entity, Long> e = it.next();
             if (time < e.getValue()) continue;

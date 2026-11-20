@@ -58,6 +58,8 @@ public final class DebugLog {
     private static BufferedWriter writer;
     private static boolean fileBroken;
     private static long written;
+    /** Última vez (ms) que se volcó el archivo: las líneas INFO se agrupan y se vuelcan como mucho una vez por segundo. */
+    private static long lastFlush;
 
     // ------------------------------------------------------------------ estado
 
@@ -134,7 +136,7 @@ public final class DebugLog {
         push(GLOBAL_LINES, line, GLOBAL);
         if (player != null) push(BY_PLAYER.computeIfAbsent(player.getUUID(), k -> new ArrayDeque<>()), line, PER_PLAYER);
         if (!"INFO".equals(level)) push(ERROR_LINES, trace == null ? line : line + "\n" + trace, ERRORS);
-        writeFile(trace == null ? line : line + "\n" + trace);
+        writeFile(trace == null ? line : line + "\n" + trace, !"INFO".equals(level));
     }
 
     private static void push(Deque<String> deque, String line, int cap) {
@@ -142,7 +144,20 @@ public final class DebugLog {
         while (deque.size() > cap) deque.removeFirst();
     }
 
-    private static void writeFile(String text) {
+    /** Vuelca al disco lo pendiente (cada segundo desde el tick del servidor y al pararlo). */
+    public static synchronized void flush() {
+        if (writer == null || fileBroken) return;
+        try {
+            writer.flush();
+            lastFlush = System.currentTimeMillis();
+        } catch (IOException e) {
+            fileBroken = true;
+            RpgClasses.LOGGER.warn("[rites_and_paths] No se puede escribir logs/rites_and_paths-debug.log", e);
+        }
+    }
+
+    /** {@code urgent}: avisos y errores se vuelcan al momento; el resto se agrupa para no escribir al disco en cada línea. */
+    private static void writeFile(String text, boolean urgent) {
         if (fileBroken || written > MAX_FILE_BYTES) return;
         try {
             if (writer == null) {
@@ -160,7 +175,11 @@ public final class DebugLog {
             }
             writer.write(text);
             writer.newLine();
-            writer.flush();
+            long now = System.currentTimeMillis();
+            if (urgent || now - lastFlush >= 1000) {
+                writer.flush();
+                lastFlush = now;
+            }
             written += text.length() + 1;
             if (written > MAX_FILE_BYTES) {
                 writer.write("[registro detenido: más de 32 MB; los errores siguen en latest.log]");

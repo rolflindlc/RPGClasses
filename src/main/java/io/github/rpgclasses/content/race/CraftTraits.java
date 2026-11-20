@@ -153,9 +153,9 @@ public final class CraftTraits {
 
     // ------------------------------------------------------------------ Eventos
 
-    private static final Map<UUID, int[]> LURE = new HashMap<>();     // [id del gancho, último tiempo visto]
-    private static final Map<UUID, List<BlockPos>> FURNACES = new HashMap<>();
-    private static final Set<BlockPos> HEATED_THIS_TICK = new HashSet<>();
+    private static final Map<UUID, int[]> LURE = io.github.rpgclasses.server.SessionState.track(new HashMap<>());     // [id del gancho, último tiempo visto]
+    private static final Map<UUID, List<BlockPos>> FURNACES = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
+    private static final Set<BlockPos> HEATED_THIS_TICK = io.github.rpgclasses.server.SessionState.track(new HashSet<>());
     private static boolean exploding;
     private static boolean tunneling;
 

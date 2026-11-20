@@ -134,7 +134,7 @@ public final class Rites {
         }
     }
 
-    private static final Map<UUID, Fight> FIGHTS = new HashMap<>();      // jefe -> combate
+    private static final Map<UUID, Fight> FIGHTS = io.github.rpgclasses.server.SessionState.track(new HashMap<>());      // jefe -> combate
 
     // ------------------------------------------------------------------ fuentes raciales (adenda 0.7)
 
@@ -147,7 +147,7 @@ public final class Rites {
     /** Slimes vivos del Enjambre (lo instala el Enjambre). */
     public static java.util.function.ToIntFunction<ServerPlayer> swarmAlive = p -> 0;
     private record Credit(UUID player, String source, long time) {}
-    private static final Map<UUID, Credit> CREDIT = new HashMap<>();
+    private static final Map<UUID, Credit> CREDIT = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
     private static final int CREDIT_TICKS = 60;
 
     /** Ejecuta un golpe atribuido a una fuente racial: cuenta para "kill.by" y para el reparto de daño del jefe. */
@@ -201,9 +201,9 @@ public final class Rites {
         var state = STATE_SOURCES.get(by);
         return state != null && state.test(p);
     }
-    private static final Map<UUID, UUID> BOSS_OF = new HashMap<>();       // dueño -> jefe
-    private static final Map<UUID, Long> LAST_SUMMON = new HashMap<>();
-    private static final Map<UUID, Deque<Long>> SHIELD_BLOCKS = new HashMap<>();
+    private static final Map<UUID, UUID> BOSS_OF = io.github.rpgclasses.server.SessionState.track(new HashMap<>());       // dueño -> jefe
+    private static final Map<UUID, Long> LAST_SUMMON = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
+    private static final Map<UUID, Deque<Long>> SHIELD_BLOCKS = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
 
     // ------------------------------------------------------------------ rito en curso
 

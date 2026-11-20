@@ -22,9 +22,9 @@ import java.util.UUID;
  * Se cachean por jugador y se invalidan en {@link StatEngine#recompute}, que se llama tras cualquier cambio.
  */
 public final class MechanicService {
-    private static final Map<UUID, List<ActiveMechanic>> CACHE = new HashMap<>();
+    private static final Map<UUID, List<ActiveMechanic>> CACHE = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
     /** Ids de la última lista calculada, para registrar qué pasivas se ganan o se pierden. */
-    private static final Map<UUID, java.util.Set<String>> LAST_IDS = new HashMap<>();
+    private static final Map<UUID, java.util.Set<String>> LAST_IDS = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
 
     /** Todas las mecánicas activas del jugador (lista vacía sin clase). */
     public static List<ActiveMechanic> all(ServerPlayer player) {
@@ -37,8 +37,11 @@ public final class MechanicService {
         String full = id.contains(":") ? id : Ids.NS + ":" + id;
         for (ActiveMechanic m : all(player)) {
             if (m.id().equals(full)) {
-                DebugLog.throttled(player, "mech:" + full, 15_000, "pasiva", "{} comprobada (la tiene, nivel {}/{})",
-                        full, m.level(), m.maxLevel());
+                // Se consulta decenas de veces por jugador y tick: sin registro activo no se monta ningún texto.
+                if (DebugLog.enabled()) {
+                    DebugLog.throttled(player, "mech:" + full, 15_000, "pasiva", "{} comprobada (la tiene, nivel {}/{})",
+                            full, m.level(), m.maxLevel());
+                }
                 return m;
             }
         }

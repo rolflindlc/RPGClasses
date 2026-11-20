@@ -56,12 +56,12 @@ public final class ClericSubclasses {
     public static final ResourceKey<DamageType> MARTYRDOM = ResourceKey.create(Registries.DAMAGE_TYPE, RpgClasses.id("martyrdom"));
 
     /** Forma Angelical: fin de la forma por jugador. */
-    private static final Map<UUID, Long> ANGEL_UNTIL = new HashMap<>();
+    private static final Map<UUID, Long> ANGEL_UNTIL = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
     /** Sin daño de caída hasta tocar el suelo tras la Forma Angelical. */
-    private static final Set<UUID> FALL_SAFE = new HashSet<>();
+    private static final Set<UUID> FALL_SAFE = io.github.rpgclasses.server.SessionState.track(new HashSet<>());
     /** Sacrificio final armado: aliado elegido y hasta cuándo vale la segunda pulsación. */
     private record Armed(UUID target, long until) {}
-    private static final Map<UUID, Armed> ARMED = new HashMap<>();
+    private static final Map<UUID, Armed> ARMED = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
     private static final float ANGEL_FLY_SPEED = 0.02f, DEFAULT_FLY_SPEED = 0.05f;
 
     public ClericSubclasses() {}

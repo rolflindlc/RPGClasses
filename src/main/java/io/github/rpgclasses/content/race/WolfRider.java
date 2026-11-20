@@ -120,7 +120,7 @@ public final class WolfRider {
     }
 
     private record Bite(Wolf wolf, LivingEntity target) {}
-    private static final java.util.List<Bite> BITES = new java.util.ArrayList<>();
+    private static final java.util.List<Bite> BITES = io.github.rpgclasses.server.SessionState.track(new java.util.ArrayList<>());
 
     @SubscribeEvent
     public void onServerTick(TickEvent.ServerTickEvent event) {

@@ -97,7 +97,7 @@ ABILITIES = {
     "angelic_form": dict(duration_seconds=10, radius=10, regen_level=2, absorption_level=1, cooldown_seconds=120),
     "sacrifice": dict(cost_fraction=.15, heal_fraction=.20, range=12, cooldown_seconds=.5, final_missing_heal=1.0,
                       final_absorption=1.0, final_immunity_seconds=2, confirm_seconds=5),
-    "prayer": dict(orbit_distance=3, full_power_blocks=10, min_power=.33, min_power_blocks=50, regen_level=1),
+    "prayer": dict(spirit_range=15, spirit_size=.9, full_power_blocks=10, min_power=.33, min_power_blocks=50, regen_level=1),
 }
 
 # ------------------------------------------------------------------ textos
@@ -131,7 +131,7 @@ SUB_NAMES = {"angel": "Ángel", "martyr": "Mártir", "intercessor": "Intercesor"
 SUB_DESC = {
     "angel": "Alas de luz: menos daño de caída y caída lenta, un halo que regenera a tus aliados cercanos y, desde el nivel 5, la Forma Angelical: vuelas unos segundos mientras tú y tus aliados regeneráis y os purificáis.",
     "martyr": "Cura con su propia sangre: más vida, menos daño recibido cuando está malherido y, desde el nivel 5, el Sacrificio: pagas vida para curar a un aliado, sin recarga. Si ya no puedes pagar, puedes dar tu vida por él.",
-    "intercessor": "Reza por un aliado aunque no lo vea: tu cuerpo se queda arrodillado y tu mirada pasa a un pequeño ángel que lo acompaña. Desde el ángel lanzas tus conjuros, con menos poder cuanto más lejos esté tu cuerpo.",
+    "intercessor": "Reza por un aliado aunque no lo vea: tu cuerpo se queda agachado y tú pasas a ser una cabeza flotante que lo acompaña. Desde ella lanzas tus conjuros, con menos poder cuanto más lejos esté tu cuerpo.",
 }
 ABILITY_TEXT = {
     "healer_eye": ("Ojo del Sanador", "Ves la vida de tus aliados cercanos sobre sus cabezas (también a través de las paredes). Los que bajan del 40 % brillan, y los tumbados por el Milagro muestran su cuenta atrás. Solo lo ves tú."),
@@ -140,7 +140,7 @@ ABILITY_TEXT = {
     "miracle": ("Milagro", "Si un aliado (también una mascota) iba a morir cerca de ti, queda tumbado unos segundos: no puede hacer nada ni recibir daño. Si otro jugador lo cura, se levanta; si no, muere. Cada aliado solo puede salvarse así cada cierto tiempo. No te salva a ti."),
     "angelic_form": ("Forma Angelical", "Durante unos segundos vuelas (sin correr en el aire). Al activarla se purgan tus efectos negativos y los de tus aliados cercanos, y todos recibís Regeneración II y Absorción I mientras dura. Al terminar no sufres daño de caída."),
     "sacrifice": ("Sacrificio", "Pagas parte de tu vida máxima y el aliado al que miras recupera parte de la suya (al menos lo que has pagado). Sin recarga. Si pagar te mataría, el icono se pone rojo: pulsa dos veces para dar tu vida: tu aliado recupera toda la vida que le falta, gana tantos corazones dorados como vida tenía y es invulnerable un instante. Su curación es verdadera: nada puede aumentarla ni reducirla."),
-    "prayer": ("Plegaria", "Eliges a un aliado de la lista: tu cuerpo se queda arrodillado y tu cámara pasa a un pequeño ángel que orbita a tu aliado y le da Regeneración. Tus conjuros, la Imposición de Manos y el Santuario salen desde el ángel; los conjuros pierden poder si tu cuerpo está lejos. Vuelve a pulsar para cambiar de aliado o dejar de rezar."),
+    "prayer": ("Plegaria", "Eliges a un aliado de la lista: tu cuerpo se queda agachado donde estás y tú apareces junto a tu aliado como una cabeza flotante que puede moverse a su alrededor (hasta 15 bloques). Tu aliado recibe Regeneración. Desde la cabeza lanzas tus conjuros, la Imposición de Manos y el Santuario, con menos poder cuanto más lejos esté tu cuerpo. Si golpean a tu cuerpo, el daño lo recibes tú; la cabeza no recibe daño. Vuelve a pulsar para cambiar de aliado o dejar de rezar."),
 }
 MECHANIC_NAMES = {
     "healing_power": "Sanación", "blessing_duration": "Bendición", "purification": "Purificación", "aegis": "Égida",
@@ -170,11 +170,13 @@ PARAMS = {
     "regen_level": "Nivel de Regeneración", "absorption_level": "Nivel de Absorción", "cost_fraction": "Vida máxima que pagas|%",
     "final_missing_heal": "Vida que le falta que recupera (Sacrificio final)|%",
     "final_absorption": "Corazones dorados (de la vida que tenía)|%", "final_immunity_seconds": "Invulnerabilidad del Sacrificio final|s",
-    "confirm_seconds": "Tiempo para confirmar|s", "orbit_distance": "Distancia del ángel (bloques)",
+    "confirm_seconds": "Tiempo para confirmar|s", "spirit_range": "Distancia máxima al aliado (bloques)",
+    "spirit_size": "Tamaño de la cabeza (bloques)",
     "full_power_blocks": "Poder completo hasta (bloques)", "min_power_blocks": "Poder mínimo desde (bloques)",
 }
 
 UI = {
+    "entity.rites_and_paths.praying_body": "Cuerpo que reza",
     "effect.rites_and_paths.downed": "Tumbado",
     "effect.rites_and_paths.angelic_form": "Forma Angelical",
     "death.attack.rites_and_paths.martyrdom": "%1$s dio su vida por sus aliados",

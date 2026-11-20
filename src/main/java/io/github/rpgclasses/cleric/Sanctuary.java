@@ -135,7 +135,7 @@ public final class Sanctuary {
         sync(player, z, anchor(player), remaining(z, now));
     }
 
-    /** Ancla de la esfera: el aliado de la Plegaria (el ángel está con él) o el propio Clérigo. */
+    /** Ancla de la esfera: el aliado de la Plegaria (la cabeza está con él) o el propio Clérigo. */
     private static Entity anchor(ServerPlayer player) {
         LivingEntity prayed = Prayer.target(player);
         return prayed != null ? prayed : player;

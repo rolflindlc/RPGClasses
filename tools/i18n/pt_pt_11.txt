@@ -6,7 +6,7 @@
 5 Imposição de Mãos
 6 Se um aliado (inclusive um mascote) ia morrer perto de si, ele fica caído por alguns segundos: não pode fazer nada nem receber dano. Se outro jogador o curar, ele se levanta; se não, morre. Cada aliado só pode ser salvo assim de tempos em tempos. Não o salva.
 7 Milagre
-8 Escolha um aliado da lista: seu corpo fica ajoelhado e sua câmara passa para um pequeno anjo que orbita o aliado e lhe dá Regeneração. Seus feitiços, a Imposição de Mãos e o Santuário saem do anjo; os feitiços perdem poder se seu corpo estiver longe. Pressione de novo para trocar de aliado ou parar de rezar.
+8 Escolhe um aliado da lista: o teu corpo fica agachado onde estás e apareces ao lado do aliado como uma cabeça flutuante que se pode mover à volta dele (até 15 blocos). O teu aliado recebe Regeneração. A partir da cabeça lanças os teus feitiços, a Imposição de Mãos e o Santuário, com menos poder quanto mais longe estiver o teu corpo. Se o teu corpo for atingido, o dano é teu; a cabeça não pode ser ferida. Prime de novo para trocar de aliado ou parar de rezar.
 9 Prece
 10 Paga parte da sua vida máxima e o aliado para o qual olha recupera parte da dele (pelo menos o que pagou). Sem recarga. Se pagar o mataria, o ícone fica vermelho: pressione duas vezes para dar sua vida; seu aliado recupera toda a vida que lhe falta, ganha tantos corações dourados quanto a vida que tinha e fica invulnerável por um instante. A cura é verdadeira: nada pode aumentá-la nem reduzi-la.
 11 Sacrifício
@@ -97,7 +97,7 @@
 96 Alvos que contam por lançamento
 97 Poder mínimo à distância
 98 Poder mínimo a partir de (blocos)
-99 Distância do anjo (blocos)
+99 Distância máxima ao aliado (blocos)
 100 Cura em outros
 101 Regeneração de mana fora de combate
 102 Recupera do que cura
@@ -132,7 +132,7 @@
 131 Penitência
 132 Asas de luz: menos dano de queda e queda lenta, uma auréola que regenera os aliados próximos e, a partir do nível 5, a Forma Angelical: voa por alguns segundos enquanto o jogador e seus aliados regeneram e são purificados.
 133 Anjo
-134 Reza por um aliado mesmo sem vê-lo: seu corpo fica ajoelhado e sua visão passa a um pequeno anjo que o acompanha. Lança seus feitiços a partir do anjo, com menos poder quanto mais longe estiver seu corpo.
+134 Reza por um aliado mesmo sem o ver: o teu corpo fica agachado e passas a ser uma cabeça flutuante que o acompanha. Lanças os teus feitiços a partir dela, com menos poder quanto mais longe estiver o teu corpo.
 135 Intercessor
 136 Cura com o próprio sangue: mais vida, menos dano recebido quando está muito ferido e, a partir do nível 5, o Sacrifício: paga vida para curar um aliado, sem recarga. Se não puder mais pagar, pode dar sua vida por ele.
 137 Mártir
@@ -151,3 +151,5 @@
 150 Novas habilidades: %s
 151 Melhorias neste Rank:
 152 Desbloqueia no Rank %s
+153 Tamanho da cabeça (blocos)
+154 Corpo em oração

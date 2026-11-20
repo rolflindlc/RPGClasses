@@ -10,8 +10,9 @@ First public beta of Rolflin's Rites & Paths (Minecraft Forge 1.20.1).
 - **Cleric:** holy healer that shares the holy school with the Paladin. Healing, Blessing, Divine Reserve, Purification
   and Aegis branches; Healer's Eye, Laying on Hands, a channeled Sanctuary and Miracle (allies who would die are
   downed and can be lifted up with a heal). Subclasses: Angel (Angelic Form flight, Winged Grace, Halo), Martyr
-  (Sacrifice and Final Sacrifice) and Intercessor (Prayer: the camera moves to an angel beside an ally and spells are
-  cast from it).
+  (Sacrifice and Final Sacrifice) and Intercessor (Prayer: a crouching copy of your body stays behind and you
+  fly beside the ally as a translucent floating head, up to 15 blocks from them, casting your spells from there; hits
+  on the body hurt you, the head cannot be hurt).
 - **12 races** with **39 subraces** and **117 rites**, with a Race Altar and rite bosses.
 - **Bard** rhythm minigame, with its own music school for Iron's Spells 'n Spellbooks, instruments, sheet music and a
   music stand.

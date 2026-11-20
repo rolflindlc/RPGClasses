@@ -6,7 +6,7 @@
 5 Imposizione delle mani
 6 Se un alleato (anche un animale domestico) stava per morire vicino a te, resta invece atterrato per alcuni secondi: non può agire né subire danni. Se un altro giocatore lo cura, si rialza; altrimenti muore. Ogni alleato può essere salvato così solo ogni tanto. Non salva te.
 7 Miracolo
-8 Scegli un alleato dalla lista: il tuo corpo resta in ginocchio e la tua visuale passa a un piccolo angelo che orbita intorno all'alleato e gli dà Rigenerazione. I tuoi incantesimi, l'Imposizione delle mani e il Santuario partono dall'angelo; gli incantesimi perdono potenza se il tuo corpo è lontano. Premi di nuovo per cambiare alleato o smettere di pregare.
+8 Scegli un alleato dalla lista: il tuo corpo resta accovacciato dove sei e tu appari accanto all'alleato come una testa fluttuante che può muoversi intorno a lui (fino a 15 blocchi). L'alleato riceve Rigenerazione. Dalla testa lanci gli incantesimi, l'Imposizione delle mani e il Santuario, con meno potenza quanto più lontano è il tuo corpo. Se colpiscono il tuo corpo, il danno lo subisci tu; la testa non può essere ferita. Premi di nuovo per cambiare alleato o smettere di pregare.
 9 Preghiera
 10 Paghi parte della tua salute massima e l'alleato che stai guardando recupera parte della sua (almeno quanto hai pagato). Nessuna ricarica. Se pagare ti ucciderebbe, l'icona diventa rossa: premi due volte per dare la tua vita; il tuo alleato recupera tutta la salute che gli manca, ottiene tanti cuori dorati quanta salute aveva ed è invulnerabile per un istante. La cura è una cura pura: nulla può aumentarla né ridurla.
 11 Sacrificio
@@ -97,7 +97,7 @@
 96 Bersagli che contano per lancio
 97 Potenza minima a distanza
 98 Potenza minima da (blocchi)
-99 Distanza dell'angelo (blocchi)
+99 Distanza massima dall'alleato (blocchi)
 100 Cura sugli altri
 101 Rigenerazione di mana fuori dal combattimento
 102 Recuperi di quanto curi
@@ -132,7 +132,7 @@
 131 Penitenza
 132 Ali di luce: meno danni da caduta e caduta lenta, un'aureola che rigenera gli alleati vicini e, dal livello 5, la Forma angelica: voli per alcuni secondi mentre tu e i tuoi alleati vi rigenerate e venite purificati.
 133 Angelo
-134 Prega per un alleato anche senza vederlo: il tuo corpo resta in ginocchio e la tua vista passa a un piccolo angelo che lo accompagna. Lanci gli incantesimi dall'angelo, con meno potenza quanto più lontano è il tuo corpo.
+134 Prega per un alleato anche senza vederlo: il tuo corpo resta accovacciato e tu diventi una testa fluttuante che lo accompagna. Lanci gli incantesimi dalla testa, con meno potenza quanto più lontano è il tuo corpo.
 135 Intercessore
 136 Cura con il proprio sangue: più salute, meno danni subiti quando è gravemente ferito e, dal livello 5, il Sacrificio: paghi salute per curare un alleato, senza ricarica. Se non puoi più pagare, puoi dare la vita per lui.
 137 Martire
@@ -151,3 +151,5 @@
 150 Nuove abilità: %s
 151 Miglioramenti a questo Rango:
 152 Si sblocca al Rango %s
+153 Dimensione della testa (blocchi)
+154 Corpo in preghiera

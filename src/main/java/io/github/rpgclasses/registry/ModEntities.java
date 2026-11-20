@@ -9,7 +9,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
-/** Entidades propias del mod: el clon del Señuelo (Ilusionista de Sombras) y las formas del Slime (adenda 0.7). */
+/** Entidades propias del mod: el clon del Señuelo (Ilusionista de Sombras), las formas del Slime (adenda 0.7) y el cuerpo que reza (Intercesor). */
 public final class ModEntities {
     public static final DeferredRegister<EntityType<?>> ENTITIES =
             DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, RpgClasses.MODID);
@@ -31,10 +31,17 @@ public final class ModEntities {
                     .sized(0.6f, 1.8f).clientTrackingRange(10).updateInterval(2)
                     .build(RpgClasses.MODID + ":mitosis_copy"));
 
+    /** Cuerpo agachado del Clérigo mientras reza (Plegaria del Intercesor): el jugador va como una cabeza junto al aliado. */
+    public static final RegistryObject<EntityType<io.github.rpgclasses.cleric.PrayingBody>> PRAYING_BODY = ENTITIES.register("praying_body",
+            () -> EntityType.Builder.<io.github.rpgclasses.cleric.PrayingBody>of(io.github.rpgclasses.cleric.PrayingBody::new, MobCategory.MISC)
+                    .sized(0.6f, 1.5f).clientTrackingRange(10).updateInterval(2).noSave()
+                    .build(RpgClasses.MODID + ":praying_body"));
+
     public static void onAttributes(EntityAttributeCreationEvent event) {
         event.put(DECOY.get(), DecoyEntity.createAttributes().build());
         event.put(SWARM_SLIME.get(), io.github.rpgclasses.content.race.SwarmSlime.createAttributes().build());
         event.put(MITOSIS_COPY.get(), DecoyEntity.createAttributes().build());
+        event.put(PRAYING_BODY.get(), DecoyEntity.createAttributes().build());
     }
 
     private ModEntities() {}

@@ -134,10 +134,9 @@ public final class Cleric {
         return e != null && Allies.isAlly(cleric, e);
     }
 
-    /** Origen de la mirada: el ángel de la Plegaria o los ojos. */
+    /** Origen de la mirada: los ojos (rezando, el jugador ya está junto al aliado como cabeza). */
     public static Vec3 eye(ServerPlayer player) {
-        Vec3 angel = Prayer.angelPos(player);
-        return angel != null ? angel : player.getEyePosition();
+        return player.getEyePosition();
     }
 
     /**

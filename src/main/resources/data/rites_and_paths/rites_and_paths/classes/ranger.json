@@ -47,7 +47,9 @@
   },
   "magic_wall_exempt_spells": [
     "irons_spellbooks:magic_arrow",
-    "irons_spellbooks:arrow_volley"
+    "irons_spellbooks:arrow_volley",
+    "irons_spellbooks:fire_arrow",
+    "irons_spellbooks:poison_arrow"
   ],
   "branches": [
     {

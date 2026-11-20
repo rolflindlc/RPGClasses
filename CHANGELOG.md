@@ -47,7 +47,7 @@ First public beta of Rolflin's Rites & Paths (Minecraft Forge 1.20.1).
   (`difficulty.traits.<id>`): swift, poisonous, igneous, regenerating, crippling, volatile, vampiric, teleporting,
   deflecting (projectiles bounce) and colossus (bigger, +50% health, -25% speed; dies in a visual explosion and drops
   3 equal mobs without traits).
-- **Ranger:** the Arcane Arrow spells of Iron's (**Magic Arrow** and **Arrow Volley**) are cast without the Ranger's Magic wall
+- **Ranger:** the arrow spells of Iron's (**Magic Arrow**, **Arrow Volley**, **Fire Arrow** and **Poison Arrow**) are cast without the Ranger's Magic wall
   (full spell power). Data-driven: `magic_wall_exempt_spells` in a class JSON (per spell, unlike the per-school
   `magic_wall_exempt_schools`).
 - **Welcome message** the first time each player joins a world, with a short explanation and (for operators and the

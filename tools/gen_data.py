@@ -281,7 +281,8 @@ def dump(path, obj):
 
 # Conjuros de Iron's (sin el espacio de nombres) exentos del muro de Magia, por clase.
 MAGIC_WALL_EXEMPT_SPELLS = {
-    "ranger": ["magic_arrow", "arrow_volley"],  # Flecha Mágica (Ender) y Lluvia de Flechas (Evocación)
+    # Flecha Mágica (Ender), Lluvia de Flechas (Evocación), Flecha de Fuego (Fuego), Flecha de Veneno (Naturaleza)
+    "ranger": ["magic_arrow", "arrow_volley", "fire_arrow", "poison_arrow"],
 }
 
 base = os.path.join(out, "data", NS, NS)

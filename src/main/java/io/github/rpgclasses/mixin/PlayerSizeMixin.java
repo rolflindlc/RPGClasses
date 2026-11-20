@@ -25,6 +25,12 @@ public abstract class PlayerSizeMixin {
             at = @At("RETURN"), cancellable = true)
     private void rites_and_paths$scaleDimensions(Pose pose, CallbackInfoReturnable<EntityDimensions> cir) {
         Player self = (Player) (Object) this;
+        // Plegaria (Intercesor): el jugador es una cabeza cúbica en todas las poses.
+        float spirit = io.github.rpgclasses.cleric.Prayer.spiritSize(self);
+        if (spirit > 0) {
+            cir.setReturnValue(EntityDimensions.fixed(spirit, spirit));
+            return;
+        }
         // Centauro (adenda 0.7): hitbox de caballo en todas las poses salvo dormido.
         if (pose != Pose.SLEEPING && RaceTraits.isCentaur(self)) {
             cir.setReturnValue(EntityDimensions.scalable(RaceTraits.CENTAUR_WIDTH, RaceTraits.centaurHeight(pose)));

@@ -11,7 +11,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  * con {@code SpellOnCastEvent} y ejecuta el conjuro ({@code onCast}); al terminar:
  * <ul>
  *   <li>los efectos que se apliquen ya no son de ese conjuro (Bendición, {@code ClericBuffs});</li>
- *   <li>el cuerpo del Intercesor vuelve a su sitio tras lanzar desde el ángel ({@code Prayer});</li>
  *   <li>el muro de Magia vuelve tras un conjuro exento de él ({@code SpellExemptions}, flechas mágicas del Ranger).</li>
  * </ul>
  * Con {@code require = 0}: si Iron's cambia, las dos cosas se resuelven al final del tick.
@@ -23,7 +22,6 @@ public abstract class CastSpellMixin {
             at = @At("RETURN"), remap = false, require = 0)
     private void rites_and_paths$castEnd(CallbackInfo ci) {
         io.github.rpgclasses.cleric.ClericBuffs.castEnd();
-        io.github.rpgclasses.cleric.Prayer.castEnd();
         io.github.rpgclasses.compat.irons.SpellExemptions.end();
     }
 }

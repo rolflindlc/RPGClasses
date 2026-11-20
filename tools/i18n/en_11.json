@@ -7,7 +7,7 @@
 "ability.rites_and_paths.laying_on_hands.name": "Laying on Hands",
 "ability.rites_and_paths.miracle.desc": "If an ally (pets too) was about to die near you, they are downed for a few seconds instead: they cannot act or take damage. If another player heals them, they get back up; if not, they die. Each ally can only be saved this way every so often. It does not save you.",
 "ability.rites_and_paths.miracle.name": "Miracle",
-"ability.rites_and_paths.prayer.desc": "Pick an ally from the list: your body stays kneeling and your camera moves to a small angel that orbits your ally and gives them Regeneration. Your spells, Laying on Hands and Sanctuary come from the angel; spells lose power if your body is far away. Press again to switch ally or stop praying.",
+"ability.rites_and_paths.prayer.desc": "Pick an ally from the list: your body stays crouched where you are and you appear next to your ally as a floating head that can move around them (up to 15 blocks). Your ally gets Regeneration. From the head you cast your spells, Laying on Hands and Sanctuary, with less power the farther away your body is. If your body is hit, you take the damage; the head cannot be hurt. Press again to switch ally or stop praying.",
 "ability.rites_and_paths.prayer.name": "Prayer",
 "ability.rites_and_paths.sacrifice.desc": "You pay part of your maximum health and the ally you are looking at recovers part of theirs (at least what you paid). No cooldown. If paying would kill you, the icon turns red: press twice to give your life; your ally recovers all their missing health, gains as many golden hearts as the health they had and is invulnerable for a moment. Its healing is true healing: nothing can increase or reduce it.",
 "ability.rites_and_paths.sacrifice.name": "Sacrifice",
@@ -98,7 +98,7 @@
 "param.rites_and_paths.max_targets": "Targets that count per cast",
 "param.rites_and_paths.min_power": "Minimum power at range",
 "param.rites_and_paths.min_power_blocks": "Minimum power from (blocks)",
-"param.rites_and_paths.orbit_distance": "Angel distance (blocks)",
+"param.rites_and_paths.spirit_range": "Max distance to the ally (blocks)",
 "param.rites_and_paths.others_heal": "Healing on others",
 "param.rites_and_paths.out_of_combat_regen": "Mana regeneration out of combat",
 "param.rites_and_paths.recovery": "You recover of what you heal",
@@ -133,7 +133,7 @@
 "perk.rites_and_paths.cleric.purification.penance.name": "Penance",
 "subclass.rites_and_paths.angel.desc": "Wings of light: less fall damage and slow fall, a halo that regenerates nearby allies and, from level 5, Angelic Form: you fly for a few seconds while you and your allies regenerate and are purified.",
 "subclass.rites_and_paths.angel.name": "Angel",
-"subclass.rites_and_paths.intercessor.desc": "Prays for an ally even without seeing them: your body stays kneeling and your sight moves to a small angel that accompanies them. You cast your spells from the angel, with less power the farther away your body is.",
+"subclass.rites_and_paths.intercessor.desc": "Prays for an ally even without seeing them: your body stays crouched and you become a floating head that accompanies them. You cast your spells from it, with less power the farther away your body is.",
 "subclass.rites_and_paths.intercessor.name": "Intercessor",
 "subclass.rites_and_paths.martyr.desc": "Heals with their own blood: more health, less damage taken when badly hurt and, from level 5, Sacrifice: you pay health to heal an ally, with no cooldown. If you can no longer pay, you can give your life for them.",
 "subclass.rites_and_paths.martyr.name": "Martyr",
@@ -151,5 +151,7 @@
 "ui.rites_and_paths.race.tree.rite_locked": "Complete the previous rite to start this one.",
 "ui.rites_and_paths.race.tree.unlocks": "New abilities: %s",
 "ui.rites_and_paths.race.tree.upgrades": "Improvements at this Rank:",
-"ui.rites_and_paths.race.tree.gem_locked": "Unlocks at Rank %s"
+"ui.rites_and_paths.race.tree.gem_locked": "Unlocks at Rank %s",
+"param.rites_and_paths.spirit_size": "Head size (blocks)",
+"entity.rites_and_paths.praying_body": "Praying body"
 }

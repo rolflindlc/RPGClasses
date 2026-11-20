@@ -572,15 +572,21 @@ public final class Packets {
         }
     }
 
-    /** Servidor -> cliente: la Plegaria empieza (cámara en el ángel del aliado {@code targetId}) o termina (-1). */
-    public record PrayerState(int targetId, float orbit) {
+    /**
+     * Servidor -> clientes que ven al Clérigo (y él mismo): el jugador {@code entityId} reza por el aliado
+     * {@code targetId} como una cabeza de {@code size} bloques que no se aleja más de {@code range} bloques, o deja de
+     * rezar ({@code targetId} = -1).
+     */
+    public record PrayerState(int entityId, int targetId, float range, float size) {
         public void encode(FriendlyByteBuf buf) {
+            buf.writeVarInt(entityId);
             buf.writeVarInt(targetId + 1);
-            buf.writeFloat(orbit);
+            buf.writeFloat(range);
+            buf.writeFloat(size);
         }
 
         public static PrayerState decode(FriendlyByteBuf buf) {
-            return new PrayerState(buf.readVarInt() - 1, buf.readFloat());
+            return new PrayerState(buf.readVarInt(), buf.readVarInt() - 1, buf.readFloat(), buf.readFloat());
         }
 
         public void handle(Supplier<NetworkEvent.Context> ctx) {

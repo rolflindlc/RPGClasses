@@ -61,8 +61,9 @@ import java.util.Map;
  *   <li><b>Santuario:</b> esfera dorada translúcida, sin postprocesado (funciona con shaders), que sigue a su ancla.
  *       Se agrieta (y parpadea al final) a medida que pierde vida.
  *       Al soltar la tecla de la ranura del Santuario se avisa al servidor.</li>
- *   <li><b>Plegaria:</b> la cámara pasa al ángel que orbita al aliado ({@code mixin.client.PrayerCameraMixin}); el ratón
- *       la gira y el cuerpo queda quieto y agachado. La lista de aliados es {@link PrayerScreen}.</li>
+ *   <li><b>Plegaria:</b> el jugador que reza es una cabeza semitransparente que flota junto al aliado (también la ven
+ *       los demás); vuela libremente sin alejarse más de {@code spirit_range} bloques del aliado. Su cuerpo agachado es
+ *       una entidad aparte ({@link PrayingBodyRenderer}). La lista de aliados es {@link PrayerScreen}.</li>
  *   <li><b>Ángel:</b> sin correr en el aire durante la Forma Angelical; caída lenta con Gracia Alada (salto pulsado).</li>
  * </ul>
  */
@@ -75,7 +76,11 @@ public final class ClericClient {
 
     private static final Map<Integer, Sphere> SPHERES = new HashMap<>();
     private static int prayerTarget = -1;
-    private static float prayerOrbit = 3;
+    private static float prayerRange = 15;
+    /** Modelo de cabeza de jugador para dibujar a los que rezan (se crea al primer uso). */
+    private static net.minecraft.client.model.SkullModel spiritModel;
+    /** Transparencia de la cabeza. */
+    private static final float SPIRIT_ALPHA = 0.55f;
     private static boolean healerEye;
     private static final boolean[] KEY_DOWN = new boolean[3];
     /** Jugador que se está dibujando acostado y su pose real. */
@@ -90,15 +95,17 @@ public final class ClericClient {
         MinecraftForge.EVENT_BUS.addListener(EventPriority.HIGHEST, ClericClient::onInteractionKey);
         MinecraftForge.EVENT_BUS.addListener(ClericClient::onRenderLevel);
         MinecraftForge.EVENT_BUS.addListener(ClericClient::onRenderLiving);
+        MinecraftForge.EVENT_BUS.addListener(EventPriority.HIGHEST, ClericClient::onRenderSpirit);
         MinecraftForge.EVENT_BUS.addListener(EventPriority.LOW, ClericClient::onRenderPlayerPre);
         MinecraftForge.EVENT_BUS.addListener(EventPriority.HIGHEST, ClericClient::onRenderPlayerPost);
         MinecraftForge.EVENT_BUS.addListener((ClientPlayerNetworkEvent.LoggingOut event) -> reset());
         MinecraftForge.EVENT_BUS.addListener((ClientPlayerNetworkEvent.Clone event) -> {
             prayerTarget = -1;
+            io.github.rpgclasses.cleric.Prayer.CLIENT_SPIRITS.clear();
             DOWNED.clear();
         });
         modBus.addListener((RegisterGuiOverlaysEvent event) -> event.registerAboveAll("cleric_downed", ClericClient::renderHud));
-        // Rezando, la cámara está en el ángel: ni la mano en primera persona ni el contorno del bloque al que mira el cuerpo.
+        // Rezando eres una cabeza: ni mano en primera persona ni contorno de bloques (no puedes usarlos).
         MinecraftForge.EVENT_BUS.addListener((net.minecraftforge.client.event.RenderHandEvent event) -> {
             if (prayerTarget >= 0) event.setCanceled(true);
         });
@@ -111,6 +118,7 @@ public final class ClericClient {
         DOWNED.clear();
         SPHERES.clear();
         prayerTarget = -1;
+        io.github.rpgclasses.cleric.Prayer.CLIENT_SPIRITS.clear();
         healerEye = false;
     }
 
@@ -139,9 +147,15 @@ public final class ClericClient {
     }
 
     public static void onPrayerState(Packets.PrayerState msg) {
-        prayerTarget = msg.targetId();
-        prayerOrbit = msg.orbit() <= 0 ? 3 : msg.orbit();
         Minecraft mc = Minecraft.getInstance();
+        var spirits = io.github.rpgclasses.cleric.Prayer.CLIENT_SPIRITS;
+        if (msg.targetId() >= 0 && msg.size() > 0) spirits.put(msg.entityId(), msg.size());
+        else spirits.remove(msg.entityId());
+        Entity e = mc.level == null ? null : mc.level.getEntity(msg.entityId());
+        if (e != null) e.refreshDimensions();
+        if (mc.player == null || msg.entityId() != mc.player.getId()) return;
+        prayerTarget = msg.targetId();
+        prayerRange = msg.range() <= 0 ? 15 : msg.range();
         if (prayerTarget < 0 && mc.screen instanceof PrayerScreen) mc.setScreen(null);
     }
 
@@ -190,23 +204,6 @@ public final class ClericClient {
         return c != null && UnlockResolver.unlocked(s, c, DefinitionStore.CLIENT.subclassDef(s.subclassId)).contains(ability);
     }
 
-    // ------------------------------------------------------------------ cámara de la Plegaria (mixin)
-
-    /** Coloca la cámara en el ángel: detrás del aliado según la mirada, sin atravesar bloques. Devuelve false si no reza. */
-    public static Vec3 prayerCamera(Camera camera, float partialTick) {
-        if (prayerTarget < 0) return null;
-        Minecraft mc = Minecraft.getInstance();
-        if (mc.level == null || mc.player == null) return null;
-        Entity target = mc.level.getEntity(prayerTarget);
-        if (target == null) return null;
-        Vec3 center = target.getEyePosition(partialTick);
-        Vec3 look = Vec3.directionFromRotation(camera.getXRot(), camera.getYRot());
-        Vec3 pos = center.subtract(look.scale(prayerOrbit));
-        BlockHitResult hit = mc.level.clip(new ClipContext(center, pos, ClipContext.Block.VISUAL, ClipContext.Fluid.NONE, mc.player));
-        if (hit.getType() != HitResult.Type.MISS) pos = hit.getLocation().add(look.scale(0.25));
-        return pos;
-    }
-
     // ------------------------------------------------------------------ tick y entrada
 
     private static void onClientTick(TickEvent.ClientTickEvent event) {
@@ -220,6 +217,7 @@ public final class ClericClient {
         DOWNED.values().removeIf(end -> now >= end + SAFETY_TICKS);
         SPHERES.values().removeIf(s -> now >= s.end());
         healerEye = localHas(Cleric.HEALER_EYE);
+        prayerTick(mc);
 
         // Santuario: avisar al soltar su tecla.
         List<String> actives = AbilityHud.localActives();
@@ -243,14 +241,77 @@ public final class ClericClient {
 
     private static void onMovementInput(MovementInputUpdateEvent event) {
         Minecraft mc = Minecraft.getInstance();
-        boolean down = downed(event.getEntity());
-        if (!down && prayerTarget < 0) return;
+        if (!downed(event.getEntity())) return;
         var in = event.getInput();
         in.forwardImpulse = 0;
         in.leftImpulse = 0;
         in.up = in.down = in.left = in.right = false;
         in.jumping = false;
-        in.shiftKeyDown = !down; // rezando: agachado
+        in.shiftKeyDown = false;
+    }
+
+    // ------------------------------------------------------------------ Plegaria: la cabeza
+
+    /**
+     * Cabeza del jugador local: siempre volando (en supervivencia tocar el suelo quita el vuelo) y atada al aliado con
+     * una correa de {@code prayerRange} bloques. Además, la hitbox de las cabezas que ve se pone al día si hace falta.
+     */
+    private static void prayerTick(Minecraft mc) {
+        var spirits = io.github.rpgclasses.cleric.Prayer.CLIENT_SPIRITS;
+        for (Map.Entry<Integer, Float> e : spirits.entrySet()) {
+            Entity en = mc.level.getEntity(e.getKey());
+            if (en != null && Math.abs(en.getBbWidth() - e.getValue()) > 1.0E-3f) en.refreshDimensions();
+        }
+        if (prayerTarget < 0) return;
+        Player p = mc.player;
+        if (!p.getAbilities().flying) {
+            p.getAbilities().mayfly = true;
+            p.getAbilities().flying = true;
+        }
+        Entity ally = mc.level.getEntity(prayerTarget);
+        if (ally == null) return;
+        Vec3 center = ally.getEyePosition();
+        Vec3 head = p.getEyePosition();
+        Vec3 off = head.subtract(center);
+        double d = off.length();
+        if (d <= prayerRange || d < 1.0E-6) return;
+        Vec3 n = off.scale(1 / d);
+        Vec3 to = center.add(n.scale(prayerRange));
+        p.setPos(to.x, to.y - p.getEyeHeight(), to.z);
+        Vec3 v = p.getDeltaMovement();
+        double out = v.dot(n);
+        if (out > 0) p.setDeltaMovement(v.subtract(n.scale(out)));
+    }
+
+    /** Los que rezan se dibujan como su cabeza: semitransparente, del tamaño de la hitbox y flotando un poco. */
+    private static void onRenderSpirit(RenderPlayerEvent.Pre event) {
+        Player p = event.getEntity();
+        Float size = io.github.rpgclasses.cleric.Prayer.CLIENT_SPIRITS.get(p.getId());
+        if (size == null) return;
+        event.setCanceled(true);
+        if (!(p instanceof net.minecraft.client.player.AbstractClientPlayer acp)) return;
+        Minecraft mc = Minecraft.getInstance();
+        if (spiritModel == null) {
+            spiritModel = new net.minecraft.client.model.SkullModel(mc.getEntityModels().bakeLayer(net.minecraft.client.model.geom.ModelLayers.PLAYER_HEAD));
+        }
+        float pt = event.getPartialTick();
+        float yaw = Mth.rotLerp(pt, p.yHeadRotO, p.yHeadRot);
+        float pitch = Mth.lerp(pt, p.xRotO, p.getXRot());
+        float bob = Mth.sin((p.tickCount + pt) * 0.1f) * 0.04f;
+        float scale = size / 0.5f; // la cabeza del jugador mide medio bloque
+        PoseStack ps = event.getPoseStack();
+        ps.pushPose();
+        ps.translate(0, size / 2 + bob, 0);
+        ps.mulPose(com.mojang.math.Axis.YP.rotationDegrees(180 - yaw));
+        ps.scale(-1, -1, 1);
+        ps.mulPose(com.mojang.math.Axis.XP.rotationDegrees(pitch));
+        ps.scale(scale, scale, scale);
+        ps.translate(0, 0.25, 0); // el cubo de la cabeza va de -0,5 a 0 en el modelo: se centra
+        spiritModel.setupAnim(0, 0, 0);
+        var buffer = event.getMultiBufferSource().getBuffer(net.minecraft.client.renderer.RenderType.entityTranslucent(acp.getSkinTextureLocation()));
+        spiritModel.renderToBuffer(ps, buffer, event.getPackedLight(), net.minecraft.client.renderer.texture.OverlayTexture.NO_OVERLAY,
+                1f, 1f, 1f, SPIRIT_ALPHA);
+        ps.popPose();
     }
 
     private static void onInteractionKey(InputEvent.InteractionKeyMappingTriggered event) {

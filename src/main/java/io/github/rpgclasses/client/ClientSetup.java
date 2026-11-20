@@ -108,6 +108,7 @@ public final class ClientSetup {
             event.registerEntityRenderer(ModEntities.DECOY.get(), DecoyRenderer::new);
             event.registerEntityRenderer(ModEntities.SWARM_SLIME.get(), SwarmSlimeRenderer::new);
             event.registerEntityRenderer(ModEntities.MITOSIS_COPY.get(), DecoyRenderer::new);
+            event.registerEntityRenderer(ModEntities.PRAYING_BODY.get(), io.github.rpgclasses.client.cleric.PrayingBodyRenderer::new);
         });
         // Formas del Slime (adenda 0.7): el Enjambre se dibuja como un slime; barra de fusión del Mitótico.
         MinecraftForge.EVENT_BUS.addListener(net.minecraftforge.eventbus.api.EventPriority.HIGH, SlimeFormsClient::onRenderPlayer);

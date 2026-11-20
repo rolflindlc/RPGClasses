@@ -1,6 +1,7 @@
 {
   "schema_version": 1,
-  "orbit_distance": 3,
+  "spirit_range": 15,
+  "spirit_size": 0.9,
   "full_power_blocks": 10,
   "min_power": 0.33,
   "min_power_blocks": 50,

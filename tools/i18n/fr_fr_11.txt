@@ -6,7 +6,7 @@
 5 Imposition des mains
 6 Si un allié (familiers compris) allait mourir près de vous, il est mis à terre quelques secondes à la place : il ne peut rien faire ni subir de dégâts. Si un autre joueur le soigne, il se relève ; sinon, il meurt. Chaque allié ne peut être sauvé ainsi que de temps en temps. Cela ne vous sauve pas.
 7 Miracle
-8 Choisissez un allié dans la liste : votre corps reste à genoux et votre caméra passe à un petit ange qui orbite autour de l'allié et lui donne Régénération. Vos sorts, Imposition des mains et Sanctuaire partent de l'ange ; les sorts perdent en puissance si votre corps est loin. Appuyez à nouveau pour changer d'allié ou arrêter de prier.
+8 Choisissez un allié dans la liste : votre corps reste accroupi sur place et vous apparaissez près de votre allié sous la forme d'une tête flottante qui peut se déplacer autour de lui (jusqu'à 15 blocs). Votre allié reçoit Régénération. Depuis la tête, vous lancez vos sorts, l'Imposition des mains et le Sanctuaire, avec moins de puissance plus votre corps est loin. Si votre corps est frappé, c'est vous qui subissez les dégâts ; la tête ne peut pas être blessée. Appuyez à nouveau pour changer d'allié ou arrêter de prier.
 9 Prière
 10 Vous payez une partie de votre santé maximale et l'allié que vous regardez récupère une partie de la sienne (au moins ce que vous avez payé). Sans délai de recharge. Si payer vous tuerait, l'icône devient rouge : appuyez deux fois pour donner votre vie ; votre allié récupère toute la santé qui lui manque, gagne autant de cœurs dorés que la santé qu'il avait et devient invulnérable un instant. Ses soins sont des soins purs : rien ne peut les augmenter ni les réduire.
 11 Sacrifice
@@ -97,7 +97,7 @@
 96 Cibles comptées par lancement
 97 Puissance minimale à distance
 98 Puissance minimale à partir de (blocs)
-99 Distance de l'ange (blocs)
+99 Distance maximale à l'allié (blocs)
 100 Soin sur les autres
 101 Régénération de mana hors combat
 102 Vous récupérez de ce que vous soignez
@@ -132,7 +132,7 @@
 131 Pénitence
 132 Ailes de lumière : moins de dégâts de chute et chute lente, une auréole qui régénère les alliés proches et, dès le niveau 5, la Forme angélique : vous volez quelques secondes pendant que vous et vos alliés régénérez et êtes purifiés.
 133 Ange
-134 Prie pour un allié même sans le voir : votre corps reste à genoux et votre regard passe à un petit ange qui l'accompagne. Vous lancez vos sorts depuis l'ange, avec moins de puissance plus votre corps est loin.
+134 Prie pour un allié même sans le voir : votre corps reste accroupi et vous devenez une tête flottante qui l'accompagne. Vous lancez vos sorts depuis la tête, avec moins de puissance plus votre corps est loin.
 135 Intercesseur
 136 Soigne avec son propre sang : plus de santé, moins de dégâts subis quand il est grièvement blessé et, dès le niveau 5, le Sacrifice : vous payez de la santé pour soigner un allié, sans délai de recharge. Si vous ne pouvez plus payer, vous pouvez donner votre vie pour lui.
 137 Martyr
@@ -151,3 +151,5 @@
 150 Nouvelles capacités : %s
 151 Améliorations à ce Rang :
 152 Se débloque au Rang %s
+153 Taille de la tête (blocs)
+154 Corps en prière

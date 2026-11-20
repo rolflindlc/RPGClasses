@@ -6,7 +6,7 @@
 5 Handauflegen
 6 Wäre ein Verbündeter (auch ein Haustier) in deiner Nähe gestorben, wird er stattdessen für einige Sekunden niedergestreckt: Er kann nichts tun und erleidet keinen Schaden. Heilt ihn ein anderer Spieler, steht er wieder auf; sonst stirbt er. Jeder Verbündete kann nur von Zeit zu Zeit so gerettet werden. Dich selbst rettet es nicht.
 7 Wunder
-8 Wähle einen Verbündeten aus der Liste: Dein Körper bleibt knien und deine Kamera wechselt zu einem kleinen Engel, der den Verbündeten umkreist und ihm Regeneration gibt. Deine Zauber, Handauflegen und Heiligtum gehen vom Engel aus; Zauber verlieren an Macht, wenn dein Körper weit weg ist. Drücke erneut, um den Verbündeten zu wechseln oder aufzuhören zu beten.
+8 Wähle einen Verbündeten aus der Liste: Dein Körper bleibt geduckt, wo du bist, und du erscheinst neben deinem Verbündeten als schwebender Kopf, der sich um ihn herum bewegen kann (bis zu 15 Blöcke). Dein Verbündeter erhält Regeneration. Vom Kopf aus wirkst du deine Zauber, Handauflegen und Heiligtum, mit weniger Macht, je weiter dein Körper entfernt ist. Wird dein Körper getroffen, erleidest du den Schaden; der Kopf kann nicht verletzt werden. Drücke erneut, um den Verbündeten zu wechseln oder aufzuhören zu beten.
 9 Gebet
 10 Du zahlst einen Teil deiner maximalen Gesundheit, und der Verbündete, den du ansiehst, erhält einen Teil seiner zurück (mindestens das Gezahlte). Keine Abklingzeit. Würde dich die Zahlung töten, wird das Symbol rot: Drücke zweimal, um dein Leben zu geben; dein Verbündeter erhält seine gesamte fehlende Gesundheit zurück, bekommt so viele goldene Herzen, wie er Gesundheit hatte, und ist einen Moment unverwundbar. Die Heilung ist wahre Heilung: Nichts kann sie erhöhen oder verringern.
 11 Opfer
@@ -97,7 +97,7 @@
 96 Zählende Ziele pro Wirken
 97 Mindestmacht auf Distanz
 98 Mindestmacht ab (Blöcke)
-99 Abstand des Engels (Blöcke)
+99 Maximaler Abstand zum Verbündeten (Blöcke)
 100 Heilung bei anderen
 101 Mana-Regeneration außerhalb des Kampfes
 102 Du erhältst vom Geheilten zurück
@@ -132,7 +132,7 @@
 131 Buße
 132 Flügel aus Licht: weniger Fallschaden und langsamer Fall, ein Heiligenschein, der Verbündete in der Nähe regeneriert, und ab Stufe 5 die Engelsgestalt: Du fliegst einige Sekunden, während du und deine Verbündeten regeneriert und geläutert werdet.
 133 Engel
-134 Betet für einen Verbündeten, auch ohne ihn zu sehen: Dein Körper bleibt knien und dein Blick wechselt zu einem kleinen Engel, der ihn begleitet. Du wirkst deine Zauber vom Engel aus, mit weniger Macht, je weiter dein Körper entfernt ist.
+134 Betet für einen Verbündeten, auch ohne ihn zu sehen: Dein Körper bleibt geduckt und du wirst zu einem schwebenden Kopf, der ihn begleitet. Von dort wirkst du deine Zauber, mit weniger Macht, je weiter dein Körper entfernt ist.
 135 Fürsprecher
 136 Heilt mit seinem eigenen Blut: mehr Gesundheit, weniger erlittener Schaden bei schweren Wunden und ab Stufe 5 das Opfer: Du zahlst Gesundheit, um einen Verbündeten zu heilen, ohne Abklingzeit. Kannst du nicht mehr zahlen, kannst du dein Leben für ihn geben.
 137 Märtyrer
@@ -151,3 +151,5 @@
 150 Neue Fähigkeiten: %s
 151 Verbesserungen auf diesem Rang:
 152 Wird auf Rang %s freigeschaltet
+153 Größe des Kopfes (Blöcke)
+154 Betender Körper

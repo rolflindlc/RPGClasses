@@ -41,7 +41,6 @@ public final class ClericSpells {
         float mana = event.getCastSource().consumesMana() ? event.getManaCost() : 0;
         LAST.put(player.getUUID(), new LastCast(mana, player.level().getGameTime()));
         ClericBuffs.castStart(player, event.getSpellId(), mana);
-        Prayer.castStart(player);
     }
 
     @SubscribeEvent

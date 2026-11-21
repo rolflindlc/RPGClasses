@@ -20,7 +20,7 @@ public final class ClientConfig {
                 .comment("Intensidad del temblor de los impactos de las bolas del Maestro del Giro (0 = sin temblor, 1 = normal).")
                 .defineInRange("spinShake", 1.0, 0.0, 1.0);
         SPIN_CINEMATIC = b
-                .comment("Cámara cinemática del Rectángulo Dorado (bandas, zoom y tercera persona). Con false solo se ven las partículas.")
+                .comment("Cámara de cine del Rectángulo Dorado (planos, bandas, rectángulo áureo y destellos). Con false la secuencia sigue igual, pero con la cámara normal.")
                 .define("spinCinematic", true);
         b.pop();
         SPEC = b.build();

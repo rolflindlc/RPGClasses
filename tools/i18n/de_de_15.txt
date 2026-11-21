@@ -8,27 +8,27 @@
 7 Abtasten
 8 Kurve
 9 Kugelwurf
-10 Mit dem Bandelier in der Hand: Linksklick, gerader Wurf; Rechtsklick, Kurvenwurf (folgt deiner Kamera). Die Kugel bohrt sich ins Ziel und dreht sich 3 Ticks darauf (ignoriert seine Unverwundbarkeit), prallt von Blöcken ab und kehrt in deine Hand zurück. Genau beim Ankommen klicken ist ein Perfekter Fang: mehr Drehung und du wirfst sie sofort erneut. Jeder Block, von dem sie vor dem Treffer abprallt, erhöht den Schaden.
+10 Mit dem Bandelier in der Hand: Linksklick, die Kugel wird dorthin gelenkt, wohin du zielst, bis sie abprallt (sie fliegt weiter, aber etwas langsamer); Rechtsklick, sie krümmt sich in Blickrichtung, und gedrückt halten lädt den Wurf auf: voll aufgeladen fliegt sie doppelt so weit, steckt doppelt so lange und verursacht ×1,5 Schaden. Die Kugel bohrt sich ins Ziel und dreht sich etwa 2 Sekunden darauf, wobei sie ununterbrochen Schaden verursacht (ignoriert seine Unverwundbarkeit), prallt von Blöcken ab und kehrt in deine Hand zurück. Genau beim Ankommen klicken ist ein Perfekter Fang: mehr Drehung und du wirfst sie sofort erneut. Jeder Block, von dem sie vor dem Treffer abprallt, erhöht den Schaden.
 11 Drehung
-12 Leiste von 0 bis 100 %, die mit jedem Treffer steigt, mehr bei Treffern in Folge. Kehrt eine Kugel zurück, ohne einen Gegner getroffen zu haben, verlierst du die Hälfte; außerhalb des Kampfes sinkt sie langsam. Ab 33 %: ein Abprall mehr und goldene Spuren. Ab 66 %: stärkerer Materialeffekt und etwas mehr Schaden. Bei 100 %: Goldenes Rechteck bereit.
+12 Leiste von 0 bis 100 %, die mit jedem Treffer steigt, mehr bei Treffern in Folge. Kehrt eine Kugel zurück, ohne einen Gegner getroffen zu haben, verlierst du die Hälfte; außerhalb des Kampfes sinkt sie langsam. Ab 33 %: ein Abprall mehr und goldene Spuren. Ab 66 %: stärkerer Materialeffekt und etwas mehr Schaden. Bei 100 %: Du kannst das Goldene Rechteck einsetzen (ab Gesamtstufe 30).
 13 Abprallroute
-14 Zeigt kurz die Abprallroute deiner Kugel in Blickrichtung und legt sie fest: dein nächster Wurf folgt ihr genau.
+14 Billardstoß: Deine Kugel schießt auf den Gegner, auf den du zielst, und springt von Gegner zu Gegner, trifft jeden im Vorbeiflug (jeder Treffer schlägt härter zu als der vorige), bis sie sich in den letzten bohrt. Bei nur einem Gegner prallt sie um ihn herum ab und kehrt zu ihm zurück. Jeder Treffer steigert deine Drehung.
 15 Umgekehrte Drehung
 16 Zieht an deiner steckenden Kugel (oder am zuletzt getroffenen Gegner, wenn es gerade erst war) und zerrt ihn zu dir. Bosse bewegen sich nicht. Zündet deine Minen.
 17 Drehschritt
 18 Spiralförmiger Sprint von etwa 6 Blöcken in deine Laufrichtung (oder Blickrichtung, wenn du stillstehst). Dein nächster Treffer kurz danach gibt mehr Drehung.
 19 Goldenes Rechteck
-20 Mit Drehung bei 100 %: Goldene Drehung für einige Sekunden (schnellere Kugeln, keine Wartezeit nach der Rückkehr und mehr Abpraller); jeder Treffer speichert eine Spiralladung. Am Ende (oder bei erneutem Drücken) umkreist dich eine Spirale aus Kugeln und schießt auf nahe Gegner, mit mehr Schaden, je mehr Ladungen du hast.
+20 Bei 100 % Drehung eine automatische Sequenz mit Kinokamera: Um dich herum bleibt die Zeit stehen, du scannst den Gegner, auf den du zielst, und wirfst eine goldene Kugel, die ihn in einer unendlichen Rotation festhält und ununterbrochen Schaden verursacht; selbst wenn er zu fliehen versucht, zieht ihn die Rotation zurück. Ein letzter kritischer Schlag rammt ihn in den Boden, und die Rotation springt auf Gegner in der Nähe über. Solange sie dauert, kannst du dich nicht bewegen, erleidest aber keinen Schaden.
 21 Geteilter Schwachpunkt
 22 Auch deine Verbündeten sehen die Schwachpunkt-Markierungen, und jeder Treffer erneuert sie.
-23 Wirft Kugeln aus verschiedenen Materialien, die sich drehen, abprallen und in die Hand zurückkehren: Linksklick gerade, Rechtsklick gekrümmt; das Bandelier verwahrt die Kugeln, und eine Taste wechselt die benutzte. Hybrider Plänkler: trifft aus der Nähe und aus der Ferne und belohnt Rhythmus, Kombos und Präzision. Jeder Treffer in Folge steigert die Drehung, die die Kugeln verstärkt und das Goldene Rechteck auflädt.
+23 Wirft Kugeln aus verschiedenen Materialien, die sich drehend ins Ziel bohren, abprallen und in die Hand zurückkehren: Linksklick, gelenkt dorthin, wohin du zielst; Rechtsklick, gekrümmt und aufladbar; das Bandelier verwahrt die Kugeln, und eine Taste wechselt die benutzte. Hybrider Plänkler: trifft aus der Nähe und aus der Ferne und belohnt Rhythmus, Kombos und Präzision. Jeder Treffer in Folge steigert die Drehung, die die Kugeln verstärkt und das Goldene Rechteck auflädt.
 24 Deine Kugeln verursachen mehr Schaden und deine Drehung steigt schneller.
 25 Mehr Abpraller, und Kugeln, die von einem Gegner zum nächsten springen, behalten mehr Schaden.
 26 Deine Kugeln sind nach der Rückkehr schneller bereit, und mit vollem Zweig kannst du eine mehr im Flug haben.
 27 Mehr kritische Trefferchance und kritischer Schaden; deine kritischen Kugeltreffer ignorieren einen Teil der Rüstung.
-28 Der Kurvenwurf krümmt sich stärker und deine Kugeln fliegen weiter.
+28 Der Kurvenwurf (Rechtsklick) krümmt sich stärker und deine Kugeln fliegen weiter.
 29 Schwere Drehung
-30 Mehr Schaden bei jedem Tick der Drehung, aber die Drehung steigt etwas langsamer.
+30 Deine Kugeln verursachen mehr Schaden, während sie sich im Ziel drehen, aber die Drehung steigt etwas langsamer.
 31 Schnelle Drehung
 32 Die Drehung steigt viel schneller, aber deine Kugeln verursachen etwas weniger Schaden.
 33 Billard
@@ -46,7 +46,7 @@
 45 Enge Kurve
 46 Der Kurvenwurf krümmt sich doppelt so stark, aber deine Kugeln fliegen weniger weit.
 47 Gelenkte Kugel
-48 Während eine Kugel fliegt, lenkt ein Rechtsklick sie einmal in Blickrichtung um (statt eine weitere zu werfen). Deine Kugeln sind etwas langsamer.
+48 Während eine Kugel fliegt, lenkt ein Rechtsklick sie einmal sofort in Blickrichtung um (statt eine weitere aufzuladen). Deine Kugeln sind etwas langsamer.
 49 Klassenmerkmal: etwas weniger maximale Gesundheit.
 50 Dreht sich mit voller Geschwindigkeit: Treffen deine Kugeln, während du nahe deiner Höchstgeschwindigkeit läufst (oder reitest), betäuben sie das Ziel und verursachen etwas mehr Schaden.
 51 Liest Schwachpunkte: Die erste Kugel, die ein Ziel trifft, markiert es, und die folgenden sind sichere kritische Treffer. Ab Stufe 5 sehen deine Verbündeten die Markierung, und jeder Treffer erneuert sie.
@@ -93,153 +93,165 @@
 92 Minen gleichzeitig
 93 Aufnahmeentfernung (Blöcke)
 94 Referenzschaden (Eisenschwert)
-95 Schaden der Eisenkugel (des Schwerts)
-96 Dreh-Ticks beim Treffer
-97 Geschwindigkeit (Blöcke pro Tick)
-98 Reichweite (Blöcke)
-99 Rückkehrgeschwindigkeit (Blöcke pro Tick)
-100 Rückkehr-Abklingzeit
-101 Grundabpraller
-102 Verbleibende Geschwindigkeit beim Abprall
-103 Mindestzeit zwischen Würfen
-104 Grundkugeln im Flug
-105 Zusätzliche Kugel ab Gesamtstufe
-106 Obergrenze zusätzlicher Abpraller (Zweige und Verzauberungen)
-107 Obergrenze zusätzlicher Reichweite
-108 Sprungweite zwischen Gegnern (Blöcke)
-109 Schaden beim Springen zwischen Gegnern (ohne den Zweig)
-110 Krümmung des Kurvenwurfs (Grad pro Tick)
-111 Kinetischer Abprall: Schaden pro abgeprallten Block
-112 Kinetischer Abprall: Maximum
-113 Zeitfenster für den Perfekten Fang
-114 Drehung des Perfekten Fangs
-115 Mindestzeit zwischen Perfekten Fängen
-116 Schaden der Eisenkugel x
-117 Schaden der Diamantkugel x
-118 Schaden der Netheritkugel x
-119 Schaden der Schleimkugel x
-120 Schaden der Kupferkugel x
-121 Schaden der Amethystkugel x
-122 Schaden der Enderperlenkugel x
-123 Schaden der Goldkugel x
-124 Schaden der Redstonekugel x
-125 Schaden der Tropfsteinkugel x
-126 Eisen: Rückstoß
-127 Diamant: ignorierte Rüstung
-128 Netherit: Brennen
-129 Netherit: Rückstoß
-130 Schleim: zusätzliche Abpraller
-131 Schleim: verbleibende Geschwindigkeit beim Abprall
-132 Kupfer: Gegner, zu denen sie springt
-133 Kupfer: Sprungschaden
-134 Kupfer: Sprungweite (Blöcke)
-135 Kupfer: Blitzchance bei Gewitter
-136 Amethyst: Länge der Welle (Blöcke)
-137 Amethyst: Schaden der Welle
-138 Amethyst: Blindheit
-139 Enderperle: Rückkehr-Abklingzeit
-140 Gold: zusätzliche Geschwindigkeit
-141 Gold: Rückkehr-Abklingzeit
-142 Redstone: Signal-Ticks
-143 Redstone: Signal-Ticks mit Drehung II
-144 Tropfstein: Blöcke pro Wurf
-145 Tropfstein: maximale Härte
-146 Drehung pro Treffer
-147 Kette: Zeit zwischen Treffern
-148 Kette: Multiplikator pro Glied
-149 Kette: maximaler Multiplikator x
-150 Bei einem Fehlwurf verlorene Drehung
-151 Drehung I ab
-152 Drehung II ab
-153 Drehung I: zusätzliche Abpraller
-154 Drehung II: Materialeffekt x
-155 Drehung II: Zusatzschaden
-156 Zeigt die Route für
-157 Maximale Abpraller der Route
-158 Zug (Blöcke)
-159 Zeit, die die Kugel stecken bleibt
-160 Schub nach oben
-161 Zusätzliche Drehung beim nächsten Treffer
-162 Zeit, um sie zu nutzen
+95 Schaden eines Treffers der Eisenkugel (des Schwerts)
+96 Geschwindigkeit (Blöcke pro Tick)
+97 Reichweite (Blöcke)
+98 Rückkehrgeschwindigkeit (Blöcke pro Tick)
+99 Rückkehr-Abklingzeit
+100 Grundabpraller
+101 Verbleibende Geschwindigkeit beim Abprall
+102 Mindestzeit zwischen Würfen
+103 Grundkugeln im Flug
+104 Zusätzliche Kugel ab Gesamtstufe
+105 Obergrenze zusätzlicher Abpraller (Zweige und Verzauberungen)
+106 Obergrenze zusätzlicher Reichweite
+107 Sprungweite zwischen Gegnern (Blöcke)
+108 Schaden beim Springen zwischen Gegnern (ohne den Zweig)
+109 Krümmung des Kurvenwurfs (Grad pro Tick)
+110 Kinetischer Abprall: Schaden pro abgeprallten Block
+111 Kinetischer Abprall: Maximum
+112 Zeitfenster für den Perfekten Fang
+113 Drehung des Perfekten Fangs
+114 Mindestzeit zwischen Perfekten Fängen
+115 Schaden der Eisenkugel x
+116 Schaden der Diamantkugel x
+117 Schaden der Netheritkugel x
+118 Schaden der Schleimkugel x
+119 Schaden der Kupferkugel x
+120 Schaden der Amethystkugel x
+121 Schaden der Enderperlenkugel x
+122 Schaden der Goldkugel x
+123 Schaden der Redstonekugel x
+124 Schaden der Tropfsteinkugel x
+125 Eisen: Rückstoß
+126 Diamant: ignorierte Rüstung
+127 Netherit: Brennen
+128 Netherit: Rückstoß
+129 Schleim: zusätzliche Abpraller
+130 Schleim: verbleibende Geschwindigkeit beim Abprall
+131 Kupfer: Gegner, zu denen sie springt
+132 Kupfer: Sprungschaden
+133 Kupfer: Sprungweite (Blöcke)
+134 Kupfer: Blitzchance bei Gewitter
+135 Amethyst: Länge der Welle (Blöcke)
+136 Amethyst: Schaden der Welle
+137 Amethyst: Blindheit
+138 Enderperle: Rückkehr-Abklingzeit
+139 Gold: zusätzliche Geschwindigkeit
+140 Gold: Rückkehr-Abklingzeit
+141 Redstone: Signal-Ticks
+142 Redstone: Signal-Ticks mit Drehung II
+143 Tropfstein: Blöcke pro Wurf
+144 Tropfstein: maximale Härte
+145 Drehung pro Treffer
+146 Kette: Zeit zwischen Treffern
+147 Kette: Multiplikator pro Glied
+148 Kette: maximaler Multiplikator x
+149 Bei einem Fehlwurf verlorene Drehung
+150 Drehung I ab
+151 Drehung II ab
+152 Drehung I: zusätzliche Abpraller
+153 Drehung II: Materialeffekt x
+154 Drehung II: Zusatzschaden
+155 Zug (Blöcke)
+156 Zeit, die die Kugel stecken bleibt
+157 Schub nach oben
+158 Zusätzliche Drehung beim nächsten Treffer
+159 Zeit, um sie zu nutzen
+160 Entfernung, auf die deine Verbündeten sie sehen (Blöcke)
+161 Kugel
+162 Kugelsignal
 163 Goldene Drehung
-164 Zusätzliche Kugelgeschwindigkeit
-165 Zusätzliche Abpraller
-166 Maximale Spiralladungen
-167 Umkreisungszeit
-168 Ziele der Spirale
-169 Reichweite der Spirale (Blöcke)
-170 Schaden pro Ladung (einer Eisenkugel)
-171 Entfernung, auf die deine Verbündeten sie sehen (Blöcke)
-172 Kugel
-173 Kugelsignal
-174 Goldene Drehung
-175 Kugelbandelier
-176 Kugeln
-177 %1$s fiel einer sich drehenden Kugel zum Opfer
-178 %1$s fiel der Kugel von %2$s zum Opfer
-179 %1$s wurde von der Drehung einer Kugel erfasst
-180 %1$s wurde von der Drehung der Kugel von %2$s erfasst
-181 Fähigkeit 4
-182 Kugel wechseln (Meister der Drehung)
-183 Experimentell
-184 Experimentelle Klasse
-185 Ihre Balance ist nicht garantiert und kann sich in jeder Version ändern.
-186 Achtung: Dies ist eine experimentelle Klasse. Ihre Balance ist nicht garantiert und kann sich in jeder Version ändern.
-187 %s: -%s fest (ab der Wahl der Klasse)
-188 Schaden: x%s
-189 Nur der Meister der Drehung kann sie werfen, aus dem Bandelier.
-190 Gewählte Kugel: %s
-191 %s/%s Kugeln
-192 Leer
-193 Rechtsklick mit einer Kugel am Cursor, um sie zu verstauen; Rechtsklick auf einen leeren Platz, um eine herauszunehmen.
-194 In der Hand: Linksklick gerade; Rechtsklick gekrümmt; %s: Kugel wechseln.
-195 Drehung
-196 Goldenes Rechteck bereit! (%s)
-197 Goldene Drehung: %s Ladungen
-198 %s: %s/%s
-199 Nur der Meister der Drehung kann diese Kugeln werfen.
-200 Dein Bandelier ist leer.
-201 %s: gerade keine bereit.
-202 Du hast bereits %s Kugeln im Flug.
-203 Kugel: %s
-204 Zerbrochen: %s.
-205 Du brauchst die Drehung bei 100 %%.
-206 Du hast keine steckende Kugel und hast vor Kurzem niemanden getroffen.
-207 Du hast bereits %s Minen gesteckt.
-208 Du hebst die Mine auf.
-209 Route festgelegt: dein nächster Wurf folgt ihr.
-210 Perfekter Fang!
-211 Goldenes Rechteck!
-212 Finale Spirale! (%s Ladungen)
-213 Eisenkugel
-214 Leichter Rückstoß.
-215 Diamantkugel
-216 Ignoriert einen Teil der Rüstung des Ziels.
-217 Netheritkugel
-218 Verbrennt und stößt stark zurück. Widersteht Feuer und Lava.
-219 Schleimkugel
-220 Prallt viel öfter ab und verliert kaum Geschwindigkeit.
-221 Kupferkugel
-222 Springt zu nahen Gegnern. Bei Gewitter zieht sie Blitze an.
-223 Amethystkugel
-224 Löst eine Schallwelle in einer Linie aus, die Blöcke durchdringt und blendet.
-225 Enderperlenkugel
-226 Bei der Rückkehr bringt sie dich zum Einschlagpunkt.
-227 Goldkugel
-228 Sehr schnell und früher wieder bereit.
-229 Redstonekugel
-230 Aktiviert das Redstone, das sie trifft.
-231 Tropfsteinkugel
-232 Zerbricht weiche Blöcke und bringt sie dir.
-233 Reibung
-234 Deine Kugeln setzen Gegner und die brennbaren Blöcke, die sie treffen, in Brand.
-235 Dichte
-236 Mehr Schaden, weniger Reichweite.
-237 Leichtigkeit
-238 Mehr Reichweite, weniger Schaden.
-239 Magnet
-240 Deine Kugeln sind nach der Rückkehr schneller bereit, verursachen aber etwas weniger Schaden.
-241 Kralle
-242 Die Kugel bleibt länger stecken und Umgekehrte Drehung zieht stärker, aber sie fliegt etwas langsamer.
-243 Elastizität
-244 Mehr Abpraller, aber jeder Abprall verursacht etwas weniger Schaden.
+164 Kugelbandelier
+165 Kugeln
+166 %1$s fiel einer sich drehenden Kugel zum Opfer
+167 %1$s fiel der Kugel von %2$s zum Opfer
+168 %1$s wurde von der Drehung einer Kugel erfasst
+169 %1$s wurde von der Drehung der Kugel von %2$s erfasst
+170 Fähigkeit 4
+171 Kugel wechseln (Meister der Drehung)
+172 Experimentell
+173 Experimentelle Klasse
+174 Ihre Balance ist nicht garantiert und kann sich in jeder Version ändern.
+175 Achtung: Dies ist eine experimentelle Klasse. Ihre Balance ist nicht garantiert und kann sich in jeder Version ändern.
+176 %s: -%s fest (ab der Wahl der Klasse)
+177 Schaden: x%s
+178 Nur der Meister der Drehung kann sie werfen, aus dem Bandelier.
+179 Gewählte Kugel: %s
+180 %s/%s Kugeln
+181 Leer
+182 Rechtsklick mit einer Kugel am Cursor, um sie zu verstauen; Rechtsklick auf einen leeren Platz, um eine herauszunehmen.
+183 In der Hand: Linksklick gelenkt; Rechtsklick (halten zum Aufladen) gekrümmt; %s: Kugel wechseln.
+184 Drehung
+185 Goldenes Rechteck bereit! (%s)
+186 %s: %s/%s
+187 Nur der Meister der Drehung kann diese Kugeln werfen.
+188 Dein Bandelier ist leer.
+189 %s: gerade keine bereit.
+190 Du hast bereits %s Kugeln im Flug.
+191 Kugel: %s
+192 Zerbrochen: %s.
+193 Du brauchst die Drehung bei 100 %%.
+194 Du hast keine steckende Kugel und hast vor Kurzem niemanden getroffen.
+195 Du hast bereits %s Minen gesteckt.
+196 Du hebst die Mine auf.
+197 Perfekter Fang!
+198 Goldenes Rechteck!
+199 Eisenkugel
+200 Leichter Rückstoß.
+201 Diamantkugel
+202 Ignoriert einen Teil der Rüstung des Ziels.
+203 Netheritkugel
+204 Verbrennt und stößt stark zurück. Widersteht Feuer und Lava.
+205 Schleimkugel
+206 Prallt viel öfter ab und verliert kaum Geschwindigkeit.
+207 Kupferkugel
+208 Springt zu nahen Gegnern. Bei Gewitter zieht sie Blitze an.
+209 Amethystkugel
+210 Löst eine Schallwelle in einer Linie aus, die Blöcke durchdringt und blendet.
+211 Enderperlenkugel
+212 Bei der Rückkehr bringt sie dich zum Einschlagpunkt.
+213 Goldkugel
+214 Sehr schnell und früher wieder bereit.
+215 Redstonekugel
+216 Aktiviert das Redstone, das sie trifft.
+217 Tropfsteinkugel
+218 Zerbricht weiche Blöcke und bringt sie dir.
+219 Reibung
+220 Deine Kugeln setzen Gegner und die brennbaren Blöcke, die sie treffen, in Brand.
+221 Dichte
+222 Mehr Schaden, weniger Reichweite.
+223 Leichtigkeit
+224 Mehr Reichweite, weniger Schaden.
+225 Magnet
+226 Deine Kugeln sind nach der Rückkehr schneller bereit, verursachen aber etwas weniger Schaden.
+227 Kralle
+228 Die Kugel bleibt länger stecken und Umgekehrte Drehung zieht stärker, aber sie fliegt etwas langsamer.
+229 Elastizität
+230 Mehr Abpraller, aber jeder Abprall verursacht etwas weniger Schaden.
+231 Dauer des Drehens im Ziel
+232 Schaden alle
+233 Trefferpause beim Aufprall (Ticks)
+234 Linksklick: Lenkung zum Fadenkreuz (Grad pro Tick)
+235 Linksklick: Geschwindigkeit
+236 Linksklick: Reichweite
+237 Rechtsklick: Zeit bis zur vollen Ladung
+238 Aufgeladener Rechtsklick: Reichweite x
+239 Aufgeladener Rechtsklick: Dauer im Ziel x
+240 Aufgeladener Rechtsklick: Schaden x
+241 Treffer der Route
+242 Reichweite für das erste Ziel (Blöcke)
+243 Abstand zwischen Gegnern der Route (Blöcke)
+244 Kegel des Fadenkreuzes (Grad)
+245 Abprall neben einem einzelnen Gegner (Blöcke)
+246 Treffer im Vorbeiflug (eines normalen Treffers)
+247 Zusätzlicher Schaden pro vorherigem Treffer
+248 Geschwindigkeit auf der Route (Blöcke pro Tick)
+249 Reichweite der Zielwahl (Blöcke)
+250 Radius, in dem die Zeit stillsteht (Blöcke)
+251 Schaden jedes Drehimpulses (des Schwerts)
+252 Letzter Schlag (des Schwerts)
+253 Gegner, auf die sie überspringt
+254 Reichweite des Überspringens (Blöcke)
+255 Schaden des Überspringens (des Schwerts)
+256 Kein Gegner in Sicht.

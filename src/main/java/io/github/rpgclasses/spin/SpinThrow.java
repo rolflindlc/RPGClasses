@@ -23,13 +23,16 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
- * Lanzar bolas (adenda del Maestro del Giro, sección 3): clic izquierdo directo, clic derecho curvo, agachado mina (Trampero).
- * Antes de lanzar, un clic derecho puede recoger una mina cercana (Trampero) o redirigir una bola en vuelo (Bola Guiada), y
- * un clic justo cuando llega una bola es una Captura Perfecta. Calcula todo lo que la bola lleva (daño, velocidad,
- * alcance, rebotes, curva, cooldown de retorno) a partir de las ramas, perks, encantamientos, material y Giro.
+ * Lanzar bolas (adenda del Maestro del Giro, sección 3): clic izquierdo guiado (va hacia donde apuntas, más lejos y algo
+ * más lenta), clic derecho curvo y cargable (mantener: hasta el doble de alcance y de tiempo clavada, ×1,5 de daño),
+ * agachado mina (Trampero). Al pulsar el derecho, antes de cargar, se puede recoger una mina cercana (Trampero) o redirigir
+ * una bola en vuelo (Bola Guiada), y un clic justo cuando llega una bola es una Captura Perfecta. Calcula todo lo que la
+ * bola lleva (daño, velocidad, alcance, rebotes, curva, cooldown de retorno) a partir de las ramas, perks,
+ * encantamientos, material, carga y Giro.
  */
 public final class SpinThrow {
-    public static final int DIRECT = 0, CURVED = 1;
+    /** Tipos del paquete: clic izquierdo, soltar el derecho (lanza curvo con la carga) y pulsar el derecho (empieza a cargar). */
+    public static final int DIRECT = 0, CURVED = 1, CHARGE_START = 2;
     /** Bolas vivas por id de lanzamiento (para limpiar las marcas de vuelo de bolas que ya no existen). */
     private static final Map<Long, SphereEntity> LIVE = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
     private static final AtomicLong IDS = new AtomicLong(System.nanoTime() & 0x7FFFFFFFFFFFL);
@@ -39,7 +42,7 @@ public final class SpinThrow {
         return e != null && !e.isRemoved();
     }
 
-    /** Bolas del jugador que existen ahora (sin las de la Espiral Final). */
+    /** Bolas del jugador que existen ahora (sin la del Rectángulo Dorado). */
     static List<SphereEntity> spheresOf(ServerPlayer p) {
         List<SphereEntity> out = new ArrayList<>();
         for (SphereEntity e : LIVE.values()) {
@@ -50,27 +53,63 @@ public final class SpinThrow {
 
     // ------------------------------------------------------------------ paquetes
 
-    /** Clic con la bandolera en la mano ({@code kind}: 0 directo, 1 curvo). Todo se valida aquí. */
+    /**
+     * Clic con la bandolera en la mano ({@code kind}: 0 izquierdo, 1 soltar el derecho, 2 pulsar el derecho). La carga la
+     * mide el servidor (desde que llega el 2 hasta el 1); un 1 sin 2 antes (tecla de teclado) es un lanzamiento sin carga.
+     */
     public static void onThrowPacket(ServerPlayer p, int kind, boolean sneak) {
-        if (!p.isAlive() || p.isSpectator() || (kind != DIRECT && kind != CURVED)) return;
+        if (!p.isAlive() || p.isSpectator() || kind < DIRECT || kind > CHARGE_START) return;
+        if (GoldenRectangle.active(p)) return;
         ItemStack band = p.getMainHandItem();
-        if (!Bandolier.is(band)) return;
-        if (!SpinMaster.canThrow(p)) {
-            p.displayClientMessage(Component.translatable("message.rites_and_paths.spin.not_spin_master").withStyle(ChatFormatting.GRAY), true);
+        SpinState.State st = SpinState.of(p);
+        long now = p.level().getGameTime();
+        if (!Bandolier.is(band)) {
+            st.chargeStart = -1;
             return;
         }
-        long now = p.level().getGameTime();
-        SpinState.State st = SpinState.of(p);
-        if (kind == CURVED && pickUpMine(p)) return;
-        if (kind == CURVED && redirectGuided(p)) return;
-        if (queueCatch(p, kind, sneak)) return;
+        if (!SpinMaster.canThrow(p)) {
+            if (kind != CURVED) {
+                p.displayClientMessage(Component.translatable("message.rites_and_paths.spin.not_spin_master").withStyle(ChatFormatting.GRAY), true);
+            }
+            return;
+        }
+        double charge = 0;
+        if (kind == CHARGE_START) {
+            // Pulsar el derecho: recoger mina, redirigir (Bola Guiada) o Captura Perfecta van antes; si no, empieza a cargar.
+            st.chargeStart = -1;
+            st.chargeConsumed = pickUpMine(p) || redirectGuided(p) || queueCatch(p, CURVED, sneak);
+            if (st.chargeConsumed) return;
+            if (!justArrived(st, now)) {
+                st.chargeStart = now;
+                p.level().playSound(null, p.getX(), p.getY(), p.getZ(), SoundEvents.CROSSBOW_LOADING_START, SoundSource.PLAYERS, 0.5f, 1.5f);
+                return;
+            }
+            // Captura Perfecta justo después de llegar: se relanza ya, sin carga (soltar no lanza otra).
+            st.chargeConsumed = true;
+            kind = CURVED;
+        } else if (kind == CURVED) {
+            if (st.chargeConsumed) {
+                st.chargeConsumed = false;
+                return;
+            }
+            if (st.chargeStart >= 0 && now - st.chargeStart <= 20 * 30) {
+                double full = Math.max(1, SpinMaster.t("full_charge_seconds", 1.0) * 20);
+                charge = Math.min(1, (now - st.chargeStart) / full);
+                st.chargeStart = -1;
+            } else {
+                st.chargeStart = -1;
+                if (pickUpMine(p) || redirectGuided(p)) return;
+                if (queueCatch(p, kind, sneak)) return;
+            }
+        } else if (queueCatch(p, kind, sneak)) {
+            return;
+        }
         if (now - st.lastThrow < Math.round(SpinMaster.t("throw_interval_seconds", 0.25) * 20)) return;
         Bandolier.clearStale(band, SpinThrow::alive, now);
 
         // Captura Perfecta justo después de llegar: la bola que acaba de volver se relanza al instante.
         SphereMaterial material = Bandolier.current(band);
-        long window = Math.max(1, Math.round(SpinMaster.t("catch_window_seconds", 0.25) * 20));
-        boolean perfect = st.lastArrivalMaterial != null && now - st.lastArrival <= window && now >= st.nextCatch;
+        boolean perfect = charge <= 0 && justArrived(st, now);
         if (perfect) material = st.lastArrivalMaterial;
 
         if (material == null) {
@@ -98,13 +137,19 @@ public final class SpinThrow {
             Bandolier.makeReady(p, st.lastArrivalId, now);
             perfectBonus(p, st);
         }
-        SphereEntity e = launch(p, band, material, kind, mine);
+        SphereEntity e = launch(p, band, material, kind, mine, charge);
         if (e == null) {
             p.displayClientMessage(Component.translatable("message.rites_and_paths.spin.no_ready",
                     Component.translatable("item.rites_and_paths." + material.itemName())).withStyle(ChatFormatting.GRAY), true);
             return;
         }
         st.lastThrow = now;
+    }
+
+    /** Acaba de llegar una bola (dentro de la ventana de Captura Perfecta y fuera de su tiempo mínimo). */
+    private static boolean justArrived(SpinState.State st, long now) {
+        long window = Math.max(1, Math.round(SpinMaster.t("catch_window_seconds", 0.25) * 20));
+        return st.lastArrivalMaterial != null && now - st.lastArrival <= window && now >= st.nextCatch;
     }
 
     /** Tecla de cambiar de bola: pasa al siguiente material de la bandolera de la mano. */
@@ -136,7 +181,21 @@ public final class SpinThrow {
     }
 
     /** Lanza una bola de {@code material} de la bandolera. Devuelve null si no hay ninguna lista. */
-    static SphereEntity launch(ServerPlayer p, ItemStack band, SphereMaterial material, int kind, boolean mine) {
+    static SphereEntity launch(ServerPlayer p, ItemStack band, SphereMaterial material, int kind, boolean mine, double charge) {
+        return launch(p, band, material, kind, mine, charge, null, null);
+    }
+
+    /**
+     * Lanzamiento con Ruta de Rebotes: la bola recorre {@code trick} (enemigos y puntos de rebote) con los números de
+     * {@code routeParams}. Devuelve null si no hay ninguna bola lista.
+     */
+    static SphereEntity launchTrick(ServerPlayer p, ItemStack band, SphereMaterial material, List<Object> trick,
+                                    com.google.gson.JsonObject routeParams) {
+        return launch(p, band, material, DIRECT, false, 0, trick, routeParams);
+    }
+
+    private static SphereEntity launch(ServerPlayer p, ItemStack band, SphereMaterial material, int kind, boolean mine, double charge,
+                                       List<Object> trick, com.google.gson.JsonObject routeParams) {
         long now = p.level().getGameTime();
         long id = IDS.incrementAndGet();
         ItemStack copy = Bandolier.take(band, material, now, id);
@@ -146,19 +205,24 @@ public final class SpinThrow {
         e.throwId = id;
         e.sphere = copy;
         e.setMaterial(material);
-        configure(e, p, material, copy, kind, mine);
+        configure(e, p, material, copy, kind, mine, charge);
         SpinState.State st = SpinState.of(p);
         Vec3 look = p.getLookAngle();
-        // Ruta de Rebotes fijada: la bola la sigue (sin curva).
-        if (st.route != null && now <= st.routeUntil && st.route.size() >= 2) {
-            e.route = new ArrayList<>(st.route);
-            e.routeIndex = 1;
-            e.curved = false;
-            st.route = null;
-            look = e.route.get(1).subtract(e.route.get(0));
-            look = look.lengthSqr() < 1.0E-6 ? p.getLookAngle() : look.normalize();
-        }
         Vec3 start = SphereEntity.handPos(p);
+        if (trick != null && !trick.isEmpty()) {
+            // Ruta de Rebotes: rápida, recta de punto en punto y sin guía ni curva.
+            e.trick = trick;
+            e.aimed = false;
+            e.curved = false;
+            e.speed = io.github.rpgclasses.server.AbilityService.number(routeParams, "route_speed", 2.6);
+            e.trickHitFactor = io.github.rpgclasses.server.AbilityService.number(routeParams, "hit_factor", 0.6);
+            e.trickBonus = io.github.rpgclasses.server.AbilityService.number(routeParams, "per_hit_bonus", 0.15);
+            e.range = Math.max(e.range, 64);
+            Object first = trick.get(0);
+            Vec3 goal = first instanceof net.minecraft.world.entity.LivingEntity le ? le.getBoundingBox().getCenter() : (Vec3) first;
+            Vec3 d = goal.subtract(start);
+            if (d.lengthSqr() > 1.0E-6) look = d.normalize();
+        }
         e.setPos(start.x, start.y, start.z);
         e.setDeltaMovement(look.scale(e.speed));
         // El muro de Esferas del lanzador va grabado en la bola (como el de Arco en las flechas).
@@ -169,7 +233,10 @@ public final class SpinThrow {
         p.swing(InteractionHand.MAIN_HAND, true);
         p.level().playSound(null, p.getX(), p.getY(), p.getZ(), SoundEvents.TRIDENT_THROW, SoundSource.PLAYERS, 0.7f,
                 1.5f + p.getRandom().nextFloat() * 0.3f);
-        if (st.spin >= SpinMaster.g("threshold_1", 0.33) || st.golden) {
+        if (charge >= 0.999) {
+            p.level().playSound(null, p.getX(), p.getY(), p.getZ(), SoundEvents.CROSSBOW_SHOOT, SoundSource.PLAYERS, 0.8f, 0.7f);
+        }
+        if (st.spin >= SpinMaster.g("threshold_1", 0.33) || charge >= 0.999 || trick != null) {
             ServerLevel level = p.serverLevel();
             for (int i = 0; i < 10; i++) {
                 double a = i * 0.7;
@@ -179,7 +246,8 @@ public final class SpinThrow {
         }
         if (DebugLog.enabled()) {
             DebugLog.event(p, "giro", "lanza {} ({}{}{}): daño base {} +{}%, velocidad {}, alcance {}, rebotes {}, saltos {}, retorno {} tics",
-                    material.id, kind == CURVED ? "curva" : "directa", mine ? ", mina" : "", e.route != null ? ", ruta" : "",
+                    material.id, kind == CURVED ? "curva, carga " + String.format("%.2f", charge) : "guiada", mine ? ", mina" : "",
+                    trick != null ? ", ruta de " + trick.size() + " puntos" : "",
                     String.format("%.2f", e.baseDamage), Math.round(e.damageBonus * 100), String.format("%.2f", e.speed),
                     String.format("%.1f", e.range), e.bounces, e.hopsLeft, e.returnCooldownTicks);
         }
@@ -187,9 +255,10 @@ public final class SpinThrow {
     }
 
     /** Números del lanzamiento. */
-    static void configure(SphereEntity e, ServerPlayer p, SphereMaterial m, ItemStack sphere, int kind, boolean mine) {
+    static void configure(SphereEntity e, ServerPlayer p, SphereMaterial m, ItemStack sphere, int kind, boolean mine, double charge) {
         SpinState.State st = SpinState.of(p);
-        boolean golden = st.golden;
+        boolean aimed = kind == DIRECT;
+        charge = aimed ? 0 : Math.max(0, Math.min(1, charge));
         int density = SpinEnchantments.level(SpinEnchantments.DENSITY, sphere);
         int lightness = SpinEnchantments.level(SpinEnchantments.LIGHTNESS, sphere);
         int magnet = SpinEnchantments.level(SpinEnchantments.MAGNET, sphere);
@@ -203,20 +272,24 @@ public final class SpinThrow {
         // Velocidad.
         double speed = SpinMaster.t("sphere_speed", 1.8) * (m == SphereMaterial.GOLD ? 1 + SpinMaster.t("gold_speed", 0.40) : 1);
         speed *= Math.max(0.3, 1 + SpinMaster.mech(p, SpinMaster.GUIDED_BALL, "speed_change", 0) + claw * SpinEnchantments.CLAW_SPEED
-                + (golden ? SpinMaster.number(SpinMaster.GOLDEN_RECTANGLE, "golden_speed", 0.5) : 0));
+                + (aimed ? SpinMaster.t("aimed_speed_change", -0.10) : 0));
         e.speed = speed;
         // Alcance (tope de +100 % entre ramas y encantamientos).
         double rangeBonus = SpinMaster.mech(p, SpinMaster.CURVE, "range_bonus", 0) + SpinMaster.mech(p, SpinMaster.TIGHT_CURVE, "range_change", 0)
                 + density * SpinEnchantments.DENSITY_RANGE + lightness * SpinEnchantments.LIGHTNESS_RANGE;
         rangeBonus = Math.max(-0.8, Math.min(SpinMaster.t("range_bonus_cap", 1.0), rangeBonus));
-        e.range = SpinMaster.t("sphere_range", 20) * (1 + rangeBonus);
+        e.range = SpinMaster.t("sphere_range", 20) * (1 + rangeBonus)
+                * (aimed ? 1 + SpinMaster.t("aimed_range_change", 0.15) : 1 + charge * (SpinMaster.t("charge_range", 2.0) - 1));
+        // Carga del clic derecho: más tiempo clavada y más daño total.
+        e.charge = charge;
+        e.spinTimeFactor = 1 + charge * (SpinMaster.t("charge_spin_time", 2.0) - 1);
+        e.chargeDamage = 1 + charge * (SpinMaster.t("charge_damage", 1.5) - 1);
         // Rebotes (tope de +5 entre ramas, perks y encantamientos).
         int bonus = (int) Math.round(SpinMaster.mech(p, SpinMaster.REBOUND, "extra_bounces", 0) + SpinMaster.mech(p, SpinMaster.BILLIARDS, "extra_bounces", 0)) + elastic;
         bonus = Math.min(bonus, (int) Math.round(SpinMaster.t("bounce_bonus_cap", 5)));
         int bounces = (int) Math.round(SpinMaster.t("base_bounces", 1)) + bonus
                 + (m == SphereMaterial.SLIME ? (int) Math.round(SpinMaster.t("slime_bounces", 3)) : 0)
-                + (st.spin >= SpinMaster.g("threshold_1", 0.33) ? (int) Math.round(SpinMaster.g("threshold_1_bounces", 1)) : 0)
-                + (golden ? (int) Math.round(SpinMaster.number(SpinMaster.GOLDEN_RECTANGLE, "golden_bounces", 2)) : 0);
+                + (st.spin >= SpinMaster.g("threshold_1", 0.33) ? (int) Math.round(SpinMaster.g("threshold_1_bounces", 1)) : 0);
         e.dry = SpinMaster.has(p, SpinMaster.DRY_REBOUND);
         if (e.dry) {
             e.hopsLeft = bounces + (int) Math.round(SpinMaster.mech(p, SpinMaster.DRY_REBOUND, "extra_hops", 2));
@@ -227,7 +300,9 @@ public final class SpinThrow {
         e.hopKeep = SpinMaster.mech(p, SpinMaster.REBOUND, "hop_keep", SpinMaster.t("base_hop_keep", 0.5));
         e.chainFalloff = SpinMaster.mech(p, SpinMaster.BILLIARDS, "chain_falloff", 0);
         e.elasticity = elastic * SpinEnchantments.ELASTICITY_FALLOFF;
-        // Curva.
+        // Guía (clic izquierdo) y curva (clic derecho).
+        e.aimed = aimed;
+        e.aimRad = Math.toRadians(SpinMaster.t("aim_degrees", 8));
         e.curved = kind == CURVED;
         e.curveRad = Math.toRadians(SpinMaster.t("curve_degrees", 4) * (1 + SpinMaster.mech(p, SpinMaster.CURVE, "curvature", 0))
                 * SpinMaster.mech(p, SpinMaster.TIGHT_CURVE, "curve_factor", 1));
@@ -236,13 +311,12 @@ public final class SpinThrow {
                 * (1 + SpinMaster.mech(p, SpinMaster.DOUBLE_HAND, "return_change", 0)) * (1 + magnet * SpinEnchantments.MAGNET_RETURN)
                 * (m == SphereMaterial.ENDER_PEARL ? 1 + SpinMaster.t("ender_return_change", 0.5) : 1)
                 * (m == SphereMaterial.GOLD ? 1 + SpinMaster.t("gold_return_change", -0.3) : 1);
-        e.returnCooldownTicks = golden ? 0 : (int) Math.max(0, Math.round(rc));
+        e.returnCooldownTicks = (int) Math.max(0, Math.round(rc));
         e.swiftReturn = SpinMaster.has(p, SpinMaster.SWIFT_RETURN);
         e.guided = SpinMaster.has(p, SpinMaster.GUIDED_BALL);
         e.clawLevel = claw;
         e.frictionLevel = SpinEnchantments.level(SpinEnchantments.FRICTION, sphere);
         e.mine = mine;
-        e.setGolden(golden);
         e.setSpin(st.spin);
     }
 
@@ -266,12 +340,12 @@ public final class SpinThrow {
         if (!SpinMaster.has(p, SpinMaster.GUIDED_BALL)) return false;
         SphereEntity best = null;
         for (SphereEntity e : spheresOf(p)) {
-            if (e.state() == SphereEntity.FLYING && e.guided && !e.guidedUsed && !e.mine && (best == null || e.tickCount < best.tickCount)) best = e;
+            if (e.state() == SphereEntity.FLYING && e.guided && !e.guidedUsed && !e.mine && e.trick == null && (best == null || e.tickCount < best.tickCount)) best = e;
         }
         if (best == null) return false;
         best.guidedUsed = true;
-        best.route = null;
         best.curved = false;
+        best.aimed = false;
         best.setDeltaMovement(p.getLookAngle().scale(Math.max(0.6, best.getDeltaMovement().length())));
         best.level().playSound(null, best.getX(), best.getY(), best.getZ(), SoundEvents.ENDER_EYE_LAUNCH, SoundSource.PLAYERS, 0.6f, 1.6f);
         if (best.level() instanceof ServerLevel sl) sl.sendParticles(ParticleTypes.WAX_OFF, best.getX(), best.getY(), best.getZ(), 6, 0.1, 0.1, 0.1, 0.1);
@@ -330,7 +404,7 @@ public final class SpinThrow {
                 st.lastArrivalMaterial = null;
                 perfectBonus(p, st);
                 boolean mine = e.queuedSneak && SpinMaster.has(p, SpinMaster.SPIN_MINE);
-                if (launch(p, band, e.material(), queued - 1, mine) != null) st.lastThrow = now;
+                if (launch(p, band, e.material(), queued - 1, mine, 0) != null) st.lastThrow = now;
             }
         }
     }

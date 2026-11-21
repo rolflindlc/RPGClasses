@@ -28,9 +28,9 @@ import java.util.Map;
 import java.util.UUID;
 
 /**
- * Estado del Maestro del Giro (adenda, secciones 4 y 7): la barra de Giro (0-1) con su cadena de impactos, el Giro Dorado
- * del Rectángulo Dorado y sus cargas de espiral, la velocidad del jugador (Jinete), la Ruta de Rebotes fijada y las marcas
- * de Punto Débil (Escáner). Vive en memoria: se pierde al morir o al desconectarse.
+ * Estado del Maestro del Giro (adenda, secciones 4 y 7): la barra de Giro (0-1) con su cadena de impactos, la carga del
+ * clic derecho, la velocidad del jugador (Jinete) y las marcas de Punto Débil (Escáner). Vive en memoria: se pierde al
+ * morir o al desconectarse.
  */
 public final class SpinState {
     /** Estado de un jugador. */
@@ -40,10 +40,10 @@ public final class SpinState {
         int chain;
         long stepUntil;
         double stepBonus;
-        boolean golden;
-        long goldenUntil;
-        int spiral;
         long nextCatch;
+        // Carga del clic derecho: tic en que se pulsó (-1 = no carga) y si esa pulsación ya se usó (mina, Bola Guiada...).
+        long chargeStart = -1;
+        boolean chargeConsumed;
         long lastArrival = -10_000;
         long lastArrivalId;
         SphereMaterial lastArrivalMaterial;
@@ -57,18 +57,13 @@ public final class SpinState {
         int lastHitId = -1;
         long lastHitAt = -10_000;
         int lastHitClaw;
-        // Ruta de Rebotes.
-        List<Vec3> route;
-        long routeUntil, routeShowUntil;
         // Punto Débil: objetivos marcados (id → fin).
         final Map<Integer, Long> marks = new HashMap<>();
         // Sincronización.
         float sentSpin = -1;
-        int sentGolden = -1, sentSpiral = -1;
     }
 
     private static final Map<UUID, State> STATES = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
-    private static final DustParticleOptions ROUTE = new DustParticleOptions(new Vector3f(1.0f, 0.84f, 0.3f), 0.8f);
     private static final DustParticleOptions MARK = new DustParticleOptions(new Vector3f(1.0f, 0.2f, 0.25f), 1.2f);
 
     public static State of(ServerPlayer p) {
@@ -80,14 +75,9 @@ public final class SpinState {
         return s == null ? 0 : s.spin;
     }
 
-    public static boolean golden(ServerPlayer p) {
-        State s = STATES.get(p.getUUID());
-        return s != null && s.golden;
-    }
-
     // ------------------------------------------------------------------ Giro
 
-    /** Un impacto en un enemigo: sube el Giro (con la cadena), carga la espiral del Giro Dorado y se apunta para Giro Reverso. */
+    /** Un impacto en un enemigo: sube el Giro (con la cadena) y se apunta para Giro Reverso. */
     static void onImpact(ServerPlayer p, LivingEntity target, int clawLevel) {
         State s = of(p);
         long now = p.level().getGameTime();
@@ -102,8 +92,7 @@ public final class SpinState {
             gain += s.stepBonus;
             s.stepUntil = 0;
         }
-        if (!s.golden) add(p, s, gain);
-        else s.spiral = Math.min((int) Math.round(SpinMaster.number(SpinMaster.GOLDEN_RECTANGLE, "max_spiral", 20)), s.spiral + 1);
+        if (!GoldenRectangle.active(p)) add(p, s, gain);
         s.lastHitId = target.getId();
         s.lastHitAt = now;
         s.lastHitClaw = clawLevel;
@@ -112,7 +101,7 @@ public final class SpinState {
     /** Una bola vuelve sin haber impactado a ningún enemigo: se pierde la mitad del Giro. */
     static void onMiss(ServerPlayer p) {
         State s = of(p);
-        if (s.golden || s.spin <= 0) return;
+        if (s.spin <= 0 || GoldenRectangle.active(p)) return;
         float before = s.spin;
         s.spin = (float) Math.max(0, s.spin * (1 - SpinMaster.g("miss_loss", 0.5)));
         s.chain = 0;
@@ -167,7 +156,7 @@ public final class SpinState {
             if (!SpinMaster.isSpinMaster(p)) {
                 if (STATES.containsKey(p.getUUID())) {
                     STATES.remove(p.getUUID());
-                    Net.toPlayer(p, new Packets.SpinSync(0, 0, 0, 0, false));
+                    Net.toPlayer(p, new Packets.SpinSync(0, false));
                 }
                 continue;
             }
@@ -191,27 +180,11 @@ public final class SpinState {
         s.lastPos = pos;
         // Bajada fuera de combate.
         double delay = SpinMaster.g("decay_delay_seconds", 5) * 20;
-        if (!s.golden && s.spin > 0 && now - s.lastImpact > delay) {
+        if (s.spin > 0 && now - s.lastImpact > delay) {
             s.spin = (float) Math.max(0, s.spin - SpinMaster.g("decay_per_second", 0.05) / 20.0);
         }
-        // Fin del Giro Dorado: Espiral Final.
-        if (s.golden && (now >= s.goldenUntil || !p.hasEffect(SpinRegistry.GOLDEN_SPIN.get()))) {
-            SpinAbilities.finalSpiral(p, s);
-        }
-        // Ruta de Rebotes: se dibuja solo para él.
-        if (s.route != null && now <= s.routeShowUntil && now % 3 == 0) {
-            for (int i = 0; i + 1 < s.route.size(); i++) {
-                Vec3 a = s.route.get(i), b = s.route.get(i + 1);
-                Vec3 d = b.subtract(a);
-                int n = Math.max(1, (int) (d.length() * 2));
-                for (int k = 0; k <= n; k++) {
-                    Vec3 q = a.add(d.scale(k / (double) n));
-                    p.serverLevel().sendParticles(p, ROUTE, true, q.x, q.y, q.z, 1, 0, 0, 0, 0);
-                }
-                p.serverLevel().sendParticles(p, ParticleTypes.WAX_OFF, true, b.x, b.y, b.z, 3, 0.05, 0.05, 0.05, 0.02);
-            }
-        }
-        if (s.route != null && now > s.routeUntil) s.route = null;
+        // Carga del clic derecho: si suelta la bandolera, se pierde.
+        if (s.chargeStart >= 0 && !Bandolier.is(p.getMainHandItem())) s.chargeStart = -1;
         // Punto Débil: marca visible para el Escáner (y sus aliados con Punto Débil Compartido).
         if (!s.marks.isEmpty() && now % 8 == 0) showMarks(p, s, now);
         sync(p, s, now);
@@ -245,26 +218,21 @@ public final class SpinState {
     }
 
     private static void sync(ServerPlayer p, State s, long now) {
-        int goldenTicks = s.golden ? (int) Math.max(0, s.goldenUntil - now) : 0;
         boolean edge = s.spin != s.sentSpin && (s.spin <= 0f || s.spin >= 0.999f);
-        boolean changed = Math.abs(s.spin - s.sentSpin) >= 0.01f || edge || (s.golden ? 1 : 0) != (s.sentGolden > 0 ? 1 : 0)
-                || s.spiral != s.sentSpiral || (s.golden && now % 10 == 0);
-        if (!changed) return;
+        if (Math.abs(s.spin - s.sentSpin) < 0.01f && !edge) return;
         s.sentSpin = s.spin;
-        s.sentGolden = goldenTicks;
-        s.sentSpiral = s.spiral;
-        Net.toPlayer(p, new Packets.SpinSync(s.spin, goldenTicks, s.spiral,
-                (int) Math.round(SpinMaster.number(SpinMaster.GOLDEN_RECTANGLE, "max_spiral", 20)), true));
+        Net.toPlayer(p, new Packets.SpinSync(s.spin, true));
     }
 
     // ------------------------------------------------------------------ fin
 
-    /** Muere o se reinicia: Giro a 0, sin Giro Dorado y las bolas en vuelo vuelven a la bandolera. */
+    /** Muere o se reinicia: Giro a 0, sin Rectángulo Dorado en curso y las bolas en vuelo vuelven a la bandolera. */
     public static void reset(ServerPlayer p) {
         STATES.remove(p.getUUID());
+        GoldenRectangle.abort(p);
         p.removeEffect(SpinRegistry.GOLDEN_SPIN.get());
         SpinThrow.recallAll(p);
-        Net.toPlayer(p, new Packets.SpinSync(0, 0, 0, 0, SpinMaster.isSpinMaster(p)));
+        Net.toPlayer(p, new Packets.SpinSync(0, SpinMaster.isSpinMaster(p)));
     }
 
     @SubscribeEvent

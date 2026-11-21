@@ -34,7 +34,8 @@
     "client.LocalPlayerPushMixin",
     "client.DanceModelMixin",
     "client.InscriptionScreenMixin",
-    "client.HealerGlowMixin"
+    "client.HealerGlowMixin",
+    "client.SpinCameraMixin"
   ],
   "injectors": {
     "defaultRequire": 1

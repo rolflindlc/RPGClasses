@@ -6,12 +6,14 @@ import io.github.rpgclasses.network.Net;
 import io.github.rpgclasses.server.AbilityService;
 import io.github.rpgclasses.server.DebugLog;
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -24,18 +26,27 @@ import net.minecraft.world.phys.Vec3;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import org.joml.Vector3f;
 
 /**
  * Habilidades activas del Maestro del Giro (adenda, secciones 6 y 7): Ruta de Rebotes (nivel 5), Giro Reverso y Paso de
- * Giro (nivel 15) y Rectángulo Dorado (nivel 30, la ulti: Giro Dorado y Espiral Final).
+ * Giro (nivel 15). El Rectángulo Dorado (nivel 30, la ulti) está en {@link GoldenRectangle}.
  */
 public final class SpinAbilities {
+    private static final DustParticleOptions ROUTE = new DustParticleOptions(new Vector3f(1.0f, 0.84f, 0.3f), 0.9f);
+
     private SpinAbilities() {}
 
     // ------------------------------------------------------------------ Ruta de Rebotes
 
-    /** Calcula la ruta de rebotes de la bola elegida hacia donde se mira, la enseña un momento y la fija para el siguiente lanzamiento. */
+    /**
+     * Tiro de billar: traza una ruta que empieza en el enemigo al que apuntas (o el más cercano a la vista) y salta de
+     * enemigo en enemigo; la bola elegida la recorre muy rápido, golpeando a cada enemigo intermedio sin clavarse (cada
+     * rebote pega más que el anterior) y se clava en el último. Con un solo enemigo, rebota a su alrededor y vuelve a por
+     * él. Cada golpe cuenta para el Giro.
+     */
     static boolean bounceRoute(ServerPlayer p, JsonObject params) {
+        if (GoldenRectangle.active(p)) return false;
         ItemStack band = p.getMainHandItem();
         if (!Bandolier.is(band) || !SpinMaster.canThrow(p)) return false;
         SphereMaterial m = Bandolier.current(band);
@@ -43,54 +54,134 @@ public final class SpinAbilities {
             p.displayClientMessage(Component.translatable("message.rites_and_paths.spin.empty").withStyle(ChatFormatting.GRAY), true);
             return false;
         }
-        // Mismos números que el lanzamiento real (alcance y rebotes), con una bola de prueba que no se añade al mundo.
-        SphereEntity probe = new SphereEntity(SpinRegistry.SPHERE_ENTITY.get(), p.level());
-        ItemStack copy = ItemStack.EMPTY;
-        Bandolier.Entry e = Bandolier.firstReady(band, m, p.level().getGameTime());
-        if (e != null) copy = e.stack;
-        SpinThrow.configure(probe, p, m, copy, SpinThrow.DIRECT, false);
-        int max = (int) Math.round(AbilityService.number(params, "route_bounces_max", 8));
-        List<Vec3> route = route(p, p.getEyePosition(), p.getLookAngle(), probe.range, Math.min(max, probe.dry ? 0 : probe.bounces));
-        SpinState.State st = SpinState.of(p);
         long now = p.level().getGameTime();
-        int show = (int) Math.round(AbilityService.number(params, "preview_seconds", 1.5) * 20);
-        st.route = route;
-        st.routeShowUntil = now + show;
-        st.routeUntil = now + show * 2L;
-        p.displayClientMessage(Component.translatable("message.rites_and_paths.spin.route").withStyle(ChatFormatting.GOLD), true);
-        p.level().playSound(null, p.getX(), p.getY(), p.getZ(), SoundEvents.SPYGLASS_USE, SoundSource.PLAYERS, 0.8f, 1.3f);
+        Bandolier.clearStale(band, SpinThrow::alive, now);
+        if (Bandolier.firstReady(band, m, now) == null) {
+            p.displayClientMessage(Component.translatable("message.rites_and_paths.spin.no_ready",
+                    Component.translatable("item.rites_and_paths." + m.itemName())).withStyle(ChatFormatting.GRAY), true);
+            return false;
+        }
+        int max = SpinThrow.maxSpheres(p);
+        if (SpinThrow.spheresOf(p).size() >= max) {
+            p.displayClientMessage(Component.translatable("message.rites_and_paths.spin.limit", max).withStyle(ChatFormatting.GRAY), true);
+            return false;
+        }
+        List<Object> route = trickRoute(p, params);
+        if (route == null) {
+            p.displayClientMessage(Component.translatable("message.rites_and_paths.spin.no_targets").withStyle(ChatFormatting.GRAY), true);
+            return false;
+        }
+        SphereEntity e = SpinThrow.launchTrick(p, band, m, route, params);
+        if (e == null) return false;
+        SpinState.of(p).lastThrow = now;
+        // La ruta se ve un momento (la ven todos): una línea dorada de punto en punto.
+        ServerLevel level = p.serverLevel();
+        Vec3 a = e.position();
+        for (Object wp : route) {
+            Vec3 b = wp instanceof LivingEntity le ? le.getBoundingBox().getCenter() : (Vec3) wp;
+            Vec3 d = b.subtract(a);
+            int n = Math.max(1, (int) (d.length() * 2.5));
+            for (int k = 0; k <= n; k++) {
+                Vec3 q = a.add(d.scale(k / (double) n));
+                level.sendParticles(ROUTE, q.x, q.y, q.z, 1, 0, 0, 0, 0);
+            }
+            a = b;
+        }
+        level.playSound(null, p.getX(), p.getY(), p.getZ(), SoundEvents.SPYGLASS_USE, SoundSource.PLAYERS, 0.8f, 1.3f);
+        level.playSound(null, p.getX(), p.getY(), p.getZ(), SoundEvents.AMETHYST_BLOCK_CHIME, SoundSource.PLAYERS, 1.0f, 1.4f);
+        DebugLog.event(p, "giro", "Ruta de Rebotes: {} puntos", route.size());
         return true;
     }
 
-    /** Reflexiones de un rayo desde {@code eye} hacia {@code look}: los puntos donde rebota y el final. */
-    static List<Vec3> route(ServerPlayer p, Vec3 eye, Vec3 look, double range, int bounces) {
-        List<Vec3> pts = new ArrayList<>();
-        Vec3 pos = eye;
-        Vec3 dir = look.normalize();
-        double left = range;
-        pts.add(pos);
-        for (int i = 0; i <= bounces && left > 0.1; i++) {
-            Vec3 end = pos.add(dir.scale(left));
-            BlockHitResult h = p.level().clip(new ClipContext(pos, end, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, p));
-            if (h.getType() == HitResult.Type.MISS) {
-                pts.add(end);
-                break;
-            }
-            Vec3 at = h.getLocation();
-            left -= pos.distanceTo(at);
-            pts.add(at);
-            if (i == bounces) break;
-            Vec3 n = Vec3.atLowerCornerOf(h.getDirection().getNormal());
-            dir = dir.subtract(n.scale(2 * dir.dot(n))).normalize();
-            pos = at.add(n.scale(0.06));
+    /**
+     * La ruta: hasta {@code route_hits} golpes. El primero, el enemigo más cerca de la mira (en un cono) o, si no hay, el más
+     * cercano a la vista; luego el enemigo más cercano a la vista desde el anterior que aún no ha recibido golpe (si no
+     * queda ninguno, repite a otro). Con un solo enemigo, un punto de rebote a su lado y vuelta a él. Null si no hay nadie.
+     */
+    static List<Object> trickRoute(ServerPlayer p, JsonObject params) {
+        int hits = Math.max(1, (int) Math.round(AbilityService.number(params, "route_hits", 4)));
+        double range = AbilityService.number(params, "route_range", 16);
+        double hop = AbilityService.number(params, "route_hop", 10);
+        double cone = Math.toRadians(AbilityService.number(params, "route_cone_degrees", 70) / 2);
+        double bank = AbilityService.number(params, "bank_distance", 3);
+        Vec3 eye = p.getEyePosition();
+        Vec3 look = p.getLookAngle();
+        List<LivingEntity> cands = new ArrayList<>();
+        for (LivingEntity e : SphereHits.enemiesAround(p, eye, range, null)) {
+            if (SphereHits.visible(p.level(), eye, e.getBoundingBox().getCenter(), p)) cands.add(e);
         }
-        return pts;
+        if (cands.isEmpty()) return null;
+        LivingEntity first = null;
+        double best = Double.MAX_VALUE;
+        for (LivingEntity e : cands) {
+            Vec3 to = e.getBoundingBox().getCenter().subtract(eye);
+            double ang = Math.acos(Mth.clamp(look.dot(to.normalize()), -1, 1));
+            if (ang <= cone && ang < best) {
+                best = ang;
+                first = e;
+            }
+        }
+        if (first == null) first = cands.stream().min(Comparator.comparingDouble(e -> e.distanceToSqr(eye))).orElse(null);
+        List<Object> out = new ArrayList<>();
+        List<LivingEntity> used = new ArrayList<>();
+        out.add(first);
+        used.add(first);
+        LivingEntity cur = first;
+        Vec3 prev = eye;
+        for (int count = 1; count < hits; count++) {
+            Vec3 c = cur.getBoundingBox().getCenter();
+            LivingEntity next = nearest(p, cands, cur, c, hop, used, true);
+            if (next == null) next = nearest(p, cands, cur, c, hop, used, false);
+            if (next == null) {
+                // Un solo enemigo: rebota a su lado (o en la pared que haya) y vuelve a por él.
+                Vec3 bankPt = bankPoint(p, c, prev, bank, count);
+                out.add(bankPt);
+                out.add(cur);
+                prev = bankPt;
+                continue;
+            }
+            out.add(next);
+            if (!used.contains(next)) used.add(next);
+            prev = c;
+            cur = next;
+        }
+        return out;
+    }
+
+    private static LivingEntity nearest(ServerPlayer p, List<LivingEntity> cands, LivingEntity cur, Vec3 from, double hop,
+                                        List<LivingEntity> used, boolean fresh) {
+        LivingEntity best = null;
+        double bestD = hop * hop;
+        for (LivingEntity e : cands) {
+            if (e == cur || (fresh && used.contains(e)) || !e.isAlive()) continue;
+            Vec3 c = e.getBoundingBox().getCenter();
+            double d = c.distanceToSqr(from);
+            if (d <= bestD && SphereHits.visible(p.level(), from, c, p)) {
+                bestD = d;
+                best = e;
+            }
+        }
+        return best;
+    }
+
+    /** Punto de rebote junto a un enemigo solo: sigue la dirección de llegada girada a un lado y al otro, hasta una pared. */
+    private static Vec3 bankPoint(ServerPlayer p, Vec3 center, Vec3 from, double dist, int k) {
+        Vec3 in = center.subtract(from).multiply(1, 0, 1);
+        if (in.lengthSqr() < 1.0E-4) in = p.getLookAngle().multiply(1, 0, 1);
+        if (in.lengthSqr() < 1.0E-4) in = new Vec3(1, 0, 0);
+        in = in.normalize();
+        double ang = Math.toRadians((k % 2 == 1 ? 1 : -1) * (40 + 25 * ((k - 1) / 2)));
+        Vec3 dir = new Vec3(in.x * Math.cos(ang) - in.z * Math.sin(ang), 0.12, in.x * Math.sin(ang) + in.z * Math.cos(ang)).normalize();
+        Vec3 end = center.add(dir.scale(dist));
+        BlockHitResult hit = p.level().clip(new ClipContext(center, end, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, p));
+        return hit.getType() == HitResult.Type.MISS ? end : hit.getLocation().subtract(dir.scale(0.25));
     }
 
     // ------------------------------------------------------------------ Giro Reverso
 
     /** Detona las minas propias o tira de la bola clavada (o del último enemigo golpeado) y lo arrastra hacia el jugador. */
     static boolean reverseSpin(ServerPlayer p, JsonObject params) {
+        if (GoldenRectangle.active(p)) return false;
         List<SphereEntity> mines = new ArrayList<>();
         SphereEntity stuck = null;
         for (SphereEntity e : SpinThrow.spheresOf(p)) {
@@ -143,6 +234,7 @@ public final class SpinAbilities {
 
     /** Impulso en espiral hacia donde se mueve (o hacia donde mira); el siguiente impacto da más Giro. */
     static boolean spinStep(ServerPlayer p, JsonObject params) {
+        if (GoldenRectangle.active(p)) return false;
         if (p.isPassenger() || p.getAbilities().flying || p.isFallFlying()) return false;
         Vec3 dir = SpinState.moveDir(p);
         if (dir.lengthSqr() < 1.0E-4) {
@@ -169,88 +261,5 @@ public final class SpinAbilities {
         }
         level.playSound(null, p.getX(), p.getY(), p.getZ(), SoundEvents.TRIDENT_RIPTIDE_1, SoundSource.PLAYERS, 0.7f, 1.4f);
         return true;
-    }
-
-    // ------------------------------------------------------------------ Rectángulo Dorado
-
-    /**
-     * Con el Giro al 100 %: Giro Dorado. Pulsando otra vez durante el Giro Dorado, Espiral Final ya. El cooldown se pone al
-     * lanzar la Espiral Final (por eso devuelve false: AbilityService no lo pone al activar).
-     */
-    static boolean goldenRectangle(ServerPlayer p, JsonObject params) {
-        SpinState.State st = SpinState.of(p);
-        if (st.golden) {
-            finalSpiral(p, st);
-            return false;
-        }
-        if (st.spin < 0.999f) {
-            p.displayClientMessage(Component.translatable("message.rites_and_paths.spin.need_full").withStyle(ChatFormatting.GRAY), true);
-            return false;
-        }
-        int ticks = (int) Math.round(AbilityService.number(params, "golden_seconds", 8) * 20);
-        st.spin = 0;
-        st.golden = true;
-        st.goldenUntil = p.level().getGameTime() + ticks;
-        st.spiral = 0;
-        p.addEffect(new MobEffectInstance(SpinRegistry.GOLDEN_SPIN.get(), ticks, 0, false, true, true));
-        ServerLevel level = p.serverLevel();
-        for (int i = 0; i < 40; i++) {
-            double a = i * 0.45;
-            double r = 0.3 + i * 0.04;
-            level.sendParticles(ParticleTypes.WAX_OFF, p.getX() + Math.cos(a) * r, p.getY() + 0.2 + i * 0.05, p.getZ() + Math.sin(a) * r, 1, 0, 0, 0, 0);
-        }
-        level.playSound(null, p.getX(), p.getY(), p.getZ(), SoundEvents.BEACON_ACTIVATE, SoundSource.PLAYERS, 1.0f, 1.6f);
-        p.displayClientMessage(Component.translatable("message.rites_and_paths.spin.golden").withStyle(ChatFormatting.GOLD, ChatFormatting.BOLD), true);
-        SpinFxSender.onomatopoeia(level, p.getEyePosition().add(0, 0.6, 0), SpinFxSender.WORD_GOGOGO);
-        DebugLog.event(p, "giro", "Rectángulo Dorado: Giro Dorado {} tics", ticks);
-        return false;
-    }
-
-    /** Espiral Final: una bola por objetivo orbita al jugador y se lanza contra él, con daño según las cargas acumuladas. */
-    static void finalSpiral(ServerPlayer p, SpinState.State st) {
-        st.golden = false;
-        p.removeEffect(SpinRegistry.GOLDEN_SPIN.get());
-        JsonObject params = SpinMaster.params(SpinMaster.GOLDEN_RECTANGLE);
-        AbilityService.setCooldown(p, SpinMaster.GOLDEN_RECTANGLE, AbilityService.ticks(params, "cooldown_seconds", 120));
-        Net.syncPlayer(p);
-        int charges = st.spiral;
-        st.spiral = 0;
-        double radius = AbilityService.number(params, "spiral_radius", 16);
-        int maxTargets = (int) Math.round(AbilityService.number(params, "spiral_targets", 8));
-        List<LivingEntity> targets = SphereHits.enemiesAround(p, p.position(), radius, null);
-        targets.sort(Comparator.comparingDouble(e -> e.distanceToSqr(p)));
-        if (targets.size() > maxTargets) targets = new ArrayList<>(targets.subList(0, maxTargets));
-        double ironDamage = SpinMaster.t("sword_damage", 6) * SpinMaster.t("iron_fraction", 0.80);
-        float damage = (float) (charges * AbilityService.number(params, "spiral_damage", 0.25) * ironDamage);
-        int orbit = (int) Math.round(AbilityService.number(params, "orbit_seconds", 1.5) * 20);
-        ItemStack band = p.getMainHandItem();
-        SphereMaterial look = Bandolier.is(band) && Bandolier.current(band) != null ? Bandolier.current(band) : SphereMaterial.GOLD;
-        int n = Math.max(targets.size(), 4);
-        for (int i = 0; i < n; i++) {
-            SphereEntity e = new SphereEntity(SpinRegistry.SPHERE_ENTITY.get(), p.level());
-            e.setOwner(p);
-            e.virtual = true;
-            e.setMaterial(look);
-            e.setGolden(true);
-            e.setSpin(1f);
-            e.orbitIndex = i;
-            e.orbitTotal = n;
-            e.orbitTicks = orbit;
-            e.orbitTarget = i < targets.size() ? targets.get(i) : null;
-            e.fixedDamage = Math.max(0.5f, damage);
-            e.speed = SpinMaster.t("sphere_speed", 1.8) * 1.5;
-            e.range = 48;
-            Vec3 start = p.position().add(0, 1, 0);
-            e.setPos(start.x, start.y, start.z);
-            e.setState(SphereEntity.ORBIT);
-            io.github.rpgclasses.server.DamagePipeline.markProjectile(e, 1.0, true);
-            p.level().addFreshEntity(e);
-        }
-        ServerLevel level = p.serverLevel();
-        level.playSound(null, p.getX(), p.getY(), p.getZ(), SoundEvents.TOTEM_USE, SoundSource.PLAYERS, 0.7f, 1.5f);
-        p.displayClientMessage(Component.translatable("message.rites_and_paths.spin.spiral", charges).withStyle(ChatFormatting.GOLD, ChatFormatting.BOLD), true);
-        SpinFxSender.cinematic(p, orbit + 24);
-        SpinFxSender.onomatopoeia(level, p.getEyePosition().add(0, 0.8, 0), SpinFxSender.WORD_GOGOGO);
-        DebugLog.event(p, "giro", "Espiral Final: {} cargas, {} objetivos, {} de daño", charges, targets.size(), damage);
     }
 }

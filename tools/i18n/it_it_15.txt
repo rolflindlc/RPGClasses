@@ -8,27 +8,27 @@
 7 Scansione
 8 Curva
 9 Lancio di Sfere
-10 Con la bandoliera in mano: clic sinistro, lancio diretto; clic destro, lancio curvo (segue la tua visuale). La sfera si conficca nel bersaglio e ci gira sopra per 3 tick (ignorandone l'invulnerabilità), rimbalza sui blocchi e torna in mano. Cliccare proprio quando arriva è una Presa Perfetta: più Rotazione e la rilanci all'istante. Ogni blocco su cui rimbalza prima dell'impatto aggiunge danno.
+10 Con la bandoliera in mano: clic sinistro, la sfera è guidata verso dove miri finché non rimbalza (arriva più lontano, ma è un po' più lenta); clic destro, curva verso dove guardi e, tenendolo premuto, il lancio si carica: a carica completa arriva al doppio della distanza, resta conficcata il doppio e infligge ×1,5 danni. La sfera si conficca nel bersaglio e ci gira sopra per circa 2 secondi, danneggiandolo senza sosta (ignorandone l'invulnerabilità), rimbalza sui blocchi e torna in mano. Cliccare proprio quando arriva è una Presa Perfetta: più Rotazione e la rilanci all'istante. Ogni blocco su cui rimbalza prima dell'impatto aggiunge danno.
 11 Rotazione
-12 Barra da 0 a 100 % che sale a ogni impatto, di più se li concateni. Se una sfera torna senza aver colpito nemici, ne perdi la metà; fuori dal combattimento cala poco a poco. Al 33 %: un rimbalzo in più e scie dorate. Al 66 %: effetto del materiale più forte e un po' più di danno. Al 100 %: Rettangolo Aureo pronto.
+12 Barra da 0 a 100 % che sale a ogni impatto, di più se li concateni. Se una sfera torna senza aver colpito nemici, ne perdi la metà; fuori dal combattimento cala poco a poco. Al 33 %: un rimbalzo in più e scie dorate. Al 66 %: effetto del materiale più forte e un po' più di danno. Al 100 %: puoi usare il Rettangolo Aureo (dal Livello totale 30).
 13 Rotta di Rimbalzi
-14 Mostra per un attimo la rotta di rimbalzi della tua sfera verso dove guardi e la fissa: il tuo prossimo lancio la segue esattamente.
+14 Tiro di biliardo: la tua sfera parte verso il nemico che miri e salta da un nemico all'altro, colpendo ognuno di passaggio (ogni colpo fa più male del precedente), finché non si conficca nell'ultimo. Con un solo nemico, rimbalza attorno a lui e torna a prenderlo. Ogni colpo aumenta la tua Rotazione.
 15 Rotazione Inversa
 16 Tira la tua sfera conficcata (o l'ultimo nemico che hai colpito poco fa) e lo trascina verso di te. I boss non si muovono. Fa esplodere le tue mine.
 17 Passo di Rotazione
 18 Scatto a spirale di circa 6 blocchi verso dove ti muovi (o verso dove guardi se sei fermo). Il tuo prossimo impatto poco dopo dà più Rotazione.
 19 Rettangolo Aureo
-20 Con la Rotazione al 100 %: Rotazione Dorata per qualche secondo (sfere più veloci, nessuna attesa al ritorno e più rimbalzi); ogni impatto accumula una carica di spirale. Alla fine (o premendo di nuovo), una spirale di sfere ti orbita intorno e si lancia contro i nemici vicini, con più danno quante più cariche hai.
+20 Con la Rotazione al 100 %, una sequenza automatica con telecamera cinematografica: il tempo si ferma attorno a te, scansioni il nemico che miri e gli lanci una sfera dorata che lo trattiene in una rotazione infinita, danneggiandolo senza sosta; anche se prova a fuggire, la rotazione lo trascina indietro. Un ultimo colpo critico lo schianta al suolo e la rotazione salta ai nemici vicini. Finché dura non puoi muoverti, ma non subisci danni.
 21 Punto Debole Condiviso
 22 Anche i tuoi alleati vedono i segni di Punto Debole, e ogni impatto li rinnova.
-23 Lancia sfere di materiali diversi che girano, rimbalzano e tornano in mano: clic sinistro, diretto; clic destro, curvo; la bandoliera custodisce le sfere e un tasto cambia quella in uso. Schermagliatore ibrido: colpisce da vicino e da lontano e premia ritmo, combo e precisione. Ogni impatto concatenato aumenta la sua Rotazione, che potenzia le sfere e carica il Rettangolo Aureo.
+23 Lancia sfere di materiali diversi che si conficcano girando, rimbalzano e tornano in mano: clic sinistro, guidata verso dove miri; clic destro, curva e caricabile; la bandoliera custodisce le sfere e un tasto cambia quella in uso. Schermagliatore ibrido: colpisce da vicino e da lontano e premia ritmo, combo e precisione. Ogni impatto concatenato aumenta la sua Rotazione, che potenzia le sfere e carica il Rettangolo Aureo.
 24 Le tue sfere infliggono più danno e la tua Rotazione sale più in fretta.
 25 Più rimbalzi, e le sfere che rimbalzano da un nemico all'altro conservano più danno.
 26 Le tue sfere sono pronte prima dopo il ritorno e, con il ramo completo, puoi averne una in più in volo.
 27 Più probabilità e danno critico; i tuoi critici con le sfere ignorano parte dell'armatura.
-28 Il lancio curvo curva di più e le tue sfere arrivano più lontano.
+28 Il lancio curvo (clic destro) curva di più e le tue sfere arrivano più lontano.
 29 Rotazione Pesante
-30 Più danno a ogni tick della rotazione, ma la Rotazione sale un po' più lentamente.
+30 Le tue sfere infliggono più danno mentre girano conficcate nel bersaglio, ma la Rotazione sale un po' più lentamente.
 31 Rotazione Rapida
 32 La Rotazione sale molto più in fretta, ma le tue sfere infliggono un po' meno danno.
 33 Biliardo
@@ -46,7 +46,7 @@
 45 Curva Stretta
 46 Il lancio curvo curva il doppio, ma le tue sfere arrivano meno lontano.
 47 Sfera Guidata
-48 Mentre una sfera vola, un clic destro la reindirizza una volta verso dove guardi (invece di lanciarne un'altra). Le tue sfere sono un po' più lente.
+48 Mentre una sfera vola, un clic destro la reindirizza all'istante una volta verso dove guardi (invece di caricarne un'altra). Le tue sfere sono un po' più lente.
 49 Tratto di classe: un po' meno salute massima.
 50 Gira a tutta velocità: se le tue sfere colpiscono mentre corri (o cavalchi) vicino alla tua velocità massima, stordiscono il bersaglio e infliggono un po' più di danno.
 51 Legge i punti deboli: la prima sfera che colpisce un bersaglio lo segna e le successive sono critici sicuri. Dal livello 5, i tuoi alleati vedono il segno e ogni impatto lo rinnova.
@@ -93,153 +93,165 @@
 92 Mine contemporanee
 93 Distanza per raccoglierla (blocchi)
 94 Danno di riferimento (spada di ferro)
-95 Danno della sfera di ferro (della spada)
-96 Tick di rotazione all'impatto
-97 Velocità (blocchi per tick)
-98 Portata (blocchi)
-99 Velocità di ritorno (blocchi per tick)
-100 Ricarica di ritorno
-101 Rimbalzi base
-102 Velocità conservata al rimbalzo
-103 Tempo minimo tra i lanci
-104 Sfere in volo base
-105 Sfera extra al Livello totale
-106 Limite di rimbalzi extra (rami e incantesimi)
-107 Limite di portata extra
-108 Distanza di rimbalzo tra nemici (blocchi)
-109 Danno rimbalzando tra nemici (senza il ramo)
-110 Curvatura del lancio curvo (gradi per tick)
-111 Rimbalzo cinetico: danno per blocco rimbalzato
-112 Rimbalzo cinetico: massimo
-113 Finestra della Presa Perfetta
-114 Rotazione della Presa Perfetta
-115 Tempo minimo tra Prese Perfette
-116 Danno della sfera di ferro x
-117 Danno della sfera di diamante x
-118 Danno della sfera di netherite x
-119 Danno della sfera di slime x
-120 Danno della sfera di rame x
-121 Danno della sfera di ametista x
-122 Danno della sfera di perla di Ender x
-123 Danno della sfera d'oro x
-124 Danno della sfera di redstone x
-125 Danno della sfera di stalattite x
-126 Ferro: contraccolpo
-127 Diamante: armatura ignorata
-128 Netherite: bruciatura
-129 Netherite: contraccolpo
-130 Slime: rimbalzi extra
-131 Slime: velocità conservata al rimbalzo
-132 Rame: nemici verso cui salta
-133 Rame: danno del salto
-134 Rame: distanza del salto (blocchi)
-135 Rame: probabilità di fulmine durante i temporali
-136 Ametista: lunghezza dell'onda (blocchi)
-137 Ametista: danno dell'onda
-138 Ametista: cecità
-139 Perla di Ender: ricarica di ritorno
-140 Oro: velocità extra
-141 Oro: ricarica di ritorno
-142 Redstone: tick di segnale
-143 Redstone: tick di segnale con Rotazione II
-144 Stalattite: blocchi per lancio
-145 Stalattite: durezza massima
-146 Rotazione per impatto
-147 Catena: tempo tra gli impatti
-148 Catena: moltiplicatore per anello
-149 Catena: moltiplicatore massimo x
-150 Rotazione persa mancando
-151 Rotazione I da
-152 Rotazione II da
-153 Rotazione I: rimbalzi extra
-154 Rotazione II: effetto del materiale x
-155 Rotazione II: danno extra
-156 Mostra la rotta per
-157 Rimbalzi massimi della rotta
-158 Trascinamento (blocchi)
-159 Tempo in cui la sfera resta conficcata
-160 Spinta verso l'alto
-161 Rotazione extra al prossimo impatto
-162 Tempo per sfruttarla
+95 Danno di un impatto della sfera di ferro (della spada)
+96 Velocità (blocchi per tick)
+97 Portata (blocchi)
+98 Velocità di ritorno (blocchi per tick)
+99 Ricarica di ritorno
+100 Rimbalzi base
+101 Velocità conservata al rimbalzo
+102 Tempo minimo tra i lanci
+103 Sfere in volo base
+104 Sfera extra al Livello totale
+105 Limite di rimbalzi extra (rami e incantesimi)
+106 Limite di portata extra
+107 Distanza di rimbalzo tra nemici (blocchi)
+108 Danno rimbalzando tra nemici (senza il ramo)
+109 Curvatura del lancio curvo (gradi per tick)
+110 Rimbalzo cinetico: danno per blocco rimbalzato
+111 Rimbalzo cinetico: massimo
+112 Finestra della Presa Perfetta
+113 Rotazione della Presa Perfetta
+114 Tempo minimo tra Prese Perfette
+115 Danno della sfera di ferro x
+116 Danno della sfera di diamante x
+117 Danno della sfera di netherite x
+118 Danno della sfera di slime x
+119 Danno della sfera di rame x
+120 Danno della sfera di ametista x
+121 Danno della sfera di perla di Ender x
+122 Danno della sfera d'oro x
+123 Danno della sfera di redstone x
+124 Danno della sfera di stalattite x
+125 Ferro: contraccolpo
+126 Diamante: armatura ignorata
+127 Netherite: bruciatura
+128 Netherite: contraccolpo
+129 Slime: rimbalzi extra
+130 Slime: velocità conservata al rimbalzo
+131 Rame: nemici verso cui salta
+132 Rame: danno del salto
+133 Rame: distanza del salto (blocchi)
+134 Rame: probabilità di fulmine durante i temporali
+135 Ametista: lunghezza dell'onda (blocchi)
+136 Ametista: danno dell'onda
+137 Ametista: cecità
+138 Perla di Ender: ricarica di ritorno
+139 Oro: velocità extra
+140 Oro: ricarica di ritorno
+141 Redstone: tick di segnale
+142 Redstone: tick di segnale con Rotazione II
+143 Stalattite: blocchi per lancio
+144 Stalattite: durezza massima
+145 Rotazione per impatto
+146 Catena: tempo tra gli impatti
+147 Catena: moltiplicatore per anello
+148 Catena: moltiplicatore massimo x
+149 Rotazione persa mancando
+150 Rotazione I da
+151 Rotazione II da
+152 Rotazione I: rimbalzi extra
+153 Rotazione II: effetto del materiale x
+154 Rotazione II: danno extra
+155 Trascinamento (blocchi)
+156 Tempo in cui la sfera resta conficcata
+157 Spinta verso l'alto
+158 Rotazione extra al prossimo impatto
+159 Tempo per sfruttarla
+160 Distanza a cui la vedono i tuoi alleati (blocchi)
+161 Sfera
+162 Segnale della sfera
 163 Rotazione Dorata
-164 Velocità extra delle sfere
-165 Rimbalzi extra
-166 Cariche di spirale massime
-167 Tempo in orbita
-168 Bersagli della spirale
-169 Portata della spirale (blocchi)
-170 Danno per carica (di una sfera di ferro)
-171 Distanza a cui la vedono i tuoi alleati (blocchi)
-172 Sfera
-173 Segnale della sfera
-174 Rotazione Dorata
-175 Bandoliera di sfere
-176 Sfere
-177 %1$s è caduto per una sfera rotante
-178 %1$s è caduto per la sfera di %2$s
-179 %1$s è stato travolto dalla rotazione di una sfera
-180 %1$s è stato travolto dalla rotazione della sfera di %2$s
-181 Abilità 4
-182 Cambia sfera (Maestro della Rotazione)
-183 Sperimentali
-184 Classe sperimentale
-185 Il suo bilanciamento non è garantito e può cambiare in qualsiasi versione.
-186 Attenzione: è una classe sperimentale. Il suo bilanciamento non è garantito e può cambiare in qualsiasi versione.
-187 %s: -%s fisso (da quando scegli la classe)
-188 Danno: x%s
-189 Solo il Maestro della Rotazione sa lanciarla, dalla bandoliera.
-190 Sfera scelta: %s
-191 %s/%s sfere
-192 Vuota
-193 Clic destro con una sfera sul cursore per riporla; clic destro su uno slot vuoto per estrarne una.
-194 In mano: clic sinistro, diretto; clic destro, curvo; %s: cambia sfera.
-195 Rotazione
-196 Rettangolo Aureo pronto! (%s)
-197 Rotazione Dorata: %s cariche
-198 %s: %s/%s
-199 Solo il Maestro della Rotazione sa lanciare queste sfere.
-200 La tua bandoliera è vuota.
-201 %s: nessuna pronta al momento.
-202 Hai già %s sfere in volo.
-203 Sfera: %s
-204 Rotta: %s.
-205 Ti serve la Rotazione al 100 %%.
-206 Non hai nessuna sfera conficcata e non hai colpito nessuno di recente.
-207 Hai già %s mine piantate.
-208 Raccogli la mina.
-209 Rotta fissata: il tuo prossimo lancio la seguirà.
-210 Presa Perfetta!
-211 Rettangolo Aureo!
-212 Spirale Finale! (%s cariche)
-213 Sfera di ferro
-214 Contraccolpo leggero.
-215 Sfera di diamante
-216 Ignora parte dell'armatura del bersaglio.
-217 Sfera di netherite
-218 Brucia e respinge forte. Resiste al fuoco e alla lava.
-219 Sfera di slime
-220 Rimbalza molto di più e quasi non perde velocità.
-221 Sfera di rame
-222 Salta verso i nemici vicini. Durante i temporali attira i fulmini.
-223 Sfera di ametista
-224 Emette un'onda sonica in linea che attraversa i blocchi e acceca.
-225 Sfera di perla di Ender
-226 Al ritorno, ti porta al punto d'impatto.
-227 Sfera d'oro
-228 Molto veloce e pronta prima.
-229 Sfera di redstone
-230 Attiva la redstone che colpisce.
-231 Sfera di stalattite
-232 Rompe i blocchi teneri e te li riporta.
-233 Attrito
-234 Le tue sfere danno fuoco ai nemici e ai blocchi infiammabili che colpiscono.
-235 Densità
-236 Più danno, meno portata.
-237 Leggerezza
-238 Più portata, meno danno.
-239 Magnete
-240 Le tue sfere sono pronte prima dopo il ritorno, ma infliggono un po' meno danno.
-241 Artiglio
-242 La sfera resta conficcata più a lungo e Rotazione Inversa trascina di più, ma vola un po' più lentamente.
-243 Elasticità
-244 Più rimbalzi, ma ogni rimbalzo infligge un po' meno danno.
+164 Bandoliera di sfere
+165 Sfere
+166 %1$s è caduto per una sfera rotante
+167 %1$s è caduto per la sfera di %2$s
+168 %1$s è stato travolto dalla rotazione di una sfera
+169 %1$s è stato travolto dalla rotazione della sfera di %2$s
+170 Abilità 4
+171 Cambia sfera (Maestro della Rotazione)
+172 Sperimentali
+173 Classe sperimentale
+174 Il suo bilanciamento non è garantito e può cambiare in qualsiasi versione.
+175 Attenzione: è una classe sperimentale. Il suo bilanciamento non è garantito e può cambiare in qualsiasi versione.
+176 %s: -%s fisso (da quando scegli la classe)
+177 Danno: x%s
+178 Solo il Maestro della Rotazione sa lanciarla, dalla bandoliera.
+179 Sfera scelta: %s
+180 %s/%s sfere
+181 Vuota
+182 Clic destro con una sfera sul cursore per riporla; clic destro su uno slot vuoto per estrarne una.
+183 In mano: clic sinistro, guidata; clic destro (tieni premuto per caricare), curva; %s: cambia sfera.
+184 Rotazione
+185 Rettangolo Aureo pronto! (%s)
+186 %s: %s/%s
+187 Solo il Maestro della Rotazione sa lanciare queste sfere.
+188 La tua bandoliera è vuota.
+189 %s: nessuna pronta al momento.
+190 Hai già %s sfere in volo.
+191 Sfera: %s
+192 Rotta: %s.
+193 Ti serve la Rotazione al 100 %%.
+194 Non hai nessuna sfera conficcata e non hai colpito nessuno di recente.
+195 Hai già %s mine piantate.
+196 Raccogli la mina.
+197 Presa Perfetta!
+198 Rettangolo Aureo!
+199 Sfera di ferro
+200 Contraccolpo leggero.
+201 Sfera di diamante
+202 Ignora parte dell'armatura del bersaglio.
+203 Sfera di netherite
+204 Brucia e respinge forte. Resiste al fuoco e alla lava.
+205 Sfera di slime
+206 Rimbalza molto di più e quasi non perde velocità.
+207 Sfera di rame
+208 Salta verso i nemici vicini. Durante i temporali attira i fulmini.
+209 Sfera di ametista
+210 Emette un'onda sonica in linea che attraversa i blocchi e acceca.
+211 Sfera di perla di Ender
+212 Al ritorno, ti porta al punto d'impatto.
+213 Sfera d'oro
+214 Molto veloce e pronta prima.
+215 Sfera di redstone
+216 Attiva la redstone che colpisce.
+217 Sfera di stalattite
+218 Rompe i blocchi teneri e te li riporta.
+219 Attrito
+220 Le tue sfere danno fuoco ai nemici e ai blocchi infiammabili che colpiscono.
+221 Densità
+222 Più danno, meno portata.
+223 Leggerezza
+224 Più portata, meno danno.
+225 Magnete
+226 Le tue sfere sono pronte prima dopo il ritorno, ma infliggono un po' meno danno.
+227 Artiglio
+228 La sfera resta conficcata più a lungo e Rotazione Inversa trascina di più, ma vola un po' più lentamente.
+229 Elasticità
+230 Più rimbalzi, ma ogni rimbalzo infligge un po' meno danno.
+231 Tempo conficcata in rotazione
+232 Danno ogni
+233 Micro-pausa all'impatto (tick)
+234 Clic sinistro: guida verso il mirino (gradi per tick)
+235 Clic sinistro: velocità
+236 Clic sinistro: gittata
+237 Clic destro: tempo di carica completa
+238 Clic destro carico: gittata x
+239 Clic destro carico: tempo conficcata x
+240 Clic destro carico: danno x
+241 Colpi del percorso
+242 Gittata per il primo bersaglio (blocchi)
+243 Distanza tra i nemici del percorso (blocchi)
+244 Cono del mirino (gradi)
+245 Rimbalzo accanto a un nemico solo (blocchi)
+246 Colpo di passaggio (di un impatto)
+247 Danno extra per ogni colpo precedente
+248 Velocità sul percorso (blocchi per tick)
+249 Gittata per scegliere il bersaglio (blocchi)
+250 Raggio in cui il tempo si ferma (blocchi)
+251 Danno di ogni impulso della rotazione (della spada)
+252 Colpo finale (della spada)
+253 Nemici a cui si propaga
+254 Gittata della propagazione (blocchi)
+255 Danno della propagazione (della spada)
+256 Nessun nemico in vista.

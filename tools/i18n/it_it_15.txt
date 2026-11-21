@@ -269,3 +269,43 @@
 268 ossidiana
 269 Trivella (selce): meno danno per tick, ma resta conficcata molto più a lungo e in totale infligge più danno.
 270 Mazzata (ossidiana): tutto il danno in un solo colpo, senza restare conficcata; è più lenta e ci mette di più a tornare pronta.
+271 Angelo (Chierico): finché dura puoi volare, lentamente e senza scattare.
+272 Mago (Fluidità): +30 % di velocità di movimento dopo aver lanciato un incantesimo.
+273 Sei nell'aura dello Stendardo di un Paladino: più armatura ed effetti negativi più brevi; a seconda dello stendardo, anche più danno o rigenerazione per gli alleati.
+274 Furia del berserker (Barbaro): attacchi più in fretta e infliggi più danno, ma ne subisci anche di più.
+275 Baluardo (Paladino): subisci molto meno danno da ogni fonte.
+276 Pozione della Sfida: la difficoltà di zona ti conta il 20 % di livello di classe in più per livello dell'effetto, quindi i mob che compaiono vicino sono più forti. Il latte la rimuove.
+277 Baluardo travolgente (Paladino): corri senza sosta ad alta velocità, ferisci e spingi chi travolgi e rompi i blocchi fragili sul tuo cammino.
+278 Ammaliato (Bardo): non attacca il Bardo né i suoi alleati e combatte contro altri mob.
+279 Condannato (Paladino): subisce più danno dal Paladino che lo ha marchiato.
+280 Corrosione (Draconide acido): −5 % di armatura e di robustezza dell'armatura per livello.
+281 Atterrato (Miracolo del Chierico): un colpo mortale ti ha lasciato a terra con mezzo cuore. Non puoi fare nulla, ma non subisci danni; se un alleato ti cura con un incantesimo o un'abilità del Chierico, ti rialzi. Se finisce, muori.
+282 Resistenza (Barbaro): subisci meno danno.
+283 Danza forzata (Bardo): balla sul posto e non può attaccare, lanciare incantesimi né usare oggetti.
+284 Gigantismo (mob d'élite): la creatura è più grande; il livello dell'effetto indica la sua taglia.
+285 Rotazione Dorata (Maestro della Rotazione): sei nel pieno del Rettangolo Aureo. Non puoi muoverti né agire, ma non subisci danni.
+286 Marchio del cacciatore (Ranger): il bersaglio marchiato subisce più danno da ogni fonte.
+287 Ultima furia (Barbaro): un colpo mortale ti ha reso immortale per qualche secondo. Se uccidi il tuo aggressore prima che finisca, sopravvivi.
+288 Corale di ferro (Bardo): subisci meno danno.
+289 Cadenza di mana (Bardo): rigeneri il mana più in fretta (1 % per livello).
+290 Marcia (Bardo): ti muovi e attacchi più in fretta.
+291 Peste (Barbaro): danno nel tempo che colpisce anche i non morti. Il latte la rimuove.
+292 Fervore del requiem (Bardo): infliggi più danno per qualche secondo dopo il Requiem finale.
+293 Ballata del riposo (Bardo): rigeneri vita ogni secondo.
+294 Ritirata (Ranger): +25 % di velocità di movimento.
+295 Scaglie contro il fuoco (Bardo): subisci il 25 % di danno da fuoco in meno.
+296 Scaglie contro il ghiaccio (Bardo): subisci il 25 % di danno da ghiaccio in meno.
+297 Scaglie contro i fulmini (Bardo): subisci il 25 % di danno da fulmine in meno.
+298 Passo condiviso (Bardo): ti muovi più in fretta.
+299 Silenziato (Bardo): non può lanciare incantesimi.
+300 Provocazione: subisci meno danno mentre i mob provocati vengono contro di te.
+301 Tossina (Ladro): danno lento nel tempo che non si accumula. Il latte la rimuove.
+302 Pozione della Tranquillità: la difficoltà di zona ti conta il 20 % di livello di classe in meno per livello dell'effetto, quindi i mob che compaiono vicino sono più deboli. Il latte la rimuove.
+303 Inno di guerra (Bardo): infliggi più danno.
+304 Sfera del Maestro della Rotazione: si lancia dalla Bandoliera di sfere. Al banco da lavoro, combinala con 4 unità di un materiale (2 perle dell'Ender) per darle un miglioramento: slime, rame, ametista, perla dell'Ender, oro, redstone, speleotema, selce (Trivella) o ossidiana (Mazzata). Un nuovo miglioramento sostituisce il precedente e la sfera conserva durabilità e incantesimi.
+305 Contiene fino a 9 sfere: clic destro con una sfera sul cursore per metterla dentro, clic destro su uno spazio vuoto per tirarne fuori una. Il Maestro della Rotazione la tiene in mano per lanciare le sfere; il tasto per cambiare sfera sceglie quale.
+306 Spartito del Bardo. Si crea alla forgia di pergamene di Iron's con un incantesimo musicale (come una pergamena, con un disco musicale, un blocco sonoro o un jukebox come focus). Si conserva in uno strumento sul leggio o sul tavolo d'iscrizione e sale di un livello al banco da lavoro con la rarità di inchiostro richiesta.
+307 Strumento leggendario del Bardo: lo lasciano Barako e Umvuthi (Mowzie's Mobs) quando un giocatore li uccide.
+308 La lascia il Leviatano (L_Ender's Cataclysm) quando un giocatore lo uccide. Serve a creare l'Organo abissale al tavolo da forgiatura.
+309 La lascia la Mostruosità di netherite (L_Ender's Cataclysm) quando un giocatore la uccide. Serve a creare il Tamburo del colosso al tavolo da forgiatura.
+310 Solo in creativa, per i test: finché è nel tuo inventario, tutte le ricariche di classe e di razza sono 0.

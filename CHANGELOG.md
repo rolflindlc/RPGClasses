@@ -35,6 +35,10 @@ First public beta of Rolflin's Rites & Paths (Minecraft Forge 1.20.1).
   Elasticity). New **Spheres** discipline: every other class has a fixed −100% wall on it. A fourth ability key (H).
   Server options `sphere.redstone.enabled`, `sphere.stalactite.breakBlocks` and `sphere.friction.igniteBlocks`;
   client options `spinShake` and `spinCinematic`.
+- **JEI support** (optional): special recipes (ball upgrades, leveling sheet music) are shown as crafting recipes, and
+  items that are not crafted (balls, Sphere Bandolier, sheet music, boss-dropped Bard materials, Creative Amulet) have
+  information pages. Every status effect has a description for Just Enough Effect Descriptions, and every enchantment
+  one for Enchantment Descriptions.
 - **12 races** with **39 subraces** and **117 rites**, with a Race Altar and rite bosses.
 - **Bard** rhythm minigame, with its own music school for Iron's Spells 'n Spellbooks, instruments, sheet music and a
   music stand.

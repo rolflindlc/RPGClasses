@@ -478,6 +478,12 @@ lang.update(spin_lang)
 difficulty_lang = difficulty.build(dump, out)
 for key in difficulty_lang: assert key not in lang, key
 lang.update(difficulty_lang)
+# Descripciones de efectos (JEED) y páginas de información de JEI.
+import descriptions
+descriptions_lang = descriptions.lang()
+for key in descriptions_lang: assert key not in lang, key
+for _e in descriptions.EFFECT_DESC: assert f"effect.{NS}.{_e}" in lang, ("efecto sin nombre", _e)
+lang.update(descriptions_lang)
 # Unidades de los parámetros, para que el cliente sepa formatearlos: "%" porcentaje, "s" segundos.
 dump(os.path.join(out, "assets", NS, "rites_and_paths_param_units.json"),
      {k: v.split("|")[1] for k, v in sorted(texts.PARAMS.items()) if "|" in v})

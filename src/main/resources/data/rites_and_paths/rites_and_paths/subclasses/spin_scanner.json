@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "class": "rites_and_paths:spin_master",
+  "display": {
+    "icon": "minecraft:spyglass"
+  },
+  "effects": [
+    {
+      "type": "rites_and_paths:mechanic",
+      "id": "rites_and_paths:weak_point",
+      "duration_seconds": 6
+    },
+    {
+      "type": "rites_and_paths:attribute",
+      "modifiers": [
+        {
+          "attribute": "rites_and_paths:crit_damage",
+          "to": 0.2,
+          "operation": "add"
+        }
+      ]
+    }
+  ],
+  "milestones": [
+    {
+      "subclass_level": 5,
+      "grants": "rites_and_paths:shared_weak_point"
+    }
+  ]
+}

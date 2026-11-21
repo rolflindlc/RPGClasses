@@ -162,6 +162,9 @@ public class RpgClasses {
         // Clérigo (adenda del Clérigo). Después de las razas: Milagro actúa tras las supervivencias propias (regla 10).
         // Después de las razas: el Milagro es el último salvavidas a prioridad LOWEST (ver Miracle.onDamage).
         io.github.rpgclasses.cleric.Cleric.register();
+        // Maestro del Giro (adenda del Maestro del Giro, clase experimental): bolas, bandolera, encantamientos y lógica.
+        io.github.rpgclasses.spin.SpinRegistry.register(modBus);
+        io.github.rpgclasses.spin.SpinMaster.register();
     }
 
     private void commonSetup(FMLCommonSetupEvent event) {

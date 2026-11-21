@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "passive": true,
+  "spin_gain": 0.04,
+  "chain_seconds": 3,
+  "chain_step": 0.25,
+  "chain_max": 2.0,
+  "miss_loss": 0.5,
+  "decay_delay_seconds": 5,
+  "decay_per_second": 0.05,
+  "threshold_1": 0.33,
+  "threshold_2": 0.66,
+  "threshold_1_bounces": 1,
+  "threshold_2_material": 1.5,
+  "threshold_2_damage": 0.1
+}

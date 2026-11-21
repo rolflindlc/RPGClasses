@@ -16,7 +16,9 @@ import java.util.Set;
 
 /** Comprueba las reglas estructurales del diseño. Una clase con errores se desactiva; nunca tumba el servidor. */
 public final class DefinitionValidator {
-    private static final Set<String> KIT_SLOTS = Set.of("mainhand", "offhand", "head", "chest", "legs", "feet", "inventory");
+    private static final Set<String> KIT_SLOTS = Set.of("mainhand", "offhand", "head", "chest", "legs", "feet", "inventory",
+            // Bolas que van dentro de la bandolera del kit (Maestro del Giro).
+            "bandolier");
 
     /** @return lista de errores de la clase y de sus subclases (vacía = válida). */
     public static List<String> validateClass(ClassDef c, Map<String, SubclassDef> subclasses) {
@@ -60,6 +62,11 @@ public final class DefinitionValidator {
             if (!Ids.DISCIPLINES.contains(w.getKey())) errors.add("muro sobre disciplina desconocida: " + w.getKey());
             double v = w.getValue();
             if (!(v > 0 && v <= 1)) errors.add("muro de " + w.getKey() + " fuera de (0, 1]: " + v);
+        }
+
+        for (Map.Entry<String, Double> w : c.fixedWalls().entrySet()) {
+            if (!Ids.DISCIPLINES.contains(w.getKey())) errors.add("muro fijo sobre disciplina desconocida: " + w.getKey());
+            if (c.walls().containsKey(w.getKey())) errors.add("disciplina con muro normal y fijo a la vez: " + w.getKey());
         }
 
         for (Definitions.KitItem k : c.startingKit()) {

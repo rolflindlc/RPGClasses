@@ -37,6 +37,9 @@
     "rites_and_paths:armor": 0.4,
     "rites_and_paths:shield": 0.7
   },
+  "fixed_walls": {
+    "rites_and_paths:spheres": 1.0
+  },
   "school_walls": {
     "irons_spellbooks:holy": 1.0,
     "rites_and_paths:music": 1.0

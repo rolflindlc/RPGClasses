@@ -20,6 +20,11 @@ public final class ServerConfig {
     public static final ForgeConfigSpec.BooleanValue ALLY_SCOREBOARD_TEAMS;
     public static final ForgeConfigSpec.IntValue MAX_ALLIES;
 
+    // Maestro del Giro (adenda del Maestro del Giro): bolas que tocan el mundo.
+    public static final ForgeConfigSpec.BooleanValue SPHERE_REDSTONE;
+    public static final ForgeConfigSpec.BooleanValue SPHERE_STALACTITE_BREAK;
+    public static final ForgeConfigSpec.BooleanValue SPHERE_FRICTION_IGNITE;
+
     // Dificultad por zona (adenda de dificultad por zona). Todo es [MEDIR].
     public static final ForgeConfigSpec.BooleanValue DIFFICULTY_ENABLED;
     public static final ForgeConfigSpec.BooleanValue DIFFICULTY_GEAR;
@@ -121,6 +126,23 @@ public final class ServerConfig {
         MAX_ALLIES = b
                 .comment("Número máximo de aliados que puede marcar cada jugador.")
                 .defineInRange("maxAllies", 32, 0, 1000);
+        b.pop();
+        b.comment("Maestro del Giro: lo que sus bolas pueden hacer en el mundo. Siempre respetan las protecciones de terreno.").push("sphere");
+        b.push("redstone");
+        SPHERE_REDSTONE = b
+                .comment("La bola de redstone activa botones, palancas y dianas y hace que el bloque golpeado dé señal un instante.")
+                .define("enabled", true);
+        b.pop();
+        b.push("stalactite");
+        SPHERE_STALACTITE_BREAK = b
+                .comment("La bola de estalactita rompe bloques blandos (tag rites_and_paths:stalactite_breakable) y te trae lo que sueltan.")
+                .define("breakBlocks", true);
+        b.pop();
+        b.push("friction");
+        SPHERE_FRICTION_IGNITE = b
+                .comment("El encantamiento Fricción prende fuego a los bloques inflamables que golpea la bola (también respeta mobGriefing).")
+                .define("igniteBlocks", true);
+        b.pop();
         b.pop();
         b.push("difficulty");
         DIFFICULTY_ENABLED = b

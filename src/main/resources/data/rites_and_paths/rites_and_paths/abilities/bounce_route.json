@@ -1,0 +1,6 @@
+{
+  "schema_version": 1,
+  "preview_seconds": 1.5,
+  "route_bounces_max": 8,
+  "cooldown_seconds": 10
+}

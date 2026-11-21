@@ -8,7 +8,7 @@
 7 Varredura
 8 Curva
 9 Lançamento de Esferas
-10 Com a bandoleira na mão: clique esquerdo, a bola vai guiada para onde você mira até ricochetear (vai mais longe, mas um pouco mais devagar); clique direito, ela faz curva para onde você olha e, se você segurar, o lançamento carrega: com a carga completa vai duas vezes mais longe, fica cravada o dobro do tempo e causa ×1,5 de dano. A bola crava no alvo e gira nele por uns 2 segundos, causando dano sem parar (ignorando a invulnerabilidade dele), ricocheteia nos blocos e volta para a mão. Clicar bem quando ela chega é uma Pegada Perfeita: mais Giro e você a relança na hora. Cada bloco em que ela ricocheteia antes do impacto soma dano.
+10 Com a bandoleira na mão: clique esquerdo, a bola vai guiada para onde você mira (vai mais longe, mas um pouco mais devagar); clique direito, ela faz curva para onde você olha e, se você segurar, o lançamento carrega: com a carga completa vai duas vezes mais longe, fica cravada o dobro do tempo e causa ×1,5 de dano. A bola crava no alvo e gira nele por uns 2 segundos, causando dano sem parar (ignorando a invulnerabilidade dele). Cada ricochete, num bloco ou depois de girar num inimigo, a manda para onde sua câmera olha: é você quem mira o próximo inimigo. Sem ricochetes restantes, ela volta para a mão. Clicar bem quando ela chega é uma Pegada Perfeita: mais Giro e você a relança na hora. Cada bloco em que ela ricocheteia antes do impacto soma dano.
 11 Giro
 12 Barra de 0 a 100 % que sobe a cada impacto, mais se você os encadear. Se uma bola volta sem acertar nenhum inimigo, você perde a metade; fora de combate ela cai aos poucos. Com 33 %: um ricochete a mais e rastros dourados. Com 66 %: efeito do material mais forte e um pouco mais de dano. Com 100 %: você pode usar o Retângulo Dourado (a partir do Nível Total 30).
 13 Rota de Ricochetes
@@ -105,7 +105,7 @@
 104 Bola extra no Nível Total
 105 Limite de ricochetes extras (ramos e encantamentos)
 106 Limite de alcance extra
-107 Distância de ricochete entre inimigos (blocos)
+107 Alcance mínimo de cada ricochete num inimigo (blocos)
 108 Dano ao ricochetear entre inimigos (sem o ramo)
 109 Curva do lançamento curvo (graus por tick)
 110 Ricochete cinético: dano por bloco ricocheteado

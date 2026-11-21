@@ -8,7 +8,7 @@
 7 Abtasten
 8 Kurve
 9 Kugelwurf
-10 Mit dem Bandelier in der Hand: Linksklick, die Kugel wird dorthin gelenkt, wohin du zielst, bis sie abprallt (sie fliegt weiter, aber etwas langsamer); Rechtsklick, sie krümmt sich in Blickrichtung, und gedrückt halten lädt den Wurf auf: voll aufgeladen fliegt sie doppelt so weit, steckt doppelt so lange und verursacht ×1,5 Schaden. Die Kugel bohrt sich ins Ziel und dreht sich etwa 2 Sekunden darauf, wobei sie ununterbrochen Schaden verursacht (ignoriert seine Unverwundbarkeit), prallt von Blöcken ab und kehrt in deine Hand zurück. Genau beim Ankommen klicken ist ein Perfekter Fang: mehr Drehung und du wirfst sie sofort erneut. Jeder Block, von dem sie vor dem Treffer abprallt, erhöht den Schaden.
+10 Mit dem Bandelier in der Hand: Linksklick, die Kugel wird dorthin gelenkt, wohin du zielst (sie fliegt weiter, aber etwas langsamer); Rechtsklick, sie krümmt sich in Blickrichtung, und gedrückt halten lädt den Wurf auf: voll aufgeladen fliegt sie doppelt so weit, steckt doppelt so lange und verursacht ×1,5 Schaden. Die Kugel bohrt sich ins Ziel und dreht sich etwa 2 Sekunden darauf, wobei sie ununterbrochen Schaden verursacht (ignoriert seine Unverwundbarkeit). Jeder Abprall, an einem Block oder nach dem Drehen in einem Gegner, schickt sie dorthin, wohin deine Kamera blickt: Auf den nächsten Gegner zielst du selbst. Ohne verbleibende Abpraller kehrt sie in deine Hand zurück. Genau beim Ankommen klicken ist ein Perfekter Fang: mehr Drehung und du wirfst sie sofort erneut. Jeder Block, von dem sie vor dem Treffer abprallt, erhöht den Schaden.
 11 Drehung
 12 Leiste von 0 bis 100 %, die mit jedem Treffer steigt, mehr bei Treffern in Folge. Kehrt eine Kugel zurück, ohne einen Gegner getroffen zu haben, verlierst du die Hälfte; außerhalb des Kampfes sinkt sie langsam. Ab 33 %: ein Abprall mehr und goldene Spuren. Ab 66 %: stärkerer Materialeffekt und etwas mehr Schaden. Bei 100 %: Du kannst das Goldene Rechteck einsetzen (ab Gesamtstufe 30).
 13 Abprallroute
@@ -105,7 +105,7 @@
 104 Zusätzliche Kugel ab Gesamtstufe
 105 Obergrenze zusätzlicher Abpraller (Zweige und Verzauberungen)
 106 Obergrenze zusätzlicher Reichweite
-107 Sprungweite zwischen Gegnern (Blöcke)
+107 Mindestreichweite jedes Abpralls an einem Gegner (Blöcke)
 108 Schaden beim Springen zwischen Gegnern (ohne den Zweig)
 109 Krümmung des Kurvenwurfs (Grad pro Tick)
 110 Kinetischer Abprall: Schaden pro abgeprallten Block

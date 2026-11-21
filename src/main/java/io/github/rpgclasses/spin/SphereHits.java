@@ -328,23 +328,6 @@ public final class SphereHits {
                 Component.translatable("item.rites_and_paths." + s.material().itemName())).withStyle(ChatFormatting.RED), true);
     }
 
-    /** Siguiente enemigo para un rebote entre enemigos: el más cercano a la vista, sin repetir. */
-    static LivingEntity nextHop(SphereEntity s, ServerPlayer owner, LivingEntity from) {
-        double r = SpinMaster.t("hop_range", 8);
-        Vec3 at = s.position();
-        LivingEntity best = null;
-        double bestD = Double.MAX_VALUE;
-        for (LivingEntity e : enemiesAround(owner, at, r, from)) {
-            if (s.hitIds.contains(e.getId())) continue;
-            double d = e.distanceToSqr(at);
-            if (d < bestD && visible(s.level(), at, e.getBoundingBox().getCenter(), s)) {
-                bestD = d;
-                best = e;
-            }
-        }
-        return best;
-    }
-
     // ------------------------------------------------------------------ bloques
 
     /**
@@ -528,7 +511,7 @@ public final class SphereHits {
     // ------------------------------------------------------------------ utilidades
 
     /**
-     * Objetivo para lo que apunta solo (rebotes entre enemigos, cobre, amatista, minas, Ruta de Rebotes, Rectángulo Dorado): un enemigo que
+     * Objetivo para lo que apunta solo (cobre, amatista, minas, Ruta de Rebotes, Rectángulo Dorado): un enemigo que
      * además sea hostil (monstruo, jefe o mob que te persigue) o un jugador enemigo. El golpe directo vale contra
      * cualquier enemigo (lo apunta el jugador): así lo automático no se lleva aldeanos ni animales.
      */

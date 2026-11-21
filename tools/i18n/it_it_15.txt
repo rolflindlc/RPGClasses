@@ -8,7 +8,7 @@
 7 Scansione
 8 Curva
 9 Lancio di Sfere
-10 Con la bandoliera in mano: clic sinistro, la sfera è guidata verso dove miri finché non rimbalza (arriva più lontano, ma è un po' più lenta); clic destro, curva verso dove guardi e, tenendolo premuto, il lancio si carica: a carica completa arriva al doppio della distanza, resta conficcata il doppio e infligge ×1,5 danni. La sfera si conficca nel bersaglio e ci gira sopra per circa 2 secondi, danneggiandolo senza sosta (ignorandone l'invulnerabilità), rimbalza sui blocchi e torna in mano. Cliccare proprio quando arriva è una Presa Perfetta: più Rotazione e la rilanci all'istante. Ogni blocco su cui rimbalza prima dell'impatto aggiunge danno.
+10 Con la bandoliera in mano: clic sinistro, la sfera è guidata verso dove miri (arriva più lontano, ma è un po' più lenta); clic destro, curva verso dove guardi e, tenendolo premuto, il lancio si carica: a carica completa arriva al doppio della distanza, resta conficcata il doppio e infligge ×1,5 danni. La sfera si conficca nel bersaglio e ci gira sopra per circa 2 secondi, danneggiandolo senza sosta (ignorandone l'invulnerabilità). Ogni rimbalzo, su un blocco o dopo aver girato in un nemico, la manda verso dove guarda la tua visuale: il nemico successivo lo miri tu. Senza rimbalzi rimasti, torna in mano. Cliccare proprio quando arriva è una Presa Perfetta: più Rotazione e la rilanci all'istante. Ogni blocco su cui rimbalza prima dell'impatto aggiunge danno.
 11 Rotazione
 12 Barra da 0 a 100 % che sale a ogni impatto, di più se li concateni. Se una sfera torna senza aver colpito nemici, ne perdi la metà; fuori dal combattimento cala poco a poco. Al 33 %: un rimbalzo in più e scie dorate. Al 66 %: effetto del materiale più forte e un po' più di danno. Al 100 %: puoi usare il Rettangolo Aureo (dal Livello totale 30).
 13 Rotta di Rimbalzi
@@ -105,7 +105,7 @@
 104 Sfera extra al Livello totale
 105 Limite di rimbalzi extra (rami e incantesimi)
 106 Limite di portata extra
-107 Distanza di rimbalzo tra nemici (blocchi)
+107 Gittata minima di ogni rimbalzo su un nemico (blocchi)
 108 Danno rimbalzando tra nemici (senza il ramo)
 109 Curvatura del lancio curvo (gradi per tick)
 110 Rimbalzo cinetico: danno per blocco rimbalzato

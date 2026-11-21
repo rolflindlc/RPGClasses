@@ -20,8 +20,9 @@ First public beta of Rolflin's Rites & Paths (Minecraft Forge 1.20.1).
   right click to store or take out; key G to switch ball): left click throws a ball guided toward your crosshair
   (until it bounces), right click throws a curved ball that can be charged by holding it (up to twice the range,
   twice the time stuck and ×1.5 damage). The ball drills into the target and spins on it for about 2 seconds,
-  damaging it in pulses (skipping invulnerability), bounces off blocks and returns to the hand; a click right as it
-  arrives is a Perfect Catch. Every hit raises the **Spin** bar (33%: extra bounce; 66%: stronger material effect;
+  damaging it in pulses (skipping invulnerability). Every bounce, off a block or after spinning in an enemy, sends it
+  toward where your camera looks, so you aim at the next enemy yourself; with no bounces left it returns to the hand,
+  and a click right as it arrives is a Perfect Catch. Every hit raises the **Spin** bar (33%: extra bounce; 66%: stronger material effect;
   100%: Golden Rectangle, announced on the HUD only once it is unlocked). Branches Rotation, Rebound, Return, Scan and
   Curve; **Bounce Route** (a billiard shot that ricochets from enemy to enemy, hitting harder each time, and drills
   into the last one), Reverse Spin, Spin Step and the **Golden Rectangle** ultimate: an automatic cinematic sequence

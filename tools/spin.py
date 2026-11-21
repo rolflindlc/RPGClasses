@@ -178,7 +178,7 @@ SUB_DESC = {
     "spin_trapper": "Clava sus bolas como minas: agachado, la bola se queda clavada en el suelo o en una pared y explota cuando pasa un enemigo cerca, frenándolo.",
 }
 ABILITY_TEXT = {
-    "sphere_throw": ("Lanzamiento de Esferas", "Con la bandolera en la mano: clic izquierdo, la bola va guiada hacia donde apuntas hasta que rebota (llega más lejos, pero algo más lenta); clic derecho, curva hacia donde miras, y si lo mantienes se carga: con la carga completa llega el doble de lejos, se queda clavada el doble y hace ×1,5 de daño. La bola se clava y gira unos 2 segundos en el objetivo, dañándolo sin parar (se salta su invulnerabilidad), rebota en los bloques y vuelve a la mano. Pulsar justo cuando llega es una Captura Perfecta: más Giro y la relanzas al instante. Cada bloque rebotado antes del impacto le suma daño."),
+    "sphere_throw": ("Lanzamiento de Esferas", "Con la bandolera en la mano: clic izquierdo, la bola va guiada hacia donde apuntas (llega más lejos, pero algo más lenta); clic derecho, curva hacia donde miras, y si lo mantienes se carga: con la carga completa llega el doble de lejos, se queda clavada el doble y hace ×1,5 de daño. La bola se clava y gira unos 2 segundos en el objetivo, dañándolo sin parar (se salta su invulnerabilidad). Cada rebote, en un bloque o al terminar de girar en un enemigo, la manda hacia donde mira tu cámara: el siguiente enemigo lo apuntas tú. Sin rebotes, vuelve a la mano. Pulsar justo cuando llega es una Captura Perfecta: más Giro y la relanzas al instante. Cada bloque rebotado antes del impacto le suma daño."),
     "spin_bar": ("Giro", "Barra de 0 a 100 % que sube con cada impacto, más si los encadenas. Si una bola vuelve sin impactar a ningún enemigo, pierdes la mitad; fuera de combate baja poco a poco. Con el 33 %: un rebote más y estelas doradas. Con el 66 %: el efecto del material es más fuerte y algo más de daño. Con el 100 %: puedes usar el Rectángulo Dorado (desde el Nivel Total 30)."),
     "bounce_route": ("Ruta de Rebotes", "Tiro de billar: tu bola sale disparada hacia el enemigo al que apuntas y salta de enemigo en enemigo, golpeando a cada uno de pasada (cada golpe pega más que el anterior), hasta clavarse en el último. Con un solo enemigo, rebota a su alrededor y vuelve a por él. Cada golpe sube tu Giro."),
     "reverse_spin": ("Giro Reverso", "Tira de tu bola clavada (o del último enemigo que golpeaste hace muy poco) y lo arrastra hacia ti. Los jefes no se mueven. Detona tus minas."),
@@ -214,7 +214,7 @@ PARAMS = {
     "base_bounces": "Rebotes base", "bounce_speed_keep": "Velocidad que conserva al rebotar|%",
     "throw_interval_seconds": "Tiempo mínimo entre lanzamientos|s", "base_spheres": "Bolas simultáneas base",
     "extra_sphere_level": "Bola extra en el Nivel Total", "bounce_bonus_cap": "Tope de rebotes extra (ramas y encantamientos)",
-    "range_bonus_cap": "Tope de alcance extra|%", "hop_range": "Distancia de rebote entre enemigos (bloques)",
+    "range_bonus_cap": "Tope de alcance extra|%", "hop_range": "Alcance mínimo de cada rebote en un enemigo (bloques)",
     "base_hop_keep": "Daño al rebotar en enemigos (sin la rama)|%", "curve_degrees": "Curva del lanzamiento curvo (grados por tic)",
     "kinetic_per_bounce": "Rebote cinético: daño por bloque rebotado|%", "kinetic_max": "Rebote cinético: máximo|%",
     "catch_window_seconds": "Ventana de Captura Perfecta|s", "catch_spin": "Giro de la Captura Perfecta|%",

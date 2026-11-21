@@ -39,12 +39,13 @@ import java.util.Set;
 /**
  * Una bola en vuelo (adenda del Maestro del Giro, secciones 3, 4, 7 y 8). Estados:
  * <ul>
- *   <li><b>Vuela:</b> guiada hacia donde apunta el lanzador (clic izquierdo, hasta el primer rebote), curvándose hacia
- *       donde mira (clic derecho, que se puede cargar) o recorriendo la Ruta de Rebotes (de enemigo en enemigo). Rebota
- *       en los bloques mientras le queden rebotes; al llegar a su alcance vuelve.</li>
+ *   <li><b>Vuela:</b> guiada hacia donde apunta el lanzador (clic izquierdo), curvándose hacia donde mira (clic derecho,
+ *       que se puede cargar) o recorriendo la Ruta de Rebotes (de enemigo en enemigo). Mientras le queden rebotes, cada
+ *       rebote en un bloque la manda hacia donde mira la cámara del lanzador (si eso la mete en la pared, rebota
+ *       normal); al llegar a su alcance vuelve.</li>
  *   <li><b>Gira:</b> clavada en un enemigo unos 2 s (el doble con la carga completa): daño en pulsos que se saltan la
- *       invulnerabilidad, con una micro-pausa al principio. Con Garra sigue clavada un rato más. Después salta a otro
- *       enemigo (rebote en enemigos) o vuelve.</li>
+ *       invulnerabilidad, con una micro-pausa al principio. Con Garra sigue clavada un rato más. Después, si le quedan
+ *       rebotes, sale hacia donde mira la cámara del lanzador (él apunta al siguiente enemigo); si no, vuelve.</li>
  *   <li><b>Vuelve:</b> atraviesa los bloques hacia la mano del lanzador (la de perla de Ender lo lleva a él al impacto).</li>
  *   <li><b>Mina:</b> clavada en un bloque (Trampero de Giro), explota cuando pasa un enemigo cerca.</li>
  * </ul>
@@ -240,7 +241,7 @@ public class SphereEntity extends Projectile {
         Vec3 start = position();
         if (aimed && aimRad > 0) {
             // Clic izquierdo: se guía hacia el punto al que apunta la cámara.
-            vel = steer(vel, aimPoint(owner).subtract(start), aimRad);
+            vel = steer(vel, aimPoint(owner, false).subtract(start), aimRad);
         } else if (curved && curveRad > 0) {
             vel = steer(vel, owner.getLookAngle(), curveRad);
         }
@@ -272,12 +273,32 @@ public class SphereEntity extends Projectile {
         if (traveled >= range) startReturn(owner);
     }
 
-    /** Punto al que apunta el lanzador: el primer bloque en su línea de vista (o 64 bloques por delante). */
-    private Vec3 aimPoint(ServerPlayer owner) {
+    /**
+     * Punto al que apunta el lanzador: el primer bloque en su línea de vista (o 64 bloques por delante). Con
+     * {@code enemies}, si antes hay un enemigo bajo la mira que esta bola aún no ha golpeado, su centro (para los rebotes;
+     * la guía de cada tic solo mira bloques, que es más barato).
+     */
+    private Vec3 aimPoint(ServerPlayer owner, boolean enemies) {
         Vec3 eye = owner.getEyePosition();
         Vec3 far = eye.add(owner.getLookAngle().scale(64));
         BlockHitResult hit = level().clip(new ClipContext(eye, far, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, owner));
-        return hit.getType() == HitResult.Type.MISS ? far : hit.getLocation();
+        Vec3 end = hit.getType() == HitResult.Type.MISS ? far : hit.getLocation();
+        if (!enemies) return end;
+        LivingEntity best = null;
+        double bestD = eye.distanceToSqr(end);
+        for (Entity e : level().getEntities(owner, new AABB(eye, end).inflate(1.0), x -> x instanceof LivingEntity && x.isAlive()
+                && !(x instanceof ArmorStand) && !hitIds.contains(x.getId()))) {
+            LivingEntity le = (LivingEntity) e;
+            if (!Allies.isEnemy(owner, le)) continue;
+            Optional<Vec3> c = le.getBoundingBox().inflate(0.3).clip(eye, end);
+            if (c.isEmpty()) continue;
+            double d = eye.distanceToSqr(c.get());
+            if (d < bestD) {
+                bestD = d;
+                best = le;
+            }
+        }
+        return best != null ? best.getBoundingBox().getCenter() : end;
     }
 
     // ------------------------------------------------------------------ Ruta de Rebotes
@@ -377,14 +398,21 @@ public class SphereEntity extends Projectile {
         if (bounces > 0 && !dry) {
             bounces--;
             blockBounces++;
-            aimed = false; // la guía del clic izquierdo acaba en el primer rebote
-            Vec3 reflected = vel.subtract(n.scale(2 * vel.dot(n)));
             double keep = material() == SphereMaterial.SLIME ? SpinMaster.t("slime_speed_keep", 0.98) : SpinMaster.t("bounce_speed_keep", 0.85);
-            reflected = reflected.scale(keep);
-            if (reflected.length() < 0.6) reflected = reflected.normalize().scale(0.6);
+            double spd = Math.max(0.6, vel.length() * keep);
+            // Sale hacia donde mira la cámara del lanzador; si eso la mete en la pared (mira a la propia pared), rebota normal.
+            Vec3 aim = aimPoint(owner, true).subtract(at);
+            Vec3 out;
+            if (aim.lengthSqr() > 0.25 && aim.normalize().dot(n) > 0.15) {
+                out = aim.normalize().scale(spd);
+            } else {
+                Vec3 reflected = vel.subtract(n.scale(2 * vel.dot(n)));
+                out = reflected.lengthSqr() < 1.0E-6 ? n.scale(spd) : reflected.normalize().scale(spd);
+            }
+            curved = false;
             Vec3 p = at.add(n.scale(0.06));
             setPos(p.x, p.y, p.z);
-            setDeltaMovement(reflected);
+            setDeltaMovement(out);
             bounceFx(at);
             return;
         }
@@ -483,15 +511,17 @@ public class SphereEntity extends Projectile {
             return;
         }
         if (canHop()) {
-            LivingEntity next = SphereHits.nextHop(this, owner, t);
-            if (next != null) {
+            // Rebote en el enemigo: sale hacia donde mira la cámara del lanzador (él apunta al siguiente).
+            Vec3 dir = aimPoint(owner, true).subtract(position());
+            if (dir.lengthSqr() > 1.0) {
                 useHop();
                 hops++;
-                Vec3 dir = next.getBoundingBox().getCenter().subtract(position());
                 setDeltaMovement(dir.normalize().scale(Math.max(speed, 1.2)));
                 curved = false;
-                aimed = false;
+                // Cada rebote en un enemigo tiene al menos su propio tramo de alcance.
+                traveled = Math.min(traveled, Math.max(0, range - SpinMaster.t("hop_range", 8)));
                 setState(FLYING);
+                bounceFx(position());
                 return;
             }
         }

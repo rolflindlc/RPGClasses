@@ -6,6 +6,7 @@ import allies
 import bonds
 import bard
 import cleric
+import spin
 import difficulty
 out = sys.argv[1]
 NS = "rites_and_paths"
@@ -170,6 +171,11 @@ classes["cleric"] = dict(cleric.CLASS)
 TRAITS["cleric"] = cleric.TRAITS
 EXTRA_BRANCHES["cleric"] = cleric.EXTRA_BRANCHES
 for _b, _ps in cleric.PERKS.items(): PERKS[("cleric", _b)] = _ps
+# Maestro del Giro (adenda del Maestro del Giro, clase experimental): desde tools/spin.py.
+classes[spin.CLASS_ID] = dict(spin.CLASS, experimental=True)
+TRAITS[spin.CLASS_ID] = spin.TRAITS
+EXTRA_BRANCHES[spin.CLASS_ID] = spin.EXTRA_BRANCHES
+for _b, _ps in spin.PERKS.items(): PERKS[(spin.CLASS_ID, _b)] = _ps
 for cid, extra in EXTRA_BRANCHES.items(): classes[cid]["branches"] = classes[cid]["branches"] + extra
 for cid, c in classes.items():
     for b, _ in c["branches"]: assert (cid, b) in PERKS, (cid, b)
@@ -240,6 +246,7 @@ subs = {
 
 for _sid, (_icon, _effects, _miles) in bard.SUBS.items(): subs[_sid] = ("bard", _icon, _effects, _miles)
 for _sid, (_icon, _effects, _miles) in cleric.SUBS.items(): subs[_sid] = ("cleric", _icon, _effects, _miles)
+for _sid, (_icon, _effects, _miles) in spin.SUBS.items(): subs[_sid] = (spin.CLASS_ID, _icon, _effects, _miles)
 
 def armor(material): return [{"item": f"minecraft:{material}_{piece}", "slot": slot} for piece, slot in
                          (("helmet","head"),("chestplate","chest"),("leggings","legs"),("boots","feet"))]
@@ -251,6 +258,7 @@ KITS = {
  "ranger": [{"item": "minecraft:bow", "slot": "mainhand"}, {"item": "minecraft:arrow", "count": 64, "slot": "inventory"}] + armor("leather"),
  "bard": bard.KIT,
  "cleric": cleric.KIT,
+ spin.CLASS_ID: spin.KIT,
 }
 
 # Icono de cada rama en el árbol de habilidades (objetos vanilla, que siempre existen).
@@ -270,6 +278,7 @@ BRANCH_ICONS = {
  ("bard","compas"): "minecraft:note_block", ("bard","resonance"): "minecraft:bell", ("bard","perfect_pitch"): "minecraft:goat_horn",
  ("bard","reverberation"): "minecraft:echo_shard", ("bard","dance"): "minecraft:music_disc_cat",
  **{("cleric", _b): _i for _b, _i in cleric.BRANCH_ICONS.items()},
+ **{(spin.CLASS_ID, _b): _i for _b, _i in spin.BRANCH_ICONS.items()},
 }
 for cid, c in classes.items():
     for b, _ in c["branches"]: assert (cid, b) in BRANCH_ICONS, ("falta icono de rama", cid, b)
@@ -291,6 +300,9 @@ for cid, c in classes.items():
     if KITS.get(cid): o["starting_kit"] = KITS[cid]
     o["crit_chance_bonus"] = c["crit"]
     o["walls"] = {R(k): v for k, v in c["walls"].items()}
+    # Adenda del Maestro del Giro: Esferas es su disciplina; el resto de clases tiene un muro fijo del 100 % (propuesta).
+    if cid != spin.CLASS_ID: o["fixed_walls"] = {R("spheres"): 1.0}
+    if c.get("experimental"): o["experimental"] = True
     # Regla 14: la escuela sagrada de Iron's solo es del Paladín; su muro de Magia no la toca.
     # Adenda del Bardo: la escuela musical es exclusiva del Bardo (−100 % fijo para el resto) y su muro de Magia
     # (−35 %) no la toca: su poder sale solo de Compás, el combo y el instrumento.
@@ -317,7 +329,8 @@ for sid, (parent, icon, effects, miles) in subs.items():
          {"schema_version": 1, "class": R(parent), "display": {"icon": icon}, "effects": effects, "milestones": miles})
 
 names = {
- "class": {"mage":"Mago","paladin":"Paladín","barbarian":"Bárbaro","rogue":"Pícaro","ranger":"Ranger","monk":"Monje","bard":bard.CLASS_NAME,"cleric":cleric.CLASS_NAME},
+ "class": {"mage":"Mago","paladin":"Paladín","barbarian":"Bárbaro","rogue":"Pícaro","ranger":"Ranger","monk":"Monje","bard":bard.CLASS_NAME,"cleric":cleric.CLASS_NAME,
+           spin.CLASS_ID: spin.CLASS_NAME},
  "subclass": {"chronomancer":"Cronomante","elementalist":"Elementalista","battle_mage":"Mago de Batalla",
    "blessed_guardian":"Guardián Bendito","unyielding_bastion":"Bastión Inflexible","charging_juggernaut":"Juggernaut de Carga",
    "indestructible":"Indestructible","suicidal_berserker":"Berserker Suicida","plague_corruptor":"Corruptor de Plagas",
@@ -331,7 +344,7 @@ branch_names = {"mage":{"power":"Poder","reserve":"Reserva","cadence":"Cadencia"
  "rogue":{"shadow":"Sombra","edge":"Filo","wind":"Viento"},
  "ranger":{"aim":"Puntería","cadence":"Cadencia","range":"Alcance"},
  "monk":{"fist":"Puño","wind":"Viento","skin":"Piel"},
- "bard":dict(bard.BRANCH_NAMES), "cleric":dict(cleric.BRANCH_NAMES)}
+ "bard":dict(bard.BRANCH_NAMES), "cleric":dict(cleric.BRANCH_NAMES), spin.CLASS_ID:dict(spin.BRANCH_NAMES)}
 for (cid, bid), name in texts.EXTRA_BRANCH_NAMES.items(): branch_names[cid][bid] = name
 for _sid, _name in bard.SUB_NAMES.items(): names["subclass"][_sid] = _name
 # Textos del Bardo en las tablas comunes (habilidades, ramas, perks, mecánicas y parámetros).
@@ -365,6 +378,23 @@ for _m, _n in cleric.MECHANIC_NAMES.items():
     assert _m not in texts.MECHANIC_NAMES, _m
     texts.MECHANIC_NAMES[_m] = _n
 for _k, _v in cleric.PARAMS.items():
+    assert _k not in texts.PARAMS, _k
+    texts.PARAMS[_k] = _v
+# Textos del Maestro del Giro en las mismas tablas. Los parámetros que ya existen reutilizan su nombre.
+for _sid, _name in spin.SUB_NAMES.items(): names["subclass"][_sid] = _name
+for _aid, _p in spin.ABILITIES.items():
+    assert _aid not in texts.ABILITIES, _aid
+    texts.ABILITIES[_aid] = _p
+texts.ABILITY_TEXT.update(spin.ABILITY_TEXT)
+texts.CLASS_DESC[spin.CLASS_ID] = spin.CLASS_DESC
+texts.TRAIT_DESC[spin.CLASS_ID] = spin.TRAIT_DESC
+for _b, _d in spin.BRANCH_DESC.items(): texts.BRANCH_DESC[(spin.CLASS_ID, _b)] = _d
+for (_b, _p), _t in spin.PERK_TEXT.items(): texts.PERK_TEXT[(spin.CLASS_ID, _b, _p)] = _t
+texts.SUBCLASS_DESC.update(spin.SUB_DESC)
+for _m, _n in spin.MECHANIC_NAMES.items():
+    assert _m not in texts.MECHANIC_NAMES, _m
+    texts.MECHANIC_NAMES[_m] = _n
+for _k, _v in spin.PARAMS.items():
     assert _k not in texts.PARAMS, _k
     texts.PARAMS[_k] = _v
 lang = {}
@@ -440,6 +470,10 @@ lang.update(bard_lang)
 cleric_lang = cleric.build(dump, out)
 for key in cleric_lang: assert key not in lang, key
 lang.update(cleric_lang)
+# Maestro del Giro: bolas, bandolera, recetas, modelos, tipos de daño, tags, encantamientos y textos de interfaz.
+spin_lang = spin.build(dump, out)
+for key in spin_lang: assert key not in lang, key
+lang.update(spin_lang)
 # Dificultad por zona: tag de mobs que nunca la reciben.
 difficulty_lang = difficulty.build(dump, out)
 for key in difficulty_lang: assert key not in lang, key

@@ -1,6 +1,8 @@
 {
   "replace": false,
   "values": [
-    "rites_and_paths:martyrdom"
+    "rites_and_paths:martyrdom",
+    "rites_and_paths:sphere",
+    "rites_and_paths:sphere_effect"
   ]
 }

@@ -1,0 +1,6 @@
+{
+  "schema_version": 1,
+  "pull_blocks": 4,
+  "stuck_window_seconds": 1.5,
+  "cooldown_seconds": 14
+}

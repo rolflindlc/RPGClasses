@@ -17,7 +17,7 @@ import net.minecraftforge.network.simple.SimpleChannel;
 
 public final class Net {
     /** Cliente y servidor con versiones de protocolo distintas no se conectan. Subir al cambiar cualquier paquete. */
-    private static final String PROTOCOL = "20";
+    private static final String PROTOCOL = "21";
 
     public static final SimpleChannel CHANNEL = NetworkRegistry.newSimpleChannel(
             RpgClasses.id("main"), () -> PROTOCOL, PROTOCOL::equals, PROTOCOL::equals);
@@ -116,6 +116,19 @@ public final class Net {
         CHANNEL.messageBuilder(Packets.AbilityRelease.class, id++, NetworkDirection.PLAY_TO_SERVER)
                 .encoder(Packets.AbilityRelease::encode).decoder(Packets.AbilityRelease::decode)
                 .consumerMainThread(Packets.AbilityRelease::handle).add();
+        // Maestro del Giro (protocolo 21).
+        CHANNEL.messageBuilder(Packets.SphereThrow.class, id++, NetworkDirection.PLAY_TO_SERVER)
+                .encoder(Packets.SphereThrow::encode).decoder(Packets.SphereThrow::decode)
+                .consumerMainThread(Packets.SphereThrow::handle).add();
+        CHANNEL.messageBuilder(Packets.SphereCycle.class, id++, NetworkDirection.PLAY_TO_SERVER)
+                .encoder(Packets.SphereCycle::encode).decoder(Packets.SphereCycle::decode)
+                .consumerMainThread(Packets.SphereCycle::handle).add();
+        CHANNEL.messageBuilder(Packets.SpinSync.class, id++, NetworkDirection.PLAY_TO_CLIENT)
+                .encoder(Packets.SpinSync::encode).decoder(Packets.SpinSync::decode)
+                .consumerMainThread(Packets.SpinSync::handle).add();
+        CHANNEL.messageBuilder(Packets.SpinFx.class, id++, NetworkDirection.PLAY_TO_CLIENT)
+                .encoder(Packets.SpinFx::encode).decoder(Packets.SpinFx::decode)
+                .consumerMainThread(Packets.SpinFx::handle).add();
     }
 
     public static void toPlayer(ServerPlayer player, Object message) {

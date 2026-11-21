@@ -1,0 +1,15 @@
+{
+  "replace": false,
+  "values": [
+    "rites_and_paths:iron_sphere",
+    "rites_and_paths:diamond_sphere",
+    "rites_and_paths:netherite_sphere",
+    "rites_and_paths:slime_sphere",
+    "rites_and_paths:copper_sphere",
+    "rites_and_paths:amethyst_sphere",
+    "rites_and_paths:ender_pearl_sphere",
+    "rites_and_paths:gold_sphere",
+    "rites_and_paths:redstone_sphere",
+    "rites_and_paths:dripstone_sphere"
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    " M ",
+    "MMM",
+    " M "
+  ],
+  "key": {
+    "M": {
+      "tag": "forge:gems/diamond"
+    }
+  },
+  "result": {
+    "item": "rites_and_paths:diamond_sphere",
+    "count": 1
+  }
+}

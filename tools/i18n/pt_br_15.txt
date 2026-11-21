@@ -1,0 +1,245 @@
+0 Mestre do Giro
+1 Cavaleiro
+2 Escâner
+3 Armadilheiro do Giro
+4 Rotação
+5 Ricochete
+6 Retorno
+7 Varredura
+8 Curva
+9 Lançamento de Esferas
+10 Com a bandoleira na mão: clique esquerdo, lançamento direto; clique direito, curvo (segue sua câmera). A bola crava no alvo e gira nele por 3 ticks (ignorando a invulnerabilidade dele), ricocheteia nos blocos e volta para a mão. Clicar bem quando ela chega é uma Pegada Perfeita: mais Giro e você a relança na hora. Cada bloco em que ela ricocheteia antes do impacto soma dano.
+11 Giro
+12 Barra de 0 a 100 % que sobe a cada impacto, mais se você os encadear. Se uma bola volta sem acertar nenhum inimigo, você perde a metade; fora de combate ela cai aos poucos. Com 33 %: um ricochete a mais e rastros dourados. Com 66 %: efeito do material mais forte e um pouco mais de dano. Com 100 %: Retângulo Dourado pronto.
+13 Rota de Ricochetes
+14 Mostra por um instante a rota de ricochetes da sua bola para onde você olha e a fixa: seu próximo lançamento a segue exatamente.
+15 Giro Reverso
+16 Puxa sua bola cravada (ou o último inimigo que você acertou há pouco) e o arrasta até você. Chefes não se movem. Detona suas minas.
+17 Passo de Giro
+18 Impulso em espiral de uns 6 blocos para onde você se move (ou para onde olha, se estiver parado). Seu próximo impacto logo depois dá mais Giro.
+19 Retângulo Dourado
+20 Com o Giro em 100 %: Giro Dourado por alguns segundos (bolas mais rápidas, sem espera na volta e com mais ricochetes); cada impacto acumula uma carga de espiral. Ao terminar (ou ao apertar de novo), uma espiral de bolas orbita ao seu redor e se lança contra os inimigos próximos, com mais dano quanto mais cargas você tiver.
+21 Ponto Fraco Compartilhado
+22 Seus aliados também veem as marcas de Ponto Fraco, e cada impacto as renova.
+23 Lança bolas de materiais diferentes que giram, ricocheteiam e voltam para a mão: clique esquerdo, direto; clique direito, curvo; a bandoleira guarda as bolas e uma tecla troca a que você usa. Escaramuçador híbrido: acerta de perto e de longe e recompensa ritmo, combos e precisão. Cada impacto encadeado aumenta seu Giro, que fortalece as bolas e carrega o Retângulo Dourado.
+24 Suas bolas causam mais dano e seu Giro sobe mais rápido.
+25 Mais ricochetes, e as bolas que ricocheteiam de um inimigo a outro conservam mais dano.
+26 Suas bolas ficam prontas mais cedo ao voltar e, com o ramo completo, você pode ter uma a mais em voo.
+27 Mais chance e dano crítico; seus críticos com bola ignoram parte da armadura.
+28 O lançamento curvo faz mais curva e suas bolas vão mais longe.
+29 Giro Pesado
+30 Mais dano em cada tick do giro, mas o Giro sobe um pouco mais devagar.
+31 Giro Veloz
+32 O Giro sobe muito mais rápido, mas suas bolas causam um pouco menos de dano.
+33 Bilhar
+34 Um ricochete a mais, mas cada ricochete encadeado causa menos dano que o anterior.
+35 Ricochete Seco
+36 Suas bolas não ricocheteiam mais nos blocos, mas saltam para mais dois inimigos.
+37 Mão Dupla
+38 Uma bola a mais em voo ao mesmo tempo, mas elas demoram mais para ficar prontas ao voltar.
+39 Retorno Veloz
+40 Se acertarem, suas bolas voltam para a mão na hora, mas você tem uma bola a menos em voo (no mínimo uma).
+41 Olho Frio
+42 O primeiro impacto em cada alvo é crítico garantido (de tempos em tempos por alvo), mas sua chance de crítico geral cai.
+43 Olho Constante
+44 Cada impacto seguido no mesmo alvo causa mais dano; o bônus se perde ao trocar de alvo.
+45 Curva Fechada
+46 O lançamento curvo faz o dobro de curva, mas suas bolas vão menos longe.
+47 Bola Guiada
+48 Enquanto uma bola voa, um clique direito a redireciona uma vez para onde você olha (em vez de lançar outra). Suas bolas ficam um pouco mais lentas.
+49 Traço de classe: um pouco menos de vida máxima.
+50 Gira a toda velocidade: se suas bolas acertam enquanto você corre (ou cavalga) perto da sua velocidade máxima, atordoam o alvo e causam um pouco mais de dano.
+51 Lê os pontos fracos: a primeira bola que acerta um alvo o marca, e as seguintes são críticos garantidos. A partir do nível 5, seus aliados veem a marca e cada impacto a renova.
+52 Crava suas bolas como minas: agachado, a bola fica cravada no chão ou numa parede e explode quando um inimigo passa perto, deixando-o lento.
+53 Rotação
+54 Ricochete
+55 Retorno
+56 Varredura
+57 Curva
+58 Giro Pesado
+59 Giro Veloz
+60 Bilhar
+61 Ricochete Seco
+62 Mão Dupla
+63 Retorno Veloz
+64 Olho Frio
+65 Olho Constante
+66 Curva Fechada
+67 Bola Guiada
+68 Carga de Giro
+69 Ponto Fraco
+70 Minas Cravadas
+71 Ritmo de ganho de Giro
+72 Ricochetes extras
+73 Dano conservado ao ricochetear entre inimigos
+74 Redução da recarga de retorno
+75 Bolas extras em voo
+76 Armadura ignorada pelos seus críticos
+77 Curvatura extra
+78 Alcance extra
+79 Dano a menos por ricochete encadeado
+80 Inimigos extras para os quais salta
+81 Variação da recarga de retorno
+82 Bônus máximo
+83 Curvatura x
+84 Variação de alcance
+85 Variação de velocidade da bola
+86 Velocidade mínima (da máxima)
+87 Dano extra a toda velocidade
+88 Duração da mina
+89 Raio de ativação (blocos)
+90 Dano da mina x
+91 Nível de Lentidão
+92 Minas ao mesmo tempo
+93 Distância para recolhê-la (blocos)
+94 Dano de referência (espada de ferro)
+95 Dano da bola de ferro (da espada)
+96 Ticks de giro ao impactar
+97 Velocidade (blocos por tick)
+98 Alcance (blocos)
+99 Velocidade de volta (blocos por tick)
+100 Recarga de retorno
+101 Ricochetes base
+102 Velocidade conservada ao ricochetear
+103 Tempo mínimo entre lançamentos
+104 Bolas em voo base
+105 Bola extra no Nível Total
+106 Limite de ricochetes extras (ramos e encantamentos)
+107 Limite de alcance extra
+108 Distância de ricochete entre inimigos (blocos)
+109 Dano ao ricochetear entre inimigos (sem o ramo)
+110 Curva do lançamento curvo (graus por tick)
+111 Ricochete cinético: dano por bloco ricocheteado
+112 Ricochete cinético: máximo
+113 Janela da Pegada Perfeita
+114 Giro da Pegada Perfeita
+115 Tempo mínimo entre Pegadas Perfeitas
+116 Dano da bola de ferro x
+117 Dano da bola de diamante x
+118 Dano da bola de netherite x
+119 Dano da bola de slime x
+120 Dano da bola de cobre x
+121 Dano da bola de ametista x
+122 Dano da bola de pérola do Ender x
+123 Dano da bola de ouro x
+124 Dano da bola de redstone x
+125 Dano da bola de estalactite x
+126 Ferro: repulsão
+127 Diamante: armadura ignorada
+128 Netherite: queimadura
+129 Netherite: repulsão
+130 Slime: ricochetes extras
+131 Slime: velocidade conservada ao ricochetear
+132 Cobre: inimigos para os quais salta
+133 Cobre: dano do salto
+134 Cobre: distância do salto (blocos)
+135 Cobre: chance de raio durante tempestades
+136 Ametista: comprimento da onda (blocos)
+137 Ametista: dano da onda
+138 Ametista: cegueira
+139 Pérola do Ender: recarga de retorno
+140 Ouro: velocidade extra
+141 Ouro: recarga de retorno
+142 Redstone: ticks de sinal
+143 Redstone: ticks de sinal com Giro II
+144 Estalactite: blocos por lançamento
+145 Estalactite: dureza máxima
+146 Giro por impacto
+147 Corrente: tempo entre impactos
+148 Corrente: multiplicador por elo
+149 Corrente: multiplicador máximo x
+150 Giro perdido ao errar
+151 Giro I a partir de
+152 Giro II a partir de
+153 Giro I: ricochetes extras
+154 Giro II: efeito do material x
+155 Giro II: dano extra
+156 Mostra a rota durante
+157 Ricochetes máximos da rota
+158 Puxão (blocos)
+159 Tempo que a bola continua cravada
+160 Impulso para cima
+161 Giro extra do próximo impacto
+162 Tempo para aproveitá-lo
+163 Giro Dourado
+164 Velocidade extra das bolas
+165 Ricochetes extras
+166 Cargas de espiral máximas
+167 Tempo orbitando
+168 Alvos da espiral
+169 Alcance da espiral (blocos)
+170 Dano por carga (de uma bola de ferro)
+171 Distância em que seus aliados a veem (blocos)
+172 Bola
+173 Sinal de bola
+174 Giro Dourado
+175 Bandoleira de Esferas
+176 Esferas
+177 %1$s caiu diante de uma bola giratória
+178 %1$s caiu diante da bola de %2$s
+179 %1$s foi pego pelo giro de uma bola
+180 %1$s foi pego pelo giro da bola de %2$s
+181 Habilidade 4
+182 Trocar de bola (Mestre do Giro)
+183 Experimentais
+184 Classe experimental
+185 Seu balanceamento não é garantido e pode mudar em qualquer versão.
+186 Atenção: esta é uma classe experimental. Seu balanceamento não é garantido e pode mudar em qualquer versão.
+187 %s: -%s fixo (desde que você escolhe a classe)
+188 Dano: x%s
+189 Só o Mestre do Giro sabe lançá-la, a partir da bandoleira.
+190 Bola escolhida: %s
+191 %s/%s bolas
+192 Vazia
+193 Clique direito com uma bola no cursor para guardá-la; clique direito num espaço vazio para tirar uma.
+194 Na mão: clique esquerdo, direto; clique direito, curvo; %s: trocar de bola.
+195 Giro
+196 Retângulo Dourado pronto! (%s)
+197 Giro Dourado: %s cargas
+198 %s: %s/%s
+199 Só o Mestre do Giro sabe lançar estas bolas.
+200 Sua bandoleira está vazia.
+201 %s: nenhuma pronta agora.
+202 Você já tem %s bolas em voo.
+203 Bola: %s
+204 Quebrou: %s.
+205 Você precisa do Giro em 100 %%.
+206 Você não tem nenhuma bola cravada nem acertou ninguém há pouco.
+207 Você já tem %s minas cravadas.
+208 Você recolhe a mina.
+209 Rota fixada: seu próximo lançamento vai segui-la.
+210 Pegada Perfeita!
+211 Retângulo Dourado!
+212 Espiral Final! (%s cargas)
+213 Bola de ferro
+214 Repulsão leve.
+215 Bola de diamante
+216 Ignora parte da armadura do alvo.
+217 Bola de netherite
+218 Queima e empurra forte. Resiste ao fogo e à lava.
+219 Bola de slime
+220 Ricocheteia muito mais e quase não perde velocidade.
+221 Bola de cobre
+222 Salta para inimigos próximos. Durante tempestades, atrai raios.
+223 Bola de ametista
+224 Solta uma onda sônica em linha que atravessa blocos e cega.
+225 Bola de pérola do Ender
+226 Ao voltar, leva você ao ponto de impacto.
+227 Bola de ouro
+228 Muito rápida e fica pronta antes.
+229 Bola de redstone
+230 Ativa a redstone que atinge.
+231 Bola de estalactite
+232 Quebra blocos macios e os traz para você.
+233 Fricção
+234 Suas bolas incendeiam os inimigos e os blocos inflamáveis que atingem.
+235 Densidade
+236 Mais dano, menos alcance.
+237 Leveza
+238 Mais alcance, menos dano.
+239 Ímã
+240 Suas bolas ficam prontas antes ao voltar, mas causam um pouco menos de dano.
+241 Garra
+242 A bola fica cravada por mais tempo e o Giro Reverso puxa mais, mas ela voa um pouco mais devagar.
+243 Elasticidade
+244 Mais ricochetes, mas cada ricochete causa um pouco menos de dano.

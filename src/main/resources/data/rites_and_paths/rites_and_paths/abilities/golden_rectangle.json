@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "golden_seconds": 8,
+  "golden_speed": 0.5,
+  "golden_bounces": 2,
+  "max_spiral": 20,
+  "orbit_seconds": 1.5,
+  "spiral_targets": 8,
+  "spiral_radius": 16,
+  "spiral_damage": 0.25,
+  "cooldown_seconds": 120
+}

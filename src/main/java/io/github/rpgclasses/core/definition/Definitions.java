@@ -49,6 +49,11 @@ public final class Definitions {
             List<KitItem> startingKit,
             double critChanceBonus,
             Map<String, Double> walls,
+            /**
+             * Muros fijos por disciplina (id → 0..1): no escalan con los puntos ni se mitigan. Esferas al 100 % en todas
+             * las clases salvo el Maestro del Giro (adenda del Maestro del Giro, como la regla 14 de la escuela sagrada).
+             */
+            Map<String, Double> fixedWalls,
             /** Muros fijos por escuela de Iron's (id de escuela → 0..1); 1 = la escuela no se puede usar (regla 14). */
             Map<String, Double> schoolWalls,
             /** Escuelas de Iron's a las que no afecta el muro de Magia (Paladín: sagrada). */
@@ -60,7 +65,9 @@ public final class Definitions {
             boolean armorDisablesPassives,
             List<BranchDef> branches,
             List<MilestoneDef> milestones,
-            List<String> subclasses) {
+            List<String> subclasses,
+            /** Clase experimental: va en un apartado escondido de la selección, con aviso de balance no garantizado. */
+            boolean experimental) {
 
         public BranchDef branch(String branchId) {
             for (BranchDef b : branches) if (b.id().equals(branchId)) return b;

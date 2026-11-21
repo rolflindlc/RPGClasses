@@ -56,6 +56,7 @@ public final class DefinitionParser {
                 kit(o),
                 o.has("crit_chance_bonus") ? o.get("crit_chance_bonus").getAsDouble() : 0.0,
                 Map.copyOf(walls),
+                fixedWalls(o),
                 schoolWalls(o),
                 o.has("magic_wall_exempt_schools") ? strings(o, "magic_wall_exempt_schools") : List.of(),
                 o.has("magic_wall_exempt_spells") ? strings(o, "magic_wall_exempt_spells") : List.of(),
@@ -63,7 +64,17 @@ public final class DefinitionParser {
                 "disables_unarmored_passives".equals(optString(o, "armor_rule", "")),
                 List.copyOf(branches),
                 milestones(o),
-                List.copyOf(subclasses));
+                List.copyOf(subclasses),
+                o.has("experimental") && o.get("experimental").getAsBoolean());
+    }
+
+    private static Map<String, Double> fixedWalls(JsonObject o) {
+        if (!o.has("fixed_walls")) return Map.of();
+        Map<String, Double> out = new LinkedHashMap<>();
+        for (Map.Entry<String, JsonElement> e : o.getAsJsonObject("fixed_walls").entrySet()) {
+            out.put(e.getKey(), Math.max(0.0, Math.min(1.0, e.getValue().getAsDouble())));
+        }
+        return Map.copyOf(out);
     }
 
     private static Map<String, Double> schoolWalls(JsonObject o) {

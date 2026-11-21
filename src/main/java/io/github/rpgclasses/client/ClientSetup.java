@@ -35,6 +35,8 @@ public final class ClientSetup {
             new KeyMapping("key.rites_and_paths.ability_1", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_Z, "key.categories.rites_and_paths"),
             new KeyMapping("key.rites_and_paths.ability_2", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_X, "key.categories.rites_and_paths"),
             new KeyMapping("key.rites_and_paths.ability_3", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_C, "key.categories.rites_and_paths"),
+            // Cuarta ranura (Maestro del Giro: la ulti Rectángulo Dorado tiene tecla propia).
+            new KeyMapping("key.rites_and_paths.ability_4", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_H, "key.categories.rites_and_paths"),
     };
 
     /** Habilidades raciales: agachado se usan las ranuras 2 y 3. */
@@ -104,6 +106,8 @@ public final class ClientSetup {
         ChronoFx.register(modBus);
         // Clérigo: Ojo del Sanador, tumbados, Santuario, Plegaria y Ángel.
         io.github.rpgclasses.client.cleric.ClericClient.register(modBus);
+        // Maestro del Giro: lanzar con la bandolera, cambiar de bola, barra de Giro, bola voxel y efectos.
+        io.github.rpgclasses.client.spin.SpinClient.register(modBus);
         modBus.addListener((EntityRenderersEvent.RegisterRenderers event) -> {
             event.registerEntityRenderer(ModEntities.DECOY.get(), DecoyRenderer::new);
             event.registerEntityRenderer(ModEntities.SWARM_SLIME.get(), SwarmSlimeRenderer::new);

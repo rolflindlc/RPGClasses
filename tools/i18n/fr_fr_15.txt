@@ -1,0 +1,245 @@
+0 Maître de la Rotation
+1 Cavalier
+2 Scanner
+3 Trappeur de Rotation
+4 Rotation
+5 Rebond
+6 Retour
+7 Analyse
+8 Courbe
+9 Lancer de Sphères
+10 Bandoulière en main : clic gauche, lancer direct ; clic droit, lancer courbe (il suit ta caméra). La boule s'enfonce dans la cible et tourne sur elle pendant 3 ticks (en ignorant son invulnérabilité), rebondit sur les blocs et revient dans ta main. Cliquer juste quand elle arrive est une Prise Parfaite : plus de Rotation et tu la relances aussitôt. Chaque bloc sur lequel elle rebondit avant l'impact ajoute des dégâts.
+11 Rotation
+12 Barre de 0 à 100 % qui monte à chaque impact, davantage si tu les enchaînes. Si une boule revient sans avoir touché d'ennemi, tu en perds la moitié ; hors combat, elle baisse peu à peu. À 33 % : un rebond de plus et des traînées dorées. À 66 % : un effet de matériau plus fort et un peu plus de dégâts. À 100 % : Rectangle d'Or prêt.
+13 Trajectoire de Rebonds
+14 Montre un instant la trajectoire de rebonds de ta boule vers où tu regardes et la fixe : ton prochain lancer la suit exactement.
+15 Rotation Inverse
+16 Tire sur ta boule plantée (ou sur le dernier ennemi touché il y a un instant) et l'attire vers toi. Les boss ne bougent pas. Fait exploser tes mines.
+17 Pas de Rotation
+18 Élan en spirale d'environ 6 blocs vers où tu te déplaces (ou vers où tu regardes si tu es immobile). Ton prochain impact peu après donne plus de Rotation.
+19 Rectangle d'Or
+20 Avec la Rotation à 100 % : Rotation Dorée pendant quelques secondes (boules plus rapides, sans attente au retour et avec plus de rebonds) ; chaque impact accumule une charge de spirale. À la fin (ou en appuyant de nouveau), une spirale de boules gravite autour de toi et se lance sur les ennemis proches, avec plus de dégâts selon les charges accumulées.
+21 Point Faible Partagé
+22 Tes alliés voient aussi les marques de Point Faible, et chaque impact les renouvelle.
+23 Lance des boules de différents matériaux qui tournent, rebondissent et reviennent à la main : clic gauche, direct ; clic droit, courbe ; la bandoulière range les boules et une touche change celle que tu utilises. Tirailleur hybride : frappe de près comme de loin et récompense le rythme, les combos et la précision. Chaque impact enchaîné fait monter sa Rotation, qui renforce les boules et charge le Rectangle d'Or.
+24 Tes boules infligent plus de dégâts et ta Rotation monte plus vite.
+25 Plus de rebonds, et les boules qui rebondissent d'un ennemi à l'autre conservent plus de dégâts.
+26 Tes boules sont prêtes plus tôt après leur retour et, avec la branche complète, tu peux en avoir une de plus en vol.
+27 Plus de chances et de dégâts critiques ; tes coups critiques avec les boules ignorent une partie de l'armure.
+28 Le lancer courbe se courbe davantage et tes boules vont plus loin.
+29 Rotation Lourde
+30 Plus de dégâts à chaque tick de rotation, mais la Rotation monte un peu plus lentement.
+31 Rotation Rapide
+32 La Rotation monte beaucoup plus vite, mais tes boules infligent un peu moins de dégâts.
+33 Billard
+34 Un rebond de plus, mais chaque rebond enchaîné inflige moins de dégâts que le précédent.
+35 Rebond Sec
+36 Tes boules ne rebondissent plus sur les blocs, mais sautent vers deux ennemis de plus.
+37 Double Main
+38 Une boule de plus en vol en même temps, mais elles mettent plus de temps à être prêtes après leur retour.
+39 Retour Rapide
+40 Si elles touchent, tes boules reviennent instantanément dans ta main, mais tu as une boule de moins en vol (au moins une).
+41 Œil Froid
+42 Le premier impact sur chaque cible est un critique assuré (de temps en temps par cible), mais ta chance de critique générale baisse.
+43 Œil Constant
+44 Chaque impact consécutif sur la même cible inflige plus de dégâts ; le bonus se perd en changeant de cible.
+45 Courbe Serrée
+46 Le lancer courbe se courbe deux fois plus, mais tes boules vont moins loin.
+47 Boule Guidée
+48 Pendant qu'une boule vole, un clic droit la redirige une fois vers où tu regardes (au lieu d'en lancer une autre). Tes boules sont un peu plus lentes.
+49 Trait de classe : un peu moins de santé maximale.
+50 Tourne à pleine vitesse : si tes boules touchent pendant que tu cours (ou chevauches) près de ta vitesse maximale, elles étourdissent la cible et infligent un peu plus de dégâts.
+51 Lit les points faibles : la première boule qui touche une cible la marque, et les suivantes sont des critiques assurés. Dès le niveau 5, tes alliés voient la marque et chaque impact la renouvelle.
+52 Plante ses boules comme des mines : accroupi, la boule reste plantée dans le sol ou un mur et explose quand un ennemi passe à côté, en le ralentissant.
+53 Rotation
+54 Rebond
+55 Retour
+56 Analyse
+57 Courbe
+58 Rotation Lourde
+59 Rotation Rapide
+60 Billard
+61 Rebond Sec
+62 Double Main
+63 Retour Rapide
+64 Œil Froid
+65 Œil Constant
+66 Courbe Serrée
+67 Boule Guidée
+68 Charge de Rotation
+69 Point Faible
+70 Mines Plantées
+71 Gain de Rotation
+72 Rebonds supplémentaires
+73 Dégâts conservés en rebondissant entre ennemis
+74 Réduction du délai de retour
+75 Boules supplémentaires en vol
+76 Armure ignorée par tes critiques
+77 Courbure supplémentaire
+78 Portée supplémentaire
+79 Dégâts en moins par rebond enchaîné
+80 Ennemis supplémentaires vers lesquels elle saute
+81 Variation du délai de retour
+82 Bonus maximal
+83 Courbure x
+84 Variation de portée
+85 Variation de vitesse de la boule
+86 Vitesse minimale (de la maximale)
+87 Dégâts supplémentaires à pleine vitesse
+88 Durée de la mine
+89 Rayon de déclenchement (blocs)
+90 Dégâts de la mine x
+91 Niveau de Lenteur
+92 Mines simultanées
+93 Distance pour la ramasser (blocs)
+94 Dégâts de référence (épée en fer)
+95 Dégâts de la boule de fer (de l'épée)
+96 Ticks de rotation à l'impact
+97 Vitesse (blocs par tick)
+98 Portée (blocs)
+99 Vitesse de retour (blocs par tick)
+100 Délai de retour
+101 Rebonds de base
+102 Vitesse conservée au rebond
+103 Temps minimal entre deux lancers
+104 Boules en vol de base
+105 Boule supplémentaire au Niveau total
+106 Plafond de rebonds supplémentaires (branches et enchantements)
+107 Plafond de portée supplémentaire
+108 Distance de rebond entre ennemis (blocs)
+109 Dégâts en rebondissant entre ennemis (sans la branche)
+110 Courbure du lancer courbe (degrés par tick)
+111 Rebond cinétique : dégâts par bloc rebondi
+112 Rebond cinétique : maximum
+113 Fenêtre de Prise Parfaite
+114 Rotation de la Prise Parfaite
+115 Temps minimal entre deux Prises Parfaites
+116 Dégâts de la boule de fer x
+117 Dégâts de la boule de diamant x
+118 Dégâts de la boule de netherite x
+119 Dégâts de la boule de slime x
+120 Dégâts de la boule de cuivre x
+121 Dégâts de la boule d'améthyste x
+122 Dégâts de la boule de perle de l'Ender x
+123 Dégâts de la boule d'or x
+124 Dégâts de la boule de redstone x
+125 Dégâts de la boule de stalactite x
+126 Fer : recul
+127 Diamant : armure ignorée
+128 Netherite : brûlure
+129 Netherite : recul
+130 Slime : rebonds supplémentaires
+131 Slime : vitesse conservée au rebond
+132 Cuivre : ennemis vers lesquels elle saute
+133 Cuivre : dégâts du saut
+134 Cuivre : distance du saut (blocs)
+135 Cuivre : chance de foudre par orage
+136 Améthyste : longueur de l'onde (blocs)
+137 Améthyste : dégâts de l'onde
+138 Améthyste : cécité
+139 Perle de l'Ender : délai de retour
+140 Or : vitesse supplémentaire
+141 Or : délai de retour
+142 Redstone : ticks de signal
+143 Redstone : ticks de signal avec Rotation II
+144 Stalactite : blocs par lancer
+145 Stalactite : dureté maximale
+146 Rotation par impact
+147 Enchaînement : temps entre impacts
+148 Enchaînement : multiplicateur par maillon
+149 Enchaînement : multiplicateur maximal x
+150 Rotation perdue en cas d'échec
+151 Rotation I dès
+152 Rotation II dès
+153 Rotation I : rebonds supplémentaires
+154 Rotation II : effet du matériau x
+155 Rotation II : dégâts supplémentaires
+156 Montre la trajectoire pendant
+157 Rebonds maximum de la trajectoire
+158 Attraction (blocs)
+159 Temps pendant lequel la boule reste plantée
+160 Élan vers le haut
+161 Rotation supplémentaire au prochain impact
+162 Temps pour en profiter
+163 Rotation Dorée
+164 Vitesse supplémentaire des boules
+165 Rebonds supplémentaires
+166 Charges de spirale maximales
+167 Temps en orbite
+168 Cibles de la spirale
+169 Portée de la spirale (blocs)
+170 Dégâts par charge (d'une boule de fer)
+171 Distance à laquelle tes alliés la voient (blocs)
+172 Boule
+173 Signal de boule
+174 Rotation Dorée
+175 Bandoulière à sphères
+176 Sphères
+177 %1$s a succombé à une boule tournoyante
+178 %1$s a succombé à la boule de %2$s
+179 %1$s a été pris dans la rotation d'une boule
+180 %1$s a été pris dans la rotation de la boule de %2$s
+181 Capacité 4
+182 Changer de boule (Maître de la Rotation)
+183 Expérimentales
+184 Classe expérimentale
+185 Son équilibrage n'est pas garanti et peut changer à chaque version.
+186 Attention : c'est une classe expérimentale. Son équilibrage n'est pas garanti et peut changer à chaque version.
+187 %s : -%s fixe (dès le choix de la classe)
+188 Dégâts : x%s
+189 Seul le Maître de la Rotation sait la lancer, depuis la bandoulière.
+190 Boule choisie : %s
+191 %s/%s boules
+192 Vide
+193 Clic droit avec une boule sur le curseur pour la ranger ; clic droit sur un emplacement vide pour en sortir une.
+194 En main : clic gauche, direct ; clic droit, courbe ; %s : changer de boule.
+195 Rotation
+196 Rectangle d'Or prêt ! (%s)
+197 Rotation Dorée : %s charges
+198 %s : %s/%s
+199 Seul le Maître de la Rotation sait lancer ces boules.
+200 Ta bandoulière est vide.
+201 %s : aucune prête pour l'instant.
+202 Tu as déjà %s boules en vol.
+203 Boule : %s
+204 Cassée : %s.
+205 Il te faut la Rotation à 100 %%.
+206 Tu n'as aucune boule plantée et tu n'as touché personne récemment.
+207 Tu as déjà %s mines plantées.
+208 Tu ramasses la mine.
+209 Trajectoire fixée : ton prochain lancer la suivra.
+210 Prise Parfaite !
+211 Rectangle d'Or !
+212 Spirale Finale ! (%s charges)
+213 Boule de fer
+214 Léger recul.
+215 Boule de diamant
+216 Ignore une partie de l'armure de la cible.
+217 Boule de netherite
+218 Brûle et repousse fort. Résiste au feu et à la lave.
+219 Boule de slime
+220 Rebondit beaucoup plus et ne perd presque pas de vitesse.
+221 Boule de cuivre
+222 Saute vers les ennemis proches. Par orage, elle attire la foudre.
+223 Boule d'améthyste
+224 Libère une onde sonique en ligne qui traverse les blocs et aveugle.
+225 Boule de perle de l'Ender
+226 À son retour, elle t'emmène au point d'impact.
+227 Boule d'or
+228 Très rapide et prête plus tôt.
+229 Boule de redstone
+230 Active la redstone qu'elle touche.
+231 Boule de stalactite
+232 Casse les blocs tendres et te les rapporte.
+233 Friction
+234 Tes boules mettent le feu aux ennemis et aux blocs inflammables qu'elles touchent.
+235 Densité
+236 Plus de dégâts, moins de portée.
+237 Légèreté
+238 Plus de portée, moins de dégâts.
+239 Aimant
+240 Tes boules sont prêtes plus tôt après leur retour, mais infligent un peu moins de dégâts.
+241 Griffe
+242 La boule reste plantée plus longtemps et Rotation Inverse attire plus fort, mais elle vole un peu plus lentement.
+243 Élasticité
+244 Plus de rebonds, mais chaque rebond inflige un peu moins de dégâts.

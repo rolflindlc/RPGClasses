@@ -53,7 +53,7 @@ public class DefinitionFilesTest {
     public void allShippedDefinitionsAreValid() {
         assertTrue("Errores de validación: " + STORE.errors(), STORE.errors().isEmpty());
         assertEquals(List.of("rites_and_paths:barbarian", "rites_and_paths:bard", "rites_and_paths:cleric", "rites_and_paths:mage", "rites_and_paths:monk",
-                "rites_and_paths:paladin", "rites_and_paths:ranger", "rites_and_paths:rogue"), List.copyOf(STORE.classIds()));
+                "rites_and_paths:paladin", "rites_and_paths:ranger", "rites_and_paths:rogue", "rites_and_paths:spin_master"), List.copyOf(STORE.classIds()));
         for (String id : STORE.classIds()) {
             ClassDef c = STORE.classDef(id);
             for (String sub : c.subclasses()) assertNotNull(sub, STORE.subclassDef(sub));
@@ -68,18 +68,33 @@ public class DefinitionFilesTest {
             assertEquals(id, 5, c.branches().size());
             for (var b : c.branches()) perks += b.perks().size();
         }
-        assertEquals(80, perks);
+        assertEquals(90, perks);
     }
 
     @Test
     public void wallTotalsMatchDesignTable() {
         Map<String, Integer> expected = Map.of("mage", 200, "paladin", 150, "barbarian", 175,
-                "rogue", 245, "ranger", 150, "monk", 275, "bard", 245, "cleric", 235);
+                "rogue", 245, "ranger", 150, "monk", 275, "bard", 245, "cleric", 235, "spin_master", 250);
         for (Map.Entry<String, Integer> e : expected.entrySet()) {
             ClassDef c = STORE.classDef("rites_and_paths:" + e.getKey());
             double total = 0;
             for (double v : c.walls().values()) total += StatMath.wallPenalty(v, 30) * 100;
             assertEquals(e.getKey(), e.getValue(), Math.round(total), 0.0);
+        }
+    }
+
+    /** Adenda del Maestro del Giro: Esferas solo para él (muro fijo del 100 % para el resto), y es experimental. */
+    @Test
+    public void spheresBelongToTheSpinMasterOnly() {
+        for (String id : STORE.classIds()) {
+            ClassDef c = STORE.classDef(id);
+            boolean spin = id.equals("rites_and_paths:spin_master");
+            assertEquals(id, spin, c.experimental());
+            assertEquals(id, spin ? null : 1.0, c.fixedWalls().get(io.github.rpgclasses.core.Ids.SPHERES));
+            io.github.rpgclasses.core.progression.ProgressState s = new io.github.rpgclasses.core.progression.ProgressState();
+            s.classId = id;
+            assertEquals(id, spin ? 0.0 : 1.0,
+                    io.github.rpgclasses.core.stat.StatCalculator.wall(s, c, null, io.github.rpgclasses.core.Ids.SPHERES), 1e-9);
         }
     }
 

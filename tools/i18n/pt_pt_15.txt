@@ -269,3 +269,43 @@
 268 obsidiana
 269 Broca (sílex): menos dano por tick, mas fica cravada muito mais tempo e no total causa mais dano.
 270 Marretada (obsidiana): todo o dano num único golpe, sem ficar cravada; é mais lenta e demora mais a ficar pronta outra vez.
+271 Anjo (Clérigo): enquanto dura, podes voar, devagar e sem correr.
+272 Mago (Fluidez): +30 % de velocidade de movimento depois de lançar um feitiço.
+273 Estás na aura do Estandarte de um Paladino: mais armadura e efeitos negativos mais curtos; conforme o estandarte, também mais dano ou regeneração para os aliados.
+274 Fúria do Berserker (Bárbaro): atacas mais depressa e causas mais dano, mas também recebes mais.
+275 Baluarte (Paladino): recebes muito menos dano de todas as fontes.
+276 Poção de Desafio: a dificuldade por zona conta-te mais 20 % de nível de classe por nível do efeito, por isso os mobs que surgem por perto são mais fortes. O leite remove-a.
+277 Baluarte Impetuoso (Paladino): corres sem parar a grande velocidade, ferindo e empurrando quem atropelas e partindo blocos frágeis pelo caminho.
+278 Enfeitiçado (Bardo): não ataca o Bardo nem os seus aliados e luta contra outros mobs.
+279 Condenado (Paladino): recebe mais dano do Paladino que o marcou.
+280 Corrosão (Draconato Ácido): −5 % de armadura e de resistência de armadura por nível.
+281 Caído (Milagre do Clérigo): um golpe mortal deixou-te no chão com meio coração. Não podes fazer nada, mas não recebes dano; se um aliado te curar com um feitiço ou uma habilidade do Clérigo, levantas-te. Se acabar, morres.
+282 Resistência (Bárbaro): recebes menos dano.
+283 Dança Forçada (Bardo): dança no lugar e não pode atacar, lançar feitiços nem usar itens.
+284 Gigantismo (mobs de elite): a criatura é maior; o nível do efeito indica o tamanho.
+285 Giro Dourado (Mestre do Giro): estás em pleno Retângulo Dourado. Não te podes mexer nem agir, mas não recebes dano.
+286 Marca do Caçador (Patrulheiro): o alvo marcado recebe mais dano de todas as fontes.
+287 Última Fúria (Bárbaro): um golpe mortal tornou-te imortal durante alguns segundos. Se matares o teu agressor antes do fim, sobrevives.
+288 Coral de Ferro (Bardo): recebes menos dano.
+289 Cadência de Mana (Bardo): regeneras mana mais depressa (1 % por nível).
+290 Marcha (Bardo): mexes-te e atacas mais depressa.
+291 Praga (Bárbaro): dano ao longo do tempo que afeta até os mortos-vivos. O leite remove-a.
+292 Fervor do Réquiem (Bardo): causas mais dano durante alguns segundos depois do Réquiem Final.
+293 Balada do Descanso (Bardo): regeneras vida a cada segundo.
+294 Retirada (Patrulheiro): +25 % de velocidade de movimento.
+295 Escamas contra Fogo (Bardo): recebes menos 25 % de dano de fogo.
+296 Escamas contra Gelo (Bardo): recebes menos 25 % de dano de gelo.
+297 Escamas contra Raio (Bardo): recebes menos 25 % de dano de raio.
+298 Passo Compartilhado (Bardo): mexes-te mais depressa.
+299 Silenciado (Bardo): não pode lançar feitiços.
+300 Provocação: recebes menos dano enquanto os mobs provocados vão atrás de ti.
+301 Toxina (Ladino): dano lento ao longo do tempo que não se acumula. O leite remove-a.
+302 Poção de Tranquilidade: a dificuldade por zona conta-te menos 20 % de nível de classe por nível do efeito, por isso os mobs que surgem por perto são mais fracos. O leite remove-a.
+303 Hino de Guerra (Bardo): causas mais dano.
+304 Bola do Mestre do Giro: lança-se a partir da Bandoleira de Esferas. Na bancada de trabalho, junta-a com 4 unidades de um material (2 pérolas do Ender) para lhe dar uma melhoria: slime, cobre, ametista, pérola do Ender, ouro, redstone, espeleotema, sílex (Broca) ou obsidiana (Marretada). Uma melhoria nova substitui a anterior e a bola mantém a durabilidade e os encantamentos.
+305 Guarda até 9 bolas: clique direito com uma bola no cursor para a guardar, clique direito num espaço vazio para tirar uma. O Mestre do Giro segura-a na mão para lançar as bolas; a tecla de trocar de bola escolhe qual.
+306 Partitura do Bardo. Faz-se na forja de pergaminhos do Iron's com um feitiço musical (como um pergaminho, com um disco de música, um bloco musical ou uma jukebox como foco). Guarda-se num instrumento no atril ou na mesa de inscrição e sobe um nível na bancada de trabalho com a raridade de tinta que pedir.
+307 Instrumento lendário do Bardo: largado por Barako e Umvuthi (Mowzie's Mobs) quando um jogador os mata.
+308 Largada pelo Leviatã (L_Ender's Cataclysm) quando um jogador o mata. Serve para fazer o Órgão Abissal na mesa de ferraria.
+309 Largado pela Monstruosidade de Netherite (L_Ender's Cataclysm) quando um jogador a mata. Serve para fazer o Tambor do Colosso na mesa de ferraria.
+310 Só no modo criativo, para testes: enquanto estiver no teu inventário, todas as recargas de classe e de raça são 0.

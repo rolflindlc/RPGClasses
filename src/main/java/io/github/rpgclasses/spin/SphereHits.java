@@ -247,7 +247,7 @@ public final class SphereHits {
                 Vec3 end = at.add(dir.scale(len));
                 // La onda atraviesa bloques: solo se miran las entidades a lo largo de la línea.
                 for (LivingEntity e : level.getEntitiesOfClass(LivingEntity.class, new AABB(at, end).inflate(1.0),
-                        e -> e != target && e.isAlive() && !(e instanceof ArmorStand) && Allies.isEnemy(owner, e))) {
+                        e -> e != target && autoTarget(owner, e))) {
                     if (e.getBoundingBox().inflate(0.6).clip(at, end).isEmpty() && !e.getBoundingBox().inflate(0.6).contains(at)) continue;
                     e.invulnerableTime = 0;
                     e.hurt(SpinMaster.effectSource(level, s, owner), (float) (total * frac));
@@ -340,8 +340,10 @@ public final class SphereHits {
             float hardness = state.getDestroySpeed(level, pos);
             if (!state.isAir() && state.is(STALACTITE_BREAKABLE) && !state.hasBlockEntity() && hardness >= 0
                     && hardness <= SpinMaster.t("dripstone_hardness", 3) && BodyTraits.mayBreak(owner, pos)) {
-                // "Los trae": lo que suelta (como con un pico de piedra) vuelve con la bola.
-                List<ItemStack> drops = Block.getDrops(state, level, pos, null, owner, new ItemStack(Items.STONE_PICKAXE));
+                // "Los trae": lo que suelta (como con un pico de piedra: sin diamantes ni oro) vuelve con la bola.
+                ItemStack tool = new ItemStack(Items.STONE_PICKAXE);
+                List<ItemStack> drops = state.requiresCorrectToolForDrops() && !tool.isCorrectToolForDrops(state)
+                        ? List.of() : Block.getDrops(state, level, pos, null, owner, tool);
                 level.destroyBlock(pos, false, owner);
                 s.carried.addAll(drops);
                 s.blocksBroken++;
@@ -485,10 +487,22 @@ public final class SphereHits {
 
     // ------------------------------------------------------------------ utilidades
 
+    /**
+     * Objetivo para lo que apunta solo (rebotes entre enemigos, cobre, amatista, minas, Espiral Final): un enemigo que
+     * además sea hostil (monstruo, jefe o mob que te persigue) o un jugador enemigo. El golpe directo vale contra
+     * cualquier enemigo (lo apunta el jugador): así lo automático no se lleva aldeanos ni animales.
+     */
+    static boolean autoTarget(ServerPlayer owner, LivingEntity e) {
+        if (e == owner || !e.isAlive() || e instanceof ArmorStand || !Allies.isEnemy(owner, e)) return false;
+        if (e instanceof net.minecraft.world.entity.player.Player || e instanceof net.minecraft.world.entity.monster.Enemy || Races.isBoss(e)) return true;
+        return e instanceof net.minecraft.world.entity.Mob m && m.getTarget() != null
+                && (m.getTarget() == owner || io.github.rpgclasses.server.Allies.isAlly(owner, m.getTarget()));
+    }
+
     static List<LivingEntity> enemiesAround(ServerPlayer owner, Vec3 at, double r, LivingEntity except) {
         List<LivingEntity> out = new ArrayList<>();
         for (LivingEntity e : owner.level().getEntitiesOfClass(LivingEntity.class, new AABB(at, at).inflate(r),
-                e -> e != except && e != owner && e.isAlive() && !(e instanceof ArmorStand) && Allies.isEnemy(owner, e))) {
+                e -> e != except && autoTarget(owner, e))) {
             if (e.getBoundingBox().getCenter().distanceToSqr(at) <= (r + e.getBbWidth() * 0.5) * (r + e.getBbWidth() * 0.5)) out.add(e);
         }
         return out;

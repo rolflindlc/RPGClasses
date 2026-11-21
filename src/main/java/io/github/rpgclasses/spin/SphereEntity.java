@@ -141,6 +141,12 @@ public class SphereEntity extends Projectile {
         return true;
     }
 
+    /** El agua no la desvía (la trayectoria la decide el código, también la Ruta de Rebotes). */
+    @Override
+    public boolean isPushedByFluid() {
+        return false;
+    }
+
     public SphereMaterial material() {
         return SphereMaterial.byIndex(entityData.get(DATA_MATERIAL));
     }
@@ -398,7 +404,10 @@ public class SphereEntity extends Projectile {
         LivingEntity t = stuck;
         if (t != null && !targetGone && impactKnockback > 0 && !Races.isBoss(t)) {
             Vec3 away = t.position().subtract(owner.position()).multiply(1, 0, 1);
-            if (away.lengthSqr() > 1.0E-4) t.knockback(impactKnockback, -away.x, -away.z);
+            if (away.lengthSqr() > 1.0E-4) {
+                t.knockback(impactKnockback, -away.x, -away.z);
+                t.hurtMarked = true;
+            }
         }
         stuck = null;
         critDecided = null;

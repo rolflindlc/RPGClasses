@@ -246,7 +246,8 @@ public final class SpinState {
 
     private static void sync(ServerPlayer p, State s, long now) {
         int goldenTicks = s.golden ? (int) Math.max(0, s.goldenUntil - now) : 0;
-        boolean changed = Math.abs(s.spin - s.sentSpin) >= 0.004f || (s.golden ? 1 : 0) != (s.sentGolden > 0 ? 1 : 0)
+        boolean edge = s.spin != s.sentSpin && (s.spin <= 0f || s.spin >= 0.999f);
+        boolean changed = Math.abs(s.spin - s.sentSpin) >= 0.01f || edge || (s.golden ? 1 : 0) != (s.sentGolden > 0 ? 1 : 0)
                 || s.spiral != s.sentSpiral || (s.golden && now % 10 == 0);
         if (!changed) return;
         s.sentSpin = s.spin;

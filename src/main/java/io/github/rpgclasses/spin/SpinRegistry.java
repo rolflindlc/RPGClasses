@@ -49,6 +49,7 @@ public final class SpinRegistry {
     public static final RegistryObject<EntityType<SphereEntity>> SPHERE_ENTITY = ENTITIES.register("spin_sphere",
             () -> EntityType.Builder.<SphereEntity>of(SphereEntity::new, MobCategory.MISC)
                     .sized(0.3f, 0.3f).noSave().fireImmune().clientTrackingRange(6).updateInterval(1)
+                    .setShouldReceiveVelocityUpdates(true)
                     .build(RpgClasses.MODID + ":spin_sphere"));
 
     /** Giro Dorado (fase 1 del Rectángulo Dorado): solo icono y tiempo; la lógica está en {@link SpinState}. */

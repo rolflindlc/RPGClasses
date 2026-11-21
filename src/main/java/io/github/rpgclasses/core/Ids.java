@@ -15,8 +15,10 @@ public final class Ids {
     public static final String LIGHT = NS + ":light";
     public static final String ARMOR = NS + ":armor";
     public static final String SHIELD = NS + ":shield";
+    /** Esferas (adenda del Maestro del Giro): las bolas del Maestro del Giro. Las demás clases tienen un muro fijo del 100 %. */
+    public static final String SPHERES = NS + ":spheres";
 
-    public static final Set<String> DISCIPLINES = Set.of(MAGIC, BOW, HEAVY, LIGHT, ARMOR, SHIELD);
+    public static final Set<String> DISCIPLINES = Set.of(MAGIC, BOW, HEAVY, LIGHT, ARMOR, SHIELD, SPHERES);
 
     /** Modificadores de atributo que escalan con los puntos. */
     public static final String EFFECT_ATTRIBUTE = NS + ":attribute";

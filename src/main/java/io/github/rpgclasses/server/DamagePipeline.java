@@ -126,6 +126,16 @@ public final class DamagePipeline {
         });
     }
 
+    /**
+     * Graba en un proyectil propio (bolas del Maestro del Giro) su factor de daño (muro) y si puede ser crítico, antes de
+     * añadirlo al mundo: así {@link #onProjectileSpawn} no le aplica el muro de Arco.
+     */
+    public static void markProjectile(Projectile projectile, double factor, boolean canCrit) {
+        CompoundTag tag = projectile.getPersistentData();
+        tag.putDouble(TAG_FACTOR, factor);
+        tag.putBoolean(TAG_CAN_CRIT, canCrit);
+    }
+
     @SubscribeEvent
     public void onProjectileSpawn(EntityJoinLevelEvent event) {
         if (event.getLevel().isClientSide() || !(event.getEntity() instanceof Projectile projectile)) return;
@@ -295,14 +305,19 @@ public final class DamagePipeline {
             log.add(" | guardia firme x%.2f", 1 + bonus);
         }
 
+        // Maestro del Giro: el crítico de una bola se decide una vez por impacto (vale para sus 3 tics).
+        Boolean sphereCrit = io.github.rpgclasses.spin.SphereHits.critOverride(direct);
+        boolean critHit = false;
         if (canCrit) {
             double chance = StatMath.critChance(ServerConfig.BASE_CRIT_CHANCE.get(),
                     classDef.critChanceBonus() + ModAttributes.value(attacker, ModAttributes.CRIT_CHANCE), false);
             // Pícaro: todo golpe desde invisibilidad es crítico seguro y suma su bonus de Backstab.
-            boolean backstab = RogueAbilities.isStealthed(attacker);
+            boolean backstab = sphereCrit == null && RogueAbilities.isStealthed(attacker);
             // Paso de Sombra: crítico seguro contra el objetivo marcado.
             boolean marked = !backstab && melee && RogueAbilities.hasShadowMark(attacker, target);
-            if (backstab || marked || attacker.getRandom().nextDouble() < chance) {
+            boolean roll = sphereCrit != null ? sphereCrit : (backstab || marked || attacker.getRandom().nextDouble() < chance);
+            if (roll) {
+                critHit = true;
                 double critBonus = ModAttributes.value(attacker, ModAttributes.CRIT_DAMAGE)
                         + (backstab ? ModAttributes.value(attacker, ModAttributes.BACKSTAB_CRIT_DAMAGE) : 0);
                 double multiplier = StatMath.critMultiplier(critBonus);
@@ -316,6 +331,14 @@ public final class DamagePipeline {
             }
         }
 
+        if (direct instanceof Projectile) {
+            // Bolas: armadura ignorada (diamante, críticos con Escaneo).
+            double sphereArmor = io.github.rpgclasses.spin.SphereHits.armorFactor(attacker, target, source, direct, damage, critHit);
+            if (sphereArmor != 1) {
+                damage *= sphereArmor;
+                log.add(" | bola (armadura) x%.2f", sphereArmor);
+            }
+        }
         if (melee) {
             double pierce = RoguePerks.armorPierceFactor(attacker, target, source, damage);
             if (pierce != 1) {

@@ -1,0 +1,352 @@
+{
+  "schema_version": 1,
+  "display": {
+    "icon": "rites_and_paths:iron_sphere",
+    "roles": [
+      "escaramuzador",
+      "híbrido"
+    ]
+  },
+  "starting_kit": [
+    {
+      "item": "rites_and_paths:sphere_bandolier",
+      "slot": "mainhand"
+    },
+    {
+      "item": "rites_and_paths:iron_sphere",
+      "count": 3,
+      "slot": "bandolier"
+    },
+    {
+      "item": "minecraft:leather_helmet",
+      "slot": "head"
+    },
+    {
+      "item": "minecraft:leather_chestplate",
+      "slot": "chest"
+    },
+    {
+      "item": "minecraft:leather_leggings",
+      "slot": "legs"
+    },
+    {
+      "item": "minecraft:leather_boots",
+      "slot": "feet"
+    }
+  ],
+  "crit_chance_bonus": 0.0,
+  "walls": {
+    "rites_and_paths:magic": 0.5,
+    "rites_and_paths:bow": 0.4,
+    "rites_and_paths:heavy": 0.5,
+    "rites_and_paths:light": 0.2,
+    "rites_and_paths:armor": 0.3,
+    "rites_and_paths:shield": 0.6
+  },
+  "experimental": true,
+  "school_walls": {
+    "irons_spellbooks:holy": 1.0,
+    "rites_and_paths:music": 1.0
+  },
+  "traits": [
+    {
+      "type": "rites_and_paths:attribute",
+      "modifiers": [
+        {
+          "attribute": "minecraft:generic.max_health",
+          "to": -0.1,
+          "operation": "multiply_base"
+        }
+      ]
+    }
+  ],
+  "branches": [
+    {
+      "id": "rotation",
+      "display": {
+        "icon": "minecraft:clock"
+      },
+      "max_points": 10,
+      "effects": [
+        {
+          "type": "rites_and_paths:mechanic",
+          "id": "rites_and_paths:rotation",
+          "damage_bonus": {
+            "to": 0.3
+          },
+          "spin_rate": {
+            "to": 0.3
+          }
+        }
+      ],
+      "perks": [
+        {
+          "id": "heavy_spin",
+          "effects": [
+            {
+              "type": "rites_and_paths:mechanic",
+              "id": "rites_and_paths:heavy_spin",
+              "damage_bonus": 0.2,
+              "spin_rate": -0.15
+            }
+          ]
+        },
+        {
+          "id": "swift_spin",
+          "effects": [
+            {
+              "type": "rites_and_paths:mechanic",
+              "id": "rites_and_paths:swift_spin",
+              "spin_rate": 0.3,
+              "damage_bonus": -0.1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rebound",
+      "display": {
+        "icon": "minecraft:slime_block"
+      },
+      "max_points": 10,
+      "effects": [
+        {
+          "type": "rites_and_paths:mechanic",
+          "id": "rites_and_paths:rebound",
+          "extra_bounces": {
+            "values": [
+              0,
+              0,
+              0,
+              0,
+              1,
+              1,
+              1,
+              1,
+              1,
+              2
+            ]
+          },
+          "hop_keep": {
+            "from": 0.53,
+            "to": 0.8
+          }
+        }
+      ],
+      "perks": [
+        {
+          "id": "billiards",
+          "effects": [
+            {
+              "type": "rites_and_paths:mechanic",
+              "id": "rites_and_paths:billiards",
+              "extra_bounces": 1,
+              "chain_falloff": 0.15
+            }
+          ]
+        },
+        {
+          "id": "dry_rebound",
+          "effects": [
+            {
+              "type": "rites_and_paths:mechanic",
+              "id": "rites_and_paths:dry_rebound",
+              "extra_hops": 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sphere_return",
+      "display": {
+        "icon": "minecraft:lead"
+      },
+      "max_points": 10,
+      "effects": [
+        {
+          "type": "rites_and_paths:mechanic",
+          "id": "rites_and_paths:sphere_return",
+          "return_reduction": {
+            "to": 0.4
+          },
+          "extra_spheres": {
+            "values": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              1
+            ]
+          }
+        }
+      ],
+      "perks": [
+        {
+          "id": "double_hand",
+          "effects": [
+            {
+              "type": "rites_and_paths:mechanic",
+              "id": "rites_and_paths:double_hand",
+              "extra_spheres": 1,
+              "return_change": 0.25
+            }
+          ]
+        },
+        {
+          "id": "swift_return",
+          "effects": [
+            {
+              "type": "rites_and_paths:mechanic",
+              "id": "rites_and_paths:swift_return",
+              "extra_spheres": -1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "scan",
+      "display": {
+        "icon": "minecraft:spyglass"
+      },
+      "max_points": 10,
+      "effects": [
+        {
+          "type": "rites_and_paths:attribute",
+          "modifiers": [
+            {
+              "attribute": "rites_and_paths:crit_chance",
+              "to": 0.15,
+              "operation": "add"
+            },
+            {
+              "attribute": "rites_and_paths:crit_damage",
+              "to": 0.2,
+              "operation": "add"
+            }
+          ]
+        },
+        {
+          "type": "rites_and_paths:mechanic",
+          "id": "rites_and_paths:scan",
+          "crit_pierce": {
+            "to": 0.15
+          }
+        }
+      ],
+      "perks": [
+        {
+          "id": "cold_eye",
+          "effects": [
+            {
+              "type": "rites_and_paths:mechanic",
+              "id": "rites_and_paths:cold_eye",
+              "icd_seconds": 6
+            },
+            {
+              "type": "rites_and_paths:attribute",
+              "modifiers": [
+                {
+                  "attribute": "rites_and_paths:crit_chance",
+                  "to": -0.1,
+                  "operation": "add"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "steady_eye",
+          "effects": [
+            {
+              "type": "rites_and_paths:mechanic",
+              "id": "rites_and_paths:steady_eye",
+              "per_hit": 0.08,
+              "max_bonus": 0.32
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "curve",
+      "display": {
+        "icon": "minecraft:phantom_membrane"
+      },
+      "max_points": 10,
+      "effects": [
+        {
+          "type": "rites_and_paths:mechanic",
+          "id": "rites_and_paths:curve",
+          "curvature": {
+            "to": 1.0
+          },
+          "range_bonus": {
+            "to": 0.3
+          }
+        }
+      ],
+      "perks": [
+        {
+          "id": "tight_curve",
+          "effects": [
+            {
+              "type": "rites_and_paths:mechanic",
+              "id": "rites_and_paths:tight_curve",
+              "curve_factor": 2.0,
+              "range_change": -0.2
+            }
+          ]
+        },
+        {
+          "id": "guided_ball",
+          "effects": [
+            {
+              "type": "rites_and_paths:mechanic",
+              "id": "rites_and_paths:guided_ball",
+              "speed_change": -0.15
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "milestones": [
+    {
+      "total_level": 1,
+      "grants": "rites_and_paths:sphere_throw"
+    },
+    {
+      "total_level": 1,
+      "grants": "rites_and_paths:spin_bar"
+    },
+    {
+      "total_level": 5,
+      "grants": "rites_and_paths:bounce_route"
+    },
+    {
+      "total_level": 15,
+      "grants": "rites_and_paths:reverse_spin"
+    },
+    {
+      "total_level": 15,
+      "grants": "rites_and_paths:spin_step"
+    },
+    {
+      "total_level": 30,
+      "grants": "rites_and_paths:golden_rectangle"
+    }
+  ],
+  "subclasses": [
+    "rites_and_paths:spin_rider",
+    "rites_and_paths:spin_scanner",
+    "rites_and_paths:spin_trapper"
+  ]
+}

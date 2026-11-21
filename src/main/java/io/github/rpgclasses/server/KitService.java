@@ -19,18 +19,28 @@ public final class KitService {
     public static java.util.function.BiConsumer<ItemStack, KitItem> spellInscriber;
 
     public static void grant(ServerPlayer player, ClassDef classDef) {
+        // Bolas del kit con ranura "bandolier" (Maestro del Giro): van dentro de la bandolera del kit, que se llena antes
+        // de colocarla (al colocarla en el inventario se copia). Sin bandolera en el kit, van al inventario.
+        java.util.List<ItemStack> forBandolier = new java.util.ArrayList<>();
         for (KitItem k : classDef.startingKit()) {
-            ResourceLocation id = ResourceLocation.tryParse(k.item());
-            Item item = id == null ? null : ForgeRegistries.ITEMS.getValue(id);
-            if (item == null || item == Items.AIR) {
-                RpgClasses.LOGGER.warn("[rites_and_paths] Objeto de kit desconocido: {}", k.item());
-                continue;
+            if (!"bandolier".equals(k.slot())) continue;
+            ItemStack stack = create(k, classDef);
+            if (stack.isEmpty()) continue;
+            for (int i = 0; i < k.count(); i++) {
+                ItemStack one = stack.copy();
+                one.setCount(1);
+                forBandolier.add(one);
             }
-            ItemStack stack = new ItemStack(item, k.count());
-            stack.getOrCreateTag().putString(KIT_TAG, classDef.id());
-            if (stack.isDamageableItem()) stack.getOrCreateTag().putBoolean("Unbreakable", true);
-            if (!k.spells().isEmpty() && spellInscriber != null) spellInscriber.accept(stack, k);
-
+        }
+        boolean filled = false;
+        for (KitItem k : classDef.startingKit()) {
+            if ("bandolier".equals(k.slot())) continue;
+            ItemStack stack = create(k, classDef);
+            if (stack.isEmpty()) continue;
+            if (!filled && io.github.rpgclasses.spin.Bandolier.is(stack)) {
+                for (ItemStack s : forBandolier) io.github.rpgclasses.spin.Bandolier.add(stack, s);
+                filled = true;
+            }
             EquipmentSlot slot = slot(k.slot());
             if (slot != null && player.getItemBySlot(slot).isEmpty()) {
                 player.setItemSlot(slot, stack);
@@ -39,10 +49,29 @@ public final class KitService {
                 player.getInventory().placeItemBackInInventory(stack);
             }
         }
+        if (!filled) for (ItemStack s : forBandolier) player.getInventory().placeItemBackInInventory(s);
+    }
+
+    /** Objeto del kit, marcado e irrompible (EMPTY si el objeto no existe). */
+    private static ItemStack create(KitItem k, ClassDef classDef) {
+        ResourceLocation id = ResourceLocation.tryParse(k.item());
+        Item item = id == null ? null : ForgeRegistries.ITEMS.getValue(id);
+        if (item == null || item == Items.AIR) {
+            RpgClasses.LOGGER.warn("[rites_and_paths] Objeto de kit desconocido: {}", k.item());
+            return ItemStack.EMPTY;
+        }
+        ItemStack stack = new ItemStack(item, k.count());
+        stack.getOrCreateTag().putString(KIT_TAG, classDef.id());
+        if (stack.isDamageableItem()) stack.getOrCreateTag().putBoolean("Unbreakable", true);
+        if (!k.spells().isEmpty() && spellInscriber != null) spellInscriber.accept(stack, k);
+        return stack;
     }
 
     /** Retira del inventario los objetos de kit. Los que estén en cofres o en el suelo se dejan. */
     public static void removeAll(ServerPlayer player) {
+        // Maestro del Giro: las bolas vuelven, las del kit salen de las bandoleras y las propias no se pierden con la del kit.
+        io.github.rpgclasses.spin.SpinThrow.recallAll(player);
+        io.github.rpgclasses.spin.Bandolier.beforeKitRemoval(player);
         player.getInventory().clearOrCountMatchingItems(
                 stack -> stack.hasTag() && stack.getTag().contains(KIT_TAG), -1, player.inventoryMenu.getCraftSlots());
         player.inventoryMenu.broadcastChanges();

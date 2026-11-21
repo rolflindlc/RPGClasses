@@ -88,6 +88,7 @@ public final class ModGear {
                 io.github.rpgclasses.registry.ModBlocks.ITEMS.getEntries().forEach(ro -> out.accept(ro.get()));
                 ORDER.forEach(ro -> out.accept(ro.get()));
                 io.github.rpgclasses.bard.BardItems.creativeItems(out::accept);
+                io.github.rpgclasses.spin.SpinRegistry.creativeItems(out::accept);
             })
             .build());
 

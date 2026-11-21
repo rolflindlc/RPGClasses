@@ -7,6 +7,8 @@ public final class ClientConfig {
     public static final ForgeConfigSpec SPEC;
 
     public static final ForgeConfigSpec.DoubleValue TITAN_SHAKE;
+    public static final ForgeConfigSpec.DoubleValue SPIN_SHAKE;
+    public static final ForgeConfigSpec.BooleanValue SPIN_CINEMATIC;
 
     static {
         ForgeConfigSpec.Builder b = new ForgeConfigSpec.Builder();
@@ -14,6 +16,12 @@ public final class ClientConfig {
         TITAN_SHAKE = b
                 .comment("Intensidad del temblor de pantalla de los pisotones del Coloso Titán (0 = sin temblor, 1 = normal).")
                 .defineInRange("titanShake", 1.0, 0.0, 1.0);
+        SPIN_SHAKE = b
+                .comment("Intensidad del temblor de los impactos de las bolas del Maestro del Giro (0 = sin temblor, 1 = normal).")
+                .defineInRange("spinShake", 1.0, 0.0, 1.0);
+        SPIN_CINEMATIC = b
+                .comment("Cámara cinemática del Rectángulo Dorado (bandas, zoom y tercera persona). Con false solo se ven las partículas.")
+                .define("spinCinematic", true);
         b.pop();
         SPEC = b.build();
     }
@@ -24,6 +32,22 @@ public final class ClientConfig {
             return TITAN_SHAKE.get();
         } catch (IllegalStateException e) {
             return 1.0;
+        }
+    }
+
+    public static double spinShake() {
+        try {
+            return SPIN_SHAKE.get();
+        } catch (IllegalStateException e) {
+            return 1.0;
+        }
+    }
+
+    public static boolean spinCinematic() {
+        try {
+            return SPIN_CINEMATIC.get();
+        } catch (IllegalStateException e) {
+            return true;
         }
     }
 

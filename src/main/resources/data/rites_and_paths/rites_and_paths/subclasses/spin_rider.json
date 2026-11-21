@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "class": "rites_and_paths:spin_master",
+  "display": {
+    "icon": "minecraft:saddle"
+  },
+  "effects": [
+    {
+      "type": "rites_and_paths:mechanic",
+      "id": "rites_and_paths:spin_charge",
+      "speed_threshold": 0.7,
+      "stun_seconds": {
+        "from": 0.3,
+        "to": 1.0
+      },
+      "boss_factor": 0.5,
+      "icd_seconds": 8,
+      "speed_damage": {
+        "to": 0.1
+      }
+    }
+  ],
+  "milestones": []
+}

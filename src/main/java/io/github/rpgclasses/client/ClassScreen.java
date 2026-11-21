@@ -57,6 +57,17 @@ public final class ClassScreen extends Screen {
     /** Plan con el que se construyeron los botones del pie (si cambia, se reconstruyen). */
     private List<TreePlan.Step> footerPlan = List.of();
 
+    /**
+     * Clases experimentales (adenda del Maestro del Giro): apartado escondido que se descubre con un secreto: escribir
+     * 1618 (la razón áurea) en esta pantalla o pulsar la φ casi invisible de la esquina. Se recuerda durante la sesión.
+     */
+    private static boolean experimentalRevealed;
+    private static final String SECRET = "1618";
+    private String typed = "";
+    /** Zona clicable de la φ y caja del apartado experimental (para su marco). */
+    private static final int PHI_X = 3, PHI_Y = 3, PHI_W = 9, PHI_H = 11;
+    private int expLeft, expTop, expRight, expBottom = -1;
+
     public ClassScreen(boolean selecting) {
         super(Component.translatable(selecting ? "ui.rites_and_paths.title_select" : "ui.rites_and_paths.title_book"));
         this.selecting = selecting;
@@ -95,7 +106,18 @@ public final class ClassScreen extends Screen {
     protected void init() {
         lastXp = availableXp();
         classIds.clear();
-        classIds.addAll(DefinitionStore.CLIENT.classIds());
+        List<String> experimental = new ArrayList<>();
+        for (String id : DefinitionStore.CLIENT.classIds()) {
+            ClassDef def = DefinitionStore.CLIENT.classDef(id);
+            if (def != null && def.experimental()) {
+                // La propia siempre se ve, aunque no se haya descubierto el apartado.
+                if (experimentalRevealed || id.equals(state().classId)) experimental.add(id);
+            } else {
+                classIds.add(id);
+            }
+        }
+        int normalCount = classIds.size();
+        classIds.addAll(experimental);
         if (selectedClass == null || !classIds.contains(selectedClass)) {
             String own = state().classId;
             selectedClass = own != null && classIds.contains(own) ? own : (classIds.isEmpty() ? null : classIds.get(0));
@@ -114,7 +136,7 @@ public final class ClassScreen extends Screen {
 
         // Rejilla de clases: tarjetas con retrato.
         int gridBottom = selecting ? height - 8 : height - 56;
-        addPortraitGrid(classIds, gridBottom);
+        addPortraitGrid(classIds, normalCount, gridBottom);
 
         // Raza propia (permanente): se consulta en su pantalla.
         if (!selecting && !io.github.rpgclasses.core.definition.RaceStore.CLIENT.ids().isEmpty()) {
@@ -194,22 +216,62 @@ public final class ClassScreen extends Screen {
         }
     }
 
-    /** Dos columnas de tarjetas; si no caben, se encogen y dejan solo el retrato (el nombre va en la ayuda). */
-    private void addPortraitGrid(List<String> ids, int bottom) {
+    /**
+     * Dos columnas de tarjetas; si no caben, se encogen y dejan solo el retrato (el nombre va en la ayuda). Las clases
+     * experimentales (desde {@code normalCount}) empiezan en una fila nueva, separadas y con marco propio.
+     */
+    private void addPortraitGrid(List<String> ids, int normalCount, int bottom) {
         int cols = 2, gap = 2, top = TABS_Y;
         int cellW = (LEFT_WIDTH - 4 - gap) / cols;
-        int rows = Math.max(1, (ids.size() + cols - 1) / cols);
-        int cellH = Math.max(26, Math.min(52, (bottom - top) / rows - gap));
+        int normalRows = (normalCount + cols - 1) / cols;
+        int expCount = ids.size() - normalCount;
+        int expRows = (expCount + cols - 1) / cols;
+        int sep = expCount > 0 ? 8 : 0;
+        int rows = Math.max(1, normalRows + expRows);
+        int cellH = Math.max(26, Math.min(52, (bottom - top - sep) / rows - gap));
         boolean names = cellH >= 48;
+        expBottom = -1;
         for (int i = 0; i < ids.size(); i++) {
             String id = ids.get(i);
+            boolean exp = i >= normalCount;
+            int k = exp ? i - normalCount : i;
+            int row = exp ? normalRows + k / cols : k / cols;
+            int x = 8 + (k % cols) * (cellW + gap);
+            int y = top + row * (cellH + gap) + (exp ? sep : 0);
             ClassDef def = DefinitionStore.CLIENT.classDef(id);
-            PortraitButton b = new PortraitButton(8 + (i % cols) * (cellW + gap), top + (i / cols) * (cellH + gap), cellW, cellH,
+            PortraitButton b = new PortraitButton(x, y, cellW, cellH,
                     Component.translatable(Ids.langKey("class", id, "name")), Portraits.classTex(id), def == null ? null : def.icon(),
                     PortraitButton.Layout.VERTICAL, names, btn -> select(id));
             b.active = !id.equals(selectedClass);
             addRenderableWidget(b);
+            if (exp) {
+                if (expBottom < 0) {
+                    expLeft = 6;
+                    expTop = y - 3;
+                    expRight = 8 + cols * (cellW + gap);
+                }
+                expBottom = y + cellH + 1;
+            }
         }
+    }
+
+    /** El secreto se ha descubierto: aparece el apartado de clases experimentales. */
+    private void revealExperimental() {
+        if (experimentalRevealed) return;
+        experimentalRevealed = true;
+        if (minecraft != null) {
+            minecraft.getSoundManager().play(net.minecraft.client.resources.sounds.SimpleSoundInstance.forUI(
+                    net.minecraft.sounds.SoundEvents.AMETHYST_BLOCK_CHIME, 1.6f, 1.0f));
+        }
+        for (String id : DefinitionStore.CLIENT.classIds()) {
+            ClassDef def = DefinitionStore.CLIENT.classDef(id);
+            if (def != null && def.experimental()) {
+                selectedClass = id;
+                if (tab == ClassPages.Tab.RACE) tab = selecting ? ClassPages.Tab.SUMMARY : ClassPages.Tab.PROGRESS;
+                break;
+            }
+        }
+        rebuildWidgets();
     }
 
     /** Cabecera del panel: retrato y nombre de la clase; si es la tuya y tienes subclase, también la subclase. */
@@ -356,8 +418,14 @@ public final class ClassScreen extends Screen {
         String id = selectedClass;
         if (id == null) return;
         Component name = Component.translatable(Ids.langKey("class", id, "name"));
-        confirmWith(Component.translatable("ui.rites_and_paths.confirm_title", name), Component.translatable("ui.rites_and_paths.confirm_text"),
-                ClassAction.Action.CHOOSE_CLASS, id);
+        MutableComponent text = Component.translatable("ui.rites_and_paths.confirm_text");
+        ClassDef def = DefinitionStore.CLIENT.classDef(id);
+        // Clase experimental: aviso de que su balance no está garantizado.
+        if (def != null && def.experimental()) {
+            text.append("\n\n").append(Component.translatable("ui.rites_and_paths.experimental.warning")
+                    .withStyle(net.minecraft.ChatFormatting.LIGHT_PURPLE));
+        }
+        confirmWith(Component.translatable("ui.rites_and_paths.confirm_title", name), text, ClassAction.Action.CHOOSE_CLASS, id);
     }
 
     // --- Texto de las demás pestañas ---
@@ -417,12 +485,34 @@ public final class ClassScreen extends Screen {
         }
 
         super.render(g, mouseX, mouseY, partialTick);
+        renderExperimental(g, mouseX, mouseY);
         if (tab == ClassPages.Tab.PROGRESS) tree.renderTooltip(g, font, mouseX, mouseY);
         else if (tab == ClassPages.Tab.RACE) raceTree.renderTooltip(g, font, mouseX, mouseY);
     }
 
+    /** La φ de la esquina (casi invisible) y, si está descubierto, el marco y el título del apartado experimental. */
+    private void renderExperimental(GuiGraphics g, int mouseX, int mouseY) {
+        boolean overPhi = mouseX >= PHI_X && mouseX < PHI_X + PHI_W && mouseY >= PHI_Y && mouseY < PHI_Y + PHI_H;
+        if (!experimentalRevealed) g.drawString(font, "φ", PHI_X + 1, PHI_Y + 1, overPhi ? 0x90D8B04A : 0x26C9A24A, false);
+        if (expBottom < 0) return;
+        int c = 0xC0B070FF;
+        g.fill(expLeft, expTop, expRight, expTop + 1, c);
+        g.fill(expLeft, expBottom, expRight, expBottom + 1, c);
+        g.fill(expLeft, expTop, expLeft + 1, expBottom + 1, c);
+        g.fill(expRight - 1, expTop, expRight, expBottom + 1, c);
+        Component label = Component.translatable("ui.rites_and_paths.experimental.section");
+        int w = font.width(label);
+        int lx = (expLeft + expRight - w) / 2;
+        g.fill(lx - 2, expTop - 4, lx + w + 2, expTop + 4, 0xFF101018);
+        g.drawString(font, label, lx, expTop - 3, 0xFFC8A0FF, false);
+    }
+
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
+        if (!experimentalRevealed && button == 0 && mouseX >= PHI_X && mouseX < PHI_X + PHI_W && mouseY >= PHI_Y && mouseY < PHI_Y + PHI_H) {
+            revealExperimental();
+            return true;
+        }
         if (tab == ClassPages.Tab.PROGRESS && tree.mouseClicked(mouseX, mouseY, button)) return true;
         if (tab == ClassPages.Tab.RACE && raceTree.mouseClicked(mouseX, mouseY, button)) return true;
         return super.mouseClicked(mouseX, mouseY, button);
@@ -458,6 +548,17 @@ public final class ClassScreen extends Screen {
         tree.saveCamera();
         raceTree.saveCamera();
         super.removed();
+    }
+
+    /** Secreto de las clases experimentales: escribir 1618 en esta pantalla. */
+    @Override
+    public boolean charTyped(char c, int modifiers) {
+        if (!experimentalRevealed && c >= '0' && c <= '9') {
+            typed = (typed + c);
+            if (typed.length() > SECRET.length()) typed = typed.substring(typed.length() - SECRET.length());
+            if (typed.equals(SECRET)) revealExperimental();
+        }
+        return super.charTyped(c, modifiers);
     }
 
     @Override

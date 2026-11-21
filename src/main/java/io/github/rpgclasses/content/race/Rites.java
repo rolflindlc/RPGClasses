@@ -329,6 +329,7 @@ public final class Rites {
         if (isSpell(s)) return Ids.MAGIC;
         if (s.is(DamageTypeTags.IS_EXPLOSION)) return null;
         Entity direct = s.getDirectEntity();
+        if (direct instanceof io.github.rpgclasses.spin.SphereEntity) return Ids.SPHERES;
         if (direct instanceof Projectile) return Ids.BOW;
         if (direct != p) return null;
         WeaponClassifier.Classification c = WeaponClassifier.classify(p.getMainHandItem());

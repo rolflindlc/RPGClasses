@@ -61,6 +61,11 @@ public final class ClassPages {
     // --- Pestañas ---
 
     private static void summary(ClassDef c, List<Component> out) {
+        if (c.experimental()) {
+            out.add(Component.translatable("ui.rites_and_paths.experimental.badge").withStyle(ChatFormatting.LIGHT_PURPLE, ChatFormatting.BOLD));
+            out.add(Component.translatable("ui.rites_and_paths.experimental.note").withStyle(ChatFormatting.LIGHT_PURPLE));
+            out.add(Component.empty());
+        }
         out.add(Component.translatable(Ids.langKey("class", c.id(), "desc")));
         out.add(Component.empty());
         if (!c.roles().isEmpty()) {
@@ -69,7 +74,8 @@ public final class ClassPages {
         out.add(Component.translatable(c.startingKit().isEmpty() ? "ui.rites_and_paths.no_kit" : "ui.rites_and_paths.kit").withStyle(ChatFormatting.GRAY));
         List<String> affine = new ArrayList<>();
         for (String d : new TreeSet<>(Ids.DISCIPLINES)) {
-            if (!c.walls().containsKey(d) && !(Ids.ARMOR.equals(d) && c.armorDisablesPassives())) affine.add(discipline(d).getString());
+            if (!c.walls().containsKey(d) && !c.fixedWalls().containsKey(d)
+                    && !(Ids.ARMOR.equals(d) && c.armorDisablesPassives())) affine.add(discipline(d).getString());
         }
         out.add(Component.empty());
         out.add(Component.translatable("ui.rites_and_paths.affine", String.join(", ", affine)).withStyle(ChatFormatting.GREEN));
@@ -134,12 +140,18 @@ public final class ClassPages {
     // --- Bloques ---
 
     private static void walls(ClassDef c, List<Component> out) {
-        if (c.walls().isEmpty()) return;
+        if (c.walls().isEmpty() && c.fixedWalls().isEmpty()) return;
         out.add(Component.empty());
         out.add(header("ui.rites_and_paths.walls_header"));
         for (String d : new TreeSet<>(c.walls().keySet())) {
             out.add(Component.translatable("ui.rites_and_paths.wall_line", discipline(d), percent(c.walls().get(d))).withStyle(ChatFormatting.RED));
         }
+        // Muros fijos (Esferas): completos desde que se elige la clase.
+        for (String d : new TreeSet<>(c.fixedWalls().keySet())) {
+            out.add(Component.translatable("ui.rites_and_paths.wall_fixed_line", discipline(d), percent(c.fixedWalls().get(d)))
+                    .withStyle(ChatFormatting.DARK_RED));
+        }
+        if (c.walls().isEmpty()) return;
         String example = new TreeSet<>(c.walls().keySet()).first();
         out.add(Component.translatable("ui.rites_and_paths.walls_note", 15,
                 "-" + percent(StatMath.wallPenalty(c.walls().get(example), 15)) + " (" + discipline(example).getString() + ")")

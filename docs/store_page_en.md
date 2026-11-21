@@ -18,6 +18,9 @@ change it with datapacks.
 - **Cleric:** a holy healer who blesses, purifies and shields allies, holds up a Sanctuary and saves them from the
   final blow with Miracle. Fly as an Angel, heal with your own blood as a Martyr or pray through a guardian angel as
   an Intercessor.
+- **A hidden experimental class:** find the secret on the class screen to unlock the Spin Master, who throws
+  spinning balls of ten materials that bounce, drill into enemies for three ticks and come back to the hand, building
+  up Spin until the Golden Rectangle. Its balance is not guaranteed.
 - **Allies:** mark your allies (key J) and share auras and effects with them.
 - **Beast Master bonds**, a Mage with free-cast slots, a Chronomancer who rewinds and stops time, and much more.
 - **Class and race HUD** with cooldowns and key bindings.

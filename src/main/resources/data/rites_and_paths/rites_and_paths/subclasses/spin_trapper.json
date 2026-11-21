@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "class": "rites_and_paths:spin_master",
+  "display": {
+    "icon": "minecraft:tripwire_hook"
+  },
+  "effects": [
+    {
+      "type": "rites_and_paths:mechanic",
+      "id": "rites_and_paths:spin_mine",
+      "mine_seconds": 30,
+      "trigger_radius": 2,
+      "mine_damage": 1.5,
+      "slow_seconds": 2,
+      "slow_level": 2,
+      "max_mines": {
+        "values": [
+          2,
+          2,
+          2,
+          2,
+          2,
+          3,
+          3,
+          3,
+          3,
+          4
+        ]
+      },
+      "pickup_range": 3
+    }
+  ],
+  "milestones": []
+}

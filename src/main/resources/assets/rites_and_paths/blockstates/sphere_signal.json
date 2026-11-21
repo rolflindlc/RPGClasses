@@ -1,0 +1,22 @@
+{
+  "variants": {
+    "facing=down": {
+      "model": "rites_and_paths:block/sphere_signal"
+    },
+    "facing=up": {
+      "model": "rites_and_paths:block/sphere_signal"
+    },
+    "facing=north": {
+      "model": "rites_and_paths:block/sphere_signal"
+    },
+    "facing=south": {
+      "model": "rites_and_paths:block/sphere_signal"
+    },
+    "facing=west": {
+      "model": "rites_and_paths:block/sphere_signal"
+    },
+    "facing=east": {
+      "model": "rites_and_paths:block/sphere_signal"
+    }
+  }
+}

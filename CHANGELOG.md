@@ -13,6 +13,20 @@ First public beta of Rolflin's Rites & Paths (Minecraft Forge 1.20.1).
   (Sacrifice and Final Sacrifice) and Intercessor (Prayer: a crouching copy of your body stays behind and you
   fly beside the ally as a translucent floating head, up to 15 blocks from them, casting your spells from there; hits
   on the body hurt you, the head cannot be hurt).
+- **Spin Master** (experimental, hidden): a hidden "Experimental" section in the class selection screen (type 1618 or
+  click the faint φ in the top-left corner) holds classes whose balance is not guaranteed; choosing one shows a
+  warning. The Spin Master throws balls of 10 materials (iron, diamond, netherite, slime, copper, amethyst, ender pearl,
+  gold, redstone and dripstone, crafted in a cross with 5 of the material) from a **Sphere Bandolier** (bundle-like:
+  right click to store or take out; key G to switch ball): left click throws straight, right click throws curved
+  (it follows your camera). The ball sticks into the target and spins for 3 ticks (skipping invulnerability), bounces
+  off blocks and returns to the hand; a click right as it arrives is a Perfect Catch. Every hit raises the **Spin** bar
+  (33%: extra bounce; 66%: stronger material effect; 100%: Golden Rectangle). Branches Rotation, Rebound, Return,
+  Scan and Curve; Bounce Route, Reverse Spin, Spin Step and the **Golden Rectangle** ultimate (Golden Spin and a Final
+  Spiral with a cinematic camera, floating onomatopoeias and hit-stop shake, all shader-friendly). Subclasses Rider,
+  Scanner and Spin Trapper (planted mines). Six ball enchantments (Friction, Density, Lightness, Magnet, Claw,
+  Elasticity). New **Spheres** discipline: every other class has a fixed −100% wall on it. A fourth ability key (H).
+  Server options `sphere.redstone.enabled`, `sphere.stalactite.breakBlocks` and `sphere.friction.igniteBlocks`;
+  client options `spinShake` and `spinCinematic`.
 - **12 races** with **39 subraces** and **117 rites**, with a Race Altar and rite bosses.
 - **Bard** rhythm minigame, with its own music school for Iron's Spells 'n Spellbooks, instruments, sheet music and a
   music stand.

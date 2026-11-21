@@ -244,6 +244,9 @@ public final class StatCalculator {
     /** Igual, con la reducción de Adaptable del Humano sumada a las mitigaciones (tope 100 %). */
     public static double wall(ProgressState s, ClassDef c, SubclassDef sub, RaceDef race, String discipline) {
         if (c == null || !c.id().equals(s.classId)) return 0;
+        // Muro fijo (Esferas para todos salvo el Maestro del Giro): completo desde el principio y sin mitigación.
+        Double fixed = c.fixedWalls().get(discipline);
+        if (fixed != null && fixed > 0) return StatMath.mitigatedWall(fixed, 0);
         double penalty = StatMath.wallPenalty(c.walls().getOrDefault(discipline, 0.0), s.basePoints());
         if (penalty <= 0) return 0;
         double mitigation = humanWallReduction(s, race, discipline);

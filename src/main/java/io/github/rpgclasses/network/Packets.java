@@ -655,4 +655,81 @@ public final class Packets {
             if (sender != null) io.github.rpgclasses.cleric.Sanctuary.release(sender);
         }
     }
+
+    // ------------------------------------------------------------------ Maestro del Giro (protocolo 21)
+
+    /** Cliente -> servidor: clic con la bandolera en la mano (0 directo, 1 curvo), agachado o no. */
+    public record SphereThrow(int kind, boolean sneak) {
+        public void encode(FriendlyByteBuf buf) {
+            buf.writeByte(kind);
+            buf.writeBoolean(sneak);
+        }
+
+        public static SphereThrow decode(FriendlyByteBuf buf) {
+            return new SphereThrow(buf.readByte(), buf.readBoolean());
+        }
+
+        public void handle(Supplier<NetworkEvent.Context> ctx) {
+            ServerPlayer sender = ctx.get().getSender();
+            if (sender != null && !io.github.rpgclasses.content.DeathGamble.flipping(sender)
+                    && !io.github.rpgclasses.content.Chronomancy.isFrozen(sender)
+                    && !io.github.rpgclasses.content.race.SlimeForms.blocksActions(sender)
+                    && !io.github.rpgclasses.cleric.Miracle.isDowned(sender)) {
+                io.github.rpgclasses.server.DebugLog.guard(sender, "lanzar bola",
+                        () -> io.github.rpgclasses.spin.SpinThrow.onThrowPacket(sender, kind, sneak));
+            }
+        }
+    }
+
+    /** Cliente -> servidor: tecla de cambiar de bola. */
+    public record SphereCycle() {
+        public void encode(FriendlyByteBuf buf) {}
+
+        public static SphereCycle decode(FriendlyByteBuf buf) {
+            return new SphereCycle();
+        }
+
+        public void handle(Supplier<NetworkEvent.Context> ctx) {
+            ServerPlayer sender = ctx.get().getSender();
+            if (sender != null) io.github.rpgclasses.spin.SpinThrow.onCycle(sender);
+        }
+    }
+
+    /** Servidor -> cliente: barra de Giro (0-1), tics de Giro Dorado, cargas de espiral y si es Maestro del Giro. */
+    public record SpinSync(float spin, int goldenTicks, int spiral, int maxSpiral, boolean active) {
+        public void encode(FriendlyByteBuf buf) {
+            buf.writeFloat(spin);
+            buf.writeVarInt(goldenTicks);
+            buf.writeVarInt(spiral);
+            buf.writeVarInt(maxSpiral);
+            buf.writeBoolean(active);
+        }
+
+        public static SpinSync decode(FriendlyByteBuf buf) {
+            return new SpinSync(buf.readFloat(), buf.readVarInt(), buf.readVarInt(), buf.readVarInt(), buf.readBoolean());
+        }
+
+        public void handle(Supplier<NetworkEvent.Context> ctx) {
+            DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> io.github.rpgclasses.client.spin.SpinClient.onSync(this));
+        }
+    }
+
+    /** Servidor -> cliente: efecto visual del Maestro del Giro (ver spin.SpinFxSender: temblor, onomatopeya, cinemática...). */
+    public record SpinFx(int kind, double x, double y, double z, float value) {
+        public void encode(FriendlyByteBuf buf) {
+            buf.writeByte(kind);
+            buf.writeDouble(x);
+            buf.writeDouble(y);
+            buf.writeDouble(z);
+            buf.writeFloat(value);
+        }
+
+        public static SpinFx decode(FriendlyByteBuf buf) {
+            return new SpinFx(buf.readByte(), buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readFloat());
+        }
+
+        public void handle(Supplier<NetworkEvent.Context> ctx) {
+            DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> io.github.rpgclasses.client.spin.SpinClient.onFx(this));
+        }
+    }
 }

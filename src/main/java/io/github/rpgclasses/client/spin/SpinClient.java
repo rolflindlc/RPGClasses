@@ -8,7 +8,7 @@ import io.github.rpgclasses.network.Net;
 import io.github.rpgclasses.network.Packets;
 import io.github.rpgclasses.spin.Bandolier;
 import io.github.rpgclasses.spin.SphereEntity;
-import io.github.rpgclasses.spin.SphereMaterial;
+import io.github.rpgclasses.spin.SphereKind;
 import io.github.rpgclasses.spin.SpinFxSender;
 import io.github.rpgclasses.spin.SpinMaster;
 import io.github.rpgclasses.spin.SpinRegistry;
@@ -410,11 +410,11 @@ public final class SpinClient {
         g.drawCenteredString(font, label, width / 2, y - 10, ready ? 0xFFFFD84A : 0xFFFFFFFF);
         ItemStack band = mc.player.getMainHandItem();
         if (Bandolier.is(band)) {
-            SphereMaterial m = Bandolier.current(band);
+            SphereKind m = Bandolier.current(band);
             if (m != null) {
                 String s = Component.translatable("hud.rites_and_paths.sphere",
-                        Component.translatable("item.rites_and_paths." + m.itemName()), Bandolier.ready(band, m, now), Bandolier.total(band, m)).getString();
-                g.drawString(font, s, x + w + 6, y - 2, 0xFF000000 | m.color);
+                        m.name(), Bandolier.ready(band, m, now), Bandolier.total(band, m)).getString();
+                g.drawString(font, s, x + w + 6, y - 2, 0xFF000000 | m.color());
             }
         }
     }

@@ -10,7 +10,7 @@
       "id": "rites_and_paths:spin_mine",
       "mine_seconds": 30,
       "trigger_radius": 2,
-      "mine_damage": 0.8,
+      "mine_damage": 1.1,
       "slow_seconds": 2,
       "slow_level": 2,
       "max_mines": {

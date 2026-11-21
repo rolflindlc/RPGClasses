@@ -4,33 +4,38 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 import io.github.rpgclasses.RpgClasses;
-import io.github.rpgclasses.spin.SphereMaterial;
+import io.github.rpgclasses.spin.SphereKind;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
 import org.joml.Matrix3f;
 import org.joml.Matrix4f;
 
-import java.util.EnumMap;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
  * La bola en 3D pixelado (adenda del Maestro del Giro, sección 3): un núcleo voxel (cubos escalonados que forman una
  * "esfera" de bloques) y un anillo octogonal que gira por separado. Se usa en la entidad y en la mano (y en el inventario).
  * <p>
- * Textura de cada material ({@code textures/item/sphere/<id>.png}, 16x16): núcleo en (0,0)-(8,8), núcleo oscuro en
- * (0,8)-(8,16), anillo en (8,0)-(16,4) y anillo dorado en (8,4)-(16,8). La hará Laira; la provisional sale de
- * tools/art/make_spin.py.
+ * Textura de cada tier y de cada mejora ({@code textures/item/sphere/<id>.png}, 16x16): núcleo en (0,0)-(8,8), núcleo
+ * oscuro en (0,8)-(8,16), anillo en (8,0)-(16,4) y anillo dorado en (8,4)-(16,8). El núcleo sale de la textura del tier
+ * y el anillo de la de la mejora (o del tier, si no tiene). La hará Laira; la provisional sale de tools/art/make_spin.py.
  */
 public final class VoxelBall {
-    private static final Map<SphereMaterial, ResourceLocation> TEXTURES = new EnumMap<>(SphereMaterial.class);
+    private static final Map<String, ResourceLocation> TEXTURES = new HashMap<>();
     private static final float A = 0.15f, B = 0.10f, C = 0.125f;
     private static final float RING_R = 0.235f, RING_T = 0.028f, RING_H = 0.05f;
 
     private VoxelBall() {}
 
-    public static ResourceLocation texture(SphereMaterial m) {
-        return TEXTURES.computeIfAbsent(m, k -> RpgClasses.id("textures/item/sphere/" + k.id + ".png"));
+    public static ResourceLocation texture(String id) {
+        return TEXTURES.computeIfAbsent(id, k -> RpgClasses.id("textures/item/sphere/" + k + ".png"));
+    }
+
+    /** Textura del núcleo (la del tier). */
+    public static ResourceLocation texture(SphereKind k) {
+        return texture(k.tier().id);
     }
 
     /**
@@ -39,7 +44,7 @@ public final class VoxelBall {
      * @param golden anillo dorado (Giro I o Giro Dorado).
      * @param scale tamaño (1 = 0,3 bloques de núcleo).
      */
-    public static void render(PoseStack pose, MultiBufferSource buffers, int light, int overlay, SphereMaterial m, float ringAngle,
+    public static void render(PoseStack pose, MultiBufferSource buffers, int light, int overlay, SphereKind m, float ringAngle,
                               boolean golden, float scale, float coreSpin) {
         VertexConsumer vc = buffers.getBuffer(RenderType.entityCutoutNoCull(texture(m)));
         pose.pushPose();
@@ -53,7 +58,8 @@ public final class VoxelBall {
         box(vc, last, -B, -B, -A, B, B, A, 0, 0, 8, 8, light, overlay, 1f);
         box(vc, last, -C, -C, -C, C, C, C, 0, 8, 8, 16, light, overlay, 1f);
         pose.popPose();
-        // Anillo: octógono inclinado que gira aparte.
+        // Anillo: octógono inclinado que gira aparte (con la textura de la mejora, si la tiene).
+        if (m.upgrade() != null) vc = buffers.getBuffer(RenderType.entityCutoutNoCull(texture(m.upgrade().id)));
         pose.pushPose();
         pose.mulPose(Axis.ZP.rotationDegrees(22f));
         pose.mulPose(Axis.YP.rotationDegrees(ringAngle));

@@ -49,7 +49,7 @@ public final class SpinAbilities {
         if (GoldenRectangle.active(p)) return false;
         ItemStack band = p.getMainHandItem();
         if (!Bandolier.is(band) || !SpinMaster.canThrow(p)) return false;
-        SphereMaterial m = Bandolier.current(band);
+        SphereKind m = Bandolier.current(band);
         if (m == null) {
             p.displayClientMessage(Component.translatable("message.rites_and_paths.spin.empty").withStyle(ChatFormatting.GRAY), true);
             return false;
@@ -58,7 +58,7 @@ public final class SpinAbilities {
         Bandolier.clearStale(band, SpinThrow::alive, now);
         if (Bandolier.firstReady(band, m, now) == null) {
             p.displayClientMessage(Component.translatable("message.rites_and_paths.spin.no_ready",
-                    Component.translatable("item.rites_and_paths." + m.itemName())).withStyle(ChatFormatting.GRAY), true);
+                    m.name()).withStyle(ChatFormatting.GRAY), true);
             return false;
         }
         int max = SpinThrow.maxSpheres(p);

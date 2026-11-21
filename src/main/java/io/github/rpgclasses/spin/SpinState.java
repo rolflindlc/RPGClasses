@@ -46,7 +46,7 @@ public final class SpinState {
         boolean chargeConsumed;
         long lastArrival = -10_000;
         long lastArrivalId;
-        SphereMaterial lastArrivalMaterial;
+        SphereKind lastArrivalKind;
         int steadyTarget = -1, steadyCount;
         long lastThrow = -10_000;
         // Velocidad (bloques por tic, horizontal) y dirección de movimiento.

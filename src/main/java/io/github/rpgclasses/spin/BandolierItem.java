@@ -90,10 +90,10 @@ public class BandolierItem extends Item {
             tooltip.add(Component.translatable("tooltip.rites_and_paths.bandolier.empty").withStyle(ChatFormatting.GRAY));
         } else {
             tooltip.add(Component.translatable("tooltip.rites_and_paths.bandolier.count", n, Bandolier.CAPACITY).withStyle(ChatFormatting.GRAY));
-            SphereMaterial m = Bandolier.current(stack);
+            SphereKind m = Bandolier.current(stack);
             if (m != null) {
                 tooltip.add(Component.translatable("tooltip.rites_and_paths.bandolier.selected",
-                        Component.translatable("item.rites_and_paths." + m.itemName())).withStyle(ChatFormatting.GOLD));
+                        m.name()).withStyle(ChatFormatting.GOLD));
             }
         }
         tooltip.add(Component.translatable("tooltip.rites_and_paths.bandolier.controls",

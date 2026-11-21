@@ -8,7 +8,7 @@
 7 Varredura
 8 Curva
 9 Lançamento de Esferas
-10 Com a bandoleira na mão: clique esquerdo, a bola vai guiada para onde apontas (vai mais longe, mas um pouco mais devagar); clique direito, faz curva para onde olhas e, se o mantiveres premido, o lançamento carrega: com a carga completa vai duas vezes mais longe, fica cravada o dobro do tempo e causa ×1,5 de dano. A bola crava-se no alvo e gira nele durante uns 2 segundos, causando dano sem parar (ignorando a invulnerabilidade dele). Cada ressalto, num bloco ou depois de girar num inimigo, manda-a para onde a tua câmara olha: és tu que apontas ao inimigo seguinte. Sem ressaltos restantes, volta à mão. Clicar mesmo quando ela chega é uma Captura Perfeita: mais Giro e relanças a bola de imediato. Cada bloco em que ressalta antes do impacto soma dano.
+10 Com a bandoleira na mão: clique esquerdo, a bola vai guiada para onde apontas (vai mais longe, mas um pouco mais devagar); clique direito, faz curva para onde olhas e, se o mantiveres premido, o lançamento carrega: com a carga completa vai duas vezes mais longe, fica cravada o dobro do tempo e causa ×1,5 de dano. A bola crava-se no alvo e gira nele durante 1 segundo, causando dano em vários ticks (ignorando a invulnerabilidade dele); cada tick perde contra a armadura o mesmo que o impacto inteiro perderia num único golpe. Cada ressalto, num bloco ou depois de girar num inimigo, manda-a para onde a tua câmara olha: és tu que apontas ao inimigo seguinte. Sem ressaltos restantes, volta à mão. Clicar mesmo quando ela chega é uma Captura Perfeita: mais Giro e relanças a bola de imediato. Cada bloco em que ressalta antes do impacto soma dano.
 11 Giro
 12 Barra de 0 a 100 % que sobe a cada impacto, mais se os encadeares. Se uma bola volta sem atingir nenhum inimigo, perdes metade; fora de combate desce aos poucos. Com 33 %: mais um ricochete e rastos dourados. Com 66 %: efeito do material mais forte e um pouco mais de dano. Com 100 %: podes usar o Retângulo Dourado (a partir do Nível Total 30).
 13 Rota de Ricochetes
@@ -22,7 +22,7 @@
 21 Ponto Fraco Compartilhado
 22 Os teus aliados também veem as marcas de Ponto Fraco, e cada impacto renova-as.
 23 Lança bolas de materiais diferentes que se cravam a girar, ressaltam e voltam à mão: clique esquerdo, guiada para onde apontas; clique direito, curva e carregável; a bandoleira guarda as bolas e uma tecla troca a que usas. Escaramuçador híbrido: atinge de perto e de longe e recompensa o ritmo, os combos e a precisão. Cada impacto encadeado aumenta o seu Giro, que fortalece as bolas e carrega o Retângulo Dourado.
-24 As tuas bolas causam mais dano e o teu Giro sobe mais rápido.
+24 As tuas bolas causam mais ticks de dano enquanto giram cravadas no alvo (mais dano nos golpes únicos) e o teu Giro sobe mais depressa.
 25 Mais ricochetes, e as bolas que ricocheteiam de um inimigo a outro conservam mais dano.
 26 As tuas bolas ficam prontas mais cedo ao voltar e, com o ramo completo, podes ter mais uma em voo.
 27 Mais probabilidade e dano crítico; os teus críticos com bola ignoram parte da armadura.
@@ -116,13 +116,13 @@
 115 Dano da bola de ferro x
 116 Dano da bola de diamante x
 117 Dano da bola de netherite x
-118 Dano da bola de slime x
-119 Dano da bola de cobre x
-120 Dano da bola de ametista x
-121 Dano da bola de pérola do Ender x
-122 Dano da bola de ouro x
-123 Dano da bola de redstone x
-124 Dano da bola de estalactite x
+118 Melhoria de Slime: dano x
+119 Melhoria de Cobre: dano x
+120 Melhoria de Ametista: dano x
+121 Melhoria de Pérola do Ender: dano x
+122 Melhoria de Ouro: dano x
+123 Melhoria de Redstone: dano x
+124 Melhoria de Espeleotema: dano x
 125 Ferro: repulsão
 126 Diamante: armadura ignorada
 127 Netherite: queimadura
@@ -203,55 +203,69 @@
 202 Ignora parte da armadura do alvo.
 203 Bola de netherite
 204 Queima e empurra forte. Resiste ao fogo e à lava.
-205 Bola de slime
-206 Ricocheteia muito mais e quase não perde velocidade.
-207 Bola de cobre
-208 Salta para inimigos próximos. Durante trovoadas, atrai raios.
-209 Bola de ametista
-210 Solta uma onda sônica em linha que atravessa blocos e cega.
-211 Bola de pérola do Ender
-212 Ao voltar, leva-te ao ponto de impacto.
-213 Bola de ouro
-214 Muito rápida e fica pronta antes.
-215 Bola de redstone
-216 Ativa a redstone que atinge.
-217 Bola de estalactite
-218 Parte blocos macios e trá-los até ti.
-219 Fricção
-220 As tuas bolas incendeiam os inimigos e os blocos inflamáveis que atingem.
-221 Densidade
-222 Mais dano, menos alcance.
-223 Leveza
-224 Mais alcance, menos dano.
-225 Ímã
-226 As tuas bolas ficam prontas antes ao voltar, mas causam um pouco menos de dano.
-227 Garra
-228 A bola fica cravada por mais tempo e o Giro Reverso puxa mais, mas ela voa um pouco mais devagar.
-229 Elasticidade
-230 Mais ricochetes, mas cada ricochete causa um pouco menos de dano.
-231 Tempo cravada a girar
-232 Dano a cada
-233 Micropausa no impacto (ticks)
-234 Clique esquerdo: guia até à mira (graus por tick)
-235 Clique esquerdo: velocidade
-236 Clique esquerdo: alcance
-237 Clique direito: tempo de carga completa
-238 Clique direito carregado: alcance x
-239 Clique direito carregado: tempo cravada x
-240 Clique direito carregado: dano x
-241 Golpes da rota
-242 Alcance do primeiro alvo (blocos)
-243 Distância entre inimigos da rota (blocos)
-244 Cone da mira (graus)
-245 Ressalto junto a um inimigo sozinho (blocos)
-246 Golpe de passagem (de um impacto)
-247 Dano extra por golpe anterior
-248 Velocidade na rota (blocos por tick)
-249 Alcance para escolher o alvo (blocos)
-250 Raio em que o tempo para (blocos)
-251 Dano de cada pulso da rotação (da espada)
-252 Golpe final (da espada)
-253 Inimigos para os quais se propaga
-254 Alcance da propagação (blocos)
-255 Dano da propagação (da espada)
-256 Não há nenhum inimigo à vista.
+205 Slime: Ricocheteia muito mais e quase não perde velocidade.
+206 Cobre: Salta para inimigos próximos. Durante trovoadas, atrai raios.
+207 Ametista: Solta uma onda sônica em linha que atravessa blocos e cega.
+208 Pérola do Ender: Ao voltar, leva-te ao ponto de impacto.
+209 Ouro: Muito rápida e fica pronta antes.
+210 Redstone: Ativa a redstone que atinge.
+211 Espeleotema: Parte blocos macios e trá-los até ti.
+212 Fricção
+213 As tuas bolas incendeiam os inimigos e os blocos inflamáveis que atingem.
+214 Densidade
+215 Mais dano, menos alcance.
+216 Leveza
+217 Mais alcance, menos dano.
+218 Ímã
+219 As tuas bolas ficam prontas antes ao voltar, mas causam um pouco menos de dano.
+220 Garra
+221 A bola fica cravada por mais tempo e o Giro Reverso puxa mais, mas ela voa um pouco mais devagar.
+222 Elasticidade
+223 Mais ricochetes, mas cada ricochete causa um pouco menos de dano.
+224 Tempo cravada a girar
+225 Dano a cada
+226 Micropausa no impacto (ticks)
+227 Clique esquerdo: guia até à mira (graus por tick)
+228 Clique esquerdo: velocidade
+229 Clique esquerdo: alcance
+230 Clique direito: tempo de carga completa
+231 Clique direito carregado: alcance x
+232 Clique direito carregado: tempo cravada x
+233 Clique direito carregado: dano x
+234 Golpes da rota
+235 Alcance do primeiro alvo (blocos)
+236 Distância entre inimigos da rota (blocos)
+237 Cone da mira (graus)
+238 Ressalto junto a um inimigo sozinho (blocos)
+239 Golpe de passagem (de um impacto)
+240 Dano extra por golpe anterior
+241 Velocidade na rota (blocos por tick)
+242 Alcance para escolher o alvo (blocos)
+243 Raio em que o tempo para (blocos)
+244 Dano de cada pulso da rotação (da espada)
+245 Golpe final (da espada)
+246 Inimigos para os quais se propaga
+247 Alcance da propagação (blocos)
+248 Dano da propagação (da espada)
+249 Não há nenhum inimigo à vista.
+250 Broca: dano x
+251 Marretada: dano x
+252 Broca: tempo cravada x
+253 Broca: dano por tick x
+254 Marretada: velocidade
+255 Marretada: recarga do regresso
+256 Marretada: repulsão
+257 Ticks de dano extra
+258 Melhora-a na bancada de trabalho com algumas unidades de um material (por exemplo, 4 lingotes de cobre).
+259 %s (%s)
+260 slime
+261 cobre
+262 ametista
+263 pérola do Ender
+264 ouro
+265 redstone
+266 espeleotema
+267 sílex
+268 obsidiana
+269 Broca (sílex): menos dano por tick, mas fica cravada muito mais tempo e no total causa mais dano.
+270 Marretada (obsidiana): todo o dano num único golpe, sem ficar cravada; é mais lenta e demora mais a ficar pronta outra vez.

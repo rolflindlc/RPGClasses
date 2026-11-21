@@ -8,7 +8,7 @@
 7 Abtasten
 8 Kurve
 9 Kugelwurf
-10 Mit dem Bandelier in der Hand: Linksklick, die Kugel wird dorthin gelenkt, wohin du zielst (sie fliegt weiter, aber etwas langsamer); Rechtsklick, sie krümmt sich in Blickrichtung, und gedrückt halten lädt den Wurf auf: voll aufgeladen fliegt sie doppelt so weit, steckt doppelt so lange und verursacht ×1,5 Schaden. Die Kugel bohrt sich ins Ziel und dreht sich etwa 2 Sekunden darauf, wobei sie ununterbrochen Schaden verursacht (ignoriert seine Unverwundbarkeit). Jeder Abprall, an einem Block oder nach dem Drehen in einem Gegner, schickt sie dorthin, wohin deine Kamera blickt: Auf den nächsten Gegner zielst du selbst. Ohne verbleibende Abpraller kehrt sie in deine Hand zurück. Genau beim Ankommen klicken ist ein Perfekter Fang: mehr Drehung und du wirfst sie sofort erneut. Jeder Block, von dem sie vor dem Treffer abprallt, erhöht den Schaden.
+10 Mit dem Bandelier in der Hand: Linksklick, die Kugel wird dorthin gelenkt, wohin du zielst (sie fliegt weiter, aber etwas langsamer); Rechtsklick, sie krümmt sich in Blickrichtung, und gedrückt halten lädt den Wurf auf: voll aufgeladen fliegt sie doppelt so weit, steckt doppelt so lange und verursacht ×1,5 Schaden. Die Kugel bohrt sich ins Ziel und dreht sich 1 Sekunde darauf, wobei sie mit mehreren Ticks Schaden verursacht (ignoriert seine Unverwundbarkeit); jeder Tick verliert gegen Rüstung so viel wie der ganze Treffer mit einem einzigen Schlag. Jeder Abprall, an einem Block oder nach dem Drehen in einem Gegner, schickt sie dorthin, wohin deine Kamera blickt: Auf den nächsten Gegner zielst du selbst. Ohne verbleibende Abpraller kehrt sie in deine Hand zurück. Genau beim Ankommen klicken ist ein Perfekter Fang: mehr Drehung und du wirfst sie sofort erneut. Jeder Block, von dem sie vor dem Treffer abprallt, erhöht den Schaden.
 11 Drehung
 12 Leiste von 0 bis 100 %, die mit jedem Treffer steigt, mehr bei Treffern in Folge. Kehrt eine Kugel zurück, ohne einen Gegner getroffen zu haben, verlierst du die Hälfte; außerhalb des Kampfes sinkt sie langsam. Ab 33 %: ein Abprall mehr und goldene Spuren. Ab 66 %: stärkerer Materialeffekt und etwas mehr Schaden. Bei 100 %: Du kannst das Goldene Rechteck einsetzen (ab Gesamtstufe 30).
 13 Abprallroute
@@ -22,7 +22,7 @@
 21 Geteilter Schwachpunkt
 22 Auch deine Verbündeten sehen die Schwachpunkt-Markierungen, und jeder Treffer erneuert sie.
 23 Wirft Kugeln aus verschiedenen Materialien, die sich drehend ins Ziel bohren, abprallen und in die Hand zurückkehren: Linksklick, gelenkt dorthin, wohin du zielst; Rechtsklick, gekrümmt und aufladbar; das Bandelier verwahrt die Kugeln, und eine Taste wechselt die benutzte. Hybrider Plänkler: trifft aus der Nähe und aus der Ferne und belohnt Rhythmus, Kombos und Präzision. Jeder Treffer in Folge steigert die Drehung, die die Kugeln verstärkt und das Goldene Rechteck auflädt.
-24 Deine Kugeln verursachen mehr Schaden und deine Drehung steigt schneller.
+24 Deine Kugeln verursachen mehr Schadensticks, während sie sich im Ziel drehen (bei Einzeltreffern mehr Schaden), und deine Drehung steigt schneller.
 25 Mehr Abpraller, und Kugeln, die von einem Gegner zum nächsten springen, behalten mehr Schaden.
 26 Deine Kugeln sind nach der Rückkehr schneller bereit, und mit vollem Zweig kannst du eine mehr im Flug haben.
 27 Mehr kritische Trefferchance und kritischer Schaden; deine kritischen Kugeltreffer ignorieren einen Teil der Rüstung.
@@ -116,13 +116,13 @@
 115 Schaden der Eisenkugel x
 116 Schaden der Diamantkugel x
 117 Schaden der Netheritkugel x
-118 Schaden der Schleimkugel x
-119 Schaden der Kupferkugel x
-120 Schaden der Amethystkugel x
-121 Schaden der Enderperlenkugel x
-122 Schaden der Goldkugel x
-123 Schaden der Redstonekugel x
-124 Schaden der Tropfsteinkugel x
+118 Schleim-Verbesserung: Schaden x
+119 Kupfer-Verbesserung: Schaden x
+120 Amethyst-Verbesserung: Schaden x
+121 Enderperle-Verbesserung: Schaden x
+122 Gold-Verbesserung: Schaden x
+123 Redstone-Verbesserung: Schaden x
+124 Tropfstein-Verbesserung: Schaden x
 125 Eisen: Rückstoß
 126 Diamant: ignorierte Rüstung
 127 Netherit: Brennen
@@ -203,55 +203,69 @@
 202 Ignoriert einen Teil der Rüstung des Ziels.
 203 Netheritkugel
 204 Verbrennt und stößt stark zurück. Widersteht Feuer und Lava.
-205 Schleimkugel
-206 Prallt viel öfter ab und verliert kaum Geschwindigkeit.
-207 Kupferkugel
-208 Springt zu nahen Gegnern. Bei Gewitter zieht sie Blitze an.
-209 Amethystkugel
-210 Löst eine Schallwelle in einer Linie aus, die Blöcke durchdringt und blendet.
-211 Enderperlenkugel
-212 Bei der Rückkehr bringt sie dich zum Einschlagpunkt.
-213 Goldkugel
-214 Sehr schnell und früher wieder bereit.
-215 Redstonekugel
-216 Aktiviert das Redstone, das sie trifft.
-217 Tropfsteinkugel
-218 Zerbricht weiche Blöcke und bringt sie dir.
-219 Reibung
-220 Deine Kugeln setzen Gegner und die brennbaren Blöcke, die sie treffen, in Brand.
-221 Dichte
-222 Mehr Schaden, weniger Reichweite.
-223 Leichtigkeit
-224 Mehr Reichweite, weniger Schaden.
-225 Magnet
-226 Deine Kugeln sind nach der Rückkehr schneller bereit, verursachen aber etwas weniger Schaden.
-227 Kralle
-228 Die Kugel bleibt länger stecken und Umgekehrte Drehung zieht stärker, aber sie fliegt etwas langsamer.
-229 Elastizität
-230 Mehr Abpraller, aber jeder Abprall verursacht etwas weniger Schaden.
-231 Dauer des Drehens im Ziel
-232 Schaden alle
-233 Trefferpause beim Aufprall (Ticks)
-234 Linksklick: Lenkung zum Fadenkreuz (Grad pro Tick)
-235 Linksklick: Geschwindigkeit
-236 Linksklick: Reichweite
-237 Rechtsklick: Zeit bis zur vollen Ladung
-238 Aufgeladener Rechtsklick: Reichweite x
-239 Aufgeladener Rechtsklick: Dauer im Ziel x
-240 Aufgeladener Rechtsklick: Schaden x
-241 Treffer der Route
-242 Reichweite für das erste Ziel (Blöcke)
-243 Abstand zwischen Gegnern der Route (Blöcke)
-244 Kegel des Fadenkreuzes (Grad)
-245 Abprall neben einem einzelnen Gegner (Blöcke)
-246 Treffer im Vorbeiflug (eines normalen Treffers)
-247 Zusätzlicher Schaden pro vorherigem Treffer
-248 Geschwindigkeit auf der Route (Blöcke pro Tick)
-249 Reichweite der Zielwahl (Blöcke)
-250 Radius, in dem die Zeit stillsteht (Blöcke)
-251 Schaden jedes Drehimpulses (des Schwerts)
-252 Letzter Schlag (des Schwerts)
-253 Gegner, auf die sie überspringt
-254 Reichweite des Überspringens (Blöcke)
-255 Schaden des Überspringens (des Schwerts)
-256 Kein Gegner in Sicht.
+205 Schleim: Prallt viel öfter ab und verliert kaum Geschwindigkeit.
+206 Kupfer: Springt zu nahen Gegnern. Bei Gewitter zieht sie Blitze an.
+207 Amethyst: Löst eine Schallwelle in einer Linie aus, die Blöcke durchdringt und blendet.
+208 Enderperle: Bei der Rückkehr bringt sie dich zum Einschlagpunkt.
+209 Gold: Sehr schnell und früher wieder bereit.
+210 Redstone: Aktiviert das Redstone, das sie trifft.
+211 Tropfstein: Zerbricht weiche Blöcke und bringt sie dir.
+212 Reibung
+213 Deine Kugeln setzen Gegner und die brennbaren Blöcke, die sie treffen, in Brand.
+214 Dichte
+215 Mehr Schaden, weniger Reichweite.
+216 Leichtigkeit
+217 Mehr Reichweite, weniger Schaden.
+218 Magnet
+219 Deine Kugeln sind nach der Rückkehr schneller bereit, verursachen aber etwas weniger Schaden.
+220 Kralle
+221 Die Kugel bleibt länger stecken und Umgekehrte Drehung zieht stärker, aber sie fliegt etwas langsamer.
+222 Elastizität
+223 Mehr Abpraller, aber jeder Abprall verursacht etwas weniger Schaden.
+224 Dauer des Drehens im Ziel
+225 Schaden alle
+226 Trefferpause beim Aufprall (Ticks)
+227 Linksklick: Lenkung zum Fadenkreuz (Grad pro Tick)
+228 Linksklick: Geschwindigkeit
+229 Linksklick: Reichweite
+230 Rechtsklick: Zeit bis zur vollen Ladung
+231 Aufgeladener Rechtsklick: Reichweite x
+232 Aufgeladener Rechtsklick: Dauer im Ziel x
+233 Aufgeladener Rechtsklick: Schaden x
+234 Treffer der Route
+235 Reichweite für das erste Ziel (Blöcke)
+236 Abstand zwischen Gegnern der Route (Blöcke)
+237 Kegel des Fadenkreuzes (Grad)
+238 Abprall neben einem einzelnen Gegner (Blöcke)
+239 Treffer im Vorbeiflug (eines normalen Treffers)
+240 Zusätzlicher Schaden pro vorherigem Treffer
+241 Geschwindigkeit auf der Route (Blöcke pro Tick)
+242 Reichweite der Zielwahl (Blöcke)
+243 Radius, in dem die Zeit stillsteht (Blöcke)
+244 Schaden jedes Drehimpulses (des Schwerts)
+245 Letzter Schlag (des Schwerts)
+246 Gegner, auf die sie überspringt
+247 Reichweite des Überspringens (Blöcke)
+248 Schaden des Überspringens (des Schwerts)
+249 Kein Gegner in Sicht.
+250 Bohrer: Schaden x
+251 Hammerschlag: Schaden x
+252 Bohrer: Dauer im Ziel x
+253 Bohrer: Schaden pro Tick x
+254 Hammerschlag: Geschwindigkeit
+255 Hammerschlag: Rückkehr-Abklingzeit
+256 Hammerschlag: Rückstoß
+257 Zusätzliche Schadensticks
+258 Verbessere sie an einer Werkbank mit einigen Einheiten eines Materials (zum Beispiel 4 Kupferbarren).
+259 %s mit %s
+260 Schleim
+261 Kupfer
+262 Amethyst
+263 Enderperle
+264 Gold
+265 Redstone
+266 Tropfstein
+267 Feuerstein
+268 Obsidian
+269 Bohrer (Feuerstein): weniger Schaden pro Tick, aber sie steckt viel länger im Ziel und verursacht insgesamt mehr Schaden.
+270 Hammerschlag (Obsidian): der ganze Schaden mit einem einzigen Treffer, ohne im Ziel stecken zu bleiben; sie ist langsamer und braucht länger, bis sie wieder bereit ist.

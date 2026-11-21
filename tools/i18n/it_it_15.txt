@@ -8,7 +8,7 @@
 7 Scansione
 8 Curva
 9 Lancio di Sfere
-10 Con la bandoliera in mano: clic sinistro, la sfera è guidata verso dove miri (arriva più lontano, ma è un po' più lenta); clic destro, curva verso dove guardi e, tenendolo premuto, il lancio si carica: a carica completa arriva al doppio della distanza, resta conficcata il doppio e infligge ×1,5 danni. La sfera si conficca nel bersaglio e ci gira sopra per circa 2 secondi, danneggiandolo senza sosta (ignorandone l'invulnerabilità). Ogni rimbalzo, su un blocco o dopo aver girato in un nemico, la manda verso dove guarda la tua visuale: il nemico successivo lo miri tu. Senza rimbalzi rimasti, torna in mano. Cliccare proprio quando arriva è una Presa Perfetta: più Rotazione e la rilanci all'istante. Ogni blocco su cui rimbalza prima dell'impatto aggiunge danno.
+10 Con la bandoliera in mano: clic sinistro, la sfera è guidata verso dove miri (arriva più lontano, ma è un po' più lenta); clic destro, curva verso dove guardi e, tenendolo premuto, il lancio si carica: a carica completa arriva al doppio della distanza, resta conficcata il doppio e infligge ×1,5 danni. La sfera si conficca nel bersaglio e ci gira sopra per 1 secondo, danneggiandolo con vari tick (ignorandone l'invulnerabilità); ogni tick perde contro l'armatura quanto perderebbe l'impatto intero in un solo colpo. Ogni rimbalzo, su un blocco o dopo aver girato in un nemico, la manda verso dove guarda la tua visuale: il nemico successivo lo miri tu. Senza rimbalzi rimasti, torna in mano. Cliccare proprio quando arriva è una Presa Perfetta: più Rotazione e la rilanci all'istante. Ogni blocco su cui rimbalza prima dell'impatto aggiunge danno.
 11 Rotazione
 12 Barra da 0 a 100 % che sale a ogni impatto, di più se li concateni. Se una sfera torna senza aver colpito nemici, ne perdi la metà; fuori dal combattimento cala poco a poco. Al 33 %: un rimbalzo in più e scie dorate. Al 66 %: effetto del materiale più forte e un po' più di danno. Al 100 %: puoi usare il Rettangolo Aureo (dal Livello totale 30).
 13 Rotta di Rimbalzi
@@ -22,7 +22,7 @@
 21 Punto Debole Condiviso
 22 Anche i tuoi alleati vedono i segni di Punto Debole, e ogni impatto li rinnova.
 23 Lancia sfere di materiali diversi che si conficcano girando, rimbalzano e tornano in mano: clic sinistro, guidata verso dove miri; clic destro, curva e caricabile; la bandoliera custodisce le sfere e un tasto cambia quella in uso. Schermagliatore ibrido: colpisce da vicino e da lontano e premia ritmo, combo e precisione. Ogni impatto concatenato aumenta la sua Rotazione, che potenzia le sfere e carica il Rettangolo Aureo.
-24 Le tue sfere infliggono più danno e la tua Rotazione sale più in fretta.
+24 Le tue sfere infliggono più tick di danno mentre girano conficcate nel bersaglio (più danno sui colpi singoli) e la tua Rotazione sale più in fretta.
 25 Più rimbalzi, e le sfere che rimbalzano da un nemico all'altro conservano più danno.
 26 Le tue sfere sono pronte prima dopo il ritorno e, con il ramo completo, puoi averne una in più in volo.
 27 Più probabilità e danno critico; i tuoi critici con le sfere ignorano parte dell'armatura.
@@ -116,13 +116,13 @@
 115 Danno della sfera di ferro x
 116 Danno della sfera di diamante x
 117 Danno della sfera di netherite x
-118 Danno della sfera di slime x
-119 Danno della sfera di rame x
-120 Danno della sfera di ametista x
-121 Danno della sfera di perla di Ender x
-122 Danno della sfera d'oro x
-123 Danno della sfera di redstone x
-124 Danno della sfera di stalattite x
+118 Miglioramento Slime: danno x
+119 Miglioramento Rame: danno x
+120 Miglioramento Ametista: danno x
+121 Miglioramento Perla dell'Ender: danno x
+122 Miglioramento Oro: danno x
+123 Miglioramento Redstone: danno x
+124 Miglioramento Speleotema: danno x
 125 Ferro: contraccolpo
 126 Diamante: armatura ignorata
 127 Netherite: bruciatura
@@ -203,55 +203,69 @@
 202 Ignora parte dell'armatura del bersaglio.
 203 Sfera di netherite
 204 Brucia e respinge forte. Resiste al fuoco e alla lava.
-205 Sfera di slime
-206 Rimbalza molto di più e quasi non perde velocità.
-207 Sfera di rame
-208 Salta verso i nemici vicini. Durante i temporali attira i fulmini.
-209 Sfera di ametista
-210 Emette un'onda sonica in linea che attraversa i blocchi e acceca.
-211 Sfera di perla di Ender
-212 Al ritorno, ti porta al punto d'impatto.
-213 Sfera d'oro
-214 Molto veloce e pronta prima.
-215 Sfera di redstone
-216 Attiva la redstone che colpisce.
-217 Sfera di stalattite
-218 Rompe i blocchi teneri e te li riporta.
-219 Attrito
-220 Le tue sfere danno fuoco ai nemici e ai blocchi infiammabili che colpiscono.
-221 Densità
-222 Più danno, meno portata.
-223 Leggerezza
-224 Più portata, meno danno.
-225 Magnete
-226 Le tue sfere sono pronte prima dopo il ritorno, ma infliggono un po' meno danno.
-227 Artiglio
-228 La sfera resta conficcata più a lungo e Rotazione Inversa trascina di più, ma vola un po' più lentamente.
-229 Elasticità
-230 Più rimbalzi, ma ogni rimbalzo infligge un po' meno danno.
-231 Tempo conficcata in rotazione
-232 Danno ogni
-233 Micro-pausa all'impatto (tick)
-234 Clic sinistro: guida verso il mirino (gradi per tick)
-235 Clic sinistro: velocità
-236 Clic sinistro: gittata
-237 Clic destro: tempo di carica completa
-238 Clic destro carico: gittata x
-239 Clic destro carico: tempo conficcata x
-240 Clic destro carico: danno x
-241 Colpi del percorso
-242 Gittata per il primo bersaglio (blocchi)
-243 Distanza tra i nemici del percorso (blocchi)
-244 Cono del mirino (gradi)
-245 Rimbalzo accanto a un nemico solo (blocchi)
-246 Colpo di passaggio (di un impatto)
-247 Danno extra per ogni colpo precedente
-248 Velocità sul percorso (blocchi per tick)
-249 Gittata per scegliere il bersaglio (blocchi)
-250 Raggio in cui il tempo si ferma (blocchi)
-251 Danno di ogni impulso della rotazione (della spada)
-252 Colpo finale (della spada)
-253 Nemici a cui si propaga
-254 Gittata della propagazione (blocchi)
-255 Danno della propagazione (della spada)
-256 Nessun nemico in vista.
+205 Slime: Rimbalza molto di più e quasi non perde velocità.
+206 Rame: Salta verso i nemici vicini. Durante i temporali attira i fulmini.
+207 Ametista: Emette un'onda sonica in linea che attraversa i blocchi e acceca.
+208 Perla dell'Ender: Al ritorno, ti porta al punto d'impatto.
+209 Oro: Molto veloce e pronta prima.
+210 Redstone: Attiva la redstone che colpisce.
+211 Speleotema: Rompe i blocchi teneri e te li riporta.
+212 Attrito
+213 Le tue sfere danno fuoco ai nemici e ai blocchi infiammabili che colpiscono.
+214 Densità
+215 Più danno, meno portata.
+216 Leggerezza
+217 Più portata, meno danno.
+218 Magnete
+219 Le tue sfere sono pronte prima dopo il ritorno, ma infliggono un po' meno danno.
+220 Artiglio
+221 La sfera resta conficcata più a lungo e Rotazione Inversa trascina di più, ma vola un po' più lentamente.
+222 Elasticità
+223 Più rimbalzi, ma ogni rimbalzo infligge un po' meno danno.
+224 Tempo conficcata in rotazione
+225 Danno ogni
+226 Micro-pausa all'impatto (tick)
+227 Clic sinistro: guida verso il mirino (gradi per tick)
+228 Clic sinistro: velocità
+229 Clic sinistro: gittata
+230 Clic destro: tempo di carica completa
+231 Clic destro carico: gittata x
+232 Clic destro carico: tempo conficcata x
+233 Clic destro carico: danno x
+234 Colpi del percorso
+235 Gittata per il primo bersaglio (blocchi)
+236 Distanza tra i nemici del percorso (blocchi)
+237 Cono del mirino (gradi)
+238 Rimbalzo accanto a un nemico solo (blocchi)
+239 Colpo di passaggio (di un impatto)
+240 Danno extra per ogni colpo precedente
+241 Velocità sul percorso (blocchi per tick)
+242 Gittata per scegliere il bersaglio (blocchi)
+243 Raggio in cui il tempo si ferma (blocchi)
+244 Danno di ogni impulso della rotazione (della spada)
+245 Colpo finale (della spada)
+246 Nemici a cui si propaga
+247 Gittata della propagazione (blocchi)
+248 Danno della propagazione (della spada)
+249 Nessun nemico in vista.
+250 Trivella: danno x
+251 Mazzata: danno x
+252 Trivella: tempo conficcata x
+253 Trivella: danno per tick x
+254 Mazzata: velocità
+255 Mazzata: ricarica del ritorno
+256 Mazzata: contraccolpo
+257 Tick di danno extra
+258 Miglioràla al banco da lavoro con alcune unità di un materiale (per esempio, 4 lingotti di rame).
+259 %s (%s)
+260 slime
+261 rame
+262 ametista
+263 perla dell'Ender
+264 oro
+265 redstone
+266 speleotema
+267 selce
+268 ossidiana
+269 Trivella (selce): meno danno per tick, ma resta conficcata molto più a lungo e in totale infligge più danno.
+270 Mazzata (ossidiana): tutto il danno in un solo colpo, senza restare conficcata; è più lenta e ci mette di più a tornare pronta.

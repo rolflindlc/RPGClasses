@@ -8,7 +8,7 @@
 7 Analyse
 8 Courbe
 9 Lancer de Sphères
-10 Bandoulière en main : clic gauche, la boule est guidée vers où tu vises (elle va plus loin, mais un peu plus lentement) ; clic droit, elle se courbe vers où tu regardes, et maintenir le clic charge le lancer : chargée au maximum, elle va deux fois plus loin, reste plantée deux fois plus longtemps et inflige ×1,5 de dégâts. La boule s'enfonce dans la cible et tourne sur elle environ 2 secondes en la blessant sans arrêt (en ignorant son invulnérabilité). Chaque rebond, sur un bloc ou après avoir tourné dans un ennemi, l'envoie vers où regarde ta caméra : c'est toi qui vises l'ennemi suivant. Quand il ne lui reste plus de rebonds, elle revient dans ta main. Cliquer juste quand elle arrive est une Prise Parfaite : plus de Rotation et tu la relances aussitôt. Chaque bloc sur lequel elle rebondit avant l'impact ajoute des dégâts.
+10 Bandoulière en main : clic gauche, la boule est guidée vers où tu vises (elle va plus loin, mais un peu plus lentement) ; clic droit, elle se courbe vers où tu regardes, et maintenir le clic charge le lancer : chargée au maximum, elle va deux fois plus loin, reste plantée deux fois plus longtemps et inflige ×1,5 de dégâts. La boule s'enfonce dans la cible et tourne sur elle pendant 1 seconde en la blessant par plusieurs ticks (en ignorant son invulnérabilité) ; chaque tick perd contre l'armure autant que l'impact entier en un seul coup. Chaque rebond, sur un bloc ou après avoir tourné dans un ennemi, l'envoie vers où regarde ta caméra : c'est toi qui vises l'ennemi suivant. Quand il ne lui reste plus de rebonds, elle revient dans ta main. Cliquer juste quand elle arrive est une Prise Parfaite : plus de Rotation et tu la relances aussitôt. Chaque bloc sur lequel elle rebondit avant l'impact ajoute des dégâts.
 11 Rotation
 12 Barre de 0 à 100 % qui monte à chaque impact, davantage si tu les enchaînes. Si une boule revient sans avoir touché d'ennemi, tu en perds la moitié ; hors combat, elle baisse peu à peu. À 33 % : un rebond de plus et des traînées dorées. À 66 % : un effet de matériau plus fort et un peu plus de dégâts. À 100 % : tu peux utiliser le Rectangle d'Or (à partir du Niveau total 30).
 13 Trajectoire de Rebonds
@@ -22,7 +22,7 @@
 21 Point Faible Partagé
 22 Tes alliés voient aussi les marques de Point Faible, et chaque impact les renouvelle.
 23 Lance des boules de différents matériaux qui se plantent en tournant, rebondissent et reviennent à la main : clic gauche, guidée vers où tu vises ; clic droit, courbe et chargeable ; la bandoulière range les boules et une touche change celle que tu utilises. Tirailleur hybride : frappe de près comme de loin et récompense le rythme, les combos et la précision. Chaque impact enchaîné fait monter sa Rotation, qui renforce les boules et charge le Rectangle d'Or.
-24 Tes boules infligent plus de dégâts et ta Rotation monte plus vite.
+24 Tes boules infligent plus de ticks de dégâts pendant qu'elles tournent plantées dans la cible (plus de dégâts sur les coups uniques) et ta Rotation monte plus vite.
 25 Plus de rebonds, et les boules qui rebondissent d'un ennemi à l'autre conservent plus de dégâts.
 26 Tes boules sont prêtes plus tôt après leur retour et, avec la branche complète, tu peux en avoir une de plus en vol.
 27 Plus de chances et de dégâts critiques ; tes coups critiques avec les boules ignorent une partie de l'armure.
@@ -116,13 +116,13 @@
 115 Dégâts de la boule de fer x
 116 Dégâts de la boule de diamant x
 117 Dégâts de la boule de netherite x
-118 Dégâts de la boule de slime x
-119 Dégâts de la boule de cuivre x
-120 Dégâts de la boule d'améthyste x
-121 Dégâts de la boule de perle de l'Ender x
-122 Dégâts de la boule d'or x
-123 Dégâts de la boule de redstone x
-124 Dégâts de la boule de stalactite x
+118 Amélioration Slime : dégâts x
+119 Amélioration Cuivre : dégâts x
+120 Amélioration Améthyste : dégâts x
+121 Amélioration Perle de l'Ender : dégâts x
+122 Amélioration Or : dégâts x
+123 Amélioration Redstone : dégâts x
+124 Amélioration Spéléothème : dégâts x
 125 Fer : recul
 126 Diamant : armure ignorée
 127 Netherite : brûlure
@@ -203,55 +203,69 @@
 202 Ignore une partie de l'armure de la cible.
 203 Boule de netherite
 204 Brûle et repousse fort. Résiste au feu et à la lave.
-205 Boule de slime
-206 Rebondit beaucoup plus et ne perd presque pas de vitesse.
-207 Boule de cuivre
-208 Saute vers les ennemis proches. Par orage, elle attire la foudre.
-209 Boule d'améthyste
-210 Libère une onde sonique en ligne qui traverse les blocs et aveugle.
-211 Boule de perle de l'Ender
-212 À son retour, elle t'emmène au point d'impact.
-213 Boule d'or
-214 Très rapide et prête plus tôt.
-215 Boule de redstone
-216 Active la redstone qu'elle touche.
-217 Boule de stalactite
-218 Casse les blocs tendres et te les rapporte.
-219 Friction
-220 Tes boules mettent le feu aux ennemis et aux blocs inflammables qu'elles touchent.
-221 Densité
-222 Plus de dégâts, moins de portée.
-223 Légèreté
-224 Plus de portée, moins de dégâts.
-225 Aimant
-226 Tes boules sont prêtes plus tôt après leur retour, mais infligent un peu moins de dégâts.
-227 Griffe
-228 La boule reste plantée plus longtemps et Rotation Inverse attire plus fort, mais elle vole un peu plus lentement.
-229 Élasticité
-230 Plus de rebonds, mais chaque rebond inflige un peu moins de dégâts.
-231 Durée plantée en rotation
-232 Dégâts toutes les
-233 Micro-pause à l'impact (ticks)
-234 Clic gauche : guidage vers le viseur (degrés par tick)
-235 Clic gauche : vitesse
-236 Clic gauche : portée
-237 Clic droit : temps de charge complète
-238 Clic droit chargé : portée x
-239 Clic droit chargé : durée plantée x
-240 Clic droit chargé : dégâts x
-241 Coups de la trajectoire
-242 Portée pour la première cible (blocs)
-243 Distance entre les ennemis de la trajectoire (blocs)
-244 Cône du viseur (degrés)
-245 Rebond à côté d'un ennemi seul (blocs)
-246 Coup au passage (d'un impact)
-247 Dégâts en plus par coup précédent
-248 Vitesse sur la trajectoire (blocs par tick)
-249 Portée pour choisir la cible (blocs)
-250 Rayon où le temps s'arrête (blocs)
-251 Dégâts de chaque impulsion de rotation (de l'épée)
-252 Coup final (de l'épée)
-253 Ennemis touchés par la propagation
-254 Portée de la propagation (blocs)
-255 Dégâts de la propagation (de l'épée)
-256 Aucun ennemi en vue.
+205 Slime : Rebondit beaucoup plus et ne perd presque pas de vitesse.
+206 Cuivre : Saute vers les ennemis proches. Par orage, elle attire la foudre.
+207 Améthyste : Libère une onde sonique en ligne qui traverse les blocs et aveugle.
+208 Perle de l'Ender : À son retour, elle t'emmène au point d'impact.
+209 Or : Très rapide et prête plus tôt.
+210 Redstone : Active la redstone qu'elle touche.
+211 Spéléothème : Casse les blocs tendres et te les rapporte.
+212 Friction
+213 Tes boules mettent le feu aux ennemis et aux blocs inflammables qu'elles touchent.
+214 Densité
+215 Plus de dégâts, moins de portée.
+216 Légèreté
+217 Plus de portée, moins de dégâts.
+218 Aimant
+219 Tes boules sont prêtes plus tôt après leur retour, mais infligent un peu moins de dégâts.
+220 Griffe
+221 La boule reste plantée plus longtemps et Rotation Inverse attire plus fort, mais elle vole un peu plus lentement.
+222 Élasticité
+223 Plus de rebonds, mais chaque rebond inflige un peu moins de dégâts.
+224 Durée plantée en rotation
+225 Dégâts toutes les
+226 Micro-pause à l'impact (ticks)
+227 Clic gauche : guidage vers le viseur (degrés par tick)
+228 Clic gauche : vitesse
+229 Clic gauche : portée
+230 Clic droit : temps de charge complète
+231 Clic droit chargé : portée x
+232 Clic droit chargé : durée plantée x
+233 Clic droit chargé : dégâts x
+234 Coups de la trajectoire
+235 Portée pour la première cible (blocs)
+236 Distance entre les ennemis de la trajectoire (blocs)
+237 Cône du viseur (degrés)
+238 Rebond à côté d'un ennemi seul (blocs)
+239 Coup au passage (d'un impact)
+240 Dégâts en plus par coup précédent
+241 Vitesse sur la trajectoire (blocs par tick)
+242 Portée pour choisir la cible (blocs)
+243 Rayon où le temps s'arrête (blocs)
+244 Dégâts de chaque impulsion de rotation (de l'épée)
+245 Coup final (de l'épée)
+246 Ennemis touchés par la propagation
+247 Portée de la propagation (blocs)
+248 Dégâts de la propagation (de l'épée)
+249 Aucun ennemi en vue.
+250 Foret : dégâts x
+251 Masse : dégâts x
+252 Foret : durée plantée x
+253 Foret : dégâts par tick x
+254 Masse : vitesse
+255 Masse : temps de retour
+256 Masse : recul
+257 Ticks de dégâts en plus
+258 Améliore-la à l'établi avec quelques unités d'un matériau (par exemple, 4 lingots de cuivre).
+259 %s (%s)
+260 slime
+261 cuivre
+262 améthyste
+263 perle de l'Ender
+264 or
+265 redstone
+266 spéléothème
+267 silex
+268 obsidienne
+269 Foret (silex) : moins de dégâts par tick, mais elle reste plantée bien plus longtemps et inflige plus de dégâts au total.
+270 Masse (obsidienne) : tous les dégâts d'un seul coup, sans rester plantée ; elle est plus lente et met plus de temps à être de nouveau prête.

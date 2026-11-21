@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "passive": true,
-  "spin_gain": 0.04,
-  "chain_seconds": 3,
+  "spin_gain": 0.05,
+  "chain_seconds": 5,
   "chain_step": 0.25,
   "chain_max": 2.0,
   "miss_loss": 0.5,

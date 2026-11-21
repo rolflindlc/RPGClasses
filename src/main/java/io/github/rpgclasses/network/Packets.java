@@ -656,9 +656,9 @@ public final class Packets {
         }
     }
 
-    // ------------------------------------------------------------------ Maestro del Giro (protocolo 21)
+    // ------------------------------------------------------------------ Maestro del Giro (protocolo 22)
 
-    /** Cliente -> servidor: clic con la bandolera en la mano (0 directo, 1 curvo), agachado o no. */
+    /** Cliente -> servidor: clic con la bandolera en la mano (0 izquierdo, 1 soltar el derecho, 2 pulsar el derecho), agachado o no. */
     public record SphereThrow(int kind, boolean sneak) {
         public void encode(FriendlyByteBuf buf) {
             buf.writeByte(kind);
@@ -695,18 +695,15 @@ public final class Packets {
         }
     }
 
-    /** Servidor -> cliente: barra de Giro (0-1), tics de Giro Dorado, cargas de espiral y si es Maestro del Giro. */
-    public record SpinSync(float spin, int goldenTicks, int spiral, int maxSpiral, boolean active) {
+    /** Servidor -> cliente: barra de Giro (0-1) y si es Maestro del Giro. */
+    public record SpinSync(float spin, boolean active) {
         public void encode(FriendlyByteBuf buf) {
             buf.writeFloat(spin);
-            buf.writeVarInt(goldenTicks);
-            buf.writeVarInt(spiral);
-            buf.writeVarInt(maxSpiral);
             buf.writeBoolean(active);
         }
 
         public static SpinSync decode(FriendlyByteBuf buf) {
-            return new SpinSync(buf.readFloat(), buf.readVarInt(), buf.readVarInt(), buf.readVarInt(), buf.readBoolean());
+            return new SpinSync(buf.readFloat(), buf.readBoolean());
         }
 
         public void handle(Supplier<NetworkEvent.Context> ctx) {
@@ -730,6 +727,26 @@ public final class Packets {
 
         public void handle(Supplier<NetworkEvent.Context> ctx) {
             DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> io.github.rpgclasses.client.spin.SpinClient.onFx(this));
+        }
+    }
+
+    /**
+     * Servidor -> cliente (solo al que la lanza): la cinemática del Rectángulo Dorado va por el tic {@code tick} de su guion
+     * (spin.GoldenRectangle), con este objetivo y esta bola (-1 si aún no hay). {@code tick} &lt; 0: termina.
+     */
+    public record SpinCinematic(int targetId, int sphereId, int tick) {
+        public void encode(FriendlyByteBuf buf) {
+            buf.writeVarInt(targetId);
+            buf.writeVarInt(sphereId);
+            buf.writeVarInt(tick);
+        }
+
+        public static SpinCinematic decode(FriendlyByteBuf buf) {
+            return new SpinCinematic(buf.readVarInt(), buf.readVarInt(), buf.readVarInt());
+        }
+
+        public void handle(Supplier<NetworkEvent.Context> ctx) {
+            DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> io.github.rpgclasses.client.spin.SpinCinematic.onPacket(this));
         }
     }
 }

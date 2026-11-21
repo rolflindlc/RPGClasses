@@ -39,19 +39,21 @@ import java.util.Set;
 /**
  * Una bola en vuelo (adenda del Maestro del Giro, secciones 3, 4, 7 y 8). Estados:
  * <ul>
- *   <li><b>Vuela:</b> recta (directa), curvándose hacia donde mira el lanzador (curva) o siguiendo una Ruta de Rebotes.
- *       Rebota en los bloques mientras le queden rebotes; al llegar a su alcance vuelve.</li>
- *   <li><b>Gira:</b> clavada en un enemigo 3 tics (daño en 3 partes saltándose la invulnerabilidad, el objetivo frenado).
- *       Con Garra sigue clavada un rato más. Después salta a otro enemigo (rebote en enemigos) o vuelve.</li>
+ *   <li><b>Vuela:</b> guiada hacia donde apunta el lanzador (clic izquierdo, hasta el primer rebote), curvándose hacia
+ *       donde mira (clic derecho, que se puede cargar) o recorriendo la Ruta de Rebotes (de enemigo en enemigo). Rebota
+ *       en los bloques mientras le queden rebotes; al llegar a su alcance vuelve.</li>
+ *   <li><b>Gira:</b> clavada en un enemigo unos 2 s (el doble con la carga completa): daño en pulsos que se saltan la
+ *       invulnerabilidad, con una micro-pausa al principio. Con Garra sigue clavada un rato más. Después salta a otro
+ *       enemigo (rebote en enemigos) o vuelve.</li>
  *   <li><b>Vuelve:</b> atraviesa los bloques hacia la mano del lanzador (la de perla de Ender lo lleva a él al impacto).</li>
  *   <li><b>Mina:</b> clavada en un bloque (Trampero de Giro), explota cuando pasa un enemigo cerca.</li>
- *   <li><b>Órbita:</b> bola de la Espiral Final: orbita al lanzador y luego se lanza contra su objetivo.</li>
  * </ul>
+ * La bola del Rectángulo Dorado es «de guion» ({@link #scripted}): la mueve {@link GoldenRectangle} y aquí no hace nada.
  * La bola nunca sale de la bandolera ({@link Bandolier}): esta entidad solo lleva una copia para leer sus encantamientos.
  * No se guarda con el mundo; si desaparece, la marca de vuelo de la bandolera se limpia sola.
  */
 public class SphereEntity extends Projectile {
-    public static final byte FLYING = 0, SPINNING = 1, RETURNING = 2, MINE = 3, ORBIT = 4;
+    public static final byte FLYING = 0, SPINNING = 1, RETURNING = 2, MINE = 3;
     private static final int MAX_FLIGHT_TICKS = 200, MAX_RETURN_TICKS = 160;
 
     private static final EntityDataAccessor<Byte> DATA_MATERIAL = SynchedEntityData.defineId(SphereEntity.class, EntityDataSerializers.BYTE);
@@ -61,16 +63,25 @@ public class SphereEntity extends Projectile {
 
     // --- Lanzamiento (lo rellena SpinThrow) ---
     long throwId;
-    /** Bola sin objeto detrás (Espiral Final): no toca la bandolera ni cuenta para fallar. */
+    /** Bola sin objeto detrás (la del Rectángulo Dorado): no toca la bandolera ni cuenta para fallar. */
     boolean virtual;
+    /** La mueve el guion del Rectángulo Dorado: su tick no hace nada. */
+    boolean scripted;
+    /** Clic izquierdo: va hacia donde apunta el lanzador (hasta el primer rebote o salto). */
+    boolean aimed;
     boolean curved, mine, golden, dry, guided, guidedUsed, swiftReturn;
     ItemStack sphere = ItemStack.EMPTY;
-    double baseDamage, damageBonus, speed, range, hopKeep, chainFalloff, elasticity, curveRad;
+    double baseDamage, damageBonus, speed, range, hopKeep, chainFalloff, elasticity, curveRad, aimRad;
     int bounces, hopsLeft, clawLevel, frictionLevel, returnCooldownTicks;
-    /** Daño fijo por impacto (Espiral Final); 0 = se calcula. */
-    float fixedDamage;
-    List<Vec3> route;
-    int routeIndex;
+    /** Carga del clic derecho (0-1) y lo que multiplica: tiempo clavada y daño total del impacto. */
+    double charge, spinTimeFactor = 1, chargeDamage = 1;
+    /**
+     * Ruta de Rebotes: enemigos (LivingEntity) y puntos de rebote (Vec3) por orden. Los enemigos intermedios reciben un
+     * impacto de rebote al pasar; en el último se clava.
+     */
+    List<Object> trick;
+    int trickIndex, trickHits;
+    double trickHitFactor, trickBonus;
 
     // --- Vuelo ---
     double traveled;
@@ -95,7 +106,8 @@ public class SphereEntity extends Projectile {
     // --- Giro sobre un objetivo ---
     LivingEntity stuck;
     Vec3 stuckOffset = Vec3.ZERO;
-    int spinTick, spinTicks = 3, lingerTicks;
+    int spinTick, spinTicks = 40, lingerTicks, pulseTicks = 5, hitStopTicks = 3;
+    /** Daño de cada pulso del giro. */
     float damagePerTick;
     /** Crítico decidido para todos los tics del impacto actual (lo lee DamagePipeline). */
     Boolean critDecided;
@@ -106,11 +118,6 @@ public class SphereEntity extends Projectile {
 
     // --- Mina ---
     long mineUntil;
-
-    // --- Órbita (Espiral Final) ---
-    LivingEntity orbitTarget;
-    int orbitIndex, orbitTotal, orbitTicks;
-    boolean homing;
 
     public SphereEntity(EntityType<? extends SphereEntity> type, Level level) {
         super(type, level);
@@ -203,12 +210,16 @@ public class SphereEntity extends Projectile {
             discard();
             return;
         }
+        if (scripted) {
+            // La mueve GoldenRectangle; si el guion se perdió, desaparece sola.
+            if (age > 400 || !GoldenRectangle.owns(owner, this)) discard();
+            return;
+        }
         switch (state()) {
             case FLYING -> tickFlying(owner);
             case SPINNING -> tickSpinning(owner);
             case RETURNING -> tickReturning(owner);
             case MINE -> tickMine(owner);
-            case ORBIT -> tickOrbit(owner);
             default -> discard();
         }
     }
@@ -220,34 +231,23 @@ public class SphereEntity extends Projectile {
             startReturn(owner);
             return;
         }
+        if (trick != null) {
+            tickTrick(owner);
+            return;
+        }
         Vec3 vel = getDeltaMovement();
         if (vel.lengthSqr() < 1.0E-6) vel = owner.getLookAngle().scale(Math.max(0.5, speed));
         Vec3 start = position();
-        Vec3 end;
-        boolean followingRoute = route != null && routeIndex < route.size();
-        if (followingRoute) {
-            Vec3 next = route.get(routeIndex);
-            Vec3 to = next.subtract(start);
-            double d = to.length();
-            if (d <= speed) {
-                end = next;
-                vel = to.lengthSqr() < 1.0E-6 ? vel : to.normalize().scale(speed);
-            } else {
-                vel = to.scale(speed / d);
-                end = start.add(vel);
-            }
-        } else {
-            if (homing && orbitTarget != null && orbitTarget.isAlive()) {
-                vel = steer(vel, orbitTarget.getBoundingBox().getCenter().subtract(start), Math.toRadians(25));
-            } else if (curved && curveRad > 0) {
-                vel = steer(vel, owner.getLookAngle(), curveRad);
-            }
-            end = start.add(vel);
+        if (aimed && aimRad > 0) {
+            // Clic izquierdo: se guía hacia el punto al que apunta la cámara.
+            vel = steer(vel, aimPoint(owner).subtract(start), aimRad);
+        } else if (curved && curveRad > 0) {
+            vel = steer(vel, owner.getLookAngle(), curveRad);
         }
+        Vec3 end = start.add(vel);
 
-        BlockHitResult block = followingRoute ? null
-                : level().clip(new ClipContext(start, end, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, this));
-        boolean wall = block != null && block.getType() != HitResult.Type.MISS;
+        BlockHitResult block = level().clip(new ClipContext(start, end, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, this));
+        boolean wall = block.getType() != HitResult.Type.MISS;
         Vec3 segEnd = wall ? block.getLocation() : end;
 
         // Enemigos en el tramo (el más cercano).
@@ -261,27 +261,6 @@ public class SphereEntity extends Projectile {
         }
         if (material() == SphereMaterial.REDSTONE) SphereHits.pressComponents(this, owner, start, segEnd);
 
-        if (followingRoute && segEnd.distanceToSqr(route.get(routeIndex)) < 1.0E-4) {
-            // Vértice de la ruta: cuenta como un rebote (efectos del bloque que haya al otro lado del punto).
-            traveled += start.distanceTo(segEnd);
-            setPos(segEnd.x, segEnd.y, segEnd.z);
-            setDeltaMovement(vel);
-            routeIndex++;
-            if (routeIndex < route.size()) {
-                Vec3 dir = route.get(routeIndex).subtract(segEnd);
-                BlockHitResult face = level().clip(new ClipContext(segEnd.subtract(vel.normalize().scale(0.3)), segEnd.add(vel.normalize().scale(0.3)),
-                        ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, this));
-                if (face.getType() != HitResult.Type.MISS) SphereHits.blockEffects(this, owner, face);
-                blockBounces++;
-                bounceFx(segEnd);
-                if (dir.lengthSqr() > 1.0E-6) setDeltaMovement(dir.normalize().scale(speed));
-            } else {
-                startReturn(owner);
-            }
-            checkInsideBlocks();
-            return;
-        }
-
         if (wall) {
             onBlockImpact(owner, block, vel, start);
             return;
@@ -290,7 +269,89 @@ public class SphereEntity extends Projectile {
         setPos(end.x, end.y, end.z);
         setDeltaMovement(vel);
         checkInsideBlocks();
-        if (!followingRoute && traveled >= range) startReturn(owner);
+        if (traveled >= range) startReturn(owner);
+    }
+
+    /** Punto al que apunta el lanzador: el primer bloque en su línea de vista (o 64 bloques por delante). */
+    private Vec3 aimPoint(ServerPlayer owner) {
+        Vec3 eye = owner.getEyePosition();
+        Vec3 far = eye.add(owner.getLookAngle().scale(64));
+        BlockHitResult hit = level().clip(new ClipContext(eye, far, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, owner));
+        return hit.getType() == HitResult.Type.MISS ? far : hit.getLocation();
+    }
+
+    // ------------------------------------------------------------------ Ruta de Rebotes
+
+    /**
+     * Recorre la ruta: vuela recta (sin chocar con bloques: la ruta se trazó con línea de vista) hacia el siguiente punto.
+     * Al pasar por un enemigo intermedio le da un impacto de rebote; en el último enemigo se clava como siempre.
+     */
+    private void tickTrick(ServerPlayer owner) {
+        while (trickIndex < trick.size()) {
+            Object wp = trick.get(trickIndex);
+            if (!(wp instanceof LivingEntity le)) break;
+            boolean gone = !le.isAlive() || le.isRemoved() || le.level() != level();
+            Vec3 c = le.getBoundingBox().getCenter();
+            if (!gone && (position().distanceToSqr(c) < 4 || SphereHits.visible(level(), position(), c, this))) break;
+            trickIndex++; // muerto o tras una pared: se lo salta
+        }
+        if (trickIndex >= trick.size()) {
+            trick = null;
+            startReturn(owner);
+            return;
+        }
+        Object wp = trick.get(trickIndex);
+        Vec3 start = position();
+        Vec3 goal = wp instanceof LivingEntity le ? le.getBoundingBox().getCenter() : (Vec3) wp;
+        Vec3 to = goal.subtract(start);
+        double d = to.length();
+        Vec3 end = d <= speed ? goal : start.add(to.scale(speed / d));
+        if (wp instanceof LivingEntity le) {
+            AABB box = le.getBoundingBox().inflate(0.3);
+            Optional<Vec3> clip = box.contains(start) ? Optional.of(start) : box.clip(start, end);
+            if (clip.isPresent() || d <= speed) {
+                Vec3 at = clip.orElse(goal);
+                traveled += start.distanceTo(at);
+                setPos(at.x, at.y, at.z);
+                if (lastTrickEnemy()) {
+                    // Último enemigo de la ruta: se clava.
+                    trick = null;
+                    setDeltaMovement(to.lengthSqr() < 1.0E-6 ? getDeltaMovement() : to.normalize().scale(speed));
+                    SphereHits.startSpin(this, owner, le, at);
+                    return;
+                }
+                SphereHits.ricochet(this, owner, le, at);
+                trickIndex++;
+                if (broken) {
+                    finishSpin(owner, true);
+                    return;
+                }
+                aimAtNext();
+                return;
+            }
+        }
+        if (to.lengthSqr() > 1.0E-6) setDeltaMovement(to.normalize().scale(speed));
+        traveled += start.distanceTo(end);
+        setPos(end.x, end.y, end.z);
+        if (!(wp instanceof LivingEntity) && d <= speed) {
+            // Punto de rebote (banda): cambia de dirección hacia el siguiente.
+            trickIndex++;
+            bounceFx(goal);
+            aimAtNext();
+        }
+    }
+
+    private boolean lastTrickEnemy() {
+        for (int i = trickIndex + 1; i < trick.size(); i++) if (trick.get(i) instanceof LivingEntity) return false;
+        return true;
+    }
+
+    private void aimAtNext() {
+        if (trick == null || trickIndex >= trick.size()) return;
+        Object next = trick.get(trickIndex);
+        Vec3 goal = next instanceof LivingEntity le ? le.getBoundingBox().getCenter() : (Vec3) next;
+        Vec3 dir = goal.subtract(position());
+        if (dir.lengthSqr() > 1.0E-6) setDeltaMovement(dir.normalize().scale(speed));
     }
 
     private void onBlockImpact(ServerPlayer owner, BlockHitResult hit, Vec3 vel, Vec3 start) {
@@ -316,6 +377,7 @@ public class SphereEntity extends Projectile {
         if (bounces > 0 && !dry) {
             bounces--;
             blockBounces++;
+            aimed = false; // la guía del clic izquierdo acaba en el primer rebote
             Vec3 reflected = vel.subtract(n.scale(2 * vel.dot(n)));
             double keep = material() == SphereMaterial.SLIME ? SpinMaster.t("slime_speed_keep", 0.98) : SpinMaster.t("bounce_speed_keep", 0.85);
             reflected = reflected.scale(keep);
@@ -344,7 +406,6 @@ public class SphereEntity extends Projectile {
         for (Entity e : level().getEntities(this, box, x -> x instanceof LivingEntity && x.isAlive() && x != owner)) {
             LivingEntity le = (LivingEntity) e;
             if (le instanceof ArmorStand || hitIds.contains(le.getId()) || !Allies.isEnemy(owner, le)) continue;
-            if (orbitTarget != null && homing && le != orbitTarget) continue;
             AABB eb = le.getBoundingBox().inflate(0.3);
             double d;
             if (eb.contains(a)) {
@@ -380,13 +441,13 @@ public class SphereEntity extends Projectile {
         setPos(p.x, p.y, p.z);
         spinTick++;
         if (spinTick < spinTicks) {
-            // Micro-pausa: el objetivo se queda quieto mientras la bola gira (los jefes no).
-            if (!Races.isBoss(t)) {
+            // Micro-pausa: al principio el objetivo se queda quieto (los jefes no); luego la bola sigue girando clavada.
+            if (spinTick < hitStopTicks && !Races.isBoss(t)) {
                 Vec3 v = t.getDeltaMovement();
                 t.setDeltaMovement(0, Math.min(0, v.y), 0);
                 t.hurtMarked = true;
             }
-            SphereHits.dealTick(this, owner, t);
+            if (spinTick % Math.max(1, pulseTicks) == 0) SphereHits.dealTick(this, owner, t);
             return;
         }
         if (lingerTicks > 0) {
@@ -421,12 +482,6 @@ public class SphereEntity extends Projectile {
             discard();
             return;
         }
-        if (virtual && orbitTarget != null) {
-            // Bola de la Espiral Final: estalla en partículas doradas.
-            if (level() instanceof ServerLevel sl) sl.sendParticles(ParticleTypes.WAX_OFF, getX(), getY(), getZ(), 10, 0.2, 0.2, 0.2, 0.3);
-            discard();
-            return;
-        }
         if (canHop()) {
             LivingEntity next = SphereHits.nextHop(this, owner, t);
             if (next != null) {
@@ -434,8 +489,8 @@ public class SphereEntity extends Projectile {
                 hops++;
                 Vec3 dir = next.getBoundingBox().getCenter().subtract(position());
                 setDeltaMovement(dir.normalize().scale(Math.max(speed, 1.2)));
-                route = null;
                 curved = false;
+                aimed = false;
                 setState(FLYING);
                 return;
             }
@@ -480,7 +535,7 @@ public class SphereEntity extends Projectile {
         Vec3 hand = handPos(owner);
         Vec3 to = hand.subtract(position());
         double dist = to.length();
-        double base = SpinMaster.t("return_speed", 1.5) * (material() == SphereMaterial.GOLD ? 1.4 : 1.0) * (golden ? 1.5 : 1.0);
+        double base = SpinMaster.t("return_speed", 1.5) * (material() == SphereMaterial.GOLD ? 1.4 : 1.0);
         double v = Math.min(4.0, base * (1 + 0.08 * returnTicks));
         if (dist <= v + 0.6 || ++returnTicks > MAX_RETURN_TICKS) {
             arrive(owner);
@@ -519,28 +574,6 @@ public class SphereEntity extends Projectile {
         if (age % 2 == 0) SphereHits.checkMine(this, owner);
     }
 
-    // ------------------------------------------------------------------ órbita (Espiral Final)
-
-    private void tickOrbit(ServerPlayer owner) {
-        orbitTicks--;
-        double a = orbitIndex * (Math.PI * 2 / Math.max(1, orbitTotal)) + age * 0.45;
-        double r = 1.4 + 0.2 * Math.sin(age * 0.3);
-        double h = 0.4 + (age % 30) / 30.0 * 1.4;
-        Vec3 p = owner.position().add(Math.cos(a) * r, h, Math.sin(a) * r);
-        setDeltaMovement(p.subtract(position()));
-        setPos(p.x, p.y, p.z);
-        if (orbitTicks > 0) return;
-        if (orbitTarget == null || !orbitTarget.isAlive()) {
-            discard();
-            return;
-        }
-        Vec3 dir = orbitTarget.getBoundingBox().getCenter().subtract(position());
-        setDeltaMovement(dir.normalize().scale(Math.max(1.6, speed)));
-        homing = true;
-        range = 48;
-        setState(FLYING);
-    }
-
     // ------------------------------------------------------------------ cliente
 
     private void clientTick() {
@@ -554,8 +587,13 @@ public class SphereEntity extends Projectile {
         boolean gold = golden() || spin() >= 0.33f;
         Vec3 v = getDeltaMovement();
         if (st == SPINNING) {
+            // Clavada y girando: chispas que salen despedidas (doradas con el Giro I o en la ulti).
             if (age % 2 == 0) level().addParticle(ParticleTypes.CRIT, getX(), getY(), getZ(), (random.nextDouble() - 0.5) * 0.4,
                     random.nextDouble() * 0.3, (random.nextDouble() - 0.5) * 0.4);
+            if (gold && age % 3 == 0) {
+                double a = age * 0.8;
+                level().addParticle(ParticleTypes.WAX_OFF, getX() + Math.cos(a) * 0.3, getY() + 0.05, getZ() + Math.sin(a) * 0.3, 0, 0.02, 0);
+            }
             return;
         }
         // Estela: color del material, o dorada con Giro I o con el Giro Dorado (con espirales).

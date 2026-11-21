@@ -93,9 +93,10 @@ SUBS = {
     "spin_scanner": ("minecraft:spyglass", [
         mech("weak_point", duration_seconds=6), attr([(R("crit_damage"), to(.20))])],
         [ms(5, "shared_weak_point", True)]),
-    # Trampero de Giro: minas clavadas (agachado), 150 % del daño y Lentitud II 2 s; 2 minas (4 en el nivel 10).
+    # Trampero de Giro: minas clavadas (agachado), Lentitud II 2 s; 2 minas (4 en el nivel 10). El daño de la mina es el
+    # 80 % de un impacto (impacto de 2 s, 150 % de la espada): lo mismo que antes del cambio (150 % de un impacto del 80 %).
     "spin_trapper": ("minecraft:tripwire_hook", [
-        mech("spin_mine", mine_seconds=30, trigger_radius=2, mine_damage=1.5, slow_seconds=2, slow_level=2,
+        mech("spin_mine", mine_seconds=30, trigger_radius=2, mine_damage=0.8, slow_seconds=2, slow_level=2,
              max_mines={"values": [2, 2, 2, 2, 2, 3, 3, 3, 3, 4]}, pickup_range=3)], []),
 }
 
@@ -105,7 +106,13 @@ KIT = [{"item": R("sphere_bandolier"), "slot": "mainhand"}, {"item": R("iron_sph
 
 ABILITIES = {
     # Nivel Total 1 (pasivas que guardan los números base; funcionan desde el nivel 0).
-    "sphere_throw": dict(passive=True, sword_damage=6, iron_fraction=.80, spin_ticks=3, sphere_speed=1.8, sphere_range=20,
+    # Impacto: la bola se queda clavada 2 s con un pulso de daño cada 0,25 s (8 pulsos). Daño total del impacto de la bola
+    # de hierro: 150 % de la espada de hierro (era 80 % en 3 tics; cada lanzamiento tarda ahora ~2,3 veces más en volver,
+    # así que el daño por segundo queda en ~80 % del de antes). Clic izquierdo: guiado hacia la mira (8°/tic), +15 % de
+    # alcance y −10 % de velocidad. Clic derecho: carga en 1 s hasta ×2 de alcance, ×2 de tiempo clavada y ×1,5 de daño.
+    "sphere_throw": dict(passive=True, sword_damage=6, iron_fraction=1.50, spin_seconds=2.0, pulse_seconds=.25, hit_stop_ticks=3,
+                         sphere_speed=1.8, sphere_range=20, aim_degrees=8, aimed_speed_change=-.10, aimed_range_change=.15,
+                         full_charge_seconds=1.0, charge_range=2.0, charge_spin_time=2.0, charge_damage=1.5,
                          return_speed=1.5, return_cooldown_seconds=.6, base_bounces=1, bounce_speed_keep=.85,
                          throw_interval_seconds=.25, base_spheres=1, extra_sphere_level=15, bounce_bonus_cap=5,
                          range_bonus_cap=1.0, hop_range=8, base_hop_keep=.50, curve_degrees=4, kinetic_per_bounce=.04,
@@ -116,27 +123,33 @@ ABILITIES = {
                          copper_lightning_chance=.25, amethyst_length=6, amethyst_fraction=.50, amethyst_blind_seconds=1,
                          ender_return_change=.50, gold_speed=.40, gold_return_change=-.30, redstone_signal_ticks=3,
                          redstone_signal_ticks_spin=20, dripstone_blocks=3, dripstone_hardness=3),
-    "spin_bar": dict(passive=True, spin_gain=.04, chain_seconds=3, chain_step=.25, chain_max=2.0, miss_loss=.50,
+    # Con 2 s clavada los impactos llegan más espaciados: +5 % por impacto y la cadena aguanta 5 s entre impactos.
+    "spin_bar": dict(passive=True, spin_gain=.05, chain_seconds=5, chain_step=.25, chain_max=2.0, miss_loss=.50,
                      decay_delay_seconds=5, decay_per_second=.05, threshold_1=.33, threshold_2=.66, threshold_1_bounces=1,
                      threshold_2_material=1.5, threshold_2_damage=.10),
-    # Nivel Total 5.
-    "bounce_route": dict(preview_seconds=1.5, route_bounces_max=8, cooldown_seconds=10),
+    # Nivel Total 5. Tiro de billar: 4 golpes de enemigo en enemigo (el primero, el de la mira); los intermedios al 60 %
+    # de un impacto, +15 % por cada golpe anterior; en el último se clava con ese bonus. Con un solo enemigo, rebota a
+    # su alrededor y vuelve a por él.
+    "bounce_route": dict(route_hits=4, route_range=16, route_hop=10, route_cone_degrees=70, bank_distance=3, hit_factor=.6,
+                         per_hit_bonus=.15, route_speed=2.6, cooldown_seconds=10),
     # Nivel Total 15 (dos habilidades en el mismo hito).
     "reverse_spin": dict(pull_blocks=4, stuck_window_seconds=1.5, cooldown_seconds=14),
     "spin_step": dict(dash_speed=1.1, dash_lift=.25, step_spin=.06, step_window_seconds=1.5, cooldown_seconds=12),
-    # Nivel Total 30 (ulti).
-    "golden_rectangle": dict(golden_seconds=8, golden_speed=.50, golden_bounces=2, max_spiral=20, orbit_seconds=1.5,
-                             spiral_targets=8, spiral_radius=16, spiral_damage=.25, cooldown_seconds=120),
+    # Nivel Total 30 (ulti): secuencia automática de ~5,7 s. Daño (de la espada de hierro, con los bonus de daño de
+    # Rotación): 14 pulsos del 40 % y golpe final crítico del 300 % al objetivo (~8,6 espadas); la rotación se propaga
+    # al 150 % a hasta 6 enemigos a 12 bloques.
+    "golden_rectangle": dict(target_range=24, freeze_radius=20, pulse_damage=.4, final_damage=3.0, spread_targets=6,
+                             spread_radius=12, spread_damage=1.5, cooldown_seconds=120),
     # Escáner, nivel de subclase 5.
     "shared_weak_point": dict(passive=True, visible_range=32),
 }
 
 # ------------------------------------------------------------------ textos (castellano, texto fuente)
 CLASS_NAME = "Maestro del Giro"
-CLASS_DESC = ("Lanza bolas de distintos materiales que giran, rebotan y vuelven a la mano: clic izquierdo, directo; clic "
-              "derecho, curvo; la bandolera guarda las bolas y una tecla cambia la que usas. Escaramuzador híbrido: golpea "
-              "de cerca y de lejos y premia el ritmo, el combo y la precisión. Cada impacto encadenado sube su Giro, que "
-              "potencia las bolas y carga el Rectángulo Dorado.")
+CLASS_DESC = ("Lanza bolas de distintos materiales que se clavan girando, rebotan y vuelven a la mano: clic izquierdo, "
+              "guiada hacia donde apuntas; clic derecho, curva y se puede cargar; la bandolera guarda las bolas y una tecla "
+              "cambia la que usas. Escaramuzador híbrido: golpea de cerca y de lejos y premia el ritmo, el combo y la "
+              "precisión. Cada impacto encadenado sube su Giro, que potencia las bolas y carga el Rectángulo Dorado.")
 TRAIT_DESC = "Rasgo de clase: algo menos de vida máxima."
 BRANCH_NAMES = {"rotation": "Rotación", "rebound": "Rebote", "sphere_return": "Retorno", "scan": "Escaneo", "curve": "Curva"}
 BRANCH_DESC = {
@@ -144,10 +157,10 @@ BRANCH_DESC = {
     "rebound": "Más rebotes, y las bolas que rebotan de un enemigo a otro conservan más daño.",
     "sphere_return": "Tus bolas tardan menos en estar listas al volver y, con la rama llena, puedes tener una más en vuelo.",
     "scan": "Más probabilidad y daño de crítico; tus críticos con bola ignoran parte de la armadura.",
-    "curve": "El lanzamiento curvo se curva más y tus bolas llegan más lejos.",
+    "curve": "El lanzamiento curvo (clic derecho) se curva más y tus bolas llegan más lejos.",
 }
 PERK_TEXT = {
-    ("rotation", "heavy_spin"): ("Giro Pesado", "Más daño en cada tic del giro, pero el Giro sube algo más despacio."),
+    ("rotation", "heavy_spin"): ("Giro Pesado", "Tus bolas hacen más daño mientras giran clavadas, pero el Giro sube algo más despacio."),
     ("rotation", "swift_spin"): ("Giro Veloz", "El Giro sube mucho más rápido, pero tus bolas hacen algo menos de daño."),
     ("rebound", "billiards"): ("Billar", "Un rebote más, pero cada rebote encadenado hace menos daño que el anterior."),
     ("rebound", "dry_rebound"): ("Rebote Seco", "Tus bolas ya no rebotan en los bloques, pero saltan a dos enemigos más."),
@@ -156,7 +169,7 @@ PERK_TEXT = {
     ("scan", "cold_eye"): ("Ojo Frío", "El primer impacto a cada objetivo es crítico seguro (cada cierto tiempo por objetivo), pero bajas tu probabilidad de crítico general."),
     ("scan", "steady_eye"): ("Ojo Constante", "Cada impacto seguido al mismo objetivo hace más daño; se pierde al cambiar de objetivo."),
     ("curve", "tight_curve"): ("Curva Cerrada", "El lanzamiento curvo se curva el doble, pero tus bolas llegan menos lejos."),
-    ("curve", "guided_ball"): ("Bola Guiada", "Mientras una bola vuela, un clic derecho la redirige una vez hacia donde miras (en vez de lanzar otra). Tus bolas van algo más lentas."),
+    ("curve", "guided_ball"): ("Bola Guiada", "Mientras una bola vuela, un clic derecho la redirige una vez hacia donde miras al instante (en vez de cargar otra). Tus bolas van algo más lentas."),
 }
 SUB_NAMES = {"spin_rider": "Jinete", "spin_scanner": "Escáner", "spin_trapper": "Trampero de Giro"}
 SUB_DESC = {
@@ -165,12 +178,12 @@ SUB_DESC = {
     "spin_trapper": "Clava sus bolas como minas: agachado, la bola se queda clavada en el suelo o en una pared y explota cuando pasa un enemigo cerca, frenándolo.",
 }
 ABILITY_TEXT = {
-    "sphere_throw": ("Lanzamiento de Esferas", "Con la bandolera en la mano: clic izquierdo, lanzamiento directo; clic derecho, curvo (sigue a tu cámara). La bola se clava y gira 3 tics sobre el objetivo (se salta su invulnerabilidad), rebota en los bloques y vuelve a la mano. Pulsar justo cuando llega es una Captura Perfecta: más Giro y la relanzas al instante. Cada bloque rebotado antes del impacto le suma daño."),
-    "spin_bar": ("Giro", "Barra de 0 a 100 % que sube con cada impacto, más si los encadenas. Si una bola vuelve sin impactar a ningún enemigo, pierdes la mitad; fuera de combate baja poco a poco. Con el 33 %: un rebote más y estelas doradas. Con el 66 %: el efecto del material es más fuerte y algo más de daño. Con el 100 %: Rectángulo Dorado listo."),
-    "bounce_route": ("Ruta de Rebotes", "Muestra un momento la ruta de rebotes de tu bola hacia donde miras y la fija: tu siguiente lanzamiento la sigue exactamente."),
+    "sphere_throw": ("Lanzamiento de Esferas", "Con la bandolera en la mano: clic izquierdo, la bola va guiada hacia donde apuntas hasta que rebota (llega más lejos, pero algo más lenta); clic derecho, curva hacia donde miras, y si lo mantienes se carga: con la carga completa llega el doble de lejos, se queda clavada el doble y hace ×1,5 de daño. La bola se clava y gira unos 2 segundos en el objetivo, dañándolo sin parar (se salta su invulnerabilidad), rebota en los bloques y vuelve a la mano. Pulsar justo cuando llega es una Captura Perfecta: más Giro y la relanzas al instante. Cada bloque rebotado antes del impacto le suma daño."),
+    "spin_bar": ("Giro", "Barra de 0 a 100 % que sube con cada impacto, más si los encadenas. Si una bola vuelve sin impactar a ningún enemigo, pierdes la mitad; fuera de combate baja poco a poco. Con el 33 %: un rebote más y estelas doradas. Con el 66 %: el efecto del material es más fuerte y algo más de daño. Con el 100 %: puedes usar el Rectángulo Dorado (desde el Nivel Total 30)."),
+    "bounce_route": ("Ruta de Rebotes", "Tiro de billar: tu bola sale disparada hacia el enemigo al que apuntas y salta de enemigo en enemigo, golpeando a cada uno de pasada (cada golpe pega más que el anterior), hasta clavarse en el último. Con un solo enemigo, rebota a su alrededor y vuelve a por él. Cada golpe sube tu Giro."),
     "reverse_spin": ("Giro Reverso", "Tira de tu bola clavada (o del último enemigo que golpeaste hace muy poco) y lo arrastra hacia ti. Los jefes no se mueven. Detona tus minas."),
     "spin_step": ("Paso de Giro", "Impulso en espiral de unos 6 bloques hacia donde te mueves (o hacia donde miras si estás quieto). Tu siguiente impacto poco después da más Giro."),
-    "golden_rectangle": ("Rectángulo Dorado", "Con el Giro al 100 %: Giro Dorado durante unos segundos (bolas más rápidas, sin espera al volver y con más rebotes); cada impacto acumula una carga de espiral. Al terminar (o al pulsar de nuevo), una espiral de bolas orbita a tu alrededor y se lanza contra los enemigos cercanos, con más daño cuantas más cargas tengas."),
+    "golden_rectangle": ("Rectángulo Dorado", "Con el Giro al 100 %, una secuencia automática con cámara de cine: el tiempo se detiene a tu alrededor, escaneas al enemigo al que apuntas y le lanzas una bola dorada que lo retiene en una rotación infinita, dañándolo sin parar; aunque intente escapar, la rotación lo arrastra de vuelta. Un último golpe crítico lo hunde contra el suelo y la rotación salta a los enemigos cercanos. Mientras dura no puedes moverte, pero no recibes daño."),
     "shared_weak_point": ("Punto Débil Compartido", "Tus aliados también ven las marcas de Punto Débil y cada impacto las renueva."),
 }
 MECHANIC_NAMES = {
@@ -190,8 +203,13 @@ PARAMS = {
     "speed_damage": "Daño extra a toda velocidad|%", "mine_seconds": "Duración de la mina|s", "trigger_radius": "Radio de activación (bloques)",
     "mine_damage": "Daño de la mina x", "slow_level": "Nivel de Lentitud",
     "max_mines": "Minas a la vez", "pickup_range": "Distancia para recogerla (bloques)",
-    "sword_damage": "Daño de referencia (espada de hierro)", "iron_fraction": "Daño de la bola de hierro (de la espada)|%",
-    "spin_ticks": "Tics de giro al impactar", "sphere_speed": "Velocidad (bloques por tic)", "sphere_range": "Alcance (bloques)",
+    "sword_damage": "Daño de referencia (espada de hierro)", "iron_fraction": "Daño de un impacto de la bola de hierro (de la espada)|%",
+    "spin_seconds": "Tiempo clavada girando|s", "pulse_seconds": "Daño cada|s", "hit_stop_ticks": "Micro-pausa al impactar (tics)",
+    "sphere_speed": "Velocidad (bloques por tic)", "sphere_range": "Alcance (bloques)",
+    "aim_degrees": "Clic izquierdo: guía hacia la mira (grados por tic)", "aimed_speed_change": "Clic izquierdo: velocidad|%",
+    "aimed_range_change": "Clic izquierdo: alcance|%", "full_charge_seconds": "Clic derecho: tiempo de carga completa|s",
+    "charge_range": "Clic derecho cargado: alcance x", "charge_spin_time": "Clic derecho cargado: tiempo clavada x",
+    "charge_damage": "Clic derecho cargado: daño x",
     "return_speed": "Velocidad de vuelta (bloques por tic)", "return_cooldown_seconds": "Cooldown de retorno|s",
     "base_bounces": "Rebotes base", "bounce_speed_keep": "Velocidad que conserva al rebotar|%",
     "throw_interval_seconds": "Tiempo mínimo entre lanzamientos|s", "base_spheres": "Bolas simultáneas base",
@@ -220,13 +238,17 @@ PARAMS = {
     "chain_max": "Cadena: multiplicador máximo x", "miss_loss": "Giro que pierdes al fallar|%",
     "threshold_1": "Giro I desde|%", "threshold_2": "Giro II desde|%", "threshold_1_bounces": "Giro I: rebotes extra",
     "threshold_2_material": "Giro II: efecto del material x", "threshold_2_damage": "Giro II: daño extra|%",
-    "preview_seconds": "Muestra la ruta durante|s", "route_bounces_max": "Rebotes máximos de la ruta",
+    "route_hits": "Golpes de la ruta", "route_range": "Alcance del primer objetivo (bloques)",
+    "route_hop": "Distancia entre enemigos de la ruta (bloques)", "route_cone_degrees": "Cono de la mira (grados)",
+    "bank_distance": "Rebote junto a un enemigo solo (bloques)", "hit_factor": "Golpe de pasada (de un impacto)|%",
+    "per_hit_bonus": "Daño extra por cada golpe anterior|%", "route_speed": "Velocidad en la ruta (bloques por tic)",
     "pull_blocks": "Arrastre (bloques)", "stuck_window_seconds": "Tiempo que sigue clavada la bola|s",
     "dash_lift": "Impulso hacia arriba", "step_spin": "Giro extra del siguiente impacto|%",
-    "step_window_seconds": "Tiempo para aprovecharlo|s", "golden_seconds": "Giro Dorado|s", "golden_speed": "Velocidad extra de las bolas|%",
-    "golden_bounces": "Rebotes extra", "max_spiral": "Cargas de espiral máximas", "orbit_seconds": "Tiempo orbitando|s",
-    "spiral_targets": "Objetivos de la espiral", "spiral_radius": "Alcance de la espiral (bloques)",
-    "spiral_damage": "Daño por carga (de una bola de hierro)|%", "visible_range": "Distancia a la que lo ven tus aliados (bloques)",
+    "step_window_seconds": "Tiempo para aprovecharlo|s", "target_range": "Alcance para elegir objetivo (bloques)",
+    "freeze_radius": "Radio en que se detiene el tiempo (bloques)", "pulse_damage": "Daño de cada pulso de la rotación (de la espada)|%",
+    "final_damage": "Golpe final (de la espada)|%", "spread_targets": "Enemigos a los que se propaga",
+    "spread_radius": "Alcance de la propagación (bloques)", "spread_damage": "Daño de la propagación (de la espada)|%",
+    "visible_range": "Distancia a la que lo ven tus aliados (bloques)",
 }
 
 ENCHANTMENTS = {
@@ -261,10 +283,9 @@ UI = {
     f"tooltip.{NS}.bandolier.count": "%s/%s bolas",
     f"tooltip.{NS}.bandolier.empty": "Vacía",
     f"tooltip.{NS}.bandolier.help": "Clic derecho con una bola encima para guardarla; clic derecho sobre un hueco para sacar una.",
-    f"tooltip.{NS}.bandolier.controls": "En la mano: clic izquierdo, directo; clic derecho, curvo; %s: cambiar de bola.",
+    f"tooltip.{NS}.bandolier.controls": "En la mano: clic izquierdo, guiada; clic derecho (mantén para cargar), curva; %s: cambiar de bola.",
     f"hud.{NS}.spin": "Giro",
     f"hud.{NS}.spin.ready": "¡Rectángulo Dorado listo! (%s)",
-    f"hud.{NS}.spin.golden": "Giro Dorado: %s cargas",
     f"hud.{NS}.sphere": "%s: %s/%s",
     f"message.{NS}.spin.not_spin_master": "Solo el Maestro del Giro sabe lanzar estas bolas.",
     f"message.{NS}.spin.empty": "Tu bandolera está vacía.",
@@ -276,10 +297,9 @@ UI = {
     f"message.{NS}.spin.nothing_stuck": "No tienes ninguna bola clavada ni has golpeado a nadie hace poco.",
     f"message.{NS}.spin.mine_limit": "Ya tienes %s minas clavadas.",
     f"message.{NS}.spin.mine_picked": "Recoges la mina.",
-    f"message.{NS}.spin.route": "Ruta fijada: tu siguiente lanzamiento la seguirá.",
+    f"message.{NS}.spin.no_targets": "No hay ningún enemigo a la vista.",
     f"message.{NS}.spin.perfect": "¡Captura Perfecta!",
     f"message.{NS}.spin.golden": "¡Rectángulo Dorado!",
-    f"message.{NS}.spin.spiral": "¡Espiral Final! (%s cargas)",
 }
 
 

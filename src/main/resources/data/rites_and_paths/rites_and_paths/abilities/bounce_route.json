@@ -1,6 +1,12 @@
 {
   "schema_version": 1,
-  "preview_seconds": 1.5,
-  "route_bounces_max": 8,
+  "route_hits": 4,
+  "route_range": 16,
+  "route_hop": 10,
+  "route_cone_degrees": 70,
+  "bank_distance": 3,
+  "hit_factor": 0.6,
+  "per_hit_bonus": 0.15,
+  "route_speed": 2.6,
   "cooldown_seconds": 10
 }

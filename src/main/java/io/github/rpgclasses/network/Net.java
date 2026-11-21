@@ -17,7 +17,7 @@ import net.minecraftforge.network.simple.SimpleChannel;
 
 public final class Net {
     /** Cliente y servidor con versiones de protocolo distintas no se conectan. Subir al cambiar cualquier paquete. */
-    private static final String PROTOCOL = "21";
+    private static final String PROTOCOL = "22";
 
     public static final SimpleChannel CHANNEL = NetworkRegistry.newSimpleChannel(
             RpgClasses.id("main"), () -> PROTOCOL, PROTOCOL::equals, PROTOCOL::equals);
@@ -129,6 +129,9 @@ public final class Net {
         CHANNEL.messageBuilder(Packets.SpinFx.class, id++, NetworkDirection.PLAY_TO_CLIENT)
                 .encoder(Packets.SpinFx::encode).decoder(Packets.SpinFx::decode)
                 .consumerMainThread(Packets.SpinFx::handle).add();
+        CHANNEL.messageBuilder(Packets.SpinCinematic.class, id++, NetworkDirection.PLAY_TO_CLIENT)
+                .encoder(Packets.SpinCinematic::encode).decoder(Packets.SpinCinematic::decode)
+                .consumerMainThread(Packets.SpinCinematic::handle).add();
     }
 
     public static void toPlayer(ServerPlayer player, Object message) {

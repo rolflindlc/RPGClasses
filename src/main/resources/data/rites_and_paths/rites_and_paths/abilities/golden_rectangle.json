@@ -1,12 +1,11 @@
 {
   "schema_version": 1,
-  "golden_seconds": 8,
-  "golden_speed": 0.5,
-  "golden_bounces": 2,
-  "max_spiral": 20,
-  "orbit_seconds": 1.5,
-  "spiral_targets": 8,
-  "spiral_radius": 16,
-  "spiral_damage": 0.25,
+  "target_range": 24,
+  "freeze_radius": 20,
+  "pulse_damage": 0.4,
+  "final_damage": 3.0,
+  "spread_targets": 6,
+  "spread_radius": 12,
+  "spread_damage": 1.5,
   "cooldown_seconds": 120
 }

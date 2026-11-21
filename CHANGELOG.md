@@ -17,12 +17,17 @@ First public beta of Rolflin's Rites & Paths (Minecraft Forge 1.20.1).
   click the faint φ in the top-left corner) holds classes whose balance is not guaranteed; choosing one shows a
   warning. The Spin Master throws balls of 10 materials (iron, diamond, netherite, slime, copper, amethyst, ender pearl,
   gold, redstone and dripstone, crafted in a cross with 5 of the material) from a **Sphere Bandolier** (bundle-like:
-  right click to store or take out; key G to switch ball): left click throws straight, right click throws curved
-  (it follows your camera). The ball sticks into the target and spins for 3 ticks (skipping invulnerability), bounces
-  off blocks and returns to the hand; a click right as it arrives is a Perfect Catch. Every hit raises the **Spin** bar
-  (33%: extra bounce; 66%: stronger material effect; 100%: Golden Rectangle). Branches Rotation, Rebound, Return,
-  Scan and Curve; Bounce Route, Reverse Spin, Spin Step and the **Golden Rectangle** ultimate (Golden Spin and a Final
-  Spiral with a cinematic camera, floating onomatopoeias and hit-stop shake, all shader-friendly). Subclasses Rider,
+  right click to store or take out; key G to switch ball): left click throws a ball guided toward your crosshair
+  (until it bounces), right click throws a curved ball that can be charged by holding it (up to twice the range,
+  twice the time stuck and ×1.5 damage). The ball drills into the target and spins on it for about 2 seconds,
+  damaging it in pulses (skipping invulnerability), bounces off blocks and returns to the hand; a click right as it
+  arrives is a Perfect Catch. Every hit raises the **Spin** bar (33%: extra bounce; 66%: stronger material effect;
+  100%: Golden Rectangle, announced on the HUD only once it is unlocked). Branches Rotation, Rebound, Return, Scan and
+  Curve; **Bounce Route** (a billiard shot that ricochets from enemy to enemy, hitting harder each time, and drills
+  into the last one), Reverse Spin, Spin Step and the **Golden Rectangle** ultimate: an automatic cinematic sequence
+  (time stops around you, a golden ball holds the target in an infinite rotation, drags it back when it tries to
+  escape and slams it into the ground, then the spin spreads to nearby enemies), with its own camera shots, floating
+  onomatopoeias and hit-stop shake, all shader-friendly. Subclasses Rider,
   Scanner and Spin Trapper (planted mines). Six ball enchantments (Friction, Density, Lightness, Magnet, Claw,
   Elasticity). New **Spheres** discipline: every other class has a fixed −100% wall on it. A fourth ability key (H).
   Server options `sphere.redstone.enabled`, `sphere.stalactite.breakBlocks` and `sphere.friction.igniteBlocks`;

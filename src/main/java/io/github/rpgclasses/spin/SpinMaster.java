@@ -26,11 +26,13 @@ import net.minecraftforge.common.MinecraftForge;
  * Maestro del Giro (adenda del Maestro del Giro, clase experimental): ids, utilidades comunes y registro.
  * <ul>
  *   <li>{@link SphereItem}, {@link BandolierItem} y {@link Bandolier}: las bolas y la bandolera (tipo saco).</li>
- *   <li>{@link SphereEntity}: la bola en vuelo (directa, curva, rebotes, 3 tics de giro, vuelta a la mano, minas y espiral).</li>
- *   <li>{@link SpinThrow}: lanzar, cambiar de bola, Captura Perfecta, Bola Guiada y recoger minas.</li>
+ *   <li>{@link SphereEntity}: la bola en vuelo (guiada, curva, rebotes, unos 2 s de giro clavada, vuelta a la mano, minas
+ *       y Ruta de Rebotes).</li>
+ *   <li>{@link SpinThrow}: lanzar (y cargar el clic derecho), cambiar de bola, Captura Perfecta, Bola Guiada y recoger minas.</li>
  *   <li>{@link SphereHits}: daño, crítico, efectos de material y de subclase y Giro de cada impacto.</li>
- *   <li>{@link SpinState}: la barra de Giro, la cadena de impactos y el Rectángulo Dorado.</li>
- *   <li>{@link SpinAbilities}: Ruta de Rebotes, Giro Reverso, Paso de Giro y Rectángulo Dorado.</li>
+ *   <li>{@link SpinState}: la barra de Giro, la cadena de impactos y la carga del clic derecho.</li>
+ *   <li>{@link SpinAbilities}: Ruta de Rebotes, Giro Reverso y Paso de Giro.</li>
+ *   <li>{@link GoldenRectangle}: la ulti, una secuencia automática con cámara de cine.</li>
  * </ul>
  * Los números se leen siempre de los JSON (tools/spin.py).
  */
@@ -76,9 +78,9 @@ public final class SpinMaster {
         AbilityService.register(BOUNCE_ROUTE, SpinAbilities::bounceRoute);
         AbilityService.register(REVERSE_SPIN, SpinAbilities::reverseSpin);
         AbilityService.register(SPIN_STEP, SpinAbilities::spinStep);
-        AbilityService.register(GOLDEN_RECTANGLE, SpinAbilities::goldenRectangle);
+        AbilityService.register(GOLDEN_RECTANGLE, GoldenRectangle::start);
         MinecraftForge.EVENT_BUS.register(new SpinState());
-        MinecraftForge.EVENT_BUS.register(new SpinThrow());
+        MinecraftForge.EVENT_BUS.register(new GoldenRectangle());
     }
 
     /** ¿Es Maestro del Giro? (servidor y cliente; en el cliente solo el jugador local tiene datos). */

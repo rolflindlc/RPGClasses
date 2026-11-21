@@ -60,9 +60,10 @@ import java.util.Comparator;
 import java.util.List;
 
 /**
- * Lo que pasa cuando una bola impacta (adenda del Maestro del Giro, secciones 3, 4, 5 y 8): daño en 3 tics con el
- * crítico decidido una vez, efecto del material (potenciado con Giro II), Jinete, Escáner, Giro, durabilidad, y lo que
- * hace en los bloques (redstone, estalactita, Fricción). También las minas del Trampero y el salto de la perla de Ender.
+ * Lo que pasa cuando una bola impacta (adenda del Maestro del Giro, secciones 3, 4, 5 y 8): daño en pulsos mientras gira
+ * clavada (unos 2 s) con el crítico decidido una vez, efecto del material (potenciado con Giro II), Jinete, Escáner,
+ * Giro, durabilidad, los impactos de rebote de la Ruta de Rebotes y lo que hace en los bloques (redstone, estalactita,
+ * Fricción). También las minas del Trampero y el salto de la perla de Ender.
  */
 public final class SphereHits {
     public static final TagKey<net.minecraft.world.level.block.Block> STALACTITE_BREAKABLE =
@@ -74,7 +75,7 @@ public final class SphereHits {
 
     // ------------------------------------------------------------------ impacto en un enemigo
 
-    /** La bola se clava en {@code target}: se calcula el daño del impacto, sus efectos y el primer tic. */
+    /** La bola se clava en {@code target}: se calcula el daño del impacto, sus efectos y el primer pulso. */
     static void startSpin(SphereEntity s, ServerPlayer owner, LivingEntity target, Vec3 at) {
         Vec3 incoming = s.getDeltaMovement();
         SpinState.State st = SpinState.of(owner);
@@ -82,7 +83,10 @@ public final class SphereHits {
         s.stuck = target;
         s.stuckOffset = at.subtract(target.position());
         s.spinTick = 0;
-        s.spinTicks = Math.max(1, (int) Math.round(SpinMaster.t("spin_ticks", 3)));
+        // Tiempo clavada: unos 2 s (hasta el doble con la carga del clic derecho), con daño cada pocos tics.
+        s.spinTicks = Math.max(1, (int) Math.round(SpinMaster.t("spin_seconds", 2.0) * 20 * s.spinTimeFactor));
+        s.pulseTicks = Math.max(1, (int) Math.round(SpinMaster.t("pulse_seconds", 0.25) * 20));
+        s.hitStopTicks = (int) Math.round(SpinMaster.t("hit_stop_ticks", 3));
         s.lingerTicks = s.virtual ? 0 : s.clawLevel * SpinEnchantments.CLAW_TICKS;
         s.hitIds.add(target.getId());
         s.hitEnemy = true;
@@ -92,8 +96,10 @@ public final class SphereHits {
         boolean spinII = st.spin >= SpinMaster.g("threshold_2", 0.66);
         s.materialFactor = spinII ? SpinMaster.g("threshold_2_material", 1.5) : 1.0;
 
-        double total = s.fixedDamage > 0 ? s.fixedDamage : impactDamage(s, owner, target, st, spinII);
-        s.damagePerTick = (float) (total / s.spinTicks);
+        // Daño total del impacto: la carga (×1,5 con la carga completa) y los rebotes previos de la Ruta lo suben.
+        double total = impactDamage(s, owner, target, st, spinII) * s.chargeDamage * (1 + s.trickBonus * s.trickHits);
+        int pulses = (s.spinTicks + s.pulseTicks - 1) / s.pulseTicks;
+        s.damagePerTick = (float) (total / Math.max(1, pulses));
         s.critDecided = decideCrit(s, owner, target);
         s.impactKnockback = switch (s.material()) {
             case IRON -> SpinMaster.t("iron_knockback", 0.35);
@@ -101,10 +107,8 @@ public final class SphereHits {
             default -> 0;
         };
 
-        if (s.fixedDamage <= 0) {
-            materialEffects(s, owner, target, at, incoming, total);
-            subclassEffects(s, owner, target);
-        }
+        materialEffects(s, owner, target, at, incoming, total);
+        subclassEffects(s, owner, target);
         if (!s.virtual) {
             SpinState.onImpact(owner, target, s.clawLevel);
             if (Bandolier.damage(owner, s.throwId, 1)) broke(s, owner);
@@ -116,25 +120,61 @@ public final class SphereHits {
         float shake = Boolean.TRUE.equals(s.critDecided) || spinII || s.golden ? 0.35f : 0.18f;
         SpinFxSender.shake(owner, shake);
         if (target instanceof ServerPlayer hit) SpinFxSender.shake(hit, shake + 0.15f);
-        if (s.virtual) SpinFxSender.onomatopoeia(level, at, SpinFxSender.WORD_DOGOON);
-        else if (Boolean.TRUE.equals(s.critDecided)) SpinFxSender.onomatopoeia(level, at, SpinFxSender.WORD_BAKYUN);
-        else if (spinII || s.golden) SpinFxSender.onomatopoeia(level, at, SpinFxSender.WORD_GYARU);
-        if (s.virtual && target instanceof ServerPlayer hit) SpinFxSender.cinematicHit(hit, 24);
+        if (Boolean.TRUE.equals(s.critDecided)) SpinFxSender.onomatopoeia(level, at, SpinFxSender.WORD_BAKYUN);
+        else if (spinII || s.charge >= 0.999) SpinFxSender.onomatopoeia(level, at, SpinFxSender.WORD_GYARU);
         if (DebugLog.enabled()) {
-            DebugLog.event(owner, "giro", "impacto {} de {} en {}: {} de daño ({} tics), crítico {}, rebotes {}+{}, Giro {}",
-                    s.throwId, s.material().id, DebugLog.describe(target), String.format("%.2f", total), s.spinTicks,
-                    s.critDecided, s.blockBounces, s.hops, String.format("%.2f", st.spin));
+            DebugLog.event(owner, "giro", "impacto {} de {} en {}: {} de daño ({} tics, {} pulsos), carga {}, crítico {}, rebotes {}+{}, ruta {}, Giro {}",
+                    s.throwId, s.material().id, DebugLog.describe(target), String.format("%.2f", total), s.spinTicks, pulses,
+                    String.format("%.2f", s.charge), s.critDecided, s.blockBounces, s.hops, s.trickHits, String.format("%.2f", st.spin));
         }
         dealTick(s, owner, target);
     }
 
-    /** Un tic del giro: un tercio del daño, saltándose la invulnerabilidad del objetivo. */
+    /** Un pulso del giro: una parte del daño, saltándose la invulnerabilidad del objetivo. */
     static void dealTick(SphereEntity s, ServerPlayer owner, LivingEntity target) {
         if (s.damagePerTick <= 0) return;
         target.invulnerableTime = 0;
         target.hurt(SpinMaster.sphereSource(s.level(), s, owner), s.damagePerTick);
         if (s.level() instanceof ServerLevel sl) {
             sl.sendParticles(ParticleTypes.CRIT, s.getX(), s.getY(), s.getZ(), 3, 0.12, 0.12, 0.12, 0.25);
+            if (s.spinTick > 0) {
+                sl.playSound(null, s.getX(), s.getY(), s.getZ(), SoundEvents.GRINDSTONE_USE, SoundSource.PLAYERS, 0.18f,
+                        1.5f + 0.4f * s.spinTick / Math.max(1f, s.spinTicks));
+            }
+        }
+    }
+
+    /**
+     * Ruta de Rebotes: la bola pasa por un enemigo intermedio sin clavarse. Le da un impacto de rebote (una parte del de un
+     * impacto normal, más por cada rebote anterior de la ruta) que cuenta para el Giro y gasta durabilidad.
+     */
+    static void ricochet(SphereEntity s, ServerPlayer owner, LivingEntity target, Vec3 at) {
+        SpinState.State st = SpinState.of(owner);
+        boolean spinII = st.spin >= SpinMaster.g("threshold_2", 0.66);
+        s.materialFactor = spinII ? SpinMaster.g("threshold_2_material", 1.5) : 1.0;
+        double total = impactDamage(s, owner, target, st, spinII) * s.trickHitFactor * (1 + s.trickBonus * s.trickHits);
+        s.critDecided = decideCrit(s, owner, target);
+        boolean crit = Boolean.TRUE.equals(s.critDecided);
+        target.invulnerableTime = 0;
+        target.hurt(SpinMaster.sphereSource(s.level(), s, owner), (float) total);
+        s.critDecided = null;
+        s.trickHits++;
+        s.hitIds.add(target.getId());
+        s.hitEnemy = true;
+        s.lastImpact = at;
+        SpinState.onImpact(owner, target, s.clawLevel);
+        if (!s.virtual && Bandolier.damage(owner, s.throwId, 1)) broke(s, owner);
+        ServerLevel level = (ServerLevel) s.level();
+        level.sendParticles(ParticleTypes.CRIT, at.x, at.y, at.z, 8, 0.15, 0.15, 0.15, 0.35);
+        level.sendParticles(ParticleTypes.WAX_OFF, at.x, at.y, at.z, 4, 0.1, 0.1, 0.1, 0.1);
+        level.playSound(null, at.x, at.y, at.z, SoundEvents.TRIDENT_HIT, SoundSource.PLAYERS, 0.6f, 1.6f + 0.1f * s.trickHits);
+        level.playSound(null, at.x, at.y, at.z, SoundEvents.CHAIN_HIT, SoundSource.PLAYERS, 0.5f, 1.4f);
+        SpinFxSender.shake(owner, crit ? 0.25f : 0.12f);
+        if (target instanceof ServerPlayer hit) SpinFxSender.shake(hit, 0.3f);
+        SpinFxSender.onomatopoeia(level, at, crit ? SpinFxSender.WORD_BAKYUN : SpinFxSender.WORD_PASHI);
+        if (DebugLog.enabled()) {
+            DebugLog.event(owner, "giro", "Ruta de Rebotes: rebote {} en {}: {} de daño, crítico {}", s.trickHits,
+                    DebugLog.describe(target), String.format("%.2f", total), crit);
         }
     }
 
@@ -488,7 +528,7 @@ public final class SphereHits {
     // ------------------------------------------------------------------ utilidades
 
     /**
-     * Objetivo para lo que apunta solo (rebotes entre enemigos, cobre, amatista, minas, Espiral Final): un enemigo que
+     * Objetivo para lo que apunta solo (rebotes entre enemigos, cobre, amatista, minas, Ruta de Rebotes, Rectángulo Dorado): un enemigo que
      * además sea hostil (monstruo, jefe o mob que te persigue) o un jugador enemigo. El golpe directo vale contra
      * cualquier enemigo (lo apunta el jugador): así lo automático no se lleva aldeanos ni animales.
      */

@@ -108,9 +108,9 @@ public final class SpinThrow {
         Bandolier.clearStale(band, SpinThrow::alive, now);
 
         // Captura Perfecta justo después de llegar: la bola que acaba de volver se relanza al instante.
-        SphereMaterial material = Bandolier.current(band);
+        SphereKind material = Bandolier.current(band);
         boolean perfect = charge <= 0 && justArrived(st, now);
-        if (perfect) material = st.lastArrivalMaterial;
+        if (perfect) material = st.lastArrivalKind;
 
         if (material == null) {
             p.displayClientMessage(Component.translatable("message.rites_and_paths.spin.empty").withStyle(ChatFormatting.GRAY), true);
@@ -133,14 +133,14 @@ public final class SpinThrow {
         }
         if (perfect) {
             st.nextCatch = now + Math.round(SpinMaster.t("catch_icd_seconds", 1.5) * 20);
-            st.lastArrivalMaterial = null;
+            st.lastArrivalKind = null;
             Bandolier.makeReady(p, st.lastArrivalId, now);
             perfectBonus(p, st);
         }
         SphereEntity e = launch(p, band, material, kind, mine, charge);
         if (e == null) {
             p.displayClientMessage(Component.translatable("message.rites_and_paths.spin.no_ready",
-                    Component.translatable("item.rites_and_paths." + material.itemName())).withStyle(ChatFormatting.GRAY), true);
+                    material.name()).withStyle(ChatFormatting.GRAY), true);
             return;
         }
         st.lastThrow = now;
@@ -149,21 +149,21 @@ public final class SpinThrow {
     /** Acaba de llegar una bola (dentro de la ventana de Captura Perfecta y fuera de su tiempo mínimo). */
     private static boolean justArrived(SpinState.State st, long now) {
         long window = Math.max(1, Math.round(SpinMaster.t("catch_window_seconds", 0.25) * 20));
-        return st.lastArrivalMaterial != null && now - st.lastArrival <= window && now >= st.nextCatch;
+        return st.lastArrivalKind != null && now - st.lastArrival <= window && now >= st.nextCatch;
     }
 
     /** Tecla de cambiar de bola: pasa al siguiente material de la bandolera de la mano. */
     public static void onCycle(ServerPlayer p) {
         ItemStack band = p.getMainHandItem();
         if (!Bandolier.is(band)) return;
-        SphereMaterial m = Bandolier.cycle(band);
+        SphereKind m = Bandolier.cycle(band);
         if (m == null) {
             p.displayClientMessage(Component.translatable("message.rites_and_paths.spin.empty").withStyle(ChatFormatting.GRAY), true);
             return;
         }
         long now = p.level().getGameTime();
         p.displayClientMessage(Component.translatable("message.rites_and_paths.spin.selected",
-                Component.translatable("item.rites_and_paths." + m.itemName()).append(" " + Bandolier.ready(band, m, now) + "/"
+                m.name().copy().append(" " + Bandolier.ready(band, m, now) + "/"
                         + Bandolier.total(band, m))).withStyle(ChatFormatting.GOLD), true);
         p.level().playSound(null, p.getX(), p.getY(), p.getZ(), SoundEvents.ARMOR_EQUIP_LEATHER, SoundSource.PLAYERS, 0.6f, 1.4f);
     }
@@ -181,7 +181,7 @@ public final class SpinThrow {
     }
 
     /** Lanza una bola de {@code material} de la bandolera. Devuelve null si no hay ninguna lista. */
-    static SphereEntity launch(ServerPlayer p, ItemStack band, SphereMaterial material, int kind, boolean mine, double charge) {
+    static SphereEntity launch(ServerPlayer p, ItemStack band, SphereKind material, int kind, boolean mine, double charge) {
         return launch(p, band, material, kind, mine, charge, null, null);
     }
 
@@ -189,12 +189,12 @@ public final class SpinThrow {
      * Lanzamiento con Ruta de Rebotes: la bola recorre {@code trick} (enemigos y puntos de rebote) con los números de
      * {@code routeParams}. Devuelve null si no hay ninguna bola lista.
      */
-    static SphereEntity launchTrick(ServerPlayer p, ItemStack band, SphereMaterial material, List<Object> trick,
+    static SphereEntity launchTrick(ServerPlayer p, ItemStack band, SphereKind material, List<Object> trick,
                                     com.google.gson.JsonObject routeParams) {
         return launch(p, band, material, DIRECT, false, 0, trick, routeParams);
     }
 
-    private static SphereEntity launch(ServerPlayer p, ItemStack band, SphereMaterial material, int kind, boolean mine, double charge,
+    private static SphereEntity launch(ServerPlayer p, ItemStack band, SphereKind material, int kind, boolean mine, double charge,
                                        List<Object> trick, com.google.gson.JsonObject routeParams) {
         long now = p.level().getGameTime();
         long id = IDS.incrementAndGet();
@@ -204,7 +204,7 @@ public final class SpinThrow {
         e.setOwner(p);
         e.throwId = id;
         e.sphere = copy;
-        e.setMaterial(material);
+        e.setKind(material);
         configure(e, p, material, copy, kind, mine, charge);
         SpinState.State st = SpinState.of(p);
         Vec3 look = p.getLookAngle();
@@ -246,7 +246,7 @@ public final class SpinThrow {
         }
         if (DebugLog.enabled()) {
             DebugLog.event(p, "giro", "lanza {} ({}{}{}): daño base {} +{}%, velocidad {}, alcance {}, rebotes {}, saltos {}, retorno {} tics",
-                    material.id, kind == CURVED ? "curva, carga " + String.format("%.2f", charge) : "guiada", mine ? ", mina" : "",
+                    material.id(), kind == CURVED ? "curva, carga " + String.format("%.2f", charge) : "guiada", mine ? ", mina" : "",
                     trick != null ? ", ruta de " + trick.size() + " puntos" : "",
                     String.format("%.2f", e.baseDamage), Math.round(e.damageBonus * 100), String.format("%.2f", e.speed),
                     String.format("%.1f", e.range), e.bounces, e.hopsLeft, e.returnCooldownTicks);
@@ -255,7 +255,9 @@ public final class SpinThrow {
     }
 
     /** Números del lanzamiento. */
-    static void configure(SphereEntity e, ServerPlayer p, SphereMaterial m, ItemStack sphere, int kind, boolean mine, double charge) {
+    static void configure(SphereEntity e, ServerPlayer p, SphereKind k, ItemStack sphere, int kind, boolean mine, double charge) {
+        SphereMaterial m = k.tier();
+        SphereUpgrade up = k.upgrade();
         SpinState.State st = SpinState.of(p);
         boolean aimed = kind == DIRECT;
         charge = aimed ? 0 : Math.max(0, Math.min(1, charge));
@@ -265,12 +267,16 @@ public final class SpinThrow {
         int claw = SpinEnchantments.level(SpinEnchantments.CLAW, sphere);
         int elastic = SpinEnchantments.level(SpinEnchantments.ELASTICITY, sphere);
         // Daño.
-        e.baseDamage = SpinMaster.t("sword_damage", 6) * SpinMaster.t("iron_fraction", 0.80) * SpinMaster.t("damage_" + m.id, 1.0);
-        e.damageBonus = SpinMaster.mech(p, SpinMaster.ROTATION, "damage_bonus", 0) + SpinMaster.mech(p, SpinMaster.HEAVY_SPIN, "damage_bonus", 0)
+        // Daño: tier × mejora. Rotación no sube el daño: da ticks de daño extra.
+        e.baseDamage = SpinMaster.t("sword_damage", 6) * SpinMaster.t("iron_fraction", 1.1) * SpinMaster.t("damage_" + m.id, 1.0)
+                * (up == null ? 1 : SpinMaster.t("damage_" + up.id, 1.0));
+        e.extraTicks = SpinMaster.mech(p, SpinMaster.ROTATION, "extra_ticks", 0);
+        e.damageBonus = SpinMaster.mech(p, SpinMaster.HEAVY_SPIN, "damage_bonus", 0)
                 + SpinMaster.mech(p, SpinMaster.SWIFT_SPIN, "damage_bonus", 0) + density * SpinEnchantments.DENSITY_DAMAGE
                 + lightness * SpinEnchantments.LIGHTNESS_DAMAGE + magnet * SpinEnchantments.MAGNET_DAMAGE;
         // Velocidad.
-        double speed = SpinMaster.t("sphere_speed", 1.8) * (m == SphereMaterial.GOLD ? 1 + SpinMaster.t("gold_speed", 0.40) : 1);
+        double speed = SpinMaster.t("sphere_speed", 1.8) * (up == SphereUpgrade.GOLD ? 1 + SpinMaster.t("gold_speed", 0.40) : 1)
+                * (up == SphereUpgrade.OBSIDIAN ? 1 + SpinMaster.t("crush_speed_change", -0.20) : 1);
         speed *= Math.max(0.3, 1 + SpinMaster.mech(p, SpinMaster.GUIDED_BALL, "speed_change", 0) + claw * SpinEnchantments.CLAW_SPEED
                 + (aimed ? SpinMaster.t("aimed_speed_change", -0.10) : 0));
         e.speed = speed;
@@ -288,7 +294,7 @@ public final class SpinThrow {
         int bonus = (int) Math.round(SpinMaster.mech(p, SpinMaster.REBOUND, "extra_bounces", 0) + SpinMaster.mech(p, SpinMaster.BILLIARDS, "extra_bounces", 0)) + elastic;
         bonus = Math.min(bonus, (int) Math.round(SpinMaster.t("bounce_bonus_cap", 5)));
         int bounces = (int) Math.round(SpinMaster.t("base_bounces", 1)) + bonus
-                + (m == SphereMaterial.SLIME ? (int) Math.round(SpinMaster.t("slime_bounces", 3)) : 0)
+                + (up == SphereUpgrade.SLIME ? (int) Math.round(SpinMaster.t("slime_bounces", 3)) : 0)
                 + (st.spin >= SpinMaster.g("threshold_1", 0.33) ? (int) Math.round(SpinMaster.g("threshold_1_bounces", 1)) : 0);
         e.dry = SpinMaster.has(p, SpinMaster.DRY_REBOUND);
         if (e.dry) {
@@ -309,8 +315,15 @@ public final class SpinThrow {
         // Retorno.
         double rc = SpinMaster.t("return_cooldown_seconds", 0.6) * 20 * (1 - SpinMaster.mech(p, SpinMaster.RETURN, "return_reduction", 0))
                 * (1 + SpinMaster.mech(p, SpinMaster.DOUBLE_HAND, "return_change", 0)) * (1 + magnet * SpinEnchantments.MAGNET_RETURN)
-                * (m == SphereMaterial.ENDER_PEARL ? 1 + SpinMaster.t("ender_return_change", 0.5) : 1)
-                * (m == SphereMaterial.GOLD ? 1 + SpinMaster.t("gold_return_change", -0.3) : 1);
+                * (up == SphereUpgrade.ENDER_PEARL ? 1 + SpinMaster.t("ender_return_change", 0.5) : 1)
+                * (up == SphereUpgrade.GOLD ? 1 + SpinMaster.t("gold_return_change", -0.3) : 1)
+                * (up == SphereUpgrade.OBSIDIAN ? 1 + SpinMaster.t("crush_return_change", 1.5) : 1);
+        // Barrena (pedernal): más tiempo clavada, menos daño por tick y más en total. Mazazo (obsidiana): un golpe.
+        if (up == SphereUpgrade.FLINT) {
+            e.upgradeTime = SpinMaster.t("drill_time", 2.5);
+            e.upgradeTotal = e.upgradeTime * SpinMaster.t("drill_tick_damage", 0.6);
+        }
+        e.oneHit = up == SphereUpgrade.OBSIDIAN;
         e.returnCooldownTicks = (int) Math.max(0, Math.round(rc));
         e.swiftReturn = SpinMaster.has(p, SpinMaster.SWIFT_RETURN);
         e.guided = SpinMaster.has(p, SpinMaster.GUIDED_BALL);
@@ -396,15 +409,15 @@ public final class SpinThrow {
         }
         st.lastArrival = now;
         st.lastArrivalId = e.throwId;
-        st.lastArrivalMaterial = e.material();
+        st.lastArrivalKind = e.kind();
         if (queued > 0) {
             ItemStack band = p.getMainHandItem();
             if (bonus && Bandolier.is(band)) {
                 st.nextCatch = now + Math.round(SpinMaster.t("catch_icd_seconds", 1.5) * 20);
-                st.lastArrivalMaterial = null;
+                st.lastArrivalKind = null;
                 perfectBonus(p, st);
                 boolean mine = e.queuedSneak && SpinMaster.has(p, SpinMaster.SPIN_MINE);
-                if (launch(p, band, e.material(), queued - 1, mine, 0) != null) st.lastThrow = now;
+                if (launch(p, band, e.kind(), queued - 1, mine, 0) != null) st.lastThrow = now;
             }
         }
     }

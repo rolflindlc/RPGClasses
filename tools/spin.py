@@ -20,33 +20,43 @@ def tag(t): return {"tag": t}
 
 CLASS_ID = "spin_master"
 
-# ------------------------------------------------------------------ materiales (deben coincidir con SphereMaterial.java)
-# id, material de la receta (en cruz: 5 unidades), nombre, efecto (descripción corta)
-MATERIALS = [
+# ------------------------------------------------------------------ tiers y mejoras (deben coincidir con SphereMaterial.java
+# y SphereUpgrade.java). Solo los tiers son objetos (en cruz con 5 unidades); las mejoras se le ponen a una bola de
+# cualquier tier en la mesa de trabajo (SphereUpgradeRecipe) con unas unidades de su material.
+# Tier: id, material de la receta, nombre, efecto (descripción corta)
+TIERS = [
     ("iron", tag("forge:ingots/iron"), "Bola de hierro", "Empuje ligero."),
     ("diamond", tag("forge:gems/diamond"), "Bola de diamante", "Ignora parte de la armadura del objetivo."),
     ("netherite", tag("forge:ingots/netherite"), "Bola de netherita", "Quema y empuja fuerte. Resiste el fuego y la lava."),
-    ("slime", tag("forge:slimeballs"), "Bola de slime", "Rebota mucho más y casi no pierde velocidad."),
-    ("copper", tag("forge:ingots/copper"), "Bola de cobre", "Salta a enemigos cercanos. Con tormenta, atrae rayos."),
-    ("amethyst", tag("forge:gems/amethyst"), "Bola de amatista", "Suelta una onda sónica en línea que atraviesa bloques y ciega."),
-    ("ender_pearl", tag("forge:ender_pearls"), "Bola de perla de Ender", "Al volver, te lleva al punto de impacto."),
-    ("gold", tag("forge:ingots/gold"), "Bola de oro", "Muy rápida y vuelve antes."),
-    ("redstone", tag("forge:dusts/redstone"), "Bola de redstone", "Activa la redstone que golpea."),
-    ("dripstone", item("minecraft:pointed_dripstone"), "Bola de estalactita", "Rompe bloques blandos y te los trae."),
 ]
-MATERIAL_IDS = [m[0] for m in MATERIALS]
+TIER_IDS = [t[0] for t in TIERS]
+# Mejora: id, nombre (tras «con»), efecto
+UPGRADES = [
+    ("slime", "slime", "Slime: rebota mucho más y casi no pierde velocidad."),
+    ("copper", "cobre", "Cobre: salta a enemigos cercanos. Con tormenta, atrae rayos."),
+    ("amethyst", "amatista", "Amatista: suelta una onda sónica en línea que atraviesa bloques y ciega."),
+    ("ender_pearl", "perla de Ender", "Perla de Ender: al volver, te lleva al punto de impacto."),
+    ("gold", "oro", "Oro: muy rápida y vuelve antes."),
+    ("redstone", "redstone", "Redstone: activa la redstone que golpea."),
+    ("dripstone", "estalactita", "Estalactita: rompe bloques blandos y te los trae."),
+    ("flint", "pedernal", "Barrena (pedernal): menos daño por tick, pero se queda clavada mucho más tiempo y en total hace más daño."),
+    ("obsidian", "obsidiana", "Mazazo (obsidiana): todo el daño de un solo golpe, sin quedarse clavada; es más lenta y tarda más en volver a estar lista."),
+]
+UPGRADE_IDS = [u[0] for u in UPGRADES]
+MATERIAL_IDS = TIER_IDS + UPGRADE_IDS
 
-# Multiplicador de daño de cada material (adenda, sección 3).
+# Multiplicador de daño de cada tier y de cada mejora (se multiplican: diamante con cobre = 1,25 × 1,0).
 MATERIAL_DAMAGE = {"iron": 1.0, "diamond": 1.25, "netherite": 1.5, "slime": .70, "copper": 1.0, "amethyst": .85,
-                   "ender_pearl": .80, "gold": .85, "redstone": .75, "dripstone": .90}
+                   "ender_pearl": .80, "gold": .85, "redstone": .75, "dripstone": .90, "flint": 1.0, "obsidian": 1.0}
 
 # ------------------------------------------------------------------ clase
 CLASS = dict(icon=R("iron_sphere"), roles=["escaramuzador", "híbrido"], kit="spin_master", crit=0.0,
              # Adenda, 2: Magia −50 %, Arco −40 %, Pesadas −50 %, Ligeras −20 %, Armadura −30 %, Escudos −60 %. Total 250.
              walls=dict(magic=.50, bow=.40, heavy=.50, light=.20, armor=.30, shield=.60),
              branches=[
-                 # Rotación: +3 % de daño de las bolas y +3 % de ritmo de Giro por punto.
-                 ("rotation", [mech("rotation", damage_bonus={"to": .30}, spin_rate={"to": .30})]),
+                 # Rotación: +3 % de ticks de daño (más pulsos en el mismo tiempo clavada; en los golpes únicos, +3 % de daño) y
+                 # +3 % de ritmo de Giro por punto.
+                 ("rotation", [mech("rotation", extra_ticks={"to": .30}, spin_rate={"to": .30})]),
                  # Rebote: +1 rebote con 5 puntos y +2 con 10; los rebotes en enemigos conservan del 53 % al 80 % del daño.
                  ("rebound", [mech("rebound", extra_bounces={"values": [0, 0, 0, 0, 1, 1, 1, 1, 1, 2]},
                                    hop_keep={"from": .53, "to": .80})]),
@@ -94,9 +104,9 @@ SUBS = {
         mech("weak_point", duration_seconds=6), attr([(R("crit_damage"), to(.20))])],
         [ms(5, "shared_weak_point", True)]),
     # Trampero de Giro: minas clavadas (agachado), Lentitud II 2 s; 2 minas (4 en el nivel 10). El daño de la mina es el
-    # 80 % de un impacto (impacto de 2 s, 150 % de la espada): lo mismo que antes del cambio (150 % de un impacto del 80 %).
+    # 110 % de un impacto (impacto de 1 s, 110 % de la espada): lo mismo que el original (150 % de un impacto del 80 %).
     "spin_trapper": ("minecraft:tripwire_hook", [
-        mech("spin_mine", mine_seconds=30, trigger_radius=2, mine_damage=0.8, slow_seconds=2, slow_level=2,
+        mech("spin_mine", mine_seconds=30, trigger_radius=2, mine_damage=1.1, slow_seconds=2, slow_level=2,
              max_mines={"values": [2, 2, 2, 2, 2, 3, 3, 3, 3, 4]}, pickup_range=3)], []),
 }
 
@@ -106,11 +116,13 @@ KIT = [{"item": R("sphere_bandolier"), "slot": "mainhand"}, {"item": R("iron_sph
 
 ABILITIES = {
     # Nivel Total 1 (pasivas que guardan los números base; funcionan desde el nivel 0).
-    # Impacto: la bola se queda clavada 2 s con un pulso de daño cada 0,25 s (8 pulsos). Daño total del impacto de la bola
-    # de hierro: 150 % de la espada de hierro (era 80 % en 3 tics; cada lanzamiento tarda ahora ~2,3 veces más en volver,
-    # así que el daño por segundo queda en ~80 % del de antes). Clic izquierdo: guiado hacia la mira (8°/tic), +15 % de
-    # alcance y −10 % de velocidad. Clic derecho: carga en 1 s hasta ×2 de alcance, ×2 de tiempo clavada y ×1,5 de daño.
-    "sphere_throw": dict(passive=True, sword_damage=6, iron_fraction=1.50, spin_seconds=2.0, pulse_seconds=.25, hit_stop_ticks=3,
+    # Impacto: la bola se queda clavada 1 s con un pulso de daño cada 0,25 s (4 pulsos; más con Rotación). Daño total del
+    # impacto de la bola de hierro: 110 % de la espada de hierro (era 80 % en 3 tics; cada lanzamiento tarda ahora ~1,6
+    # veces más en volver, así que el daño por segundo queda en ~85 % del original). Clic izquierdo: guiado hacia la mira
+    # (8°/tic), +15 % de alcance y −10 % de velocidad. Clic derecho: carga en 1 s hasta ×2 de alcance, ×2 de tiempo
+    # clavada (2 s) y ×1,5 de daño. Barrena: ×2,5 de tiempo clavada a ×0,6 por tick (×1,5 en total). Mazazo: todo de un
+    # golpe, −20 % de velocidad y +150 % de cooldown de retorno (deja su daño por segundo parecido al normal).
+    "sphere_throw": dict(passive=True, sword_damage=6, iron_fraction=1.10, spin_seconds=1.0, pulse_seconds=.25, hit_stop_ticks=3,
                          sphere_speed=1.8, sphere_range=20, aim_degrees=8, aimed_speed_change=-.10, aimed_range_change=.15,
                          full_charge_seconds=1.0, charge_range=2.0, charge_spin_time=2.0, charge_damage=1.5,
                          return_speed=1.5, return_cooldown_seconds=.6, base_bounces=1, bounce_speed_keep=.85,
@@ -122,7 +134,8 @@ ABILITIES = {
                          slime_bounces=3, slime_speed_keep=.98, copper_targets=2, copper_fraction=.40, copper_range=6,
                          copper_lightning_chance=.25, amethyst_length=6, amethyst_fraction=.50, amethyst_blind_seconds=1,
                          ender_return_change=.50, gold_speed=.40, gold_return_change=-.30, redstone_signal_ticks=3,
-                         redstone_signal_ticks_spin=20, dripstone_blocks=3, dripstone_hardness=3),
+                         redstone_signal_ticks_spin=20, dripstone_blocks=3, dripstone_hardness=3,
+                         drill_time=2.5, drill_tick_damage=.6, crush_speed_change=-.20, crush_return_change=1.5, crush_knockback=1.2),
     # Con 2 s clavada los impactos llegan más espaciados: +5 % por impacto y la cadena aguanta 5 s entre impactos.
     "spin_bar": dict(passive=True, spin_gain=.05, chain_seconds=5, chain_step=.25, chain_max=2.0, miss_loss=.50,
                      decay_delay_seconds=5, decay_per_second=.05, threshold_1=.33, threshold_2=.66, threshold_1_bounces=1,
@@ -153,7 +166,7 @@ CLASS_DESC = ("Lanza bolas de distintos materiales que se clavan girando, rebota
 TRAIT_DESC = "Rasgo de clase: algo menos de vida máxima."
 BRANCH_NAMES = {"rotation": "Rotación", "rebound": "Rebote", "sphere_return": "Retorno", "scan": "Escaneo", "curve": "Curva"}
 BRANCH_DESC = {
-    "rotation": "Tus bolas hacen más daño y tu Giro sube más rápido.",
+    "rotation": "Tus bolas hacen más ticks de daño mientras giran clavadas (en los golpes únicos, más daño) y tu Giro sube más rápido.",
     "rebound": "Más rebotes, y las bolas que rebotan de un enemigo a otro conservan más daño.",
     "sphere_return": "Tus bolas tardan menos en estar listas al volver y, con la rama llena, puedes tener una más en vuelo.",
     "scan": "Más probabilidad y daño de crítico; tus críticos con bola ignoran parte de la armadura.",
@@ -178,7 +191,7 @@ SUB_DESC = {
     "spin_trapper": "Clava sus bolas como minas: agachado, la bola se queda clavada en el suelo o en una pared y explota cuando pasa un enemigo cerca, frenándolo.",
 }
 ABILITY_TEXT = {
-    "sphere_throw": ("Lanzamiento de Esferas", "Con la bandolera en la mano: clic izquierdo, la bola va guiada hacia donde apuntas (llega más lejos, pero algo más lenta); clic derecho, curva hacia donde miras, y si lo mantienes se carga: con la carga completa llega el doble de lejos, se queda clavada el doble y hace ×1,5 de daño. La bola se clava y gira unos 2 segundos en el objetivo, dañándolo sin parar (se salta su invulnerabilidad). Cada rebote, en un bloque o al terminar de girar en un enemigo, la manda hacia donde mira tu cámara: el siguiente enemigo lo apuntas tú. Sin rebotes, vuelve a la mano. Pulsar justo cuando llega es una Captura Perfecta: más Giro y la relanzas al instante. Cada bloque rebotado antes del impacto le suma daño."),
+    "sphere_throw": ("Lanzamiento de Esferas", "Con la bandolera en la mano: clic izquierdo, la bola va guiada hacia donde apuntas (llega más lejos, pero algo más lenta); clic derecho, curva hacia donde miras, y si lo mantienes se carga: con la carga completa llega el doble de lejos, se queda clavada el doble y hace ×1,5 de daño. La bola se clava y gira 1 segundo en el objetivo, dañándolo con varios ticks (se salta su invulnerabilidad); cada tick pierde contra la armadura lo mismo que perdería el impacto entero de un solo golpe. Cada rebote, en un bloque o al terminar de girar en un enemigo, la manda hacia donde mira tu cámara: el siguiente enemigo lo apuntas tú. Sin rebotes, vuelve a la mano. Pulsar justo cuando llega es una Captura Perfecta: más Giro y la relanzas al instante. Cada bloque rebotado antes del impacto le suma daño."),
     "spin_bar": ("Giro", "Barra de 0 a 100 % que sube con cada impacto, más si los encadenas. Si una bola vuelve sin impactar a ningún enemigo, pierdes la mitad; fuera de combate baja poco a poco. Con el 33 %: un rebote más y estelas doradas. Con el 66 %: el efecto del material es más fuerte y algo más de daño. Con el 100 %: puedes usar el Rectángulo Dorado (desde el Nivel Total 30)."),
     "bounce_route": ("Ruta de Rebotes", "Tiro de billar: tu bola sale disparada hacia el enemigo al que apuntas y salta de enemigo en enemigo, golpeando a cada uno de pasada (cada golpe pega más que el anterior), hasta clavarse en el último. Con un solo enemigo, rebota a su alrededor y vuelve a por él. Cada golpe sube tu Giro."),
     "reverse_spin": ("Giro Reverso", "Tira de tu bola clavada (o del último enemigo que golpeaste hace muy poco) y lo arrastra hacia ti. Los jefes no se mueven. Detona tus minas."),
@@ -220,10 +233,14 @@ PARAMS = {
     "catch_window_seconds": "Ventana de Captura Perfecta|s", "catch_spin": "Giro de la Captura Perfecta|%",
     "catch_icd_seconds": "Tiempo mínimo entre Capturas Perfectas|s",
     "damage_iron": "Daño de la bola de hierro x", "damage_diamond": "Daño de la bola de diamante x",
-    "damage_netherite": "Daño de la bola de netherita x", "damage_slime": "Daño de la bola de slime x",
-    "damage_copper": "Daño de la bola de cobre x", "damage_amethyst": "Daño de la bola de amatista x",
-    "damage_ender_pearl": "Daño de la bola de perla de Ender x", "damage_gold": "Daño de la bola de oro x",
-    "damage_redstone": "Daño de la bola de redstone x", "damage_dripstone": "Daño de la bola de estalactita x",
+    "damage_netherite": "Daño de la bola de netherita x", "damage_slime": "Mejora de slime: daño x",
+    "damage_copper": "Mejora de cobre: daño x", "damage_amethyst": "Mejora de amatista: daño x",
+    "damage_ender_pearl": "Mejora de perla de Ender: daño x", "damage_gold": "Mejora de oro: daño x",
+    "damage_redstone": "Mejora de redstone: daño x", "damage_dripstone": "Mejora de estalactita: daño x",
+    "damage_flint": "Barrena: daño x", "damage_obsidian": "Mazazo: daño x",
+    "drill_time": "Barrena: tiempo clavada x", "drill_tick_damage": "Barrena: daño por tick x",
+    "crush_speed_change": "Mazazo: velocidad|%", "crush_return_change": "Mazazo: cooldown de retorno|%",
+    "crush_knockback": "Mazazo: empuje", "extra_ticks": "Ticks de daño extra|%",
     "iron_knockback": "Hierro: empuje", "diamond_armor": "Diamante: armadura ignorada|%",
     "netherite_burn_seconds": "Netherita: quemadura|s", "netherite_knockback": "Netherita: empuje",
     "slime_bounces": "Slime: rebotes extra", "slime_speed_keep": "Slime: velocidad que conserva al rebotar|%",
@@ -279,6 +296,8 @@ UI = {
     f"ui.{NS}.wall_fixed_line": "%s: -%s fijo (desde que eliges la clase)",
     f"tooltip.{NS}.sphere.damage": "Daño: x%s",
     f"tooltip.{NS}.sphere.only_class": "Solo el Maestro del Giro sabe lanzarla, desde la bandolera.",
+    f"tooltip.{NS}.sphere.upgrade_hint": "Mejórala en la mesa de trabajo con unidades de un material (por ejemplo, 4 lingotes de cobre).",
+    f"item.{NS}.sphere_upgraded": "%s con %s",
     f"tooltip.{NS}.bandolier.selected": "Bola elegida: %s",
     f"tooltip.{NS}.bandolier.count": "%s/%s bolas",
     f"tooltip.{NS}.bandolier.empty": "Vacía",
@@ -305,7 +324,7 @@ UI = {
 
 def recipes():
     out = {}
-    for m, ing, _, _ in MATERIALS:
+    for m, ing, _, _ in TIERS:
         out[f"{m}_sphere"] = {"type": "minecraft:crafting_shaped", "category": "equipment", "pattern": [" M ", "MMM", " M "],
                               "key": {"M": ing}, "result": {"item": R(f"{m}_sphere"), "count": 1}}
     # Mejora de diamante a netherita en la mesa de herrería, como el resto del equipo (propuesta; la receta en cruz sigue).
@@ -316,6 +335,8 @@ def recipes():
     out["sphere_bandolier"] = {"type": "minecraft:crafting_shaped", "category": "equipment", "pattern": ["LSL", "L L", "LIL"],
                                "key": {"L": item("minecraft:leather"), "S": item("minecraft:string"), "I": tag("forge:ingots/iron")},
                                "result": {"item": R("sphere_bandolier"), "count": 1}}
+    # Mejoras de bola (receta especial: bola + unidades de un material; ver SphereUpgradeRecipe).
+    out["sphere_upgrade"] = {"type": R("sphere_upgrade"), "category": "equipment"}
     return out
 
 
@@ -348,7 +369,7 @@ def build(dump, out_dir):
         dump(os.path.join(data, NS, "recipes", "spin", name + ".json"), recipe)
     # Modelos: bolas y bandolera los dibuja el código (núcleo voxel con un anillo que gira); el icono plano de la
     # bandolera y la textura de cada bola los usa ese dibujo.
-    for m in MATERIAL_IDS:
+    for m in TIER_IDS:
         dump(os.path.join(assets, "models", "item", f"{m}_sphere.json"),
              {"parent": "minecraft:builtin/entity", "gui_light": "side", "textures": {"particle": f"{NS}:item/sphere/{m}"},
               "display": SPHERE_DISPLAY})
@@ -387,11 +408,14 @@ def build(dump, out_dir):
         "minecraft:glowstone", "minecraft:soul_sand", "minecraft:soul_soil", "minecraft:end_stone", "minecraft:glass",
         "minecraft:amethyst_cluster", "minecraft:budding_amethyst", "minecraft:amethyst_block"]})
     # Todas las bolas (para datapacks y otros mods).
-    dump(os.path.join(data, NS, "tags", "items", "spheres.json"), {"replace": False, "values": [R(f"{m}_sphere") for m in MATERIAL_IDS]})
+    dump(os.path.join(data, NS, "tags", "items", "spheres.json"), {"replace": False, "values": [R(f"{m}_sphere") for m in TIER_IDS]})
     lang = dict(UI)
-    for m, _, name, effect in MATERIALS:
+    for m, _, name, effect in TIERS:
         lang[f"item.{NS}.{m}_sphere"] = name
         lang[f"tooltip.{NS}.sphere.effect.{m}"] = effect
+    for u, name, effect in UPGRADES:
+        lang[f"upgrade.{NS}.{u}"] = name
+        lang[f"tooltip.{NS}.sphere.effect.{u}"] = effect
     for e, (name, desc) in ENCHANTMENTS.items():
         lang[f"enchantment.{NS}.{e}"] = name
         lang[f"enchantment.{NS}.{e}.desc"] = desc

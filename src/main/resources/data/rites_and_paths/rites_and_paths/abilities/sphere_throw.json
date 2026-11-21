@@ -2,8 +2,8 @@
   "schema_version": 1,
   "passive": true,
   "sword_damage": 6,
-  "iron_fraction": 1.5,
-  "spin_seconds": 2.0,
+  "iron_fraction": 1.1,
+  "spin_seconds": 1.0,
   "pulse_seconds": 0.25,
   "hit_stop_ticks": 3,
   "sphere_speed": 1.8,
@@ -42,6 +42,8 @@
   "damage_gold": 0.85,
   "damage_redstone": 0.75,
   "damage_dripstone": 0.9,
+  "damage_flint": 1.0,
+  "damage_obsidian": 1.0,
   "iron_knockback": 0.35,
   "diamond_armor": 0.2,
   "netherite_burn_seconds": 3,
@@ -61,5 +63,10 @@
   "redstone_signal_ticks": 3,
   "redstone_signal_ticks_spin": 20,
   "dripstone_blocks": 3,
-  "dripstone_hardness": 3
+  "dripstone_hardness": 3,
+  "drill_time": 2.5,
+  "drill_tick_damage": 0.6,
+  "crush_speed_change": -0.2,
+  "crush_return_change": 1.5,
+  "crush_knockback": 1.2
 }

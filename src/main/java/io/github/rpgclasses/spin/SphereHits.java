@@ -83,8 +83,8 @@ public final class SphereHits {
         s.stuck = target;
         s.stuckOffset = at.subtract(target.position());
         s.spinTick = 0;
-        // Tiempo clavada: unos 2 s (hasta el doble con la carga del clic derecho), con daño cada pocos tics.
-        s.spinTicks = Math.max(1, (int) Math.round(SpinMaster.t("spin_seconds", 2.0) * 20 * s.spinTimeFactor));
+        // Tiempo clavada: 1 s (el doble con la carga del clic derecho; más con la Barrena), con daño cada pocos tics.
+        s.spinTicks = Math.max(1, (int) Math.round(SpinMaster.t("spin_seconds", 1.0) * 20 * s.spinTimeFactor * s.upgradeTime));
         s.pulseTicks = Math.max(1, (int) Math.round(SpinMaster.t("pulse_seconds", 0.25) * 20));
         s.hitStopTicks = (int) Math.round(SpinMaster.t("hit_stop_ticks", 3));
         s.lingerTicks = s.virtual ? 0 : s.clawLevel * SpinEnchantments.CLAW_TICKS;
@@ -96,16 +96,27 @@ public final class SphereHits {
         boolean spinII = st.spin >= SpinMaster.g("threshold_2", 0.66);
         s.materialFactor = spinII ? SpinMaster.g("threshold_2_material", 1.5) : 1.0;
 
-        // Daño total del impacto: la carga (×1,5 con la carga completa) y los rebotes previos de la Ruta lo suben.
-        double total = impactDamage(s, owner, target, st, spinII) * s.chargeDamage * (1 + s.trickBonus * s.trickHits);
-        int pulses = (s.spinTicks + s.pulseTicks - 1) / s.pulseTicks;
-        s.damagePerTick = (float) (total / Math.max(1, pulses));
+        // Pulsos: uno cada pulse_seconds del tiempo clavada; Rotación añade ticks de daño (más pulsos en el mismo tiempo).
+        double basePulses = s.spinTicks / (double) s.pulseTicks;
+        int pulses = Math.max(1, (int) Math.ceil(basePulses * (1 + s.extraTicks) - 1.0E-6));
+        // Daño total del impacto: el de los pulsos base y los ticks extra; la carga (×1,5 con la carga completa), la
+        // mejora (Barrena ×1,5) y los rebotes previos de la Ruta lo suben. El Mazazo lo da todo de un golpe.
+        double total = impactDamage(s, owner, target, st, spinII) * s.chargeDamage * s.upgradeTotal * (1 + s.extraTicks)
+                * (1 + s.trickBonus * s.trickHits);
+        if (s.oneHit) {
+            pulses = 1;
+            s.spinTicks = 1;
+            s.lingerTicks = 0;
+        }
+        s.pulseHits = pulses;
+        s.pulsesDone = 1;
+        s.damagePerTick = (float) (total / pulses);
         s.critDecided = decideCrit(s, owner, target);
         s.impactKnockback = switch (s.material()) {
             case IRON -> SpinMaster.t("iron_knockback", 0.35);
             case NETHERITE -> SpinMaster.t("netherite_knockback", 0.9);
             default -> 0;
-        };
+        } + (s.oneHit ? SpinMaster.t("crush_knockback", 1.2) : 0);
 
         materialEffects(s, owner, target, at, incoming, total);
         subclassEffects(s, owner, target);
@@ -124,10 +135,16 @@ public final class SphereHits {
         else if (spinII || s.charge >= 0.999) SpinFxSender.onomatopoeia(level, at, SpinFxSender.WORD_GYARU);
         if (DebugLog.enabled()) {
             DebugLog.event(owner, "giro", "impacto {} de {} en {}: {} de daño ({} tics, {} pulsos), carga {}, crítico {}, rebotes {}+{}, ruta {}, Giro {}",
-                    s.throwId, s.material().id, DebugLog.describe(target), String.format("%.2f", total), s.spinTicks, pulses,
+                    s.throwId, s.kind().id(), DebugLog.describe(target), String.format("%.2f", total), s.spinTicks, pulses,
                     String.format("%.2f", s.charge), s.critDecided, s.blockBounces, s.hops, s.trickHits, String.format("%.2f", st.spin));
         }
         dealTick(s, owner, target);
+        if (s.oneHit) {
+            // Mazazo: un golpe seco y la bola sigue (rebote hacia la mira o vuelta).
+            level.playSound(null, at.x, at.y, at.z, SoundEvents.ANVIL_LAND, SoundSource.PLAYERS, 0.6f, 0.7f);
+            SpinFxSender.onomatopoeia(level, at, SpinFxSender.WORD_DOGOON);
+            s.finishSpin(owner, !target.isAlive());
+        }
     }
 
     /** Un pulso del giro: una parte del daño, saltándose la invulnerabilidad del objetivo. */
@@ -152,7 +169,7 @@ public final class SphereHits {
         SpinState.State st = SpinState.of(owner);
         boolean spinII = st.spin >= SpinMaster.g("threshold_2", 0.66);
         s.materialFactor = spinII ? SpinMaster.g("threshold_2_material", 1.5) : 1.0;
-        double total = impactDamage(s, owner, target, st, spinII) * s.trickHitFactor * (1 + s.trickBonus * s.trickHits);
+        double total = impactDamage(s, owner, target, st, spinII) * s.trickHitFactor * (1 + s.extraTicks) * (1 + s.trickBonus * s.trickHits);
         s.critDecided = decideCrit(s, owner, target);
         boolean crit = Boolean.TRUE.equals(s.critDecided);
         target.invulnerableTime = 0;
@@ -252,7 +269,8 @@ public final class SphereHits {
         double burn = s.frictionLevel > 0 ? SpinEnchantments.FRICTION_SECONDS[Math.min(2, s.frictionLevel)] : 0;
         if (s.material() == SphereMaterial.NETHERITE) burn = Math.max(burn, SpinMaster.t("netherite_burn_seconds", 3) * f);
         if (burn > 0 && !target.fireImmune()) target.setSecondsOnFire((int) Math.ceil(burn));
-        switch (s.material()) {
+        SphereUpgrade up = s.upgrade();
+        if (up != null) switch (up) {
             case COPPER -> {
                 int n = (int) Math.round(SpinMaster.t("copper_targets", 2));
                 double frac = SpinMaster.t("copper_fraction", 0.40) * f;
@@ -325,7 +343,7 @@ public final class SphereHits {
         s.broken = true;
         owner.level().playSound(null, owner.getX(), owner.getY(), owner.getZ(), SoundEvents.ITEM_BREAK, SoundSource.PLAYERS, 0.8f, 1.0f);
         owner.displayClientMessage(Component.translatable("message.rites_and_paths.spin.broken",
-                Component.translatable("item.rites_and_paths." + s.material().itemName())).withStyle(ChatFormatting.RED), true);
+                s.kind().name()).withStyle(ChatFormatting.RED), true);
     }
 
     // ------------------------------------------------------------------ bloques
@@ -347,7 +365,7 @@ public final class SphereHits {
                 level.setBlock(fire, BaseFireBlock.getState(level, fire), 11);
             }
         }
-        if (s.material() == SphereMaterial.REDSTONE && ServerConfig.SPHERE_REDSTONE.get()) {
+        if (s.upgrade() == SphereUpgrade.REDSTONE && ServerConfig.SPHERE_REDSTONE.get()) {
             BlockPos sig = pos.relative(face);
             if (level.getBlockState(sig).isAir() && allowed(owner, level, sig)) {
                 int ticks = (int) Math.round(SpinState.of(owner).spin >= SpinMaster.g("threshold_2", 0.66)
@@ -358,7 +376,7 @@ public final class SphereHits {
                         hit.getLocation().z, 8, 0.2, 0.2, 0.2, 0);
             }
         }
-        if (s.material() == SphereMaterial.DRIPSTONE && ServerConfig.SPHERE_STALACTITE_BREAK.get()
+        if (s.upgrade() == SphereUpgrade.DRIPSTONE && ServerConfig.SPHERE_STALACTITE_BREAK.get()
                 && s.blocksBroken < (int) Math.round(SpinMaster.t("dripstone_blocks", 3))) {
             float hardness = state.getDestroySpeed(level, pos);
             if (!state.isAir() && state.is(STALACTITE_BREAKABLE) && !state.hasBlockEntity() && hardness >= 0
@@ -435,7 +453,7 @@ public final class SphereHits {
         Vec3 at = s.position();
         List<LivingEntity> hit = enemiesAround(owner, at, r, null);
         for (LivingEntity e : hit) {
-            double dmg = impactDamage(s, owner, e, st, spinII) * factor;
+            double dmg = impactDamage(s, owner, e, st, spinII) * factor * (1 + s.extraTicks);
             s.critDecided = decideCrit(s, owner, e);
             e.invulnerableTime = 0;
             e.hurt(SpinMaster.sphereSource(level, s, owner), (float) dmg);
@@ -490,8 +508,14 @@ public final class SphereHits {
     }
 
     /**
-     * Armadura que ignoran las bolas: la de diamante (más con Giro II) y los críticos con la rama Escaneo. Devuelve el
-     * factor de daño que deja la armadura reducida frente a la normal.
+     * Armadura frente a las bolas. Devuelve el factor por el que se multiplica el daño antes de la armadura vanilla para
+     * que, después de ella, quede lo que tiene que quedar:
+     * <ul>
+     *   <li><b>Pulsos del giro:</b> la armadura de Minecraft quita más cuanto más pequeño es el golpe, así que muchos ticks
+     *       pequeños saldrían mucho peor que un impacto entero. Cada pulso recibe la misma reducción que recibiría el
+     *       impacto completo de un solo golpe (la parte de armadura que le quitaría de más se ignora).</li>
+     *   <li>La bola de diamante (más con Giro II) y los críticos con la rama Escaneo ignoran además parte de la armadura.</li>
+     * </ul>
      */
     public static double armorFactor(ServerPlayer attacker, LivingEntity target, DamageSource source, Entity direct, double damage, boolean crit) {
         if (!(direct instanceof SphereEntity s) || damage <= 0 || source.is(DamageTypeTags.BYPASSES_ARMOR)) return 1;
@@ -499,13 +523,22 @@ public final class SphereHits {
         if (s.material() == SphereMaterial.DIAMOND) ignored += SpinMaster.t("diamond_armor", 0.20) * s.materialFactor;
         if (crit) ignored += SpinMaster.mech(attacker, SpinMaster.SCAN, "crit_pierce", 0);
         ignored = Mth.clamp(ignored, 0, 0.9);
-        if (ignored <= 0) return 1;
+        int pulses = s.state() == SphereEntity.SPINNING ? Math.max(1, s.pulseHits) : 1;
+        if (ignored <= 0 && pulses <= 1) return 1;
         float armor = target.getArmorValue();
         if (armor <= 0) return 1;
         float toughness = (float) target.getAttributeValue(Attributes.ARMOR_TOUGHNESS);
-        float actual = CombatRules.getDamageAfterAbsorb((float) damage, armor, toughness);
-        float wanted = CombatRules.getDamageAfterAbsorb((float) damage, (float) (armor * (1 - ignored)), toughness);
-        return actual <= 0 ? 1 : wanted / actual;
+        float eff = (float) (armor * (1 - ignored));
+        // Lo que debe quedar tras la armadura: la parte de este pulso del impacto entero contra la armadura efectiva.
+        double wanted = CombatRules.getDamageAfterAbsorb((float) (damage * pulses), eff, toughness) / pulses;
+        // Daño antes de la armadura que deja exactamente eso (la reducción vanilla no es lineal: búsqueda binaria).
+        double lo = 0, hi = damage * pulses * 2 + 1;
+        for (int i = 0; i < 30; i++) {
+            double mid = (lo + hi) / 2;
+            if (CombatRules.getDamageAfterAbsorb((float) mid, armor, toughness) < wanted) lo = mid;
+            else hi = mid;
+        }
+        return Math.max(1, hi / damage);
     }
 
     // ------------------------------------------------------------------ utilidades

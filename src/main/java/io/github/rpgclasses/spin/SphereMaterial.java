@@ -1,6 +1,5 @@
 package io.github.rpgclasses.spin;
 
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraftforge.common.Tags;
 
@@ -8,21 +7,15 @@ import java.util.Locale;
 import java.util.function.Supplier;
 
 /**
- * Materiales de las bolas (adenda del Maestro del Giro, sección 3). Aquí solo lo que es propio del objeto (durabilidad
- * como las herramientas del mismo material, encantabilidad, reparación y color); el daño y los números de cada efecto
- * se leen de la habilidad {@code sphere_throw} (tools/spin.py), como el resto del balance.
+ * Tiers de las bolas (adenda del Maestro del Giro, sección 3): hierro, diamante y netherita. Son los únicos objetos de bola;
+ * los materiales especiales (slime, cobre, amatista...) son mejoras que se le ponen a una bola de cualquier tier
+ * ({@link SphereUpgrade}). Aquí solo lo que es propio del objeto (durabilidad como las herramientas del mismo material,
+ * encantabilidad, reparación y color); el daño y los efectos se leen de la habilidad {@code sphere_throw} (tools/spin.py).
  */
 public enum SphereMaterial {
     IRON("iron", 250, 14, () -> Ingredient.of(Tags.Items.INGOTS_IRON), 0xD9D9D9, false),
     DIAMOND("diamond", 1561, 10, () -> Ingredient.of(Tags.Items.GEMS_DIAMOND), 0x5CE1D5, false),
-    NETHERITE("netherite", 2031, 15, () -> Ingredient.of(Tags.Items.INGOTS_NETHERITE), 0x5A4A4E, true),
-    SLIME("slime", 200, 12, () -> Ingredient.of(Tags.Items.SLIMEBALLS), 0x7CCB6A, false),
-    COPPER("copper", 190, 13, () -> Ingredient.of(Tags.Items.INGOTS_COPPER), 0xD9824F, false),
-    AMETHYST("amethyst", 300, 16, () -> Ingredient.of(Tags.Items.GEMS_AMETHYST), 0xA77BDB, false),
-    ENDER_PEARL("ender_pearl", 150, 15, () -> Ingredient.of(Tags.Items.ENDER_PEARLS), 0x2E9B83, false),
-    GOLD("gold", 32, 22, () -> Ingredient.of(Tags.Items.INGOTS_GOLD), 0xF2D14A, false),
-    REDSTONE("redstone", 180, 12, () -> Ingredient.of(Tags.Items.DUSTS_REDSTONE), 0xD0281E, false),
-    DRIPSTONE("dripstone", 160, 8, () -> Ingredient.of(Items.POINTED_DRIPSTONE), 0x9E8066, false);
+    NETHERITE("netherite", 2031, 15, () -> Ingredient.of(Tags.Items.INGOTS_NETHERITE), 0x5A4A4E, true);
 
     public final String id;
     public final int durability;

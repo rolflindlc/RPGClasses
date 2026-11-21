@@ -58,6 +58,7 @@ public class SphereEntity extends Projectile {
     private static final int MAX_FLIGHT_TICKS = 200, MAX_RETURN_TICKS = 160;
 
     private static final EntityDataAccessor<Byte> DATA_MATERIAL = SynchedEntityData.defineId(SphereEntity.class, EntityDataSerializers.BYTE);
+    private static final EntityDataAccessor<Byte> DATA_UPGRADE = SynchedEntityData.defineId(SphereEntity.class, EntityDataSerializers.BYTE);
     private static final EntityDataAccessor<Byte> DATA_STATE = SynchedEntityData.defineId(SphereEntity.class, EntityDataSerializers.BYTE);
     private static final EntityDataAccessor<Float> DATA_SPIN = SynchedEntityData.defineId(SphereEntity.class, EntityDataSerializers.FLOAT);
     private static final EntityDataAccessor<Boolean> DATA_GOLDEN = SynchedEntityData.defineId(SphereEntity.class, EntityDataSerializers.BOOLEAN);
@@ -76,6 +77,12 @@ public class SphereEntity extends Projectile {
     int bounces, hopsLeft, clawLevel, frictionLevel, returnCooldownTicks;
     /** Carga del clic derecho (0-1) y lo que multiplica: tiempo clavada y daño total del impacto. */
     double charge, spinTimeFactor = 1, chargeDamage = 1;
+    /** Ticks de daño extra (rama Rotación): más pulsos en el mismo tiempo; en los golpes únicos, daño extra. */
+    double extraTicks;
+    /** Mejora: tiempo clavada y daño total (Barrena: más tiempo y más daño total, menos por tick). */
+    double upgradeTime = 1, upgradeTotal = 1;
+    /** Mazazo (obsidiana): todo el daño de un golpe, sin quedarse clavada. */
+    boolean oneHit;
     /**
      * Ruta de Rebotes: enemigos (LivingEntity) y puntos de rebote (Vec3) por orden. Los enemigos intermedios reciben un
      * impacto de rebote al pasar; en el último se clava.
@@ -107,7 +114,9 @@ public class SphereEntity extends Projectile {
     // --- Giro sobre un objetivo ---
     LivingEntity stuck;
     Vec3 stuckOffset = Vec3.ZERO;
-    int spinTick, spinTicks = 40, lingerTicks, pulseTicks = 5, hitStopTicks = 3;
+    int spinTick, spinTicks = 20, lingerTicks, pulseTicks = 5, hitStopTicks = 3;
+    /** Pulsos de daño de este impacto (con los ticks extra) y los ya hechos. */
+    int pulseHits = 1, pulsesDone;
     /** Daño de cada pulso del giro. */
     float damagePerTick;
     /** Crítico decidido para todos los tics del impacto actual (lo lee DamagePipeline). */
@@ -129,6 +138,7 @@ public class SphereEntity extends Projectile {
     @Override
     protected void defineSynchedData() {
         entityData.define(DATA_MATERIAL, (byte) 0);
+        entityData.define(DATA_UPGRADE, (byte) 0);
         entityData.define(DATA_STATE, FLYING);
         entityData.define(DATA_SPIN, 0f);
         entityData.define(DATA_GOLDEN, false);
@@ -161,6 +171,20 @@ public class SphereEntity extends Projectile {
 
     void setMaterial(SphereMaterial m) {
         entityData.set(DATA_MATERIAL, (byte) m.ordinal());
+    }
+
+    /** La mejora de la bola (null si no tiene). */
+    public SphereUpgrade upgrade() {
+        return SphereUpgrade.byIndex(entityData.get(DATA_UPGRADE));
+    }
+
+    public SphereKind kind() {
+        return new SphereKind(material(), upgrade());
+    }
+
+    void setKind(SphereKind k) {
+        setMaterial(k.tier());
+        entityData.set(DATA_UPGRADE, (byte) SphereUpgrade.index(k.upgrade()));
     }
 
     public byte state() {
@@ -260,7 +284,7 @@ public class SphereEntity extends Projectile {
             SphereHits.startSpin(this, owner, target, at);
             return;
         }
-        if (material() == SphereMaterial.REDSTONE) SphereHits.pressComponents(this, owner, start, segEnd);
+        if (upgrade() == SphereUpgrade.REDSTONE) SphereHits.pressComponents(this, owner, start, segEnd);
 
         if (wall) {
             onBlockImpact(owner, block, vel, start);
@@ -398,7 +422,7 @@ public class SphereEntity extends Projectile {
         if (bounces > 0 && !dry) {
             bounces--;
             blockBounces++;
-            double keep = material() == SphereMaterial.SLIME ? SpinMaster.t("slime_speed_keep", 0.98) : SpinMaster.t("bounce_speed_keep", 0.85);
+            double keep = upgrade() == SphereUpgrade.SLIME ? SpinMaster.t("slime_speed_keep", 0.98) : SpinMaster.t("bounce_speed_keep", 0.85);
             double spd = Math.max(0.6, vel.length() * keep);
             // Sale hacia donde mira la cámara del lanzador; si eso la mete en la pared (mira a la propia pared), rebota normal.
             Vec3 aim = aimPoint(owner, true).subtract(at);
@@ -421,7 +445,7 @@ public class SphereEntity extends Projectile {
     }
 
     private void bounceFx(Vec3 at) {
-        level().playSound(null, at.x, at.y, at.z, material() == SphereMaterial.SLIME ? SoundEvents.SLIME_JUMP_SMALL : SoundEvents.CHAIN_HIT,
+        level().playSound(null, at.x, at.y, at.z, upgrade() == SphereUpgrade.SLIME ? SoundEvents.SLIME_JUMP_SMALL : SoundEvents.CHAIN_HIT,
                 SoundSource.PLAYERS, 0.5f, 1.3f + random.nextFloat() * 0.3f);
         if (level() instanceof ServerLevel sl) sl.sendParticles(ParticleTypes.CRIT, at.x, at.y, at.z, 4, 0.05, 0.05, 0.05, 0.15);
     }
@@ -475,7 +499,11 @@ public class SphereEntity extends Projectile {
                 t.setDeltaMovement(0, Math.min(0, v.y), 0);
                 t.hurtMarked = true;
             }
-            if (spinTick % Math.max(1, pulseTicks) == 0) SphereHits.dealTick(this, owner, t);
+            // Pulsos repartidos por igual en el tiempo clavada (con Rotación hay más en el mismo tiempo).
+            while (pulsesDone < pulseHits && (long) spinTick * pulseHits >= (long) pulsesDone * spinTicks) {
+                SphereHits.dealTick(this, owner, t);
+                pulsesDone++;
+            }
             return;
         }
         if (lingerTicks > 0) {
@@ -552,7 +580,7 @@ public class SphereEntity extends Projectile {
         setState(RETURNING);
         returnTicks = 0;
         // Perla de Ender: en vez de volver la bola, el lanzador va al punto de impacto.
-        if (material() == SphereMaterial.ENDER_PEARL && lastImpact != null) {
+        if (upgrade() == SphereUpgrade.ENDER_PEARL && lastImpact != null) {
             SphereHits.enderTeleport(this, owner, lastImpact);
             arrive(owner);
             return;
@@ -565,7 +593,7 @@ public class SphereEntity extends Projectile {
         Vec3 hand = handPos(owner);
         Vec3 to = hand.subtract(position());
         double dist = to.length();
-        double base = SpinMaster.t("return_speed", 1.5) * (material() == SphereMaterial.GOLD ? 1.4 : 1.0);
+        double base = SpinMaster.t("return_speed", 1.5) * (upgrade() == SphereUpgrade.GOLD ? 1.4 : 1.0);
         double v = Math.min(4.0, base * (1 + 0.08 * returnTicks));
         if (dist <= v + 0.6 || ++returnTicks > MAX_RETURN_TICKS) {
             arrive(owner);
@@ -608,9 +636,10 @@ public class SphereEntity extends Projectile {
 
     private void clientTick() {
         SphereMaterial m = material();
+        SphereKind kind = kind();
         byte st = state();
         if (st == MINE) {
-            if (age % 10 == 0) level().addParticle(new DustParticleOptions(new Vector3f(m.red(), m.green(), m.blue()), 0.6f),
+            if (age % 10 == 0) level().addParticle(new DustParticleOptions(new Vector3f(kind.red(), kind.green(), kind.blue()), 0.6f),
                     getX(), getY() + 0.15, getZ(), 0, 0.02, 0);
             return;
         }
@@ -628,7 +657,7 @@ public class SphereEntity extends Projectile {
         }
         // Estela: color del material, o dorada con Giro I o con el Giro Dorado (con espirales).
         DustParticleOptions dust = gold ? new DustParticleOptions(new Vector3f(1.0f, 0.82f, 0.25f), 0.9f)
-                : new DustParticleOptions(new Vector3f(m.red(), m.green(), m.blue()), 0.7f);
+                : new DustParticleOptions(new Vector3f(kind.red(), kind.green(), kind.blue()), 0.7f);
         level().addParticle(dust, getX() - v.x * 0.5, getY() - v.y * 0.5, getZ() - v.z * 0.5, 0, 0, 0);
         if (gold && v.lengthSqr() > 1.0E-4) {
             Vec3 dir = v.normalize();
@@ -641,7 +670,7 @@ public class SphereEntity extends Projectile {
             level().addParticle(ParticleTypes.WAX_OFF, getX() + off.x, getY() + off.y, getZ() + off.z, 0, 0, 0);
         }
         if (m == SphereMaterial.NETHERITE && age % 3 == 0) level().addParticle(ParticleTypes.SMALL_FLAME, getX(), getY(), getZ(), 0, 0, 0);
-        if (m == SphereMaterial.REDSTONE && age % 3 == 0) level().addParticle(DustParticleOptions.REDSTONE, getX(), getY(), getZ(), 0, 0, 0);
+        if (kind.upgrade() == SphereUpgrade.REDSTONE && age % 3 == 0) level().addParticle(DustParticleOptions.REDSTONE, getX(), getY(), getZ(), 0, 0, 0);
     }
 
     // ------------------------------------------------------------------ utilidades

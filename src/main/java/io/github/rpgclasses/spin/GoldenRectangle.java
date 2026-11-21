@@ -83,7 +83,7 @@ public final class GoldenRectangle {
         Vec3 casterPos, anchor, lastCenter, flightFrom, escapePos;
         boolean boss, escaped;
         double ref;
-        SphereMaterial look = SphereMaterial.GOLD;
+        SphereKind look = new SphereKind(SphereMaterial.IRON, SphereUpgrade.GOLD);
 
         Run(ServerPlayer caster, JsonObject params) {
             this.caster = caster;
@@ -126,9 +126,9 @@ public final class GoldenRectangle {
         r.boss = Races.isBoss(target);
         r.casterPos = p.position();
         r.lastCenter = target.getBoundingBox().getCenter();
-        double bonus = SpinMaster.mech(p, SpinMaster.ROTATION, "damage_bonus", 0) + SpinMaster.mech(p, SpinMaster.HEAVY_SPIN, "damage_bonus", 0)
-                + SpinMaster.mech(p, SpinMaster.SWIFT_SPIN, "damage_bonus", 0);
-        r.ref = SpinMaster.t("sword_damage", 6) * Math.max(0.1, 1 + bonus);
+        double bonus = SpinMaster.mech(p, SpinMaster.HEAVY_SPIN, "damage_bonus", 0) + SpinMaster.mech(p, SpinMaster.SWIFT_SPIN, "damage_bonus", 0);
+        // Rotación da ticks extra: aquí, el mismo daño extra en cada pulso.
+        r.ref = SpinMaster.t("sword_damage", 6) * Math.max(0.1, 1 + bonus) * (1 + SpinMaster.mech(p, SpinMaster.ROTATION, "extra_ticks", 0));
         ItemStack band = p.getMainHandItem();
         if (Bandolier.is(band) && Bandolier.current(band) != null) r.look = Bandolier.current(band);
         // El tiempo se detiene: mobs cercanos (no jefes ni aliados) quietos durante el escaneo y el lanzamiento.
@@ -264,7 +264,7 @@ public final class GoldenRectangle {
         e.setOwner(p);
         e.virtual = true;
         e.scripted = true;
-        e.setMaterial(r.look);
+        e.setKind(r.look);
         e.setGolden(true);
         e.setSpin(1f);
         Vec3 hand = SphereEntity.handPos(p);
@@ -309,6 +309,8 @@ public final class GoldenRectangle {
         r.frozen.clear();
         if (r.sphere != null) {
             r.sphere.setState(SphereEntity.SPINNING);
+            // Para la armadura: cada pulso cuenta como parte de un golpe entero (SphereHits.armorFactor).
+            r.sphere.pulseHits = (FINAL - IMPACT) / PULSE_TICKS + 1;
             r.sphere.setDeltaMovement(Vec3.ZERO);
             r.sphere.setPos(r.anchor.x, r.anchor.y, r.anchor.z);
         }
@@ -404,6 +406,7 @@ public final class GoldenRectangle {
         Vec3 c = r.anchor != null ? r.anchor : r.lastCenter;
         ServerPlayer p = r.caster;
         LivingEntity t = r.target;
+        if (r.sphere != null) r.sphere.pulseHits = 1;
         if (alive && r.sphere != null) {
             r.sphere.critDecided = true;
             t.invulnerableTime = 0;

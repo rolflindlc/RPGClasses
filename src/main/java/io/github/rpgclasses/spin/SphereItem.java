@@ -13,9 +13,10 @@ import java.util.Locale;
 import java.util.function.Consumer;
 
 /**
- * Bola de un material (adenda del Maestro del Giro, sección 3): se fabrica en cruz con 5 unidades del material, tiene
- * durabilidad (1 por impacto), se repara en el yunque con su material y acepta los encantamientos de bola. Se lanza desde
- * la bandolera ({@link BandolierItem}); suelta en la mano no hace nada. Se dibuja como un núcleo voxel con un anillo.
+ * Bola de un tier (adenda del Maestro del Giro, sección 3): se fabrica en cruz con 5 unidades del material, tiene
+ * durabilidad (1 por impacto), se repara en el yunque con su material y acepta los encantamientos de bola. Puede llevar
+ * una mejora ({@link SphereUpgrade}, en su NBT). Se lanza desde la bandolera ({@link BandolierItem}); suelta en la mano no
+ * hace nada. Se dibuja como un núcleo voxel (color del tier) con un anillo (color de la mejora).
  */
 public class SphereItem extends Item {
     public final SphereMaterial material;
@@ -41,11 +42,21 @@ public class SphereItem extends Item {
     }
 
     @Override
+    public Component getName(ItemStack stack) {
+        SphereUpgrade u = SphereUpgrade.of(stack);
+        return u == null ? super.getName(stack) : new SphereKind(material, u).name();
+    }
+
+    @Override
     public void appendHoverText(ItemStack stack, Level level, List<Component> tooltip, TooltipFlag flag) {
-        double damage = SpinMaster.anySide(SpinMaster.SPHERE_THROW, "damage_" + material.id, 1.0);
+        SphereUpgrade u = SphereUpgrade.of(stack);
+        double damage = SpinMaster.anySide(SpinMaster.SPHERE_THROW, "damage_" + material.id, 1.0)
+                * (u == null ? 1 : SpinMaster.anySide(SpinMaster.SPHERE_THROW, "damage_" + u.id, 1.0));
         tooltip.add(Component.translatable("tooltip.rites_and_paths.sphere.damage", String.format(Locale.ROOT, "%.2f", damage))
                 .withStyle(ChatFormatting.GRAY));
         tooltip.add(Component.translatable("tooltip.rites_and_paths.sphere.effect." + material.id).withStyle(ChatFormatting.GOLD));
+        if (u != null) tooltip.add(Component.translatable("tooltip.rites_and_paths.sphere.effect." + u.id).withStyle(ChatFormatting.YELLOW));
+        else tooltip.add(Component.translatable("tooltip.rites_and_paths.sphere.upgrade_hint").withStyle(ChatFormatting.DARK_AQUA));
         tooltip.add(Component.translatable("tooltip.rites_and_paths.sphere.only_class").withStyle(ChatFormatting.DARK_GRAY));
     }
 

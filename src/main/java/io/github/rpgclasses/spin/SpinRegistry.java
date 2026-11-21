@@ -26,6 +26,12 @@ public final class SpinRegistry {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, RpgClasses.MODID);
     public static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, RpgClasses.MODID);
     public static final DeferredRegister<MobEffect> EFFECTS = DeferredRegister.create(ForgeRegistries.MOB_EFFECTS, RpgClasses.MODID);
+    public static final DeferredRegister<net.minecraft.world.item.crafting.RecipeSerializer<?>> RECIPES =
+            DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, RpgClasses.MODID);
+
+    /** Mejora de bola en la mesa de trabajo (data/rites_and_paths/recipes/spin/sphere_upgrade.json). */
+    public static final RegistryObject<net.minecraft.world.item.crafting.SimpleCraftingRecipeSerializer<SphereUpgradeRecipe>> UPGRADE_RECIPE =
+            RECIPES.register("sphere_upgrade", () -> new net.minecraft.world.item.crafting.SimpleCraftingRecipeSerializer<>(SphereUpgradeRecipe::new));
 
     public static final Map<SphereMaterial, RegistryObject<Item>> SPHERES = new EnumMap<>(SphereMaterial.class);
 
@@ -63,6 +69,7 @@ public final class SpinRegistry {
         BLOCKS.register(modBus);
         ENTITIES.register(modBus);
         EFFECTS.register(modBus);
+        RECIPES.register(modBus);
         SpinEnchantments.ENCHANTMENTS.register(modBus);
     }
 
@@ -70,12 +77,17 @@ public final class SpinRegistry {
         return SPHERES.get(m).get();
     }
 
-    /** Para la pestaña de creativo: la bandolera llena de hierro y una bola de cada material. */
+    /** Para la pestaña de creativo: la bandolera (vacía y con 3 de hierro), los tres tiers y el hierro con cada mejora. */
     public static void creativeItems(Consumer<ItemStack> out) {
         ItemStack bandolier = new ItemStack(BANDOLIER.get());
         out.accept(bandolier.copy());
         for (int i = 0; i < 3; i++) Bandolier.add(bandolier, new ItemStack(sphere(SphereMaterial.IRON)));
         out.accept(bandolier);
         for (SphereMaterial m : SphereMaterial.values()) out.accept(new ItemStack(sphere(m)));
+        for (SphereUpgrade u : SphereUpgrade.values()) {
+            ItemStack s = new ItemStack(sphere(SphereMaterial.IRON));
+            SphereUpgrade.set(s, u);
+            out.accept(s);
+        }
     }
 }

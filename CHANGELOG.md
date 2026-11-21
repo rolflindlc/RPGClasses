@@ -15,16 +15,18 @@ First public beta of Rolflin's Rites & Paths (Minecraft Forge 1.20.1).
   on the body hurt you, the head cannot be hurt).
 - **Spin Master** (experimental, hidden): a hidden "Experimental" section in the class selection screen (type 1618 or
   click the faint φ in the top-left corner) holds classes whose balance is not guaranteed; choosing one shows a
-  warning. The Spin Master throws balls of 10 materials (iron, diamond, netherite, slime, copper, amethyst, ender pearl,
-  gold, redstone and dripstone, crafted in a cross with 5 of the material) from a **Sphere Bandolier** (bundle-like:
-  right click to store or take out; key G to switch ball): left click throws a ball guided toward your crosshair
-  (until it bounces), right click throws a curved ball that can be charged by holding it (up to twice the range,
-  twice the time stuck and ×1.5 damage). The ball drills into the target and spins on it for about 2 seconds,
-  damaging it in pulses (skipping invulnerability). Every bounce, off a block or after spinning in an enemy, sends it
-  toward where your camera looks, so you aim at the next enemy yourself; with no bounces left it returns to the hand,
-  and a click right as it arrives is a Perfect Catch. Every hit raises the **Spin** bar (33%: extra bounce; 66%: stronger material effect;
-  100%: Golden Rectangle, announced on the HUD only once it is unlocked). Branches Rotation, Rebound, Return, Scan and
-  Curve; **Bounce Route** (a billiard shot that ricochets from enemy to enemy, hitting harder each time, and drills
+  warning. The Spin Master throws balls of three tiers (iron, diamond and netherite, crafted in a cross with 5 of the material)
+  that can carry one of nine upgrades applied at a crafting table (slime, copper, amethyst, ender pearl, gold,
+  redstone, dripstone, flint "Drill" that stays stuck longer for more total damage, and obsidian "Crusher" that deals
+  everything in one hit), from a **Sphere Bandolier** (bundle-like: right click to store or take out; key G to switch
+  ball): left click throws a ball guided toward your crosshair, right click throws a curved ball that can be charged
+  by holding it (up to twice the range, twice the time stuck and ×1.5 damage). The ball drills into the target and
+  spins on it for 1 second (2 when charged), damaging it in ticks that skip invulnerability and lose to armor only as
+  much as the whole impact would in one hit. Every bounce, off a block or after spinning in an enemy, sends it toward
+  where your camera looks, so you aim at the next enemy yourself; with no bounces left it returns to the hand, and a
+  click right as it arrives is a Perfect Catch. Every hit raises the **Spin** bar (33%: extra bounce; 66%: stronger material effect;
+  100%: Golden Rectangle, announced on the HUD only once it is unlocked). Branches Rotation (more damage ticks instead of
+  flat damage), Rebound, Return, Scan and Curve; **Bounce Route** (a billiard shot that ricochets from enemy to enemy, hitting harder each time, and drills
   into the last one), Reverse Spin, Spin Step and the **Golden Rectangle** ultimate: an automatic cinematic sequence
   (time stops around you, a golden ball holds the target in an infinite rotation, drags it back when it tries to
   escape and slams it into the ground, then the spin spreads to nearby enemies), with its own camera shots, floating

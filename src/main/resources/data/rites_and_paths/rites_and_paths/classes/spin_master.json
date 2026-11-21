@@ -71,7 +71,7 @@
         {
           "type": "rites_and_paths:mechanic",
           "id": "rites_and_paths:rotation",
-          "damage_bonus": {
+          "extra_ticks": {
             "to": 0.3
           },
           "spin_rate": {

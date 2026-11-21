@@ -43,13 +43,13 @@ public class SphereRenderer extends EntityRenderer<SphereEntity> {
             }
         }
         boolean golden = e.golden() || e.spin() >= 0.33f;
-        VoxelBall.render(pose, buffers, light, OverlayTexture.NO_OVERLAY, e.material(), t * ringSpeed, golden, 1.0f, t * (spinning ? 40f : 14f));
+        VoxelBall.render(pose, buffers, light, OverlayTexture.NO_OVERLAY, e.kind(), t * ringSpeed, golden, 1.0f, t * (spinning ? 40f : 14f));
         pose.popPose();
         super.render(e, yaw, partialTick, pose, buffers, light);
     }
 
     @Override
     public ResourceLocation getTextureLocation(SphereEntity e) {
-        return VoxelBall.texture(e.material());
+        return VoxelBall.texture(e.kind());
     }
 }

@@ -11,6 +11,9 @@ import net.minecraft.world.item.ItemStack;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.TreeMap;
 import java.util.function.LongPredicate;
 
 /**
@@ -19,7 +22,7 @@ import java.util.function.LongPredicate;
  * perder: si la bola en vuelo desaparece (chunk descargado, servidor caído), la marca se limpia sola.
  * <pre>
  * Spheres: [{Item: {...}, Out: id del lanzamiento (0 = en la bandolera), OutAt: tic, Ready: tic en que está lista}]
- * Selected: id del material elegido
+ * Selected: id del tipo elegido (tier y mejora: iron, diamond+copper...)
  * </pre>
  */
 public final class Bandolier {
@@ -40,8 +43,8 @@ public final class Bandolier {
             this.last = last;
         }
 
-        public SphereMaterial material() {
-            return stack.getItem() instanceof SphereItem s ? s.material : null;
+        public SphereKind kind() {
+            return SphereKind.of(stack);
         }
 
         public boolean inFlight() {
@@ -108,7 +111,7 @@ public final class Bandolier {
         one.setCount(1);
         list.add(new Entry(one, 0, 0, 0, 0));
         save(bandolier, list);
-        if (selected(bandolier) == null && one.getItem() instanceof SphereItem s) select(bandolier, s.material);
+        if (selected(bandolier) == null) select(bandolier, SphereKind.of(one));
         return true;
     }
 
@@ -124,52 +127,50 @@ public final class Bandolier {
         return ItemStack.EMPTY;
     }
 
-    public static SphereMaterial selected(ItemStack bandolier) {
+    public static SphereKind selected(ItemStack bandolier) {
         CompoundTag tag = bandolier.getTag();
-        return tag == null ? null : SphereMaterial.byId(tag.getString(SELECTED));
+        return tag == null ? null : SphereKind.byId(tag.getString(SELECTED));
     }
 
-    public static void select(ItemStack bandolier, SphereMaterial m) {
-        if (m == null) bandolier.getOrCreateTag().remove(SELECTED);
-        else bandolier.getOrCreateTag().putString(SELECTED, m.id);
+    public static void select(ItemStack bandolier, SphereKind k) {
+        if (k == null) bandolier.getOrCreateTag().remove(SELECTED);
+        else bandolier.getOrCreateTag().putString(SELECTED, k.id());
     }
 
-    /** El material elegido; si ya no queda ninguna bola de él, el primero que haya. */
-    public static SphereMaterial current(ItemStack bandolier) {
-        SphereMaterial sel = selected(bandolier);
+    /** El tipo elegido; si ya no queda ninguna bola de él, el primero que haya. */
+    public static SphereKind current(ItemStack bandolier) {
+        SphereKind sel = selected(bandolier);
         List<Entry> list = entries(bandolier);
-        for (Entry e : list) if (e.material() == sel) return sel;
-        return list.isEmpty() ? sel : list.get(0).material();
+        for (Entry e : list) if (Objects.equals(e.kind(), sel)) return sel;
+        return list.isEmpty() ? sel : list.get(0).kind();
     }
 
-    /** Siguiente material de los que hay en la bandolera (en el orden de {@link SphereMaterial}). */
-    public static SphereMaterial cycle(ItemStack bandolier) {
+    /** Siguiente tipo de los que hay en la bandolera (por tier y luego por mejora). */
+    public static SphereKind cycle(ItemStack bandolier) {
         List<Entry> list = entries(bandolier);
         if (list.isEmpty()) return null;
-        SphereMaterial cur = current(bandolier);
-        SphereMaterial[] all = SphereMaterial.values();
-        int start = cur == null ? -1 : cur.ordinal();
-        for (int k = 1; k <= all.length; k++) {
-            SphereMaterial m = all[(start + k + all.length) % all.length];
-            for (Entry e : list) {
-                if (e.material() == m) {
-                    select(bandolier, m);
-                    return m;
-                }
-            }
+        SphereKind cur = current(bandolier);
+        TreeMap<Integer, SphereKind> kinds = new TreeMap<>();
+        for (Entry e : list) {
+            SphereKind k = e.kind();
+            if (k != null) kinds.put(k.order(), k);
         }
-        return cur;
+        if (kinds.isEmpty()) return cur;
+        Map.Entry<Integer, SphereKind> next = cur == null ? null : kinds.higherEntry(cur.order());
+        SphereKind k = next != null ? next.getValue() : kinds.firstEntry().getValue();
+        select(bandolier, k);
+        return k;
     }
 
-    public static int total(ItemStack bandolier, SphereMaterial m) {
+    public static int total(ItemStack bandolier, SphereKind k) {
         int n = 0;
-        for (Entry e : entries(bandolier)) if (e.material() == m) n++;
+        for (Entry e : entries(bandolier)) if (Objects.equals(e.kind(), k)) n++;
         return n;
     }
 
-    public static int ready(ItemStack bandolier, SphereMaterial m, long now) {
+    public static int ready(ItemStack bandolier, SphereKind k, long now) {
         int n = 0;
-        for (Entry e : entries(bandolier)) if (e.material() == m && e.ready(now)) n++;
+        for (Entry e : entries(bandolier)) if (Objects.equals(e.kind(), k) && e.ready(now)) n++;
         return n;
     }
 
@@ -179,17 +180,17 @@ public final class Bandolier {
         return n;
     }
 
-    /** La primera bola del material que esté lista para lanzar (sin marcarla), o null. */
-    public static Entry firstReady(ItemStack bandolier, SphereMaterial m, long now) {
-        for (Entry e : entries(bandolier)) if (e.material() == m && e.ready(now)) return e;
+    /** La primera bola de ese tipo que esté lista para lanzar (sin marcarla), o null. */
+    public static Entry firstReady(ItemStack bandolier, SphereKind k, long now) {
+        for (Entry e : entries(bandolier)) if (Objects.equals(e.kind(), k) && e.ready(now)) return e;
         return null;
     }
 
-    /** Marca en vuelo la primera bola lista del material y devuelve una copia de su objeto (o EMPTY). */
-    public static ItemStack take(ItemStack bandolier, SphereMaterial m, long now, long throwId) {
+    /** Marca en vuelo la primera bola lista de ese tipo y devuelve una copia de su objeto (o EMPTY). */
+    public static ItemStack take(ItemStack bandolier, SphereKind k, long now, long throwId) {
         List<Entry> list = entries(bandolier);
         for (Entry e : list) {
-            if (e.material() != m || !e.ready(now)) continue;
+            if (!Objects.equals(e.kind(), k) || !e.ready(now)) continue;
             e.out = throwId;
             e.outAt = now;
             save(bandolier, list);

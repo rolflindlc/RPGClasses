@@ -5,7 +5,7 @@ import io.github.rpgclasses.RpgClasses;
 import io.github.rpgclasses.spin.Bandolier;
 import io.github.rpgclasses.spin.BandolierItem;
 import io.github.rpgclasses.spin.SphereItem;
-import io.github.rpgclasses.spin.SphereMaterial;
+import io.github.rpgclasses.spin.SphereKind;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -37,13 +37,13 @@ public final class SpinItemRenderer extends BlockEntityWithoutLevelRenderer {
         Minecraft mc = Minecraft.getInstance();
         float t = (mc.level == null ? 0 : mc.level.getGameTime()) + mc.getPartialTick();
         if (stack.getItem() instanceof SphereItem s) {
-            ball(pose, buffers, light, overlay, s.material, t, false, 20f);
+            ball(pose, buffers, light, overlay, SphereKind.of(stack), t, false, 20f);
             return;
         }
         if (!(stack.getItem() instanceof BandolierItem)) return;
         boolean hand = ctx.firstPerson() || ctx == ItemDisplayContext.THIRD_PERSON_LEFT_HAND || ctx == ItemDisplayContext.THIRD_PERSON_RIGHT_HAND;
         if (hand) {
-            SphereMaterial m = Bandolier.current(stack);
+            SphereKind m = Bandolier.current(stack);
             long now = mc.level == null ? 0 : mc.level.getGameTime();
             if (m != null && Bandolier.ready(stack, m, now) > 0) {
                 // La propia: el anillo gira más rápido cuanto más Giro.
@@ -60,7 +60,7 @@ public final class SpinItemRenderer extends BlockEntityWithoutLevelRenderer {
         pose.popPose();
     }
 
-    private static void ball(PoseStack pose, MultiBufferSource buffers, int light, int overlay, SphereMaterial m, float t, boolean golden, float ringSpeed) {
+    private static void ball(PoseStack pose, MultiBufferSource buffers, int light, int overlay, SphereKind m, float t, boolean golden, float ringSpeed) {
         pose.pushPose();
         pose.translate(0.5, 0.5, 0.5);
         VoxelBall.render(pose, buffers, light, overlay, m, t * ringSpeed, golden, 2.0f, t * 3f);

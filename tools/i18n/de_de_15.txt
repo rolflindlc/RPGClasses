@@ -269,3 +269,43 @@
 268 Obsidian
 269 Bohrer (Feuerstein): weniger Schaden pro Tick, aber sie steckt viel länger im Ziel und verursacht insgesamt mehr Schaden.
 270 Hammerschlag (Obsidian): der ganze Schaden mit einem einzigen Treffer, ohne im Ziel stecken zu bleiben; sie ist langsamer und braucht länger, bis sie wieder bereit ist.
+271 Engel (Kleriker): solange es anhält, kannst du fliegen, langsam und ohne Sprinten.
+272 Magier (Fluss): +30 % Bewegungsgeschwindigkeit nach dem Wirken eines Zaubers.
+273 Du bist in der Aura des Banners eines Paladins: mehr Rüstung und kürzere negative Effekte; je nach Banner auch mehr Schaden oder Regeneration für Verbündete.
+274 Berserkerwut (Barbar): du greifst schneller an und verursachst mehr Schaden, erleidest aber auch mehr.
+275 Bollwerk (Paladin): du erleidest viel weniger Schaden aus allen Quellen.
+276 Trank der Herausforderung: die Zonenschwierigkeit rechnet dir pro Effektstufe 20 % mehr Klassenstufe an, daher sind Mobs in der Nähe stärker. Milch entfernt ihn.
+277 Stürmendes Bollwerk (Paladin): du rennst ununterbrochen mit hoher Geschwindigkeit, verletzt und stößt alles, was du überrennst, und zerbrichst schwache Blöcke auf deinem Weg.
+278 Bezaubert (Barde): greift weder den Barden noch seine Verbündeten an und kämpft gegen andere Mobs.
+279 Verdammt (Paladin): erleidet mehr Schaden durch den Paladin, der es markiert hat.
+280 Korrosion (Säure-Drakonide): −5 % Rüstung und Rüstungshärte pro Stufe.
+281 Niedergestreckt (Wunder des Klerikers): ein tödlicher Treffer hat dich mit einem halben Herz zu Boden gebracht. Du kannst nichts tun, erleidest aber keinen Schaden; heilt dich ein Verbündeter mit einem Zauber oder einer Klerikerfähigkeit, stehst du auf. Läuft es ab, stirbst du.
+282 Ausdauer (Barbar): du erleidest weniger Schaden.
+283 Erzwungener Tanz (Barde): tanzt auf der Stelle und kann weder angreifen noch zaubern noch Gegenstände benutzen.
+284 Gigantismus (Elite-Mobs): die Kreatur ist größer; die Effektstufe zeigt ihre Größe.
+285 Goldene Drehung (Meister der Drehung): du bist mitten im Goldenen Rechteck. Du kannst dich nicht bewegen oder handeln, erleidest aber keinen Schaden.
+286 Jägermal (Waldläufer): das markierte Ziel erleidet mehr Schaden aus allen Quellen.
+287 Letzte Wut (Barbar): ein tödlicher Treffer hat dich für einige Sekunden unsterblich gemacht. Tötest du deinen Angreifer vorher, überlebst du.
+288 Eiserner Choral (Barde): du erleidest weniger Schaden.
+289 Manakadenz (Barde): du regenerierst schneller Mana (1 % pro Stufe).
+290 Marsch (Barde): du bewegst dich und greifst schneller an.
+291 Seuche (Barbar): Schaden über Zeit, der sogar Untote trifft. Milch entfernt sie.
+292 Eifer des Requiems (Barde): du verursachst nach dem Finalen Requiem einige Sekunden lang mehr Schaden.
+293 Ballade der Ruhe (Barde): du regenerierst jede Sekunde Leben.
+294 Rückzug (Waldläufer): +25 % Bewegungsgeschwindigkeit.
+295 Schuppen gegen Feuer (Barde): du erleidest 25 % weniger Feuerschaden.
+296 Schuppen gegen Eis (Barde): du erleidest 25 % weniger Eisschaden.
+297 Schuppen gegen Blitz (Barde): du erleidest 25 % weniger Blitzschaden.
+298 Geteilter Schritt (Barde): du bewegst dich schneller.
+299 Zum Schweigen gebracht (Barde): kann keine Zauber wirken.
+300 Spott: du erleidest weniger Schaden, während die verspotteten Mobs auf dich losgehen.
+301 Toxin (Schurke): langsamer Schaden über Zeit, der sich nicht stapelt. Milch entfernt es.
+302 Trank der Gelassenheit: die Zonenschwierigkeit rechnet dir pro Effektstufe 20 % weniger Klassenstufe an, daher sind Mobs in der Nähe schwächer. Milch entfernt ihn.
+303 Kriegshymne (Barde): du verursachst mehr Schaden.
+304 Kugel des Meisters der Drehung: wird aus dem Kugelbandelier geworfen. Kombiniere sie an einer Werkbank mit 4 Einheiten eines Materials (2 Enderperlen), um ihr eine Verbesserung zu geben: Schleim, Kupfer, Amethyst, Enderperle, Gold, Redstone, Tropfstein, Feuerstein (Bohrer) oder Obsidian (Hammerschlag). Eine neue Verbesserung ersetzt die vorige, und die Kugel behält Haltbarkeit und Verzauberungen.
+305 Fasst bis zu 9 Kugeln: Rechtsklick mit einer Kugel am Mauszeiger, um sie hineinzulegen, Rechtsklick auf einen leeren Platz, um eine herauszunehmen. Der Meister der Drehung hält es in der Hand, um die Kugeln zu werfen; die Taste zum Kugelwechsel wählt welche.
+306 Notenblatt des Barden. Wird an Iron's Schriftrollenschmiede mit einem Musikzauber hergestellt (wie eine Schriftrolle, mit einer Schallplatte, einem Notenblock oder einer Jukebox als Fokus). Es wird am Notenständer oder am Inschriftentisch in einem Instrument gespeichert und steigt an einer Werkbank mit der verlangten Tintenseltenheit eine Stufe auf.
+307 Legendäres Instrument des Barden: lassen Barako und Umvuthi (Mowzie's Mobs) fallen, wenn ein Spieler sie tötet.
+308 Lässt der Leviathan (L_Ender's Cataclysm) fallen, wenn ein Spieler ihn tötet. Damit wird an einem Schmiedetisch die Abgrundorgel hergestellt.
+309 Lässt die Netherit-Monstrosität (L_Ender's Cataclysm) fallen, wenn ein Spieler sie tötet. Damit wird an einem Schmiedetisch die Trommel des Kolosses hergestellt.
+310 Nur im Kreativmodus, zum Testen: solange es in deinem Inventar ist, sind alle Klassen- und Volks-Abklingzeiten 0.

@@ -269,3 +269,43 @@
 268 obsidienne
 269 Foret (silex) : moins de dégâts par tick, mais elle reste plantée bien plus longtemps et inflige plus de dégâts au total.
 270 Masse (obsidienne) : tous les dégâts d'un seul coup, sans rester plantée ; elle est plus lente et met plus de temps à être de nouveau prête.
+271 Ange (Clerc) : tant que ça dure, tu peux voler, lentement et sans sprinter.
+272 Mage (Fluidité) : +30 % de vitesse de déplacement après avoir lancé un sort.
+273 Tu es dans l'aura de l'Étendard d'un Paladin : plus d'armure et des effets négatifs plus courts ; selon l'étendard, aussi plus de dégâts ou de régénération pour les alliés.
+274 Rage du berserker (Barbare) : tu attaques plus vite et infliges plus de dégâts, mais tu en subis aussi davantage.
+275 Rempart (Paladin) : tu subis beaucoup moins de dégâts de toutes les sources.
+276 Potion de Défi : la difficulté de zone te compte 20 % de niveau de classe en plus par niveau d'effet, donc les monstres qui apparaissent près de toi sont plus forts. Le lait l'enlève.
+277 Rempart de charge (Paladin) : tu cours sans t'arrêter à grande vitesse, blesses et repousses ceux que tu renverses et brises les blocs fragiles sur ton passage.
+278 Charmé (Barde) : il n'attaque ni le Barde ni ses alliés et combat d'autres monstres.
+279 Condamné (Paladin) : subit plus de dégâts du Paladin qui l'a marqué.
+280 Corrosion (Draconide acide) : −5 % d'armure et de robustesse d'armure par niveau.
+281 À terre (Miracle du Clerc) : un coup mortel t'a laissé au sol avec un demi-cœur. Tu ne peux rien faire, mais tu ne subis aucun dégât ; si un allié te soigne avec un sort ou une capacité du Clerc, tu te relèves. Si ça s'écoule, tu meurs.
+282 Endurance (Barbare) : tu subis moins de dégâts.
+283 Danse forcée (Barde) : il danse sur place et ne peut ni attaquer, ni lancer de sorts, ni utiliser d'objets.
+284 Gigantisme (monstres d'élite) : la créature est plus grande ; le niveau de l'effet indique sa taille.
+285 Rotation Dorée (Maître de la Rotation) : tu es en plein Rectangle d'Or. Tu ne peux ni bouger ni agir, mais tu ne subis aucun dégât.
+286 Marque du chasseur (Rôdeur) : la cible marquée subit plus de dégâts de toutes les sources.
+287 Dernière fureur (Barbare) : un coup mortel t'a rendu immortel quelques secondes. Si tu tues ton agresseur avant la fin, tu survis.
+288 Choral de fer (Barde) : tu subis moins de dégâts.
+289 Cadence de mana (Barde) : tu régénères le mana plus vite (1 % par niveau).
+290 Marche (Barde) : tu te déplaces et attaques plus vite.
+291 Peste (Barbare) : dégâts sur la durée qui touchent même les morts-vivants. Le lait l'enlève.
+292 Ferveur du requiem (Barde) : tu infliges plus de dégâts quelques secondes après le Requiem final.
+293 Ballade du repos (Barde) : tu régénères de la vie chaque seconde.
+294 Retraite (Rôdeur) : +25 % de vitesse de déplacement.
+295 Écailles contre le feu (Barde) : tu subis 25 % de dégâts de feu en moins.
+296 Écailles contre la glace (Barde) : tu subis 25 % de dégâts de glace en moins.
+297 Écailles contre la foudre (Barde) : tu subis 25 % de dégâts de foudre en moins.
+298 Pas partagé (Barde) : tu te déplaces plus vite.
+299 Réduit au silence (Barde) : il ne peut pas lancer de sorts.
+300 Provocation : tu subis moins de dégâts pendant que les monstres provoqués s'en prennent à toi.
+301 Toxine (Voleur) : dégâts lents sur la durée, qui ne se cumulent pas. Le lait l'enlève.
+302 Potion de Tranquillité : la difficulté de zone te compte 20 % de niveau de classe en moins par niveau d'effet, donc les monstres qui apparaissent près de toi sont plus faibles. Le lait l'enlève.
+303 Hymne de guerre (Barde) : tu infliges plus de dégâts.
+304 Boule du Maître de la Rotation : elle se lance depuis la Bandoulière à sphères. À l'établi, combine-la avec 4 unités d'un matériau (2 perles de l'Ender) pour lui donner une amélioration : slime, cuivre, améthyste, perle de l'Ender, or, redstone, spéléothème, silex (Foret) ou obsidienne (Masse). Une nouvelle amélioration remplace la précédente et la boule garde sa durabilité et ses enchantements.
+305 Contient jusqu'à 9 boules : clic droit avec une boule sur le curseur pour la ranger, clic droit sur un emplacement vide pour en sortir une. Le Maître de la Rotation la tient en main pour lancer les boules ; la touche de changement de boule choisit laquelle.
+306 Partition du Barde. Elle se fabrique à la forge de parchemins d'Iron's avec un sort musical (comme un parchemin, avec un disque de musique, un bloc musical ou un juke-box comme focus). Elle se range dans un instrument au pupitre ou à la table d'inscription, et monte d'un niveau à l'établi avec la rareté d'encre demandée.
+307 Instrument légendaire du Barde : lâché par Barako et Umvuthi (Mowzie's Mobs) quand un joueur les tue.
+308 Lâché par le Léviathan (L_Ender's Cataclysm) quand un joueur le tue. Sert à fabriquer l'Orgue abyssal à la table de forgeron.
+309 Lâché par la Monstruosité de netherite (L_Ender's Cataclysm) quand un joueur la tue. Sert à fabriquer le Tambour du colosse à la table de forgeron.
+310 Créatif uniquement, pour les tests : tant qu'il est dans ton inventaire, tous les temps de recharge de classe et de race sont à 0.

@@ -8,7 +8,7 @@
 7 Analyse
 8 Courbe
 9 Lancer de Sphères
-10 Bandoulière en main : clic gauche, la boule est guidée vers où tu vises jusqu'à ce qu'elle rebondisse (elle va plus loin, mais un peu plus lentement) ; clic droit, elle se courbe vers où tu regardes, et maintenir le clic charge le lancer : chargée au maximum, elle va deux fois plus loin, reste plantée deux fois plus longtemps et inflige ×1,5 de dégâts. La boule s'enfonce dans la cible et tourne sur elle environ 2 secondes en la blessant sans arrêt (en ignorant son invulnérabilité), rebondit sur les blocs et revient dans ta main. Cliquer juste quand elle arrive est une Prise Parfaite : plus de Rotation et tu la relances aussitôt. Chaque bloc sur lequel elle rebondit avant l'impact ajoute des dégâts.
+10 Bandoulière en main : clic gauche, la boule est guidée vers où tu vises (elle va plus loin, mais un peu plus lentement) ; clic droit, elle se courbe vers où tu regardes, et maintenir le clic charge le lancer : chargée au maximum, elle va deux fois plus loin, reste plantée deux fois plus longtemps et inflige ×1,5 de dégâts. La boule s'enfonce dans la cible et tourne sur elle environ 2 secondes en la blessant sans arrêt (en ignorant son invulnérabilité). Chaque rebond, sur un bloc ou après avoir tourné dans un ennemi, l'envoie vers où regarde ta caméra : c'est toi qui vises l'ennemi suivant. Quand il ne lui reste plus de rebonds, elle revient dans ta main. Cliquer juste quand elle arrive est une Prise Parfaite : plus de Rotation et tu la relances aussitôt. Chaque bloc sur lequel elle rebondit avant l'impact ajoute des dégâts.
 11 Rotation
 12 Barre de 0 à 100 % qui monte à chaque impact, davantage si tu les enchaînes. Si une boule revient sans avoir touché d'ennemi, tu en perds la moitié ; hors combat, elle baisse peu à peu. À 33 % : un rebond de plus et des traînées dorées. À 66 % : un effet de matériau plus fort et un peu plus de dégâts. À 100 % : tu peux utiliser le Rectangle d'Or (à partir du Niveau total 30).
 13 Trajectoire de Rebonds
@@ -105,7 +105,7 @@
 104 Boule supplémentaire au Niveau total
 105 Plafond de rebonds supplémentaires (branches et enchantements)
 106 Plafond de portée supplémentaire
-107 Distance de rebond entre ennemis (blocs)
+107 Portée minimale de chaque rebond sur un ennemi (blocs)
 108 Dégâts en rebondissant entre ennemis (sans la branche)
 109 Courbure du lancer courbe (degrés par tick)
 110 Rebond cinétique : dégâts par bloc rebondi

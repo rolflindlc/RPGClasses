@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "CEC",
+    "FIF",
+    "BBB"
+  ],
+  "key": {
+    "C": {
+      "tag": "minecraft:candles"
+    },
+    "E": {
+      "item": "minecraft:fermented_spider_eye"
+    },
+    "F": {
+      "item": "minecraft:rotten_flesh"
+    },
+    "I": {
+      "tag": "forge:ingots/iron"
+    },
+    "B": {
+      "item": "minecraft:bone_block"
+    }
+  },
+  "result": {
+    "item": "rites_and_paths:flesh_altar",
+    "count": 1
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "class": "rites_and_paths:druid",
+  "display": {
+    "icon": "minecraft:sea_lantern"
+  },
+  "effects": [
+    {
+      "type": "rites_and_paths:mechanic",
+      "id": "rites_and_paths:druid_moon",
+      "cast_seconds": 1,
+      "exit_cooldown_seconds": 5
+    }
+  ],
+  "milestones": []
+}

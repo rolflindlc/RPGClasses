@@ -17,7 +17,7 @@ import net.minecraftforge.network.simple.SimpleChannel;
 
 public final class Net {
     /** Cliente y servidor con versiones de protocolo distintas no se conectan. Subir al cambiar cualquier paquete. */
-    private static final String PROTOCOL = "22";
+    private static final String PROTOCOL = "23";
 
     public static final SimpleChannel CHANNEL = NetworkRegistry.newSimpleChannel(
             RpgClasses.id("main"), () -> PROTOCOL, PROTOCOL::equals, PROTOCOL::equals);
@@ -132,6 +132,8 @@ public final class Net {
         CHANNEL.messageBuilder(Packets.SpinCinematic.class, id++, NetworkDirection.PLAY_TO_CLIENT)
                 .encoder(Packets.SpinCinematic::encode).decoder(Packets.SpinCinematic::decode)
                 .consumerMainThread(Packets.SpinCinematic::handle).add();
+        // Druida (protocolo 23).
+        id = DruidPackets.register(CHANNEL, id);
     }
 
     public static void toPlayer(ServerPlayer player, Object message) {
@@ -147,7 +149,7 @@ public final class Net {
     public static void syncPlayer(ServerPlayer player) {
         PlayerClassData data = PlayerClassDataProvider.get(player);
         if (data == null) return;
-        toPlayer(player, new SyncPlayerData(data.save()));
+        toPlayer(player, new SyncPlayerData(data.saveForClient()));
         // Sin raza, el cliente abre antes la selección de raza (lo decide él con los datos sincronizados).
         if (data.state.classId == null) toPlayer(player, new OpenClassSelection());
     }
@@ -155,7 +157,7 @@ public final class Net {
     /** Envía el progreso sin pedir selecciones: para el avance de los ritos, que la pestaña Raza enseña en directo. */
     public static void syncProgress(ServerPlayer player) {
         PlayerClassData data = PlayerClassDataProvider.get(player);
-        if (data != null) toPlayer(player, new SyncPlayerData(data.save()));
+        if (data != null) toPlayer(player, new SyncPlayerData(data.saveForClient()));
     }
 
     private Net() {}

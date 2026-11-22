@@ -58,7 +58,8 @@ public final class StatEngine {
         SubclassDef subDef = classDef == null ? null : DefinitionStore.SERVER.subclassDef(s.subclassId);
 
         removeAll(player);
-        io.github.rpgclasses.core.definition.Definitions.RaceDef race = race(s);
+        // Druida: transformado, los rasgos de raza se suspenden (la bestia manda: tamaño, cuerpo y estadísticas).
+        io.github.rpgclasses.core.definition.Definitions.RaceDef race = io.github.rpgclasses.druid.WildShape.inForm(player) ? null : race(s);
 
         // 1. Pasivas de atributo de ramas, subclase y raza (con topes y suelos globales ya aplicados).
         // Bonus que cambian en combate y deben pasar por los topes: cargas del Monje y velocidad del Bardo (tocar y Danza).
@@ -131,6 +132,9 @@ public final class StatEngine {
 
         // 6. Cargas de Piedra del Monje: armadura hasta el máximo vanilla (30 / 20) sobre lo ya calculado.
         io.github.rpgclasses.content.MonkCharges.applyStoneArmor(player);
+
+        // 7. Druida: transformado, las estadísticas son las de la bestia (al final, sobre todo lo demás).
+        io.github.rpgclasses.druid.WildShape.applyStats(player);
 
         clampHealth(player);
         player.refreshDimensions(); // tamaño racial

@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "rites_and_paths:race_altar"
+    "rites_and_paths:race_altar",
+    "rites_and_paths:flesh_altar"
   ]
 }

@@ -41,7 +41,8 @@
     "irons_spellbooks:holy"
   ],
   "school_walls": {
-    "rites_and_paths:music": 1.0
+    "rites_and_paths:music": 1.0,
+    "irons_spellbooks:nature": 1.0
   },
   "traits": [
     {

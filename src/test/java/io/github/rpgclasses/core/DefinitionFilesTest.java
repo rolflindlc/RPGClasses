@@ -52,7 +52,8 @@ public class DefinitionFilesTest {
     @Test
     public void allShippedDefinitionsAreValid() {
         assertTrue("Errores de validación: " + STORE.errors(), STORE.errors().isEmpty());
-        assertEquals(List.of("rites_and_paths:barbarian", "rites_and_paths:bard", "rites_and_paths:cleric", "rites_and_paths:mage", "rites_and_paths:monk",
+        assertEquals(List.of("rites_and_paths:barbarian", "rites_and_paths:bard", "rites_and_paths:cleric", "rites_and_paths:druid", "rites_and_paths:mage",
+                "rites_and_paths:monk",
                 "rites_and_paths:paladin", "rites_and_paths:ranger", "rites_and_paths:rogue", "rites_and_paths:spin_master"), List.copyOf(STORE.classIds()));
         for (String id : STORE.classIds()) {
             ClassDef c = STORE.classDef(id);
@@ -68,18 +69,28 @@ public class DefinitionFilesTest {
             assertEquals(id, 5, c.branches().size());
             for (var b : c.branches()) perks += b.perks().size();
         }
-        assertEquals(90, perks);
+        assertEquals(100, perks);
     }
 
     @Test
     public void wallTotalsMatchDesignTable() {
         Map<String, Integer> expected = Map.of("mage", 200, "paladin", 150, "barbarian", 175,
-                "rogue", 245, "ranger", 150, "monk", 275, "bard", 245, "cleric", 235, "spin_master", 250);
+                "rogue", 245, "ranger", 150, "monk", 275, "bard", 245, "cleric", 235, "spin_master", 250,
+                "druid", 285);
         for (Map.Entry<String, Integer> e : expected.entrySet()) {
             ClassDef c = STORE.classDef("rites_and_paths:" + e.getKey());
             double total = 0;
             for (double v : c.walls().values()) total += StatMath.wallPenalty(v, 30) * 100;
             assertEquals(e.getKey(), e.getValue(), Math.round(total), 0.0);
+        }
+    }
+
+    /** Adenda del Druida: la escuela de naturaleza es suya (muro de escuela del 100 % para el resto). */
+    @Test
+    public void natureSchoolBelongsToTheDruid() {
+        for (String id : STORE.classIds()) {
+            Double wall = STORE.classDef(id).schoolWalls().get("irons_spellbooks:nature");
+            assertEquals(id, id.equals("rites_and_paths:druid") ? null : 1.0, wall);
         }
     }
 

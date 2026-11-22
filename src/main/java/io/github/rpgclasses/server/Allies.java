@@ -87,6 +87,9 @@ public final class Allies {
         if (e instanceof Player p) return p instanceof FakePlayer ? null : p.getUUID();
         if (e instanceof DecoyEntity decoy) return decoy.getOwnerUuid().orElse(null);
         if (e instanceof io.github.rpgclasses.content.race.SwarmSlime slime) return slime.getOwnerUuid().orElse(null);
+        // Dominar Animal (Druida): mientras dure, el animal es del Druida.
+        UUID dominated = io.github.rpgclasses.druid.Dominate.ownerOf(e);
+        if (dominated != null) return dominated;
         if (e instanceof OwnableEntity pet && pet.getOwnerUUID() != null) return pet.getOwnerUUID();
         if (e instanceof Projectile projectile) return ownerOf(projectile.getOwner(), depth + 1);
         Entity summoner = summoner(e);

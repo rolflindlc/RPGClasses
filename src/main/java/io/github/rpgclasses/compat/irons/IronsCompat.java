@@ -153,7 +153,15 @@ public final class IronsCompat {
             return;
         }
         String school = event.getSchoolType().getId().toString();
-        if (StatEngine.schoolWall(player, school) >= 1.0) {
+        // Druida: transformado no se lanzan conjuros (con Forma Sobrenatural, solo los de naturaleza); tampoco mientras
+        // se transforma.
+        if (io.github.rpgclasses.druid.WildShape.blocksCast(player, school)) {
+            player.displayClientMessage(Component.translatable("message.rites_and_paths.druid.in_form"), true);
+            event.setCanceled(true);
+            return;
+        }
+        // Conjuros exentos de su clase (Ranger: Flecha de Veneno, de la naturaleza del Druida) no sufren el muro de escuela.
+        if (StatEngine.schoolWall(player, school) >= 1.0 && !SpellExemptions.exempt(player, event.getSpellId())) {
             io.github.rpgclasses.server.DebugLog.event(player, "conjuro", "bloqueado: la escuela {} está vetada para su clase", school);
             event.setCanceled(true);
             player.displayClientMessage(Component.translatable("message.rites_and_paths.school_locked",

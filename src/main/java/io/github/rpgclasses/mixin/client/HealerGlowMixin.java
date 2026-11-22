@@ -13,6 +13,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class HealerGlowMixin {
     @Inject(method = "shouldEntityAppearGlowing", at = @At("HEAD"), cancellable = true, require = 0)
     private void rites_and_paths$healerGlow(Entity entity, CallbackInfoReturnable<Boolean> cir) {
-        if (ClericClient.glows(entity)) cir.setReturnValue(true);
+        if (ClericClient.glows(entity) || io.github.rpgclasses.client.druid.DruidClient.glows(entity)) cir.setReturnValue(true);
     }
 }

@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "BFB",
+    "FPF",
+    "BFB"
+  ],
+  "key": {
+    "B": {
+      "item": "minecraft:bone"
+    },
+    "F": {
+      "item": "minecraft:rotten_flesh"
+    },
+    "P": {
+      "item": "minecraft:decorated_pot"
+    }
+  },
+  "result": {
+    "item": "rites_and_paths:flesh_vessel",
+    "count": 1
+  }
+}

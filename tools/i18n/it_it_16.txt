@@ -1,0 +1,270 @@
+0 Impari le forme degli animali e delle bestie. Studio: tieni premuto il tasto destro con un Libro di studio su una creatura viva finché la barra non si riempie (se subisci danni si azzera; il libro si consuma alla fine). Rituale: lancia l'incantesimo Rituale del druido (senza pergamena, è sempre nella tua ruota) sui resti di una bestia appena uccisa. Ognuno dà un punto di conoscenza della sua specie, e ogni creatura può essere studiata una sola volta e usata in un rituale una sola volta. Le specie più forti richiedono più punti. Ciò che impari resta quando reimposti la classe.
+1 Sapere delle bestie
+2 L'animale di una specie che conosci e che stai guardando ti obbedisce per qualche minuto come un famiglio: ti segue e attacca i tuoi nemici (se sa attaccare). Utilizzabile in forma animale.
+3 Dominare animale
+4 Dal terreno intorno a te spuntano rampicanti per un po': i tuoi alleati (e tu) vi guariscono lentamente, e i nemici che ci camminano sopra vengono rallentati e si feriscono muovendosi, come in un cespuglio di bacche. Devi lasciare la tua forma per usarla.
+5 Rampicanti avvinghianti
+6 Le bestie vicine brillano per qualche secondo (solo per te). Se fissi una specie nel bestiario, vedi solo quella, e da più lontano. Utilizzabile in forma animale.
+7 Seguire le prede
+8 Apre il bestiario per scegliere una specie che conosci: dopo qualche secondo di lancio (subire danni lo interrompe) ti trasformi in essa. Paghi mana in base alla forza della bestia e, finché mantieni la forma, quel mana non si rigenera. Ottieni vita, taglia, velocità e attacchi della bestia, più forti quanto più alto è il tuo livello; il tuo equipaggiamento è nascosto e non conta, non puoi usare oggetti né lanciare incantesimi, e i tratti della tua razza sono sospesi. Se la bestia cade, torni alla tua forma con la vita che avevi. Premi di nuovo (accovacciato, all'istante) per tornare alla tua forma; la ricarica inizia allora. Anche dormire, morire o disconnetterti ti fa tornare.
+9 Forma selvatica
+10 Altare di carne
+11 Le tue forme bestiali hanno più vita e infliggono più danni.
+12 Ferocia
+13 Studi più in fretta, hai più tempo per il rituale e, con il ramo completo, ogni specie richiede un punto di conoscenza in meno.
+14 Sapere
+15 Rigeneri vita mentre sei una bestia e ti curi quando torni alla tua forma.
+16 Radici
+17 Più potere per i tuoi incantesimi della scuola della natura.
+18 Linfa
+19 Trasformarti costa meno mana e hai più mana massimo.
+20 Riserva selvatica
+21 Mago della natura che si trasforma nelle bestie che conosce. Studia le creature vive con il suo libro e compie un rituale sui loro resti per impararne la forma; quando conosce bene una specie può diventarla, con il suo corpo, la sua vita e i suoi attacchi. La scuola della natura è sua: tutte le altre scuole perdono il 35 %, ed è molto goffo con armi, armature e scudi.
+22 Druido
+23 Tratto di classe: un po' meno vita massima.
+24 %1$s è rimasto intrappolato tra i rampicanti
+25 %1$s è rimasto intrappolato tra i rampicanti di %2$s
+26 Scatto
+27 Un lungo slancio in avanti.
+28 Ecolocalizzazione
+29 Le creature vicine brillano per qualche secondo (solo per te).
+30 Gonfiarsi
+31 Ti gonfi per qualche secondo: i nemici che ti toccano vengono avvelenati.
+32 Nube d'inchiostro
+33 Accechi i nemici vicini.
+34 Avventarsi
+35 Salti in alto sul nemico che guardi e, atterrando vicino, lo stordisci per un istante.
+36 Fingersi morto
+37 Rigeneri in fretta e i nemici smettono di inseguirti.
+38 Balzo di caccia
+39 Ti lanci in avanti; il tuo morso successivo poco dopo infligge più danni.
+40 Carica
+41 Carichi in avanti e scagli in aria il primo nemico che colpisci.
+42 Ruggito
+43 Indebolisci e respingi i nemici vicini.
+44 Guscio
+45 Ti nascondi nel guscio: subisci molti meno danni, ma ti muovi molto lentamente.
+46 Sputo
+47 Sputi a distanza.
+48 Pungiglione
+49 Pungi il nemico davanti a te e lo avveleni.
+50 Ruggito stordente
+51 Stordisci i nemici vicini (i boss, per meno tempo).
+52 Supersalto
+53 Un salto altissimo in avanti.
+54 Lingua
+55 Afferri una piccola creatura con la lingua e la avvicini.
+56 Incornata
+57 Scagli verso l'alto il nemico davanti a te.
+58 Slancio acquatico
+59 Uno slancio rapidissimo sott'acqua.
+60 Ragnatela
+61 Lanci una ragnatela su ciò che guardi: lascia una ragnatela per qualche secondo.
+62 Chimera: %s
+63 Testa (attacco)
+64 Istinto (abilità)
+65 Zampe (movimento)
+66 Torso (vita e taglia)
+67 Respira sott'acqua
+68 Si arrampica sui muri
+69 Grazia del delfino per gli alleati
+70 Immune al fuoco
+71 Vola
+72 Cammina sulla lava
+73 Rompe le foglie camminando
+74 Visione notturna
+75 Nessun danno da caduta
+76 Morso velenoso
+77 I creeper fuggono
+78 Caduta lenta
+79 Nuota veloce e respira sott'acqua
+80 specie sconosciuta
+81 Prezzo della carne
+82 Prezzo della carne (Druido scultore): hai pagato con il sangue il rituale di una chimera; la tua vita massima cala del 30 % finché dura.
+83 Resti
+84 [%s] %s
+85 [%s] %s: %s s
+86 Trasformazione: %s
+87 Creazione della chimera…
+88 Volo
+89 %s
+90 %s (%s s)
+91 Studio: %s
+92 Testa di bestia
+93 Testa: %s
+94 Istinto di bestia
+95 Istinto: %s
+96 Zampe di bestia
+97 Zampe: %s
+98 Torso di bestia
+99 Torso: %s
+100 Recipiente di carne
+101 Libro di studio
+102 Parte di bestia del Druido scultore: si ottiene scegliendola dopo il rituale del druido sui resti di una specie che conosci già. Va nel Recipiente di carne.
+103 Druido scultore: gettaci sopra un Recipiente di carne completo e fai clic destro per il rituale di creazione. Costa molto mana e riduce per un po' la tua vita massima.
+104 Druido scultore: clic destro per aprirlo e metterci quattro parti di bestia (testa, torso, zampe e istinto). Con tutte e quattro, gettalo su un Altare di carne e fai clic destro sull'altare per creare una chimera.
+105 Druido: tieni premuto il tasto destro mirando a un animale o una bestia viva per studiarlo; se subisci danni, lo studio ricomincia. Alla fine il libro si consuma e ottieni conoscenza della sua specie. Ogni creatura si studia una sola volta.
+106 Abilità bestiale (Druido)
+107 Linfa corporea
+108 Forma economica
+109 Colosso
+110 Ferocia
+111 Ritorno curativo
+112 Cacciatore
+113 Sapere
+114 Circolo della Luna
+115 Forma ricca
+116 Radici
+117 Spazzino
+118 Erudito
+119 Scultore di carne
+120 Forma soprannaturale
+121 Linfa velenosa
+122 Linfa vitale
+123 Riserva selvatica
+124 %s: %s s
+125 Questa forma non ha un'abilità speciale.
+126 La trasformazione è stata interrotta.
+127 Ti trasformi in %s…
+128 Ti stai già trasformando.
+129 La carne si sta già muovendo.
+130 Hai creato: %s.
+131 La creazione si è disfatta.
+132 Il recipiente ha bisogno di tutte e quattro le parti.
+133 Getta un Recipiente di carne completo sull'altare.
+134 Solo uno Scultore sa dare vita alla carne.
+135 La carne comincia a muoversi…
+136 %s ti obbedisce per %s s.
+137 %s non ti obbedisce più.
+138 Non stai guardando nessun animale a portata.
+139 Non conosci bene quella specie.
+140 Le tue ali sono stanche: atterra per riprenderti.
+141 La tua forma bestiale è caduta: torni alla tua forma.
+142 Torni alla tua forma.
+143 La tua forma economica si esaurisce.
+144 Ora sei: %s.
+145 Non conosci ancora bene quella specie.
+146 Non puoi farlo in forma animale.
+147 Ti servono %s di mana.
+148 Non c'è nessun bersaglio davanti a te.
+149 Solo un Druido sa usarlo.
+150 Strappi dai resti: %s.
+151 Hai già fatto il rituale con questa creatura.
+152 Rituale completato: %s/%s di conoscenza di %s.
+153 Nessun resto fresco di bestia in vista.
+154 Questi resti non servono più: arrivi tardi.
+155 Ora puoi trasformarti in %s!
+156 Hai già studiato questa creatura.
+157 Hai studiato %s: %s/%s di conoscenza.
+158 Lo studio è stato interrotto.
+159 Puoi studiare solo animali e bestie vivi.
+160 Seguirai tutte le bestie.
+161 Seguirai solo: %s.
+162 Segui %s prede.
+163 Nessuna preda nei paraggi.
+164 Torna alla tua forma per evocare i rampicanti.
+165 Solo sott'acqua.
+166 Mana extra delle forme acquatiche
+167 Velocità delle forme acquatiche fuori dall'acqua x
+168 Tempo di lancio
+169 Velocità durante la trasformazione
+170 Mana per creazione
+171 Durata della creazione
+172 Mana alla trasformazione
+173 Danno da movimento al massimo ogni
+174 Potere della bestia: vita + danno x
+175 Ricarica al ritorno alla tua forma
+176 Cura al ritorno alla tua forma (della tua vita massima)
+177 Raggio con una specie fissata (blocchi)
+178 Altezza massima di volo dal suolo (blocchi)
+179 Ricarica del volo a terra (al secondo)
+180 Volo continuo
+181 Velocità di volo
+182 Mana extra delle forme volanti
+183 Ti segue oltre (blocchi)
+184 Colpi al secondo (predefinito)
+185 Danno delle forme
+186 Vita delle forme
+187 Velocità massima di una forma x
+188 Velocità minima di una forma x
+189 Rigenerazione in forma (vita al secondo)
+190 Velocità di nuoto delle forme acquatiche
+191 Vita massima persa
+192 Vita e danno della forma per Livello totale
+193 Mana base di una forma
+194 Mana per punto di potere della bestia
+195 Chimere conservate al massimo
+196 Vita massima di una bestia valida
+197 Punti di conoscenza al massimo
+198 Per
+199 Punti di conoscenza in meno per specie
+200 Potere della bestia per punto di conoscenza
+201 Distanza da un Druido perché restino i resti (blocchi)
+202 Lancio del rituale
+203 Mana del rituale
+204 Margine del rituale
+205 Margine per il rituale dopo la morte
+206 Punti per rituale
+207 Portata del rituale (blocchi)
+208 Mana degli incantesimi della natura in forma
+209 Vita e danno delle forme
+210 Punti per studio
+211 Tempo di studio
+212 Tempo di studio
+213 Si teletrasporta oltre (blocchi)
+214 Le tue forme hanno molta più vita, ma infliggono meno danni.
+215 Colosso
+216 Le tue forme infliggono molti più danni, ma hanno meno vita.
+217 Cacciatore
+218 Ogni rituale dà due punti di conoscenza, ma costa il doppio del mana e hai meno tempo per farlo.
+219 Spazzino
+220 Ogni studio dà due punti di conoscenza, ma studiare richiede più tempo.
+221 Erudito
+222 Rigeneri molto di più in forma bestiale, ma le tue forme hanno un po' meno vita.
+223 Linfa corporea
+224 Quando torni alla tua forma ti curi molto di più, ma non rigeneri più mentre sei una bestia.
+225 Ritorno curativo
+226 I tuoi incantesimi della natura avvelenano ciò che colpiscono, ma il tuo potere della natura cala un po'.
+227 Linfa velenosa
+228 Gli incantesimi della natura che infliggono danni ti curano di una parte del danno, ma il tuo potere della natura cala un po'.
+229 Linfa vitale
+230 Trasformarti costa molto meno mana, ma ogni forma dura al massimo qualche minuto.
+231 Forma economica
+232 Trasformarti costa più mana, ma le tue forme sono più forti in tutto.
+233 Forma ricca
+234 Rituale del druido
+235 Sui resti di una bestia appena uccisa: impari un po' di più sulla sua specie (un punto di conoscenza). Solo Druido.
+236 Druido del Circolo della Luna: si trasforma in un istante, quasi senza ricarica, e le sue forme non riservano mana.
+237 Circolo della Luna
+238 Rituali oscuri: strappa parti dai resti delle bestie (testa, torso, zampe e istinto), le unisce in un Recipiente di carne e, su un Altare di carne, dà vita a una chimera in cui può trasformarsi. Ogni creazione gli costa molto mana e parte della sua vita per un po'.
+239 Scultore
+240 Una bestia che fa magie: può lanciare incantesimi della natura in forma animale, anche se le sue forme sono un po' più deboli e quegli incantesimi costano di più.
+241 Forma soprannaturale
+242 Solo lo Scultore sa usarla.
+243 Va nello slot: %s
+244 Gettaci sopra un Recipiente di carne completo e fai clic destro sull'altare (solo Scultore).
+245 Clic destro: apre il recipiente. Riempilo con testa, torso, zampe e istinto di bestia, e gettalo su un Altare di carne.
+246 Parti: %s/4
+247 Tieni premuto il tasto destro su un animale o una bestia viva per studiarlo (solo Druido). Si consuma alla fine.
+248 Abilità: %s
+249 Chimere
+250 Ricarica: %s s
+251 Danno: %s
+252 Non conosci ancora nessuna bestia. Studia una creatura viva con il Libro di studio o compi il Rituale del druido sui suoi resti.
+253 Vita: %s
+254 Clic: trasformarti. Accovacciato + tasto Forma selvatica: torna all'istante.
+255 Conoscenza: %s/%s
+256 Ti manca conoscenza di questa specie.
+257 Mana: %s
+258 Nessuna abilità speciale
+259 Testa: %s · Torso: %s · Zampe: %s · Istinto: %s
+260 Tratti: %s
+261 Torna alla tua forma
+262 Velocità: x%s
+263 Bestiario
+264 Clic destro: fissa per Seguire le prede
+265 Fissata per Seguire le prede (clic destro per rimuoverla)
+266 Non creare la chimera
+267 Hai già il massimo di chimere: quale sostituisci?
+268 Conoscenza (un punto)
+269 Cosa prendi dai resti di %s?

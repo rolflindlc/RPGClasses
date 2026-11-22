@@ -1,0 +1,358 @@
+{
+  "schema_version": 1,
+  "display": {
+    "icon": "minecraft:oak_sapling",
+    "roles": [
+      "magia",
+      "transformación"
+    ]
+  },
+  "starting_kit": [
+    {
+      "item": "rites_and_paths:study_book",
+      "count": 4,
+      "slot": "inventory"
+    },
+    {
+      "item": "irons_spellbooks:copper_spell_book",
+      "slot": "inventory",
+      "spells": [
+        {
+          "id": "irons_spellbooks:poison_splash",
+          "level": 1
+        }
+      ]
+    },
+    {
+      "item": "minecraft:leather_helmet",
+      "slot": "head"
+    },
+    {
+      "item": "minecraft:leather_chestplate",
+      "slot": "chest"
+    },
+    {
+      "item": "minecraft:leather_leggings",
+      "slot": "legs"
+    },
+    {
+      "item": "minecraft:leather_boots",
+      "slot": "feet"
+    }
+  ],
+  "crit_chance_bonus": 0.0,
+  "walls": {
+    "rites_and_paths:magic": 0.35,
+    "rites_and_paths:bow": 0.5,
+    "rites_and_paths:heavy": 0.6,
+    "rites_and_paths:light": 0.4,
+    "rites_and_paths:armor": 0.3,
+    "rites_and_paths:shield": 0.7
+  },
+  "fixed_walls": {
+    "rites_and_paths:spheres": 1.0
+  },
+  "magic_wall_exempt_schools": [
+    "irons_spellbooks:nature"
+  ],
+  "school_walls": {
+    "irons_spellbooks:holy": 1.0,
+    "rites_and_paths:music": 1.0
+  },
+  "traits": [
+    {
+      "type": "rites_and_paths:attribute",
+      "modifiers": [
+        {
+          "attribute": "minecraft:generic.max_health",
+          "to": -0.1,
+          "operation": "multiply_base"
+        }
+      ]
+    }
+  ],
+  "branches": [
+    {
+      "id": "sap",
+      "display": {
+        "icon": "minecraft:spore_blossom"
+      },
+      "max_points": 10,
+      "effects": [
+        {
+          "type": "rites_and_paths:attribute",
+          "modifiers": [
+            {
+              "attribute": "irons_spellbooks:nature_spell_power",
+              "to": 0.5,
+              "operation": "multiply_base"
+            }
+          ]
+        }
+      ],
+      "perks": [
+        {
+          "id": "venom_sap",
+          "effects": [
+            {
+              "type": "rites_and_paths:mechanic",
+              "id": "rites_and_paths:druid_venom_sap",
+              "poison_seconds": 5,
+              "poison_level": 1
+            },
+            {
+              "type": "rites_and_paths:attribute",
+              "modifiers": [
+                {
+                  "attribute": "irons_spellbooks:nature_spell_power",
+                  "to": -0.1,
+                  "operation": "multiply_base"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "vital_sap",
+          "effects": [
+            {
+              "type": "rites_and_paths:mechanic",
+              "id": "rites_and_paths:druid_vital_sap",
+              "lifesteal": 0.15
+            },
+            {
+              "type": "rites_and_paths:attribute",
+              "modifiers": [
+                {
+                  "attribute": "irons_spellbooks:nature_spell_power",
+                  "to": -0.1,
+                  "operation": "multiply_base"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ferocity",
+      "display": {
+        "icon": "minecraft:bone"
+      },
+      "max_points": 10,
+      "effects": [
+        {
+          "type": "rites_and_paths:mechanic",
+          "id": "rites_and_paths:druid_ferocity",
+          "form_health": {
+            "to": 0.3
+          },
+          "form_damage": {
+            "to": 0.3
+          }
+        }
+      ],
+      "perks": [
+        {
+          "id": "hunter",
+          "effects": [
+            {
+              "type": "rites_and_paths:mechanic",
+              "id": "rites_and_paths:druid_hunter",
+              "form_damage": 0.25,
+              "form_health": -0.15
+            }
+          ]
+        },
+        {
+          "id": "colossus",
+          "effects": [
+            {
+              "type": "rites_and_paths:mechanic",
+              "id": "rites_and_paths:druid_colossus",
+              "form_health": 0.25,
+              "form_damage": -0.15
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wild_reserve",
+      "display": {
+        "icon": "minecraft:lapis_lazuli"
+      },
+      "max_points": 10,
+      "effects": [
+        {
+          "type": "rites_and_paths:mechanic",
+          "id": "rites_and_paths:druid_wild_reserve",
+          "cost": {
+            "to": -0.3
+          }
+        },
+        {
+          "type": "rites_and_paths:attribute",
+          "modifiers": [
+            {
+              "attribute": "irons_spellbooks:max_mana",
+              "to": 150,
+              "operation": "add"
+            }
+          ]
+        }
+      ],
+      "perks": [
+        {
+          "id": "cheap_form",
+          "effects": [
+            {
+              "type": "rites_and_paths:mechanic",
+              "id": "rites_and_paths:druid_cheap_form",
+              "cost": -0.4,
+              "max_seconds": 180
+            }
+          ]
+        },
+        {
+          "id": "rich_form",
+          "effects": [
+            {
+              "type": "rites_and_paths:mechanic",
+              "id": "rites_and_paths:druid_rich_form",
+              "cost": 0.25,
+              "stats": 0.2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lore",
+      "display": {
+        "icon": "minecraft:writable_book"
+      },
+      "max_points": 10,
+      "effects": [
+        {
+          "type": "rites_and_paths:mechanic",
+          "id": "rites_and_paths:druid_lore",
+          "study_time": {
+            "to": -0.5
+          },
+          "ritual_margin": {
+            "to": 10
+          },
+          "points_reduction": {
+            "values": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              1
+            ]
+          }
+        }
+      ],
+      "perks": [
+        {
+          "id": "scholar",
+          "effects": [
+            {
+              "type": "rites_and_paths:mechanic",
+              "id": "rites_and_paths:druid_scholar",
+              "study_points": 2,
+              "study_time": 0.5
+            }
+          ]
+        },
+        {
+          "id": "scavenger",
+          "effects": [
+            {
+              "type": "rites_and_paths:mechanic",
+              "id": "rites_and_paths:druid_scavenger",
+              "ritual_points": 2,
+              "ritual_mana": 1.0,
+              "ritual_margin": -10
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "roots",
+      "display": {
+        "icon": "minecraft:hanging_roots"
+      },
+      "max_points": 10,
+      "effects": [
+        {
+          "type": "rites_and_paths:mechanic",
+          "id": "rites_and_paths:druid_roots",
+          "form_regen": {
+            "to": 0.5
+          },
+          "exit_heal": {
+            "to": 0.1
+          }
+        }
+      ],
+      "perks": [
+        {
+          "id": "body_sap",
+          "effects": [
+            {
+              "type": "rites_and_paths:mechanic",
+              "id": "rites_and_paths:druid_body_sap",
+              "form_regen": 0.5,
+              "form_health": -0.1
+            }
+          ]
+        },
+        {
+          "id": "healing_exit",
+          "effects": [
+            {
+              "type": "rites_and_paths:mechanic",
+              "id": "rites_and_paths:druid_healing_exit",
+              "exit_heal": 0.25
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "milestones": [
+    {
+      "total_level": 1,
+      "grants": "rites_and_paths:wild_shape"
+    },
+    {
+      "total_level": 1,
+      "grants": "rites_and_paths:beast_lore"
+    },
+    {
+      "total_level": 5,
+      "grants": "rites_and_paths:track_prey"
+    },
+    {
+      "total_level": 15,
+      "grants": "rites_and_paths:dominate_beast"
+    },
+    {
+      "total_level": 30,
+      "grants": "rites_and_paths:entangling_vines"
+    }
+  ],
+  "subclasses": [
+    "rites_and_paths:moon_circle",
+    "rites_and_paths:supernatural_form",
+    "rites_and_paths:sculptor"
+  ]
+}

@@ -40,6 +40,10 @@ public final class SpinState {
         int chain;
         long stepUntil;
         double stepBonus;
+        // Paso de Giro: bloqueo corto entre dashes (no lo quita el Amuleto del Creativo) y si ya hubo dash desde que tocó
+        // el suelo (en el aire solo se puede uno: mantener la tecla no deja volar).
+        long dashLock;
+        boolean dashedSinceGround;
         long nextCatch;
         // Carga del clic derecho: tic en que se pulsó (-1 = no carga) y si esa pulsación ya se usó (mina, Bola Guiada...).
         long chargeStart = -1;
@@ -178,6 +182,9 @@ public final class SpinState {
             }
         }
         s.lastPos = pos;
+        if (s.dashedSinceGround && now >= s.dashLock && (p.onGround() || p.isInWater() || p.onClimbable() || p.isPassenger())) {
+            s.dashedSinceGround = false;
+        }
         // Bajada fuera de combate.
         double delay = SpinMaster.g("decay_delay_seconds", 5) * 20;
         if (s.spin > 0 && now - s.lastImpact > delay) {

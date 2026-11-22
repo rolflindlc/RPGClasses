@@ -79,9 +79,14 @@ import java.util.Locale;
 public final class SpinClient {
     public static final KeyMapping CYCLE = new KeyMapping("key.rites_and_paths.cycle_sphere", InputConstants.Type.KEYSYM,
             GLFW.GLFW_KEY_G, "key.categories.rites_and_paths");
-    /** Onomatopeyas (índices de SpinFxSender.WORD_*): no se traducen, son sonidos. */
-    static final String[] WORDS = {"GYARURURU!", "BAKYUN!", "DOGOOON!", "GOGOGOGO", "PASHI!"};
-    private static final int[] WORD_COLORS = {0xFFE8B83A, 0xFFFF5A3C, 0xFFFFD84A, 0xFFB070FF, 0xFFFFFFFF};
+    /**
+     * Onomatopeyas (índices de SpinFxSender.WORD_*): no se traducen, son sonidos. En katakana y moradas, como en la serie
+     * (ギャルルル = GYARURURU, バキュン = BAKYUN, ドゴォォン = DOGOOON, ゴゴゴゴ = GOGOGOGO, パシッ = PASHI).
+     */
+    static final String[] WORDS = {"ギャルルルル!", "バキュン!", "ドゴォォン!", "ゴゴゴゴ", "パシッ!"};
+    /** Relleno morado (con un matiz distinto por palabra) y contorno morado muy oscuro. */
+    private static final int[] WORD_COLORS = {0xFFB44CFF, 0xFFD050FF, 0xFFA040FF, 0xFF8A3CE0, 0xFFC070FF};
+    private static final int WORD_OUTLINE = 0x1E0034;
 
     private static float spin;
     private static boolean active;
@@ -439,7 +444,7 @@ public final class SpinClient {
         for (Word w : FLOATING) {
             float age = w.age()[0] + pt;
             float life = w.life();
-            float scale = 0.035f * (age < 4 ? 0.6f + 0.4f * age / 4f : 1f) * (1.2f - 0.2f * age / life);
+            float scale = 0.042f * (age < 4 ? 0.6f + 0.4f * age / 4f : 1f) * (1.2f - 0.2f * age / life);
             float alpha = Mth.clamp((life - age) / 8f, 0f, 1f);
             if (alpha <= 0.02f) continue;
             int color = ((int) (alpha * 255) << 24) | (w.color() & 0xFFFFFF);
@@ -450,7 +455,16 @@ public final class SpinClient {
             float tilt = (float) Math.toRadians(-8 + (w.text().hashCode() & 7) * 2);
             pose.mulPose(com.mojang.math.Axis.ZP.rotation(tilt));
             float tx = -font.width(w.text()) / 2f;
-            font.drawInBatch(w.text(), tx, 0, color, true, pose.last().pose(), buffers, Font.DisplayMode.SEE_THROUGH, 0, LightTexture.FULL_BRIGHT);
+            // Contorno grueso (ocho copias desplazadas) y el relleno morado encima, como los rótulos de la serie.
+            int outline = ((int) (alpha * 255) << 24) | WORD_OUTLINE;
+            for (int ox = -1; ox <= 1; ox++) {
+                for (int oy = -1; oy <= 1; oy++) {
+                    if (ox == 0 && oy == 0) continue;
+                    font.drawInBatch(w.text(), tx + ox * 0.75f, oy * 0.75f, outline, false, pose.last().pose(), buffers,
+                            Font.DisplayMode.SEE_THROUGH, 0, LightTexture.FULL_BRIGHT);
+                }
+            }
+            font.drawInBatch(w.text(), tx, 0, color, false, pose.last().pose(), buffers, Font.DisplayMode.SEE_THROUGH, 0, LightTexture.FULL_BRIGHT);
             pose.popPose();
         }
         buffers.endBatch();

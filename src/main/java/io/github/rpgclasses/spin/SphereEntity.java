@@ -386,6 +386,40 @@ public class SphereEntity extends Projectile {
         }
     }
 
+    /**
+     * Ruta de Rebotes con la bola ya fuera (en vuelo o volviendo): vuelve al instante a la mano y sale por la ruta. False
+     * si esta bola no se puede usar (clavada, mina, rota o ya en otra ruta).
+     */
+    boolean takeOverForTrick(ServerPlayer owner, List<Object> route, double routeSpeed, double hitFactor, double perHitBonus) {
+        if (isRemoved() || arrived || broken || virtual || scripted || mine || trick != null
+                || (state() != FLYING && state() != RETURNING)) return false;
+        if (level() instanceof ServerLevel sl) {
+            sl.sendParticles(ParticleTypes.WAX_OFF, getX(), getY(), getZ(), 6, 0.1, 0.1, 0.1, 0.05);
+        }
+        setState(FLYING);
+        stuck = null;
+        critDecided = null;
+        trick = route;
+        trickIndex = 0;
+        trickHits = 0;
+        trickHitFactor = hitFactor;
+        trickBonus = perHitBonus;
+        aimed = false;
+        curved = false;
+        speed = routeSpeed;
+        range = Math.max(range, 64);
+        flightTicks = 0;
+        returnTicks = 0;
+        traveled = 0;
+        queuedRethrow = 0;
+        catchable = false;
+        hitIds.clear();
+        Vec3 start = handPos(owner);
+        setPos(start.x, start.y, start.z);
+        aimAtNext();
+        return true;
+    }
+
     private boolean lastTrickEnemy() {
         for (int i = trickIndex + 1; i < trick.size(); i++) if (trick.get(i) instanceof LivingEntity) return false;
         return true;

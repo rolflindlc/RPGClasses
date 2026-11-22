@@ -39,6 +39,9 @@ public final class ClientSetup {
             new KeyMapping("key.rites_and_paths.ability_4", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_H, "key.categories.rites_and_paths"),
     };
 
+    /** Tecla de habilidad que seguía pulsada en el tic anterior (para ignorar la autorrepetición). */
+    private static final boolean[] ABILITY_HELD = new boolean[ABILITY_KEYS.length];
+
     /** Habilidades raciales: agachado se usan las ranuras 2 y 3. */
     public static final KeyMapping OPEN_ALLIES = new KeyMapping(
             "key.rites_and_paths.allies", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_J, "key.categories.rites_and_paths");
@@ -245,9 +248,12 @@ public final class ClientSetup {
         MovementPerks.lightFeetTick(mc.player, hasLocalMechanic("rites_and_paths:light_feet"));
         if (hasLocalMechanic("rites_and_paths:feather_fall")) MovementPerks.featherFallTick(mc.player, mc.options.keyJump.isDown());
         for (int i = 0; i < ABILITY_KEYS.length; i++) {
-            while (ABILITY_KEYS[i].consumeClick()) {
-                if (mc.screen == null) Net.CHANNEL.sendToServer(new Packets.UseAbility(i));
-            }
+            // Solo una pulsación nueva activa la habilidad: mantener la tecla (autorrepetición del teclado) no la manda
+            // una y otra vez.
+            boolean pressed = false;
+            while (ABILITY_KEYS[i].consumeClick()) pressed = true;
+            if (pressed && !ABILITY_HELD[i] && mc.screen == null) Net.CHANNEL.sendToServer(new Packets.UseAbility(i));
+            ABILITY_HELD[i] = ABILITY_KEYS[i].isDown();
         }
         while (OPEN_BOOK.consumeClick()) {
             if (mc.screen == null) mc.setScreen(new ClassScreen(false));

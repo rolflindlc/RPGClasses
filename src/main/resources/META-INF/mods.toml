@@ -40,3 +40,10 @@ Integrates with Iron's Spells 'n Spellbooks and Epic Fight (both optional). Avai
     versionRange="[20,)"
     ordering="AFTER"
     side="BOTH"
+
+[[dependencies.rites_and_paths]]
+    modId="improvedarmor"
+    mandatory=false
+    versionRange="[0.1.0,)"
+    ordering="AFTER"
+    side="BOTH"

@@ -85,6 +85,10 @@ public final class DebugDump {
         out.addAll(StatEngine.describe(player));
         out.add("vida " + DebugLog.num(player.getHealth()) + "/" + DebugLog.num(player.getMaxHealth()) + ", absorción "
                 + DebugLog.num(player.getAbsorptionAmount()) + ", armadura " + player.getArmorValue());
+        if (io.github.rpgclasses.compat.improvedarmor.ImprovedArmorCompat.active()) {
+            double eff = io.github.rpgclasses.compat.improvedarmor.ImprovedArmorCompat.effectiveArmor(player, player.damageSources().generic());
+            out.add("Improved Armor activo: armadura efectiva " + DebugLog.num(eff) + " (atributo + Protección + Resistencia)");
+        }
         String last = DamagePipeline.lastBreakdown(player);
         if (last != null) out.add("último golpe: " + last);
 

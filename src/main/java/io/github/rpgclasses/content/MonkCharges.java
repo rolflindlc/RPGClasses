@@ -1,5 +1,7 @@
 package io.github.rpgclasses.content;
 
+import io.github.rpgclasses.compat.improvedarmor.ImprovedArmorCompat;
+import io.github.rpgclasses.core.ArmorSolve;
 import com.google.gson.JsonObject;
 import io.github.rpgclasses.content.race.Races;
 import io.github.rpgclasses.core.stat.StatCalculator;
@@ -22,7 +24,6 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.DamageTypeTags;
-import net.minecraft.world.damagesource.CombatRules;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -403,12 +404,10 @@ public final class MonkCharges {
         double ignored = st.pendingArmorIgnore;
         st.pendingArmorIgnore = 0;
         if (damage <= 0 || source.is(DamageTypeTags.BYPASSES_ARMOR)) return 1;
-        float armor = target.getArmorValue();
-        if (armor <= 0) return 1;
-        float toughness = (float) target.getAttributeValue(Attributes.ARMOR_TOUGHNESS);
-        float actual = CombatRules.getDamageAfterAbsorb((float) damage, armor, toughness);
-        float wanted = CombatRules.getDamageAfterAbsorb((float) damage, (float) (armor * (1 - ignored)), toughness);
-        return actual <= 0 ? 1 : wanted / actual;
+        if (target.getArmorValue() <= 0) return 1;
+        double actual = ImprovedArmorCompat.damageAfterArmor(target, source, damage, 1);
+        double wanted = ImprovedArmorCompat.damageAfterArmor(target, source, damage, 1 - ignored);
+        return ArmorSolve.ratio(wanted, actual);
     }
 
     // ------------------------------------------------------------------ reglas compartidas (6 y 7)

@@ -42,6 +42,7 @@ public final class ServerEvents {
                 if (!event.isWasDeath()) to.cooldowns.putAll(from.cooldowns);
                 to.counters.putAll(from.counters);
                 to.texts.putAll(from.texts);
+                to.druid = from.druid.copy(); // Druida: el bestiario no se pierde al morir
             }
             if (event.getEntity() instanceof ServerPlayer player) {
                 StatEngine.recompute(player);

@@ -20,6 +20,11 @@ public final class PlayerClassData {
     public final Map<String, Integer> counters = new java.util.HashMap<>();
     /** Valores de texto de la clase (p. ej. conjuro fijado en cada ranura de Conjuro Gratuito). */
     public final Map<String, String> texts = new java.util.HashMap<>();
+    /**
+     * Druida (adenda del Druida): bestiario (conocimiento por especie, criaturas ya usadas, quimeras) y forma en curso.
+     * Es del jugador, no de la clase: no se borra al reiniciarla. Ver {@code druid.Bestiary}.
+     */
+    public net.minecraft.nbt.CompoundTag druid = new net.minecraft.nbt.CompoundTag();
 
     public CompoundTag save() {
         CompoundTag tag = new CompoundTag();
@@ -55,6 +60,21 @@ public final class PlayerClassData {
         CompoundTag txt = new CompoundTag();
         for (Map.Entry<String, String> e : texts.entrySet()) txt.putString(e.getKey(), e.getValue());
         tag.put("texts", txt);
+        if (!druid.isEmpty()) tag.put("druid", druid.copy());
+        return tag;
+    }
+
+    /**
+     * Lo que se manda al cliente: lo mismo que {@link #save()} sin las listas de criaturas ya estudiadas o usadas en un
+     * ritual del Druida (solo las mira el servidor y pueden crecer mucho).
+     */
+    public CompoundTag saveForClient() {
+        CompoundTag tag = save();
+        if (tag.contains("druid")) {
+            CompoundTag d = tag.getCompound("druid").copy();
+            d.remove("used");
+            tag.put("druid", d);
+        }
         return tag;
     }
 
@@ -92,6 +112,7 @@ public final class PlayerClassData {
         texts.clear();
         CompoundTag txt = tag.getCompound("texts");
         for (String key : txt.getAllKeys()) texts.put(key, txt.getString(key));
+        druid = tag.getCompound("druid").copy();
     }
 
     /** Al reiniciar la clase se borra lo que era propio de ella (conjuros fijados, cargas). */

@@ -112,6 +112,8 @@ public class RpgClasses {
             io.github.rpgclasses.compat.irons.IronsCompat.init();
             // Escuela musical y conjuros del Bardo (registro en Iron's).
             io.github.rpgclasses.compat.irons.music.MusicBridge.init(modBus);
+            // Druida: Ritual del Druida y Forma Sobrenatural.
+            io.github.rpgclasses.compat.irons.DruidSpells.init(modBus);
         }
         MinecraftForge.EVENT_BUS.register(new io.github.rpgclasses.bard.BardState());
         MinecraftForge.EVENT_BUS.register(new io.github.rpgclasses.bard.BardAuras());
@@ -165,6 +167,8 @@ public class RpgClasses {
         // Maestro del Giro (adenda del Maestro del Giro, clase experimental): bolas, bandolera, encantamientos y lógica.
         io.github.rpgclasses.spin.SpinRegistry.register(modBus);
         io.github.rpgclasses.spin.SpinMaster.register();
+        // Druida (adenda del Druida): bestiario, transformación, activas, Escultor y su registro.
+        io.github.rpgclasses.druid.Druid.register(modBus);
     }
 
     private void commonSetup(FMLCommonSetupEvent event) {

@@ -111,6 +111,8 @@ public final class ClientSetup {
         io.github.rpgclasses.client.cleric.ClericClient.register(modBus);
         // Maestro del Giro: lanzar con la bandolera, cambiar de bola, barra de Giro, bola voxel y efectos.
         io.github.rpgclasses.client.spin.SpinClient.register(modBus);
+        // Druida: formas de bestia, bestiario, barras, restos, quimeras y recipiente.
+        io.github.rpgclasses.client.druid.DruidClient.register(modBus);
         modBus.addListener((EntityRenderersEvent.RegisterRenderers event) -> {
             event.registerEntityRenderer(ModEntities.DECOY.get(), DecoyRenderer::new);
             event.registerEntityRenderer(ModEntities.SWARM_SLIME.get(), SwarmSlimeRenderer::new);
@@ -419,6 +421,8 @@ public final class ClientSetup {
                 if (m.id().equals(id)) return m;
             }
         }
+        // Druida: transformado, los rasgos de raza se suspenden.
+        if (io.github.rpgclasses.druid.WildShape.inForm(Minecraft.getInstance().player)) return null;
         return io.github.rpgclasses.core.stat.StatCalculator.raceMechanic(s,
                 io.github.rpgclasses.core.definition.RaceStore.CLIENT.race(s.raceId), id);
     }

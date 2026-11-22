@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "radius": 5,
+  "duration_seconds": 20,
+  "heal_per_second": 0.5,
+  "slow_level": 1,
+  "damage": 1.5,
+  "damage_interval_seconds": 0.5,
+  "cooldown_seconds": 70
+}

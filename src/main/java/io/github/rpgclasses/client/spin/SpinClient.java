@@ -77,7 +77,7 @@ import java.util.Locale;
  * </ul>
  */
 public final class SpinClient {
-    public static final KeyMapping CYCLE = new KeyMapping("key.rites_and_paths.cycle_sphere", InputConstants.Type.KEYSYM,
+    public static final KeyMapping CYCLE = new KeyMapping("key.rites_and_paths.cycle_sphere", io.github.rpgclasses.client.ClassKeyContext.SPIN_MASTER, InputConstants.Type.KEYSYM,
             GLFW.GLFW_KEY_G, "key.categories.rites_and_paths");
     /**
      * Onomatopeyas (índices de SpinFxSender.WORD_*): no se traducen, son sonidos. En katakana y moradas, como en la serie

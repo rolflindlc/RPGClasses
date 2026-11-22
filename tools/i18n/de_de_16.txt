@@ -1,0 +1,270 @@
+0 Du lernst die Gestalten von Tieren und Bestien. Studium: Halte mit einem Studienbuch die rechte Maustaste auf eine lebende Kreatur, bis sich die Leiste füllt (erleidest du Schaden, beginnt sie von vorn; das Buch wird am Ende verbraucht). Ritual: Wirke den Zauber Ritual des Druiden (ohne Schriftrolle, er ist immer in deinem Rad) auf die Überreste einer frisch getöteten Bestie. Beides gibt einen Wissenspunkt für ihre Art, und jede Kreatur kann nur einmal studiert und einmal für ein Ritual genutzt werden. Stärkere Arten brauchen mehr Punkte. Gelerntes bleibt erhalten, wenn du deine Klasse zurücksetzt.
+1 Bestienkunde
+2 Das Tier einer dir bekannten Art, das du ansiehst, gehorcht dir einige Minuten als Haustier: Es folgt dir und greift deine Feinde an (wenn es angreifen kann). Auch in Tiergestalt nutzbar.
+3 Tier beherrschen
+4 Eine Weile sprießen Ranken um dich aus dem Boden: Deine Verbündeten (und du) heilen darin langsam, und Feinde, die darüber laufen, werden verlangsamt und verletzen sich bei jeder Bewegung, wie in einem Beerenstrauch. Du musst deine Gestalt verlassen, um sie zu nutzen.
+5 Fesselnde Ranken
+6 Bestien in der Nähe leuchten einige Sekunden lang (nur für dich). Wenn du eine Art im Bestiarium markierst, siehst du nur diese, und aus größerer Entfernung. Auch in Tiergestalt nutzbar.
+7 Beute aufspüren
+8 Öffnet das Bestiarium, um eine dir bekannte Art zu wählen: Nach einigen Sekunden Wirken (Schaden unterbricht es) verwandelst du dich in sie. Du zahlst Mana je nach Stärke der Bestie, und solange du die Gestalt hältst, regeneriert sich dieses Mana nicht. Du erhältst Leben, Größe, Tempo und Angriffe der Bestie, stärker je höher deine Stufe; deine Ausrüstung wird verborgen und zählt nicht, du kannst keine Gegenstände benutzen oder Zauber wirken, und deine Volksmerkmale ruhen. Fällt die Bestie, kehrst du mit dem Leben zurück, das du hattest. Drücke erneut (geduckt, sofort), um zu deiner Gestalt zurückzukehren; dann beginnt die Abklingzeit. Schlafen, Sterben oder Abmelden bringt dich ebenfalls zurück.
+9 Wilde Gestalt
+10 Fleischaltar
+11 Deine Bestiengestalten haben mehr Leben und verursachen mehr Schaden.
+12 Wildheit
+13 Du studierst schneller, hast mehr Zeit für das Ritual und, mit vollem Zweig, braucht jede Art einen Wissenspunkt weniger.
+14 Wissen
+15 Du regenerierst Leben, solange du eine Bestie bist, und heilst dich, wenn du zu deiner Gestalt zurückkehrst.
+16 Wurzeln
+17 Mehr Macht für deine Zauber der Naturschule.
+18 Saft
+19 Verwandeln kostet weniger Mana und du hast mehr maximales Mana.
+20 Wilde Reserve
+21 Naturmagier, der sich in die Bestien verwandelt, die er kennt. Er studiert lebende Kreaturen mit seinem Buch und führt ein Ritual an ihren Überresten durch, um ihre Gestalt zu lernen; kennt er eine Art gut, kann er zu ihr werden, mit ihrem Körper, ihrem Leben und ihren Angriffen. Die Naturschule gehört ihm: Alle anderen Schulen verlieren 35 %, und mit Waffen, Rüstungen und Schilden ist er sehr ungeschickt.
+22 Druide
+23 Klassenmerkmal: etwas weniger maximales Leben.
+24 %1$s verfing sich in den Ranken
+25 %1$s verfing sich in den Ranken von %2$s
+26 Sprint
+27 Ein langer Schub nach vorn.
+28 Echoortung
+29 Kreaturen in der Nähe leuchten einige Sekunden lang (nur für dich).
+30 Aufblähen
+31 Du blähst dich einige Sekunden auf: Feinde, die dich berühren, werden vergiftet.
+32 Tintenwolke
+33 Du blendest Feinde in der Nähe.
+34 Anspringen
+35 Du springst hoch auf den Feind, den du ansiehst, und betäubst ihn kurz, wenn du in seiner Nähe landest.
+36 Totstellen
+37 Du regenerierst schnell und Feinde hören auf, dich zu verfolgen.
+38 Jagdsprung
+39 Du stürzt nach vorn; dein nächster Biss kurz danach verursacht mehr Schaden.
+40 Rammen
+41 Du stürmst nach vorn und schleuderst den ersten getroffenen Feind in die Luft.
+42 Brüllen
+43 Du schwächst Feinde in der Nähe und stößt sie zurück.
+44 Panzer
+45 Du versteckst dich in deinem Panzer: Du erleidest viel weniger Schaden, bewegst dich aber sehr langsam.
+46 Spucken
+47 Du spuckst auf Distanz.
+48 Stachel
+49 Du stichst den Feind vor dir und vergiftest ihn.
+50 Betäubendes Brüllen
+51 Du betäubst Feinde in der Nähe (Bosse kürzer).
+52 Supersprung
+53 Ein sehr hoher Sprung nach vorn.
+54 Zunge
+55 Du fängst eine kleine Kreatur mit der Zunge und ziehst sie heran.
+56 Aufspießen
+57 Du schleuderst den Feind vor dir nach oben.
+58 Wasserschub
+59 Ein sehr schneller Schub unter Wasser.
+60 Spinnennetz
+61 Du schießt ein Netz auf das, was du ansiehst: Es hinterlässt einige Sekunden lang ein Spinnennetz.
+62 Chimäre: %s
+63 Kopf (Angriff)
+64 Instinkt (Fähigkeit)
+65 Beine (Bewegung)
+66 Rumpf (Leben und Größe)
+67 Atmet unter Wasser
+68 Klettert an Wänden
+69 Gunst des Delfins für Verbündete
+70 Immun gegen Feuer
+71 Fliegt
+72 Läuft auf Lava
+73 Zerbricht Laub beim Gehen
+74 Nachtsicht
+75 Kein Fallschaden
+76 Giftiger Biss
+77 Creeper fliehen
+78 Sanfter Fall
+79 Schwimmt schnell und atmet unter Wasser
+80 unbekannte Art
+81 Preis des Fleisches
+82 Preis des Fleisches (Bildhauer-Druide): Du hast das Ritual einer Chimäre mit Blut bezahlt; dein maximales Leben ist währenddessen um 30 % gesenkt.
+83 Überreste
+84 [%s] %s
+85 [%s] %s: %s s
+86 Verwandlung: %s
+87 Chimäre entsteht…
+88 Flug
+89 %s
+90 %s (%s s)
+91 Studiere: %s
+92 Bestienkopf
+93 Kopf: %s
+94 Bestieninstinkt
+95 Instinkt: %s
+96 Bestienbeine
+97 Beine: %s
+98 Bestienrumpf
+99 Rumpf: %s
+100 Fleischgefäß
+101 Studienbuch
+102 Bestienteil des Bildhauer-Druiden: Du erhältst es, indem du es nach dem Ritual des Druiden an den Überresten einer Art wählst, die du schon kennst. Es kommt in das Fleischgefäß.
+103 Bildhauer-Druide: Wirf ein vollständiges Fleischgefäß darauf und klicke mit rechts für das Ritual der Erschaffung. Es kostet viel Mana und senkt eine Weile dein maximales Leben.
+104 Bildhauer-Druide: Rechtsklick zum Öffnen und Einlegen von vier Bestienteilen (Kopf, Rumpf, Beine und Instinkt). Mit allen vier wirfst du es auf einen Fleischaltar und klickst den Altar mit rechts an, um eine Chimäre zu erschaffen.
+105 Druide: Halte die rechte Maustaste auf ein lebendes Tier oder eine Bestie, um es zu studieren; erleidest du Schaden, beginnt das Studium von vorn. Am Ende wird das Buch verbraucht und du erhältst Wissen über seine Art. Jede Kreatur kann nur einmal studiert werden.
+106 Bestienfähigkeit (Druide)
+107 Körpersaft
+108 Billige Gestalt
+109 Koloss
+110 Wildheit
+111 Heilende Rückkehr
+112 Jäger
+113 Wissen
+114 Kreis des Mondes
+115 Reiche Gestalt
+116 Wurzeln
+117 Aasfresser
+118 Gelehrter
+119 Fleischbildhauer
+120 Übernatürliche Gestalt
+121 Giftsaft
+122 Lebenssaft
+123 Wilde Reserve
+124 %s: %s s
+125 Diese Gestalt hat keine besondere Fähigkeit.
+126 Die Verwandlung wurde unterbrochen.
+127 Du verwandelst dich in %s…
+128 Du verwandelst dich bereits.
+129 Das Fleisch bewegt sich bereits.
+130 Du hast erschaffen: %s.
+131 Die Erschaffung ist zerfallen.
+132 Das Gefäß braucht alle vier Teile.
+133 Wirf ein vollständiges Fleischgefäß auf den Altar.
+134 Nur ein Bildhauer weiß dem Fleisch Leben einzuhauchen.
+135 Das Fleisch beginnt sich zu bewegen…
+136 %s gehorcht dir %s s lang.
+137 %s gehorcht dir nicht mehr.
+138 Du siehst kein Tier in Reichweite an.
+139 Du kennst diese Art nicht gut genug.
+140 Deine Flügel sind müde: Lande, um dich zu erholen.
+141 Deine Bestiengestalt ist gefallen: Du kehrst zu deiner Gestalt zurück.
+142 Du kehrst zu deiner Gestalt zurück.
+143 Deine billige Gestalt lässt nach.
+144 Du bist jetzt: %s.
+145 Du kennst diese Art noch nicht gut genug.
+146 Das kannst du in Tiergestalt nicht tun.
+147 Du brauchst %s Mana.
+148 Vor dir ist kein Ziel.
+149 Nur ein Druide weiß das zu benutzen.
+150 Du reißt aus den Überresten: %s.
+151 Du hast mit dieser Kreatur bereits das Ritual durchgeführt.
+152 Ritual vollendet: %s/%s Wissen über %s.
+153 Keine frischen Überreste einer Bestie in Sicht.
+154 Diese Überreste taugen nichts mehr: Du kommst zu spät.
+155 Du kannst dich jetzt in %s verwandeln!
+156 Du hast diese Kreatur bereits studiert.
+157 Du hast %s studiert: %s/%s Wissen.
+158 Das Studium wurde unterbrochen.
+159 Du kannst nur lebende Tiere und Bestien studieren.
+160 Du spürst alle Bestien auf.
+161 Du spürst nur noch auf: %s.
+162 Du spürst %s Beutetiere auf.
+163 Keine Beute in der Nähe.
+164 Kehre zu deiner Gestalt zurück, um die Ranken zu rufen.
+165 Nur unter Wasser.
+166 Zusätzliches Mana für Wassergestalten
+167 Tempo von Wassergestalten an Land x
+168 Wirkzeit
+169 Tempo während der Verwandlung
+170 Mana pro Erschaffung
+171 Dauer der Erschaffung
+172 Mana beim Verwandeln
+173 Bewegungsschaden höchstens alle
+174 Bestienstärke: Leben + Schaden x
+175 Abklingzeit bei Rückkehr zu deiner Gestalt
+176 Heilung bei Rückkehr zu deiner Gestalt (deines maximalen Lebens)
+177 Radius mit markierter Art (Blöcke)
+178 Maximale Flughöhe über dem Boden (Blöcke)
+179 Flugaufladung am Boden (pro Sekunde)
+180 Durchgehender Flug
+181 Fluggeschwindigkeit
+182 Zusätzliches Mana für Fluggestalten
+183 Folgt dir ab (Blöcke)
+184 Schläge pro Sekunde (Standard)
+185 Schaden der Gestalten
+186 Leben der Gestalten
+187 Höchsttempo einer Gestalt x
+188 Mindesttempo einer Gestalt x
+189 Regeneration in Gestalt (Leben pro Sekunde)
+190 Schwimmtempo von Wassergestalten
+191 Verlorenes maximales Leben
+192 Leben und Schaden der Gestalt pro Gesamtstufe
+193 Grundmana einer Gestalt
+194 Mana pro Punkt Bestienstärke
+195 Maximal gespeicherte Chimären
+196 Maximales Leben einer gültigen Bestie
+197 Maximale Wissenspunkte
+198 Für
+199 Weniger Wissenspunkte pro Art
+200 Bestienstärke pro Wissenspunkt
+201 Abstand zu einem Druiden, damit Überreste bleiben (Blöcke)
+202 Wirkzeit des Rituals
+203 Mana des Rituals
+204 Zeitfenster des Rituals
+205 Zeitfenster für das Ritual nach dem Tod
+206 Punkte pro Ritual
+207 Reichweite des Rituals (Blöcke)
+208 Mana der Naturzauber in Gestalt
+209 Leben und Schaden der Gestalten
+210 Punkte pro Studium
+211 Studiendauer
+212 Studiendauer
+213 Teleportiert sich ab (Blöcke)
+214 Deine Gestalten haben deutlich mehr Leben, verursachen aber weniger Schaden.
+215 Koloss
+216 Deine Gestalten verursachen deutlich mehr Schaden, haben aber weniger Leben.
+217 Jäger
+218 Jedes Ritual gibt zwei Wissenspunkte, kostet aber doppelt so viel Mana und du hast weniger Zeit dafür.
+219 Aasfresser
+220 Jedes Studium gibt zwei Wissenspunkte, dauert aber länger.
+221 Gelehrter
+222 Du regenerierst in Bestiengestalt viel mehr, aber deine Gestalten haben etwas weniger Leben.
+223 Körpersaft
+224 Bei der Rückkehr zu deiner Gestalt heilst du viel mehr, regenerierst aber nicht mehr, solange du eine Bestie bist.
+225 Heilende Rückkehr
+226 Deine Naturzauber vergiften, was sie treffen, aber deine Naturmacht sinkt etwas.
+227 Giftsaft
+228 Schadende Naturzauber heilen dich um einen Teil des Schadens, aber deine Naturmacht sinkt etwas.
+229 Lebenssaft
+230 Verwandeln kostet viel weniger Mana, aber jede Gestalt hält höchstens einige Minuten.
+231 Billige Gestalt
+232 Verwandeln kostet mehr Mana, aber deine Gestalten sind in allem stärker.
+233 Reiche Gestalt
+234 Ritual des Druiden
+235 Auf die Überreste einer frisch getöteten Bestie: Du lernst etwas mehr über ihre Art (ein Wissenspunkt). Nur Druide.
+236 Druide des Mondkreises: verwandelt sich im Nu, fast ohne Abklingzeit, und seine Gestalten reservieren kein Mana.
+237 Kreis des Mondes
+238 Dunkle Rituale: reißt Teile aus den Überresten von Bestien (Kopf, Rumpf, Beine und Instinkt), vereint sie in einem Fleischgefäß und erweckt auf einem Fleischaltar eine Chimäre zum Leben, in die er sich verwandeln kann. Jede Erschaffung kostet viel Mana und eine Weile einen Teil seines Lebens.
+239 Bildhauer
+240 Eine Bestie, die zaubert: kann in Tiergestalt Naturzauber wirken, auch wenn seine Gestalten etwas schwächer sind und diese Zauber mehr kosten.
+241 Übernatürliche Gestalt
+242 Nur der Bildhauer weiß es zu benutzen.
+243 Kommt in den Platz: %s
+244 Wirf ein vollständiges Fleischgefäß darauf und klicke den Altar mit rechts an (nur Bildhauer).
+245 Rechtsklick: öffnet das Gefäß. Fülle es mit Kopf, Rumpf, Beinen und Instinkt einer Bestie und wirf es auf einen Fleischaltar.
+246 Teile: %s/4
+247 Halte die rechte Maustaste auf ein lebendes Tier oder eine Bestie, um es zu studieren (nur Druide). Wird am Ende verbraucht.
+248 Fähigkeit: %s
+249 Chimären
+250 Abklingzeit: %s s
+251 Schaden: %s
+252 Du kennst noch keine Bestie. Studiere eine lebende Kreatur mit dem Studienbuch oder führe das Ritual des Druiden an ihren Überresten durch.
+253 Leben: %s
+254 Klick: verwandeln. Ducken + Taste für Wilde Gestalt: sofort zurück.
+255 Wissen: %s/%s
+256 Dir fehlt Wissen über diese Art.
+257 Mana: %s
+258 Keine besondere Fähigkeit
+259 Kopf: %s · Rumpf: %s · Beine: %s · Instinkt: %s
+260 Merkmale: %s
+261 Zu deiner Gestalt zurückkehren
+262 Tempo: x%s
+263 Bestiarium
+264 Rechtsklick: für Beute aufspüren markieren
+265 Für Beute aufspüren markiert (Rechtsklick zum Entfernen)
+266 Chimäre nicht erschaffen
+267 Du hast bereits die maximale Zahl an Chimären: Welche ersetzt du?
+268 Wissen (ein Punkt)
+269 Was nimmst du aus den Überresten von %s?

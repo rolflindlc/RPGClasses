@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "passive": true,
+  "study_seconds": 5,
+  "ritual_mana": 35,
+  "ritual_cast_seconds": 2,
+  "ritual_margin_seconds": 20,
+  "ritual_range": 8,
+  "power_per_point": 20,
+  "max_points": 6,
+  "max_health": 100,
+  "remains_radius": 48
+}

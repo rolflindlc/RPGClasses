@@ -5,8 +5,8 @@
 First public beta of Rolflin's Rites & Paths (Minecraft Forge 1.20.1).
 
 ### Added
-- **8 classes** (Barbarian, Bard, Cleric, Mage, Monk, Paladin, Ranger, Rogue) with branches, perks and
-  **24 subclasses**, plus discipline walls, custom critical hits and caps.
+- **9 classes** (Barbarian, Bard, Cleric, Druid, Mage, Monk, Paladin, Ranger, Rogue) with branches, perks and
+  **27 subclasses**, plus discipline walls, custom critical hits and caps.
 - **Cleric:** holy healer that shares the holy school with the Paladin. Healing, Blessing, Divine Reserve, Purification
   and Aegis branches; Healer's Eye, Laying on Hands, a channeled Sanctuary and Miracle (allies who would die are
   downed and can be lifted up with a heal). Subclasses: Angel (Angelic Form flight, Winged Grace, Halo), Martyr
@@ -35,6 +35,21 @@ First public beta of Rolflin's Rites & Paths (Minecraft Forge 1.20.1).
   Elasticity). New **Spheres** discipline: every other class has a fixed −100% wall on it. A fourth ability key (H).
   Server options `sphere.redstone.enabled`, `sphere.stalactite.breakBlocks` and `sphere.friction.igniteBlocks`;
   client options `spinShake` and `spinCinematic`.
+- **Druid:** nature mage who turns into the beasts they know. The nature school is now the Druid's (every other class
+  has a fixed −100% wall on it; the Ranger keeps Poison Arrow), −35% to the other schools, clumsy with weapons, armor
+  and shields, −10% max health. **Beast Lore** (level 1): study a living animal or beast by holding right click with a
+  **Study Book** (taking damage resets the bar) or cast the class-only **Druid's Ritual** spell on fresh remains;
+  each gives a knowledge point for the species (once per individual creature), and stronger species need more points.
+  Knowledge survives a class reset. **Wild Shape** (key → **Bestiary**): a 6 s cast (damage interrupts) turns you into
+  a known species with its size, health pool (falling returns you to your previous health), speed, attacks and a
+  special ability on key G, scaled +2% per Total Level; the mana cost (by beast power, more for flying and aquatic
+  forms) stays reserved from max mana while transformed. Equipment is hidden, items and spells are blocked, race traits
+  are suspended; flying forms have stamina and a ceiling. Also Track Prey, Dominate Animal and Entangling Vines.
+  Branches Sap, Ferocity, Wild Reserve, Lore and Roots. Subclasses **Circle of the Moon** (1 s cast, 5 s cooldown, no
+  mana reserve), **Supernatural Form** (nature spells while transformed) and **Sculptor** (rituals give a knowledge
+  point or a beast part; put head, torso, legs and instinct in a **Flesh Vessel**, throw it on a **Flesh Altar** and
+  right click it to create a chimera you can turn into, at the cost of mana and 30% max health for 10 minutes).
+  ~40 vanilla beasts with abilities; allowed and forbidden species are entity tags in the datapack.
 - **JEI support** (optional): special recipes (ball upgrades, leveling sheet music) are shown as crafting recipes, and
   items that are not crafted (balls, Sphere Bandolier, sheet music, boss-dropped Bard materials, Creative Amulet) have
   information pages. Every status effect has a description for Just Enough Effect Descriptions, and every enchantment

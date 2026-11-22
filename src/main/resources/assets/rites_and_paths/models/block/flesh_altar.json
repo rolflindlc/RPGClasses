@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "top": "rites_and_paths:block/flesh_altar_top",
+    "bottom": "rites_and_paths:block/flesh_altar_bottom",
+    "side": "rites_and_paths:block/flesh_altar_side"
+  }
+}

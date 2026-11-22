@@ -57,7 +57,7 @@ import java.util.UUID;
  * de Rastrear Presas, la creación de quimeras sobre el altar y las pantallas (bestiario, ritual, recipiente).
  */
 public final class DruidClient {
-    public static final KeyMapping BEAST_ABILITY = new KeyMapping("key.rites_and_paths.beast_ability", InputConstants.Type.KEYSYM,
+    public static final KeyMapping BEAST_ABILITY = new KeyMapping("key.rites_and_paths.beast_ability", io.github.rpgclasses.client.ClassKeyContext.DRUID, InputConstants.Type.KEYSYM,
             GLFW.GLFW_KEY_G, "key.categories.rites_and_paths");
 
     /** Cuerpos de bestia de cada jugador transformado (entidades sin añadir al mundo). */

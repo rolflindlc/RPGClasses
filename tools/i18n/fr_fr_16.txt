@@ -1,0 +1,270 @@
+0 Tu apprends les formes des animaux et des bêtes. Étude : maintiens le clic droit avec un Livre d'étude sur une créature vivante jusqu'à remplir la barre (subir des dégâts la remet à zéro ; le livre est consommé à la fin). Rituel : lance le sort Rituel du druide (sans parchemin, il est toujours dans ta roue) sur les restes d'une bête tout juste tuée. Chacun donne un point de connaissance de son espèce, et chaque créature ne peut être étudiée qu'une fois et servir à un rituel qu'une fois. Plus une espèce est forte, plus elle demande de points. Ce que tu as appris est conservé quand tu réinitialises ta classe.
+1 Savoir des bêtes
+2 L'animal d'une espèce que tu connais et que tu regardes t'obéit quelques minutes comme un familier : il te suit et attaque tes ennemis (s'il sait attaquer). Utilisable sous forme animale.
+3 Dominer un animal
+4 Des lianes jaillissent du sol autour de toi pendant un moment : tes alliés (et toi) y guérissent lentement, et les ennemis qui marchent dessus sont ralentis et se blessent en bougeant, comme dans un buisson à baies. Tu dois quitter ta forme pour l'utiliser.
+5 Lianes entravantes
+6 Les bêtes proches brillent quelques secondes (pour toi seul). Si tu épingles une espèce dans le bestiaire, tu ne vois qu'elle, et de plus loin. Utilisable sous forme animale.
+7 Pister les proies
+8 Ouvre le bestiaire pour choisir une espèce que tu connais : après quelques secondes d'incantation (subir des dégâts l'interrompt), tu te transformes en elle. Tu paies du mana selon la force de la bête et, tant que tu gardes la forme, ce mana ne se régénère pas. Tu as la vie, la taille, la vitesse et les attaques de la bête, plus fortes selon ton niveau ; ton équipement est caché et ne compte pas, tu ne peux ni utiliser d'objets ni lancer de sorts, et tes traits de race sont suspendus. Si la bête tombe, tu reprends ta forme avec la vie que tu avais. Appuie de nouveau (accroupi, instantanément) pour reprendre ta forme ; le temps de recharge commence alors. Dormir, mourir ou te déconnecter te ramène aussi.
+9 Forme sauvage
+10 Autel de chair
+11 Tes formes de bête ont plus de vie et infligent plus de dégâts.
+12 Férocité
+13 Tu étudies plus vite, tu as plus de temps pour le rituel et, avec la branche pleine, chaque espèce demande un point de connaissance de moins.
+14 Savoir
+15 Tu régénères de la vie tant que tu es une bête et tu te soignes en reprenant ta forme.
+16 Racines
+17 Plus de puissance pour tes sorts de l'école de la nature.
+18 Sève
+19 Te transformer coûte moins de mana et tu as plus de mana max.
+20 Réserve sauvage
+21 Mage de la nature qui se transforme en les bêtes qu'il connaît. Il étudie les créatures vivantes avec son livre et accomplit un rituel sur leurs restes pour apprendre leur forme ; quand il connaît bien une espèce, il peut la devenir, avec son corps, sa vie et ses attaques. L'école de la nature lui appartient : toutes les autres écoles perdent 35 %, et il est très maladroit avec les armes, les armures et les boucliers.
+22 Druide
+23 Trait de classe : un peu moins de vie max.
+24 %1$s s'est fait prendre dans les lianes
+25 %1$s s'est fait prendre dans les lianes de %2$s
+26 Course
+27 Un long élan vers l'avant.
+28 Écholocalisation
+29 Les créatures proches brillent quelques secondes (pour toi seul).
+30 Gonflement
+31 Tu gonfles quelques secondes : les ennemis qui te touchent sont empoisonnés.
+32 Nuage d'encre
+33 Tu aveugles les ennemis proches.
+34 Bondir
+35 Tu sautes haut sur l'ennemi que tu regardes et, en atterrissant près de lui, tu l'étourdis un instant.
+36 Faire le mort
+37 Tu régénères vite et les ennemis cessent de te poursuivre.
+38 Saut de chasse
+39 Tu te jettes en avant ; ta morsure suivante peu après inflige plus de dégâts.
+40 Charge
+41 Tu charges vers l'avant et projettes en l'air le premier ennemi touché.
+42 Rugissement
+43 Tu affaiblis et repousses les ennemis proches.
+44 Carapace
+45 Tu te caches dans ta carapace : tu subis beaucoup moins de dégâts, mais tu avances très lentement.
+46 Crachat
+47 Tu craches à distance.
+48 Dard
+49 Tu piques l'ennemi devant toi et l'empoisonnes.
+50 Rugissement étourdissant
+51 Tu étourdis les ennemis proches (les boss, moins longtemps).
+52 Super saut
+53 Un saut très haut vers l'avant.
+54 Langue
+55 Tu attrapes une petite créature avec ta langue et la ramènes vers toi.
+56 Coup de corne
+57 Tu projettes vers le haut l'ennemi devant toi.
+58 Élan aquatique
+59 Un élan très rapide sous l'eau.
+60 Toile
+61 Tu lances une toile sur ce que tu regardes : elle laisse une toile d'araignée quelques secondes.
+62 Chimère : %s
+63 Tête (attaque)
+64 Instinct (capacité)
+65 Pattes (mouvement)
+66 Torse (vie et taille)
+67 Respire sous l'eau
+68 Grimpe aux murs
+69 Grâce du dauphin pour les alliés
+70 Immunisé contre le feu
+71 Vole
+72 Marche sur la lave
+73 Casse les feuilles en marchant
+74 Vision nocturne
+75 Pas de dégâts de chute
+76 Morsure venimeuse
+77 Les creepers fuient
+78 Chute lente
+79 Nage vite et respire sous l'eau
+80 espèce inconnue
+81 Prix de la chair
+82 Prix de la chair (Druide sculpteur) : tu as payé le rituel d'une chimère avec ton sang ; ta vie max baisse de 30 % tant qu'il dure.
+83 Restes
+84 [%s] %s
+85 [%s] %s : %s s
+86 Transformation : %s
+87 Création de la chimère…
+88 Vol
+89 %s
+90 %s (%s s)
+91 Étude : %s
+92 Tête de bête
+93 Tête : %s
+94 Instinct de bête
+95 Instinct : %s
+96 Pattes de bête
+97 Pattes : %s
+98 Torse de bête
+99 Torse : %s
+100 Réceptacle de chair
+101 Livre d'étude
+102 Partie de bête du Druide sculpteur : on l'obtient en la choisissant après le rituel du druide sur les restes d'une espèce déjà connue. Elle va dans le Réceptacle de chair.
+103 Druide sculpteur : jette dessus un Réceptacle de chair complet et fais un clic droit pour le rituel de création. Il coûte beaucoup de mana et réduit ta vie max un moment.
+104 Druide sculpteur : clic droit pour l'ouvrir et y mettre quatre parties de bête (tête, torse, pattes et instinct). Avec les quatre, jette-le sur un Autel de chair et fais un clic droit sur l'autel pour créer une chimère.
+105 Druide : maintiens le clic droit en visant un animal ou une bête vivante pour l'étudier ; si tu subis des dégâts, l'étude recommence. À la fin, le livre est consommé et tu gagnes de la connaissance sur son espèce. Chaque créature ne s'étudie qu'une fois.
+106 Capacité de bête (Druide)
+107 Sève corporelle
+108 Forme bon marché
+109 Colosse
+110 Férocité
+111 Retour guérisseur
+112 Chasseur
+113 Savoir
+114 Cercle de la Lune
+115 Forme riche
+116 Racines
+117 Charognard
+118 Érudit
+119 Sculpteur de chair
+120 Forme surnaturelle
+121 Sève venimeuse
+122 Sève vitale
+123 Réserve sauvage
+124 %s : %s s
+125 Cette forme n'a pas de capacité spéciale.
+126 La transformation a été interrompue.
+127 Tu te transformes en %s…
+128 Tu es déjà en train de te transformer.
+129 La chair bouge déjà.
+130 Tu as créé : %s.
+131 La création s'est défaite.
+132 Le réceptacle a besoin des quatre parties.
+133 Jette un Réceptacle de chair complet sur l'autel.
+134 Seul un Sculpteur sait donner vie à la chair.
+135 La chair commence à bouger…
+136 %s t'obéit pendant %s s.
+137 %s ne t'obéit plus.
+138 Tu ne regardes aucun animal à portée.
+139 Tu ne connais pas bien cette espèce.
+140 Tes ailes sont fatiguées : pose-toi pour récupérer.
+141 Ta forme de bête est tombée : tu reprends ta forme.
+142 Tu reprends ta forme.
+143 Ta forme bon marché s'épuise.
+144 Tu es maintenant : %s.
+145 Tu ne connais pas encore bien cette espèce.
+146 Tu ne peux pas faire ça sous forme animale.
+147 Il te faut %s de mana.
+148 Aucune cible devant toi.
+149 Seul un Druide sait utiliser ceci.
+150 Tu arraches aux restes : %s.
+151 Tu as déjà fait le rituel avec cette créature.
+152 Rituel accompli : %s/%s de connaissance de %s.
+153 Aucun reste frais de bête en vue.
+154 Ces restes ne servent plus à rien : tu arrives trop tard.
+155 Tu peux maintenant te transformer en %s !
+156 Tu as déjà étudié cette créature.
+157 Tu as étudié %s : %s/%s de connaissance.
+158 L'étude a été interrompue.
+159 Tu ne peux étudier que des animaux et des bêtes vivants.
+160 Tu pisteras toutes les bêtes.
+161 Tu ne pisteras que : %s.
+162 Tu pistes %s proies.
+163 Aucune proie à proximité.
+164 Reprends ta forme pour invoquer les lianes.
+165 Seulement sous l'eau.
+166 Mana en plus des formes aquatiques
+167 Vitesse des formes aquatiques hors de l'eau x
+168 Temps d'incantation
+169 Vitesse pendant la transformation
+170 Mana par création
+171 Durée de la création
+172 Mana à la transformation
+173 Dégâts de mouvement au plus toutes les
+174 Puissance de la bête : vie + dégâts x
+175 Recharge en reprenant ta forme
+176 Soin en reprenant ta forme (de ta vie max)
+177 Rayon avec une espèce épinglée (blocs)
+178 Hauteur de vol max au-dessus du sol (blocs)
+179 Recharge du vol au sol (par seconde)
+180 Vol continu
+181 Vitesse de vol
+182 Mana en plus des formes volantes
+183 Te suit au-delà de (blocs)
+184 Coups par seconde (par défaut)
+185 Dégâts des formes
+186 Vie des formes
+187 Vitesse max d'une forme x
+188 Vitesse min d'une forme x
+189 Régénération en forme (vie par seconde)
+190 Vitesse de nage des formes aquatiques
+191 Vie max perdue
+192 Vie et dégâts de la forme par Niveau total
+193 Mana de base d'une forme
+194 Mana par point de puissance de la bête
+195 Chimères conservées au maximum
+196 Vie max d'une bête valide
+197 Points de connaissance au maximum
+198 Pendant
+199 Points de connaissance en moins par espèce
+200 Puissance de la bête par point de connaissance
+201 Distance d'un Druide pour qu'il reste des restes (blocs)
+202 Incantation du rituel
+203 Mana du rituel
+204 Marge du rituel
+205 Marge pour le rituel après la mort
+206 Points par rituel
+207 Portée du rituel (blocs)
+208 Mana des sorts de nature en forme
+209 Vie et dégâts des formes
+210 Points par étude
+211 Durée de l'étude
+212 Durée de l'étude
+213 Se téléporte au-delà de (blocs)
+214 Tes formes ont bien plus de vie, mais infligent moins de dégâts.
+215 Colosse
+216 Tes formes infligent bien plus de dégâts, mais ont moins de vie.
+217 Chasseur
+218 Chaque rituel donne deux points de connaissance, mais coûte deux fois plus de mana et tu as moins de temps pour le faire.
+219 Charognard
+220 Chaque étude donne deux points de connaissance, mais étudier prend plus de temps.
+221 Érudit
+222 Tu régénères bien plus sous forme de bête, mais tes formes ont un peu moins de vie.
+223 Sève corporelle
+224 En reprenant ta forme, tu te soignes bien plus, mais tu ne régénères plus tant que tu es une bête.
+225 Retour guérisseur
+226 Tes sorts de nature empoisonnent ce qu'ils blessent, mais ta puissance de nature baisse un peu.
+227 Sève venimeuse
+228 Les sorts de nature qui infligent des dégâts te soignent d'une partie des dégâts, mais ta puissance de nature baisse un peu.
+229 Sève vitale
+230 Te transformer coûte bien moins de mana, mais chaque forme dure au plus quelques minutes.
+231 Forme bon marché
+232 Te transformer coûte plus de mana, mais tes formes sont plus fortes en tout.
+233 Forme riche
+234 Rituel du druide
+235 Sur les restes d'une bête tout juste tuée : tu en apprends un peu plus sur son espèce (un point de connaissance). Druide uniquement.
+236 Druide du Cercle de la Lune : se transforme en un instant, presque sans recharge, et ses formes ne réservent pas de mana.
+237 Cercle de la Lune
+238 Rituels sombres : arrache des parties aux restes des bêtes (tête, torse, pattes et instinct), les réunit dans un Réceptacle de chair et, sur un Autel de chair, donne vie à une chimère en laquelle il peut se transformer. Chaque création lui coûte beaucoup de mana et une partie de sa vie pendant un moment.
+239 Sculpteur
+240 Une bête qui fait de la magie : peut lancer des sorts de nature sous forme animale, même si ses formes sont un peu plus faibles et que ces sorts coûtent plus.
+241 Forme surnaturelle
+242 Seul le Sculpteur sait l'utiliser.
+243 Va dans l'emplacement : %s
+244 Jette dessus un Réceptacle de chair complet et fais un clic droit sur l'autel (Sculpteur uniquement).
+245 Clic droit : ouvre le réceptacle. Remplis-le avec une tête, un torse, des pattes et un instinct de bête, et jette-le sur un Autel de chair.
+246 Parties : %s/4
+247 Maintiens le clic droit sur un animal ou une bête vivante pour l'étudier (Druide uniquement). Consommé à la fin.
+248 Capacité : %s
+249 Chimères
+250 Recharge : %s s
+251 Dégâts : %s
+252 Tu ne connais encore aucune bête. Étudie une créature vivante avec le Livre d'étude ou accomplis le Rituel du druide sur ses restes.
+253 Vie : %s
+254 Clic : se transformer. Accroupi + touche de Forme sauvage : revenir instantanément.
+255 Connaissance : %s/%s
+256 Il te manque de la connaissance sur cette espèce.
+257 Mana : %s
+258 Pas de capacité spéciale
+259 Tête : %s · Torse : %s · Pattes : %s · Instinct : %s
+260 Traits : %s
+261 Reprendre ta forme
+262 Vitesse : x%s
+263 Bestiaire
+264 Clic droit : épingler pour Pister les proies
+265 Épinglée pour Pister les proies (clic droit pour retirer)
+266 Ne pas créer la chimère
+267 Tu as déjà le maximum de chimères : laquelle remplaces-tu ?
+268 Connaissance (un point)
+269 Que prends-tu des restes de %s ?

@@ -113,6 +113,10 @@ public class RitesJeiPlugin implements IModPlugin {
         info(reg, new ItemStack(BardItems.ABYSSAL_REED.get()), "abyssal_reed");
         info(reg, new ItemStack(BardItems.COLOSSUS_DRUMSKIN.get()), "colossus_drumskin");
         info(reg, new ItemStack(ModBlocks.CREATIVE_AMULET.get()), "creative_amulet");
+        info(reg, new ItemStack(io.github.rpgclasses.druid.DruidRegistry.STUDY_BOOK.get()), "study_book");
+        info(reg, new ItemStack(io.github.rpgclasses.druid.DruidRegistry.FLESH_VESSEL.get()), "flesh_vessel");
+        info(reg, new ItemStack(io.github.rpgclasses.druid.DruidRegistry.FLESH_ALTAR_ITEM.get()), "flesh_altar");
+        for (var part : io.github.rpgclasses.druid.DruidRegistry.PARTS) info(reg, new ItemStack(part.get()), "beast_head");
     }
 
     private static void info(IRecipeRegistration reg, ItemStack stack, String key) {

@@ -201,6 +201,10 @@ public final class DamagePipeline {
             damage *= tag.getDouble(TAG_FACTOR) * hit;
             log.add(" | proyectil (arco + muro + perks) x%.2f", tag.getDouble(TAG_FACTOR) * hit);
             canCrit = tag.getBoolean(TAG_CAN_CRIT);
+        } else if (direct == attacker && io.github.rpgclasses.druid.WildShape.isBeastHit()) {
+            // Druida transformado: el daño ya es el de la bestia (sin muros de armas ni bonus de desarmado).
+            log.add(" | golpe de bestia");
+            canCrit = true;
         } else if (direct == attacker) {
             WeaponClassifier.Classification weapon = WeaponClassifier.classify(attacker.getMainHandItem());
             boolean isMonk = io.github.rpgclasses.gear.GearClass.MONK.is(attacker);

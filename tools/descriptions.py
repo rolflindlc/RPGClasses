@@ -18,6 +18,7 @@ EFFECT_DESC = {
     "corrosion": "Corrosión (Dracónido Ácido): −5 % de armadura y de dureza de armadura por nivel.",
     "downed": "Tumbado (Milagro del Clérigo): un golpe mortal te ha dejado en el suelo con medio corazón. No puedes hacer nada, pero no recibes daño; si un aliado te cura con un conjuro o una habilidad del Clérigo, te levantas. Si se acaba, mueres.",
     "endurance": "Aguante (Bárbaro): recibes menos daño.",
+    "flesh_price": "Precio de la Carne (Druida Escultor): has pagado con sangre el ritual de una quimera; tu vida máxima baja un 30 % mientras dura.",
     "forced_dance": "Baile Forzado (Bardo): baila en el sitio y no puede atacar, lanzar conjuros ni usar objetos.",
     "gigantism": "Gigantismo (mobs de élite): la criatura es más grande; el nivel del efecto indica su tamaño.",
     "golden_spin": "Giro Dorado (Maestro del Giro): estás en pleno Rectángulo Dorado. No te puedes mover ni actuar, pero no recibes daño.",
@@ -48,6 +49,10 @@ JEI_INFO = {
     "eternal_sun_lute": "Instrumento legendario del Bardo: lo sueltan Barako y Umvuthi (Mowzie's Mobs) al morir a manos de un jugador.",
     "abyssal_reed": "Lo suelta el Leviatán (L_Ender's Cataclysm) al morir a manos de un jugador. Con ella se hace el Órgano del Abismo en la mesa de herrería.",
     "colossus_drumskin": "Lo suelta la Monstruosidad de Netherita (L_Ender's Cataclysm) al morir a manos de un jugador. Con él se hace el Tambor del Coloso en la mesa de herrería.",
+    "study_book": "Druida: mantén clic derecho apuntando a un animal o una bestia viva para estudiarlo; si recibes daño, el estudio vuelve a empezar. Al terminar se gasta y ganas conocimiento de su especie. Cada criatura solo se estudia una vez.",
+    "flesh_vessel": "Druida Escultor: clic derecho para abrirlo y meter cuatro partes de bestia (cabeza, torso, patas e instinto). Con las cuatro, tíralo sobre un Altar de Carne y haz clic derecho en el altar para crear una quimera.",
+    "flesh_altar": "Druida Escultor: tira encima un Recipiente de Carne completo y haz clic derecho para el ritual de creación. Cuesta mucho maná y te baja la vida máxima un rato.",
+    "beast_head": "Parte de bestia del Druida Escultor: se consigue eligiéndola tras el ritual del Druida sobre los restos de una especie que ya conoce. Va en el Recipiente de Carne.",
     "creative_amulet": "Solo en creativo, para pruebas: mientras lo lleves en el inventario, todos los enfriamientos de clase y de raza son 0.",
 }
 

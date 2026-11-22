@@ -7,6 +7,7 @@ import bonds
 import bard
 import cleric
 import spin
+import druid
 import difficulty
 out = sys.argv[1]
 NS = "rites_and_paths"
@@ -176,6 +177,11 @@ classes[spin.CLASS_ID] = dict(spin.CLASS, experimental=True)
 TRAITS[spin.CLASS_ID] = spin.TRAITS
 EXTRA_BRANCHES[spin.CLASS_ID] = spin.EXTRA_BRANCHES
 for _b, _ps in spin.PERKS.items(): PERKS[(spin.CLASS_ID, _b)] = _ps
+# Druida (adenda del Druida): desde tools/druid.py.
+classes[druid.CLASS_ID] = dict(druid.CLASS)
+TRAITS[druid.CLASS_ID] = druid.TRAITS
+EXTRA_BRANCHES[druid.CLASS_ID] = druid.EXTRA_BRANCHES
+for _b, _ps in druid.PERKS.items(): PERKS[(druid.CLASS_ID, _b)] = _ps
 for cid, extra in EXTRA_BRANCHES.items(): classes[cid]["branches"] = classes[cid]["branches"] + extra
 for cid, c in classes.items():
     for b, _ in c["branches"]: assert (cid, b) in PERKS, (cid, b)
@@ -247,6 +253,7 @@ subs = {
 for _sid, (_icon, _effects, _miles) in bard.SUBS.items(): subs[_sid] = ("bard", _icon, _effects, _miles)
 for _sid, (_icon, _effects, _miles) in cleric.SUBS.items(): subs[_sid] = ("cleric", _icon, _effects, _miles)
 for _sid, (_icon, _effects, _miles) in spin.SUBS.items(): subs[_sid] = (spin.CLASS_ID, _icon, _effects, _miles)
+for _sid, (_icon, _effects, _miles) in druid.SUBS.items(): subs[_sid] = (druid.CLASS_ID, _icon, _effects, _miles)
 
 def armor(material): return [{"item": f"minecraft:{material}_{piece}", "slot": slot} for piece, slot in
                          (("helmet","head"),("chestplate","chest"),("leggings","legs"),("boots","feet"))]
@@ -259,6 +266,7 @@ KITS = {
  "bard": bard.KIT,
  "cleric": cleric.KIT,
  spin.CLASS_ID: spin.KIT,
+ druid.CLASS_ID: druid.KIT,
 }
 
 # Icono de cada rama en el árbol de habilidades (objetos vanilla, que siempre existen).
@@ -279,6 +287,7 @@ BRANCH_ICONS = {
  ("bard","reverberation"): "minecraft:echo_shard", ("bard","dance"): "minecraft:music_disc_cat",
  **{("cleric", _b): _i for _b, _i in cleric.BRANCH_ICONS.items()},
  **{(spin.CLASS_ID, _b): _i for _b, _i in spin.BRANCH_ICONS.items()},
+ **{(druid.CLASS_ID, _b): _i for _b, _i in druid.BRANCH_ICONS.items()},
 }
 for cid, c in classes.items():
     for b, _ in c["branches"]: assert (cid, b) in BRANCH_ICONS, ("falta icono de rama", cid, b)
@@ -307,14 +316,19 @@ for cid, c in classes.items():
     # Adenda del Bardo: la escuela musical es exclusiva del Bardo (−100 % fijo para el resto) y su muro de Magia
     # (−35 %) no la toca: su poder sale solo de Compás, el combo y el instrumento.
     # Adenda del Clérigo, 2.1: la sagrada es del Paladín y del Clérigo (sin muro de Magia para ninguno de los dos).
+    # Adenda del Druida, 1: la escuela de naturaleza es del Druida (−100 % fijo para el resto; el Ranger conserva la
+    # Flecha de Veneno, exenta por conjuro) y su muro de Magia no la toca.
     if cid in ("paladin", "cleric"):
         o["magic_wall_exempt_schools"] = [IR + "holy"]
-        o["school_walls"] = {bard.MUSIC: 1.0}
+        o["school_walls"] = {bard.MUSIC: 1.0, druid.NATURE: 1.0}
     elif cid == "bard":
         o["magic_wall_exempt_schools"] = [bard.MUSIC]
-        o["school_walls"] = {IR + "holy": 1.0}
-    else:
+        o["school_walls"] = {IR + "holy": 1.0, druid.NATURE: 1.0}
+    elif cid == druid.CLASS_ID:
+        o["magic_wall_exempt_schools"] = [druid.NATURE]
         o["school_walls"] = {IR + "holy": 1.0, bard.MUSIC: 1.0}
+    else:
+        o["school_walls"] = {IR + "holy": 1.0, bard.MUSIC: 1.0, druid.NATURE: 1.0}
     # Conjuros concretos que se lanzan sin el muro de Magia (por conjuro, no por escuela): el Ranger y las flechas mágicas.
     if cid in MAGIC_WALL_EXEMPT_SPELLS: o["magic_wall_exempt_spells"] = [IR + s for s in MAGIC_WALL_EXEMPT_SPELLS[cid]]
     if TRAITS.get(cid): o["traits"] = TRAITS[cid]
@@ -330,7 +344,7 @@ for sid, (parent, icon, effects, miles) in subs.items():
 
 names = {
  "class": {"mage":"Mago","paladin":"Paladín","barbarian":"Bárbaro","rogue":"Pícaro","ranger":"Ranger","monk":"Monje","bard":bard.CLASS_NAME,"cleric":cleric.CLASS_NAME,
-           spin.CLASS_ID: spin.CLASS_NAME},
+           spin.CLASS_ID: spin.CLASS_NAME, druid.CLASS_ID: druid.CLASS_NAME},
  "subclass": {"chronomancer":"Cronomante","elementalist":"Elementalista","battle_mage":"Mago de Batalla",
    "blessed_guardian":"Guardián Bendito","unyielding_bastion":"Bastión Inflexible","charging_juggernaut":"Juggernaut de Carga",
    "indestructible":"Indestructible","suicidal_berserker":"Berserker Suicida","plague_corruptor":"Corruptor de Plagas",
@@ -344,7 +358,8 @@ branch_names = {"mage":{"power":"Poder","reserve":"Reserva","cadence":"Cadencia"
  "rogue":{"shadow":"Sombra","edge":"Filo","wind":"Viento"},
  "ranger":{"aim":"Puntería","cadence":"Cadencia","range":"Alcance"},
  "monk":{"fist":"Puño","wind":"Viento","skin":"Piel"},
- "bard":dict(bard.BRANCH_NAMES), "cleric":dict(cleric.BRANCH_NAMES), spin.CLASS_ID:dict(spin.BRANCH_NAMES)}
+ "bard":dict(bard.BRANCH_NAMES), "cleric":dict(cleric.BRANCH_NAMES), spin.CLASS_ID:dict(spin.BRANCH_NAMES),
+ druid.CLASS_ID:dict(druid.BRANCH_NAMES)}
 for (cid, bid), name in texts.EXTRA_BRANCH_NAMES.items(): branch_names[cid][bid] = name
 for _sid, _name in bard.SUB_NAMES.items(): names["subclass"][_sid] = _name
 # Textos del Bardo en las tablas comunes (habilidades, ramas, perks, mecánicas y parámetros).
@@ -397,6 +412,22 @@ for _m, _n in spin.MECHANIC_NAMES.items():
 for _k, _v in spin.PARAMS.items():
     assert _k not in texts.PARAMS, _k
     texts.PARAMS[_k] = _v
+# Textos del Druida en las mismas tablas. Los parámetros que ya existen reutilizan su nombre.
+for _sid, _name in druid.SUB_NAMES.items(): names["subclass"][_sid] = _name
+for _aid, _p in druid.ABILITIES.items():
+    assert _aid not in texts.ABILITIES, _aid
+    texts.ABILITIES[_aid] = _p
+texts.ABILITY_TEXT.update(druid.ABILITY_TEXT)
+texts.CLASS_DESC[druid.CLASS_ID] = druid.CLASS_DESC
+texts.TRAIT_DESC[druid.CLASS_ID] = druid.TRAIT_DESC
+for _b, _d in druid.BRANCH_DESC.items(): texts.BRANCH_DESC[(druid.CLASS_ID, _b)] = _d
+for (_b, _p), _t in druid.PERK_TEXT.items(): texts.PERK_TEXT[(druid.CLASS_ID, _b, _p)] = _t
+texts.SUBCLASS_DESC.update(druid.SUB_DESC)
+for _m, _n in druid.MECHANIC_NAMES.items():
+    assert _m not in texts.MECHANIC_NAMES, _m
+    texts.MECHANIC_NAMES[_m] = _n
+for _k, _v in druid.PARAMS.items():
+    if _k not in texts.PARAMS and _k not in races.RACE_PARAMS: texts.PARAMS[_k] = _v
 lang = {}
 for kind, m in names.items():
     for k, v in m.items(): lang[f"{kind}.{NS}.{k}.name"] = v
@@ -474,6 +505,10 @@ lang.update(cleric_lang)
 spin_lang = spin.build(dump, out)
 for key in spin_lang: assert key not in lang, key
 lang.update(spin_lang)
+# Druida: tabla de bestias, recetas, tags, tipo de daño de las Enredaderas, modelos y textos de interfaz.
+druid_lang = druid.build(dump, out)
+for key in druid_lang: assert key not in lang, key
+lang.update(druid_lang)
 # Dificultad por zona: tag de mobs que nunca la reciben.
 difficulty_lang = difficulty.build(dump, out)
 for key in difficulty_lang: assert key not in lang, key

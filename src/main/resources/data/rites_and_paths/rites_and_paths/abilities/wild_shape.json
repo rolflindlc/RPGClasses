@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "cast_seconds": 6,
+  "exit_cooldown_seconds": 30,
+  "level_scaling": 0.02,
+  "mana_base": 15,
+  "mana_per_power": 1.5,
+  "damage_weight": 3,
+  "flying_cost": 0.25,
+  "aquatic_cost": 0.25,
+  "cast_slow": -0.5,
+  "form_attack_speed": 1.6,
+  "aquatic_land_speed": 0.35,
+  "form_swim_bonus": 1.5,
+  "flight_seconds": 10,
+  "flight_recharge": 0.1,
+  "flight_ceiling": 40,
+  "flight_speed": 0.03,
+  "form_min_speed": 0.5,
+  "form_max_speed": 1.6
+}

@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "class": "rites_and_paths:druid",
+  "display": {
+    "icon": "minecraft:rotten_flesh"
+  },
+  "effects": [
+    {
+      "type": "rites_and_paths:mechanic",
+      "id": "rites_and_paths:druid_sculptor",
+      "chimera_mana": 120,
+      "cinematic_seconds": 4,
+      "health_penalty": 0.3,
+      "penalty_seconds": 600,
+      "max_chimeras": 3
+    }
+  ],
+  "milestones": []
+}

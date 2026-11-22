@@ -1,0 +1,381 @@
+{
+  "schema_version": 1,
+  "passive": true,
+  "beasts": {
+    "minecraft:wolf": {
+      "health": 20,
+      "damage": 4,
+      "speed": 1.35,
+      "ability": "pounce"
+    },
+    "minecraft:fox": {
+      "health": 10,
+      "damage": 3,
+      "speed": 1.3,
+      "ability": "leap",
+      "passives": [
+        "night_vision"
+      ]
+    },
+    "minecraft:cat": {
+      "health": 10,
+      "damage": 3,
+      "speed": 1.3,
+      "jump": 0.5,
+      "passives": [
+        "no_fall",
+        "scare_creepers"
+      ]
+    },
+    "minecraft:ocelot": {
+      "health": 10,
+      "damage": 3,
+      "speed": 1.35,
+      "jump": 0.5,
+      "passives": [
+        "no_fall",
+        "scare_creepers"
+      ]
+    },
+    "minecraft:rabbit": {
+      "health": 3,
+      "damage": 1,
+      "speed": 1.3,
+      "jump": 1.0,
+      "ability": "super_jump"
+    },
+    "minecraft:spider": {
+      "health": 16,
+      "damage": 3,
+      "speed": 1.35,
+      "ability": "web",
+      "passives": [
+        "climb",
+        "night_vision"
+      ]
+    },
+    "minecraft:cave_spider": {
+      "health": 12,
+      "damage": 2,
+      "speed": 1.35,
+      "passives": [
+        "climb",
+        "poison_bite"
+      ]
+    },
+    "minecraft:polar_bear": {
+      "health": 30,
+      "damage": 6,
+      "speed": 1.15,
+      "attack_speed": 1.2,
+      "ability": "roar"
+    },
+    "minecraft:goat": {
+      "health": 10,
+      "damage": 2,
+      "speed": 1.1,
+      "jump": 0.8,
+      "ability": "ram"
+    },
+    "minecraft:hoglin": {
+      "health": 40,
+      "damage": 6,
+      "speed": 1.0,
+      "attack_speed": 1.0,
+      "knockback_resistance": 0.6,
+      "ability": "toss"
+    },
+    "minecraft:ravager": {
+      "health": 100,
+      "damage": 12,
+      "speed": 1.2,
+      "attack_speed": 0.8,
+      "knockback_resistance": 0.75,
+      "ability": "stun_roar",
+      "passives": [
+        "leaf_breaker"
+      ]
+    },
+    "minecraft:horse": {
+      "health": 22,
+      "damage": 2,
+      "speed": 1.6,
+      "jump": 1.0
+    },
+    "minecraft:donkey": {
+      "health": 22,
+      "damage": 2,
+      "speed": 1.4,
+      "jump": 0.8
+    },
+    "minecraft:mule": {
+      "health": 22,
+      "damage": 2,
+      "speed": 1.4,
+      "jump": 0.8
+    },
+    "minecraft:skeleton_horse": {
+      "health": 15,
+      "damage": 2,
+      "speed": 1.6,
+      "jump": 1.0,
+      "amphibious": true
+    },
+    "minecraft:camel": {
+      "health": 32,
+      "damage": 2,
+      "speed": 1.2,
+      "jump": 0.6,
+      "ability": "dash"
+    },
+    "minecraft:llama": {
+      "health": 22,
+      "damage": 1,
+      "speed": 1.0,
+      "ability": "spit"
+    },
+    "minecraft:trader_llama": {
+      "health": 22,
+      "damage": 1,
+      "speed": 1.0,
+      "ability": "spit"
+    },
+    "minecraft:bee": {
+      "health": 10,
+      "damage": 2,
+      "speed": 1.1,
+      "ability": "sting",
+      "flying": true
+    },
+    "minecraft:parrot": {
+      "health": 6,
+      "damage": 1,
+      "speed": 1.0,
+      "flying": true
+    },
+    "minecraft:bat": {
+      "health": 6,
+      "damage": 1,
+      "speed": 1.0,
+      "ability": "echolocation",
+      "flying": true,
+      "passives": [
+        "night_vision"
+      ]
+    },
+    "minecraft:dolphin": {
+      "health": 10,
+      "damage": 3,
+      "speed": 1.0,
+      "ability": "water_dash",
+      "aquatic": true,
+      "passives": [
+        "dolphin_grace"
+      ]
+    },
+    "minecraft:turtle": {
+      "health": 30,
+      "damage": 1,
+      "speed": 0.5,
+      "ability": "shell",
+      "amphibious": true
+    },
+    "minecraft:axolotl": {
+      "health": 14,
+      "damage": 2,
+      "speed": 0.8,
+      "ability": "play_dead",
+      "amphibious": true
+    },
+    "minecraft:frog": {
+      "health": 10,
+      "damage": 2,
+      "speed": 1.0,
+      "jump": 0.8,
+      "ability": "tongue",
+      "amphibious": true
+    },
+    "minecraft:squid": {
+      "health": 10,
+      "damage": 1,
+      "ability": "ink",
+      "aquatic": true
+    },
+    "minecraft:glow_squid": {
+      "health": 10,
+      "damage": 1,
+      "ability": "ink",
+      "aquatic": true,
+      "passives": [
+        "night_vision"
+      ]
+    },
+    "minecraft:pufferfish": {
+      "health": 3,
+      "damage": 1,
+      "ability": "inflate",
+      "aquatic": true
+    },
+    "minecraft:cod": {
+      "health": 3,
+      "damage": 1,
+      "aquatic": true
+    },
+    "minecraft:salmon": {
+      "health": 3,
+      "damage": 1,
+      "aquatic": true
+    },
+    "minecraft:tropical_fish": {
+      "health": 3,
+      "damage": 1,
+      "aquatic": true
+    },
+    "minecraft:strider": {
+      "health": 20,
+      "damage": 1,
+      "speed": 1.0,
+      "passives": [
+        "lava_walk",
+        "fire_immune"
+      ]
+    },
+    "minecraft:chicken": {
+      "health": 4,
+      "damage": 1,
+      "speed": 0.9,
+      "passives": [
+        "slow_fall"
+      ]
+    },
+    "minecraft:panda": {
+      "health": 20,
+      "damage": 6,
+      "speed": 0.7,
+      "attack_speed": 1.0
+    },
+    "minecraft:sniffer": {
+      "health": 14,
+      "damage": 1,
+      "speed": 0.6
+    },
+    "minecraft:cow": {
+      "damage": 1,
+      "speed": 0.8
+    },
+    "minecraft:mooshroom": {
+      "damage": 1,
+      "speed": 0.8
+    },
+    "minecraft:pig": {
+      "damage": 1,
+      "speed": 1.0
+    },
+    "minecraft:sheep": {
+      "damage": 1,
+      "speed": 0.9
+    }
+  },
+  "abilities": {
+    "pounce": {
+      "cooldown_seconds": 6,
+      "distance": 5,
+      "lift": 0.4,
+      "damage_bonus": 0.5,
+      "window_seconds": 3
+    },
+    "leap": {
+      "cooldown_seconds": 8,
+      "range": 12,
+      "lift": 0.9,
+      "stun_seconds": 0.5
+    },
+    "super_jump": {
+      "cooldown_seconds": 5,
+      "lift": 1.1,
+      "forward": 0.6
+    },
+    "web": {
+      "cooldown_seconds": 10,
+      "range": 16,
+      "duration_seconds": 5
+    },
+    "roar": {
+      "cooldown_seconds": 15,
+      "radius": 5,
+      "weakness_seconds": 5,
+      "knockback": 1.0
+    },
+    "ram": {
+      "cooldown_seconds": 10,
+      "distance": 6,
+      "damage": 4,
+      "knockback": 2.0
+    },
+    "toss": {
+      "cooldown_seconds": 8,
+      "range": 3,
+      "damage": 4,
+      "lift": 1.0
+    },
+    "stun_roar": {
+      "cooldown_seconds": 20,
+      "radius": 4,
+      "stun_seconds": 1,
+      "boss_factor": 0.5
+    },
+    "dash": {
+      "cooldown_seconds": 8,
+      "distance": 8
+    },
+    "spit": {
+      "cooldown_seconds": 3,
+      "damage": 3,
+      "speed": 1.5
+    },
+    "sting": {
+      "cooldown_seconds": 6,
+      "range": 3,
+      "damage": 2,
+      "poison_seconds": 5,
+      "poison_level": 2
+    },
+    "echolocation": {
+      "cooldown_seconds": 15,
+      "radius": 16,
+      "duration_seconds": 5
+    },
+    "water_dash": {
+      "cooldown_seconds": 4,
+      "distance": 8
+    },
+    "shell": {
+      "cooldown_seconds": 12,
+      "duration_seconds": 4,
+      "resistance_level": 2,
+      "slow_level": 2
+    },
+    "play_dead": {
+      "cooldown_seconds": 20,
+      "duration_seconds": 5,
+      "regen_level": 2
+    },
+    "tongue": {
+      "cooldown_seconds": 8,
+      "range": 6,
+      "max_width": 1.0,
+      "damage": 2
+    },
+    "ink": {
+      "cooldown_seconds": 10,
+      "radius": 4,
+      "blind_seconds": 3
+    },
+    "inflate": {
+      "cooldown_seconds": 12,
+      "duration_seconds": 4,
+      "radius": 1.5,
+      "poison_seconds": 4
+    }
+  }
+}

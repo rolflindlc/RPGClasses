@@ -1,0 +1,8 @@
+{
+  "schema_version": 1,
+  "range": 12,
+  "duration_seconds": 180,
+  "cooldown_seconds": 90,
+  "follow_distance": 6,
+  "teleport_distance": 24
+}

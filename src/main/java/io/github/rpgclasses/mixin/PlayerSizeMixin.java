@@ -25,6 +25,12 @@ public abstract class PlayerSizeMixin {
             at = @At("RETURN"), cancellable = true)
     private void rites_and_paths$scaleDimensions(Pose pose, CallbackInfoReturnable<EntityDimensions> cir) {
         Player self = (Player) (Object) this;
+        // Druida: transformado, la hitbox es la de la bestia en todas las poses (salvo dormido).
+        EntityDimensions form = io.github.rpgclasses.druid.WildShape.dimensions(self, pose);
+        if (form != null) {
+            cir.setReturnValue(form);
+            return;
+        }
         // Plegaria (Intercesor): el jugador es una cabeza cúbica en todas las poses.
         float spirit = io.github.rpgclasses.cleric.Prayer.spiritSize(self);
         if (spirit > 0) {

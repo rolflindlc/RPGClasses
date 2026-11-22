@@ -68,8 +68,10 @@ public final class MechanicService {
         ClassDef classDef = DefinitionStore.SERVER.classDef(data.state.classId);
         List<ActiveMechanic> both = new java.util.ArrayList<>();
         if (classDef != null) both.addAll(StatCalculator.mechanics(data.state, classDef, DefinitionStore.SERVER.subclassDef(data.state.subclassId)));
-        // Rasgos de raza y subraza: van con el jugador aunque no tenga clase.
-        both.addAll(StatCalculator.raceMechanics(data.state, io.github.rpgclasses.core.definition.RaceStore.SERVER.race(data.state.raceId)));
+        // Rasgos de raza y subraza: van con el jugador aunque no tenga clase. Transformado en bestia (Druida), se suspenden.
+        if (!io.github.rpgclasses.druid.WildShape.inForm(player)) {
+            both.addAll(StatCalculator.raceMechanics(data.state, io.github.rpgclasses.core.definition.RaceStore.SERVER.race(data.state.raceId)));
+        }
         List<ActiveMechanic> list = List.copyOf(both);
         java.util.Set<String> ids = new java.util.TreeSet<>();
         for (ActiveMechanic m : list) ids.add(m.id() + "@" + m.level());

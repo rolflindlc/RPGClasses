@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "class": "rites_and_paths:druid",
+  "display": {
+    "icon": "minecraft:glow_berries"
+  },
+  "effects": [
+    {
+      "type": "rites_and_paths:mechanic",
+      "id": "rites_and_paths:druid_supernatural",
+      "stats": -0.15,
+      "spell_cost": 0.25
+    }
+  ],
+  "milestones": []
+}

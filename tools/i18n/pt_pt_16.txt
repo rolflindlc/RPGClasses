@@ -1,0 +1,270 @@
+0 Aprendes as formas dos animais e das bestas. Estudo: mantém o botão direito com um Livro de Estudo sobre uma criatura viva até encher a barra (se sofreres dano, reinicia; o livro gasta-se no fim). Ritual: lança o feitiço Ritual do Druida (sem pergaminho, está sempre na tua roda) sobre os restos de uma besta acabada de morrer. Cada um dá um ponto de conhecimento da espécie, e cada criatura só pode ser estudada uma vez e usada num ritual uma vez. As espécies mais fortes pedem mais pontos. O que aprendes não se perde ao reiniciar a classe.
+1 Saber das Bestas
+2 O animal de uma espécie que conheces e para o qual estás a olhar obedece-te durante alguns minutos como animal de estimação: segue-te e ataca os teus inimigos (se souber atacar). Podes usá-la transformado.
+3 Dominar Animal
+4 Brotam trepadeiras do chão à tua volta durante algum tempo: os teus aliados (e tu) curam-se devagar lá dentro, e os inimigos que andam sobre elas ficam mais lentos e ferem-se ao mexer-se, como num arbusto de bagas. Tens de sair da forma para a usar.
+5 Trepadeiras Enredantes
+6 As bestas próximas brilham durante alguns segundos (só para ti). Se fixares uma espécie no bestiário, vês só essa, e de mais longe. Podes usá-la transformado.
+7 Rastrear Presas
+8 Abre o bestiário para escolheres uma espécie que conheces: após alguns segundos a lançar (sofrer dano interrompe) transformas-te nela. Pagas mana conforme a força da besta e, enquanto manténs a forma, esse mana não se regenera. Ganhas a vida, o tamanho, a velocidade e os ataques da besta, mais fortes quanto maior o teu nível; o teu equipamento fica escondido e não conta, não podes usar objetos nem lançar feitiços, e os teus traços de raça ficam suspensos. Se a besta cair, voltas à tua forma com a vida que tinhas. Carrega de novo (agachado, no momento) para voltar à tua forma; a recarga começa então. Dormir, morrer ou desligar-te também te faz voltar.
+9 Forma Selvagem
+10 Altar de Carne
+11 As tuas formas de besta têm mais vida e causam mais dano.
+12 Ferocidade
+13 Estudas mais depressa, tens mais tempo para o ritual e, com o ramo completo, cada espécie pede menos um ponto de conhecimento.
+14 Saber
+15 Regeneras vida enquanto és uma besta e curas-te ao voltar à tua forma.
+16 Raiz
+17 Mais poder para os teus feitiços da escola da natureza.
+18 Seiva
+19 Transformares-te custa menos mana e tens mais mana máximo.
+20 Reserva Selvagem
+21 Mago da natureza que se transforma nas bestas que conhece. Estuda as criaturas vivas com o seu livro e faz um ritual sobre os seus restos para aprender a sua forma; quando conhece bem uma espécie, pode tornar-se nela, com o seu corpo, a sua vida e os seus ataques. A escola da natureza é sua: as restantes escolas perdem 35 %, e é muito desajeitado com armas, armaduras e escudos.
+22 Druida
+23 Traço de classe: um pouco menos de vida máxima.
+24 %1$s ficou preso nas trepadeiras
+25 %1$s ficou preso nas trepadeiras de %2$s
+26 Arranque
+27 Um impulso longo para a frente.
+28 Ecolocalização
+29 As criaturas próximas brilham durante alguns segundos (só para ti).
+30 Inchar
+31 Inchas durante alguns segundos: os inimigos que te tocam ficam envenenados.
+32 Nuvem de Tinta
+33 Cegas os inimigos próximos.
+34 Atirar-se
+35 Saltas alto sobre o inimigo para o qual olhas e, ao cair perto dele, atordoa-lo por um instante.
+36 Fingir-se de Morto
+37 Regeneras depressa e os inimigos deixam de te perseguir.
+38 Salto de Caça
+39 Lanças-te para a frente; a tua mordidela seguinte, pouco depois, causa mais dano.
+40 Investida
+41 Carregas para a frente e atiras pelo ar o primeiro inimigo que atingires.
+42 Rugido
+43 Enfraqueces e empurras os inimigos próximos.
+44 Carapaça
+45 Escondes-te na carapaça: sofres muito menos dano, mas andas muito devagar.
+46 Cuspidela
+47 Cospes à distância.
+48 Ferrão
+49 Picas o inimigo à tua frente e envenena-lo.
+50 Rugido Atordoante
+51 Atordoas os inimigos próximos (os chefes, menos tempo).
+52 Supersalto
+53 Um salto altíssimo para a frente.
+54 Língua
+55 Apanhas uma criatura pequena com a língua e puxa-la para ti.
+56 Marrada
+57 Atiras para cima o inimigo à tua frente.
+58 Impulso Aquático
+59 Um impulso muito rápido debaixo de água.
+60 Teia
+61 Lanças uma teia ao que estás a olhar: deixa uma teia de aranha durante alguns segundos.
+62 Quimera de %s
+63 Cabeça (ataque)
+64 Instinto (habilidade)
+65 Patas (movimento)
+66 Torso (vida e tamanho)
+67 Respira debaixo de água
+68 Trepa paredes
+69 Graça do Golfinho para os aliados
+70 Imune ao fogo
+71 Voa
+72 Anda sobre lava
+73 Parte folhas ao andar
+74 Visão noturna
+75 Sem dano de queda
+76 Mordidela venenosa
+77 Os creepers fogem
+78 Queda lenta
+79 Nada depressa e respira debaixo de água
+80 espécie desconhecida
+81 Preço da Carne
+82 Preço da Carne (Druida Escultor): pagaste com sangue o ritual de uma quimera; a tua vida máxima desce 30 % enquanto durar.
+83 Restos
+84 [%s] %s
+85 [%s] %s: %s s
+86 A transformar-te: %s
+87 A criar a quimera…
+88 Voo
+89 %s
+90 %s (%s s)
+91 A estudar: %s
+92 Cabeça de Besta
+93 Cabeça de %s
+94 Instinto de Besta
+95 Instinto de %s
+96 Patas de Besta
+97 Patas de %s
+98 Torso de Besta
+99 Torso de %s
+100 Recipiente de Carne
+101 Livro de Estudo
+102 Parte de besta do Druida Escultor: obtém-se escolhendo-a após o ritual do Druida sobre os restos de uma espécie que já conheces. Vai no Recipiente de Carne.
+103 Druida Escultor: atira para cima dele um Recipiente de Carne completo e clica com o botão direito para o ritual de criação. Custa muito mana e baixa a tua vida máxima durante algum tempo.
+104 Druida Escultor: clica com o botão direito para o abrir e meter quatro partes de besta (cabeça, torso, patas e instinto). Com as quatro, atira-o para um Altar de Carne e clica com o botão direito no altar para criar uma quimera.
+105 Druida: mantém o botão direito a apontar para um animal ou uma besta viva para o estudar; se sofreres dano, o estudo recomeça. No fim, o livro gasta-se e ganhas conhecimento da sua espécie. Cada criatura só se estuda uma vez.
+106 Habilidade de Besta (Druida)
+107 Seiva Corporal
+108 Forma Barata
+109 Colosso
+110 Ferocidade
+111 Saída Curativa
+112 Caçador
+113 Saber
+114 Círculo da Lua
+115 Forma Rica
+116 Raiz
+117 Necrófago
+118 Erudito
+119 Escultor de Carne
+120 Forma Sobrenatural
+121 Seiva Venenosa
+122 Seiva Vital
+123 Reserva Selvagem
+124 %s: %s s
+125 Esta forma não tem habilidade especial.
+126 A transformação foi interrompida.
+127 Transformas-te em %s…
+128 Já te estás a transformar.
+129 A carne já se está a mexer.
+130 Criaste: %s.
+131 A criação desfez-se.
+132 O recipiente precisa das quatro partes.
+133 Atira um Recipiente de Carne completo para o altar.
+134 Só um Escultor sabe dar vida à carne.
+135 A carne começa a mexer-se…
+136 %s obedece-te durante %s s.
+137 %s já não te obedece.
+138 Não estás a olhar para nenhum animal ao alcance.
+139 Não conheces bem essa espécie.
+140 As tuas asas estão cansadas: aterra para recuperares.
+141 A tua forma de besta caiu: voltas à tua forma.
+142 Voltas à tua forma.
+143 A tua forma barata esgota-se.
+144 Agora és: %s.
+145 Ainda não conheces bem essa espécie.
+146 Não podes fazer isso transformado.
+147 Precisas de %s de mana.
+148 Não há nenhum alvo à tua frente.
+149 Só um Druida sabe usar isto.
+150 Arrancas dos restos: %s.
+151 Já fizeste o ritual com esta criatura.
+152 Ritual concluído: %s/%s de conhecimento de %s.
+153 Não há restos frescos de uma besta à vista.
+154 Estes restos já não servem: chegas tarde.
+155 Já te podes transformar em %s!
+156 Já estudaste esta criatura.
+157 Estudaste %s: %s/%s de conhecimento.
+158 O estudo foi interrompido.
+159 Só podes estudar animais e bestas vivos.
+160 Vais rastrear todas as bestas.
+161 Vais rastrear só: %s.
+162 Rastreias %s presas.
+163 Não há presas por perto.
+164 Volta à tua forma para invocar as trepadeiras.
+165 Só debaixo de água.
+166 Mana extra das formas aquáticas
+167 Velocidade das formas aquáticas fora de água x
+168 Tempo de lançamento
+169 Velocidade enquanto te transformas
+170 Mana de cada criação
+171 Duração da criação
+172 Mana ao transformares-te
+173 Dano ao mexer-se no máximo a cada
+174 Poder da besta: vida + dano x
+175 Recarga ao voltar à tua forma
+176 Cura ao voltar à tua forma (da tua vida máxima)
+177 Raio com uma espécie fixada (blocos)
+178 Altura máxima de voo acima do chão (blocos)
+179 Recarga do voo no chão (por segundo)
+180 Voo seguido
+181 Velocidade de voo
+182 Mana extra das formas voadoras
+183 Segue-te a mais de (blocos)
+184 Golpes por segundo (por defeito)
+185 Dano das formas
+186 Vida das formas
+187 Velocidade máxima de uma forma x
+188 Velocidade mínima de uma forma x
+189 Regeneração em forma (vida por segundo)
+190 Velocidade de nado das formas aquáticas
+191 Vida máxima que perdes
+192 Vida e dano da forma por Nível Total
+193 Mana base de uma forma
+194 Mana por ponto de poder da besta
+195 Quimeras guardadas no máximo
+196 Vida máxima de uma besta válida
+197 Pontos de conhecimento no máximo
+198 Durante
+199 Menos pontos de conhecimento por espécie
+200 Poder da besta por ponto de conhecimento
+201 Distância a um Druida para ficarem restos (blocos)
+202 Lançamento do ritual
+203 Mana do ritual
+204 Margem do ritual
+205 Margem para o ritual após a morte
+206 Pontos por ritual
+207 Alcance do ritual (blocos)
+208 Mana dos feitiços da natureza em forma
+209 Vida e dano das formas
+210 Pontos por estudo
+211 Tempo de estudo
+212 Tempo de estudo
+213 Teletransporta-se a mais de (blocos)
+214 As tuas formas têm bastante mais vida, mas causam menos dano.
+215 Colosso
+216 As tuas formas causam bastante mais dano, mas têm menos vida.
+217 Caçador
+218 Cada ritual dá dois pontos de conhecimento, mas custa o dobro do mana e tens menos tempo para o fazer.
+219 Necrófago
+220 Cada estudo dá dois pontos de conhecimento, mas estudar demora mais.
+221 Erudito
+222 Regeneras muito mais em forma de besta, mas as tuas formas têm um pouco menos de vida.
+223 Seiva Corporal
+224 Ao voltar à tua forma curas-te muito mais, mas deixas de regenerar enquanto és uma besta.
+225 Saída Curativa
+226 Os teus feitiços da natureza envenenam o que ferem, mas o teu poder da natureza desce um pouco.
+227 Seiva Venenosa
+228 Os feitiços da natureza que causam dano curam-te uma parte do dano, mas o teu poder da natureza desce um pouco.
+229 Seiva Vital
+230 Transformares-te custa muito menos mana, mas cada forma dura no máximo alguns minutos.
+231 Forma Barata
+232 Transformares-te custa mais mana, mas as tuas formas são mais fortes em tudo.
+233 Forma Rica
+234 Ritual do Druida
+235 Sobre os restos de uma besta acabada de morrer: aprendes um pouco mais sobre a sua espécie (um ponto de conhecimento). Só o Druida.
+236 Druida do Círculo da Lua: transforma-se num instante, quase sem recarga, e as suas formas não lhe reservam mana.
+237 Círculo da Lua
+238 Rituais sombrios: arranca partes dos restos das bestas (cabeça, torso, patas e instinto), junta-as num Recipiente de Carne e, sobre um Altar de Carne, dá vida a uma quimera na qual se pode transformar. Cada criação custa-lhe muito mana e parte da sua vida durante algum tempo.
+239 Escultor
+240 Uma besta que faz magia: pode lançar feitiços da natureza transformado, embora as suas formas sejam um pouco mais fracas e esses feitiços custem mais.
+241 Forma Sobrenatural
+242 Só o Escultor a sabe usar.
+243 Vai no espaço: %s
+244 Atira para cima dele um Recipiente de Carne completo e clica com o botão direito no altar (só o Escultor).
+245 Botão direito: abre o recipiente. Enche-o com uma cabeça, um torso, umas patas e um instinto de besta, e atira-o para um Altar de Carne.
+246 Partes: %s/4
+247 Mantém o botão direito sobre um animal ou uma besta viva para o estudar (só o Druida). Gasta-se no fim.
+248 Habilidade: %s
+249 Quimeras
+250 Recarga: %s s
+251 Dano: %s
+252 Ainda não conheces nenhuma besta. Estuda uma criatura viva com o Livro de Estudo ou faz o Ritual do Druida sobre os seus restos.
+253 Vida: %s
+254 Clique: transformares-te. Agachado + tecla de Forma Selvagem: voltar no momento.
+255 Conhecimento: %s/%s
+256 Falta-te conhecimento desta espécie.
+257 Mana: %s
+258 Sem habilidade especial
+259 Cabeça: %s · Torso: %s · Patas: %s · Instinto: %s
+260 Traços: %s
+261 Voltar à tua forma
+262 Velocidade: x%s
+263 Bestiário
+264 Botão direito: fixar para Rastrear Presas
+265 Fixada para Rastrear Presas (botão direito para a retirar)
+266 Não criar a quimera
+267 Já tens o máximo de quimeras: qual substituis?
+268 Conhecimento (um ponto)
+269 O que tiras dos restos de %s?

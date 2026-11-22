@@ -35,12 +35,20 @@ public final class SpellExemptions {
 
     private SpellExemptions() {}
 
+    /** ¿Es uno de los conjuros exentos de su clase? */
+    static boolean exempt(ServerPlayer player, String spellId) {
+        PlayerClassData data = PlayerClassDataProvider.get(player);
+        if (data == null || data.state.classId == null) return false;
+        ClassDef classDef = DefinitionStore.SERVER.classDef(data.state.classId);
+        return classDef != null && classDef.magicWallExemptSpells().contains(spellId);
+    }
+
     /** Antes de ejecutar el conjuro (SpellOnCastEvent): si es de los exentos de su clase, quita el muro de Magia. */
     static void begin(ServerPlayer player, String spellId) {
-        PlayerClassData data = PlayerClassDataProvider.get(player);
-        if (data == null || data.state.classId == null) return;
-        ClassDef classDef = DefinitionStore.SERVER.classDef(data.state.classId);
-        if (classDef == null || !classDef.magicWallExemptSpells().contains(spellId)) return;
+        if (!exempt(player, spellId)) return;
+        // Adenda del Druida: la Flecha de Veneno es de la naturaleza, vetada (−100 %) para el Ranger. Durante el
+        // lanzamiento se quita también ese muro de escuela.
+        liftSchoolWall(player, spellId);
         double wall = StatEngine.wall(player, Ids.MAGIC);
         if (wall <= 0 || wall >= 1) return;
         Attribute attribute = ForgeRegistries.ATTRIBUTES.getValue(SPELL_POWER);
@@ -53,9 +61,33 @@ public final class SpellExemptions {
         DebugLog.event(player, "conjuro", "{} se lanza sin el muro de Magia ({} %)", spellId, Math.round(wall * 100));
     }
 
+    /** Muro de escuela quitado durante un lanzamiento exento: jugador → (atributo, modificador). */
+    private static final java.util.Map<UUID, Object[]> LIFTED = io.github.rpgclasses.server.SessionState.track(new java.util.HashMap<>());
+
+    private static void liftSchoolWall(ServerPlayer player, String spellId) {
+        io.redspace.ironsspellbooks.api.spells.AbstractSpell spell =
+                io.redspace.ironsspellbooks.api.registry.SpellRegistry.getSpell(new ResourceLocation(spellId));
+        if (spell == null) return;
+        ResourceLocation school = spell.getSchoolType().getId();
+        if (StatEngine.schoolWall(player, school.toString()) < 1.0) return;
+        Attribute attribute = ForgeRegistries.ATTRIBUTES.getValue(new ResourceLocation(school.getNamespace(), school.getPath() + "_spell_power"));
+        AttributeInstance instance = attribute == null ? null : player.getAttribute(attribute);
+        if (instance == null) return;
+        for (AttributeModifier m : java.util.List.copyOf(instance.getModifiers())) {
+            if (m.getName().startsWith(StatEngine.MODIFIER_PREFIX + "school_wall")) {
+                instance.removeModifier(m.getId());
+                LIFTED.put(player.getUUID(), new Object[] {attribute, m});
+                ACTIVE.add(player.getUUID());
+                DebugLog.event(player, "conjuro", "{} se lanza sin el muro de su escuela ({})", spellId, school);
+                return;
+            }
+        }
+    }
+
     /** Fin del lanzamiento: el muro vuelve a aplicarse. */
     public static void end() {
         if (ACTIVE.isEmpty()) return;
+        restoreSchoolWalls();
         net.minecraft.server.MinecraftServer server = net.minecraftforge.server.ServerLifecycleHooks.getCurrentServer();
         for (UUID id : ACTIVE) {
             ServerPlayer player = server == null ? null : server.getPlayerList().getPlayer(id);
@@ -64,5 +96,18 @@ public final class SpellExemptions {
             if (instance != null) instance.removeModifier(MODIFIER_ID);
         }
         ACTIVE.clear();
+    }
+
+    private static void restoreSchoolWalls() {
+        if (LIFTED.isEmpty()) return;
+        net.minecraft.server.MinecraftServer server = net.minecraftforge.server.ServerLifecycleHooks.getCurrentServer();
+        for (java.util.Map.Entry<UUID, Object[]> e : LIFTED.entrySet()) {
+            ServerPlayer player = server == null ? null : server.getPlayerList().getPlayer(e.getKey());
+            if (player == null) continue;
+            AttributeInstance instance = player.getAttribute((Attribute) e.getValue()[0]);
+            AttributeModifier m = (AttributeModifier) e.getValue()[1];
+            if (instance != null && instance.getModifier(m.getId()) == null) instance.addTransientModifier(m);
+        }
+        LIFTED.clear();
     }
 }

@@ -56,23 +56,28 @@ public final class SpinAbilities {
         }
         long now = p.level().getGameTime();
         Bandolier.clearStale(band, SpinThrow::alive, now);
-        if (Bandolier.firstReady(band, m, now) == null) {
-            p.displayClientMessage(Component.translatable("message.rites_and_paths.spin.no_ready",
-                    m.name()).withStyle(ChatFormatting.GRAY), true);
-            return false;
-        }
-        int max = SpinThrow.maxSpheres(p);
-        if (SpinThrow.spheresOf(p).size() >= max) {
-            p.displayClientMessage(Component.translatable("message.rites_and_paths.spin.limit", max).withStyle(ChatFormatting.GRAY), true);
-            return false;
-        }
         List<Object> route = trickRoute(p, params);
         if (route == null) {
             p.displayClientMessage(Component.translatable("message.rites_and_paths.spin.no_targets").withStyle(ChatFormatting.GRAY), true);
             return false;
         }
-        SphereEntity e = SpinThrow.launchTrick(p, band, m, route, params);
-        if (e == null) return false;
+        int max = SpinThrow.maxSpheres(p);
+        boolean canLaunch = Bandolier.firstReady(band, m, now) != null && SpinThrow.spheresOf(p).size() < max;
+        SphereEntity e = canLaunch ? SpinThrow.launchTrick(p, band, m, route, params) : null;
+        if (e == null) {
+            // Sin bola lista o con todas fuera: la que está en vuelo o volviendo vuelve al instante y sale por la ruta
+            // (antes la habilidad no hacía nada si la bola estaba fuera, que es casi siempre en combate).
+            e = takeOver(p, route, params);
+        }
+        if (e == null) {
+            if (SpinThrow.spheresOf(p).size() >= max) {
+                p.displayClientMessage(Component.translatable("message.rites_and_paths.spin.limit", max).withStyle(ChatFormatting.GRAY), true);
+            } else {
+                p.displayClientMessage(Component.translatable("message.rites_and_paths.spin.no_ready",
+                        m.name()).withStyle(ChatFormatting.GRAY), true);
+            }
+            return false;
+        }
         SpinState.of(p).lastThrow = now;
         // La ruta se ve un momento (la ven todos): una línea dorada de punto en punto.
         ServerLevel level = p.serverLevel();
@@ -93,6 +98,46 @@ public final class SpinAbilities {
         return true;
     }
 
+    /** La bola propia en vuelo o volviendo más cercana al jugador, metida en la ruta. Null si no hay ninguna utilizable. */
+    private static SphereEntity takeOver(ServerPlayer p, List<Object> route, JsonObject params) {
+        List<SphereEntity> own = new ArrayList<>(SpinThrow.spheresOf(p));
+        own.sort(Comparator.comparingDouble(x -> x.distanceToSqr(p)));
+        for (SphereEntity e : own) {
+            if (e.takeOverForTrick(p, route, AbilityService.number(params, "route_speed", 2.6),
+                    AbilityService.number(params, "hit_factor", 0.6), AbilityService.number(params, "per_hit_bonus", 0.15))) {
+                p.level().playSound(null, p.getX(), p.getY(), p.getZ(), SoundEvents.TRIDENT_THROW, SoundSource.PLAYERS, 0.7f, 1.7f);
+                return e;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Enemigo justo bajo la mira (sin pared delante), aunque no sea hostil: si el jugador apunta a algo a propósito, la
+     * ruta empieza en él. Los saltos siguientes solo eligen objetivos automáticos (hostiles o que van a por ti).
+     */
+    private static LivingEntity crosshairEnemy(ServerPlayer p, double range) {
+        Vec3 eye = p.getEyePosition();
+        Vec3 far = eye.add(p.getLookAngle().scale(range));
+        BlockHitResult wall = p.level().clip(new ClipContext(eye, far, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, p));
+        Vec3 end = wall.getType() == HitResult.Type.MISS ? far : wall.getLocation();
+        LivingEntity best = null;
+        double bestD = Double.MAX_VALUE;
+        for (Entity x : p.level().getEntities(p, new net.minecraft.world.phys.AABB(eye, end).inflate(1.0),
+                y -> y instanceof LivingEntity le && le.isAlive() && !(y instanceof net.minecraft.world.entity.decoration.ArmorStand))) {
+            LivingEntity le = (LivingEntity) x;
+            if (!io.github.rpgclasses.server.Allies.isEnemy(p, le)) continue;
+            java.util.Optional<Vec3> c = le.getBoundingBox().inflate(0.3).clip(eye, end);
+            if (c.isEmpty()) continue;
+            double d = eye.distanceToSqr(c.get());
+            if (d < bestD) {
+                bestD = d;
+                best = le;
+            }
+        }
+        return best;
+    }
+
     /**
      * La ruta: hasta {@code route_hits} golpes. El primero, el enemigo más cerca de la mira (en un cono) o, si no hay, el más
      * cercano a la vista; luego el enemigo más cercano a la vista desde el anterior que aún no ha recibido golpe (si no
@@ -110,10 +155,12 @@ public final class SpinAbilities {
         for (LivingEntity e : SphereHits.enemiesAround(p, eye, range, null)) {
             if (SphereHits.visible(p.level(), eye, e.getBoundingBox().getCenter(), p)) cands.add(e);
         }
+        LivingEntity aimed = crosshairEnemy(p, range);
+        if (aimed != null && !cands.contains(aimed)) cands.add(aimed);
         if (cands.isEmpty()) return null;
-        LivingEntity first = null;
+        LivingEntity first = aimed;
         double best = Double.MAX_VALUE;
-        for (LivingEntity e : cands) {
+        for (LivingEntity e : first != null ? List.<LivingEntity>of() : cands) {
             Vec3 to = e.getBoundingBox().getCenter().subtract(eye);
             double ang = Math.acos(Mth.clamp(look.dot(to.normalize()), -1, 1));
             if (ang <= cone && ang < best) {
@@ -236,6 +283,12 @@ public final class SpinAbilities {
     static boolean spinStep(ServerPlayer p, JsonObject params) {
         if (GoldenRectangle.active(p)) return false;
         if (p.isPassenger() || p.getAbilities().flying || p.isFallFlying()) return false;
+        SpinState.State st = SpinState.of(p);
+        long now = p.level().getGameTime();
+        // Seguro contra el vuelo: entre dashes hay un bloqueo mínimo (aunque se lleve el Amuleto del Creativo o la tecla se
+        // repita al mantenerla) y en el aire solo se puede hacer un dash hasta volver a tocar el suelo.
+        boolean grounded = p.onGround() || p.isInWater() || p.onClimbable();
+        if (now < st.dashLock || (!grounded && st.dashedSinceGround)) return false;
         Vec3 dir = SpinState.moveDir(p);
         if (dir.lengthSqr() < 1.0E-4) {
             Vec3 look = p.getLookAngle();
@@ -245,11 +298,14 @@ public final class SpinAbilities {
         dir = dir.normalize();
         double speed = AbilityService.number(params, "dash_speed", 1.1);
         double lift = AbilityService.number(params, "dash_lift", 0.25);
-        p.setDeltaMovement(dir.scale(speed).add(0, lift, 0));
+        // En el aire no gana altura: el impulso es horizontal y solo frena la caída.
+        double vy = grounded ? lift : Math.max(p.getDeltaMovement().y, 0.0);
+        p.setDeltaMovement(dir.scale(speed).add(0, vy, 0));
         p.hurtMarked = true;
         p.resetFallDistance();
-        SpinState.State st = SpinState.of(p);
-        st.stepUntil = p.level().getGameTime() + Math.round(AbilityService.number(params, "step_window_seconds", 1.5) * 20);
+        st.dashLock = now + Math.round(AbilityService.number(params, "dash_lock_seconds", 0.5) * 20);
+        st.dashedSinceGround = true;
+        st.stepUntil = now + Math.round(AbilityService.number(params, "step_window_seconds", 1.5) * 20);
         st.stepBonus = AbilityService.number(params, "step_spin", 0.06);
         ServerLevel level = p.serverLevel();
         Vec3 side = dir.cross(new Vec3(0, 1, 0)).normalize();

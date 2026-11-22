@@ -147,7 +147,8 @@ ABILITIES = {
                          per_hit_bonus=.15, route_speed=2.6, cooldown_seconds=10),
     # Nivel Total 15 (dos habilidades en el mismo hito).
     "reverse_spin": dict(pull_blocks=4, stuck_window_seconds=1.5, cooldown_seconds=14),
-    "spin_step": dict(dash_speed=1.1, dash_lift=.25, step_spin=.06, step_window_seconds=1.5, cooldown_seconds=12),
+    "spin_step": dict(dash_speed=1.1, dash_lift=.25, step_spin=.06, step_window_seconds=1.5, dash_lock_seconds=.5,
+                      cooldown_seconds=12),
     # Nivel Total 30 (ulti): secuencia automática de ~5,7 s. Daño (de la espada de hierro, con los bonus de daño de
     # Rotación): 14 pulsos del 40 % y golpe final crítico del 300 % al objetivo (~8,6 espadas); la rotación se propaga
     # al 150 % a hasta 6 enemigos a 12 bloques.

@@ -4,5 +4,6 @@
   "dash_lift": 0.25,
   "step_spin": 0.06,
   "step_window_seconds": 1.5,
+  "dash_lock_seconds": 0.5,
   "cooldown_seconds": 12
 }

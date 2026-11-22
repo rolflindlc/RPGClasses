@@ -1,5 +1,7 @@
 package io.github.rpgclasses.spin;
 
+import io.github.rpgclasses.compat.improvedarmor.ImprovedArmorCompat;
+import io.github.rpgclasses.core.ArmorSolve;
 import io.github.rpgclasses.config.ServerConfig;
 import io.github.rpgclasses.content.CombatAbilities;
 import io.github.rpgclasses.content.MonkCharges;
@@ -28,7 +30,6 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
-import net.minecraft.world.damagesource.CombatRules;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -525,19 +526,12 @@ public final class SphereHits {
         ignored = Mth.clamp(ignored, 0, 0.9);
         int pulses = s.state() == SphereEntity.SPINNING ? Math.max(1, s.pulseHits) : 1;
         if (ignored <= 0 && pulses <= 1) return 1;
-        float armor = target.getArmorValue();
-        if (armor <= 0) return 1;
-        float toughness = (float) target.getAttributeValue(Attributes.ARMOR_TOUGHNESS);
-        float eff = (float) (armor * (1 - ignored));
+        if (target.getArmorValue() <= 0) return 1;
         // Lo que debe quedar tras la armadura: la parte de este pulso del impacto entero contra la armadura efectiva.
-        double wanted = CombatRules.getDamageAfterAbsorb((float) (damage * pulses), eff, toughness) / pulses;
-        // Daño antes de la armadura que deja exactamente eso (la reducción vanilla no es lineal: búsqueda binaria).
-        double lo = 0, hi = damage * pulses * 2 + 1;
-        for (int i = 0; i < 30; i++) {
-            double mid = (lo + hi) / 2;
-            if (CombatRules.getDamageAfterAbsorb((float) mid, armor, toughness) < wanted) lo = mid;
-            else hi = mid;
-        }
+        double wanted = ImprovedArmorCompat.damageAfterArmor(target, source, damage * pulses, 1 - ignored) / pulses;
+        // Daño antes de la armadura que deja exactamente eso (la reducción no es lineal: búsqueda binaria).
+        double hi = ArmorSolve.damageBeforeArmor(d -> ImprovedArmorCompat.damageAfterArmor(target, source, d, 1), wanted,
+                damage * pulses * 2 + 1);
         return Math.max(1, hi / damage);
     }
 

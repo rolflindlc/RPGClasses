@@ -1,5 +1,15 @@
 # Changelog
 
+## Unreleased
+
+### Added
+- **Improved Armor compatibility** (optional, no hard dependency): when the mod `improvedarmor` is loaded, the
+  effects that ignore part of the target's armor (Rogue's Lunge, Monk's Fiery Strike, Spin Master's diamond and
+  critical-pierce spheres) evaluate its flat armor curve instead of vanilla's, so they still remove the intended
+  share of the armor. Class gear and class defenses are balanced in armor points (a class set plus the class's own
+  defense equals the normal set of its tier), so they work unchanged under either curve. `/clases debug volcar` shows
+  the effective armor when Improved Armor is active.
+
 ## 1.0.0-beta
 
 First public beta of Rolflin's Rites & Paths (Minecraft Forge 1.20.1).

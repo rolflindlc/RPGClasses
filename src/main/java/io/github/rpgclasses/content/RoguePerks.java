@@ -1,5 +1,7 @@
 package io.github.rpgclasses.content;
 
+import io.github.rpgclasses.compat.improvedarmor.ImprovedArmorCompat;
+import io.github.rpgclasses.core.ArmorSolve;
 import io.github.rpgclasses.core.stat.StatCalculator.ActiveMechanic;
 import io.github.rpgclasses.server.AbilityService;
 import io.github.rpgclasses.server.MechanicService;
@@ -9,11 +11,9 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.tags.FluidTags;
-import net.minecraft.world.damagesource.CombatRules;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
@@ -96,13 +96,11 @@ public final class RoguePerks {
     public static double armorPierceFactor(ServerPlayer attacker, LivingEntity target, DamageSource source, double damage) {
         ActiveMechanic m = MechanicService.find(attacker, ARMOR_PIERCE);
         if (m == null || damage <= 0 || source.is(DamageTypeTags.BYPASSES_ARMOR)) return 1;
-        float armor = target.getArmorValue();
-        if (armor <= 0) return 1;
-        float toughness = (float) target.getAttributeValue(Attributes.ARMOR_TOUGHNESS);
+        if (target.getArmorValue() <= 0) return 1;
         double ignored = Math.max(0, Math.min(1, m.number("armor_ignored", 0.3)));
-        float actual = CombatRules.getDamageAfterAbsorb((float) damage, armor, toughness);
-        float wanted = CombatRules.getDamageAfterAbsorb((float) damage, (float) (armor * (1 - ignored)), toughness);
-        return actual <= 0 ? 1 : wanted / actual;
+        double actual = ImprovedArmorCompat.damageAfterArmor(target, source, damage, 1);
+        double wanted = ImprovedArmorCompat.damageAfterArmor(target, source, damage, 1 - ignored);
+        return ArmorSolve.ratio(wanted, actual);
     }
 
     /** Esquiva: probabilidad de evitar un golpe cuerpo a cuerpo o un proyectil, saltando hacia atrás. */

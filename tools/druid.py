@@ -172,8 +172,10 @@ BEAST_ABILITIES = {
 
 # Bestias de otros grupos que valen (las automáticas son las de categoría de animal: CREATURE, AMBIENT, WATER_*,
 # AXOLOTLS) y las que nunca valen (además de los jefes y los mobs de más vida que el máximo de beast_lore).
-ALLOWED = ["minecraft:spider", "minecraft:cave_spider", "minecraft:ravager"]
-FORBIDDEN = ["minecraft:allay", "#forge:bosses", "iceandfire:fire_dragon", "iceandfire:ice_dragon",
+# Bestias de categoría "monstruo" que sí valen (el resto de monstruos no).
+ALLOWED = ["minecraft:spider", "minecraft:cave_spider", "minecraft:ravager", "minecraft:hoglin"]
+# Criaturas pasivas que no son animales ni bestias, jefes y bestias de mods demasiado grandes.
+FORBIDDEN = ["minecraft:allay", "minecraft:wandering_trader", "#forge:bosses", "iceandfire:fire_dragon", "iceandfire:ice_dragon",
              "iceandfire:lightning_dragon", "iceandfire:sea_serpent", "iceandfire:hydra"]
 
 # ------------------------------------------------------------------ textos (castellano, texto fuente)

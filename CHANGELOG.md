@@ -3,6 +3,16 @@
 ## Unreleased
 
 ### Added
+- **Druid, Wild Shape:** your inventory (including armor and off-hand) is stored away while you are transformed and
+  given back exactly as it was when you return (also after a crash or on death, before loot drops). In beast form you
+  cannot pick up items or open containers, and anything that enters the beast's inventory (`/give`, other mods) goes
+  straight to the stored inventory. Right-click now triggers the beast's special ability (the ability key still works).
+- **Druid, Wild Shape:** first-person hands and items are hidden in beast form (also Epic Fight's arms); the beast's
+  attack plays its own animation (iron golem, ravager, hoglin, zoglin, warden), swings its arm if its model has arms,
+  or head-butts otherwise; attack reach scales with the creature's size (wolf 3 blocks, chicken ~2.4, spider ~4.6,
+  1.5-6). Both can be overridden per species in `druid_beasts.json` (`"reach"`, `"attack_anim"`).
+- **`/clases bestiario <player> ver | dar <species> [points] | quitar <species>`** (permission 2): view, grant or
+  remove a Druid's known species.
 - **Improved Armor compatibility** (optional, no hard dependency): when the mod `improvedarmor` is loaded, the
   effects that ignore part of the target's armor (Rogue's Lunge, Monk's Fiery Strike, Spin Master's diamond and
   critical-pierce spheres) evaluate its flat armor curve instead of vanilla's, so they still remove the intended

@@ -88,6 +88,7 @@ public final class DruidClient {
         MinecraftForge.EVENT_BUS.addListener(EventPriority.HIGH, DruidClient::onRenderPlayer);
         MinecraftForge.EVENT_BUS.addListener(EventPriority.HIGHEST, DruidClient::onRenderHand);
         MinecraftForge.EVENT_BUS.addListener(DruidClient::onClientTick);
+        MinecraftForge.EVENT_BUS.addListener(EventPriority.HIGH, DruidClient::onInteractionKey);
         MinecraftForge.EVENT_BUS.addListener(DruidClient::onRenderLevel);
         MinecraftForge.EVENT_BUS.addListener((ClientPlayerNetworkEvent.LoggingOut e) -> reset());
     }
@@ -99,6 +100,7 @@ public final class DruidClient {
         LAST_ATTACK.clear();
         GLOW.clear();
         FORMATIONS.clear();
+        ATTACK_ANIM.clear();
         state = null;
     }
 
@@ -151,6 +153,25 @@ public final class DruidClient {
         return until != null && until > clientTicks;
     }
 
+    // ------------------------------------------------------------------ clic derecho = habilidad de la bestia
+
+    /** El clic derecho sigue pulsado desde la última vez que lanzó la habilidad (no se repite al mantenerlo). */
+    private static boolean useHeld;
+
+    /**
+     * Transformado no hay objetos que usar: el clic derecho lanza la habilidad especial de la bestia (igual que su
+     * tecla). Una vez por pulsación: mantenerlo no la repite.
+     */
+    private static void onInteractionKey(net.minecraftforge.client.event.InputEvent.InteractionKeyMappingTriggered event) {
+        Minecraft mc = Minecraft.getInstance();
+        if (!event.isUseItem() || mc.player == null || !WildShape.inForm(mc.player)) return;
+        event.setCanceled(true);
+        event.setSwingHand(false);
+        if (useHeld || mc.screen != null) return;
+        useHeld = true;
+        send(DruidPackets.Action.BEAST_ABILITY, new CompoundTag(), 0);
+    }
+
     // ------------------------------------------------------------------ cada tic
 
     private static void onClientTick(TickEvent.ClientTickEvent event) {
@@ -159,6 +180,7 @@ public final class DruidClient {
         Minecraft mc = Minecraft.getInstance();
         if (mc.level == null || mc.player == null) return;
         LocalPlayer me = mc.player;
+        if (!mc.options.keyUse.isDown()) useHeld = false;
         while (BEAST_ABILITY.consumeClick()) {
             if (mc.screen == null && WildShape.inForm(me)) send(DruidPackets.Action.BEAST_ABILITY, new CompoundTag(), 0);
         }
@@ -234,14 +256,73 @@ public final class DruidClient {
         d.setInvisible(p.isInvisible());
         d.setSprinting(p.isSprinting());
         if (d instanceof TamableAnimal t) t.setInSittingPose(p.isCrouching() && move < .05f);
-        // Ataque: el balanceo del jugador mueve el del cuerpo y dispara la animación de ataque del mob (evento 4).
+        // Ataque: según la especie, su animación propia (evento 4), el brazo (modelos con brazos) o un cabezazo que se
+        // dibuja en onRenderPlayer.
+        AttackAnim mode = attackAnim(d);
+        if (d instanceof BeastAttackTicker ticker) ticker.rites_and_paths$tickAttackAnim();
         Float last = LAST_ATTACK.get(p.getUUID());
-        if (p.swinging && p.swingTime == 0 && (last == null || last == 0f)) d.handleEntityEvent((byte) 4);
+        if (mode == AttackAnim.NATIVE && p.swinging && p.swingTime == 0 && (last == null || last == 0f)) d.handleEntityEvent((byte) 4);
         LAST_ATTACK.put(p.getUUID(), p.swinging ? 1f : 0f);
         d.swinging = p.swinging;
         d.swingTime = p.swingTime;
         d.oAttackAnim = p.oAttackAnim;
         d.attackAnim = p.attackAnim;
+    }
+
+    // ------------------------------------------------------------------ animación de ataque
+
+    /** Cómo enseña la bestia su golpe. */
+    enum AttackAnim { NATIVE, ARMS, HEAD, NONE }
+
+    private static final Map<String, AttackAnim> ATTACK_ANIM = new HashMap<>();
+
+    /**
+     * Animación de ataque de la especie: la de la tabla ({@code "attack_anim"}) si la fija; si no, la suya propia para
+     * los mobs que la arrancan con el evento 4 (golem de hierro, devastador, hoglin, zoglin, warden), el brazo si su
+     * modelo tiene brazos, y si no un cabezazo.
+     */
+    static AttackAnim attackAnim(LivingEntity d) {
+        String id = Beasts.id(d.getType());
+        AttackAnim cached = ATTACK_ANIM.get(id);
+        if (cached != null) return cached;
+        AttackAnim mode = switch (Beasts.attackAnim(id, true).toLowerCase(java.util.Locale.ROOT)) {
+            case "native" -> AttackAnim.NATIVE;
+            case "arms" -> AttackAnim.ARMS;
+            case "head" -> AttackAnim.HEAD;
+            case "none" -> AttackAnim.NONE;
+            default -> null;
+        };
+        if (mode == null) {
+            if (d instanceof BeastAttackTicker || d instanceof net.minecraft.world.entity.monster.warden.Warden) {
+                mode = AttackAnim.NATIVE;
+            } else {
+                mode = AttackAnim.HEAD;
+                try {
+                    if (Minecraft.getInstance().getEntityRenderDispatcher().getRenderer(d) instanceof net.minecraft.client.renderer.entity.LivingEntityRenderer<?, ?> lr
+                            && lr.getModel() instanceof net.minecraft.client.model.ArmedModel) {
+                        mode = AttackAnim.ARMS;
+                    }
+                } catch (RuntimeException ignored) {
+                    // Sin renderer conocido: cabezazo.
+                }
+            }
+        }
+        ATTACK_ANIM.put(id, mode);
+        return mode;
+    }
+
+    /** Fuerza del cabezazo (0-1) en este fotograma: sube y baja con el balanceo del golpe del jugador. */
+    private static float headButt(Player p, float partial) {
+        float t = p.getAttackAnim(partial);
+        return t <= 0 ? 0 : Mth.sin(t * Mth.PI);
+    }
+
+    /** Cabeza hacia abajo durante el cabezazo (el modelo toma la inclinación de la cabeza de xRot). */
+    private static void pitchHead(LivingEntity d, Player p, float butt) {
+        if (butt <= 0) return;
+        float pitch = Mth.clamp(p.getXRot() + butt * 40f, -90f, 90f);
+        d.setXRot(pitch);
+        d.xRotO = pitch;
     }
 
     // ------------------------------------------------------------------ dibujo
@@ -261,11 +342,22 @@ public final class DruidClient {
         float yaw = Mth.rotLerp(partial, p.yBodyRotO, p.yBodyRot);
         MultiBufferSource buffers = event.getMultiBufferSource();
         if (spec.isChimera()) buffers = new TintedBufferSource(buffers, tint(spec.chimera.legs()));
-        renderEntity(mc, d, yaw, partial, event.getPoseStack(), buffers, event.getPackedLight());
+        // Sin animación propia: cabezazo (cabeza abajo y una pequeña embestida hacia delante).
+        float butt = attackAnim(d) == AttackAnim.HEAD ? headButt(p, partial) : 0;
+        pitchHead(d, p, butt);
+        PoseStack lunge = event.getPoseStack();
+        lunge.pushPose();
+        if (butt > 0) {
+            double r = Math.toRadians(yaw), dist = butt * Math.max(.12, d.getBbWidth() * .25);
+            lunge.translate(-Math.sin(r) * dist, 0, Math.cos(r) * dist);
+        }
+        renderEntity(mc, d, yaw, partial, lunge, buffers, event.getPackedLight());
+        lunge.popPose();
         if (spec.isChimera() && body[1] != null) {
             // Cabeza injertada: la especie de la cabeza, pequeña, delante y arriba del torso.
             LivingEntity head = body[1];
             sync(head, p);
+            pitchHead(head, p, attackAnim(head) == AttackAnim.HEAD ? headButt(p, partial) : 0);
             PoseStack pose = event.getPoseStack();
             pose.pushPose();
             double r = Math.toRadians(yaw);
@@ -312,7 +404,8 @@ public final class DruidClient {
 
     private static void onRenderHand(RenderHandEvent event) {
         Minecraft mc = Minecraft.getInstance();
-        if (mc.player != null && WildShape.inForm(mc.player) && DUMMIES.containsKey(mc.player.getUUID())) event.setCanceled(true);
+        // Respaldo de BeastHandsMixin: transformado nunca se ven las manos (aunque la especie no se pueda dibujar).
+        if (mc.player != null && WildShape.inForm(mc.player)) event.setCanceled(true);
     }
 
     /** Quimeras que se forman sobre un altar: crecen girando, oscuras al principio. */
@@ -374,7 +467,8 @@ public final class DruidClient {
         g.drawString(font, line, x, y, 0xFF9FE07A);
         if (info != null && info.ability() != null) {
             Component ability = Component.translatable("druid.rites_and_paths.ability." + info.ability());
-            Component key = BEAST_ABILITY.getTranslatedKeyMessage();
+            Component key = Component.empty().append(mc.options.keyUse.getTranslatedKeyMessage()).append(" / ")
+                    .append(BEAST_ABILITY.getTranslatedKeyMessage());
             Component text = st != null && st.abilityCooldown() > 0
                     ? Component.translatable("hud.rites_and_paths.druid.ability_cooldown", key, ability,
                     String.format(java.util.Locale.ROOT, "%.1f", st.abilityCooldown() / 20.0))

@@ -221,6 +221,36 @@ public final class Beasts {
         return out;
     }
 
+    /** Fila de la especie en la tabla de bestias (vacía si no tiene). */
+    private static JsonObject row(String id, boolean client) {
+        JsonObject table = table(client);
+        JsonObject beasts = table.has("beasts") && table.get("beasts").isJsonObject() ? table.getAsJsonObject("beasts") : new JsonObject();
+        return id != null && beasts.has(id) && beasts.get(id).isJsonObject() ? beasts.getAsJsonObject(id) : new JsonObject();
+    }
+
+    /**
+     * Alcance del golpe de la forma, según el tamaño de la especie: el del jugador ({@code reach_base}, 3 bloques) para
+     * un cuerpo como el suyo (0,6 de ancho) y crece o baja con la raíz del tamaño (ancho, o media altura si es más),
+     * entre {@code reach_min} y {@code reach_max}. Gallina ≈ 2,4; lobo 3; vaca ≈ 3,7; araña o golem ≈ 4,6. La fila de
+     * la especie puede fijarlo con {@code "reach"}.
+     */
+    public static double reach(EntityType<?> type, boolean client) {
+        if (type == null) return Druid.number(Druid.WILD_SHAPE, "reach_base", 3, client);
+        JsonObject r = row(id(type), client);
+        if (r.has("reach") && r.get("reach").isJsonPrimitive()) return r.get("reach").getAsDouble();
+        net.minecraft.world.entity.EntityDimensions dims = type.getDimensions();
+        double size = Math.max(.1, Math.max(dims.width, dims.height * .5));
+        double base = Druid.number(Druid.WILD_SHAPE, "reach_base", 3, client);
+        double reach = base * Math.sqrt(size / .6);
+        return Math.max(Druid.number(Druid.WILD_SHAPE, "reach_min", 1.5, client), Math.min(Druid.number(Druid.WILD_SHAPE, "reach_max", 6, client), reach));
+    }
+
+    /** Animación de ataque fijada en la fila de la especie ({@code "attack_anim"}: native, arms, head, none), o "". */
+    public static String attackAnim(String id, boolean client) {
+        JsonObject r = row(id, client);
+        return r.has("attack_anim") && r.get("attack_anim").isJsonPrimitive() ? r.get("attack_anim").getAsString() : "";
+    }
+
     // ------------------------------------------------------------------ cuerpo
 
     /**

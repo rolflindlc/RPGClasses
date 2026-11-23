@@ -29,6 +29,11 @@
     "irons.SpellSelectionMixin"
   ],
   "client": [
+    "client.BeastHandsMixin",
+    "client.beast.HoglinAttackAnimMixin",
+    "client.beast.IronGolemAttackAnimMixin",
+    "client.beast.RavagerAttackAnimMixin",
+    "client.beast.ZoglinAttackAnimMixin",
     "client.CameraZoomMixin",
     "client.ArmorLegsMixin",
     "client.LocalPlayerPushMixin",

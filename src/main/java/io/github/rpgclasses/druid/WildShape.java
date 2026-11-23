@@ -69,7 +69,8 @@ import java.util.concurrent.ConcurrentHashMap;
  *   <li><b>Coste:</b> se paga el maná al terminar y, mientras dura la forma, el maná máximo baja en ese coste (salvo
  *       en el Círculo de la Luna). Al salir se libera.</li>
  *   <li><b>Cuerpo:</b> la vida, la armadura, la velocidad, el salto y el ritmo de golpes de la bestia (la vida y el daño
- *       suben con el nivel y las ramas), su tamaño y su modelo. El equipo no cuenta, no se pueden usar objetos ni
+ *       suben con el nivel y las ramas), su tamaño, su modelo y su alcance. El inventario se guarda aparte
+ *       ({@link BeastInventory}), no se pueden usar objetos ni
  *       lanzar conjuros (salvo los de naturaleza con Forma Sobrenatural) y los rasgos de raza se suspenden.</li>
  *   <li><b>Vida propia:</b> se entra con la vida de la bestia llena; si llega a 0, se vuelve a la forma propia con la
  *       vida que se tenía antes (el golpe sobrante no pasa).</li>
@@ -349,6 +350,7 @@ public final class WildShape {
         Form form = new Form(c.spec, c.info, preHealth, reserved, p.level().getGameTime(), maxTicks, flight);
         form.wasInWater = p.isInWater();
         if (previous != null) clearPassives(p);
+        else BeastInventory.stash(p);
         FORMS.put(p.getUUID(), form);
         PlayerClassData data = Druid.data(p);
         if (data != null) Bestiary.saveForm(data, c.spec, preHealth);
@@ -373,6 +375,7 @@ public final class WildShape {
         if (form == null) return;
         PlayerClassData data = Druid.data(p);
         if (data != null) Bestiary.clearForm(data);
+        BeastInventory.restore(p);
         clearPassives(p);
         restoreFlight(p);
         StatEngine.recompute(p);
@@ -425,6 +428,8 @@ public final class WildShape {
         setTo(p, Attributes.ARMOR_TOUGHNESS, "toughness", 0);
         setTo(p, Attributes.KNOCKBACK_RESISTANCE, "knockback", info.knockbackResistance());
         setTo(p, Attributes.ATTACK_SPEED, "attack_speed", info.attackSpeed());
+        // Alcance del golpe según el tamaño de la bestia (el de la quimera, el de su torso).
+        setTo(p, ForgeMod.ENTITY_REACH.get(), "reach", Beasts.reach(f.spec.entityType(), false));
         double speed = info.speed();
         if (info.aquatic() && !info.amphibious() && !p.isInWater()) speed *= Druid.number(Druid.WILD_SHAPE, "aquatic_land_speed", .35);
         set(p, Attributes.MOVEMENT_SPEED, "speed", AttributeModifier.Operation.MULTIPLY_TOTAL, speed - 1);

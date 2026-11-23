@@ -118,6 +118,7 @@ public final class ClassCommands {
                         })))
                 .then(Commands.literal("validar").executes(c -> validate(c.getSource())))
                 .then(io.github.rpgclasses.difficulty.DifficultyMenu.command())
+                .then(io.github.rpgclasses.druid.BestiaryCommand.command())
                 .then(Commands.literal("debug")
                         .then(Commands.literal("item").executes(c -> debugItem(c.getSource())))
                         .then(Commands.literal("stats").executes(c -> debugStats(c.getSource())))

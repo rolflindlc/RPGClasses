@@ -52,6 +52,13 @@ public final class Bestiary {
         return total;
     }
 
+    /** Olvida por completo una especie (comando de administración). */
+    public static void removeSpecies(PlayerClassData data, String species) {
+        CompoundTag know = root(data).getCompound("know");
+        know.remove(species);
+        root(data).put("know", know);
+    }
+
     /** Especies con algún punto, en el orden en que se aprendieron. */
     public static List<String> species(PlayerClassData data) {
         if (data == null) return List.of();

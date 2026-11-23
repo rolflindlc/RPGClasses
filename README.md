@@ -1,124 +1,124 @@
 # Rolflin's Rites & Paths (Forge 1.20.1) — modId `rites_and_paths`
 
-Mod de clases, ramas, subclases y razas definido por datapack. Diseño funcional en
-`documento_de_diseno_de_clases_v2.md`, razas y su estado en
-`documento_de_razas_implementacion.md`, y arquitectura en el documento
-"Arquitectura técnica del mod de clases".
+A datapack-driven mod of classes, branches, subclasses and races. The functional design lives in
+`documento_de_diseno_de_clases_v2.md`, the races and their status in
+`documento_de_razas_implementacion.md`, and the architecture in the document
+"Arquitectura técnica del mod de clases" (all design documents are written in Spanish).
 
-## Estado actual (2026-11-17)
+## Current status (2026-11-17)
 
-Todo lo siguiente está en el código y compila con sus pruebas, pero **no se ha probado en el juego** salvo la fase 1.
+Everything below is in the code and compiles with its tests, but **it has not been tested in game** except phase 1.
 
-- **Clases:** 7 clases con 5 ramas (3 usables) y perks, 21 subclases, habilidades, muros de disciplina, críticos
-  propios y topes (diseño v2, rev. 2.21). Integración con Iron's Spells y Epic Fight (opcionales).
-- **Equipo de Clase (rev. 2.20):** armaduras de Bárbaro y Monje de todos los tiers (hasta dragonsteel de Ice and Fire),
-  armas marciales del Monje, efectos de set y nudilleras en la ranura de manos de Curios (opcional); los 32 curios están **desactivados** en la versión de salida (`Curio.ENABLED` y `CURIOS_ENABLED` en `tools/gear.py`). Texturas provisionales
-  (`python3 -I tools/art/make_gear.py src/main/resources`). Detalle en `documento_equipo_de_clase.md`.
-- **Razas:** 12 razas, **39 subrazas** y 117 ritos, con Altar de Raza y jefes de rito; incluye las 4 razas de la
-  adenda 0.7 (Slime, Coloso, Dracónido y Centauro). Estado y pruebas en `documento_de_razas_implementacion.md`.
-- **Aliados** (tecla J), **Libro de Vínculos** del Maestro de Bestias, retratos e interfaz propia
+- **Classes:** 7 classes with 5 branches (3 usable) and perks, 21 subclasses, abilities, discipline walls, custom
+  criticals and caps (design v2, rev. 2.21). Optional integration with Iron's Spells and Epic Fight.
+- **Class gear (rev. 2.20):** Barbarian and Monk armor of every tier (up to Ice and Fire's dragonsteel),
+  Monk martial weapons, set effects and knuckles in the Curios hands slot (optional); the 32 curios are **disabled** in the release build (`Curio.ENABLED` and `CURIOS_ENABLED` in `tools/gear.py`). Placeholder textures
+  (`python3 -I tools/art/make_gear.py src/main/resources`). Details in `documento_equipo_de_clase.md`.
+- **Races:** 12 races, **39 subraces** and 117 rites, with a Race Altar and rite bosses; includes the 4 races of
+  addendum 0.7 (Slime, Colossus, Dragonborn and Centaur). Status and tests in `documento_de_razas_implementacion.md`.
+- **Allies** (J key), the Beastmaster's **Book of Bonds**, portraits and a custom interface
   (`python3 -I tools/art/make_ui.py src/main/resources`).
-- **HUD:** habilidades de clase y raciales con su tecla y enfriamiento (abajo a la derecha), conjuros gratuitos del
-  Mago, barras de sigilo, salto cargado, adherencia y fusión.
-- **Configuración:** de servidor (`rites_and_paths-server.toml`: coste de XP, respec, aliados, depuración) y de cliente
-  (`rites_and_paths-client.toml`: intensidad del temblor del Titán).
-- **Cronomante** (sustituye al Evocador Caótico): Retroceso Temporal y Parada Temporal (esfera gris translúcida,
-  compatible con shaders). Pruebas en el juego: ver "Probar el Cronomante" más abajo.
-- **Bardo** (adenda del Bardo): minijuego de ritmo con los cuatro carriles (clic izquierdo, clic derecho, Shift y
-  espacio), combo, Armonía, Contrapunto y Crescendo; escuela musical registrada en Iron's (`rites_and_paths:music`) con 12
-  conjuros, 21 instrumentos más la guitarra-hacha, partituras con nivel y atril, 3 subclases. Detalle y diferencias con
-  el diseño en `documento_bardo.md`. Pruebas: ver "Probar el Bardo" más abajo.
-- Red: protocolo **16** (servidor y cliente con el mismo jar). 18 mixins (3 solo de cliente).
-- Depuración: `/clases debug volcar` escribe un informe en `logs/`; `logs/rites_and_paths-debug.log` lleva el registro.
+- **HUD:** class and racial abilities with their key and cooldown (bottom right), the Mage's free spells,
+  stealth bars, charged jump, clinging and fusion.
+- **Configuration:** server (`rites_and_paths-server.toml`: XP cost, respec, allies, debugging) and client
+  (`rites_and_paths-client.toml`: Titan's screen-shake intensity).
+- **Chronomancer** (replaces the Chaotic Evoker): Time Rewind and Time Stop (translucent grey sphere,
+  shader-compatible). In-game tests: see "Testing the Chronomancer" below.
+- **Bard** (Bard addendum): rhythm minigame with four lanes (left click, right click, Shift and
+  Space), combo, Harmony, Counterpoint and Crescendo; a music school registered in Iron's (`rites_and_paths:music`) with 12
+  spells, 21 instruments plus the axe-guitar, leveled sheet music and a lectern, 3 subclasses. Details and differences from
+  the design in `documento_bardo.md`. Tests: see "Testing the Bard" below.
+- Network: protocol **16** (server and client must use the same jar). 18 mixins (3 client-only).
+- Debugging: `/clases debug volcar` writes a report to `logs/`; `logs/rites_and_paths-debug.log` keeps the log.
 
-### Pendiente
+### Pending
 
-- Probar en el juego y calibrar los valores marcados **[MEDIR]** en los documentos de diseño.
-- Ids del pack: todos fijados (Mojado `traveloptics:wet`, conjuros del Moldeador, dragones y criaturas de Ice and Fire).
-- Enfriamiento del escudo por el muro de Escudos (aparcado): hoy solo aumenta el desgaste.
-- Animaciones propias de nunchaku y bo; curios por subclase y por subraza (sin diseñar).
-- Integrar los anexos (razas, adenda 0.7, equipo) en el documento de diseño v2. Publicación en CurseForge.
+- Test in game and calibrate the values marked **[MEDIR]** (to be measured) in the design documents.
+- Pack ids: all fixed (Wet `traveloptics:wet`, the Shaper's spells, Ice and Fire dragons and creatures).
+- Shield cooldown from the Shields wall (parked): for now it only increases wear.
+- Custom nunchaku and bo animations; curios per subclass and per subrace (not designed yet).
+- Merge the annexes (races, addendum 0.7, gear) into design document v2. Release on CurseForge.
 
-Los textos y los JSON se generan con `python3 tools/gen_data.py src/main/resources`
-(números de habilidades y textos en `tools/texts.py`).
+Texts and JSON are generated with `python3 tools/gen_data.py src/main/resources`
+(ability numbers and texts live in `tools/texts.py`).
 
-## Compilar y probar
+## Build and test
 
-Requiere JDK 17 y conexión a internet la primera vez.
+Requires JDK 17 and an internet connection the first time.
 
 ```
-./gradlew test        # pruebas unitarias de la lógica pura
-./gradlew runClient   # cliente de desarrollo
-./gradlew runServer   # servidor dedicado de desarrollo
-./gradlew build       # jar en build/libs/
+./gradlew test        # unit tests for the pure logic
+./gradlew runClient   # development client
+./gradlew runServer   # development dedicated server
+./gradlew build       # jar in build/libs/
 ```
 
-## Probar la fase 1 en el juego
+## Testing phase 1 in game
 
-Al entrar sin clase se abre la pantalla de selección.
+When you join without a class, the selection screen opens.
 
-| Comando | Efecto |
+| Command | Effect |
 | --- | --- |
-| `/clase elegir <id>` | Elige clase, p. ej. `rites_and_paths:barbarian` |
-| `/clase punto <rama>` | Gasta un punto en una rama (cobra XP) |
-| `/clase subclase <id>` | Elige subclase (desde 15 puntos de base) |
-| `/clase subpunto` | Sube un nivel de subclase |
-| `/clase reiniciar clase` / `subclase` | Respec ilimitado; cada uno pierde el 33% de la XP (configurable) |
-| `/clase info` | Estado actual y coste del siguiente nivel |
-| `/clases info <jugador>`, `/clases reset <jugador>`, `/clases validar` | Administración (nivel 2) |
-| `/clases debug item` | Disciplina del objeto en la mano y por qué |
-| `/clases debug stats` | Modificadores activos, muros, crítico y desglose del último golpe |
+| `/clase elegir <id>` | Choose a class, e.g. `rites_and_paths:barbarian` |
+| `/clase punto <branch>` | Spend a point in a branch (costs XP) |
+| `/clase subclase <id>` | Choose a subclass (from 15 base points) |
+| `/clase subpunto` | Raise a subclass level |
+| `/clase reiniciar clase` / `subclase` | Unlimited respec; each one loses 33% of the XP (configurable) |
+| `/clase info` | Current status and cost of the next level |
+| `/clases info <player>`, `/clases reset <player>`, `/clases validar` | Administration (level 2) |
+| `/clases debug item` | Discipline of the held item and why |
+| `/clases debug stats` | Active modifiers, walls, critical and a breakdown of the last hit |
 
-Para tener XP de prueba: `/xp add @s 9000 points`.
+To get test XP: `/xp add @s 9000 points`.
 
-**Amuleto del Creativo** (pestaña Herramientas y utilidades del creativo, o `/give @s rites_and_paths:creative_amulet`):
-mientras esté en cualquier hueco del inventario, todos los enfriamientos de clase y de raza son 0 (habilidades,
-tiempos mínimos entre usos de pasivas y perks, recargas de cargas, Salvaguarda de Bestias y robo del Goblin Ladrón).
-No tiene receta; funciona en cualquier modo de juego para poder probar en supervivencia.
+**Creative Amulet** (Tools & Utilities creative tab, or `/give @s rites_and_paths:creative_amulet`):
+while it is in any inventory slot, every class and race cooldown is 0 (abilities,
+minimum delays between passives and perks, charge recharges, Beast Safeguard and the Thief Goblin's steal).
+It has no recipe; it works in any game mode so you can test in survival.
 
-## Probar el Cronomante
+## Testing the Chronomancer
 
-`/clase elegir rites_and_paths:mage`, sube la base a 15 puntos y `/clase subclase rites_and_paths:chronomancer`; ambas
-habilidades se tienen desde el nivel 1 de subclase (teclas Z y X). Para probar los niveles altos, sube la subclase con
-`/clase subpunto` (cada nivel exige más puntos de base).
+`/clase elegir rites_and_paths:mage`, raise the base to 15 points and `/clase subclase rites_and_paths:chronomancer`; both
+abilities are available from subclass level 1 (Z and X keys). To test the high levels, raise the subclass with
+`/clase subpunto` (each level requires more base points).
 
-1. **Retroceso:** camina unos segundos, recibe daño y gasta maná; al pulsarlo vuelves al sitio de hace 3 s (5 s desde
-   el nivel 4 y 8 s desde el 8) con parte de la vida y el maná. Unas chispas moradas marcan dónde volverías. Probar:
-   caída desde altura (sin daño), efecto de Veneno (se quita desde el nivel 4), recarga de un conjuro (baja a la mitad
-   desde el nivel 8), volver a un sitio que ya tiene un bloque (busca hueco o falla sin gastar recarga) y cambiar de
-   dimensión (borra el historial).
-2. **Parada:** junto a zombis y esqueletos: quedan quietos (también en el aire) y sus flechas se paran en el aire y
-   siguen al terminar. Con otro jugador no aliado: pantalla gris, tercera persona, tictac y sin poder moverse ni atacar;
-   al acabar vuelve su cámara. Un aliado (tecla J) no se para. Un jefe (Mowzie's, Cataclysm) se para la mitad del tiempo.
-3. **Shaders:** con Iris/Oculus y un shaderpack, la esfera debe verse igual (es una cáscara translúcida, sin
-   postprocesado).
-4. **Seguridad:** desconectarse, morir o salir del chunk durante la parada no debe dejar nada congelado.
+1. **Rewind:** walk for a few seconds, take damage and spend mana; when you press it you return to where you were 3 s ago (5 s from
+   level 4 and 8 s from level 8) with part of your health and mana. Purple sparks mark where you would return. Things to test:
+   falling from a height (no damage), the Poison effect (removed from level 4), a spell recharge (halved
+   from level 8), returning to a spot that now has a block (it looks for a gap or fails without spending the cooldown) and changing
+   dimension (clears the history).
+2. **Stop:** next to zombies and skeletons: they stand still (even in the air) and their arrows stop in mid-air and
+   resume when it ends. With another non-allied player: grey screen, third person, ticking and unable to move or attack;
+   when it ends their camera comes back. An ally (J key) is not stopped. A boss (Mowzie's, Cataclysm) is stopped for half the time.
+3. **Shaders:** with Iris/Oculus and a shaderpack, the sphere should look the same (it is a translucent shell, with no
+   post-processing).
+4. **Safety:** disconnecting, dying or leaving the chunk during the stop must not leave anything frozen.
 
-## Probar el Bardo
+## Testing the Bard
 
-`/clase elegir rites_and_paths:bard` (con Iron's Spells instalado). El kit trae un laúd en la mano secundaria. Ritmo llega
-con el primer punto (`/clase punto compas`); Armonía con Nivel Total 5, Contrapunto con 15 y Crescendo (tecla Z) con 30.
-Las partituras de nivel 1 y al máximo están en la pestaña de creativo del mod.
+`/clase elegir rites_and_paths:bard` (with Iron's Spells installed). The kit comes with a lute in the off hand. Rhythm arrives
+with the first point (`/clase punto compas`); Harmony with Total Level 5, Counterpoint with 15 and Crescendo (Z key) with 30.
+The level 1 and max-level sheet music are in the mod's creative tab.
 
-1. **Minijuego:** con un instrumento en la mano aparecen notas que vienen hacia la mira: desde la izquierda, clic
-   izquierdo; desde la derecha, clic derecho; desde arriba, espacio; desde abajo, Shift. Acierta y mira el combo (x12)
-   debajo de la mira. Deja pasar una nota: el combo vuelve a 0. Pulsa otros carriles: el combo no baja.
-2. **Atril:** pasa el instrumento a la mano principal (F) y Mayús + clic derecho fuera de combate. Mete partituras; una de
-   nivel demasiado alto para la rareza no entra. Vuelve a pasarlo a la mano secundaria.
-3. **Conjuros:** elige uno del instrumento en la rueda de Iron's y lánzalo con el clic derecho. Sin el combo mínimo sale
-   un aviso; con la tecla de lanzar de Iron's (V) también (los musicales solo se tocan). Probar Marcha y Himno de Guerra
-   con un aliado (tecla J), el Piano de Cola sobre un zombi (la sombra lo sigue y se para antes de caer) y el Baile
-   Forzado sobre un zombi y sobre otro jugador (no puede moverse ni atacar).
-4. **Armonía:** desde Nivel Total 5, toca una frase entera sin fallos ni pulsaciones de más: suben las etapas (puntos bajo
-   el combo) y el tempo.
-5. **Subir partituras:** partitura + tinta de Iron's en la mesa de trabajo (la rareza de la tinta depende del nivel).
-6. **Otras clases:** un Mago no puede lanzar conjuros musicales ni tocar instrumentos.
+1. **Minigame:** with an instrument in hand, notes come toward the crosshair: from the left,
+   left click; from the right, right click; from above, Space; from below, Shift. Hit them and watch the combo (x12)
+   under the crosshair. Let a note pass: the combo goes back to 0. Press other lanes: the combo does not drop.
+2. **Lectern:** move the instrument to the main hand (F) and Shift + right click out of combat. Insert sheet music; one whose
+   level is too high for the rarity does not fit. Move it back to the off hand.
+3. **Spells:** pick one from the instrument in Iron's wheel and cast it with right click. Without the minimum combo a
+   warning appears; with Iron's cast key (V) too (musical spells are only played). Test March and War Hymn
+   with an ally (J key), the Grand Piano on a zombie (the shadow follows it and stops before it falls) and Forced
+   Dance on a zombie and on another player (they cannot move or attack).
+4. **Harmony:** from Total Level 5, play a whole phrase with no misses or extra presses: the stages (dots under
+   the combo) and the tempo go up.
+5. **Upgrading sheet music:** sheet music + Iron's ink on the crafting table (the ink's rarity depends on the level).
+6. **Other classes:** a Mage cannot cast musical spells or play instruments.
 
-## Añadir una clase
+## Adding a class
 
-1. `data/<namespace>/rites_and_paths/classes/<id>.json` con 3 ramas de 10 puntos y 3 subclases.
-2. Tres archivos en `data/<namespace>/rites_and_paths/subclasses/`.
-3. Nombres en `assets/<namespace>/lang/`.
-4. Código Java solo si necesita una mecánica nueva.
+1. `data/<namespace>/rites_and_paths/classes/<id>.json` with 3 branches of 10 points and 3 subclasses.
+2. Three files in `data/<namespace>/rites_and_paths/subclasses/`.
+3. Names in `assets/<namespace>/lang/`.
+4. Java code only if it needs a new mechanic.
 
-`/clases validar` y la prueba `DefinitionFilesTest` comprueban la estructura.
+`/clases validar` and the `DefinitionFilesTest` test check the structure.

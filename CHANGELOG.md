@@ -11,6 +11,11 @@
   attack plays its own animation (iron golem, ravager, hoglin, zoglin, warden), swings its arm if its model has arms,
   or head-butts otherwise; attack reach scales with the creature's size (wolf 3 blocks, chicken ~2.4, spider ~4.6,
   1.5-6). Both can be overridden per species in `druid_beasts.json` (`"reach"`, `"attack_anim"`).
+- **Druid, Wild Shape:** forms apply the status effects their creature applies, on hit (cave spider and bee poison)
+  or to whoever is near. Vanilla creatures come in `druid_beasts.json` (`"hit_effects"`, `"aura_effects"`); for
+  creatures from other mods the server learns them by watching what those mobs apply (saved in the world; the table
+  always wins). Same effect and level as the mob, duration +2% per Druid level. Chimeras: hit effects from the head,
+  nearby ones from the instinct.
 - **`/clases bestiario <player> ver | dar <species> [points] | quitar <species>`** (permission 2): view, grant or
   remove a Druid's known species.
 - **Improved Armor compatibility** (optional, no hard dependency): when the mod `improvedarmor` is loaded, the

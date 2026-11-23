@@ -79,6 +79,7 @@ public final class Druid {
         MinecraftForge.EVENT_BUS.register(new WildShape());
         MinecraftForge.EVENT_BUS.register(new BeastAbilities());
         MinecraftForge.EVENT_BUS.register(new BeastInventory());
+        MinecraftForge.EVENT_BUS.register(new BeastEffects());
         MinecraftForge.EVENT_BUS.register(new Knowledge());
         MinecraftForge.EVENT_BUS.register(new DruidActives());
         MinecraftForge.EVENT_BUS.register(new Dominate());

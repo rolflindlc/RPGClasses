@@ -536,6 +536,7 @@ public final class WildShape {
             }
         }
         BeastAbilities.tick(p, f);
+        BeastEffects.tickAura(p, f);
     }
 
     // ------------------------------------------------------------------ rasgos de la forma

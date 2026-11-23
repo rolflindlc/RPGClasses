@@ -102,7 +102,7 @@ public final class BeastAbilities {
         p.setLastHurtMob(victim);
         p.causeFoodExhaustion(.1f);
         p.level().playSound(null, p.getX(), p.getY(), p.getZ(), SoundEvents.PLAYER_ATTACK_STRONG, SoundSource.PLAYERS, .7f, .8f);
-        if (info.hasPassive("poison_bite")) victim.addEffect(new MobEffectInstance(MobEffects.POISON, 140, 0), p);
+        BeastEffects.onBeastHit(p, victim);
         DebugLog.event(p, "Druida", "golpe de bestia a {}: {} (carga {})", DebugLog.describe(victim), DebugLog.num(damage), DebugLog.num(strength));
     }
 

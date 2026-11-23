@@ -222,7 +222,7 @@ public final class Beasts {
     }
 
     /** Fila de la especie en la tabla de bestias (vacía si no tiene). */
-    private static JsonObject row(String id, boolean client) {
+    static JsonObject row(String id, boolean client) {
         JsonObject table = table(client);
         JsonObject beasts = table.has("beasts") && table.get("beasts").isJsonObject() ? table.getAsJsonObject("beasts") : new JsonObject();
         return id != null && beasts.has(id) && beasts.get(id).isJsonObject() ? beasts.getAsJsonObject(id) : new JsonObject();

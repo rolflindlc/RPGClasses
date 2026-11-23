@@ -59,8 +59,14 @@
       "damage": 2,
       "speed": 1.35,
       "passives": [
-        "climb",
-        "poison_bite"
+        "climb"
+      ],
+      "hit_effects": [
+        {
+          "effect": "minecraft:poison",
+          "seconds": 7,
+          "level": 1
+        }
       ]
     },
     "minecraft:polar_bear": {
@@ -145,7 +151,14 @@
       "damage": 2,
       "speed": 1.1,
       "ability": "sting",
-      "flying": true
+      "flying": true,
+      "hit_effects": [
+        {
+          "effect": "minecraft:poison",
+          "seconds": 10,
+          "level": 1
+        }
+      ]
     },
     "minecraft:parrot": {
       "health": 6,
@@ -214,7 +227,9 @@
       "health": 3,
       "damage": 1,
       "ability": "inflate",
-      "aquatic": true
+      "aquatic": true,
+      "hit_effects": [],
+      "aura_effects": []
     },
     "minecraft:cod": {
       "health": 3,

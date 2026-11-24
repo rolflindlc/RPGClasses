@@ -12,6 +12,17 @@ public final class ServerConfig {
     public static final ForgeConfigSpec.DoubleValue XP_COST_MULTIPLIER;
     public static final ForgeConfigSpec.IntValue OUT_OF_COMBAT_SECONDS;
     public static final ForgeConfigSpec.DoubleValue RESPEC_XP_LOSS;
+    public static final ForgeConfigSpec.BooleanValue BUY_POINTS_WITH_XP;
+    public static final ForgeConfigSpec.BooleanValue CATCH_UP_ENABLED;
+    public static final ForgeConfigSpec.DoubleValue CATCH_UP_PER_LEVEL;
+    public static final ForgeConfigSpec.DoubleValue CATCH_UP_MAX;
+    public static final ForgeConfigSpec.IntValue CATCH_UP_DAYS;
+    public static final ForgeConfigSpec.BooleanValue BOSS_POINTS_ENABLED;
+    public static final ForgeConfigSpec.IntValue BOSS_POINTS;
+    public static final ForgeConfigSpec.BooleanValue KNOWLEDGE_BOOK_LOOT;
+    public static final ForgeConfigSpec.DoubleValue KNOWLEDGE_BOOK_WEIGHT;
+    public static final ForgeConfigSpec.BooleanValue OBLIVION_BOOK_LOOT;
+    public static final ForgeConfigSpec.DoubleValue OBLIVION_BOOK_WEIGHT;
     public static final ForgeConfigSpec.BooleanValue PROTECT_UNCLASSED;
     public static final ForgeConfigSpec.DoubleValue BASE_CRIT_CHANCE;
     public static final ForgeConfigSpec.ConfigValue<List<? extends String>> DISABLED_CLASSES;
@@ -95,14 +106,56 @@ public final class ServerConfig {
         ForgeConfigSpec.Builder b = new ForgeConfigSpec.Builder();
         b.push("progression");
         XP_COST_MULTIPLIER = b
-                .comment("Multiplicador del coste en XP de cada nivel de clase (coste = (80 + 6n) x multiplicador).")
+                .comment("Multiplicador del precio en XP de cada punto de clase (precio del punto n = (80 + 6n) x multiplicador;",
+                        "n cuenta todos los puntos que tiene el jugador, vengan de XP, libros o jefes).")
                 .defineInRange("xpCostMultiplier", 1.0, 0.0, 100.0);
         OUT_OF_COMBAT_SECONDS = b
                 .comment("Segundos sin dar ni recibir daño para considerarse fuera de combate (lo exige el respec).")
                 .defineInRange("outOfCombatSeconds", 10, 0, 600);
         RESPEC_XP_LOSS = b
-                .comment("Fracción de la XP gastada que se pierde en cada reinicio de clase o subclase (0.33 = se devuelve el 67%).")
+                .comment("Fracción de los puntos de clase que se pierde en cada reinicio de clase o subclase (0.33 = vuelven al saldo el 67 %,",
+                        "redondeando al más cercano). El Libro de Olvido reinicia sin pérdida.")
                 .defineInRange("respecXpLoss", 0.33, 0.0, 1.0);
+        BUY_POINTS_WITH_XP = b
+                .comment("Si es false, los puntos de clase no se pueden comprar con XP (solo libros de conocimiento y jefes).")
+                .define("buyPointsWithXp", true);
+        b.push("catchUp");
+        CATCH_UP_ENABLED = b
+                .comment("Ayuda a rezagados: quien tiene menos puntos de clase que la media del servidor los compra más baratos.")
+                .define("enabled", true);
+        CATCH_UP_PER_LEVEL = b
+                .comment("Descuento por cada punto por debajo de la media (0.03 = 3 %).")
+                .defineInRange("discountPerLevel", 0.03, 0.0, 1.0);
+        CATCH_UP_MAX = b
+                .comment("Descuento máximo (0.5 = 50 %).")
+                .defineInRange("maxDiscount", 0.5, 0.0, 0.95);
+        CATCH_UP_DAYS = b
+                .comment("La media solo cuenta a los jugadores que han entrado en los últimos N días.")
+                .defineInRange("activeDays", 14, 1, 3650);
+        b.pop();
+        b.push("bossPoints");
+        BOSS_POINTS_ENABLED = b
+                .comment("Derrotar por primera vez cada especie de jefe (etiqueta rites_and_paths:class_point_bosses) da puntos de clase",
+                        "a todos los jugadores que le hicieron daño.")
+                .define("enabled", true);
+        BOSS_POINTS = b
+                .comment("Puntos de clase por especie de jefe.")
+                .defineInRange("points", 1, 0, 40);
+        b.pop();
+        b.push("classBooks");
+        KNOWLEDGE_BOOK_LOOT = b
+                .comment("Si es true, el Libro de Conocimiento (1 punto de clase) puede salir en los cofres donde sale la manzana de oro encantada.")
+                .define("knowledgeBookLoot", false);
+        KNOWLEDGE_BOOK_WEIGHT = b
+                .comment("Peso del Libro de Conocimiento respecto al de la manzana de oro encantada en cada cofre (1.0 = el mismo).")
+                .defineInRange("knowledgeBookWeight", 1.0, 0.0, 100.0);
+        OBLIVION_BOOK_LOOT = b
+                .comment("Si es true, el Libro de Olvido (reinicio sin pérdida) puede salir en esos mismos cofres.")
+                .define("oblivionBookLoot", false);
+        OBLIVION_BOOK_WEIGHT = b
+                .comment("Peso del Libro de Olvido respecto al de la manzana de oro encantada (0.5 = la mitad).")
+                .defineInRange("oblivionBookWeight", 0.5, 0.0, 100.0);
+        b.pop();
         PROTECT_UNCLASSED = b
                 .comment("Si es true, un jugador que aún no ha elegido clase no recibe daño.")
                 .define("protectUnclassed", true);

@@ -29,6 +29,7 @@ public final class ProgressionService {
         if (data == null) return Result.NO_CLASS;
         ProgressState s = data.state;
         long xpBefore = currentXp(player);
+        int balanceBefore = s.pointBalance;
 
         Result result = perform(player, s, action, arg == null ? "" : arg);
         DebugLog.event(player, "progreso", "{} '{}' → {}; clase {}, ramas {}, perks {}, subclase {} ({}); raza {}/{} rango {} muros {}", action, arg, result,
@@ -38,17 +39,25 @@ public final class ProgressionService {
             player.sendSystemMessage(resultMessage(result).withStyle(ChatFormatting.RED));
             return result;
         }
-        long delta = currentXp(player) - xpBefore;
-        if (delta < 0) {
-            player.sendSystemMessage(ProgressionRules.isMaxed(s)
-                    ? Component.translatable("msg.rites_and_paths.xp_charged_max", -delta)
-                    : Component.translatable("msg.rites_and_paths.xp_charged", -delta,
-                            ProgressionRules.nextCost(s, ServerConfig.XP_COST_MULTIPLIER.get())));
-        } else if (delta > 0) {
-            player.sendSystemMessage(Component.translatable("msg.rites_and_paths.xp_refunded", delta));
-        } else {
-            player.sendSystemMessage(resultMessage(result).withStyle(ChatFormatting.GREEN));
+        long xpSpent = xpBefore - currentXp(player);
+        int gained = s.pointBalance - balanceBefore;
+        switch (action) {
+            case BUY_POINTS -> player.sendSystemMessage((s.ownedPoints() >= ProgressionRules.MAX_POINTS
+                    ? Component.translatable("msg.rites_and_paths.points_bought_max", gained, xpSpent, s.pointBalance)
+                    : Component.translatable("msg.rites_and_paths.points_bought", gained, xpSpent, s.pointBalance,
+                            ProgressionRules.nextCost(s, ServerConfig.XP_COST_MULTIPLIER.get(), ClassPoints.discount(player))))
+                    .withStyle(ChatFormatting.GREEN));
+            case RESPEC_CLASS, RESPEC_SUBCLASS -> player.sendSystemMessage(
+                    Component.translatable("msg.rites_and_paths.points_refunded", gained, s.pointBalance).withStyle(ChatFormatting.GREEN));
+            case USE_OBLIVION -> player.sendSystemMessage(
+                    Component.translatable("msg.rites_and_paths.oblivion_used", gained, s.pointBalance).withStyle(ChatFormatting.LIGHT_PURPLE));
+            case SAVE_BUILD -> player.sendSystemMessage(
+                    Component.translatable("msg.rites_and_paths.build_saved", Integer.parseInt(arg.trim()) + 1).withStyle(ChatFormatting.GREEN));
+            case LOAD_BUILD -> player.sendSystemMessage(Component.translatable("msg.rites_and_paths.build_loaded",
+                    Integer.parseInt(arg.trim()) + 1, s.totalLevel(), s.pointBalance).withStyle(ChatFormatting.GREEN));
+            default -> player.sendSystemMessage(resultMessage(result).withStyle(ChatFormatting.GREEN));
         }
+        ClassPoints.touch(player);
         StatEngine.refresh(player);
         return result;
     }
@@ -67,7 +76,7 @@ public final class ProgressionService {
         if (data == null || steps.isEmpty() || steps.size() > MAX_PLAN) return;
         for (var step : steps) if (!PLAN_ACTIONS.contains(step.action())) return;
         ProgressState s = data.state;
-        long xpBefore = currentXp(player);
+        int balanceBefore = s.pointBalance;
         int done = 0;
         Result failure = null;
         for (var step : steps) {
@@ -82,9 +91,10 @@ public final class ProgressionService {
         }
         DebugLog.event(player, "progreso", "plan {}/{}; clase {}, ramas {}, perks {}, subclase {} ({})", done, steps.size(),
                 s.classId, s.branchPoints, s.perks, s.subclassId, s.subclassLevel);
-        long spent = Math.max(0, xpBefore - currentXp(player));
+        int spent = Math.max(0, balanceBefore - s.pointBalance);
         if (done > 0) {
-            player.sendSystemMessage(Component.translatable("msg.rites_and_paths.plan_applied", done, spent).withStyle(ChatFormatting.GREEN));
+            player.sendSystemMessage(Component.translatable("msg.rites_and_paths.plan_applied_points", done, spent, s.pointBalance)
+                    .withStyle(ChatFormatting.GREEN));
         }
         if (failure != null) {
             player.sendSystemMessage(Component.translatable("msg.rites_and_paths.plan_partial", done, steps.size(), resultMessage(failure))
@@ -95,8 +105,6 @@ public final class ProgressionService {
 
     private static Result perform(ServerPlayer player, ProgressState s, Action action, String arg) {
         DefinitionStore defs = DefinitionStore.SERVER;
-        double mult = ServerConfig.XP_COST_MULTIPLIER.get();
-        long xp = currentXp(player);
         ClassDef classDef = defs.classDef(s.classId);
 
         switch (action) {
@@ -127,8 +135,8 @@ public final class ProgressionService {
                 return r;
             }
             case SPEND_BRANCH -> {
-                Result r = ProgressionRules.checkSpendBranch(s, classDef, arg, xp, mult);
-                if (r.ok()) setXp(player, xp - ProgressionRules.spendBranch(s, arg, mult));
+                Result r = ProgressionRules.checkSpendBranch(s, classDef, arg);
+                if (r.ok()) ProgressionRules.spendBranch(s, arg);
                 return r;
             }
             case CHOOSE_SUBCLASS -> {
@@ -139,8 +147,8 @@ public final class ProgressionService {
             }
             case SPEND_SUBCLASS -> {
                 if (s.subclassId != null && defs.subclassDef(s.subclassId) == null) return Result.UNKNOWN_SUBCLASS;
-                Result r = ProgressionRules.checkSpendSubclass(s, xp, mult);
-                if (r.ok()) setXp(player, xp - ProgressionRules.spendSubclass(s, mult));
+                Result r = ProgressionRules.checkSpendSubclass(s);
+                if (r.ok()) ProgressionRules.spendSubclass(s);
                 return r;
             }
             case CHOOSE_PERK -> {
@@ -156,20 +164,108 @@ public final class ProgressionService {
             }
             case RESPEC_SUBCLASS -> {
                 Result r = ProgressionRules.checkRespecSubclass(s, CombatTracker.inCombat(player));
-                if (r.ok()) setXp(player, xp + ProgressionRules.respecSubclass(s, mult, respecLoss(s)));
+                if (r.ok()) ProgressionRules.respecSubclass(s, respecLoss(s));
                 return r;
             }
             case RESPEC_CLASS -> {
                 Result r = ProgressionRules.checkRespecClass(s, CombatTracker.inCombat(player));
-                if (r.ok()) {
-                    setXp(player, xp + ProgressionRules.respecClass(s, respecLoss(s)));
-                    KitService.removeAll(player);
-                    PlayerClassData d = PlayerClassDataProvider.get(player);
-                    if (d != null) d.clearClassBindings();
-                }
+                if (r.ok()) respecClassNow(player, s, respecLoss(s));
                 return r;
             }
+            case BUY_POINTS -> {
+                return buyPoints(player, s, "max".equalsIgnoreCase(arg.trim()) ? ProgressionRules.MAX_POINTS : 1);
+            }
+            case SAVE_BUILD -> {
+                int slot = slot(arg);
+                if (slot < 0) return Result.UNKNOWN_BUILD;
+                if (s.classId == null) return Result.NO_CLASS;
+                s.builds[slot] = io.github.rpgclasses.core.progression.SavedBuild.of(s);
+                return Result.OK;
+            }
+            case LOAD_BUILD -> {
+                return loadBuild(player, s, slot(arg));
+            }
+            case USE_OBLIVION -> {
+                return useOblivion(player, s);
+            }
         }
+        return Result.OK;
+    }
+
+    /** Reinicia la clase devolviendo los puntos con esa pérdida, y quita el kit y lo propio de la clase. */
+    private static void respecClassNow(ServerPlayer player, ProgressState s, double loss) {
+        ProgressionRules.respecClass(s, loss);
+        KitService.removeAll(player);
+        PlayerClassData d = PlayerClassDataProvider.get(player);
+        if (d != null) d.clearClassBindings();
+    }
+
+    /** Compra hasta {@code max} puntos con XP al precio de la curva (con la ayuda a rezagados). */
+    private static Result buyPoints(ServerPlayer player, ProgressState s, int max) {
+        if (!ServerConfig.BUY_POINTS_WITH_XP.get()) return Result.XP_PURCHASE_DISABLED;
+        double mult = ServerConfig.XP_COST_MULTIPLIER.get();
+        double discount = ClassPoints.discount(player);
+        int bought = 0;
+        Result last = Result.OK;
+        while (bought < max) {
+            long xp = currentXp(player);
+            int cost = ProgressionRules.nextCost(s, mult, discount);
+            last = ProgressionRules.checkBuyPoint(s, xp, cost);
+            if (!last.ok()) break;
+            setXp(player, xp - cost);
+            ProgressionRules.buyPoint(s);
+            bought++;
+        }
+        return bought > 0 ? Result.OK : last;
+    }
+
+    private static int slot(String arg) {
+        try {
+            int slot = Integer.parseInt(arg.trim());
+            return slot >= 0 && slot < io.github.rpgclasses.core.progression.SavedBuild.SLOTS ? slot : -1;
+        } catch (NumberFormatException e) {
+            return -1;
+        }
+    }
+
+    /**
+     * Carga una build: reinicia la clase con la pérdida normal (si tiene), elige la clase de la build y gasta el saldo
+     * siguiéndola hasta donde llegue.
+     */
+    private static Result loadBuild(ServerPlayer player, ProgressState s, int slot) {
+        if (slot < 0 || s.builds[slot] == null) return Result.UNKNOWN_BUILD;
+        var build = s.builds[slot];
+        DefinitionStore defs = DefinitionStore.SERVER;
+        ClassDef def = defs.classDef(build.classId());
+        if (def == null) return Result.UNKNOWN_CLASS;
+        if (ServerConfig.DISABLED_CLASSES.get().contains(build.classId())) return Result.CLASS_DISABLED;
+        if (s.raceId == null && !io.github.rpgclasses.core.definition.RaceStore.SERVER.ids().isEmpty()) return Result.NO_RACE;
+        if (s.classId != null) {
+            Result r = ProgressionRules.checkRespecClass(s, CombatTracker.inCombat(player));
+            if (!r.ok()) return r;
+            respecClassNow(player, s, respecLoss(s));
+        }
+        ProgressionRules.chooseClass(s, def);
+        KitService.grant(player, def);
+        s.kitGranted = true;
+        SubclassDef sub = build.subclassId() == null ? null : defs.subclassDef(build.subclassId());
+        io.github.rpgclasses.core.progression.BuildRules.apply(s, def, sub, build);
+        return Result.OK;
+    }
+
+    /** Libro de Olvido: reinicio completo sin pérdida, gastando el libro de la mano. */
+    private static Result useOblivion(ServerPlayer player, ProgressState s) {
+        if (s.classId == null) return Result.NO_CLASS;
+        if (CombatTracker.inCombat(player)) return Result.IN_COMBAT;
+        net.minecraft.world.InteractionHand hand = null;
+        for (net.minecraft.world.InteractionHand h : net.minecraft.world.InteractionHand.values()) {
+            if (player.getItemInHand(h).is(io.github.rpgclasses.registry.ClassBooks.OBLIVION_BOOK.get())) hand = h;
+        }
+        if (hand == null) return Result.NO_OBLIVION_BOOK;
+        respecClassNow(player, s, 0.0);
+        if (!player.getAbilities().instabuild) player.getItemInHand(hand).shrink(1);
+        player.level().playSound(null, player.blockPosition(), net.minecraft.sounds.SoundEvents.ENCHANTMENT_TABLE_USE,
+                net.minecraft.sounds.SoundSource.PLAYERS, 1f, .6f);
         return Result.OK;
     }
 
@@ -205,7 +301,7 @@ public final class ProgressionService {
         return true;
     }
 
-    /** Reinicio administrativo: sin comprobación de combate y sin devolver XP. */
+    /** Reinicio administrativo: sin comprobación de combate y sin devolver puntos (el saldo que tuviera se queda). */
     public static void adminReset(ServerPlayer player) {
         PlayerClassData data = PlayerClassDataProvider.get(player);
         if (data == null) return;

@@ -149,7 +149,7 @@ public final class Net {
     public static void syncPlayer(ServerPlayer player) {
         PlayerClassData data = PlayerClassDataProvider.get(player);
         if (data == null) return;
-        toPlayer(player, new SyncPlayerData(data.saveForClient()));
+        toPlayer(player, new SyncPlayerData(clientTag(player, data)));
         // Sin raza, el cliente abre antes la selección de raza (lo decide él con los datos sincronizados).
         if (data.state.classId == null) toPlayer(player, new OpenClassSelection());
     }
@@ -157,7 +157,14 @@ public final class Net {
     /** Envía el progreso sin pedir selecciones: para el avance de los ritos, que la pestaña Raza enseña en directo. */
     public static void syncProgress(ServerPlayer player) {
         PlayerClassData data = PlayerClassDataProvider.get(player);
-        if (data != null) toPlayer(player, new SyncPlayerData(data.saveForClient()));
+        if (data != null) toPlayer(player, new SyncPlayerData(clientTag(player, data)));
+    }
+
+    /** Datos para el cliente, con el descuento de la ayuda a rezagados (lo calcula el servidor con la media). */
+    private static net.minecraft.nbt.CompoundTag clientTag(ServerPlayer player, PlayerClassData data) {
+        net.minecraft.nbt.CompoundTag tag = data.saveForClient();
+        tag.putDouble("catchUp", io.github.rpgclasses.server.ClassPoints.discount(player));
+        return tag;
     }
 
     private Net() {}

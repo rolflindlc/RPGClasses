@@ -23,24 +23,24 @@ public final class TreePlan {
     /** BRANCH: {@code branch}. PERK: {@code branch} y {@code value} (perk). CHOOSE_SUBCLASS: {@code value}. SUBCLASS: nada. */
     public record Step(Type type, String branch, String value) {}
 
-    /** Lo que hace falta para simular: estado real, definiciones, XP disponible y multiplicador de coste. */
-    public record Context(ProgressState real, ClassDef def, Function<String, SubclassDef> subclasses, long xp, double multiplier) {}
+    /** Lo que hace falta para simular: estado real (con su saldo de puntos) y definiciones. */
+    public record Context(ProgressState real, ClassDef def, Function<String, SubclassDef> subclasses) {}
 
     /** Resultado de reproducir el plan. */
     public static final class Simulation {
         public final ProgressState state;
         public final List<Step> valid;
-        /** XP que costará el plan entero. */
+        /** Puntos que costará el plan entero. */
         public final long cost;
-        /** XP que queda tras el plan. */
-        public final long xpLeft;
+        /** Puntos de saldo que quedan tras el plan. */
+        public final long pointsLeft;
         public final int points;
 
-        Simulation(ProgressState state, List<Step> valid, long cost, long xpLeft, int points) {
+        Simulation(ProgressState state, List<Step> valid, long cost, long pointsLeft, int points) {
             this.state = state;
             this.valid = valid;
             this.cost = cost;
-            this.xpLeft = xpLeft;
+            this.pointsLeft = pointsLeft;
             this.points = points;
         }
     }
@@ -59,7 +59,7 @@ public final class TreePlan {
         steps.clear();
     }
 
-    /** Reproduce el plan; los pasos que ya no son válidos (otro estado real, menos XP) se saltan. */
+    /** Reproduce el plan; los pasos que ya no son válidos (otro estado real, menos puntos) se saltan. */
     public Simulation simulate(Context c) {
         ProgressState s = new ProgressState();
         s.copyFrom(c.real());
@@ -67,13 +67,13 @@ public final class TreePlan {
         long spent = 0;
         int points = 0;
         for (Step st : steps) {
-            long cost = tryApply(s, c, st, c.xp() - spent);
+            long cost = tryApply(s, c, st);
             if (cost < 0) continue;
             spent += cost;
             if (st.type() == Type.BRANCH || st.type() == Type.SUBCLASS) points++;
             ok.add(st);
         }
-        return new Simulation(s, List.copyOf(ok), spent, c.xp() - spent, points);
+        return new Simulation(s, List.copyOf(ok), spent, s.pointBalance, points);
     }
 
     /** Quita los pasos que han dejado de ser válidos. */
@@ -180,21 +180,21 @@ public final class TreePlan {
     }
 
     /** Lo que diría el servidor de un paso sobre el estado {@code s}, sin aplicarlo. */
-    public static Result check(ProgressState s, Context c, Step st, long xpLeft) {
+    public static Result check(ProgressState s, Context c, Step st) {
         return switch (st.type()) {
-            case BRANCH -> ProgressionRules.checkSpendBranch(s, c.def(), st.branch(), xpLeft, c.multiplier());
+            case BRANCH -> ProgressionRules.checkSpendBranch(s, c.def(), st.branch());
             case PERK -> ProgressionRules.checkChoosePerk(s, c.def(), st.branch(), st.value());
             case CHOOSE_SUBCLASS -> ProgressionRules.checkChooseSubclass(s, c.def(), c.subclasses().apply(st.value()));
             case SUBCLASS -> s.subclassId != null && c.subclasses().apply(s.subclassId) == null
-                    ? Result.UNKNOWN_SUBCLASS : ProgressionRules.checkSpendSubclass(s, xpLeft, c.multiplier());
+                    ? Result.UNKNOWN_SUBCLASS : ProgressionRules.checkSpendSubclass(s);
         };
     }
 
-    /** Aplica el paso si es válido. @return XP que cuesta, o -1 si no es válido. */
-    static long tryApply(ProgressState s, Context c, Step st, long xpLeft) {
-        if (!check(s, c, st, xpLeft).ok()) return -1;
+    /** Aplica el paso si es válido. @return puntos que cuesta, o -1 si no es válido. */
+    static long tryApply(ProgressState s, Context c, Step st) {
+        if (!check(s, c, st).ok()) return -1;
         return switch (st.type()) {
-            case BRANCH -> ProgressionRules.spendBranch(s, st.branch(), c.multiplier());
+            case BRANCH -> ProgressionRules.spendBranch(s, st.branch());
             case PERK -> {
                 ProgressionRules.choosePerk(s, st.branch(), st.value());
                 yield 0;
@@ -203,7 +203,7 @@ public final class TreePlan {
                 ProgressionRules.chooseSubclass(s, c.subclasses().apply(st.value()));
                 yield 0;
             }
-            case SUBCLASS -> ProgressionRules.spendSubclass(s, c.multiplier());
+            case SUBCLASS -> ProgressionRules.spendSubclass(s);
         };
     }
 }

@@ -67,6 +67,7 @@ public class RpgClasses {
         io.github.rpgclasses.registry.ModBlocks.BLOCKS.register(modBus);
         io.github.rpgclasses.registry.ModBlocks.ITEMS.register(modBus);
         io.github.rpgclasses.gear.ModGear.ITEMS.register(modBus);
+        io.github.rpgclasses.registry.ClassBooks.register(modBus);
         io.github.rpgclasses.gear.ModGear.TABS.register(modBus);
         // Bardo (adenda del Bardo): objetos, receta de partituras, efectos y entidades.
         io.github.rpgclasses.bard.BardItems.ITEMS.register(modBus);
@@ -90,6 +91,7 @@ public class RpgClasses {
         MinecraftForge.EVENT_BUS.register(new CombatTracker());
         MinecraftForge.EVENT_BUS.register(new DamagePipeline());
         MinecraftForge.EVENT_BUS.register(new AttributeHandlers());
+        MinecraftForge.EVENT_BUS.register(new io.github.rpgclasses.server.ClassPoints());
         MinecraftForge.EVENT_BUS.register(new CombatAbilities());
         MinecraftForge.EVENT_BUS.register(new RangerAbilities());
         MinecraftForge.EVENT_BUS.register(new MonkAbilities());

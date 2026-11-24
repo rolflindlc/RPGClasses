@@ -130,7 +130,9 @@ public final class DefinitionValidator {
     private static void validateMilestone(MilestoneDef m, String where, List<String> errors) {
         int max = m.subclassLevel() ? ProgressionRules.SUBCLASS_MAX
                 : ProgressionRules.BASE_MAX + ProgressionRules.SUBCLASS_MAX;
-        if (m.level() < 1 || m.level() > max) errors.add(where + "hito con nivel fuera de 1.." + max + ": " + m.level());
+        // Los hitos de clase pueden ser de nivel 0 (se tienen al elegir la clase); los de subclase empiezan en 1.
+        int min = m.subclassLevel() ? 1 : 0;
+        if (m.level() < min || m.level() > max) errors.add(where + "hito con nivel fuera de " + min + ".." + max + ": " + m.level());
         if (m.grants().indexOf(':') <= 0) errors.add(where + "hito con \"grants\" sin namespace: " + m.grants());
     }
 

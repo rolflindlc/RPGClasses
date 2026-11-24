@@ -22,6 +22,12 @@ public final class ProgressState {
     public long xpPaidSubclass;
     /** Sin uso desde que los reinicios son ilimitados; se conserva por compatibilidad del guardado. */
     public boolean firstRespecUsed;
+    /** Puntos de clase sin gastar (se compran con XP, con libros de conocimiento o al derrotar jefes). */
+    public int pointBalance;
+    /** Especies de jefe que ya le han dado su punto (puntos por jefes). */
+    public final java.util.Set<String> bossesCredited = new java.util.LinkedHashSet<>();
+    /** Builds guardadas (huecos fijos; null = vacío). */
+    public final SavedBuild[] builds = new SavedBuild[SavedBuild.SLOTS];
     public boolean kitGranted;
     /** Raza y subraza (anexo de razas): permanentes, no se pierden al reiniciar la clase. null = sin elegir. */
     public String raceId;
@@ -42,6 +48,11 @@ public final class ProgressState {
     /** Nivel Total de Clase: puntos de base + niveles de subclase. */
     public int totalLevel() {
         return basePoints() + subclassLevel;
+    }
+
+    /** Puntos que tiene en total: gastados en el árbol más el saldo. */
+    public int ownedPoints() {
+        return totalLevel() + pointBalance;
     }
 
     public int pointsIn(String branchId) {
@@ -70,6 +81,10 @@ public final class ProgressState {
         xpPaidBase = o.xpPaidBase;
         xpPaidSubclass = o.xpPaidSubclass;
         firstRespecUsed = o.firstRespecUsed;
+        pointBalance = o.pointBalance;
+        bossesCredited.clear();
+        bossesCredited.addAll(o.bossesCredited);
+        System.arraycopy(o.builds, 0, builds, 0, builds.length);
         kitGranted = o.kitGranted;
         raceId = o.raceId;
         subraceId = o.subraceId;

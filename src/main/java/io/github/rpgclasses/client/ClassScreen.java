@@ -96,15 +96,20 @@ public final class ClassScreen extends Screen {
     @Override
     public void tick() {
         long xp = availableXp();
-        if (xp != lastXp) {
+        int balance = state().pointBalance;
+        if (xp != lastXp || balance != lastBalance) {
             lastXp = xp;
+            lastBalance = balance;
             if (tab == ClassPages.Tab.PROGRESS) rebuildWidgets();
         }
     }
 
+    private int lastBalance = -1;
+
     @Override
     protected void init() {
         lastXp = availableXp();
+        lastBalance = state().pointBalance;
         classIds.clear();
         List<String> experimental = new ArrayList<>();
         for (String id : DefinitionStore.CLIENT.classIds()) {
@@ -132,7 +137,9 @@ public final class ClassScreen extends Screen {
         headerTop = TABS_Y + 24;
         panelTop = headerTop + header;
         panelRight = width - 10;
-        panelBottom = height - 36;
+        // En el árbol propio hay una fila más: comprar puntos y builds.
+        boolean pointsRow = tab == ClassPages.Tab.PROGRESS && treeEditable();
+        panelBottom = height - (pointsRow ? 58 : 36);
 
         // Rejilla de clases: tarjetas con retrato.
         int gridBottom = selecting ? height - 8 : height - 56;
@@ -174,8 +181,9 @@ public final class ClassScreen extends Screen {
         } else if (tab == ClassPages.Tab.PROGRESS && treeEditable()) {
             int w = Math.min(120, (panelRight - panelLeft - 8) / 3);
             ClassDef def = DefinitionStore.CLIENT.classDef(selectedClass);
-            tree.setup(def, true, panelLeft + 3, headerTop + 3, panelRight - 3, panelBottom - 3, this::availableXp, costMultiplier());
+            tree.setup(def, true, panelLeft + 3, headerTop + 3, panelRight - 3, panelBottom - 3, this::availableXp, costMultiplier(), this::discount);
             footerPlan = tree.plan().steps();
+            addPointsRow(center, height - 52);
             if (!tree.plan().isEmpty()) {
                 // Plan pendiente: descartarlo o confirmarlo (con aviso si bloquea ramas o elige perk o subclase).
                 TreePlan.Simulation sim = tree.simulate();
@@ -183,7 +191,7 @@ public final class ClassScreen extends Screen {
                     tree.plan().clear();
                     rebuildWidgets();
                 }).bounds(center - w * 3 / 2 - 4, footerY, w, 20).build());
-                Button ok = Button.builder(Component.translatable("ui.rites_and_paths.tree.plan_confirm", sim.cost), btn -> confirmPlan())
+                Button ok = Button.builder(Component.translatable("ui.rites_and_paths.tree.plan_confirm_points", sim.cost), btn -> confirmPlan())
                         .bounds(center - w / 2, footerY, w, 20).build();
                 ok.active = !sim.valid.isEmpty();
                 addRenderableWidget(ok);
@@ -209,7 +217,7 @@ public final class ClassScreen extends Screen {
             lines = List.of();
             if (!treeEditable()) {
                 tree.setup(DefinitionStore.CLIENT.classDef(selectedClass), false, panelLeft + 3, headerTop + 3, panelRight - 3, panelBottom - 3,
-                        this::availableXp, costMultiplier());
+                        this::availableXp, costMultiplier(), this::discount);
             }
         } else {
             rebuildLines();
@@ -310,6 +318,58 @@ public final class ClassScreen extends Screen {
     private long availableXp() {
         return minecraft == null || minecraft.player == null ? 0
                 : XpMath.totalPoints(minecraft.player.experienceLevel, minecraft.player.experienceProgress);
+    }
+
+    private double discount() {
+        return ClientHandlers.LOCAL_DATA.catchUpDiscount;
+    }
+
+    private boolean xpPurchaseEnabled() {
+        try {
+            return ServerConfig.BUY_POINTS_WITH_XP.get();
+        } catch (IllegalStateException notLoaded) {
+            return true;
+        }
+    }
+
+    /**
+     * Fila de puntos de clase: comprar uno, comprar todos los que se puedan pagar (con el precio a la vista) y builds.
+     * El servidor vuelve a comprobarlo todo.
+     */
+    private void addPointsRow(int center, int y) {
+        ProgressState s = state();
+        double mult = costMultiplier(), disc = discount();
+        int w = Math.min(150, (panelRight - panelLeft - 8) / 3);
+        boolean enabled = xpPurchaseEnabled();
+        int next = io.github.rpgclasses.core.progression.ProgressionRules.nextCost(s, mult, disc);
+        boolean maxed = s.ownedPoints() >= io.github.rpgclasses.core.progression.ProgressionRules.MAX_POINTS;
+        // Cuántos se pueden pagar ahora y por cuánto.
+        ProgressState sim = new ProgressState();
+        sim.copyFrom(s);
+        long xp = availableXp(), spent = 0;
+        int affordable = 0;
+        while (sim.ownedPoints() < io.github.rpgclasses.core.progression.ProgressionRules.MAX_POINTS) {
+            int c = io.github.rpgclasses.core.progression.ProgressionRules.nextCost(sim, mult, disc);
+            if (spent + c > xp) break;
+            spent += c;
+            sim.pointBalance++;
+            affordable++;
+        }
+        Component oneLabel = maxed ? Component.translatable("ui.rites_and_paths.points.maxed")
+                : Component.translatable("ui.rites_and_paths.points.buy_one", next);
+        Button one = Button.builder(oneLabel, btn -> send(ClassAction.Action.BUY_POINTS, "1"))
+                .bounds(center - w * 3 / 2 - 4, y, w, 20).build();
+        one.active = enabled && !maxed && xp >= next;
+        if (!enabled) one.setTooltip(net.minecraft.client.gui.components.Tooltip.create(Component.translatable("ui.rites_and_paths.points.xp_disabled")));
+        else if (disc > 0) one.setTooltip(net.minecraft.client.gui.components.Tooltip.create(
+                Component.translatable("ui.rites_and_paths.points.catch_up", Math.round(disc * 100))));
+        addRenderableWidget(one);
+        Button all = Button.builder(Component.translatable("ui.rites_and_paths.points.buy_all", affordable, spent),
+                btn -> send(ClassAction.Action.BUY_POINTS, "max")).bounds(center - w / 2, y, w, 20).build();
+        all.active = enabled && affordable > 1;
+        addRenderableWidget(all);
+        addRenderableWidget(Button.builder(Component.translatable("ui.rites_and_paths.builds.button"),
+                btn -> minecraft.setScreen(new BuildsScreen(this))).bounds(center + w / 2 + 4, y, w, 20).build());
     }
 
     private double costMultiplier() {

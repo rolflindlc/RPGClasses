@@ -15,7 +15,6 @@ import io.github.rpgclasses.core.definition.Definitions.PerkDef;
 import io.github.rpgclasses.core.definition.Definitions.SubclassDef;
 import io.github.rpgclasses.core.progression.ProgressState;
 import io.github.rpgclasses.core.progression.ProgressionRules;
-import io.github.rpgclasses.core.progression.XpMath;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
@@ -60,6 +59,7 @@ public final class SkillTreeView {
     private boolean editable;
     private LongSupplier xp = () -> 0;
     private double multiplier = 1;
+    private java.util.function.DoubleSupplier discount = () -> 0;
 
     private long lastNanos;
     private float time;
@@ -87,9 +87,11 @@ public final class SkillTreeView {
      * Prepara la vista para una clase. Se llama en cada {@code init} de la pantalla: si la clase no cambia,
      * se conservan el plan, la cámara y las animaciones.
      */
-    public void setup(ClassDef def, boolean editable, int x0, int y0, int x1, int y1, LongSupplier xp, double multiplier) {
+    public void setup(ClassDef def, boolean editable, int x0, int y0, int x1, int y1, LongSupplier xp, double multiplier,
+                      java.util.function.DoubleSupplier discount) {
         this.xp = xp;
         this.multiplier = multiplier;
+        this.discount = discount;
         boolean changed = this.def == null || def == null || this.def != def || this.editable != editable || layout == null;
         cam.setView(x0, y0, x1, y1);
         if (!changed) {
@@ -141,7 +143,7 @@ public final class SkillTreeView {
     }
 
     public TreePlan.Context context() {
-        return new TreePlan.Context(real(), def, DefinitionStore.CLIENT::subclassDef, xp.getAsLong(), multiplier);
+        return new TreePlan.Context(real(), def, DefinitionStore.CLIENT::subclassDef);
     }
 
     public TreePlan.Simulation simulate() {
@@ -192,10 +194,11 @@ public final class SkillTreeView {
         ProgressState s = status.sim.state;
         String level = I18n.get("ui.rites_and_paths.tree.level", real.totalLevel(), totalMax);
         String planned = s.totalLevel() > real.totalLevel() ? I18n.get("ui.rites_and_paths.tree.level_planned", s.totalLevel()) : null;
-        String xpLine = ProgressionRules.isMaxed(s)
-                ? I18n.get("ui.rites_and_paths.tree.xp_max", status.sim.xpLeft)
-                : I18n.get("ui.rites_and_paths.tree.xp", status.sim.xpLeft, ProgressionRules.nextCost(s, multiplier));
-        String planLine = plan.isEmpty() ? null : I18n.get("ui.rites_and_paths.tree.plan", status.sim.valid.size(), status.sim.cost);
+        // Saldo de puntos (tras el plan) y precio en XP del siguiente punto.
+        String xpLine = real.ownedPoints() >= ProgressionRules.MAX_POINTS
+                ? I18n.get("ui.rites_and_paths.tree.points_max", status.sim.pointsLeft)
+                : I18n.get("ui.rites_and_paths.tree.points", status.sim.pointsLeft, ProgressionRules.nextCost(real, multiplier, discount.getAsDouble()));
+        String planLine = plan.isEmpty() ? null : I18n.get("ui.rites_and_paths.tree.plan_points", status.sim.valid.size(), status.sim.cost);
         String bridge = real.basePoints() < ProgressionRules.SUBCLASS_UNLOCK
                 ? I18n.get("ui.rites_and_paths.tree.bridge", Math.min(ProgressionRules.SUBCLASS_UNLOCK, s.basePoints()), ProgressionRules.SUBCLASS_UNLOCK)
                 : null;
@@ -503,16 +506,15 @@ public final class SkillTreeView {
             default -> {
                 int needed = Math.max(1, Math.min(target, max) - simPoints);
                 int total = sim.state.totalLevel();
-                long cost = XpMath.totalCost(total, total + needed, multiplier);
-                if (ProgressionRules.isMaxed(sim.state) || total + needed > ProgressionRules.BASE_MAX + ProgressionRules.SUBCLASS_MAX) {
+                if (ProgressionRules.isMaxed(sim.state) || total + needed > ProgressionRules.MAX_POINTS) {
                     out.add(Component.translatable("msg.rites_and_paths.max_level").withStyle(ChatFormatting.GRAY));
                 } else if (needed == 1) {
-                    out.add(Component.translatable("ui.rites_and_paths.tree.cost", cost).withStyle(ChatFormatting.YELLOW));
-                    if (sim.xpLeft >= cost) out.add(Component.translatable("ui.rites_and_paths.tree.click_add").withStyle(ChatFormatting.GRAY));
-                    else out.add(Component.translatable("ui.rites_and_paths.tree.need_xp", cost - sim.xpLeft).withStyle(ChatFormatting.RED));
+                    out.add(Component.translatable("ui.rites_and_paths.tree.cost_points").withStyle(ChatFormatting.YELLOW));
+                    if (sim.pointsLeft >= 1) out.add(Component.translatable("ui.rites_and_paths.tree.click_add").withStyle(ChatFormatting.GRAY));
+                    else out.add(Component.translatable("ui.rites_and_paths.tree.need_points", 1).withStyle(ChatFormatting.RED));
                 } else {
-                    out.add(Component.translatable("ui.rites_and_paths.tree.click_until", needed, cost).withStyle(ChatFormatting.GRAY));
-                    if (sim.xpLeft < cost) out.add(Component.translatable("ui.rites_and_paths.tree.need_xp", cost - sim.xpLeft).withStyle(ChatFormatting.RED));
+                    out.add(Component.translatable("ui.rites_and_paths.tree.click_until_points", needed).withStyle(ChatFormatting.GRAY));
+                    if (sim.pointsLeft < needed) out.add(Component.translatable("ui.rites_and_paths.tree.need_points", needed - sim.pointsLeft).withStyle(ChatFormatting.RED));
                 }
             }
         }

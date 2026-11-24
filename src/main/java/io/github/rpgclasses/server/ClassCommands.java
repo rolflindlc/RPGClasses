@@ -66,6 +66,8 @@ public final class ClassCommands {
                 .then(Commands.literal("subclase").then(Commands.argument("id", ResourceLocationArgument.id()).suggests(SUBCLASS_IDS)
                         .executes(c -> act(c, Action.CHOOSE_SUBCLASS, ResourceLocationArgument.getId(c, "id").toString()))))
                 .then(Commands.literal("subpunto").executes(c -> act(c, Action.SPEND_SUBCLASS, "")))
+                .then(Commands.literal("comprar").executes(c -> act(c, Action.BUY_POINTS, "1"))
+                        .then(Commands.literal("todos").executes(c -> act(c, Action.BUY_POINTS, "max"))))
                 .then(Commands.literal("reiniciar")
                         .then(Commands.literal("clase").executes(c -> act(c, Action.RESPEC_CLASS, "")))
                         .then(Commands.literal("subclase").executes(c -> act(c, Action.RESPEC_SUBCLASS, ""))))
@@ -117,6 +119,10 @@ public final class ClassCommands {
                             return 1;
                         })))
                 .then(Commands.literal("validar").executes(c -> validate(c.getSource())))
+                .then(Commands.literal("puntos").then(Commands.argument("jugador", EntityArgument.player())
+                        .then(Commands.argument("cantidad", com.mojang.brigadier.arguments.IntegerArgumentType.integer(-40, 40))
+                                .executes(c -> givePoints(c.getSource(), EntityArgument.getPlayer(c, "jugador"),
+                                        com.mojang.brigadier.arguments.IntegerArgumentType.getInteger(c, "cantidad"))))))
                 .then(io.github.rpgclasses.difficulty.DifficultyMenu.command())
                 .then(io.github.rpgclasses.druid.BestiaryCommand.command())
                 .then(Commands.literal("debug")
@@ -174,6 +180,19 @@ public final class ClassCommands {
         return ProgressionService.performAndReport(player, action, arg).ok() ? 1 : 0;
     }
 
+    /** Administración: suma (o quita, con negativo) puntos al saldo, sin pasar de 40 en total ni bajar de 0. */
+    private static int givePoints(CommandSourceStack source, ServerPlayer target, int amount) {
+        PlayerClassData data = PlayerClassDataProvider.get(target);
+        if (data == null) return 0;
+        ProgressState s = data.state;
+        int changed = amount >= 0 ? ProgressionRules.addPoints(s, amount) : -Math.min(s.pointBalance, -amount);
+        if (amount < 0) s.pointBalance += changed;
+        ClassPoints.touch(target);
+        io.github.rpgclasses.network.Net.syncProgress(target);
+        source.sendSuccess(() -> Component.translatable("msg.rites_and_paths.points_admin", target.getDisplayName(), changed, s.pointBalance), true);
+        return changed;
+    }
+
     private static int info(CommandSourceStack source, ServerPlayer target) {
         PlayerClassData data = PlayerClassDataProvider.get(target);
         if (data == null) return 0;
@@ -182,11 +201,14 @@ public final class ClassCommands {
         Component className = s.classId == null ? none : Component.translatable(Ids.langKey("class", s.classId, "name"));
         Component subName = s.subclassId == null ? none : Component.translatable(Ids.langKey("subclass", s.subclassId, "name"));
         int cap = ProgressionRules.subclassCap(s.basePoints());
-        Component next = ProgressionRules.isMaxed(s)
+        Component next = s.ownedPoints() >= ProgressionRules.MAX_POINTS
                 ? Component.translatable("msg.rites_and_paths.max_level")
-                : Component.translatable("msg.rites_and_paths.next_cost", ProgressionRules.nextCost(s, ServerConfig.XP_COST_MULTIPLIER.get()));
+                : Component.translatable("msg.rites_and_paths.next_cost",
+                        ProgressionRules.nextCost(s, ServerConfig.XP_COST_MULTIPLIER.get(), ClassPoints.discount(target)));
         source.sendSuccess(() -> Component.translatable("msg.rites_and_paths.info",
                 className, s.basePoints(), subName, s.subclassLevel, cap, next), false);
+        source.sendSuccess(() -> Component.translatable("msg.rites_and_paths.points_info", s.pointBalance, s.ownedPoints(),
+                ProgressionRules.MAX_POINTS, s.bossesCredited.size()), false);
         if (s.classId != null && DefinitionStore.SERVER.classDef(s.classId) == null) {
             source.sendSuccess(() -> Component.translatable("msg.rites_and_paths.suspended").withStyle(ChatFormatting.YELLOW), false);
         }

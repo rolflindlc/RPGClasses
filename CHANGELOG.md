@@ -3,6 +3,24 @@
 ## Unreleased
 
 ### Added
+- **Class points:** levelling no longer charges XP when you spend in the tree. You hold a balance of class points
+  (shown in the tree) and every branch or subclass level costs 1 point. Points are bought with XP (`+1` / `all`
+  buttons, same price curve: point n costs (80 + 6n) XP, where n counts every point you own) or come from items and
+  bosses; 40 at most. Respecs give points back with the usual loss (rounded to the nearest). `buyPointsWithXp`
+  turns XP purchases off. Existing players keep everything they spent and start with a balance of 0.
+- **Book of Knowledge** (+1 point) and **Book of Oblivion** (full class + subclass respec with no loss, with
+  confirmation): no recipe, creative only; optional rare loot in the chests where the enchanted golden apple appears
+  (same weight by default for the Book of Knowledge, half for the Book of Oblivion; `classBooks` config).
+- **Boss points:** the first kill of each boss species (`rites_and_paths:class_point_bosses`: Wither, Ender Dragon,
+  Warden, Elder Guardian and `forge:bosses`) gives 1 class point to every player who damaged it (`bossPoints`).
+- **Catch-up help:** players below the average class points of the players active in the last 14 days buy points
+  3% cheaper per point below, up to 50% (`catchUp`).
+- **Saved builds:** 3 slots; loading one resets the class with the usual loss and spends your points following it.
+- `/clase comprar [todos]`, `/clases puntos <player> <amount>`; `/clase info` shows the balance.
+
+### Changed
+- **Druid:** Wild Shape and Beast Lore are granted at level 0 (when choosing the class). Class milestones may now be
+  level 0.
 - **Druid, beasts from other mods:** about 145 creatures from Alex's Mobs, Alex's Caves, Mowzie's Mobs, L_Ender's
   Cataclysm, Skarrier Mobs, Iron's Spellbooks and Travel Optics are valid Wild Shape forms (optional entries: missing
   mods are ignored), with abilities and traits. Bosses, humanoids, constructs, summons and segmented creatures are

@@ -1,6 +1,7 @@
 {
   "replace": false,
   "entries": [
-    "rites_and_paths:race_loot"
+    "rites_and_paths:race_loot",
+    "rites_and_paths:class_books"
   ]
 }

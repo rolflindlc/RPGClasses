@@ -52,7 +52,7 @@ public final class TreeStatus {
         ClassDef def = layout.def;
         ProgressState real = c == null ? new ProgressState() : c.real();
         ProgressState s = sim == null ? real : sim.state;
-        long xpLeft = sim == null ? 0 : sim.xpLeft;
+        long pointsLeft = sim == null ? 0 : sim.pointsLeft;
 
         for (Node n : layout.nodes) {
             Status st;
@@ -61,14 +61,14 @@ public final class TreeStatus {
             } else {
                 st = switch (n.kind) {
                     case CORE -> Status.OWNED;
-                    case KEYSTONE -> keystone(def.branches().get(n.index), real, s, c, xpLeft);
-                    case POINT -> point(def.branches().get(n.index), n.level, real, s, c, xpLeft);
+                    case KEYSTONE -> keystone(def.branches().get(n.index), real, s, c);
+                    case POINT -> point(def.branches().get(n.index), n.level, real, s, c);
                     case PERK -> perk(def.branches().get(n.index), n.level, real, s);
                     case GEM -> real.totalLevel() >= n.level ? Status.OWNED : s.totalLevel() >= n.level ? Status.PLANNED : Status.FUTURE;
                     case SUB_HUB -> real.basePoints() >= ProgressionRules.SUBCLASS_UNLOCK ? Status.OWNED
                             : s.basePoints() >= ProgressionRules.SUBCLASS_UNLOCK ? Status.PLANNED : Status.LOCKED;
                     case SUB_KEY -> subKey(def.subclasses().get(n.index), real, s, c);
-                    case SUB_POINT -> subPoint(def.subclasses().get(n.index), n.level, real, s, c, xpLeft);
+                    case SUB_POINT -> subPoint(def.subclasses().get(n.index), n.level, real, s, c);
                 };
             }
             statuses.put(n, st);
@@ -85,20 +85,20 @@ public final class TreeStatus {
         return statuses.getOrDefault(n, Status.FUTURE);
     }
 
-    private static Status keystone(BranchDef b, ProgressState real, ProgressState s, TreePlan.Context c, long xpLeft) {
+    private static Status keystone(BranchDef b, ProgressState real, ProgressState s, TreePlan.Context c) {
         if (ProgressionRules.isBranchLocked(real, b.id())) return Status.LOCKED;
         if (ProgressionRules.isBranchLocked(s, b.id())) return Status.WILL_LOCK;
         if (real.pointsIn(b.id()) > 0) return Status.OWNED;
         if (s.pointsIn(b.id()) > 0) return Status.PLANNED;
-        return nextStatus(TreePlan.check(s, c, new Step(Type.BRANCH, b.id(), null), xpLeft));
+        return nextStatus(TreePlan.check(s, c, new Step(Type.BRANCH, b.id(), null)));
     }
 
-    private static Status point(BranchDef b, int level, ProgressState real, ProgressState s, TreePlan.Context c, long xpLeft) {
+    private static Status point(BranchDef b, int level, ProgressState real, ProgressState s, TreePlan.Context c) {
         if (level <= real.pointsIn(b.id())) return Status.OWNED;
         if (level <= s.pointsIn(b.id())) return Status.PLANNED;
         if (ProgressionRules.isBranchLocked(real, b.id())) return Status.LOCKED;
         if (ProgressionRules.isBranchLocked(s, b.id())) return Status.WILL_LOCK;
-        if (level == s.pointsIn(b.id()) + 1) return nextStatus(TreePlan.check(s, c, new Step(Type.BRANCH, b.id(), null), xpLeft));
+        if (level == s.pointsIn(b.id()) + 1) return nextStatus(TreePlan.check(s, c, new Step(Type.BRANCH, b.id(), null)));
         return Status.FUTURE;
     }
 
@@ -122,21 +122,21 @@ public final class TreeStatus {
         return r.ok() ? Status.AVAILABLE : Status.FUTURE;
     }
 
-    private static Status subPoint(String subId, int level, ProgressState real, ProgressState s, TreePlan.Context c, long xpLeft) {
+    private static Status subPoint(String subId, int level, ProgressState real, ProgressState s, TreePlan.Context c) {
         if (subId.equals(real.subclassId) && level <= real.subclassLevel) return Status.OWNED;
         if (real.subclassId != null && !subId.equals(real.subclassId)) return Status.LOCKED;
         if (s.subclassId != null && !subId.equals(s.subclassId)) return Status.WILL_LOCK;
         if (subId.equals(s.subclassId) && level <= s.subclassLevel) return Status.PLANNED;
         if (level > ProgressionRules.subclassCap(s.basePoints())) return Status.CAPPED;
         if (subId.equals(s.subclassId) && level == s.subclassLevel + 1) {
-            return nextStatus(TreePlan.check(s, c, new Step(Type.SUBCLASS, null, null), xpLeft));
+            return nextStatus(TreePlan.check(s, c, new Step(Type.SUBCLASS, null, null)));
         }
         return Status.FUTURE;
     }
 
     private static Status nextStatus(Result r) {
         if (r.ok()) return Status.AVAILABLE;
-        if (r == Result.NOT_ENOUGH_XP) return Status.POOR;
+        if (r == Result.NOT_ENOUGH_XP || r == Result.NO_POINTS) return Status.POOR;
         if (r == Result.BRANCH_LOCKED || r == Result.SUBCLASS_LOCKED) return Status.LOCKED;
         if (r == Result.SUBCLASS_CAP) return Status.CAPPED;
         return Status.FUTURE;

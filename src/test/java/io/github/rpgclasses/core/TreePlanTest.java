@@ -53,8 +53,10 @@ public class TreePlanTest {
         return s;
     }
 
-    private TreePlan.Context ctx(ProgressState s, long xp) {
-        return new TreePlan.Context(s, def, subs::get, xp, 1.0);
+    /** Contexto con ese saldo de puntos. */
+    private TreePlan.Context ctx(ProgressState s, long points) {
+        s.pointBalance = (int) Math.min(points, ProgressionRules.MAX_POINTS);
+        return new TreePlan.Context(s, def, subs::get);
     }
 
     @Test
@@ -70,7 +72,7 @@ public class TreePlanTest {
         plan.setBranchTarget(ctx(s, RICH), "a", 4);
         TreePlan.Simulation sim = plan.simulate(ctx(s, RICH));
         assertEquals(4, sim.state.pointsIn("a"));
-        assertEquals(XpMath.totalCost(0, 4, 1.0), sim.cost);
+        assertEquals(4, sim.cost);
         assertEquals(0, s.pointsIn("a")); // el estado real no cambia
         // Bajar el objetivo quita pasos del plan, nunca puntos comprados.
         plan.setBranchTarget(ctx(s, RICH), "a", 1);
@@ -78,14 +80,13 @@ public class TreePlanTest {
     }
 
     @Test
-    public void xpLimitsThePlan() {
+    public void pointsLimitThePlan() {
         ProgressState s = fresh();
         TreePlan plan = new TreePlan();
-        long two = XpMath.totalCost(0, 2, 1.0);
-        plan.setBranchTarget(ctx(s, two), "a", 10);
+        plan.setBranchTarget(ctx(s, 2), "a", 10);
         assertEquals(2, plan.steps().size());
-        // Si luego hay menos XP, los pasos que ya no se pueden pagar se saltan.
-        assertEquals(1, plan.simulate(ctx(s, two - 1)).state.pointsIn("a"));
+        // Si luego hay menos puntos, los pasos que ya no se pueden pagar se saltan.
+        assertEquals(1, plan.simulate(ctx(s, 1)).state.pointsIn("a"));
     }
 
     @Test

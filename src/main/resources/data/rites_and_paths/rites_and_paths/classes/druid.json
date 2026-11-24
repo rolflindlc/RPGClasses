@@ -330,11 +330,11 @@
   ],
   "milestones": [
     {
-      "total_level": 1,
+      "total_level": 0,
       "grants": "rites_and_paths:wild_shape"
     },
     {
-      "total_level": 1,
+      "total_level": 0,
       "grants": "rites_and_paths:beast_lore"
     },
     {

@@ -20,11 +20,13 @@ public final class ProgressionRules {
     public static final int PERKS_PER_BRANCH = 2;
     public static final int SUBCLASS_MAX = 10;
     public static final int SUBCLASS_UNLOCK = 15;
+    /** Puntos de clase que se pueden tener como máximo (gastados + saldo): 30 de base y 10 de subclase. */
+    public static final int MAX_POINTS = BASE_MAX + SUBCLASS_MAX;
 
     public enum Result {
         OK, NO_CLASS, ALREADY_HAS_CLASS, UNKNOWN_CLASS, UNKNOWN_BRANCH, BRANCH_FULL,
         SUBCLASS_LOCKED, UNKNOWN_SUBCLASS, ALREADY_HAS_SUBCLASS, NO_SUBCLASS, SUBCLASS_CAP,
-        NOT_ENOUGH_XP, IN_COMBAT, CLASS_DISABLED, BRANCH_LOCKED, UNKNOWN_PERK, PERK_UNAVAILABLE, PERK_ALREADY_CHOSEN,
+        NOT_ENOUGH_XP, NO_POINTS, POINTS_MAXED, XP_PURCHASE_DISABLED, UNKNOWN_BUILD, NO_OBLIVION_BOOK, IN_COMBAT, CLASS_DISABLED, BRANCH_LOCKED, UNKNOWN_PERK, PERK_UNAVAILABLE, PERK_ALREADY_CHOSEN,
         NO_RACE, ALREADY_HAS_RACE, UNKNOWN_RACE, UNKNOWN_SUBRACE, SUBRACE_UNAVAILABLE, NOT_HUMAN, WALL_INVALID, WALL_SLOTS_FULL;
 
         public boolean ok() {
@@ -38,9 +40,43 @@ public final class ProgressionRules {
         return Math.min(SUBCLASS_MAX, (Math.min(basePoints, BASE_MAX) - 10) / 2);
     }
 
-    /** Coste del siguiente punto, sea de base o de subclase. */
+    /**
+     * Precio en XP del siguiente punto de clase: el del nivel n de la curva (80 + 6n) x multiplicador, con n = puntos que
+     * ya tiene (gastados + saldo, vengan de XP, libros o jefes) + 1.
+     */
     public static int nextCost(ProgressState s, double multiplier) {
-        return XpMath.costOfLevel(s.totalLevel() + 1, multiplier);
+        return XpMath.costOfLevel(Math.min(s.ownedPoints(), MAX_POINTS - 1) + 1, multiplier);
+    }
+
+    /** Precio con un descuento (ayuda a rezagados) en [0, 1). */
+    public static int nextCost(ProgressState s, double multiplier, double discount) {
+        double d = Double.isFinite(discount) ? Math.max(0, Math.min(.95, discount)) : 0;
+        return (int) Math.round(nextCost(s, multiplier) * (1 - d));
+    }
+
+    // --- Saldo de puntos ---
+
+    public static Result checkBuyPoint(ProgressState s, long availableXp, int cost) {
+        if (s.ownedPoints() >= MAX_POINTS) return Result.POINTS_MAXED;
+        if (availableXp < cost) return Result.NOT_ENOUGH_XP;
+        return Result.OK;
+    }
+
+    public static void buyPoint(ProgressState s) {
+        s.pointBalance++;
+    }
+
+    /** Suma puntos al saldo (libros, jefes) sin pasar del máximo. @return los que se han sumado. */
+    public static int addPoints(ProgressState s, int amount) {
+        int added = Math.max(0, Math.min(amount, MAX_POINTS - s.ownedPoints()));
+        s.pointBalance += added;
+        return added;
+    }
+
+    /** Puntos que se devuelven al reiniciar {@code points} con esa pérdida (redondeo al más cercano). */
+    public static int refundPoints(int points, double lossFraction) {
+        double loss = Double.isFinite(lossFraction) ? Math.max(0, Math.min(1, lossFraction)) : 0;
+        return (int) Math.round(points * (1 - loss));
     }
 
     // --- Raza (anexo de razas): permanente ---
@@ -98,23 +134,22 @@ public final class ProgressionRules {
     // --- Puntos de rama ---
 
     /** @param def definición de la clase del jugador; null si la clase ya no existe ("en suspenso"). */
-    public static Result checkSpendBranch(ProgressState s, ClassDef def, String branchId, long availableXp, double multiplier) {
+    public static Result checkSpendBranch(ProgressState s, ClassDef def, String branchId) {
         if (s.classId == null) return Result.NO_CLASS;
         if (def == null || !def.id().equals(s.classId)) return Result.UNKNOWN_CLASS;
         BranchDef branch = def.branch(branchId);
         if (branch == null) return Result.UNKNOWN_BRANCH;
         if (s.pointsIn(branchId) >= branch.maxPoints()) return Result.BRANCH_FULL;
         if (isBranchLocked(s, branchId)) return Result.BRANCH_LOCKED;
-        if (availableXp < nextCost(s, multiplier)) return Result.NOT_ENOUGH_XP;
+        if (s.pointBalance < 1) return Result.NO_POINTS;
         return Result.OK;
     }
 
-    /** @return XP a cobrar. */
-    public static int spendBranch(ProgressState s, String branchId, double multiplier) {
-        int cost = nextCost(s, multiplier);
+    /** Gasta un punto del saldo en la rama. @return puntos gastados (1). */
+    public static int spendBranch(ProgressState s, String branchId) {
         s.branchPoints.merge(branchId, 1, Integer::sum);
-        s.xpPaidBase += cost;
-        return cost;
+        s.pointBalance--;
+        return 1;
     }
 
     /** Regla 13: una rama sin puntos queda bloqueada en cuanto hay puntos en 3 ramas distintas. */
@@ -162,20 +197,19 @@ public final class ProgressionRules {
         s.xpPaidSubclass = 0;
     }
 
-    public static Result checkSpendSubclass(ProgressState s, long availableXp, double multiplier) {
+    public static Result checkSpendSubclass(ProgressState s) {
         if (s.classId == null) return Result.NO_CLASS;
         if (s.subclassId == null) return Result.NO_SUBCLASS;
         if (s.subclassLevel >= subclassCap(s.basePoints())) return Result.SUBCLASS_CAP;
-        if (availableXp < nextCost(s, multiplier)) return Result.NOT_ENOUGH_XP;
+        if (s.pointBalance < 1) return Result.NO_POINTS;
         return Result.OK;
     }
 
-    /** @return XP a cobrar. */
-    public static int spendSubclass(ProgressState s, double multiplier) {
-        int cost = nextCost(s, multiplier);
+    /** Gasta un punto del saldo en la subclase. @return puntos gastados (1). */
+    public static int spendSubclass(ProgressState s) {
         s.subclassLevel++;
-        s.xpPaidSubclass += cost;
-        return cost;
+        s.pointBalance--;
+        return 1;
     }
 
     // --- Respec ---
@@ -188,20 +222,17 @@ public final class ProgressionRules {
     }
 
     /**
-     * Quita la subclase (se podrá elegir otra). Sin límite de usos.
-     * Devuelve el coste actual de los niveles que se pierden (los más altos del Nivel Total)
-     * menos la fracción {@code lossFraction}. Así, con pérdida 0, lo devuelto alcanza exactamente
-     * para volver a comprarlos, se hayan comprado en el orden que sea.
-     * @return XP a devolver.
+     * Quita la subclase (se podrá elegir otra). Sin límite de usos. Sus puntos vuelven al saldo menos la fracción
+     * {@code lossFraction} (los perdidos se pueden volver a conseguir, y más baratos).
+     * @return puntos devueltos al saldo.
      */
-    public static long respecSubclass(ProgressState s, double multiplier, double lossFraction) {
-        int total = s.totalLevel();
-        long removedCost = Math.min(XpMath.totalCost(total - s.subclassLevel, total, multiplier), s.xpPaidBase + s.xpPaidSubclass);
-        s.xpPaidBase = s.xpPaidBase + s.xpPaidSubclass - removedCost;
-        s.xpPaidSubclass = 0;
+    public static int respecSubclass(ProgressState s, double lossFraction) {
+        int back = refundPoints(s.subclassLevel, lossFraction);
         s.subclassId = null;
         s.subclassLevel = 0;
-        return refund(removedCost, lossFraction);
+        s.xpPaidSubclass = 0;
+        s.pointBalance += back;
+        return back;
     }
 
     public static Result checkRespecClass(ProgressState s, boolean inCombat) {
@@ -210,9 +241,9 @@ public final class ProgressionRules {
         return Result.OK;
     }
 
-    /** Quita clase y subclase (se podrá elegir otra clase). Sin límite de usos. @return XP a devolver. */
-    public static long respecClass(ProgressState s, double lossFraction) {
-        long paid = s.xpPaidBase + s.xpPaidSubclass;
+    /** Quita clase y subclase (se podrá elegir otra clase). Sin límite de usos. @return puntos devueltos al saldo. */
+    public static int respecClass(ProgressState s, double lossFraction) {
+        int back = refundPoints(s.totalLevel(), lossFraction);
         s.classId = null;
         s.branchPoints.clear();
         s.perks.clear();
@@ -222,12 +253,8 @@ public final class ProgressionRules {
         s.xpPaidSubclass = 0;
         s.kitGranted = false;
         s.humanWalls.clear();
-        return refund(paid, lossFraction);
-    }
-
-    private static long refund(long paid, double lossFraction) {
-        double loss = Double.isFinite(lossFraction) ? Math.max(0, Math.min(1, lossFraction)) : 0;
-        return (long) Math.floor(paid * (1 - loss));
+        s.pointBalance += back;
+        return back;
     }
 
     /** true si ya no queda ningún punto por comprar (30 de base y 10 de subclase). */

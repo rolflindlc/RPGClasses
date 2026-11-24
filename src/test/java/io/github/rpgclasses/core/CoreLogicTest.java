@@ -40,11 +40,19 @@ public class CoreLogicTest {
         return DefinitionParser.parseSubclass(id, "{\"class\":\"t:class\",\"effects\":[{\"type\":\"rites_and_paths:mechanic\",\"id\":\"t:y\"}]}");
     }
 
+    /** Da los puntos y los gasta en la rama. */
     private static void fill(ProgressState s, ClassDef def, String branch, int points) {
         for (int i = 0; i < points; i++) {
-            assertEquals(Result.OK, ProgressionRules.checkSpendBranch(s, def, branch, RICH, 1.0));
-            ProgressionRules.spendBranch(s, branch, 1.0);
+            s.pointBalance++;
+            assertEquals(Result.OK, ProgressionRules.checkSpendBranch(s, def, branch));
+            ProgressionRules.spendBranch(s, branch);
         }
+    }
+
+    private static void spendSub(ProgressState s) {
+        s.pointBalance++;
+        assertEquals(Result.OK, ProgressionRules.checkSpendSubclass(s));
+        ProgressionRules.spendSubclass(s);
     }
 
     // --- Ramas extra y perks (reglas 11 y 13) ---
@@ -72,12 +80,12 @@ public class CoreLogicTest {
         assertTrue(ProgressionRules.isBranchLocked(s, "d"));
         assertTrue(ProgressionRules.isBranchLocked(s, "e"));
         assertFalse(ProgressionRules.isBranchLocked(s, "a"));
-        assertEquals(Result.BRANCH_LOCKED, ProgressionRules.checkSpendBranch(s, def, "d", RICH, 1.0));
+        assertEquals(Result.BRANCH_LOCKED, ProgressionRules.checkSpendBranch(s, def, "d"));
         fill(s, def, "a", 9);
         // Reiniciar la clase desbloquea todo.
         ProgressionRules.respecClass(s, 0.33);
         ProgressionRules.chooseClass(s, def);
-        assertEquals(Result.OK, ProgressionRules.checkSpendBranch(s, def, "e", RICH, 1.0));
+        assertEquals(Result.OK, ProgressionRules.checkSpendBranch(s, def, "e"));
     }
 
     @Test
@@ -99,7 +107,7 @@ public class CoreLogicTest {
         assertEquals(10, s.totalLevel());
         // Reiniciar la subclase no lo toca; reiniciar la clase sí.
         s.subclassId = "t:s1";
-        ProgressionRules.respecSubclass(s, 1.0, 0.33);
+        ProgressionRules.respecSubclass(s, 0.33);
         assertEquals("p2", s.perkIn("c"));
         ProgressionRules.respecClass(s, 0.33);
         assertTrue(s.perks.isEmpty());
@@ -147,38 +155,58 @@ public class CoreLogicTest {
     }
 
     @Test
-    public void fullProgressionCosts8120() {
+    public void fullProgressionUsesFortyPoints() {
         ClassDef def = testClass();
         ProgressState s = new ProgressState();
-        assertEquals(Result.NO_CLASS, ProgressionRules.checkSpendBranch(s, def, "a", RICH, 1.0));
+        assertEquals(Result.NO_CLASS, ProgressionRules.checkSpendBranch(s, def, "a"));
         assertEquals(Result.OK, ProgressionRules.checkChooseClass(s, def));
         ProgressionRules.chooseClass(s, def);
         assertEquals(Result.ALREADY_HAS_CLASS, ProgressionRules.checkChooseClass(s, def));
 
         fill(s, def, "a", 10);
-        assertEquals(Result.BRANCH_FULL, ProgressionRules.checkSpendBranch(s, def, "a", RICH, 1.0));
-        assertEquals(Result.UNKNOWN_BRANCH, ProgressionRules.checkSpendBranch(s, def, "zzz", RICH, 1.0));
-        assertEquals(Result.NOT_ENOUGH_XP, ProgressionRules.checkSpendBranch(s, def, "b", 10, 1.0));
+        assertEquals(Result.BRANCH_FULL, ProgressionRules.checkSpendBranch(s, def, "a"));
+        assertEquals(Result.UNKNOWN_BRANCH, ProgressionRules.checkSpendBranch(s, def, "zzz"));
+        assertEquals(Result.NO_POINTS, ProgressionRules.checkSpendBranch(s, def, "b"));
         assertEquals(Result.SUBCLASS_LOCKED, ProgressionRules.checkChooseSubclass(s, def, testSub("t:s1")));
 
         fill(s, def, "b", 5); // 15 de base
         assertEquals(Result.UNKNOWN_SUBCLASS, ProgressionRules.checkChooseSubclass(s, def, testSub("t:other")));
-        assertEquals(Result.NO_SUBCLASS, ProgressionRules.checkSpendSubclass(s, RICH, 1.0));
-        assertEquals(Result.OK, ProgressionRules.checkChooseSubclass(s, def, testSub("t:s1")));
+        assertEquals(Result.NO_SUBCLASS, ProgressionRules.checkSpendSubclass(s));
         ProgressionRules.chooseSubclass(s, testSub("t:s1"));
-        ProgressionRules.spendSubclass(s, 1.0);
-        ProgressionRules.spendSubclass(s, 1.0);
-        assertEquals(Result.SUBCLASS_CAP, ProgressionRules.checkSpendSubclass(s, RICH, 1.0));
+        spendSub(s);
+        spendSub(s);
+        s.pointBalance++;
+        assertEquals(Result.SUBCLASS_CAP, ProgressionRules.checkSpendSubclass(s));
+        s.pointBalance--;
         assertEquals(17, s.totalLevel());
 
         fill(s, def, "b", 5);
         fill(s, def, "c", 10);
-        while (ProgressionRules.checkSpendSubclass(s, RICH, 1.0).ok()) ProgressionRules.spendSubclass(s, 1.0);
-        assertEquals(30, s.basePoints());
-        assertEquals(10, s.subclassLevel);
+        while (s.subclassLevel < ProgressionRules.subclassCap(s.basePoints())) spendSub(s);
         assertEquals(40, s.totalLevel());
-        // El reparto entre base y subclase no cambia el total.
-        assertEquals(8120, s.xpPaidBase + s.xpPaidSubclass);
+        assertEquals(ProgressionRules.MAX_POINTS, s.ownedPoints());
+        assertTrue(ProgressionRules.isMaxed(s));
+    }
+
+    @Test
+    public void pointPriceFollowsEveryPointOwned() {
+        ProgressState s = new ProgressState();
+        assertEquals(86, ProgressionRules.nextCost(s, 1.0));
+        assertEquals(Result.NOT_ENOUGH_XP, ProgressionRules.checkBuyPoint(s, 85, 86));
+        assertEquals(Result.OK, ProgressionRules.checkBuyPoint(s, 86, 86));
+        ProgressionRules.buyPoint(s);
+        assertEquals(1, s.pointBalance);
+        assertEquals(XpMath.costOfLevel(2, 1.0), ProgressionRules.nextCost(s, 1.0));
+        // Un libro también encarece el siguiente.
+        assertEquals(1, ProgressionRules.addPoints(s, 1));
+        assertEquals(XpMath.costOfLevel(3, 1.0), ProgressionRules.nextCost(s, 1.0));
+        // Descuento de la ayuda a rezagados.
+        assertEquals(Math.round(XpMath.costOfLevel(3, 1.0) * 0.5), ProgressionRules.nextCost(s, 1.0, 0.5));
+        // Tope de 40: ni se compra ni se suman libros.
+        assertEquals(38, ProgressionRules.addPoints(s, 100));
+        assertEquals(40, s.ownedPoints());
+        assertEquals(Result.POINTS_MAXED, ProgressionRules.checkBuyPoint(s, RICH, 1));
+        assertEquals(0, ProgressionRules.addPoints(s, 1));
     }
 
     @Test
@@ -187,58 +215,90 @@ public class CoreLogicTest {
         ProgressState s = new ProgressState();
         ProgressionRules.chooseClass(s, def);
         fill(s, def, "a", 10);
-        fill(s, def, "b", 5);
+        fill(s, def, "b", 10);
         ProgressionRules.chooseSubclass(s, testSub("t:s1"));
-        ProgressionRules.spendSubclass(s, 1.0); // comprado barato, como nivel 16
-        ProgressionRules.spendSubclass(s, 1.0);
-        fill(s, def, "b", 5);
+        for (int i = 0; i < 5; i++) spendSub(s);
         fill(s, def, "c", 10);
-        while (ProgressionRules.checkSpendSubclass(s, RICH, 1.0).ok()) ProgressionRules.spendSubclass(s, 1.0);
-        assertTrue(ProgressionRules.isMaxed(s));
+        assertEquals(0, s.pointBalance);
 
         assertEquals(Result.IN_COMBAT, ProgressionRules.checkRespecSubclass(s, true));
         assertEquals(Result.OK, ProgressionRules.checkRespecSubclass(s, false));
-        // Se devuelve el coste actual de los niveles 31-40 (2930) menos el 33%, sin importar el orden de compra.
-        assertEquals((long) Math.floor(2930 * 0.67), ProgressionRules.respecSubclass(s, 1.0, 0.33));
+        // 5 niveles de subclase con 33 % de pérdida: vuelven round(3.35) = 3.
+        assertEquals(3, ProgressionRules.respecSubclass(s, 0.33));
         assertNull(s.subclassId);
         assertEquals(30, s.totalLevel());
-        assertEquals(5190, s.xpPaidBase + s.xpPaidSubclass);
-        assertFalse(ProgressionRules.isMaxed(s));
+        assertEquals(3, s.pointBalance);
 
         // Se puede elegir otra subclase y reiniciar de nuevo, sin límite.
-        assertEquals(Result.OK, ProgressionRules.checkChooseSubclass(s, def, testSub("t:s2")));
         ProgressionRules.chooseSubclass(s, testSub("t:s2"));
-        ProgressionRules.spendSubclass(s, 1.0);
-        assertEquals((long) Math.floor(XpMath.costOfLevel(31, 1.0) * 0.67), ProgressionRules.respecSubclass(s, 1.0, 0.33));
+        ProgressionRules.spendSubclass(s);
+        assertEquals(2, s.pointBalance);
 
-        // Reinicio de clase: 67% de todo lo pagado, y permite elegir otra clase.
-        assertEquals((long) Math.floor(5190 * 0.67), ProgressionRules.respecClass(s, 0.33));
+        // Reinicio de clase: 31 puntos gastados -> vuelven round(20.77) = 21, y permite elegir otra clase.
+        assertEquals(21, ProgressionRules.respecClass(s, 0.33));
         assertNull(s.classId);
         assertEquals(0, s.totalLevel());
+        assertEquals(23, s.pointBalance);
         assertEquals(Result.OK, ProgressionRules.checkChooseClass(s, def));
     }
 
     @Test
-    public void respecWithoutLossAllowsExactRebuy() {
+    public void respecWithoutLossGivesEveryPointBack() {
         ClassDef def = testClass();
         ProgressState s = new ProgressState();
         ProgressionRules.chooseClass(s, def);
         fill(s, def, "a", 10);
         fill(s, def, "b", 5);
         ProgressionRules.chooseSubclass(s, testSub("t:s1"));
-        ProgressionRules.spendSubclass(s, 1.0);
-        ProgressionRules.spendSubclass(s, 1.0);
-        fill(s, def, "b", 5); // la base sube después: los 2 niveles de subclase ahora "valen" como 21 y 22
-        long refund = ProgressionRules.respecSubclass(s, 1.0, 0.0);
-        assertEquals(XpMath.totalCost(20, 22, 1.0), refund);
-        assertEquals(XpMath.totalCost(0, 20, 1.0), s.xpPaidBase);
+        spendSub(s);
+        spendSub(s);
+        assertEquals(2, ProgressionRules.respecSubclass(s, 0.0));
+        assertEquals(15, ProgressionRules.respecClass(s, 0.0));
+        assertEquals(17, s.pointBalance);
+        assertEquals(17, s.ownedPoints());
+    }
+
+    @Test
+    public void buildIsRebuiltInAValidOrderAndStopsWithThePoints() {
+        ClassDef def = testClass();
+        ProgressState s = new ProgressState();
+        ProgressionRules.chooseClass(s, def);
+        fill(s, def, "a", 10);
+        fill(s, def, "c", 10);
+        ProgressionRules.choosePerk(s, "c", "p1");
+        ProgressionRules.chooseSubclass(s, testSub("t:s1"));
+        for (int i = 0; i < 5; i++) spendSub(s);
+        io.github.rpgclasses.core.progression.SavedBuild build = io.github.rpgclasses.core.progression.SavedBuild.of(s);
+        assertEquals(25, build.totalPoints());
+
+        // Con todos los puntos, la build queda igual.
+        ProgressState t = new ProgressState();
+        ProgressionRules.chooseClass(t, def);
+        t.pointBalance = 25;
+        assertEquals(25, io.github.rpgclasses.core.progression.BuildRules.apply(t, def, testSub("t:s1"), build));
+        assertEquals(10, t.pointsIn("a"));
+        assertEquals(10, t.pointsIn("c"));
+        assertEquals("p1", t.perkIn("c"));
+        assertEquals("t:s1", t.subclassId);
+        assertEquals(5, t.subclassLevel);
+        assertEquals(0, t.pointBalance);
+
+        // Con menos, se reparte por vueltas y se para sin saltarse reglas.
+        ProgressState u = new ProgressState();
+        ProgressionRules.chooseClass(u, def);
+        u.pointBalance = 12;
+        assertEquals(12, io.github.rpgclasses.core.progression.BuildRules.apply(u, def, testSub("t:s1"), build));
+        assertEquals(6, u.pointsIn("a"));
+        assertEquals(6, u.pointsIn("c"));
+        assertNull(u.perkIn("c"));
+        assertNull(u.subclassId);
     }
 
     @Test
     public void suspendedClassCannotSpend() {
         ProgressState s = new ProgressState();
         s.classId = "t:removed";
-        assertEquals(Result.UNKNOWN_CLASS, ProgressionRules.checkSpendBranch(s, null, "a", RICH, 1.0));
+        assertEquals(Result.UNKNOWN_CLASS, ProgressionRules.checkSpendBranch(s, null, "a"));
         assertEquals(Result.OK, ProgressionRules.checkRespecClass(s, false));
     }
 

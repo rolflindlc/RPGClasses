@@ -86,6 +86,7 @@ public final class ModGear {
             .icon(() -> new ItemStack(ARMOR.get(GearClass.MONK).get(ArmorTier.DRAGONSTEEL_FIRE).get(ArmorItem.Type.CHESTPLATE).get()))
             .displayItems((params, out) -> {
                 io.github.rpgclasses.registry.ModBlocks.ITEMS.getEntries().forEach(ro -> out.accept(ro.get()));
+                io.github.rpgclasses.registry.ClassBooks.ITEMS.getEntries().forEach(ro -> out.accept(ro.get()));
                 ORDER.forEach(ro -> out.accept(ro.get()));
                 io.github.rpgclasses.bard.BardItems.creativeItems(out::accept);
                 io.github.rpgclasses.spin.SpinRegistry.creativeItems(out::accept);

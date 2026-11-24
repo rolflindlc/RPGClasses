@@ -9,7 +9,7 @@ import java.util.Map;
 /** Progreso de clase de un jugador y su serialización NBT. */
 public final class PlayerClassData {
     /** Subir al cambiar el formato guardado, y añadir la migración en {@link #load}. */
-    public static final int DATA_VERSION = 3;
+    public static final int DATA_VERSION = 4;
 
     public final ProgressState state = new ProgressState();
     /** Vida con la que se guardó el jugador; -1 si no se conoce. Solo se usa al iniciar sesión. */
@@ -25,6 +25,8 @@ public final class PlayerClassData {
      * Es del jugador, no de la clase: no se borra al reiniciarla. Ver {@code druid.Bestiary}.
      */
     public net.minecraft.nbt.CompoundTag druid = new net.minecraft.nbt.CompoundTag();
+    /** Solo en el cliente: descuento de la ayuda a rezagados que manda el servidor (no se guarda). */
+    public double catchUpDiscount;
 
     public CompoundTag save() {
         CompoundTag tag = new CompoundTag();
@@ -42,6 +44,28 @@ public final class PlayerClassData {
         tag.putLong("xpSub", state.xpPaidSubclass);
         tag.putBoolean("firstRespec", state.firstRespecUsed);
         tag.putBoolean("kit", state.kitGranted);
+        tag.putInt("points", state.pointBalance);
+        net.minecraft.nbt.ListTag bosses = new net.minecraft.nbt.ListTag();
+        for (String b : state.bossesCredited) bosses.add(net.minecraft.nbt.StringTag.valueOf(b));
+        tag.put("bosses", bosses);
+        net.minecraft.nbt.ListTag builds = new net.minecraft.nbt.ListTag();
+        for (int i = 0; i < state.builds.length; i++) {
+            io.github.rpgclasses.core.progression.SavedBuild b = state.builds[i];
+            if (b == null || b.classId() == null) continue;
+            CompoundTag bt = new CompoundTag();
+            bt.putInt("slot", i);
+            bt.putString("class", b.classId());
+            if (b.subclassId() != null) bt.putString("subclass", b.subclassId());
+            bt.putInt("subLevel", b.subclassLevel());
+            CompoundTag bb = new CompoundTag();
+            b.branchPoints().forEach(bb::putInt);
+            bt.put("branches", bb);
+            CompoundTag bp = new CompoundTag();
+            b.perks().forEach(bp::putString);
+            bt.put("perks", bp);
+            builds.add(bt);
+        }
+        tag.put("builds", builds);
         if (state.raceId != null) tag.putString("race", state.raceId);
         if (state.subraceId != null) tag.putString("subrace", state.subraceId);
         tag.putInt("raceRank", state.raceRank);
@@ -93,6 +117,27 @@ public final class PlayerClassData {
         state.xpPaidSubclass = Math.max(0, tag.getLong("xpSub"));
         state.firstRespecUsed = tag.getBoolean("firstRespec");
         state.kitGranted = tag.getBoolean("kit");
+        // v3 -> v4: puntos de clase (saldo), jefes que ya dieron su punto y builds guardadas. Ausentes = 0 / vacío: los
+        // puntos ya gastados se conservan tal cual.
+        state.pointBalance = Math.max(0, tag.getInt("points"));
+        state.bossesCredited.clear();
+        net.minecraft.nbt.ListTag bosses = tag.getList("bosses", Tag.TAG_STRING);
+        for (int i = 0; i < bosses.size(); i++) state.bossesCredited.add(bosses.getString(i));
+        java.util.Arrays.fill(state.builds, null);
+        net.minecraft.nbt.ListTag builds = tag.getList("builds", Tag.TAG_COMPOUND);
+        for (int i = 0; i < builds.size(); i++) {
+            CompoundTag bt = builds.getCompound(i);
+            int slot = bt.getInt("slot");
+            if (slot < 0 || slot >= state.builds.length || !bt.contains("class", Tag.TAG_STRING)) continue;
+            java.util.Map<String, Integer> pts = new java.util.LinkedHashMap<>();
+            CompoundTag bb = bt.getCompound("branches");
+            for (String k : bb.getAllKeys()) pts.put(k, Math.max(0, bb.getInt(k)));
+            java.util.Map<String, String> pk = new java.util.LinkedHashMap<>();
+            CompoundTag bp = bt.getCompound("perks");
+            for (String k : bp.getAllKeys()) pk.put(k, bp.getString(k));
+            state.builds[slot] = new io.github.rpgclasses.core.progression.SavedBuild(bt.getString("class"), pts, pk,
+                    bt.contains("subclass", Tag.TAG_STRING) ? bt.getString("subclass") : null, bt.getInt("subLevel"));
+        }
         // v2 -> v3: razas (ausente = sin raza; se pedirá elegirla al entrar).
         state.raceId = tag.contains("race", Tag.TAG_STRING) ? tag.getString("race") : null;
         state.subraceId = tag.contains("subrace", Tag.TAG_STRING) ? tag.getString("subrace") : null;
@@ -113,6 +158,7 @@ public final class PlayerClassData {
         CompoundTag txt = tag.getCompound("texts");
         for (String key : txt.getAllKeys()) texts.put(key, txt.getString(key));
         druid = tag.getCompound("druid").copy();
+        catchUpDiscount = tag.contains("catchUp") ? tag.getDouble("catchUp") : 0;
     }
 
     /** Al reiniciar la clase se borra lo que era propio de ella (conjuros fijados, cargas). */

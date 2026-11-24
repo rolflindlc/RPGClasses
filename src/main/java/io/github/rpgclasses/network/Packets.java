@@ -76,7 +76,15 @@ public final class Packets {
 
     /** Cliente -> servidor: una intención de progresión. El servidor la valida entera. */
     public record ClassAction(Action action, String arg) {
-        public enum Action { CHOOSE_CLASS, SPEND_BRANCH, CHOOSE_SUBCLASS, SPEND_SUBCLASS, RESPEC_CLASS, RESPEC_SUBCLASS, CHOOSE_PERK, CHOOSE_RACE, CHOOSE_WALL }
+        public enum Action {
+            CHOOSE_CLASS, SPEND_BRANCH, CHOOSE_SUBCLASS, SPEND_SUBCLASS, RESPEC_CLASS, RESPEC_SUBCLASS, CHOOSE_PERK, CHOOSE_RACE, CHOOSE_WALL,
+            /** Comprar puntos de clase con XP: arg "1" o "max". */
+            BUY_POINTS,
+            /** Builds: arg = hueco (0..2). */
+            SAVE_BUILD, LOAD_BUILD,
+            /** Libro de Olvido en la mano: reinicio completo sin pérdida (tras confirmar). */
+            USE_OBLIVION
+        }
 
         /** Argumento de CHOOSE_PERK: "rama/perk". */
         public static String perkArg(String branchId, String perkId) {

@@ -194,6 +194,21 @@ public final class DruidClient {
                 me.resetFallDistance();
             }
             if (info.hasPassive("lava_walk")) io.github.rpgclasses.content.MonkSubclasses.fluidWalk(me, false, true);
+            // Nadar en lava (laviatán, stradpole): en la lava se mueve como nadando, hacia donde mira.
+            if (info.hasPassive("lava_swim") && me.isInLava() && mc.screen == null) {
+                float fwd = me.input.forwardImpulse, side = me.input.leftImpulse;
+                Vec3 look = me.getLookAngle();
+                Vec3 v = me.getDeltaMovement();
+                if (fwd != 0 || side != 0) {
+                    double yaw = Math.toRadians(me.getYRot());
+                    Vec3 left = new Vec3(Math.cos(yaw), 0, Math.sin(yaw));
+                    Vec3 push = look.scale(fwd).add(left.scale(side));
+                    if (push.lengthSqr() > 1e-6) v = v.add(push.normalize().scale(.09));
+                }
+                double vy = mc.options.keyJump.isDown() ? .12 : me.isShiftKeyDown() ? -.12 : v.y;
+                me.setDeltaMovement(v.x, vy, v.z);
+                me.resetFallDistance();
+            }
         }
         GLOW.values().removeIf(t -> t <= clientTicks);
         FORMATIONS.removeIf(f -> clientTicks - f.start() > f.total() + 10);

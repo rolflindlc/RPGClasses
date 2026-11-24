@@ -246,6 +246,11 @@ public final class WildShape {
             p.displayClientMessage(Component.translatable("message.rites_and_paths.druid.form_unknown"), true);
             return;
         }
+        // Minijefes bestia (más vida que el tope normal): la forma pide nivel 30.
+        if (Beasts.miniboss(info, false) && Druid.totalLevel(p) < Beasts.minibossLevel(false)) {
+            p.displayClientMessage(Component.translatable("message.rites_and_paths.druid.miniboss_level", Beasts.minibossLevel(false)), true);
+            return;
+        }
         Form current = FORMS.get(p.getUUID());
         if (current != null && current.spec.equals(spec)) return;
         // La recarga solo cuenta desde que se sale de la forma: transformado se puede cambiar de forma.
@@ -376,6 +381,7 @@ public final class WildShape {
         PlayerClassData data = Druid.data(p);
         if (data != null) Bestiary.clearForm(data);
         BeastInventory.restore(p);
+        BeastMoves.clear(p);
         clearPassives(p);
         restoreFlight(p);
         StatEngine.recompute(p);
@@ -432,6 +438,8 @@ public final class WildShape {
         setTo(p, ForgeMod.ENTITY_REACH.get(), "reach", Beasts.reach(f.spec.entityType(), false));
         double speed = info.speed();
         if (info.aquatic() && !info.amphibious() && !p.isInWater()) speed *= Druid.number(Druid.WILD_SHAPE, "aquatic_land_speed", .35);
+        // Arraigada (plantas y bestias de emboscada): no se mueve.
+        if (info.hasPassive("rooted")) speed = 0;
         set(p, Attributes.MOVEMENT_SPEED, "speed", AttributeModifier.Operation.MULTIPLY_TOTAL, speed - 1);
         set(p, ModAttributes.JUMP_BONUS.get(), "jump", AttributeModifier.Operation.ADDITION, info.jump());
         if (info.breathesWater()) {
@@ -535,6 +543,7 @@ public final class WildShape {
                 if (ally.isInWater()) ally.addEffect(new MobEffectInstance(MobEffects.DOLPHINS_GRACE, 60, 0, true, true));
             }
         }
+        BeastPassives.tick(p, info);
         BeastAbilities.tick(p, f);
         BeastEffects.tickAura(p, f);
     }
@@ -545,7 +554,7 @@ public final class WildShape {
     private static void refreshPassives(ServerPlayer p, Beasts.Info info) {
         if (info.hasPassive("night_vision")) hidden(p, MobEffects.NIGHT_VISION);
         if (info.breathesWater()) hidden(p, MobEffects.WATER_BREATHING);
-        if (info.hasPassive("fire_immune")) hidden(p, MobEffects.FIRE_RESISTANCE);
+        if (info.hasPassive("fire_immune") || info.hasPassive("lava_swim")) hidden(p, MobEffects.FIRE_RESISTANCE);
         if (info.hasPassive("slow_fall")) hidden(p, MobEffects.SLOW_FALLING);
     }
 
@@ -756,7 +765,7 @@ public final class WildShape {
         if (!(event.getEntity() instanceof Player p)) return;
         Beasts.Info info = info(p);
         if (info == null) return;
-        if (info.flying() || info.hasPassive("no_fall") || info.hasPassive("slow_fall")) {
+        if (info.flying() || info.hasPassive("no_fall") || info.hasPassive("slow_fall") || info.hasPassive("glide")) {
             event.setDistance(0);
             event.setDamageMultiplier(0);
         } else if (info.hasPassive("climb")) {

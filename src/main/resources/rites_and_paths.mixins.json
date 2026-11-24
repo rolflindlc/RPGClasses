@@ -19,6 +19,7 @@
     "PlayerEnchantMixin",
     "PlayerPassengerMixin",
     "PlayerSizeMixin",
+    "PowderSnowWalkMixin",
     "WolfRideMixin",
     "irons.CastSpellMixin",
     "irons.InscriptionBookSlotMixin",

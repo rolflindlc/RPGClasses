@@ -289,6 +289,556 @@
     "minecraft:sheep": {
       "damage": 1,
       "speed": 0.9
+    },
+    "alexsmobs:alligator_snapping_turtle": {
+      "ability": "jaw_lock",
+      "amphibious": true
+    },
+    "alexsmobs:anteater": {
+      "ability": "tongue"
+    },
+    "alexsmobs:bald_eagle": {
+      "ability": "dive",
+      "flying": true
+    },
+    "alexsmobs:banana_slug": {
+      "passives": [
+        "climb"
+      ]
+    },
+    "alexsmobs:bison": {
+      "ability": "ram"
+    },
+    "alexsmobs:blobfish": {
+      "aquatic": true
+    },
+    "alexsmobs:blue_jay": {
+      "flying": true
+    },
+    "alexsmobs:bunfungus": {
+      "ability": "super_jump"
+    },
+    "alexsmobs:cachalot_whale": {
+      "ability": "whale_echo",
+      "aquatic": true
+    },
+    "alexsmobs:caiman": {
+      "ability": "death_roll",
+      "amphibious": true
+    },
+    "alexsmobs:capuchin_monkey": {
+      "ability": "dart"
+    },
+    "alexsmobs:catfish": {
+      "aquatic": true
+    },
+    "alexsmobs:cockroach": {},
+    "alexsmobs:comb_jelly": {
+      "passives": [
+        "night_vision"
+      ],
+      "aquatic": true
+    },
+    "alexsmobs:cosmaw": {
+      "ability": "ender_blink",
+      "flying": true
+    },
+    "alexsmobs:cosmic_cod": {
+      "flying": true
+    },
+    "alexsmobs:crocodile": {
+      "ability": "death_roll",
+      "amphibious": true
+    },
+    "alexsmobs:crow": {
+      "flying": true
+    },
+    "alexsmobs:devils_hole_pupfish": {
+      "aquatic": true
+    },
+    "alexsmobs:dropbear": {
+      "ability": "tree_drop",
+      "passives": [
+        "climb"
+      ]
+    },
+    "alexsmobs:elephant": {
+      "ability": "stomp"
+    },
+    "alexsmobs:emu": {
+      "ability": "dash",
+      "passives": [
+        "dodge"
+      ]
+    },
+    "alexsmobs:endergrade": {
+      "passives": [
+        "slow_fall"
+      ],
+      "flying": true
+    },
+    "alexsmobs:enderiophage": {
+      "ability": "ender_blink",
+      "passives": [
+        "climb"
+      ]
+    },
+    "alexsmobs:flutter": {
+      "flying": true
+    },
+    "alexsmobs:fly": {
+      "flying": true
+    },
+    "alexsmobs:flying_fish": {
+      "ability": "water_dash",
+      "passives": [
+        "glide"
+      ],
+      "aquatic": true
+    },
+    "alexsmobs:frilled_shark": {
+      "ability": "water_dash",
+      "aquatic": true
+    },
+    "alexsmobs:froststalker": {
+      "ability": "pounce",
+      "passives": [
+        "snow_walk"
+      ]
+    },
+    "alexsmobs:gazelle": {
+      "ability": "dash"
+    },
+    "alexsmobs:gelada_monkey": {
+      "ability": "troop_call"
+    },
+    "alexsmobs:giant_squid": {
+      "ability": "tentacles",
+      "aquatic": true
+    },
+    "alexsmobs:gorilla": {
+      "ability": "ground_pound"
+    },
+    "alexsmobs:grizzly_bear": {
+      "ability": "roar"
+    },
+    "alexsmobs:hammerhead_shark": {
+      "ability": "water_dash",
+      "aquatic": true
+    },
+    "alexsmobs:hummingbird": {
+      "flying": true
+    },
+    "alexsmobs:jerboa": {
+      "ability": "super_jump"
+    },
+    "alexsmobs:kangaroo": {
+      "ability": "kick"
+    },
+    "alexsmobs:komodo_dragon": {},
+    "alexsmobs:laviathan": {
+      "passives": [
+        "lava_swim"
+      ]
+    },
+    "alexsmobs:leafcutter_ant": {},
+    "alexsmobs:lobster": {
+      "ability": "pinch",
+      "amphibious": true
+    },
+    "alexsmobs:maned_wolf": {
+      "ability": "pounce"
+    },
+    "alexsmobs:mantis_shrimp": {
+      "ability": "punch",
+      "aquatic": true
+    },
+    "alexsmobs:mimic_octopus": {
+      "ability": "camouflage",
+      "aquatic": true
+    },
+    "alexsmobs:moose": {
+      "ability": "ram"
+    },
+    "alexsmobs:mudskipper": {
+      "ability": "mud_ball",
+      "amphibious": true
+    },
+    "alexsmobs:mungus": {},
+    "alexsmobs:orca": {
+      "ability": "water_dash",
+      "aquatic": true
+    },
+    "alexsmobs:platypus": {
+      "ability": "electroreception",
+      "amphibious": true
+    },
+    "alexsmobs:potoo": {
+      "ability": "camouflage",
+      "flying": true
+    },
+    "alexsmobs:raccoon": {},
+    "alexsmobs:rain_frog": {},
+    "alexsmobs:rattlesnake": {
+      "ability": "rattle"
+    },
+    "alexsmobs:rhinoceros": {
+      "ability": "rhino_charge"
+    },
+    "alexsmobs:roadrunner": {
+      "ability": "sprint"
+    },
+    "alexsmobs:rocky_roller": {
+      "ability": "roll"
+    },
+    "alexsmobs:seagull": {
+      "flying": true
+    },
+    "alexsmobs:seal": {
+      "ability": "water_dash",
+      "amphibious": true
+    },
+    "alexsmobs:sea_bear": {
+      "ability": "roar",
+      "aquatic": true
+    },
+    "alexsmobs:shoebill": {
+      "ability": "peck"
+    },
+    "alexsmobs:skelewag": {
+      "ability": "water_dash",
+      "aquatic": true
+    },
+    "alexsmobs:skreecher": {
+      "ability": "skreech",
+      "passives": [
+        "climb"
+      ]
+    },
+    "alexsmobs:skunk": {
+      "ability": "spray"
+    },
+    "alexsmobs:snow_leopard": {
+      "ability": "leap",
+      "passives": [
+        "snow_walk",
+        "no_fall"
+      ]
+    },
+    "alexsmobs:soul_vulture": {
+      "flying": true
+    },
+    "alexsmobs:spectre": {
+      "flying": true
+    },
+    "alexsmobs:stradpole": {
+      "passives": [
+        "lava_swim"
+      ]
+    },
+    "alexsmobs:straddler": {
+      "ability": "harpoon",
+      "passives": [
+        "fire_immune",
+        "lava_walk"
+      ]
+    },
+    "alexsmobs:sugar_glider": {
+      "passives": [
+        "glide",
+        "climb"
+      ]
+    },
+    "alexsmobs:sunbird": {
+      "ability": "sun_blessing",
+      "passives": [
+        "fire_immune"
+      ],
+      "flying": true
+    },
+    "alexsmobs:tarantula_hawk": {
+      "ability": "paralysis",
+      "flying": true
+    },
+    "alexsmobs:tasmanian_devil": {
+      "ability": "devil_screech"
+    },
+    "alexsmobs:terrapin": {
+      "ability": "shell",
+      "amphibious": true
+    },
+    "alexsmobs:tiger": {
+      "ability": "pounce"
+    },
+    "alexsmobs:toucan": {
+      "flying": true
+    },
+    "alexsmobs:triops": {
+      "aquatic": true
+    },
+    "alexsmobs:tusklin": {
+      "ability": "toss"
+    },
+    "alexsmobs:crimson_mosquito": {
+      "ability": "blood_drain",
+      "flying": true
+    },
+    "alexsmobs:warped_mosco": {
+      "ability": "blood_drain",
+      "flying": true
+    },
+    "alexsmobs:warped_toad": {
+      "ability": "tongue",
+      "passives": [
+        "fire_immune"
+      ]
+    },
+    "alexscaves:subterranodon": {
+      "passives": [
+        "no_fall"
+      ],
+      "flying": true
+    },
+    "alexscaves:vallumraptor": {
+      "ability": "leap"
+    },
+    "alexscaves:grottoceratops": {
+      "ability": "ram"
+    },
+    "alexscaves:relicheirus": {
+      "ability": "claw_slash"
+    },
+    "alexscaves:tremorsaurus": {
+      "ability": "stun_roar"
+    },
+    "alexscaves:atlatitan": {
+      "ability": "big_stomp"
+    },
+    "alexscaves:raycat": {
+      "passives": [
+        "night_vision"
+      ]
+    },
+    "alexscaves:gammaroach": {},
+    "alexscaves:brainiac": {
+      "ability": "toxic_barrel"
+    },
+    "alexscaves:lanternfish": {
+      "aquatic": true
+    },
+    "alexscaves:radgill": {
+      "aquatic": true
+    },
+    "alexscaves:trilocaris": {
+      "aquatic": true
+    },
+    "alexscaves:tripodfish": {
+      "aquatic": true
+    },
+    "alexscaves:sea_pig": {
+      "aquatic": true
+    },
+    "alexscaves:sweetish_fish": {
+      "aquatic": true
+    },
+    "alexscaves:hullbreaker": {
+      "ability": "abyssal_charge",
+      "aquatic": true
+    },
+    "alexscaves:gossamer_worm": {
+      "aquatic": true
+    },
+    "alexscaves:gloomoth": {
+      "flying": true
+    },
+    "alexscaves:corrodent": {
+      "ability": "burrow"
+    },
+    "alexscaves:vesper": {
+      "ability": "echolocation",
+      "passives": [
+        "night_vision"
+      ],
+      "flying": true
+    },
+    "alexscaves:forsaken": {
+      "ability": "sonic_scream"
+    },
+    "alexscaves:candicorn": {
+      "ability": "ram"
+    },
+    "alexscaves:gummy_bear": {},
+    "alexscaves:caramel_cube": {},
+    "mowziesmobs:frostmaw": {
+      "ability": "ice_breath",
+      "passives": [
+        "snow_walk"
+      ]
+    },
+    "mowziesmobs:grottol": {
+      "ability": "burrow"
+    },
+    "mowziesmobs:lantern": {
+      "flying": true
+    },
+    "mowziesmobs:naga": {
+      "ability": "naga_spit",
+      "flying": true
+    },
+    "mowziesmobs:foliaath": {
+      "ability": "camouflage",
+      "passives": [
+        "rooted"
+      ]
+    },
+    "mowziesmobs:baby_foliaath": {
+      "ability": "camouflage",
+      "passives": [
+        "rooted"
+      ]
+    },
+    "mowziesmobs:elokosa_howler": {
+      "ability": "howl",
+      "passives": [
+        "climb"
+      ]
+    },
+    "cataclysm:amethyst_crab": {
+      "ability": "big_stomp"
+    },
+    "cataclysm:clawdian": {
+      "ability": "big_pinch",
+      "amphibious": true
+    },
+    "cataclysm:lionfish": {
+      "ability": "spine",
+      "aquatic": true
+    },
+    "cataclysm:urchinkin": {
+      "passives": [
+        "thorns"
+      ]
+    },
+    "cataclysm:symbiocto": {
+      "ability": "ink",
+      "aquatic": true
+    },
+    "cataclysm:endermaptera": {
+      "ability": "ender_blink",
+      "passives": [
+        "climb"
+      ]
+    },
+    "cataclysm:modern_remnant": {
+      "ability": "roar"
+    },
+    "cataclysm:the_baby_leviathan": {
+      "ability": "water_dash",
+      "aquatic": true
+    },
+    "cataclysm:hippocamtus": {
+      "ability": "spear_charge",
+      "aquatic": true
+    },
+    "cataclysm:cindaria": {
+      "ability": "jelly_shock",
+      "aquatic": true
+    },
+    "skarrier_mobs:bowlder": {
+      "ability": "spin"
+    },
+    "skarrier_mobs:colossadon": {
+      "ability": "big_stomp"
+    },
+    "skarrier_mobs:dangle": {
+      "ability": "lasso"
+    },
+    "skarrier_mobs:gadlisk": {
+      "flying": true
+    },
+    "skarrier_mobs:glowin": {
+      "passives": [
+        "night_vision"
+      ]
+    },
+    "skarrier_mobs:hellamander": {
+      "ability": "fire_breath",
+      "passives": [
+        "fire_immune"
+      ],
+      "amphibious": true
+    },
+    "skarrier_mobs:krill": {
+      "aquatic": true
+    },
+    "skarrier_mobs:quake": {
+      "ability": "stomp"
+    },
+    "skarrier_mobs:roe": {
+      "flying": true
+    },
+    "skarrier_mobs:serene": {
+      "ability": "tranquility",
+      "flying": true
+    },
+    "skarrier_mobs:slither": {},
+    "skarrier_mobs:slither_matriarch": {
+      "ability": "constrict"
+    },
+    "skarrier_mobs:trawler": {
+      "ability": "ram"
+    },
+    "skarrier_mobs:vicemaw": {
+      "ability": "bite_hold",
+      "aquatic": true
+    },
+    "skarrier_mobs:viruleon": {
+      "ability": "tail_strike"
+    },
+    "skarrier_mobs:voidrake": {
+      "ability": "void_breath",
+      "flying": true
+    },
+    "skarrier_mobs:wretch": {
+      "ability": "roar"
+    },
+    "skarrier_mobs:eater": {
+      "ability": "bite_hold",
+      "passives": [
+        "rooted"
+      ]
+    },
+    "skarrier_mobs:gorger": {
+      "ability": "acid_spit",
+      "passives": [
+        "rooted"
+      ]
+    },
+    "skarrier_mobs:carniflore": {
+      "ability": "bite_hold",
+      "passives": [
+        "rooted"
+      ]
+    },
+    "skarrier_mobs:snap": {
+      "ability": "bite_hold",
+      "passives": [
+        "rooted"
+      ]
+    },
+    "irons_spellbooks:ice_spider": {
+      "ability": "web",
+      "passives": [
+        "climb",
+        "snow_walk"
+      ]
+    },
+    "traveloptics:snow_fox": {
+      "ability": "leap",
+      "passives": [
+        "snow_walk",
+        "night_vision"
+      ]
     }
   },
   "abilities": {
@@ -391,6 +941,541 @@
       "duration_seconds": 4,
       "radius": 1.5,
       "poison_seconds": 4
+    },
+    "dive": {
+      "type": "leap",
+      "cooldown_seconds": 8,
+      "range": 16,
+      "lift": 0.5,
+      "stun_seconds": 0.75
+    },
+    "tree_drop": {
+      "type": "leap",
+      "cooldown_seconds": 10,
+      "range": 10,
+      "lift": 0.7,
+      "stun_seconds": 1
+    },
+    "rhino_charge": {
+      "type": "ram",
+      "cooldown_seconds": 12,
+      "distance": 8,
+      "damage": 8,
+      "knockback": 3,
+      "sound": "minecraft:entity.ravager.attack"
+    },
+    "roll": {
+      "type": "ram",
+      "cooldown_seconds": 8,
+      "distance": 7,
+      "damage": 5,
+      "knockback": 1.5,
+      "sound": "minecraft:block.stone.break"
+    },
+    "abyssal_charge": {
+      "type": "ram",
+      "cooldown_seconds": 14,
+      "distance": 10,
+      "damage": 10,
+      "knockback": 3,
+      "follow_look": true,
+      "sound": "minecraft:entity.guardian.attack"
+    },
+    "spear_charge": {
+      "type": "ram",
+      "cooldown_seconds": 10,
+      "distance": 9,
+      "damage": 7,
+      "knockback": 2,
+      "follow_look": true,
+      "sound": "minecraft:item.trident.riptide_1"
+    },
+    "sprint": {
+      "type": "dash",
+      "cooldown_seconds": 6,
+      "distance": 12
+    },
+    "rattle": {
+      "type": "roar",
+      "cooldown_seconds": 15,
+      "radius": 6,
+      "knockback": 0.3,
+      "effect": "minecraft:slowness",
+      "effect_level": 2,
+      "effect_seconds": 5,
+      "sound": "minecraft:entity.silverfish.ambient"
+    },
+    "devil_screech": {
+      "type": "roar",
+      "cooldown_seconds": 18,
+      "radius": 6,
+      "knockback": 0.6,
+      "effect": "minecraft:weakness",
+      "effect_level": 2,
+      "effect_seconds": 6,
+      "sound": "minecraft:entity.fox.screech"
+    },
+    "skreech": {
+      "type": "roar",
+      "cooldown_seconds": 20,
+      "radius": 8,
+      "knockback": 0.2,
+      "effect": "minecraft:darkness",
+      "effect_seconds": 6,
+      "sound": "minecraft:entity.ghast.scream"
+    },
+    "paralysis": {
+      "type": "sting",
+      "cooldown_seconds": 10,
+      "range": 3,
+      "damage": 3,
+      "effect": "minecraft:slowness",
+      "effect_level": 4,
+      "effect_seconds": 3
+    },
+    "electroreception": {
+      "type": "echolocation",
+      "cooldown_seconds": 15,
+      "radius": 20,
+      "duration_seconds": 6
+    },
+    "lasso": {
+      "type": "tongue",
+      "cooldown_seconds": 10,
+      "range": 8,
+      "max_width": 2.0,
+      "damage": 3
+    },
+    "spray": {
+      "type": "breath",
+      "cooldown_seconds": 20,
+      "range": 4,
+      "angle": 40,
+      "duration_seconds": 2,
+      "damage_per_second": 0,
+      "effects": [
+        {
+          "effect": "minecraft:nausea",
+          "seconds": 8,
+          "level": 1
+        },
+        {
+          "effect": "minecraft:blindness",
+          "seconds": 3,
+          "level": 1
+        }
+      ],
+      "drop_aggro": true,
+      "particle": "gas",
+      "sound": "minecraft:entity.llama.spit"
+    },
+    "fire_breath": {
+      "type": "breath",
+      "cooldown_seconds": 14,
+      "range": 5,
+      "angle": 30,
+      "duration_seconds": 3,
+      "damage_per_second": 4,
+      "fire_seconds": 4,
+      "particle": "flame",
+      "sound": "minecraft:entity.blaze.shoot"
+    },
+    "ice_breath": {
+      "type": "breath",
+      "cooldown_seconds": 16,
+      "range": 7,
+      "angle": 35,
+      "duration_seconds": 3,
+      "damage_per_second": 6,
+      "freeze_ticks": 60,
+      "effects": [
+        {
+          "effect": "minecraft:slowness",
+          "seconds": 3,
+          "level": 3
+        }
+      ],
+      "particle": "snowflake",
+      "sound": "minecraft:entity.player.hurt_freeze"
+    },
+    "void_breath": {
+      "type": "breath",
+      "cooldown_seconds": 16,
+      "range": 6,
+      "angle": 30,
+      "duration_seconds": 3,
+      "damage_per_second": 4,
+      "effects": [
+        {
+          "effect": "minecraft:wither",
+          "seconds": 4,
+          "level": 1
+        }
+      ],
+      "particle": "void",
+      "sound": "minecraft:entity.ender_dragon.shoot"
+    },
+    "stomp": {
+      "type": "slam",
+      "cooldown_seconds": 12,
+      "radius": 4,
+      "damage": 6,
+      "lift": 0.5,
+      "slow_seconds": 3,
+      "slow_level": 2,
+      "sound": "minecraft:entity.iron_golem.attack"
+    },
+    "big_stomp": {
+      "type": "slam",
+      "cooldown_seconds": 16,
+      "radius": 6,
+      "damage": 10,
+      "lift": 0.8,
+      "slow_seconds": 3,
+      "slow_level": 2,
+      "sound": "minecraft:entity.ravager.stunned"
+    },
+    "ground_pound": {
+      "type": "slam",
+      "cooldown_seconds": 10,
+      "radius": 3.5,
+      "damage": 7,
+      "lift": 0.7,
+      "slow_seconds": 2,
+      "slow_level": 1,
+      "sound": "minecraft:entity.ravager.attack"
+    },
+    "spin": {
+      "type": "slam",
+      "cooldown_seconds": 8,
+      "radius": 3,
+      "damage": 5,
+      "lift": 0.2,
+      "slow_seconds": 0,
+      "sound": "minecraft:entity.player.attack.sweep"
+    },
+    "kick": {
+      "type": "strike",
+      "cooldown_seconds": 8,
+      "range": 3,
+      "damage": 7,
+      "knockback": 3
+    },
+    "pinch": {
+      "type": "strike",
+      "cooldown_seconds": 9,
+      "range": 3,
+      "damage": 7,
+      "knockback": 0.5,
+      "effects": [
+        {
+          "effect": "minecraft:slowness",
+          "seconds": 3,
+          "level": 2
+        }
+      ],
+      "sound": "minecraft:entity.player.attack.crit"
+    },
+    "big_pinch": {
+      "type": "strike",
+      "cooldown_seconds": 12,
+      "range": 4,
+      "damage": 12,
+      "knockback": 1,
+      "effects": [
+        {
+          "effect": "minecraft:slowness",
+          "seconds": 3,
+          "level": 2
+        }
+      ],
+      "sound": "minecraft:entity.player.attack.crit"
+    },
+    "punch": {
+      "type": "strike",
+      "cooldown_seconds": 14,
+      "range": 3,
+      "damage": 10,
+      "knockback": 2.5,
+      "armor_pierce": 0.5,
+      "sound": "minecraft:entity.player.attack.crit"
+    },
+    "peck": {
+      "type": "strike",
+      "cooldown_seconds": 12,
+      "range": 3,
+      "damage": 5,
+      "knockback": 0.3,
+      "stun_seconds": 1.5
+    },
+    "claw_slash": {
+      "type": "strike",
+      "cooldown_seconds": 10,
+      "range": 4,
+      "damage": 8,
+      "knockback": 1,
+      "sound": "minecraft:entity.player.attack.sweep"
+    },
+    "tail_strike": {
+      "type": "strike",
+      "cooldown_seconds": 10,
+      "range": 4,
+      "damage": 7,
+      "knockback": 1,
+      "effects": [
+        {
+          "effect": "minecraft:poison",
+          "seconds": 5,
+          "level": 2
+        }
+      ],
+      "sound": "minecraft:entity.bee.sting"
+    },
+    "jaw_lock": {
+      "type": "grapple",
+      "cooldown_seconds": 16,
+      "range": 3,
+      "seconds": 3,
+      "damage_per_second": 3
+    },
+    "death_roll": {
+      "type": "grapple",
+      "cooldown_seconds": 16,
+      "range": 3,
+      "seconds": 3,
+      "damage_per_second": 4,
+      "sound": "minecraft:entity.generic.splash"
+    },
+    "tentacles": {
+      "type": "grapple",
+      "cooldown_seconds": 18,
+      "range": 6,
+      "seconds": 4,
+      "damage_per_second": 3,
+      "max_width": 3,
+      "sound": "minecraft:entity.squid.squirt"
+    },
+    "constrict": {
+      "type": "grapple",
+      "cooldown_seconds": 18,
+      "range": 4,
+      "seconds": 4,
+      "damage_per_second": 5,
+      "max_width": 3
+    },
+    "bite_hold": {
+      "type": "grapple",
+      "cooldown_seconds": 14,
+      "range": 3,
+      "seconds": 3,
+      "damage_per_second": 3
+    },
+    "camouflage": {
+      "type": "camouflage",
+      "cooldown_seconds": 25,
+      "seconds": 8
+    },
+    "ender_blink": {
+      "type": "blink",
+      "cooldown_seconds": 10,
+      "range": 12
+    },
+    "burrow": {
+      "type": "tunnel",
+      "cooldown_seconds": 12,
+      "distance": 6,
+      "max_hardness": 3
+    },
+    "troop_call": {
+      "type": "rally",
+      "cooldown_seconds": 30,
+      "radius": 10,
+      "effects": [
+        {
+          "effect": "minecraft:strength",
+          "seconds": 10,
+          "level": 1
+        }
+      ],
+      "sound": "minecraft:entity.evoker.celebrate"
+    },
+    "sun_blessing": {
+      "type": "rally",
+      "cooldown_seconds": 40,
+      "radius": 10,
+      "effects": [
+        {
+          "effect": "minecraft:slow_falling",
+          "seconds": 15,
+          "level": 1
+        },
+        {
+          "effect": "minecraft:regeneration",
+          "seconds": 8,
+          "level": 1
+        }
+      ],
+      "particle": "happy",
+      "sound": "minecraft:block.amethyst_block.chime"
+    },
+    "tranquility": {
+      "type": "rally",
+      "cooldown_seconds": 35,
+      "radius": 10,
+      "effects": [
+        {
+          "effect": "minecraft:regeneration",
+          "seconds": 6,
+          "level": 2
+        }
+      ],
+      "particle": "heart",
+      "sound": "minecraft:block.amethyst_block.resonate"
+    },
+    "howl": {
+      "type": "rally",
+      "cooldown_seconds": 35,
+      "radius": 12,
+      "effects": [
+        {
+          "effect": "minecraft:speed",
+          "seconds": 10,
+          "level": 1
+        },
+        {
+          "effect": "minecraft:strength",
+          "seconds": 10,
+          "level": 1
+        }
+      ],
+      "sound": "minecraft:entity.wolf.howl"
+    },
+    "blood_drain": {
+      "type": "drain",
+      "cooldown_seconds": 8,
+      "range": 3,
+      "damage": 4,
+      "heal_ratio": 0.6
+    },
+    "dart": {
+      "type": "throw",
+      "cooldown_seconds": 4,
+      "damage": 4,
+      "speed": 1.8,
+      "item": "minecraft:arrow"
+    },
+    "mud_ball": {
+      "type": "throw",
+      "cooldown_seconds": 5,
+      "damage": 2,
+      "speed": 1.3,
+      "item": "alexsmobs:mud_ball",
+      "item_fallback": "minecraft:mud",
+      "effects": [
+        {
+          "effect": "minecraft:slowness",
+          "seconds": 3,
+          "level": 2
+        }
+      ]
+    },
+    "harpoon": {
+      "type": "throw",
+      "cooldown_seconds": 6,
+      "damage": 5,
+      "speed": 2.0,
+      "item": "minecraft:trident"
+    },
+    "toxic_barrel": {
+      "type": "throw",
+      "cooldown_seconds": 10,
+      "damage": 6,
+      "speed": 1.0,
+      "item": "alexscaves:waste_drum",
+      "item_fallback": "minecraft:barrel",
+      "effects": [
+        {
+          "effect": "minecraft:poison",
+          "seconds": 6,
+          "level": 2
+        },
+        {
+          "effect": "alexscaves:irradiated",
+          "seconds": 10,
+          "level": 1
+        }
+      ]
+    },
+    "naga_spit": {
+      "type": "throw",
+      "cooldown_seconds": 6,
+      "damage": 4,
+      "speed": 1.6,
+      "item": "minecraft:slime_ball",
+      "effects": [
+        {
+          "effect": "minecraft:poison",
+          "seconds": 5,
+          "level": 1
+        }
+      ],
+      "sound": "minecraft:entity.llama.spit"
+    },
+    "spine": {
+      "type": "throw",
+      "cooldown_seconds": 5,
+      "damage": 3,
+      "speed": 2.0,
+      "item": "cataclysm:lionfish_spike",
+      "item_fallback": "minecraft:pointed_dripstone",
+      "effects": [
+        {
+          "effect": "minecraft:poison",
+          "seconds": 5,
+          "level": 1
+        }
+      ]
+    },
+    "acid_spit": {
+      "type": "throw",
+      "cooldown_seconds": 6,
+      "damage": 5,
+      "speed": 1.4,
+      "item": "minecraft:slime_ball",
+      "effects": [
+        {
+          "effect": "minecraft:poison",
+          "seconds": 4,
+          "level": 2
+        }
+      ],
+      "sound": "minecraft:entity.llama.spit"
+    },
+    "whale_echo": {
+      "type": "sonic",
+      "cooldown_seconds": 22,
+      "range": 20,
+      "width": 1.5,
+      "damage": 10,
+      "stun_seconds": 2
+    },
+    "sonic_scream": {
+      "type": "sonic",
+      "cooldown_seconds": 20,
+      "range": 16,
+      "width": 1.2,
+      "damage": 8,
+      "stun_seconds": 1.5
+    },
+    "jelly_shock": {
+      "type": "sonic",
+      "cooldown_seconds": 12,
+      "range": 10,
+      "width": 1,
+      "damage": 6,
+      "stun_seconds": 1,
+      "particle": "electric",
+      "sound": "minecraft:entity.guardian.attack"
     }
   }
 }

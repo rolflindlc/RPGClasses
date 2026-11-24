@@ -221,6 +221,18 @@ public final class Beasts {
         return out;
     }
 
+    /**
+     * Minijefe bestia: más vida que el tope de las bestias normales ({@code max_health} del Saber de bestias, 100). Solo
+     * puede serlo una criatura de la lista permitida, y su forma pide nivel {@link #minibossLevel}.
+     */
+    public static boolean miniboss(Info info, boolean client) {
+        return info != null && info.health() > Druid.number(Druid.BEAST_LORE, "max_health", 100, client);
+    }
+
+    public static int minibossLevel(boolean client) {
+        return (int) Druid.number(Druid.WILD_SHAPE, "miniboss_level", 30, client);
+    }
+
     /** Fila de la especie en la tabla de bestias (vacía si no tiene). */
     static JsonObject row(String id, boolean client) {
         JsonObject table = table(client);

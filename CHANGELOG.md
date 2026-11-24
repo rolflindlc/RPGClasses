@@ -3,6 +3,15 @@
 ## Unreleased
 
 ### Added
+- **Druid, beasts from other mods:** about 145 creatures from Alex's Mobs, Alex's Caves, Mowzie's Mobs, L_Ender's
+  Cataclysm, Skarrier Mobs, Iron's Spellbooks and Travel Optics are valid Wild Shape forms (optional entries: missing
+  mods are ignored), with abilities and traits. Bosses, humanoids, constructs, summons and segmented creatures are
+  excluded. Mini-boss beasts (over 100 health) need total level 30.
+- **Druid, new beast ability types** (each creature uses a variant with its own name and numbers in
+  `druid_beasts.json`, `"abilities": {"id": {"type": ...}}`): breath, slam, strike, grapple, camouflage, blink,
+  tunnel, rally, drain, throw and sonic. Roar and sting accept another effect (`"effect"`); ram can follow the look
+  (`"follow_look"`) for swimmers.
+- **Druid, new form traits:** glide, dodge, lava swim, thorns, snow walk and rooted (forms that cannot move).
 - **Druid, Wild Shape:** your inventory (including armor and off-hand) is stored away while you are transformed and
   given back exactly as it was when you return (also after a crash or on death, before loot drops). In beast form you
   cannot pick up items or open containers, and anything that enters the beast's inventory (`/give`, other mods) goes

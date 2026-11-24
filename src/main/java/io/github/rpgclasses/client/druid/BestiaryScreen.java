@@ -172,6 +172,10 @@ public class BestiaryScreen extends Screen {
         out.add(Component.translatable("ui.rites_and_paths.bestiary.damage", num(info.damage() * Beasts.damageFactor(p))));
         out.add(Component.translatable("ui.rites_and_paths.bestiary.speed", num(info.speed())));
         out.add(Component.translatable("ui.rites_and_paths.bestiary.mana", Beasts.manaCost(p, info)));
+        if (Beasts.miniboss(info, true)) {
+            out.add(Component.translatable("ui.rites_and_paths.bestiary.miniboss", Beasts.minibossLevel(true))
+                    .withStyle(io.github.rpgclasses.druid.Druid.totalLevel(p) >= Beasts.minibossLevel(true) ? ChatFormatting.GOLD : ChatFormatting.RED));
+        }
         if (info.ability() != null) {
             out.add(Component.translatable("ui.rites_and_paths.bestiary.ability",
                     Component.translatable("druid.rites_and_paths.ability." + info.ability())).withStyle(ChatFormatting.AQUA));

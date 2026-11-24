@@ -17,6 +17,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -79,6 +80,7 @@ public final class BeastAbilities {
     public void onAttack(AttackEntityEvent event) {
         if (!(event.getEntity() instanceof ServerPlayer p) || !WildShape.inForm(p)) return;
         event.setCanceled(true);
+        BeastMoves.breakCamouflage(p);
         Entity target = event.getTarget();
         if (!target.isAttackable() || target.skipAttackInteraction(p) || !(target instanceof LivingEntity victim)) return;
         Beasts.Info info = WildShape.info(p);
@@ -125,19 +127,22 @@ public final class BeastAbilities {
             return;
         }
         JsonObject params = Beasts.abilityParams(ability, false);
+        String type = params.has("type") ? params.get("type").getAsString() : ability;
+        if (!"camouflage".equals(type)) BeastMoves.breakCamouflage(p);
         boolean used;
         try {
-            used = run(p, ability, params);
+            used = run(p, type, params);
         } catch (RuntimeException e) {
             DebugLog.error(p, "Druida", e, "habilidad de bestia {} falló", ability);
             return;
         }
         if (!used) return;
         AbilityService.setCooldown(p, key, (int) Math.round(num(params, "cooldown_seconds", 5) * 20));
-        DebugLog.event(p, "Druida", "habilidad de bestia {}", ability);
+        DebugLog.event(p, "Druida", "habilidad de bestia {} ({})", ability, type);
         DruidNet.sendState(p);
     }
 
+    /** Ejecuta la habilidad de ese tipo con esos parámetros (los de la variante). */
     private static boolean run(ServerPlayer p, String ability, JsonObject a) {
         ServerLevel level = p.serverLevel();
         Vec3 look = p.getLookAngle();
@@ -183,19 +188,25 @@ public final class BeastAbilities {
             }
             case "roar" -> {
                 double r = num(a, "radius", 5);
+                // effect: otro estado en vez de debilidad (el cascabel ralentiza, el chillido oscurece...).
+                MobEffect effect = BeastMoves.effect(a, "effect", MobEffects.WEAKNESS);
+                int ticks = (int) Math.round(num(a, "effect_seconds", num(a, "weakness_seconds", 5)) * 20);
+                int amp = Math.max(0, (int) num(a, "effect_level", 1) - 1);
                 for (LivingEntity e : enemiesAround(p, r)) {
-                    e.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, (int) Math.round(num(a, "weakness_seconds", 5) * 20), 0), p);
+                    e.addEffect(new MobEffectInstance(effect, ticks, amp), p);
                     Vec3 away = e.position().subtract(p.position()).multiply(1, 0, 1).normalize();
                     e.knockback(num(a, "knockback", 1), -away.x, -away.z);
                 }
                 level.sendParticles(ParticleTypes.SONIC_BOOM, p.getX(), p.getY() + 1, p.getZ(), 1, 0, 0, 0, 0);
-                level.playSound(null, p.blockPosition(), SoundEvents.POLAR_BEAR_WARNING, SoundSource.PLAYERS, 1.5f, .8f);
+                level.playSound(null, p.blockPosition(), BeastMoves.sound(a, SoundEvents.POLAR_BEAR_WARNING), SoundSource.PLAYERS, 1.5f, .8f);
                 return true;
             }
             case "ram" -> {
-                impulse(p, flat.scale(num(a, "distance", 6) * .25).add(0, .15, 0));
+                // follow_look: la carga sigue la mirada (también hacia arriba o abajo), para las que nadan.
+                Vec3 dir = a.has("follow_look") && a.get("follow_look").getAsBoolean() ? look : flat;
+                impulse(p, dir.scale(num(a, "distance", 6) * .25).add(0, dir == flat ? .15 : 0, 0));
                 CHARGES.put(p.getUUID(), new Charge(14, num(a, "damage", 4) * dmgFactor, num(a, "knockback", 2), "ram"));
-                level.playSound(null, p.blockPosition(), SoundEvents.GOAT_RAM_IMPACT, SoundSource.PLAYERS, 1f, 1f);
+                level.playSound(null, p.blockPosition(), BeastMoves.sound(a, SoundEvents.GOAT_RAM_IMPACT), SoundSource.PLAYERS, 1f, 1f);
                 return true;
             }
             case "toss" -> {
@@ -240,8 +251,9 @@ public final class BeastAbilities {
                 LivingEntity target = lookEnemy(p, num(a, "range", 3));
                 if (target == null) return noTarget(p);
                 beastDamage(p, target, num(a, "damage", 2) * dmgFactor);
-                target.addEffect(new MobEffectInstance(MobEffects.POISON, (int) Math.round(num(a, "poison_seconds", 5) * 20),
-                        Math.max(0, (int) num(a, "poison_level", 2) - 1)), p);
+                target.addEffect(new MobEffectInstance(BeastMoves.effect(a, "effect", MobEffects.POISON),
+                        (int) Math.round(num(a, "effect_seconds", num(a, "poison_seconds", 5)) * 20),
+                        Math.max(0, (int) num(a, "effect_level", num(a, "poison_level", 2)) - 1)), p);
                 level.playSound(null, p.blockPosition(), SoundEvents.BEE_STING, SoundSource.PLAYERS, 1f, 1f);
                 return true;
             }
@@ -303,6 +315,8 @@ public final class BeastAbilities {
                 return true;
             }
             default -> {
+                Boolean used = BeastMoves.run(p, ability, a, dmgFactor);
+                if (used != null) return used;
                 p.displayClientMessage(Component.translatable("message.rites_and_paths.druid.beast_ability_none"), true);
                 return false;
             }
@@ -312,6 +326,7 @@ public final class BeastAbilities {
     /** Cada tic de la forma (desde WildShape): embestidas, salto de caza, inflarse. */
     static void tick(ServerPlayer p, WildShape.Form form) {
         ServerLevel level = p.serverLevel();
+        BeastMoves.tick(p);
         Charge c = CHARGES.get(p.getUUID());
         if (c != null) {
             LivingEntity hit = null;
@@ -376,19 +391,19 @@ public final class BeastAbilities {
 
     // ------------------------------------------------------------------ utilidades
 
-    private static void impulse(ServerPlayer p, Vec3 v) {
+    static void impulse(ServerPlayer p, Vec3 v) {
         p.setDeltaMovement(p.getDeltaMovement().add(v));
         p.hurtMarked = true;
         p.resetFallDistance();
     }
 
-    private static boolean noTarget(ServerPlayer p) {
+    static boolean noTarget(ServerPlayer p) {
         p.displayClientMessage(Component.translatable("message.rites_and_paths.druid.no_target"), true);
         return false;
     }
 
     /** Daño de una habilidad de bestia: golpe del jugador marcado como de bestia (sin muros de armas). */
-    private static void beastDamage(ServerPlayer p, LivingEntity target, double damage) {
+    static void beastDamage(ServerPlayer p, LivingEntity target, double damage) {
         WildShape.beastHit(true);
         try {
             target.hurt(p.damageSources().playerAttack(p), (float) damage);

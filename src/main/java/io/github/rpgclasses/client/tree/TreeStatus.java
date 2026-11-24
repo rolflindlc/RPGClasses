@@ -118,7 +118,7 @@ public final class TreeStatus {
         if (real.subclassId != null) return Status.LOCKED;
         if (subId.equals(s.subclassId)) return Status.PLANNED;
         if (s.subclassId != null) return Status.WILL_LOCK;
-        Result r = TreePlan.check(s, c, new Step(Type.CHOOSE_SUBCLASS, null, subId), 0);
+        Result r = TreePlan.check(s, c, new Step(Type.CHOOSE_SUBCLASS, null, subId));
         return r.ok() ? Status.AVAILABLE : Status.FUTURE;
     }
 

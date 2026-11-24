@@ -66,9 +66,7 @@ public final class ClassBooks {
     public static final RegistryObject<Item> OBLIVION_BOOK = ITEMS.register("oblivion_book",
             () -> new OblivionBook(new Item.Properties().stacksTo(16).rarity(Rarity.EPIC)));
 
-    public static final Supplier<Codec<Loot>> LOOT_CODEC = Suppliers.memoize(
-            () -> RecordCodecBuilder.create(inst -> LootModifier.codecStart(inst).apply(inst, Loot::new)));
-    public static final RegistryObject<Codec<Loot>> CLASS_BOOKS_LOOT = LOOT.register("class_books", LOOT_CODEC);
+    public static final RegistryObject<Codec<Loot>> CLASS_BOOKS_LOOT = LOOT.register("class_books", () -> Loot.CODEC.get());
 
     private ClassBooks() {}
 
@@ -148,13 +146,16 @@ public final class ClassBooks {
     private static final ResourceLocation NOTCH_APPLE = new ResourceLocation("minecraft", "enchanted_golden_apple");
 
     public static final class Loot extends LootModifier {
+        static final Supplier<Codec<Loot>> CODEC = Suppliers.memoize(
+                () -> RecordCodecBuilder.create(inst -> codecStart(inst).apply(inst, Loot::new)));
+
         public Loot(LootItemCondition[] conditions) {
             super(conditions);
         }
 
         @Override
         public Codec<? extends IGlobalLootModifier> codec() {
-            return LOOT_CODEC.get();
+            return CODEC.get();
         }
 
         @Override

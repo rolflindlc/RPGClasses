@@ -361,8 +361,9 @@ public final class ClassScreen extends Screen {
                 .bounds(center - w * 3 / 2 - 4, y, w, 20).build();
         one.active = enabled && !maxed && xp >= next;
         if (!enabled) one.setTooltip(net.minecraft.client.gui.components.Tooltip.create(Component.translatable("ui.rites_and_paths.points.xp_disabled")));
-        else if (disc > 0) one.setTooltip(net.minecraft.client.gui.components.Tooltip.create(
-                Component.translatable("ui.rites_and_paths.points.catch_up", Math.round(disc * 100))));
+        else if (Math.round(disc * 100) != 0) one.setTooltip(net.minecraft.client.gui.components.Tooltip.create(disc > 0
+                ? Component.translatable("ui.rites_and_paths.points.catch_up", Math.round(disc * 100))
+                : Component.translatable("ui.rites_and_paths.points.penalty", Math.round(-disc * 100))));
         addRenderableWidget(one);
         Button all = Button.builder(Component.translatable("ui.rites_and_paths.points.buy_all", affordable, spent),
                 btn -> send(ClassAction.Action.BUY_POINTS, "max")).bounds(center - w / 2, y, w, 20).build();

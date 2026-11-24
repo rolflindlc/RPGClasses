@@ -3280,7 +3280,7 @@
   "ui.rites_and_paths.points.buy_all": "All: %s (%s XP)",
   "ui.rites_and_paths.points.maxed": "40 points",
   "ui.rites_and_paths.points.xp_disabled": "On this server points can't be bought with XP.",
-  "ui.rites_and_paths.points.catch_up": "Catch-up help: −%s %% (you are below the average)",
+  "ui.rites_and_paths.points.catch_up": "Catch-up help: −%s %% (you are below the average of the other active players)",
   "ui.rites_and_paths.builds.button": "Builds…",
   "ui.rites_and_paths.builds.title": "Saved builds",
   "ui.rites_and_paths.builds.save": "Save",
@@ -3297,5 +3297,8 @@
   "item.rites_and_paths.knowledge_book": "Book of Knowledge",
   "item.rites_and_paths.oblivion_book": "Book of Oblivion",
   "tooltip.rites_and_paths.knowledge_book": "Right click: +1 class point.",
-  "tooltip.rites_and_paths.oblivion_book": "Right click: reset your class and subclass without losing points."
+  "tooltip.rites_and_paths.oblivion_book": "Right click: reset your class and subclass without losing points.",
+  "ui.rites_and_paths.points.penalty": "Lead surcharge: +%s %% (you are well ahead of the average of the other active players)",
+  "msg.rites_and_paths.catch_up_info": "Point balance: %s other active players (minimum %s), average %s points → price %s",
+  "msg.rites_and_paths.catch_up_normal": "normal"
 }

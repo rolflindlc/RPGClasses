@@ -13,8 +13,13 @@
   (same weight by default for the Book of Knowledge, half for the Book of Oblivion; `classBooks` config).
 - **Boss points:** the first kill of each boss species (`rites_and_paths:class_point_bosses`: Wither, Ender Dragon,
   Warden, Elder Guardian and `forge:bosses`) gives 1 class point to every player who damaged it (`bossPoints`).
-- **Catch-up help:** players below the average class points of the players active in the last 14 days buy points
-  3% cheaper per point below, up to 50% (`catchUp`).
+- **Point balance:** the XP price of class points follows how you compare with the average of the *other* active
+  players (active = played at least 1 hour in the last 48 real hours; tracked per hour in the world save). Within ±3
+  points of that average nothing changes; beyond it, each point below makes the next point 3% cheaper (up to −50%)
+  and each point above 3% dearer (up to +50%). Needs at least 2 other active players. The buy button tooltip shows
+  the discount or surcharge and `/clase info` shows the active players, their average and the price change. All of
+  it is configurable in `catchUp` (`margin`, `discountPerLevel`, `maxDiscount`, `penaltyPerLevel`, `maxPenalty`,
+  `minActivePlayers`, `activeHours`, `minPlayMinutes`). Books and bosses are not affected.
 - **Saved builds:** 3 slots; loading one resets the class with the usual loss and spends your points following it.
 - `/clase comprar [todos]`, `/clases puntos <player> <amount>`; `/clase info` shows the balance.
 

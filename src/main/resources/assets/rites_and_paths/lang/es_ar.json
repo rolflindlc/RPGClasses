@@ -3280,7 +3280,7 @@
   "ui.rites_and_paths.points.buy_all": "Todos: %s (%s XP)",
   "ui.rites_and_paths.points.maxed": "40 puntos",
   "ui.rites_and_paths.points.xp_disabled": "En este servidor los puntos no se compran con XP.",
-  "ui.rites_and_paths.points.catch_up": "Ayuda a rezagados: −%s %% (estás por debajo de la media)",
+  "ui.rites_and_paths.points.catch_up": "Ayuda a rezagados: −%s %% (vas por debajo de la media de los demás jugadores activos)",
   "ui.rites_and_paths.builds.button": "Builds…",
   "ui.rites_and_paths.builds.title": "Builds guardadas",
   "ui.rites_and_paths.builds.save": "Guardar",
@@ -3297,5 +3297,8 @@
   "item.rites_and_paths.knowledge_book": "Libro de Conocimiento",
   "item.rites_and_paths.oblivion_book": "Libro de Olvido",
   "tooltip.rites_and_paths.knowledge_book": "Clic derecho: +1 punto de clase.",
-  "tooltip.rites_and_paths.oblivion_book": "Clic derecho: reinicia tu clase y tu subclase sin perder puntos."
+  "tooltip.rites_and_paths.oblivion_book": "Clic derecho: reinicia tu clase y tu subclase sin perder puntos.",
+  "ui.rites_and_paths.points.penalty": "Recargo por ventaja: +%s %% (vas muy por delante de la media de los demás jugadores activos)",
+  "msg.rites_and_paths.catch_up_info": "Equilibrio de puntos: %s jugadores activos aparte (mínimo %s), media %s puntos → precio %s",
+  "msg.rites_and_paths.catch_up_normal": "normal"
 }

@@ -4,6 +4,7 @@ import com.google.gson.JsonParser;
 import io.github.rpgclasses.core.definition.DefinitionParser;
 import io.github.rpgclasses.core.definition.Definitions.ClassDef;
 import io.github.rpgclasses.core.definition.Definitions.SubclassDef;
+import io.github.rpgclasses.core.progression.CatchUp;
 import io.github.rpgclasses.core.progression.ProgressState;
 import io.github.rpgclasses.core.progression.ProgressionRules;
 import io.github.rpgclasses.core.progression.ProgressionRules.Result;
@@ -188,6 +189,50 @@ public class CoreLogicTest {
         assertTrue(ProgressionRules.isMaxed(s));
     }
 
+    private static final CatchUp.Rules BALANCE = new CatchUp.Rules(3, 0.03, 0.5, 0.03, 0.5, 2);
+
+    @Test
+    public void catchUpIsSymmetricOutsideTheMargin() {
+        // Media de los demás: 20.
+        java.util.List<Integer> others = java.util.List.of(18, 22);
+        assertEquals(0, CatchUp.discount(20, others, BALANCE), EPS);
+        assertEquals(0, CatchUp.discount(17, others, BALANCE), EPS);   // justo en el margen
+        assertEquals(0, CatchUp.discount(23, others, BALANCE), EPS);
+        assertEquals(0.06, CatchUp.discount(15, others, BALANCE), EPS); // 5 por detrás → cuentan 2
+        assertEquals(-0.06, CatchUp.discount(25, others, BALANCE), EPS); // 5 por delante → cuentan 2
+        // Topes.
+        assertEquals(0.5, CatchUp.discount(0, others, BALANCE), EPS);
+        assertEquals(-0.5, CatchUp.discount(40, java.util.List.of(0, 0), BALANCE), EPS);
+        // Topes distintos a cada lado.
+        CatchUp.Rules soft = new CatchUp.Rules(0, 0.03, 0.5, 0.02, 0.3, 1);
+        assertEquals(-0.3, CatchUp.discount(40, java.util.List.of(0), soft), EPS);
+        assertEquals(-0.2, CatchUp.discount(10, java.util.List.of(0), soft), EPS);
+        // Sin recargo si se configura a 0.
+        assertEquals(0, CatchUp.discount(40, others, new CatchUp.Rules(3, 0.03, 0.5, 0, 0.5, 2)), EPS);
+    }
+
+    @Test
+    public void catchUpNeedsEnoughActivePlayers() {
+        assertEquals(0, CatchUp.discount(0, java.util.List.of(), BALANCE), EPS);
+        assertEquals(0, CatchUp.discount(0, java.util.List.of(30), BALANCE), EPS); // 1 activo y hacen falta 2
+        assertEquals(0.5, CatchUp.discount(0, java.util.List.of(30, 30), BALANCE), EPS);
+        assertEquals(0, CatchUp.discount(0, java.util.List.of(), new CatchUp.Rules(3, 0.03, 0.5, 0.03, 0.5, 0)), EPS);
+    }
+
+    @Test
+    public void activePlayTimeOnlyCountsTheWindow() {
+        long now = 1000 * CatchUp.HOUR_MS + 30 * 60_000L; // media hora dentro de la hora 1000
+        long first = CatchUp.firstHour(now, 48);
+        assertEquals(952, first); // 48 horas completas antes de la hora en curso
+        java.util.Map<Long, Long> hours = new java.util.TreeMap<>();
+        hours.put(951L, 60 * 60_000L);   // fuera de la ventana
+        hours.put(952L, 20 * 60_000L);
+        hours.put(1000L, 30 * 60_000L);
+        assertEquals(50 * 60_000L, CatchUp.playedMs(hours, first));
+        hours.put(990L, 10 * 60_000L);
+        assertEquals(60 * 60_000L, CatchUp.playedMs(hours, first)); // justo 1 hora: activo
+    }
+
     @Test
     public void pointPriceFollowsEveryPointOwned() {
         ProgressState s = new ProgressState();
@@ -202,6 +247,8 @@ public class CoreLogicTest {
         assertEquals(XpMath.costOfLevel(3, 1.0), ProgressionRules.nextCost(s, 1.0));
         // Descuento de la ayuda a rezagados.
         assertEquals(Math.round(XpMath.costOfLevel(3, 1.0) * 0.5), ProgressionRules.nextCost(s, 1.0, 0.5));
+        // Recargo por ventaja (descuento negativo).
+        assertEquals(Math.round(XpMath.costOfLevel(3, 1.0) * 1.5), ProgressionRules.nextCost(s, 1.0, -0.5));
         // Tope de 40: ni se compra ni se suman libros.
         assertEquals(38, ProgressionRules.addPoints(s, 100));
         assertEquals(40, s.ownedPoints());

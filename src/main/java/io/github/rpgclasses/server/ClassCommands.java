@@ -209,6 +209,14 @@ public final class ClassCommands {
                 className, s.basePoints(), subName, s.subclassLevel, cap, next), false);
         source.sendSuccess(() -> Component.translatable("msg.rites_and_paths.points_info", s.pointBalance, s.ownedPoints(),
                 ProgressionRules.MAX_POINTS, s.bossesCredited.size()), false);
+        ClassPoints.Balance balance = ClassPoints.balance(target);
+        if (balance != null) {
+            long pct = Math.round(-balance.discount() * 100);
+            Component price = pct == 0 ? Component.translatable("msg.rites_and_paths.catch_up_normal")
+                    : Component.literal((pct > 0 ? "+" : "−") + Math.abs(pct) + " %");
+            source.sendSuccess(() -> Component.translatable("msg.rites_and_paths.catch_up_info", balance.activeOthers(),
+                    ServerConfig.CATCH_UP_MIN_PLAYERS.get(), String.format(java.util.Locale.ROOT, "%.1f", balance.average()), price), false);
+        }
         if (s.classId != null && DefinitionStore.SERVER.classDef(s.classId) == null) {
             source.sendSuccess(() -> Component.translatable("msg.rites_and_paths.suspended").withStyle(ChatFormatting.YELLOW), false);
         }

@@ -160,10 +160,10 @@ public final class Net {
         if (data != null) toPlayer(player, new SyncPlayerData(clientTag(player, data)));
     }
 
-    /** Datos para el cliente, con el descuento de la ayuda a rezagados (lo calcula el servidor con la media). */
+    /** Datos para el cliente, con el descuento con signo del equilibrio de puntos (lo calcula el servidor con la media). */
     private static net.minecraft.nbt.CompoundTag clientTag(ServerPlayer player, PlayerClassData data) {
         net.minecraft.nbt.CompoundTag tag = data.saveForClient();
-        tag.putDouble("catchUp", io.github.rpgclasses.server.ClassPoints.discount(player));
+        tag.putDouble("catchUp", io.github.rpgclasses.server.ClassPoints.clientDiscount(player));
         return tag;
     }
 

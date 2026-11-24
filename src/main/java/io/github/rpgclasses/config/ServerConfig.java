@@ -16,7 +16,12 @@ public final class ServerConfig {
     public static final ForgeConfigSpec.BooleanValue CATCH_UP_ENABLED;
     public static final ForgeConfigSpec.DoubleValue CATCH_UP_PER_LEVEL;
     public static final ForgeConfigSpec.DoubleValue CATCH_UP_MAX;
-    public static final ForgeConfigSpec.IntValue CATCH_UP_DAYS;
+    public static final ForgeConfigSpec.DoubleValue CATCH_UP_MARGIN;
+    public static final ForgeConfigSpec.DoubleValue CATCH_UP_PENALTY_PER_LEVEL;
+    public static final ForgeConfigSpec.DoubleValue CATCH_UP_MAX_PENALTY;
+    public static final ForgeConfigSpec.IntValue CATCH_UP_MIN_PLAYERS;
+    public static final ForgeConfigSpec.IntValue CATCH_UP_ACTIVE_HOURS;
+    public static final ForgeConfigSpec.IntValue CATCH_UP_MIN_MINUTES;
     public static final ForgeConfigSpec.BooleanValue BOSS_POINTS_ENABLED;
     public static final ForgeConfigSpec.IntValue BOSS_POINTS;
     public static final ForgeConfigSpec.BooleanValue KNOWLEDGE_BOOK_LOOT;
@@ -121,17 +126,34 @@ public final class ServerConfig {
                 .define("buyPointsWithXp", true);
         b.push("catchUp");
         CATCH_UP_ENABLED = b
-                .comment("Ayuda a rezagados: quien tiene menos puntos de clase que la media del servidor los compra más baratos.")
+                .comment("Equilibrio de puntos: quien va por debajo de la media de puntos de clase de los demás jugadores activos",
+                        "compra los puntos con XP más baratos, y quien va muy por delante, más caros. No afecta a libros ni jefes.")
                 .define("enabled", true);
+        CATCH_UP_MARGIN = b
+                .comment("Margen alrededor de la media sin descuento ni recargo, en puntos. Fuera de él solo cuenta lo que pase del margen",
+                        "(con 3, ir 5 puntos por detrás cuenta como 2).")
+                .defineInRange("margin", 3.0, 0.0, 40.0);
         CATCH_UP_PER_LEVEL = b
-                .comment("Descuento por cada punto por debajo de la media (0.03 = 3 %).")
+                .comment("Descuento por cada punto por debajo de la media (fuera del margen). 0.03 = 3 %.")
                 .defineInRange("discountPerLevel", 0.03, 0.0, 1.0);
         CATCH_UP_MAX = b
-                .comment("Descuento máximo (0.5 = 50 %).")
+                .comment("Descuento máximo (0.5 = −50 %).")
                 .defineInRange("maxDiscount", 0.5, 0.0, 0.95);
-        CATCH_UP_DAYS = b
-                .comment("La media solo cuenta a los jugadores que han entrado en los últimos N días.")
-                .defineInRange("activeDays", 14, 1, 3650);
+        CATCH_UP_PENALTY_PER_LEVEL = b
+                .comment("Recargo por cada punto por encima de la media (fuera del margen). 0.03 = 3 %. Con 0 no hay recargo.")
+                .defineInRange("penaltyPerLevel", 0.03, 0.0, 1.0);
+        CATCH_UP_MAX_PENALTY = b
+                .comment("Recargo máximo (0.5 = +50 %, 1.0 = el doble).")
+                .defineInRange("maxPenalty", 0.5, 0.0, 10.0);
+        CATCH_UP_MIN_PLAYERS = b
+                .comment("Jugadores activos necesarios aparte de quien compra. Con menos, precio normal.")
+                .defineInRange("minActivePlayers", 2, 1, 1000);
+        CATCH_UP_ACTIVE_HOURS = b
+                .comment("Ventana para ser jugador activo, en horas de tiempo real.")
+                .defineInRange("activeHours", 48, 1, 720);
+        CATCH_UP_MIN_MINUTES = b
+                .comment("Minutos jugados dentro de esa ventana para contar como activo (60 = 1 hora).")
+                .defineInRange("minPlayMinutes", 60, 1, 43200);
         b.pop();
         b.push("bossPoints");
         BOSS_POINTS_ENABLED = b

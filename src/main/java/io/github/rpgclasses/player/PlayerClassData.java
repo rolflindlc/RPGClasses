@@ -25,7 +25,7 @@ public final class PlayerClassData {
      * Es del jugador, no de la clase: no se borra al reiniciarla. Ver {@code druid.Bestiary}.
      */
     public net.minecraft.nbt.CompoundTag druid = new net.minecraft.nbt.CompoundTag();
-    /** Solo en el cliente: descuento de la ayuda a rezagados que manda el servidor (no se guarda). */
+    /** Solo en el cliente: descuento con signo del equilibrio de puntos que manda el servidor (&lt;0 = recargo; no se guarda). */
     public double catchUpDiscount;
 
     public CompoundTag save() {

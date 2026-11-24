@@ -48,9 +48,12 @@ public final class ProgressionRules {
         return XpMath.costOfLevel(Math.min(s.ownedPoints(), MAX_POINTS - 1) + 1, multiplier);
     }
 
-    /** Precio con un descuento (ayuda a rezagados) en [0, 1). */
+    /**
+     * Precio con el equilibrio de puntos ({@link CatchUp}): descuento con signo, positivo abarata (hasta −95 %) y negativo
+     * encarece (−0,5 = +50 %, hasta +1000 %).
+     */
     public static int nextCost(ProgressState s, double multiplier, double discount) {
-        double d = Double.isFinite(discount) ? Math.max(0, Math.min(.95, discount)) : 0;
+        double d = Double.isFinite(discount) ? Math.max(-10, Math.min(.95, discount)) : 0;
         return (int) Math.round(nextCost(s, multiplier) * (1 - d));
     }
 

@@ -95,8 +95,8 @@ public class StatCalculatorTest {
     @Test
     public void monkBreezeMasterReachesDesignTotals() {
         Map<Key, Double> t = totals(player("monk", 10, "breeze_master", 10), NO_ARMOR);
-        // Rev. 2.9: Viento ya no da bonus plano; solo Cefiro Marcial (+40% / +80%).
-        assertEquals(0.4, t.get(new Key("minecraft:generic.movement_speed", "multiply_base")), EPS);
+        // Rev. 2.23: Cefiro Marcial +30% de velocidad (era +40%) y +80% de salto.
+        assertEquals(0.3, t.get(new Key("minecraft:generic.movement_speed", "multiply_base")), EPS);
         assertEquals(0.8, t.get(new Key("rites_and_paths:jump_bonus", "add")), EPS);
     }
 

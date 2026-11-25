@@ -298,10 +298,10 @@ public final class DamagePipeline {
             log.add(" | juicio +%.2f sagrado", holyDamage);
         }
 
-        double smite = melee ? CombatAbilities.divineSmiteBonus(attacker, target) : 0;
-        if (smite > 0) {
-            damage *= 1 + smite;
-            log.add(" | castigo divino x%.2f", 1 + smite);
+        double divineSmite = melee ? CombatAbilities.divineSmiteBonus(attacker, target) : 0;
+        if (divineSmite > 0) {
+            damage *= 1 + divineSmite;
+            log.add(" | castigo divino x%.2f", 1 + divineSmite);
         }
 
         if (attacker.hasEffect(ModEffects.BERSERKER_RAGE.get())) {

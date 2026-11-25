@@ -192,6 +192,45 @@ SUBRACES = [
 ]
 
 
+# ---------------------------------------------------------------- kit de conjuros de Iron's
+# Los conjuros de movilidad y defensa de Iron's (Teletransporte, Paso Helado, Embestida Ardiente, Golpe Voltaico,
+# Ascensión, Paso de Sangre, Evasión, Velo Abisal, Paro Cardíaco, Escudo, Invisibilidad...) escalan con su nivel, no con
+# el poder de hechizo: el muro de Magia no los recorta y cualquier clase puede lanzarlos. Lo que cambia es cuántas veces:
+# maná, regeneración, recarga y cargas gratis. Factor por clase: (movilidad +, vida efectiva ×, utilidad +).
+# Las curaciones sagradas propias (Curación, Curación Mayor, Fortalecer) cuentan como vida efectiva del Clérigo y del
+# Paladín. Las subclases heredan el factor de su clase.
+
+SPELL_KIT = {
+    "Mago": (3.0, 1.40, 1.5),       # 400 de maná, −25 % de recarga, Conjuros Gratuitos: Evasión casi permanente
+    "Clérigo": (1.5, 1.50, 0.5),    # 400 de maná; Alas de Ángel y Prisa; curaciones propias sin muro
+    "Paladín": (0.5, 1.15, 0.0),    # sagrada sin muro, pero ~100 de maná
+    "Bardo": (1.0, 1.15, 0.5),      # maná de instrumentos; resto de escuelas con muro
+    "Druida": (1.0, 1.15, 0.5),     # Piel de Roble sin muro; reserva de maná en forma
+    "Pícaro": (0.5, 1.05, 0.5),     # ~100 de maná (Hoja Arcana: ver abajo)
+    "Ranger": (0.5, 1.05, 0.5),
+    "Bárbaro": (0.5, 1.05, 0.5),
+    "Monje": (0.5, 1.05, 0.5),
+    "Maestro del Giro (exp.)": (0.5, 1.05, 0.5),
+}
+# Subclases con más maná o recarga que su clase.
+SUBCLASS_KIT = {"Hoja Arcana": (1.0, 1.15, 0.5)}
+
+
+def kit_for(name):
+    for k, v in SPELL_KIT.items():
+        if name.startswith(k):
+            return v
+    return (0, 1, 0)
+
+
+def apply_kit(r, kit):
+    dm, fr, du = kit
+    return row(r["name"], min(10, r["mob"] + dm), r["ehp"] * fr, r["idx"], min(10, r["util"] + du), r["note"])
+
+
+CLASSES = [apply_kit(r, kit_for(r["name"])) for r in CLASSES]
+SUBCLASSES = [(g, apply_kit(apply_kit(r, kit_for(g)), SUBCLASS_KIT.get(r["name"], (0, 1, 0)))) for g, r in SUBCLASSES]
+
 # ---------------------------------------------------------------- cálculo
 
 def tier(delta):

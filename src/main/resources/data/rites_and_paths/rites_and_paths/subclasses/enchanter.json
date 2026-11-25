@@ -17,7 +17,7 @@
       "id": "rites_and_paths:dance_contagion",
       "radius": 3,
       "chance": 0.5,
-      "max_extra": 3
+      "max_extra": 5
     }
   ],
   "milestones": [

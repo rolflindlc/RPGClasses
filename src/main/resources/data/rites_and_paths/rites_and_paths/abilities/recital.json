@@ -4,5 +4,5 @@
   "distinct_spells": 3,
   "window_seconds": 12,
   "cooldown_cut": 0.5,
-  "icd_seconds": 20
+  "icd_seconds": 12
 }

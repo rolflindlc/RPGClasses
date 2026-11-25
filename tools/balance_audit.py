@@ -243,10 +243,15 @@ def apply_fix(r, group):
 # Rev. 2.22 (subidas aplicadas): (movilidad +, vida efectiva ×, DPS ×, utilidad +).
 # Paladín: Castigo Divino, cada 4.º golpe +40 % sagrado (×2 contra no-muertos y Nether) → DPS ×1,10.
 # Bárbaro: Sed de Sangre 10 → 15 % (vida ×1,05), Furia Berserker 60 → 45 s (DPS ×1,04) y el grito hace huir 2 s (+1 util).
-REV222_CLASS = {"Paladín": (0, 1.0, 1.10, 0), "Bárbaro": (0, 1.05, 1.04, 1.0)}
+# Paladín: velocidad del rasgo base −10 % → −5 % (+0,25 de movilidad).
+# Pícaro: sigilo con drenaje del 8 %/s (12,5 s en vez de 10 s): vida efectiva ×1,08.
+REV222_CLASS = {"Paladín": (0.25, 1.0, 1.10, 0), "Bárbaro": (0, 1.05, 1.04, 1.0), "Pícaro": (0, 1.08, 1.0, 0)}
 # Bastión: Tenacidad devuelve el 20 % de los golpes reducidos (DPS ×1,10).
 # Francotirador: Camuflaje (vida ×1,2, +1 util) y Marca de Mira, +50 % al siguiente disparo (DPS ×1,08, +0,5 util).
-REV222_SUB = {"Bastión Inflexible": (0, 1.0, 1.10, 0), "Francotirador": (0, 1.2, 1.08, 1.5)}
+# Bardo: Cantor de Guerra, Golpe Resonante hasta el 100 % (DPS ×1,06); Encantador, Contagio a 5 y Hechizar 6 s
+# (vida ×1,05 y +0,25 util); Juglar, Recital con ICD de 12 s (DPS ×1,04 y +0,25 util).
+REV222_SUB = {"Bastión Inflexible": (0, 1.0, 1.10, 0), "Francotirador": (0, 1.2, 1.08, 1.5),
+              "Cantor de Guerra": (0, 1.0, 1.06, 0), "Encantador": (0, 1.05, 1.0, 0.25), "Juglar": (0, 1.0, 1.04, 0.25)}
 
 
 def apply_rev(r, key, table):

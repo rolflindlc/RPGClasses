@@ -148,9 +148,9 @@ public class StatCalculatorTest {
         double[] cuirass = StatCalculator.equippedArmorBonus(s, STORE.classDef(s.classId));
         assertEquals(0.25, cuirass[0], EPS);
         assertEquals(0.40, cuirass[1], EPS);
-        // Rasgo del Paladín (+20%) + Vigor Colosal (+60%) = +80%; la velocidad lleva el -10% del rasgo.
+        // Rasgo del Paladín (+20%) + Vigor Colosal (+60%) = +80%; la velocidad lleva el -5% del rasgo (rev. 2.22).
         assertEquals(0.80, totals(s, ARMORED).get(new Key("minecraft:generic.max_health", "multiply_base")), EPS);
-        assertEquals(-0.10, totals(s, ARMORED).get(new Key("minecraft:generic.movement_speed", "multiply_base")), EPS);
+        assertEquals(-0.05, totals(s, ARMORED).get(new Key("minecraft:generic.movement_speed", "multiply_base")), EPS);
         // Con Cuerpo Colosal (+20%) llega justo al tope global de +100%.
         s.perks.put("cuirass", "colossal_body");
         assertEquals(1.0, totals(s, ARMORED).get(new Key("minecraft:generic.max_health", "multiply_base")), EPS);

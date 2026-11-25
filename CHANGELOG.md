@@ -8,6 +8,9 @@
   and its roar makes regular mobs flee for 2 s. **Unyielding Bastion:** hits reduced by *Tenacity* return 20% to the
   attacker. **Sniper:** *Camouflage* (crouch still 2 s: invisible to mobs and players until you move or shoot) and
   *Aimed Mark* (watch an enemy through a spyglass for 5 s: your next shot that hits it within 30 s deals +50%).
+  **Paladin** speed penalty −5% (was −10%). **Rogue** stealth drains 8%/s (was 10%/s). **War Chanter:** *Resonant
+  Strike* up to 100% (was 75%). **Enchanter:** *Contagion* up to 5 dancers (was 3) and *Bewitch* 6 s (was 4 s).
+  **Minstrel:** *Recital* internal cooldown 12 s (was 20 s).
 - **Rogue, new subclass Face Changer** (replaces Shadow Walker; existing Shadow Walkers become Face Changers with
   the same level). *Spy's Spyglass* (passive): looking through a spyglass shows the target's health (armor from
   subclass level 4, effects from level 7) and makes it glow only for you (3 to 10 s). Watching a player or a

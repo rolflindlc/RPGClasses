@@ -308,7 +308,11 @@ public final class FaceChanger {
     }
 
     private static LivingEntity lookedAt(ServerPlayer player) {
-        double range = AbilityService.number(AbilityService.params(SPY_GLASS), "study_range", 64);
+        return lookedAt(player, AbilityService.number(AbilityService.params(SPY_GLASS), "study_range", 64));
+    }
+
+    /** Entidad viva a la que apunta la mira, con línea de visión (la usa también la marca del Francotirador). */
+    public static LivingEntity lookedAt(ServerPlayer player, double range) {
         Vec3 eye = player.getEyePosition();
         Vec3 look = player.getViewVector(1f);
         Vec3 end = eye.add(look.scale(range));

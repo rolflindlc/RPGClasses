@@ -3,6 +3,11 @@
 ## Unreleased
 
 ### Added
+- **Balance rev. 2.22:** **Paladin** gains *Divine Smite* (every 4th melee hit deals +40% holy damage, ×2 against
+  undead and Nether mobs). **Barbarian:** *Bloodthirst* heals 15% (was 10%), *Berserker Rage* cooldown 45 s (was 60 s)
+  and its roar makes regular mobs flee for 2 s. **Unyielding Bastion:** hits reduced by *Tenacity* return 20% to the
+  attacker. **Sniper:** *Camouflage* (crouch still 2 s: invisible to mobs and players until you move or shoot) and
+  *Aimed Mark* (watch an enemy through a spyglass for 5 s: your next shot that hits it within 30 s deals +50%).
 - **Rogue, new subclass Face Changer** (replaces Shadow Walker; existing Shadow Walkers become Face Changers with
   the same level). *Spy's Spyglass* (passive): looking through a spyglass shows the target's health (armor from
   subclass level 4, effects from level 7) and makes it glow only for you (3 to 10 s). Watching a player or a

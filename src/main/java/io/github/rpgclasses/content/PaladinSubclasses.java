@@ -122,6 +122,16 @@ public final class PaladinSubclasses {
         return 1;
     }
 
+    /** Tenacidad (rev. 2.22): un golpe reducido devuelve {@code reflect} (20 %) del golpe al atacante, como espinas. */
+    public static void tenacityReflect(ServerPlayer victim, net.minecraft.world.damagesource.DamageSource source, float amount) {
+        ActiveMechanic m = MechanicService.find(victim, TENACITY);
+        if (m == null || source.is(net.minecraft.world.damagesource.DamageTypes.THORNS)) return;
+        double reflect = m.number("reflect", 0);
+        if (reflect <= 0 || !(source.getEntity() instanceof net.minecraft.world.entity.LivingEntity attacker) || attacker == victim
+                || !CombatAbilities.canHit(victim, attacker)) return;
+        attacker.hurt(victim.damageSources().thorns(victim), (float) (amount * reflect));
+    }
+
     /** Baluarte de Embestida: daño y empuje en área a lo que el Paladín arrolla mientras corre. */
     @SubscribeEvent
     public void onPlayerTick(TickEvent.PlayerTickEvent event) {

@@ -19,7 +19,8 @@
       "type": "rites_and_paths:mechanic",
       "id": "rites_and_paths:tenacity",
       "window_ticks": 20,
-      "reduction": 0.5
+      "reduction": 0.5,
+      "reflect": 0.2
     }
   ],
   "milestones": [

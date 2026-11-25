@@ -47,6 +47,9 @@ public final class CombatAbilities {
     public static final String BLOODTHIRST = Ids.NS + ":bloodthirst";
     public static final String CHARGE = Ids.NS + ":charge";
     public static final String BERSERKER_RAGE = Ids.NS + ":berserker_rage";
+    /** Paladín (rev. 2.22): cada N golpes cuerpo a cuerpo añaden daño sagrado; más contra no-muertos y mobs del Nether. */
+    public static final String DIVINE_SMITE = Ids.NS + ":divine_smite";
+    private static final String SMITE_COUNTER = "divine_smite_hits";
 
     public static final TagKey<EntityType<?>> TAUNT_IMMUNE = TagKey.create(Registries.ENTITY_TYPE, RpgClasses.id("taunt_immune"));
     public static final TagKey<EntityType<?>> STUN_IMMUNE = TagKey.create(Registries.ENTITY_TYPE, RpgClasses.id("stun_immune"));
@@ -143,6 +146,17 @@ public final class CombatAbilities {
         ClassFx.burst(player, ClassFx.RED, 40, 0.1);
         ClassFx.ring(player, ClassFx.RED, radius, 0.2, 36);
         sound(player, SoundEvents.WOLF_GROWL);
+        // Rev. 2.22: el grito hace huir a los mobs normales cercanos (no a los jefes ni a los jugadores).
+        int fearTicks = AbilityService.ticks(p, "fear_seconds", 2);
+        if (fearTicks > 0) {
+            long until = player.level().getGameTime() + fearTicks;
+            for (Mob mob : player.level().getEntitiesOfClass(Mob.class, player.getBoundingBox().inflate(radius),
+                    m -> canHit(player, m) && m.distanceToSqr(player) <= radius * radius
+                            && !m.getType().is(net.minecraftforge.common.Tags.EntityTypes.BOSSES))) {
+                FEARED.put(mob.getUUID(), new Fear(player.getUUID(), until));
+                flee(mob, player);
+            }
+        }
         io.github.rpgclasses.gear.SetEffects.onBarbarianAbility(player, true);
         return true;
     }
@@ -231,6 +245,58 @@ public final class CombatAbilities {
         ClassFx.line(event.getEntity(), player, ClassFx.BLOOD, 8);
         ClassFx.burst(player, ParticleTypes.HEART, 3, 0);
         AbilityService.setCooldown(player, BLOODTHIRST, AbilityService.ticks(p, "icd_seconds", 1));
+    }
+
+    // ------------------------------------------------------------------ miedo (Furia Berserker, rev. 2.22)
+
+    private record Fear(UUID from, long until) {}
+
+    private static final Map<UUID, Fear> FEARED = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
+
+    /** El mob corre en dirección contraria al Bárbaro y deja de atacarle. */
+    private static void flee(Mob mob, LivingEntity from) {
+        if (mob.getTarget() == from) mob.setTarget(null);
+        Vec3 away = mob.position().subtract(from.position()).multiply(1, 0, 1);
+        if (away.lengthSqr() < 1.0e-4) away = new Vec3(1, 0, 0);
+        Vec3 dest = mob.position().add(away.normalize().scale(8));
+        mob.getNavigation().moveTo(dest.x, dest.y, dest.z, 1.4);
+    }
+
+    @SubscribeEvent
+    public void onLivingTick(net.minecraftforge.event.entity.living.LivingEvent.LivingTickEvent event) {
+        if (FEARED.isEmpty() || !(event.getEntity() instanceof Mob mob) || mob.level().isClientSide) return;
+        Fear fear = FEARED.get(mob.getUUID());
+        if (fear == null) return;
+        if (!mob.isAlive() || mob.level().getGameTime() > fear.until()) {
+            FEARED.remove(mob.getUUID());
+            return;
+        }
+        if (mob.tickCount % 5 == 0 && mob.level() instanceof net.minecraft.server.level.ServerLevel level
+                && level.getEntity(fear.from()) instanceof LivingEntity from) flee(mob, from);
+    }
+
+    /** Castigo Divino: cada {@code every_hits} golpes cuerpo a cuerpo, fracción del golpe como daño sagrado extra. */
+    public static double divineSmiteBonus(ServerPlayer attacker, LivingEntity target) {
+        if (!AbilityService.has(attacker, DIVINE_SMITE)) return 0;
+        PlayerClassData data = PlayerClassDataProvider.get(attacker);
+        if (data == null) return 0;
+        JsonObject p = AbilityService.params(DIVINE_SMITE);
+        int every = Math.max(1, (int) Math.round(AbilityService.number(p, "every_hits", 4)));
+        int hits = data.counters.getOrDefault(SMITE_COUNTER, 0) + 1;
+        if (hits < every) {
+            data.counters.put(SMITE_COUNTER, hits);
+            return 0;
+        }
+        data.counters.remove(SMITE_COUNTER);
+        double bonus = AbilityService.number(p, "damage_bonus", 0.4);
+        if (target.getMobType() == net.minecraft.world.entity.MobType.UNDEAD || target.getType().is(PaladinPerks.NETHER_MOBS)) {
+            bonus *= AbilityService.number(p, "undead_nether_multiplier", 2);
+        }
+        if (attacker.level() instanceof net.minecraft.server.level.ServerLevel level) {
+            level.sendParticles(ParticleTypes.END_ROD, target.getX(), target.getY() + target.getBbHeight() * 0.6, target.getZ(), 10, 0.25, 0.4, 0.25, 0.04);
+            level.playSound(null, target.getX(), target.getY(), target.getZ(), SoundEvents.AMETHYST_BLOCK_RESONATE, SoundSource.PLAYERS, 0.9f, 1.4f);
+        }
+        return bonus;
     }
 
     @SubscribeEvent

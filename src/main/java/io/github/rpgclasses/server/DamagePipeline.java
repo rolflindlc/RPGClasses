@@ -298,6 +298,12 @@ public final class DamagePipeline {
             log.add(" | juicio +%.2f sagrado", holyDamage);
         }
 
+        double smite = melee ? CombatAbilities.divineSmiteBonus(attacker, target) : 0;
+        if (smite > 0) {
+            damage *= 1 + smite;
+            log.add(" | castigo divino x%.2f", 1 + smite);
+        }
+
         if (attacker.hasEffect(ModEffects.BERSERKER_RAGE.get())) {
             double bonus = AbilityService.number(AbilityService.params(CombatAbilities.BERSERKER_RAGE), "damage_bonus", 0.25);
             damage *= 1 + bonus;
@@ -395,7 +401,10 @@ public final class DamagePipeline {
         if (cleric != 1) log.add(" | resolución/oración x%.2f", cleric);
         double tenacity = PaladinSubclasses.tenacityFactor(victim);
         factor *= tenacity;
-        if (tenacity != 1) log.add(" | tenacidad x%.2f", tenacity);
+        if (tenacity != 1) {
+            log.add(" | tenacidad x%.2f", tenacity);
+            PaladinSubclasses.tenacityReflect(victim, event.getSource(), event.getAmount());
+        }
         if (victim.hasEffect(ModEffects.BULWARK.get())) {
             double reduction = CombatAbilities.bulwarkReduction(victim);
             // Baluarte Sanador: cura con lo que Baluarte ha quitado de este golpe.

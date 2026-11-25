@@ -240,8 +240,23 @@ def apply_fix(r, group):
     return row(r["name"], r["mob"], r["ehp"] * fr, r["idx"] * fd, r["util"], r["note"])
 
 
-CLASSES = [apply_fix(apply_kit(r, kit_for(r["name"])), r["name"]) for r in CLASSES]
-SUBCLASSES = [(g, apply_fix(apply_kit(apply_kit(r, kit_for(g)), SUBCLASS_KIT.get(r["name"], (0, 1, 0))), g))
+# Rev. 2.22 (subidas aplicadas): (movilidad +, vida efectiva ×, DPS ×, utilidad +).
+# Paladín: Castigo Divino, cada 4.º golpe +40 % sagrado (×2 contra no-muertos y Nether) → DPS ×1,10.
+# Bárbaro: Sed de Sangre 10 → 15 % (vida ×1,05), Furia Berserker 60 → 45 s (DPS ×1,04) y el grito hace huir 2 s (+1 util).
+REV222_CLASS = {"Paladín": (0, 1.0, 1.10, 0), "Bárbaro": (0, 1.05, 1.04, 1.0)}
+# Bastión: Tenacidad devuelve el 20 % de los golpes reducidos (DPS ×1,10).
+# Francotirador: Camuflaje (vida ×1,2, +1 util) y Marca de Mira, +50 % al siguiente disparo (DPS ×1,08, +0,5 util).
+REV222_SUB = {"Bastión Inflexible": (0, 1.0, 1.10, 0), "Francotirador": (0, 1.2, 1.08, 1.5)}
+
+
+def apply_rev(r, key, table):
+    dm, fr, fd, du = table.get(key, (0, 1.0, 1.0, 0))
+    return row(r["name"], min(10, r["mob"] + dm), r["ehp"] * fr, r["idx"] * fd, min(10, r["util"] + du), r["note"])
+
+
+CLASSES = [apply_rev(apply_fix(apply_kit(r, kit_for(r["name"])), r["name"]), r["name"], REV222_CLASS) for r in CLASSES]
+SUBCLASSES = [(g, apply_rev(apply_rev(apply_fix(apply_kit(apply_kit(r, kit_for(g)), SUBCLASS_KIT.get(r["name"], (0, 1, 0))), g),
+                                      g, REV222_CLASS), r["name"], REV222_SUB))
               for g, r in SUBCLASSES]
 
 # ---------------------------------------------------------------- cálculo

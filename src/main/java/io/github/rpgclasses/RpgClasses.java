@@ -134,6 +134,7 @@ public class RpgClasses {
         MinecraftForge.EVENT_BUS.register(new BannerAura());
         MinecraftForge.EVENT_BUS.register(new RangerPerks());
         MinecraftForge.EVENT_BUS.register(new RangerSubclasses());
+        io.github.rpgclasses.content.SniperTools.register(); // Francotirador: Camuflaje y Marca de Mira (rev. 2.22)
         MinecraftForge.EVENT_BUS.register(new io.github.rpgclasses.content.BondBook());
         MinecraftForge.EVENT_BUS.register(new RoguePerks());
         MinecraftForge.EVENT_BUS.register(new io.github.rpgclasses.gear.GearEvents());

@@ -4,7 +4,8 @@
   "attack_speed": 0.3,
   "damage_bonus": 0.25,
   "damage_taken": 0.2,
-  "cooldown_seconds": 60,
+  "cooldown_seconds": 45,
   "weakness_radius": 6,
-  "weakness_seconds": 6
+  "weakness_seconds": 6,
+  "fear_seconds": 2
 }

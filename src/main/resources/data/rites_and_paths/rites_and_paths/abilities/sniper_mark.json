@@ -1,0 +1,8 @@
+{
+  "schema_version": 1,
+  "passive": true,
+  "study_seconds": 5,
+  "mark_seconds": 30,
+  "damage_bonus": 0.5,
+  "range": 96
+}

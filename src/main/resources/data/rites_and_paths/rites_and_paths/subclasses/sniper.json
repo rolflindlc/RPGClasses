@@ -36,6 +36,14 @@
       "subclass_level": 1,
       "grants": "rites_and_paths:lethal_shot",
       "upgrades": "rites_and_paths:heavy_shot"
+    },
+    {
+      "subclass_level": 1,
+      "grants": "rites_and_paths:camouflage"
+    },
+    {
+      "subclass_level": 1,
+      "grants": "rites_and_paths:sniper_mark"
     }
   ]
 }

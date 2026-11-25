@@ -339,6 +339,10 @@
   ],
   "milestones": [
     {
+      "total_level": 1,
+      "grants": "rites_and_paths:divine_smite"
+    },
+    {
       "total_level": 10,
       "grants": "rites_and_paths:taunt"
     },

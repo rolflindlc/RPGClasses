@@ -317,9 +317,7 @@ public final class DamagePipeline {
                     classDef.critChanceBonus() + ModAttributes.value(attacker, ModAttributes.CRIT_CHANCE), false);
             // Pícaro: todo golpe desde invisibilidad es crítico seguro y suma su bonus de Backstab.
             boolean backstab = sphereCrit == null && RogueAbilities.isStealthed(attacker);
-            // Paso de Sombra: crítico seguro contra el objetivo marcado.
-            boolean marked = !backstab && melee && RogueAbilities.hasShadowMark(attacker, target);
-            boolean roll = sphereCrit != null ? sphereCrit : (backstab || marked || attacker.getRandom().nextDouble() < chance);
+            boolean roll = sphereCrit != null ? sphereCrit : (backstab || attacker.getRandom().nextDouble() < chance);
             if (roll) {
                 critHit = true;
                 double critBonus = ModAttributes.value(attacker, ModAttributes.CRIT_DAMAGE)
@@ -328,8 +326,8 @@ public final class DamagePipeline {
                 damage *= multiplier * io.github.rpgclasses.gear.CurioEffects.critRoll(attacker, multiplier);
                 attacker.crit(target);
                 io.github.rpgclasses.gear.SetEffects.onCrit(attacker, target, damage, melee);
-                log.add(backstab ? " | CRÍTICO SEGURO (sigilo) x%.2f" : marked ? " | CRÍTICO SEGURO (paso de sombra) x%.2f" : " | CRÍTICO (%.0f%%) x%.2f",
-                        backstab || marked ? new Object[] {multiplier} : new Object[] {chance * 100, multiplier});
+                log.add(backstab ? " | CRÍTICO SEGURO (sigilo) x%.2f" : " | CRÍTICO (%.0f%%) x%.2f",
+                        backstab ? new Object[] {multiplier} : new Object[] {chance * 100, multiplier});
             } else {
                 log.add(" | sin crítico (%.0f%%)", chance * 100);
             }

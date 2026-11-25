@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "passive": true,
+  "study_seconds": 90,
+  "study_range": 64,
+  "mark_seconds": {
+    "from": 3,
+    "to": 10
+  },
+  "armor_from_level": 4,
+  "effects_from_level": 7
+}

@@ -25,6 +25,11 @@ public final class PlayerClassData {
      * Es del jugador, no de la clase: no se borra al reiniciarla. Ver {@code druid.Bestiary}.
      */
     public net.minecraft.nbt.CompoundTag druid = new net.minecraft.nbt.CompoundTag();
+    /**
+     * Cambiarrostros (Pícaro): rostros aprendidos con el catalejo y estudios a medias. Es del jugador, no de la clase:
+     * no se borra al reiniciarla ni al morir. Solo lo mira el servidor. Ver {@code rogue.Faces}.
+     */
+    public net.minecraft.nbt.CompoundTag faces = new net.minecraft.nbt.CompoundTag();
     /** Solo en el cliente: descuento con signo del equilibrio de puntos que manda el servidor (&lt;0 = recargo; no se guarda). */
     public double catchUpDiscount;
 
@@ -85,6 +90,7 @@ public final class PlayerClassData {
         for (Map.Entry<String, String> e : texts.entrySet()) txt.putString(e.getKey(), e.getValue());
         tag.put("texts", txt);
         if (!druid.isEmpty()) tag.put("druid", druid.copy());
+        if (!faces.isEmpty()) tag.put("faces", faces.copy());
         return tag;
     }
 
@@ -99,6 +105,7 @@ public final class PlayerClassData {
             d.remove("used");
             tag.put("druid", d);
         }
+        tag.remove("faces"); // rostros del Cambiarrostros: solo los usa el servidor
         return tag;
     }
 
@@ -111,7 +118,7 @@ public final class PlayerClassData {
         state.perks.clear();
         CompoundTag perks = tag.getCompound("perks");
         for (String key : perks.getAllKeys()) state.perks.put(key, perks.getString(key));
-        state.subclassId = tag.contains("subclass", Tag.TAG_STRING) ? tag.getString("subclass") : null;
+        state.subclassId = renamedSubclass(tag.contains("subclass", Tag.TAG_STRING) ? tag.getString("subclass") : null);
         state.subclassLevel = Math.max(0, tag.getInt("subLevel"));
         state.xpPaidBase = Math.max(0, tag.getLong("xpBase"));
         state.xpPaidSubclass = Math.max(0, tag.getLong("xpSub"));
@@ -136,7 +143,7 @@ public final class PlayerClassData {
             CompoundTag bp = bt.getCompound("perks");
             for (String k : bp.getAllKeys()) pk.put(k, bp.getString(k));
             state.builds[slot] = new io.github.rpgclasses.core.progression.SavedBuild(bt.getString("class"), pts, pk,
-                    bt.contains("subclass", Tag.TAG_STRING) ? bt.getString("subclass") : null, bt.getInt("subLevel"));
+                    renamedSubclass(bt.contains("subclass", Tag.TAG_STRING) ? bt.getString("subclass") : null), bt.getInt("subLevel"));
         }
         // v2 -> v3: razas (ausente = sin raza; se pedirá elegirla al entrar).
         state.raceId = tag.contains("race", Tag.TAG_STRING) ? tag.getString("race") : null;
@@ -158,7 +165,15 @@ public final class PlayerClassData {
         CompoundTag txt = tag.getCompound("texts");
         for (String key : txt.getAllKeys()) texts.put(key, txt.getString(key));
         druid = tag.getCompound("druid").copy();
+        faces = tag.getCompound("faces").copy();
         catchUpDiscount = tag.contains("catchUp") ? tag.getDouble("catchUp") : 0;
+    }
+
+    /** Subclases sustituidas por otras: quien tenía la antigua pasa a la nueva con el mismo nivel. */
+    private static String renamedSubclass(String id) {
+        // Rev. 2.20: el Caminante de Sombras (Paso de Sombra) se sustituye por el Cambiarrostros.
+        if ("rites_and_paths:shadow_walker".equals(id)) return "rites_and_paths:face_changer";
+        return id;
     }
 
     /** Al reiniciar la clase se borra lo que era propio de ella (conjuros fijados, cargas). */

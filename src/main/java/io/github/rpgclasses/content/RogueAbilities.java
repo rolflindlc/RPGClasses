@@ -8,16 +8,12 @@ import io.github.rpgclasses.player.PlayerClassDataProvider;
 import io.github.rpgclasses.registry.ModEntities;
 import io.github.rpgclasses.server.AbilityService;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.phys.AABB;
@@ -34,10 +30,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-/** Habilidades del Pícaro: barra de Sigilo (invisibilidad verdadera), Paso de Sombra y Señuelo. */
+/** Habilidades del Pícaro: barra de Sigilo (invisibilidad verdadera) y Señuelo. El Cambiarrostros está en {@code rogue.FaceChanger}. */
 public final class RogueAbilities {
     public static final String STEALTH = Ids.NS + ":stealth";
-    public static final String SHADOW_STEP = Ids.NS + ":shadow_step";
     public static final String DECOY = Ids.NS + ":decoy";
 
     /** Contadores guardados con el jugador (los lee el HUD): barra en milésimas y estado. */
@@ -59,10 +54,10 @@ public final class RogueAbilities {
     private static final Map<UUID, State> STATES = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
 
     public static void register() {
-        AbilityService.register(SHADOW_STEP, RogueAbilities::shadowStep);
+        io.github.rpgclasses.rogue.FaceChanger.register();
     }
 
-    /** ¿Está el jugador ahora mismo invisible por Sigilo? (lo usan el crítico seguro y el clon). */
+    /** ¿Está el jugador ahora mismo invisible por Sigilo? (lo usan el crítico seguro, el clon y el disfraz). */
     public static boolean isStealthed(ServerPlayer player) {
         State st = STATES.get(player.getUUID());
         return st != null && st.active;
@@ -229,104 +224,6 @@ public final class RogueAbilities {
     @SubscribeEvent
     public void onLogout(PlayerEvent.PlayerLoggedOutEvent event) {
         STATES.remove(event.getEntity().getUUID());
-        MARKS.remove(event.getEntity().getUUID());
-    }
-
-    // --- Paso de Sombra ---
-
-    /** Marca del Paso de Sombra: objetivo y tick en que acaba (críticos seguros contra él y recarga al matarlo). */
-    private record Mark(UUID target, long until) {}
-
-    private static final Map<UUID, Mark> MARKS = io.github.rpgclasses.server.SessionState.track(new HashMap<>());
-
-    /** ¿Tiene {@code attacker} la marca del Paso de Sombra sobre {@code target}? (golpe crítico seguro) */
-    public static boolean hasShadowMark(ServerPlayer attacker, Entity target) {
-        Mark m = MARKS.get(attacker.getUUID());
-        return m != null && m.target.equals(target.getUUID()) && attacker.level().getGameTime() <= m.until;
-    }
-
-    /** Teletransporte a la espalda del enemigo al que mira; crítico seguro 5 s y recarga si lo mata. */
-    private static boolean shadowStep(ServerPlayer player, JsonObject p) {
-        double range = AbilityService.number(p, "distance", 10);
-        double behind = AbilityService.number(p, "behind_distance", 1.4);
-        ServerLevel level = player.serverLevel();
-        Vec3 eye = player.getEyePosition();
-        Vec3 look = player.getLookAngle();
-        LivingEntity target = null;
-        double bestDot = 0.93; // ≈ 21°: hay que mirar más o menos hacia el enemigo
-        for (LivingEntity e : level.getEntitiesOfClass(LivingEntity.class, player.getBoundingBox().inflate(range),
-                e -> e != player && e.isAlive() && !e.isInvulnerable() && io.github.rpgclasses.server.Allies.isEnemy(player, e)
-                        && !(e instanceof DecoyEntity) && player.hasLineOfSight(e))) {
-            Vec3 to = e.getBoundingBox().getCenter().subtract(eye);
-            double dist = to.length();
-            if (dist > range || dist < 1.0e-3) continue;
-            double dot = to.scale(1.0 / dist).dot(look);
-            if (dot > bestDot) { bestDot = dot; target = e; }
-        }
-        if (target == null) {
-            player.displayClientMessage(Component.translatable("msg.rites_and_paths.shadow_step_blocked"), true);
-            return false;
-        }
-        // Espalda = opuesto a hacia donde mira el objetivo. Se prueban varias distancias y, si no hay sitio, los lados.
-        Vec3 face = Vec3.directionFromRotation(0, target.getYRot()).multiply(1, 0, 1).normalize();
-        Vec3 side = new Vec3(-face.z, 0, face.x);
-        Vec3[] tries = {
-                face.scale(-behind), face.scale(-(behind - 0.5)), face.scale(-(behind + 0.7)),
-                face.scale(-behind).add(side.scale(1.0)), face.scale(-behind).add(side.scale(-1.0))};
-        Vec3 dest = null;
-        for (Vec3 off : tries) {
-            Vec3 pos = target.position().add(off);
-            net.minecraft.world.phys.AABB box = player.getBoundingBox().move(pos.subtract(player.position()));
-            if (level.noCollision(player, box)) { dest = pos; break; }
-        }
-        if (dest == null) {
-            player.displayClientMessage(Component.translatable("msg.rites_and_paths.shadow_step_blocked"), true);
-            return false;
-        }
-        Vec3 from = player.position();
-        level.sendParticles(ParticleTypes.PORTAL, from.x, from.y + 1, from.z, 30, 0.3, 0.6, 0.3, 0.2);
-        level.sendParticles(ParticleTypes.SMOKE, from.x, from.y + 1, from.z, 15, 0.3, 0.6, 0.3, 0.02);
-        level.playSound(null, from.x, from.y, from.z, SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 0.8f, 1.2f);
-        // Aparece mirando la nuca del objetivo.
-        player.connection.teleport(dest.x, dest.y, dest.z, target.getYRot(), 0.0f);
-        player.fallDistance = 0;
-        level.sendParticles(ParticleTypes.PORTAL, dest.x, dest.y + 1, dest.z, 30, 0.3, 0.6, 0.3, 0.2);
-        level.sendParticles(ParticleTypes.CRIT, target.getX(), target.getY() + target.getBbHeight() * 0.6, target.getZ(), 12, 0.3, 0.4, 0.3, 0.2);
-        level.playSound(null, dest.x, dest.y, dest.z, SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 0.8f, 0.8f);
-        long until = level.getGameTime() + AbilityService.ticks(p, "mark_seconds", 5);
-        MARKS.put(player.getUUID(), new Mark(target.getUUID(), until));
-        io.github.rpgclasses.server.DebugLog.event(player, "habilidad", "Paso de Sombra: a la espalda de {}", io.github.rpgclasses.server.DebugLog.describe(target));
-        return true;
-    }
-
-    /** Si matas al objetivo marcado dentro de la ventana, Paso de Sombra se recarga al instante. */
-    @SubscribeEvent
-    public void onMarkedKill(net.minecraftforge.event.entity.living.LivingDeathEvent event) {
-        LivingEntity dead = event.getEntity();
-        // Quién mató: el atacante directo, o (con Epic Fight, flechas, fuego...) quien tenía el crédito de la muerte.
-        ServerPlayer player = null;
-        if (event.getSource().getEntity() instanceof ServerPlayer sp) player = sp;
-        else if (dead.getKillCredit() instanceof ServerPlayer sp) player = sp;
-        if (player == null || player instanceof FakePlayer) return;
-        Mark m = MARKS.get(player.getUUID());
-        if (m == null) return;
-        if (!m.target.equals(dead.getUUID())) {
-            io.github.rpgclasses.server.DebugLog.event(player, "habilidad", "Paso de Sombra: murió {} pero no es el marcado", io.github.rpgclasses.server.DebugLog.describe(dead));
-            return;
-        }
-        MARKS.remove(player.getUUID());
-        long now = player.level().getGameTime();
-        if (now > m.until) {
-            io.github.rpgclasses.server.DebugLog.event(player, "habilidad", "Paso de Sombra: el objetivo murió fuera de la ventana ({} ticks tarde)", now - m.until);
-            return;
-        }
-        AbilityService.clearCooldown(player, SHADOW_STEP);
-        Net.syncPlayer(player);
-        io.github.rpgclasses.server.DebugLog.event(player, "habilidad", "Paso de Sombra recargado al matar a {}", io.github.rpgclasses.server.DebugLog.describe(dead));
-        ServerLevel level = player.serverLevel();
-        level.sendParticles(ParticleTypes.SOUL_FIRE_FLAME, player.getX(), player.getY() + 1, player.getZ(), 20, 0.3, 0.5, 0.3, 0.05);
-        level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.AMETHYST_BLOCK_CHIME, SoundSource.PLAYERS, 1.0f, 1.6f);
-        player.displayClientMessage(Component.translatable("msg.rites_and_paths.shadow_step_ready"), true);
     }
 
     // --- Señuelo ---

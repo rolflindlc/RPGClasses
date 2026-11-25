@@ -134,6 +134,7 @@ public final class CentaurRender {
     /** El cuerpo de caballo se dibuja para este jugador (y por tanto sus piernas humanas no). */
     public static boolean drawsBody(AbstractClientPlayer p) {
         if (!RaceTraits.isCentaur(p) || p.isSpectator()) return false;
+        if (io.github.rpgclasses.client.rogue.DisguiseClient.disguised(p)) return false; // Cambiarrostros: se ve el disfraz
         Pose pose = p.getPose();
         return pose == Pose.STANDING || pose == Pose.CROUCHING;
     }

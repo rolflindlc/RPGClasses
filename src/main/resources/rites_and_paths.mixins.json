@@ -7,6 +7,7 @@
   "mixins": [
     "AllyEntityMixin",
     "AnvilMenuMixin",
+    "DeathMessageMixin",
     "FishingHookAccessor",
     "FurnaceAccessor",
     "InstantHealMixin",
@@ -16,6 +17,7 @@
     "LeavesCollisionMixin",
     "LivingEntityAccessor",
     "PiglinBarterMixin",
+    "PlayerDisplayNameMixin",
     "PlayerEnchantMixin",
     "PlayerPassengerMixin",
     "PlayerSizeMixin",
@@ -41,7 +43,9 @@
     "client.DanceModelMixin",
     "client.InscriptionScreenMixin",
     "client.HealerGlowMixin",
-    "client.SpinCameraMixin"
+    "client.SpinCameraMixin",
+    "client.TabHideMixin",
+    "client.DisguiseSkinMixin"
   ],
   "injectors": {
     "defaultRequire": 1

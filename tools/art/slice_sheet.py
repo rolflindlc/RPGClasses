@@ -34,7 +34,7 @@ PORTRAITS = [
     "class/mage", "subclass/battle_mage", None, "subclass/elementalist",  # None: Evocador Caótico (retirado; el Cronomante tiene retrato propio)
     "class/paladin", "subclass/blessed_guardian", "subclass/charging_juggernaut", "subclass/unyielding_bastion",
     "class/barbarian", "subclass/indestructible", "subclass/plague_corruptor", "subclass/suicidal_berserker",
-    "class/rogue", "subclass/arcane_blade", "subclass/shadow_illusionist", "subclass/shadow_walker",
+    "class/rogue", "subclass/arcane_blade", "subclass/shadow_illusionist", "subclass/face_changer",
     "class/ranger", "subclass/agile_scout", "subclass/beast_master", "subclass/sniper",
     "class/monk", "subclass/breeze_master", "subclass/heavy_palm", "subclass/triworld_guardian",
     "race/human", "subrace/human/polyvalent", "subrace/human/specialist", "subrace/human/autodidact",

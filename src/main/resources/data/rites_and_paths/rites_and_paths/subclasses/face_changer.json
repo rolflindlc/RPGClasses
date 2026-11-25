@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "class": "rites_and_paths:rogue",
+  "display": {
+    "icon": "minecraft:spyglass"
+  },
+  "effects": [],
+  "milestones": [
+    {
+      "subclass_level": 1,
+      "grants": "rites_and_paths:spy_glass"
+    },
+    {
+      "subclass_level": 1,
+      "grants": "rites_and_paths:disguise"
+    }
+  ]
+}

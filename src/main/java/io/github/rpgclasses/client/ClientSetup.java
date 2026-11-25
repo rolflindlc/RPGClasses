@@ -113,6 +113,8 @@ public final class ClientSetup {
         io.github.rpgclasses.client.spin.SpinClient.register(modBus);
         // Druida: formas de bestia, bestiario, barras, restos, quimeras y recipiente.
         io.github.rpgclasses.client.druid.DruidClient.register(modBus);
+        // Cambiarrostros: disfraces (mob o jugador), lista de rostros y Tab.
+        io.github.rpgclasses.client.rogue.DisguiseClient.register(modBus);
         modBus.addListener((EntityRenderersEvent.RegisterRenderers event) -> {
             event.registerEntityRenderer(ModEntities.DECOY.get(), DecoyRenderer::new);
             event.registerEntityRenderer(ModEntities.SWARM_SLIME.get(), SwarmSlimeRenderer::new);

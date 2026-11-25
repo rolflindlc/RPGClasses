@@ -53,6 +53,7 @@ public final class BeltLayer {
         if (!(event.getEntity() instanceof AbstractClientPlayer player)) return;
         List<ItemStack> blocks = BELTS.get(player.getId());
         if (blocks == null || blocks.isEmpty() || player.isInvisible() || player.isSpectator()) return;
+        if (io.github.rpgclasses.client.rogue.DisguiseClient.disguised(player)) return; // Cambiarrostros: se ve el disfraz
         // Solo de pie o agachado (nadando, durmiendo o planeando con élitros la cintura no está ahí).
         var pose = player.getPose();
         if (pose != net.minecraft.world.entity.Pose.STANDING && pose != net.minecraft.world.entity.Pose.CROUCHING) return;

@@ -44,7 +44,7 @@ import java.util.TreeSet;
 public final class ClassPages {
     public enum Tab { PROGRESS, RACE, SUMMARY, DATA }
 
-    static final Set<String> SKIPPED_PARAMS = Set.of("type", "id", "schema_version", "passive", "condition", "modifiers");
+    static final Set<String> SKIPPED_PARAMS = Set.of("type", "id", "schema_version", "passive", "condition", "modifiers", "factions");
     private static final int LEVELS = 10;
     private static Map<String, String> paramUnits;
 

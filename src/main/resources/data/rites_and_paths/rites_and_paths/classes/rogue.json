@@ -347,7 +347,7 @@
     }
   ],
   "subclasses": [
-    "rites_and_paths:shadow_walker",
+    "rites_and_paths:face_changer",
     "rites_and_paths:shadow_illusionist",
     "rites_and_paths:arcane_blade"
   ]

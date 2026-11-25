@@ -3,6 +3,16 @@
 ## Unreleased
 
 ### Added
+- **Rogue, new subclass Face Changer** (replaces Shadow Walker; existing Shadow Walkers become Face Changers with
+  the same level). *Spy's Spyglass* (passive): looking through a spyglass shows the target's health (armor from
+  subclass level 4, effects from level 7) and makes it glow only for you (3 to 10 s). Watching a player or a
+  villager, illager, witch, piglin or humanoid undead for 90 s in total (progress is kept) teaches you its face; mobs
+  are learned by type, players one by one (`rites_and_paths:disguise/*` entity type tags). *Disguise* (active): pick
+  a learned face. A mob face makes its whole faction ignore you; a player face shows their skin, model, racial size
+  (visual only) and name, hides you from the Tab list and puts their name in death and kill messages. Allies see the
+  disguise with your real name. Attacking reveals you to the target and its faction within 16 blocks; mobs already
+  chasing you when you disguise know you are an impostor (and warn their faction) until they lose aggro. Water, rain,
+  fire or stealth break it: Speed II 4 s + 1 s invisibility, then a 30 s cooldown. Bosses are never fooled.
 - **Class points:** levelling no longer charges XP when you spend in the tree. You hold a balance of class points
   (shown in the tree) and every branch or subclass level costs 1 point. Points are bought with XP (`+1` / `all`
   buttons, same price curve: point n costs (80 + 6n) XP, where n counts every point you own) or come from items and

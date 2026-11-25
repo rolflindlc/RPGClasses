@@ -43,6 +43,7 @@ public final class ServerEvents {
                 to.counters.putAll(from.counters);
                 to.texts.putAll(from.texts);
                 to.druid = from.druid.copy(); // Druida: el bestiario no se pierde al morir
+                to.faces = from.faces.copy(); // Cambiarrostros: los rostros aprendidos tampoco
             }
             if (event.getEntity() instanceof ServerPlayer player) {
                 StatEngine.recompute(player);

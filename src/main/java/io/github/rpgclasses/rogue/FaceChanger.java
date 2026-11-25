@@ -410,7 +410,7 @@ public final class FaceChanger {
         @SubscribeEvent(priority = EventPriority.LOW)
         public void onHurt(LivingHurtEvent event) {
             if (!(event.getSource().getEntity() instanceof ServerPlayer player) || !isDisguised(player)) return;
-            if (!(event.getEntity() instanceof Mob victim) || victim == player) return;
+            if (!(event.getEntity() instanceof Mob victim)) return;
             expose(player, victim);
             Faces.Faction faction = Faces.factionOf(DISGUISED.get(player.getUUID()));
             if (faction != null && Faces.isMember(faction, victim)) alert(player, victim, faction);

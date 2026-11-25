@@ -228,8 +228,21 @@ def apply_kit(r, kit):
     return row(r["name"], min(10, r["mob"] + dm), r["ehp"] * fr, r["idx"], min(10, r["util"] + du), r["note"])
 
 
-CLASSES = [apply_kit(r, kit_for(r["name"])) for r in CLASSES]
-SUBCLASSES = [(g, apply_kit(apply_kit(r, kit_for(g)), SUBCLASS_KIT.get(r["name"], (0, 1, 0)))) for g, r in SUBCLASSES]
+# Correcciones de clase que el modelo general no ve (se aplican también a sus subclases).
+# Bárbaro: crítico del 35 % (no 30 %) con multiplicador ×2,0 → DPS ×1,35/1,30.
+# Pícaro: crítico del 25 % con ×2,25 (Filo), compensado en parte por el crítico seguro desde sigilo (DPS ×0,98), y el
+# sigilo le quita agro (los mobs casi no lo ven): +25 % de vida efectiva.
+CLASS_FIX = {"Bárbaro": (1.0, 1.35 / 1.30), "Pícaro": (1.25, 0.98)}
+
+
+def apply_fix(r, group):
+    fr, fd = CLASS_FIX.get(group, (1.0, 1.0))
+    return row(r["name"], r["mob"], r["ehp"] * fr, r["idx"] * fd, r["util"], r["note"])
+
+
+CLASSES = [apply_fix(apply_kit(r, kit_for(r["name"])), r["name"]) for r in CLASSES]
+SUBCLASSES = [(g, apply_fix(apply_kit(apply_kit(r, kit_for(g)), SUBCLASS_KIT.get(r["name"], (0, 1, 0))), g))
+              for g, r in SUBCLASSES]
 
 # ---------------------------------------------------------------- cálculo
 

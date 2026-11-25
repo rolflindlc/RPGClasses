@@ -157,7 +157,8 @@ public final class BloodBond {
     private static ServerPlayer martyrOf(LivingEntity ally) {
         for (Map.Entry<UUID, Bonds> e : BONDS.entrySet()) {
             if (!ally.getUUID().equals(e.getValue().ally)) continue;
-            if (ally.getServer() != null && ally.getServer().getPlayerList().getPlayer(e.getKey()) instanceof ServerPlayer sp && sp.isAlive()) return sp;
+            ServerPlayer sp = ally.getServer() == null ? null : ally.getServer().getPlayerList().getPlayer(e.getKey());
+            if (sp != null && sp.isAlive()) return sp;
         }
         return null;
     }

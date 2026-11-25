@@ -28,6 +28,10 @@
     {
       "subclass_level": 1,
       "grants": "rites_and_paths:prayer"
+    },
+    {
+      "subclass_level": 1,
+      "grants": "rites_and_paths:guardian_angel"
     }
   ]
 }

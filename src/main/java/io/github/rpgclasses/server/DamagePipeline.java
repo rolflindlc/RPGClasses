@@ -386,6 +386,7 @@ public final class DamagePipeline {
     public void onDefend(LivingHurtEvent event) {
         if (!(event.getEntity() instanceof ServerPlayer victim) || victim instanceof FakePlayer || event.getAmount() <= 0) return;
         if (event.getSource().is(DamageTypeTags.BYPASSES_INVULNERABILITY)) return;
+        if (event.getSource().is(io.github.rpgclasses.cleric.BloodBond.BOND_DAMAGE)) return; // daño verdadero del Vínculo de Sangre
         Breakdown log = new Breakdown("recibe %.2f (%s de %s)", event.getAmount(),
                 event.getSource().getMsgId(), DebugLog.describe(event.getSource().getEntity()));
         double hazard = BarbarianPerks.hazardFactor(victim, event.getSource());

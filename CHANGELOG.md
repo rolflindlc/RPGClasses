@@ -10,7 +10,12 @@
   *Aimed Mark* (watch an enemy through a spyglass for 5 s: your next shot that hits it within 30 s deals +50%).
   **Paladin** speed penalty −5% (was −10%). **Rogue** stealth drains 8%/s (was 10%/s). **War Chanter:** *Resonant
   Strike* up to 100% (was 75%). **Enchanter:** *Contagion* up to 5 dancers (was 3) and *Bewitch* 6 s (was 4 s).
-  **Minstrel:** *Recital* internal cooldown 12 s (was 20 s).
+  **Minstrel:** *Recital* internal cooldown 12 s (was 20 s). **Martyr**, new active *Blood Bond* (look at a target
+  within 10 blocks and press): bind one ally (breaks beyond 15 blocks) and one enemy (beyond 10) with a dripping blood
+  tether. Half the final damage the ally takes goes to the Martyr as true damage; the bound enemy also takes 25% of
+  all damage the Martyr takes, Sacrifice included. Press on a bound target (or at nothing) to break it; 15 s cooldown
+  starts when a bond breaks. **Intercessor**, new passive *Guardian Angel*: the first lethal hit on the ally you are
+  praying for is negated (60 s cooldown per ally).
 - **Rogue, new subclass Face Changer** (replaces Shadow Walker; existing Shadow Walkers become Face Changers with
   the same level). *Spy's Spyglass* (passive): looking through a spyglass shows the target's health (armor from
   subclass level 4, effects from level 7) and makes it glow only for you (3 to 10 s). Watching a player or a

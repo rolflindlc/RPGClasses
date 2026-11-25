@@ -190,6 +190,7 @@ public final class ClericSubclasses {
             return false;
         }
         player.setHealth((float) (player.getHealth() - cost));
+        BloodBond.onSelfPay(player, (float) cost); // Vínculo de Sangre: el enemigo vinculado también lo sufre
         float heal = (float) Math.max(target.getMaxHealth() * AbilityService.number(p, "heal_fraction", 0.2), cost);
         trueHeal(player, target, heal);
         ServerLevel level = player.serverLevel();

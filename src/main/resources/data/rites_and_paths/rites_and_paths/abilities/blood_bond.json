@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "cooldown_seconds": 15,
+  "cast_range": 10,
+  "ally_range": 15,
+  "enemy_range": 10,
+  "taken_from_ally": 0.5,
+  "reflected_to_enemy": 0.25
+}

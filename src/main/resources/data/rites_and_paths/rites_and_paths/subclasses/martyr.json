@@ -26,6 +26,10 @@
   ],
   "milestones": [
     {
+      "subclass_level": 1,
+      "grants": "rites_and_paths:blood_bond"
+    },
+    {
       "subclass_level": 5,
       "grants": "rites_and_paths:sacrifice"
     }

@@ -1,0 +1,5 @@
+{
+  "schema_version": 1,
+  "passive": true,
+  "ally_cooldown_seconds": 60
+}

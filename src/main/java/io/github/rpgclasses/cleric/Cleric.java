@@ -87,6 +87,8 @@ public final class Cleric {
         MinecraftForge.EVENT_BUS.register(new ClericSubclasses());
         MinecraftForge.EVENT_BUS.register(new Prayer());
         // Milagro va el último: en el mismo golpe letal actúan antes las supervivencias propias (regla 10).
+        BloodBond.register(); // Mártir: antes del Milagro (reparte el daño del aliado antes de que el Milagro lo mire)
+        MinecraftForge.EVENT_BUS.register(new GuardianAngel()); // Intercesor: antes del Milagro
         MinecraftForge.EVENT_BUS.register(new Miracle());
     }
 

@@ -251,7 +251,11 @@ REV222_CLASS = {"Paladín": (0.25, 1.0, 1.10, 0), "Bárbaro": (0, 1.05, 1.04, 1.
 # Bardo: Cantor de Guerra, Golpe Resonante hasta el 100 % (DPS ×1,06); Encantador, Contagio a 5 y Hechizar 6 s
 # (vida ×1,05 y +0,25 util); Juglar, Recital con ICD de 12 s (DPS ×1,04 y +0,25 util).
 REV222_SUB = {"Bastión Inflexible": (0, 1.0, 1.10, 0), "Francotirador": (0, 1.2, 1.08, 1.5),
-              "Cantor de Guerra": (0, 1.0, 1.06, 0), "Encantador": (0, 1.05, 1.0, 0.25), "Juglar": (0, 1.0, 1.04, 0.25)}
+              "Cantor de Guerra": (0, 1.0, 1.06, 0), "Encantador": (0, 1.05, 1.0, 0.25), "Juglar": (0, 1.0, 1.04, 0.25),
+              # Vínculo de Sangre: el enemigo vinculado sufre el 25 % de lo que recibe el Mártir; protege a un aliado.
+              "Mártir": (0, 1.0, 1.15, 0.5),
+              # Ángel Guardián: anula el primer golpe letal del aliado por el que reza (60 s por aliado).
+              "Intercesor": (0, 1.05, 1.0, 1.0)}
 
 
 def apply_rev(r, key, table):

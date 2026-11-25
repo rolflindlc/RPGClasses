@@ -226,7 +226,7 @@ public class StatCalculatorTest {
         s.branchPoints.put("will", 10);
         s.branchPoints.put("push", 5);
         java.util.Set<String> unlocked = io.github.rpgclasses.core.ability.UnlockResolver.unlocked(s, paladin, STORE.subclassDef(s.subclassId));
-        assertEquals(java.util.List.of("rites_and_paths:taunt", "rites_and_paths:steady_guard", "rites_and_paths:bulwark", "rites_and_paths:healing_bulwark"),
+        assertEquals(java.util.List.of("rites_and_paths:divine_smite", "rites_and_paths:taunt", "rites_and_paths:steady_guard", "rites_and_paths:bulwark", "rites_and_paths:healing_bulwark"),
                 java.util.List.copyOf(unlocked));
         assertEquals(java.util.List.of("rites_and_paths:taunt", "rites_and_paths:bulwark"),
                 io.github.rpgclasses.core.ability.UnlockResolver.actives(unlocked, STORE::abilityDef));

@@ -1730,7 +1730,7 @@
   "param.rites_and_paths.leash": "Distância máx. (blocos)",
   "param.rites_and_paths.leech_fraction": "Sangue: dano extra que cura-o",
   "param.rites_and_paths.level": "Nível",
-  "param.rites_and_paths.level_scaling": "Vida e dano da forma por Nível Total",
+  "param.rites_and_paths.level_scaling": "Dano da forma por Nível Total",
   "param.rites_and_paths.lifesteal": "Roubo de vida",
   "param.rites_and_paths.linger_factor": "Efeito da postura anterior",
   "param.rites_and_paths.linger_potency": "Força enquanto persiste",
@@ -2770,7 +2770,7 @@
   "subclass.rites_and_paths.martyr.name": "Mártir",
   "subclass.rites_and_paths.minstrel.desc": "O mais versátil: mais espaços de partitura nos seus instrumentos, feitiços com combo mínimo menor e, a partir do nível 5, o Recital: depois de três feitiços diferentes seguidos, o próximo é grátis e recarrega mais cedo.",
   "subclass.rites_and_paths.minstrel.name": "Menestrel",
-  "subclass.rites_and_paths.moon_circle.desc": "Druida do Círculo da Lua: transforma-se num instante, quase sem recarga, e as suas formas não lhe reservam mana.",
+  "subclass.rites_and_paths.moon_circle.desc": "Druida do Círculo da Lua: transforma-se num instante, quase sem recarga, e as suas formas não lhe reservam mana. Ao trocar de uma forma para outra, você mantém a mesma porcentagem de vida.",
   "subclass.rites_and_paths.moon_circle.name": "Círculo da Lua",
   "subclass.rites_and_paths.plague_corruptor.desc": "Imune a fome, veneno e wither. Seus golpes espalham a Praga, que causa dano ao longo do tempo até em mortos-vivos.",
   "subclass.rites_and_paths.plague_corruptor.name": "Corruptor da Praga",
@@ -3190,5 +3190,6 @@
   "param.rites_and_paths.ally_range": "Distância máx. do aliado (blocos)",
   "param.rites_and_paths.enemy_range": "Distância máx. do inimigo (blocos)",
   "param.rites_and_paths.taken_from_ally": "Dano do aliado que você recebe",
-  "param.rites_and_paths.reflected_to_enemy": "Dano que o inimigo sofre"
+  "param.rites_and_paths.reflected_to_enemy": "Dano que o inimigo sofre",
+  "param.rites_and_paths.health_level_scaling": "Vida da forma por Nível Total"
 }

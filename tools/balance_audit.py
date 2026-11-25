@@ -88,8 +88,8 @@ CLASSES = [
     row("Monje (5 cargas)", 5.5, M5_STONE, M5_FIRE, 7.5, "rev. 2.20: Fuego, Piedra y Agua con su rama llena"),
     row("Clérigo", 3, ehp_geared(22, .25, .50), 1.2, 9, "curación de grupo; DPS según equipo"),
     row("Bardo", 4.5, ehp_geared(18, .30, .55), 1.35, 9, "combo medio 20, Compás e instrumento raro; auras de grupo"),
-    row("Druida", 5, ehp_geared(18, .30, .70) + 48 * 0.8, 1.45, 8,
-        "forma de bestia de ~30 HP ×1,6 al nivel 30 (vida aparte, sin armadura)"),
+    row("Druida", 5, ehp_geared(13, .30, .70) + 48 * 0.8 * 1.3 / 1.6, 1.45, 8,
+        "rev. 2.23: vida −35 %; forma de bestia de ~30 HP ×1,3 al nivel 30 (+1 %/nivel, vida aparte)"),
     row("Maestro del Giro (exp.)", 6, ehp_geared(18, .30, .60), 1.55, 6, "experimental: fuera de la media"),
 ]
 
@@ -121,11 +121,11 @@ SUBCLASSES = [
     ("Bardo", row("Cantor de Guerra", 4.5, ehp_geared(18, .30, .55), 1.65, 8.5, "+30 % con combo 30, Golpe Resonante")),
     ("Bardo", row("Encantador", 4.5, ehp_geared(18, .30, .55) * 1.1, 1.35, 9.5, "controles +50 %, Hechizar")),
     ("Bardo", row("Juglar", 4.5, ehp_geared(18, .30, .55), 1.45, 9.5, "3 ranuras más, Recital")),
-    ("Druida", row("Círculo de la Luna", 6, ehp_geared(18, .30, .70) + 48 * 0.8 * 1.5, 1.6, 8,
-                   "formas en 1 s sin reserva: casi siempre en forma")),
-    ("Druida", row("Forma Sobrenatural", 5, ehp_geared(18, .30, .70) + 48 * 0.8 * 0.85, 1.75, 8.5,
+    ("Druida", row("Círculo de la Luna", 6, ehp_geared(13, .30, .70) + 48 * 0.8 * 1.4 / 1.6 * 1.2, 1.6, 8,
+                   "formas en 1 s sin reserva; rev. 2.23: conserva el % de vida al cambiar")),
+    ("Druida", row("Forma Sobrenatural", 5, ehp_geared(13, .30, .70) + 48 * 0.8 * 1.4 / 1.6 * 0.85, 1.75, 8.5,
                    "conjuros en forma; formas −15 %")),
-    ("Druida", row("Escultor", 5.5, ehp_geared(18, .30, .70) + 60 * 0.8, 1.6, 8, "quimeras de 4 partes")),
+    ("Druida", row("Escultor", 5.5, ehp_geared(13, .30, .70) + 60 * 0.8 * 1.4 / 1.6, 1.6, 8, "quimeras de 4 partes")),
     ("Maestro del Giro (exp.)", row("Jinete", 7, ehp_geared(18, .30, .60), 1.6, 7, "aturde a velocidad")),
     ("Maestro del Giro (exp.)", row("Escáner", 6, ehp_geared(18, .30, .60), 1.8, 6.5, "críticos seguros con marca")),
     ("Maestro del Giro (exp.)", row("Trampero de Giro", 6, ehp_geared(18, .30, .60) * 1.1, 1.65, 7, "minas")),
@@ -146,7 +146,7 @@ RACES = [
     ("Slime", 1.0, 0.85 * 1.05, 1.0, 0, "sin caída, rebote y salto doble; −15 % de vida y +50 % de empuje recibido"),
     ("Coloso", -1.0, 2.0 * 0.85, 1.05, 1.0, "+100 % de vida, hitbox ×2 y +50 % de detección; minería en área y alcance"),
     ("Dracónido", 0, 1.08, 1.10, 0, "resistencia de su elemento (≈ +8 %) y aliento canalizado (con muro)"),
-    ("Centauro", 2.0, 0.95, 1.08, 0.5, "+75 % de velocidad sin tope y embestida; hitbox de caballo; lleva a un aliado"),
+    ("Centauro", 1.5, 0.95, 1.08, 0.5, "+65 % de velocidad sin tope y embestida; hitbox de caballo; lleva a un aliado"),
 ]
 
 SUBRACES = [
@@ -179,7 +179,7 @@ SUBRACES = [
     ("Slime", "Mitótico", 0, 0.85 * 1.35, 1.0, 0),
     ("Slime", "Viscoso", 1.0, 1.0, 1.05, 0.5),
     ("Coloso", "Porteador", -0.5, 1.0, 1.0, 1.5),
-    ("Coloso", "Titán", 0, 1.35, 1.10, 0),
+    ("Coloso", "Titán", 0, 1.25, 1.10, 0),
     ("Dracónido", "Fuego", 0, 1.03, 1.03, 0.5),
     ("Dracónido", "Hielo", 0, 1.05, 1.0, 0.5),
     ("Dracónido", "Eléctrico", 0, 1.05, 1.05, 0.5),
@@ -257,16 +257,25 @@ REV222_SUB = {"Bastión Inflexible": (0, 1.0, 1.10, 0), "Francotirador": (0, 1.2
               # Ángel Guardián: anula el primer golpe letal del aliado por el que reza (60 s por aliado).
               "Intercesor": (0, 1.05, 1.0, 1.0)}
 
+# Rev. 2.23 (bajadas de las altas): (movilidad +, ×vida, ×DPS, utilidad +)
+REV223_CLASS = {"Mago": (0, 1.0, 0.95, 0)}  # rama Reserva +300 -> +250 de maná
+REV223_SUB = {"Elementalista": (0, 1.0, 0.96, 0),      # recarga −10 % -> −6 %
+              "Cronomante": (0, 1.0, 0.97, 0.25),       # lanzamiento −15 % -> −10 %; Parada Temporal 2 s
+              "Berserker Suicida": (0, 0.85, 0.92, 0),  # +25 % -> +15 % de daño; Furia 5 s fijos
+              "Maestro de la Brisa (5 cargas)": (-0.5, 1.0, 1.0, 0)}  # velocidad sin armadura +40 % -> +30 %
+
 
 def apply_rev(r, key, table):
     dm, fr, fd, du = table.get(key, (0, 1.0, 1.0, 0))
     return row(r["name"], min(10, r["mob"] + dm), r["ehp"] * fr, r["idx"] * fd, min(10, r["util"] + du), r["note"])
 
 
-CLASSES = [apply_rev(apply_fix(apply_kit(r, kit_for(r["name"])), r["name"]), r["name"], REV222_CLASS) for r in CLASSES]
+CLASSES = [apply_rev(apply_rev(apply_fix(apply_kit(r, kit_for(r["name"])), r["name"]), r["name"], REV222_CLASS), r["name"], REV223_CLASS)
+           for r in CLASSES]
 SUBCLASSES = [(g, apply_rev(apply_rev(apply_fix(apply_kit(apply_kit(r, kit_for(g)), SUBCLASS_KIT.get(r["name"], (0, 1, 0))), g),
                                       g, REV222_CLASS), r["name"], REV222_SUB))
               for g, r in SUBCLASSES]
+SUBCLASSES = [(g, apply_rev(apply_rev(r, g, REV223_CLASS), r["name"], REV223_SUB)) for g, r in SUBCLASSES]
 
 # ---------------------------------------------------------------- cálculo
 

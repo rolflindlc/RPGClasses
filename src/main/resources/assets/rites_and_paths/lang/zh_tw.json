@@ -1730,7 +1730,7 @@
   "param.rites_and_paths.leash": "最大距離(方塊)",
   "param.rites_and_paths.leech_fraction": "鮮血:治療你的額外傷害",
   "param.rites_and_paths.level": "等級",
-  "param.rites_and_paths.level_scaling": "每總等級的形態生命與傷害",
+  "param.rites_and_paths.level_scaling": "每總等級的形態傷害",
   "param.rites_and_paths.lifesteal": "生命偷取",
   "param.rites_and_paths.linger_factor": "上一姿態的效果",
   "param.rites_and_paths.linger_potency": "持續時的強度",
@@ -2770,7 +2770,7 @@
   "subclass.rites_and_paths.martyr.name": "殉道者",
   "subclass.rites_and_paths.minstrel.desc": "最多才多藝的一位:樂器中有更多樂譜欄位,法術的最低連擊更低,且從 5 級起獲得獨奏會:連續三個不同的法術後,下一個免費並更快冷卻。",
   "subclass.rites_and_paths.minstrel.name": "遊吟詩人",
-  "subclass.rites_and_paths.moon_circle.desc": "月之環德魯伊：瞬間變形，幾乎沒有冷卻，且形態不會占用法力。",
+  "subclass.rites_and_paths.moon_circle.desc": "月之環德魯伊：瞬間變形，幾乎沒有冷卻，且形態不會占用法力。從一種形態切換到另一種形態時,生命百分比保持不變。",
   "subclass.rites_and_paths.moon_circle.name": "月之環",
   "subclass.rites_and_paths.plague_corruptor.desc": "免疫飢餓、中毒和凋零。你的攻擊會傳播瘟疫,瘟疫會持續造成傷害,連亡靈也不例外。",
   "subclass.rites_and_paths.plague_corruptor.name": "瘟疫腐化者",
@@ -3190,5 +3190,6 @@
   "param.rites_and_paths.ally_range": "盟友最大距離(格)",
   "param.rites_and_paths.enemy_range": "敵人最大距離(格)",
   "param.rites_and_paths.taken_from_ally": "你承受的盟友傷害",
-  "param.rites_and_paths.reflected_to_enemy": "敵人承受的傷害"
+  "param.rites_and_paths.reflected_to_enemy": "敵人承受的傷害",
+  "param.rites_and_paths.health_level_scaling": "每總等級的形態生命"
 }

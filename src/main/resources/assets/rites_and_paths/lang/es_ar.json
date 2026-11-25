@@ -1840,7 +1840,7 @@
   "param.rites_and_paths.leash": "Distancia máxima (bloques)",
   "param.rites_and_paths.leech_fraction": "Sangre: daño extra que te cura",
   "param.rites_and_paths.level": "Nivel",
-  "param.rites_and_paths.level_scaling": "Vida y daño de la forma por Nivel Total",
+  "param.rites_and_paths.level_scaling": "Daño de la forma por Nivel Total",
   "param.rites_and_paths.lifesteal": "Robo de vida",
   "param.rites_and_paths.linger_factor": "Efecto de la postura anterior",
   "param.rites_and_paths.linger_potency": "Potencia durante la persistencia",
@@ -2880,7 +2880,7 @@
   "subclass.rites_and_paths.martyr.name": "Mártir",
   "subclass.rites_and_paths.minstrel.desc": "El más versátil: más ranuras de partitura en tus instrumentos, conjuros con menos combo mínimo y, desde el nivel 5, el Recital: tras tres conjuros distintos seguidos, el siguiente es gratis y se recarga antes.",
   "subclass.rites_and_paths.minstrel.name": "Juglar",
-  "subclass.rites_and_paths.moon_circle.desc": "Druida del Círculo de la Luna: se transforma en un instante, casi sin recarga, y sus formas no le reservan maná.",
+  "subclass.rites_and_paths.moon_circle.desc": "Druida del Círculo de la Luna: se transforma en un instante, casi sin recarga, y sus formas no le reservan maná. Al cambiar de una forma a otra conservas el mismo porcentaje de vida.",
   "subclass.rites_and_paths.moon_circle.name": "Círculo de la Luna",
   "subclass.rites_and_paths.plague_corruptor.desc": "Inmune a hambre, veneno y wither. Tus golpes contagian la Plaga, que daña con el tiempo incluso a los no-muertos.",
   "subclass.rites_and_paths.plague_corruptor.name": "Corruptor de Plagas",
@@ -3350,5 +3350,6 @@
   "param.rites_and_paths.ally_range": "Distancia máxima del aliado (bloques)",
   "param.rites_and_paths.enemy_range": "Distancia máxima del enemigo (bloques)",
   "param.rites_and_paths.taken_from_ally": "Daño del aliado que recibes",
-  "param.rites_and_paths.reflected_to_enemy": "Daño que sufre el enemigo"
+  "param.rites_and_paths.reflected_to_enemy": "Daño que sufre el enemigo",
+  "param.rites_and_paths.health_level_scaling": "Vida de la forma por Nivel Total"
 }

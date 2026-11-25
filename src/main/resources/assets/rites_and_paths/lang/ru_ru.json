@@ -1730,7 +1730,7 @@
   "param.rites_and_paths.leash": "Макс. расстояние (блоки)",
   "param.rites_and_paths.leech_fraction": "Кровь: дополнительный урон, лечащий вас",
   "param.rites_and_paths.level": "Уровень",
-  "param.rites_and_paths.level_scaling": "Здоровье и урон облика за общий уровень",
+  "param.rites_and_paths.level_scaling": "Урон облика за общий уровень",
   "param.rites_and_paths.lifesteal": "Вампиризм",
   "param.rites_and_paths.linger_factor": "Эффект предыдущей стойки",
   "param.rites_and_paths.linger_potency": "Сила при стойкости",
@@ -2770,7 +2770,7 @@
   "subclass.rites_and_paths.martyr.name": "Мученик",
   "subclass.rites_and_paths.minstrel.desc": "Самый универсальный: больше слотов нот в ваших инструментах, заклинания с меньшим минимальным комбо и с 5-го уровня Концерт: после трёх разных заклинаний подряд следующее бесплатно и перезаряжается быстрее.",
   "subclass.rites_and_paths.minstrel.name": "Менестрель",
-  "subclass.rites_and_paths.moon_circle.desc": "Друид Круга Луны: превращается мгновенно, почти без перезарядки, и его облики не резервируют ману.",
+  "subclass.rites_and_paths.moon_circle.desc": "Друид Круга Луны: превращается мгновенно, почти без перезарядки, и его облики не резервируют ману. При смене одного облика на другой сохраняется тот же процент здоровья.",
   "subclass.rites_and_paths.moon_circle.name": "Круг Луны",
   "subclass.rites_and_paths.plague_corruptor.desc": "Иммунитет к голоду, яду и иссушению. Ваши удары распространяют Чуму, которая наносит урон со временем даже нежити.",
   "subclass.rites_and_paths.plague_corruptor.name": "Осквернитель чумы",
@@ -3190,5 +3190,6 @@
   "param.rites_and_paths.ally_range": "Макс. расстояние до союзника (блоки)",
   "param.rites_and_paths.enemy_range": "Макс. расстояние до врага (блоки)",
   "param.rites_and_paths.taken_from_ally": "Урон союзника, который получаешь ты",
-  "param.rites_and_paths.reflected_to_enemy": "Урон, получаемый врагом"
+  "param.rites_and_paths.reflected_to_enemy": "Урон, получаемый врагом",
+  "param.rites_and_paths.health_level_scaling": "Здоровье облика за общий уровень"
 }

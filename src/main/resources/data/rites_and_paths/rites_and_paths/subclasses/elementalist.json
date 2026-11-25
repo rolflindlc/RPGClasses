@@ -10,7 +10,7 @@
       "modifiers": [
         {
           "attribute": "irons_spellbooks:cooldown_reduction",
-          "to": 0.1,
+          "to": 0.06,
           "operation": "multiply_base"
         }
       ]

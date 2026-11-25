@@ -1730,7 +1730,7 @@
   "param.rites_and_paths.leash": "Max. Entfernung (Blöcke)",
   "param.rites_and_paths.leech_fraction": "Blut: zusätzlicher Schaden, der dich heilt",
   "param.rites_and_paths.level": "Stufe",
-  "param.rites_and_paths.level_scaling": "Leben und Schaden der Gestalt pro Gesamtstufe",
+  "param.rites_and_paths.level_scaling": "Schaden der Gestalt pro Gesamtstufe",
   "param.rites_and_paths.lifesteal": "Lebensraub",
   "param.rites_and_paths.linger_factor": "Effekt der vorherigen Haltung",
   "param.rites_and_paths.linger_potency": "Stärke während der Nachwirkung",
@@ -2770,7 +2770,7 @@
   "subclass.rites_and_paths.martyr.name": "Märtyrer",
   "subclass.rites_and_paths.minstrel.desc": "Der Vielseitigste: mehr Notenblatt-Plätze in deinen Instrumenten, Zauber mit niedrigerer Mindestkombo und ab Stufe 5 das Rezital: Nach drei verschiedenen Zaubern in Folge ist der nächste kostenlos und lädt sich schneller auf.",
   "subclass.rites_and_paths.minstrel.name": "Minnesänger",
-  "subclass.rites_and_paths.moon_circle.desc": "Druide des Mondkreises: verwandelt sich im Nu, fast ohne Abklingzeit, und seine Gestalten reservieren kein Mana.",
+  "subclass.rites_and_paths.moon_circle.desc": "Druide des Mondkreises: verwandelt sich im Nu, fast ohne Abklingzeit, und seine Gestalten reservieren kein Mana. Beim Wechsel von einer Gestalt in eine andere bleibt der Lebensanteil gleich.",
   "subclass.rites_and_paths.moon_circle.name": "Kreis des Mondes",
   "subclass.rites_and_paths.plague_corruptor.desc": "Immun gegen Hunger, Gift und Wither. Deine Treffer verbreiten die Seuche, die mit der Zeit Schaden verursacht, selbst bei Untoten.",
   "subclass.rites_and_paths.plague_corruptor.name": "Seuchenverderber",
@@ -3190,5 +3190,6 @@
   "param.rites_and_paths.ally_range": "Max. Entfernung des Verbündeten (Blöcke)",
   "param.rites_and_paths.enemy_range": "Max. Entfernung des Gegners (Blöcke)",
   "param.rites_and_paths.taken_from_ally": "Schaden des Verbündeten, den du erleidest",
-  "param.rites_and_paths.reflected_to_enemy": "Schaden, den der Gegner erleidet"
+  "param.rites_and_paths.reflected_to_enemy": "Schaden, den der Gegner erleidet",
+  "param.rites_and_paths.health_level_scaling": "Leben der Gestalt pro Gesamtstufe"
 }

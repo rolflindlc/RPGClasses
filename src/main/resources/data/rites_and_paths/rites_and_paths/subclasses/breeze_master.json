@@ -11,7 +11,7 @@
       "modifiers": [
         {
           "attribute": "minecraft:generic.movement_speed",
-          "to": 0.4,
+          "to": 0.3,
           "operation": "multiply_base"
         },
         {

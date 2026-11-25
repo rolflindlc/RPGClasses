@@ -1730,7 +1730,7 @@
   "param.rites_and_paths.leash": "最大距離(ブロック)",
   "param.rites_and_paths.leech_fraction": "血:あなたを回復する追加ダメージ",
   "param.rites_and_paths.level": "レベル",
-  "param.rites_and_paths.level_scaling": "総レベルごとの姿の体力とダメージ",
+  "param.rites_and_paths.level_scaling": "総レベルごとの姿のダメージ",
   "param.rites_and_paths.lifesteal": "生命吸収",
   "param.rites_and_paths.linger_factor": "前の構えの効果",
   "param.rites_and_paths.linger_potency": "持続中の強さ",
@@ -2770,7 +2770,7 @@
   "subclass.rites_and_paths.martyr.name": "殉教者",
   "subclass.rites_and_paths.minstrel.desc": "最も万能:楽器の楽譜スロットが増え、呪文の最低コンボが下がり、レベル5からはリサイタルを得る:3種類の異なる呪文を続けて唱えると、次の呪文は無料で、再充填も早まる。",
   "subclass.rites_and_paths.minstrel.name": "吟遊詩人",
-  "subclass.rites_and_paths.moon_circle.desc": "月の環のドルイド：一瞬で変身し、クールダウンはほとんどなく、姿がマナを確保しない。",
+  "subclass.rites_and_paths.moon_circle.desc": "月の環のドルイド：一瞬で変身し、クールダウンはほとんどなく、姿がマナを確保しない。姿から別の姿に変わるときは、体力の割合がそのまま引き継がれる。",
   "subclass.rites_and_paths.moon_circle.name": "月の環",
   "subclass.rites_and_paths.plague_corruptor.desc": "空腹、毒、ウィザーに対して免疫を持つ。攻撃が疫病を広め、アンデッドにも継続ダメージを与える。",
   "subclass.rites_and_paths.plague_corruptor.name": "疫病の腐敗者",
@@ -3190,5 +3190,6 @@
   "param.rites_and_paths.ally_range": "味方の最大距離(ブロック)",
   "param.rites_and_paths.enemy_range": "敵の最大距離(ブロック)",
   "param.rites_and_paths.taken_from_ally": "受け持つ味方のダメージ",
-  "param.rites_and_paths.reflected_to_enemy": "敵が受けるダメージ"
+  "param.rites_and_paths.reflected_to_enemy": "敵が受けるダメージ",
+  "param.rites_and_paths.health_level_scaling": "総レベルごとの姿の体力"
 }

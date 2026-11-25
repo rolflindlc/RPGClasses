@@ -2,6 +2,15 @@
 
 ## Unreleased
 
+### Changed
+- **Balance rev. 2.23 (top tiers):** **Druid** max health −35% (was −10%) and beast forms gain +1% health per Total
+  Level (was +2%; damage still +2%): ×1.4 at level 40. **Moon Circle:** switching from one form to another keeps your
+  health percentage. **Mage:** *Reserve* branch gives up to +250 mana (was +300). **Elementalist:** cooldown reduction
+  6% (was 10%). **Chronomancer:** cast time reduction 10% (was 15%) and *Time Stop* lasts 1–2 s (was 0.5–1 s).
+  **Suicidal Berserker:** +15% damage (was +25%) and *Last Immortal Fury* lasts a fixed 5 s (was 7–17 s).
+  **Breeze Master:** +30% speed without armor (was +40%). **Centaur** max speed 0.40/0.45/0.55/0.65 by rank (was
+  0.40/0.50/0.60/0.75). **Colossus Titan:** *Grow* absorption 0.40/0.55/0.70/0.80 (was 0.50/0.70/0.85/1.00).
+
 ### Added
 - **Balance rev. 2.22:** **Paladin** gains *Divine Smite* (every 4th melee hit deals +40% holy damage, ×2 against
   undead and Nether mobs). **Barbarian:** *Bloodthirst* heals 15% (was 10%), *Berserker Rage* cooldown 45 s (was 60 s)

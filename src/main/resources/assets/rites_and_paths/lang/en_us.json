@@ -1840,7 +1840,7 @@
   "param.rites_and_paths.leash": "Max distance (blocks)",
   "param.rites_and_paths.leech_fraction": "Blood: extra damage that heals you",
   "param.rites_and_paths.level": "Level",
-  "param.rites_and_paths.level_scaling": "Form health and damage per Total Level",
+  "param.rites_and_paths.level_scaling": "Form damage per Total Level",
   "param.rites_and_paths.lifesteal": "Life steal",
   "param.rites_and_paths.linger_factor": "Previous stance effect",
   "param.rites_and_paths.linger_potency": "Strength while persisting",
@@ -2880,7 +2880,7 @@
   "subclass.rites_and_paths.martyr.name": "Martyr",
   "subclass.rites_and_paths.minstrel.desc": "The most versatile: more sheet music slots in your instruments, spells with a lower minimum combo and, from level 5, the Recital: after three different spells in a row, the next one is free and recharges sooner.",
   "subclass.rites_and_paths.minstrel.name": "Minstrel",
-  "subclass.rites_and_paths.moon_circle.desc": "Circle of the Moon Druid: transforms in an instant, with almost no cooldown, and their forms do not reserve mana.",
+  "subclass.rites_and_paths.moon_circle.desc": "Circle of the Moon Druid: transforms in an instant, with almost no cooldown, and their forms do not reserve mana. Switching from one form to another keeps the same percentage of health.",
   "subclass.rites_and_paths.moon_circle.name": "Circle of the Moon",
   "subclass.rites_and_paths.plague_corruptor.desc": "Immune to hunger, poison and wither. Your hits spread the Plague, which damages over time even the undead.",
   "subclass.rites_and_paths.plague_corruptor.name": "Plague Corruptor",
@@ -3350,5 +3350,6 @@
   "param.rites_and_paths.ally_range": "Ally max distance (blocks)",
   "param.rites_and_paths.enemy_range": "Enemy max distance (blocks)",
   "param.rites_and_paths.taken_from_ally": "Ally damage you take",
-  "param.rites_and_paths.reflected_to_enemy": "Damage the enemy suffers"
+  "param.rites_and_paths.reflected_to_enemy": "Damage the enemy suffers",
+  "param.rites_and_paths.health_level_scaling": "Form health per Total Level"
 }

@@ -293,7 +293,9 @@ public final class Beasts {
 
     /** Multiplicador de la vida de las formas. */
     public static double healthFactor(Player p) {
-        double f = 1 + levelBonus(p)
+        double perLevel = Druid.number(Druid.WILD_SHAPE, "health_level_scaling",
+                Druid.number(Druid.WILD_SHAPE, "level_scaling", .02, p.level().isClientSide), p.level().isClientSide);
+        double f = 1 + Druid.totalLevel(p) * perLevel // rev. 2.22: la vida escala aparte (+1 %/nivel, ×1,4 al 40)
                 + Druid.mech(p, Druid.FEROCITY, "form_health", 0)
                 + Druid.mech(p, Druid.HUNTER, "form_health", 0) + Druid.mech(p, Druid.COLOSSUS, "form_health", 0)
                 + Druid.mech(p, Druid.BODY_SAP, "form_health", 0)

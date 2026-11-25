@@ -65,7 +65,7 @@
       "modifiers": [
         {
           "attribute": "minecraft:generic.max_health",
-          "to": -0.1,
+          "to": -0.35,
           "operation": "multiply_base"
         }
       ]

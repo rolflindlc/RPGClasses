@@ -123,7 +123,7 @@
           "modifiers": [
             {
               "attribute": "irons_spellbooks:max_mana",
-              "to": 300,
+              "to": 250,
               "operation": "add"
             },
             {

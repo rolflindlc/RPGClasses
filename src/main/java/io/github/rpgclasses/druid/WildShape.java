@@ -349,6 +349,8 @@ public final class WildShape {
         }
         float preHealth = previous != null ? previous.preHealth : p.getHealth();
         boolean moon = Druid.hasMech(p, Druid.MOON);
+        // Círculo de la Luna (rev. 2.22): de forma a forma se conserva el porcentaje de vida (encadenar formas no cura).
+        float keepFraction = moon && previous != null && p.getMaxHealth() > 0 ? Math.min(1f, p.getHealth() / p.getMaxHealth()) : 1f;
         int reserved = moon ? 0 : c.cost;
         int maxTicks = Druid.hasMech(p, Druid.CHEAP_FORM) ? (int) Math.round(Druid.mech(p, Druid.CHEAP_FORM, "max_seconds", 180) * 20) : 0;
         double flight = Druid.number(Druid.WILD_SHAPE, "flight_seconds", 10) * 20;
@@ -361,7 +363,7 @@ public final class WildShape {
         if (data != null) Bestiary.saveForm(data, c.spec, preHealth);
         StatEngine.recompute(p);
         p.refreshDimensions();
-        p.setHealth(p.getMaxHealth());
+        p.setHealth(Math.max(1f, p.getMaxHealth() * keepFraction));
         p.stopUsingItem();
         clampMana(p);
         EpicFightBridge.toVanillaMode(p);

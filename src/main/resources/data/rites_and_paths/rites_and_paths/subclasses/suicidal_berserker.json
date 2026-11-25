@@ -10,7 +10,7 @@
       "modifiers": [
         {
           "attribute": "minecraft:generic.attack_damage",
-          "to": 0.25,
+          "to": 0.15,
           "operation": "multiply_base"
         }
       ]
@@ -18,8 +18,8 @@
     {
       "type": "rites_and_paths:mechanic",
       "id": "rites_and_paths:last_immortal_fury",
-      "min_seconds": 7,
-      "max_seconds": 17,
+      "min_seconds": 5,
+      "max_seconds": 5,
       "cooldown_seconds": 300,
       "weakness_seconds": 10
     }

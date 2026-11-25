@@ -161,6 +161,7 @@
   "healing": "+%",
   "healing_per_missing_pct": "%",
   "health": "%",
+  "health_level_scaling": "%",
   "health_limit": "%",
   "health_penalty": "%",
   "health_restore": "%",

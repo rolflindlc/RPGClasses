@@ -1730,7 +1730,7 @@
   "param.rites_and_paths.leash": "Distance max. (blocs)",
   "param.rites_and_paths.leech_fraction": "Sang : dégâts supplémentaires qui vous soignent",
   "param.rites_and_paths.level": "Niveau",
-  "param.rites_and_paths.level_scaling": "Vie et dégâts de la forme par Niveau total",
+  "param.rites_and_paths.level_scaling": "Dégâts de la forme par Niveau total",
   "param.rites_and_paths.lifesteal": "Vol de vie",
   "param.rites_and_paths.linger_factor": "Effet de la posture précédente",
   "param.rites_and_paths.linger_potency": "Force pendant la persistance",
@@ -2770,7 +2770,7 @@
   "subclass.rites_and_paths.martyr.name": "Martyr",
   "subclass.rites_and_paths.minstrel.desc": "Le plus polyvalent : plus d'emplacements de partition dans vos instruments, des sorts avec un combo minimal plus bas et, à partir du niveau 5, le Récital : après trois sorts différents d'affilée, le suivant est gratuit et se recharge plus tôt.",
   "subclass.rites_and_paths.minstrel.name": "Ménestrel",
-  "subclass.rites_and_paths.moon_circle.desc": "Druide du Cercle de la Lune : se transforme en un instant, presque sans recharge, et ses formes ne réservent pas de mana.",
+  "subclass.rites_and_paths.moon_circle.desc": "Druide du Cercle de la Lune : se transforme en un instant, presque sans recharge, et ses formes ne réservent pas de mana. Passer d'une forme à une autre conserve le même pourcentage de vie.",
   "subclass.rites_and_paths.moon_circle.name": "Cercle de la Lune",
   "subclass.rites_and_paths.plague_corruptor.desc": "Immunisé contre la faim, le poison et le wither. Vos coups propagent la Peste, qui inflige des dégâts avec le temps, même aux morts-vivants.",
   "subclass.rites_and_paths.plague_corruptor.name": "Corrupteur de peste",
@@ -3190,5 +3190,6 @@
   "param.rites_and_paths.ally_range": "Distance max. de l'allié (blocs)",
   "param.rites_and_paths.enemy_range": "Distance max. de l'ennemi (blocs)",
   "param.rites_and_paths.taken_from_ally": "Dégâts de l'allié que tu subis",
-  "param.rites_and_paths.reflected_to_enemy": "Dégâts subis par l'ennemi"
+  "param.rites_and_paths.reflected_to_enemy": "Dégâts subis par l'ennemi",
+  "param.rites_and_paths.health_level_scaling": "Vie de la forme par Niveau total"
 }

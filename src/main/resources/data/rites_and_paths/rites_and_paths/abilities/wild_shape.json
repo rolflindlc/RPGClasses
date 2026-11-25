@@ -17,5 +17,6 @@
   "flight_ceiling": 40,
   "flight_speed": 0.03,
   "form_min_speed": 0.5,
-  "form_max_speed": 1.6
+  "form_max_speed": 1.6,
+  "health_level_scaling": 0.01
 }

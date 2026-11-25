@@ -1730,7 +1730,7 @@
   "param.rites_and_paths.leash": "Distanza max. (blocchi)",
   "param.rites_and_paths.leech_fraction": "Sangue: danno extra che ti cura",
   "param.rites_and_paths.level": "Livello",
-  "param.rites_and_paths.level_scaling": "Vita e danno della forma per Livello totale",
+  "param.rites_and_paths.level_scaling": "Danno della forma per Livello totale",
   "param.rites_and_paths.lifesteal": "Furto di vita",
   "param.rites_and_paths.linger_factor": "Effetto della postura precedente",
   "param.rites_and_paths.linger_potency": "Forza durante la persistenza",
@@ -2770,7 +2770,7 @@
   "subclass.rites_and_paths.martyr.name": "Martire",
   "subclass.rites_and_paths.minstrel.desc": "Il più versatile: più slot di spartito nei tuoi strumenti, incantesimi con un combo minimo più basso e, dal livello 5, il Recital: dopo tre incantesimi diversi di fila, il successivo è gratis e si ricarica prima.",
   "subclass.rites_and_paths.minstrel.name": "Menestrello",
-  "subclass.rites_and_paths.moon_circle.desc": "Druido del Circolo della Luna: si trasforma in un istante, quasi senza ricarica, e le sue forme non riservano mana.",
+  "subclass.rites_and_paths.moon_circle.desc": "Druido del Circolo della Luna: si trasforma in un istante, quasi senza ricarica, e le sue forme non riservano mana. Passando da una forma all'altra mantieni la stessa percentuale di vita.",
   "subclass.rites_and_paths.moon_circle.name": "Circolo della Luna",
   "subclass.rites_and_paths.plague_corruptor.desc": "Immune a fame, veleno e wither. I tuoi colpi diffondono la Peste, che infligge danno nel tempo anche ai non morti.",
   "subclass.rites_and_paths.plague_corruptor.name": "Corruttore della peste",
@@ -3190,5 +3190,6 @@
   "param.rites_and_paths.ally_range": "Distanza max. dell'alleato (blocchi)",
   "param.rites_and_paths.enemy_range": "Distanza max. del nemico (blocchi)",
   "param.rites_and_paths.taken_from_ally": "Danno dell'alleato che ricevi",
-  "param.rites_and_paths.reflected_to_enemy": "Danno subito dal nemico"
+  "param.rites_and_paths.reflected_to_enemy": "Danno subito dal nemico",
+  "param.rites_and_paths.health_level_scaling": "Vita della forma per Livello totale"
 }

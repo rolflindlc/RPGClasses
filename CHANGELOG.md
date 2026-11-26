@@ -3,6 +3,9 @@
 ## Unreleased
 
 ### Changed
+- **Epic Fight compatibility:** the mod is now compiled against Epic Fight 20.14.17, the latest stable release (was
+  the 20.15.2 beta), and requires 20.14.17 or newer when Epic Fight is installed (was any 20.x). This keeps the
+  integration from calling methods that only exist in beta builds.
 - **Balance review for Improved Armor's flat curve:** with it a Paladin takes about twice the hits of a Mage (was
   ~4× under vanilla), so the Paladin is compensated with offence and utility instead of defence. **Paladin** class
   trait no longer slows you (was −5% speed). *Divine Smite* triggers every 3rd melee hit and deals +50% holy damage

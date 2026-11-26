@@ -37,7 +37,7 @@ Integrates with Iron's Spells 'n Spellbooks and Epic Fight (both optional). Avai
 [[dependencies.rites_and_paths]]
     modId="epicfight"
     mandatory=false
-    versionRange="[20,)"
+    versionRange="[20.14.17,)"
     ordering="AFTER"
     side="BOTH"
 

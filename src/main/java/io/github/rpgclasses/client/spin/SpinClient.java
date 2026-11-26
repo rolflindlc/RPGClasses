@@ -92,7 +92,7 @@ public final class SpinClient {
     private static boolean active;
     private static long lastSend;
     // Carga del clic derecho (desde que se pulsó; la mide también el servidor).
-    private static boolean charging, chargeFull;
+    private static boolean charging, chargeFull, chargeMuscle;
     private static long chargeStart;
 
     // Efectos.
@@ -218,6 +218,7 @@ public final class SpinClient {
             send(mc, 2);
             charging = true;
             chargeFull = false;
+            chargeMuscle = false;
             chargeStart = mc.level == null ? 0 : mc.level.getGameTime();
             event.setCanceled(true);
         }
@@ -234,6 +235,15 @@ public final class SpinClient {
     /** Carga actual del clic derecho del jugador local (0-1), para la animación de la bola en la mano. */
     public static float chargeProgress(float pt) {
         return charge(pt);
+    }
+
+    /** Segunda fase de la carga (0-1): de la carga completa a la sobrecarga del giro muscular. */
+    public static float overcharge(float pt) {
+        Minecraft mc = Minecraft.getInstance();
+        if (!charging || mc.level == null) return 0;
+        double full = Math.max(1, SpinMaster.anySide(SpinMaster.SPHERE_THROW, "full_charge_seconds", 1.0) * 20);
+        double muscle = Math.max(full + 1, SpinMaster.anySide(SpinMaster.SPHERE_THROW, "muscle_charge_seconds", 2.0) * 20);
+        return (float) Mth.clamp((mc.level.getGameTime() - chargeStart + pt - full) / (muscle - full), 0, 1);
     }
 
     /** 0-1: cuánto lleva cargado el clic derecho (el servidor hace la misma cuenta). */
@@ -322,6 +332,10 @@ public final class SpinClient {
                 chargeFull = true;
                 mc.getSoundManager().play(net.minecraft.client.resources.sounds.SimpleSoundInstance.forUI(
                         net.minecraft.sounds.SoundEvents.CROSSBOW_LOADING_END, 1.4f, 0.6f));
+            } else if (chargeFull && !chargeMuscle && overcharge(0) >= 1f) {
+                chargeMuscle = true;
+                mc.getSoundManager().play(net.minecraft.client.resources.sounds.SimpleSoundInstance.forUI(
+                        net.minecraft.sounds.SoundEvents.AMETHYST_BLOCK_RESONATE, 1.6f, 0.8f));
             }
         }
         Iterator<Word> it = FLOATING.iterator();
@@ -412,6 +426,12 @@ public final class SpinClient {
         if (c > 0) {
             int cw = Math.round(w * c);
             g.fill(x, y + h + 2, x + cw, y + h + 4, c >= 1f ? lerp(0xFFFFD84A, 0xFFFFFFFF, pulse) : 0xFFE0E0E0);
+            // Segunda fase (giro muscular): una línea morada encima que se llena hasta la sobrecarga.
+            float o = overcharge(partialTick);
+            if (o > 0) {
+                int ow = Math.round(w * o);
+                g.fill(x, y + h + 2, x + ow, y + h + 4, o >= 1f ? lerp(0xFFB050FF, 0xFFF0D0FF, pulse) : 0xFF8A3CC8);
+            }
         }
         String label;
         if (ready) {

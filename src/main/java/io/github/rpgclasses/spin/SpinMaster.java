@@ -81,6 +81,7 @@ public final class SpinMaster {
         AbilityService.register(GOLDEN_RECTANGLE, GoldenRectangle::start);
         MinecraftForge.EVENT_BUS.register(new SpinState());
         MinecraftForge.EVENT_BUS.addListener(SphereHits::onKnockback);
+        MinecraftForge.EVENT_BUS.register(new MuscleSpin());
         MinecraftForge.EVENT_BUS.register(new GoldenRectangle());
     }
 

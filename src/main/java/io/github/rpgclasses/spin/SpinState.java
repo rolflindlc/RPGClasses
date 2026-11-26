@@ -228,14 +228,21 @@ public final class SpinState {
         Vec3 right = look.cross(new Vec3(0, 1, 0));
         right = right.lengthSqr() < 1.0E-6 ? new Vec3(1, 0, 0) : right.normalize();
         Vec3 up = right.cross(look).normalize();
-        double radius = 0.45 - 0.3 * c;
+        // Fase 2 (sobrecarga, giro muscular): tres espirales moradas más rápidas y latido.
+        boolean muscle = now - s.chargeStart >= Math.round(SpinMaster.t("muscle_charge_seconds", 2.0) * 20);
+        double radius = muscle ? 0.2 : 0.45 - 0.3 * c;
         var level = p.serverLevel();
-        for (int i = 0; i < 2; i++) {
-            double a = now * (0.6 + 1.2 * c) + i * Math.PI;
+        int arms = muscle ? 3 : 2;
+        for (int i = 0; i < arms; i++) {
+            double a = now * (muscle ? 2.4 : 0.6 + 1.2 * c) + i * (2 * Math.PI / arms);
             Vec3 q = hand.add(right.scale(Math.cos(a) * radius)).add(up.scale(Math.sin(a) * radius));
-            level.sendParticles(c >= 1 ? CHARGE_FULL : ParticleTypes.WAX_OFF, q.x, q.y, q.z, 1, 0, 0, 0, 0);
+            level.sendParticles(muscle ? CHARGE_FULL : c >= 1 ? ParticleTypes.ELECTRIC_SPARK : ParticleTypes.WAX_OFF, q.x, q.y, q.z, 1, 0, 0, 0, 0);
         }
         if (c >= 1 && now % 4 == 0) level.sendParticles(ParticleTypes.ENCHANTED_HIT, hand.x, hand.y, hand.z, 2, 0.08, 0.08, 0.08, 0.05);
+        if (muscle && now % 10 == 0) {
+            level.playSound(null, p.getX(), p.getY(), p.getZ(), net.minecraft.sounds.SoundEvents.WARDEN_HEARTBEAT,
+                    net.minecraft.sounds.SoundSource.PLAYERS, 0.35f, 1.8f);
+        }
     }
 
     private static void showMarks(ServerPlayer p, State s, long now) {

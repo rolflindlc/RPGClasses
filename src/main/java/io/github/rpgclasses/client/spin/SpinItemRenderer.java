@@ -56,16 +56,19 @@ public final class SpinItemRenderer extends BlockEntityWithoutLevelRenderer {
                     float ease = c * c * (3 - 2 * c);
                     pose.pushPose();
                     float jx = 0, jy = 0;
+                    // Sobrecarga (giro muscular): tiembla cada vez más y gira aún más rápido.
+                    float o = SpinClient.overcharge(mc.getPartialTick());
                     if (c >= 1f) {
-                        jx = (float) Math.sin(t * 2.7f) * 0.015f;
-                        jy = (float) Math.cos(t * 3.1f) * 0.015f;
+                        float amp = 0.015f + 0.035f * o;
+                        jx = (float) Math.sin(t * (2.7f + 3f * o)) * amp;
+                        jy = (float) Math.cos(t * (3.1f + 3f * o)) * amp;
                     }
                     pose.translate(0.5 + jx, 0.5 + 0.12 * ease + jy, 0.5 + 0.18 * ease);
                     float sc = 1f + 0.15f * ease;
                     pose.scale(sc, sc, sc);
                     pose.mulPose(com.mojang.math.Axis.ZP.rotationDegrees(-12f * ease));
                     pose.translate(-0.5, -0.5, -0.5);
-                    ball(pose, buffers, light, overlay, m, t, golden || c >= 1f, 20f + 50f * spin + 160f * ease);
+                    ball(pose, buffers, light, overlay, m, t, golden || c >= 1f, 20f + 50f * spin + 160f * ease + 240f * o);
                     pose.popPose();
                     return;
                 }

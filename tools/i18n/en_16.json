@@ -273,5 +273,7 @@
   "param.rites_and_paths.guard_break_armor": "Guard Break: armor and toughness",
   "param.rites_and_paths.impact_knockback": "Impact knockback",
   "effect.rites_and_paths.guard_break": "Guard Break",
-  "effect.rites_and_paths.guard_break.description": "Guard Break (Spin Master): a charged ball broke your guard. You have less armor and toughness."
+  "effect.rites_and_paths.guard_break.description": "Guard Break (Spin Master): a charged ball broke your guard. You have less armor and toughness.",
+  "message.rites_and_paths.spin.muscle": "The spin moves your muscles on their own!",
+  "param.rites_and_paths.muscle_charge_seconds": "Right click: overcharge for the muscle spin"
 }

@@ -16,6 +16,7 @@
   "charge_armor_ignore": 0.5,
   "charge_guard_seconds": 4,
   "charge_slow": -0.35,
+  "muscle_charge_seconds": 2.0,
   "guard_break_armor": -0.25,
   "impact_knockback": 0.15,
   "return_speed": 2.2,

@@ -273,3 +273,5 @@
 272 Recul de l'impact
 273 Garde brisée
 274 Garde brisée (Maître de la Rotation) : une boule chargée a brisé ta garde. Tu as moins d'armure et de robustesse.
+275 La rotation fait bouger tes muscles toute seule !
+276 Clic droit : surcharge pour la rotation musculaire

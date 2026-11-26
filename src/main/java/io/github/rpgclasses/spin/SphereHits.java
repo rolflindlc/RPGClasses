@@ -144,6 +144,8 @@ public final class SphereHits {
         }
         dealTick(s, owner, target);
         if (s.oneHit || s.hitStopTicks <= 0) impactPush(s, owner, target);
+        // Bola sobrecargada: giro muscular (el objetivo usa lo que lleva en la mano).
+        if (s.muscle && !s.virtual && target.isAlive()) MuscleSpin.trigger(s, owner, target);
         if (s.oneHit) {
             // Mazazo: un golpe seco y la bola sigue (rebote hacia la mira o vuelta).
             level.playSound(null, at.x, at.y, at.z, SoundEvents.ANVIL_LAND, SoundSource.PLAYERS, 0.6f, 0.7f);

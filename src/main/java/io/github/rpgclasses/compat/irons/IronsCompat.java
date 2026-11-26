@@ -398,6 +398,12 @@ public final class IronsCompat {
      * Contrapunto del Bardo: todos los conjuros en recarga pierden esa fracción de lo que les queda (por reflexión,
      * como el Retroceso Temporal: PlayerCooldowns no está en la API de Iron's).
      */
+    /** ¿Está lanzando un conjuro de Iron's ahora mismo? */
+    public static boolean isCasting(ServerPlayer player) {
+        MagicData magic = MagicData.getPlayerMagicData(player);
+        return magic != null && magic.isCasting();
+    }
+
     public static void refundAllCooldowns(ServerPlayer player, double fraction) {
         Method getCooldowns = method("io.redspace.ironsspellbooks.api.magic.MagicData", "getPlayerCooldowns");
         Method all = method(PLAYER_COOLDOWNS, "getSpellCooldowns");

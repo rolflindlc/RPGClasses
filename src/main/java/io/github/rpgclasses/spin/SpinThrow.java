@@ -74,6 +74,7 @@ public final class SpinThrow {
             return;
         }
         double charge = 0;
+        boolean muscle = false;
         if (kind == CHARGE_START) {
             // Pulsar el derecho: recoger mina, redirigir (Bola Guiada) o Captura Perfecta van antes; si no, empieza a cargar.
             st.chargeStart = -1;
@@ -95,6 +96,8 @@ public final class SpinThrow {
             if (st.chargeStart >= 0 && now - st.chargeStart <= 20 * 30) {
                 double full = Math.max(1, SpinMaster.t("full_charge_seconds", 1.0) * 20);
                 charge = Math.min(1, (now - st.chargeStart) / full);
+                // Mantenerla aún más (sobrecarga): giro muscular.
+                muscle = now - st.chargeStart >= Math.round(SpinMaster.t("muscle_charge_seconds", 2.0) * 20);
                 st.chargeStart = -1;
             } else {
                 st.chargeStart = -1;
@@ -138,6 +141,10 @@ public final class SpinThrow {
             perfectBonus(p, st);
         }
         SphereEntity e = launch(p, band, material, kind, mine, charge);
+        if (e != null && muscle) {
+            e.muscle = true;
+            p.level().playSound(null, p.getX(), p.getY(), p.getZ(), SoundEvents.WARDEN_SONIC_CHARGE, SoundSource.PLAYERS, 0.5f, 1.8f);
+        }
         if (e == null) {
             p.displayClientMessage(Component.translatable("message.rites_and_paths.spin.no_ready",
                     material.name()).withStyle(ChatFormatting.GRAY), true);

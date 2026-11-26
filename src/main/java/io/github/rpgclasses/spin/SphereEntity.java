@@ -80,6 +80,8 @@ public class SphereEntity extends Projectile {
     // Bola cargada (rompeguardias): armadura que ignoran sus ticks y, con la carga completa, Guardia Rota y escudo fuera.
     double chargeArmor;
     boolean guardBreak;
+    /** Sobrecargada (clic derecho mantenido aún más): giro muscular al impactar. */
+    boolean muscle;
     /** Ticks de daño extra (rama Rotación): más pulsos en el mismo tiempo; en los golpes únicos, daño extra. */
     double extraTicks;
     /** Mejora: tiempo clavada y daño total (Barrena: más tiempo y más daño total, menos por tick). */

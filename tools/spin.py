@@ -124,7 +124,7 @@ ABILITIES = {
     # golpe, −20 % de velocidad y +150 % de cooldown de retorno (deja su daño por segundo parecido al normal).
     "sphere_throw": dict(passive=True, sword_damage=6, iron_fraction=.32, spin_seconds=1.0, pulse_seconds=.25, hit_stop_ticks=3,
                          sphere_speed=1.3, sphere_range=16, aim_degrees=10, aimed_speed_change=-.10, aimed_range_change=.15,
-                         full_charge_seconds=1.0, charge_range=1.5, charge_armor_ignore=.50, charge_guard_seconds=4, charge_slow=-.35,
+                         full_charge_seconds=1.0, charge_range=1.5, charge_armor_ignore=.50, charge_guard_seconds=4, charge_slow=-.35, muscle_charge_seconds=2.0,
                          guard_break_armor=-.25, impact_knockback=.15,
                          return_speed=2.2, return_cooldown_seconds=.35, base_bounces=1, bounce_speed_keep=.85,
                          throw_interval_seconds=.25, base_spheres=1, extra_sphere_level=15, bounce_bonus_cap=5,
@@ -193,7 +193,7 @@ SUB_DESC = {
     "spin_trapper": "Clava sus bolas como minas: agachado, la bola se queda clavada en el suelo o en una pared y explota cuando pasa un enemigo cerca, frenándolo.",
 }
 ABILITY_TEXT = {
-    "sphere_throw": ("Lanzamiento de Esferas", "Con la bandolera en la mano: clic izquierdo, la bola va guiada hacia donde apuntas (llega más lejos, pero algo más lenta); clic derecho, curva hacia donde miras, y si lo mantienes se carga (mientras cargas vas más lento): la bola cargada es un rompeguardias, ignora parte de la armadura según la carga y llega algo más lejos; con la carga completa desactiva el escudo del objetivo y le deja la Guardia Rota (menos armadura) unos segundos. La bola se clava y gira 1 segundo en el objetivo, dañándolo con varios ticks (se salta su invulnerabilidad); cada tick pierde contra la armadura lo mismo que perdería el impacto entero de un solo golpe. Cada rebote, en un bloque o al terminar de girar en un enemigo, la manda hacia donde mira tu cámara: el siguiente enemigo lo apuntas tú. Sin rebotes, vuelve a la mano. Pulsar justo cuando llega es una Captura Perfecta: más Giro y la relanzas al instante. Cada bloque rebotado antes del impacto le suma daño."),
+    "sphere_throw": ("Lanzamiento de Esferas", "Con la bandolera en la mano: clic izquierdo, la bola va guiada hacia donde apuntas (llega más lejos, pero algo más lenta); clic derecho, curva hacia donde miras, y si lo mantienes se carga (mientras cargas vas más lento): la bola cargada es un rompeguardias, ignora parte de la armadura según la carga y llega algo más lejos; con la carga completa desactiva el escudo del objetivo y le deja la Guardia Rota (menos armadura) unos segundos. Si la sigues manteniendo hasta sobrecargarla, al impactar el giro mueve los músculos del objetivo: usa a la fuerza lo que lleva en la mano (ataca con el arma o los puños, tensa el arco hasta disparar, carga la ballesta, se come la comida, lanza el conjuro de su bastón) y no puede parar hasta terminar. Los jefes no se ven afectados. La bola se clava y gira 1 segundo en el objetivo, dañándolo con varios ticks (se salta su invulnerabilidad); cada tick pierde contra la armadura lo mismo que perdería el impacto entero de un solo golpe. Cada rebote, en un bloque o al terminar de girar en un enemigo, la manda hacia donde mira tu cámara: el siguiente enemigo lo apuntas tú. Sin rebotes, vuelve a la mano. Pulsar justo cuando llega es una Captura Perfecta: más Giro y la relanzas al instante. Cada bloque rebotado antes del impacto le suma daño."),
     "spin_bar": ("Giro", "Barra de 0 a 100 % que sube con cada impacto, más si los encadenas. Si una bola vuelve sin impactar a ningún enemigo, pierdes la mitad; fuera de combate baja poco a poco. Con el 33 %: un rebote más y estelas doradas. Con el 66 %: el efecto del material es más fuerte y algo más de daño. Con el 100 %: puedes usar el Rectángulo Dorado (desde el Nivel Total 30)."),
     "bounce_route": ("Ruta de Rebotes", "Tiro de billar: tu bola sale disparada hacia el enemigo al que apuntas y salta de enemigo en enemigo, golpeando a cada uno de pasada (cada golpe pega más que el anterior), hasta clavarse en el último. Con un solo enemigo, rebota a su alrededor y vuelve a por él. Cada golpe sube tu Giro."),
     "reverse_spin": ("Giro Reverso", "Tira de tu bola clavada (o del último enemigo que golpeaste hace muy poco) y lo arrastra hacia ti. Los jefes no se mueven. Detona tus minas."),
@@ -226,7 +226,7 @@ PARAMS = {
     "charge_range": "Clic derecho cargado: alcance x", "charge_armor_ignore": "Clic derecho cargado: armadura ignorada|%",
     "charge_guard_seconds": "Clic derecho cargado: Guardia Rota y escudo desactivado|s",
     "charge_slow": "Clic derecho: velocidad mientras cargas|%", "guard_break_armor": "Guardia Rota: armadura y dureza|%",
-    "impact_knockback": "Empuje del impacto",
+    "impact_knockback": "Empuje del impacto", "muscle_charge_seconds": "Clic derecho: sobrecarga para el giro muscular|s",
     "return_speed": "Velocidad de vuelta (bloques por tic)", "return_cooldown_seconds": "Cooldown de retorno|s",
     "base_bounces": "Rebotes base", "bounce_speed_keep": "Velocidad que conserva al rebotar|%",
     "throw_interval_seconds": "Tiempo mínimo entre lanzamientos|s", "base_spheres": "Bolas simultáneas base",
@@ -286,6 +286,7 @@ UI = {
     f"block.{NS}.sphere_signal": "Señal de bola",
     f"effect.{NS}.golden_spin": "Giro Dorado",
     f"effect.{NS}.guard_break": "Guardia Rota",
+    f"message.{NS}.spin.muscle": "¡El giro mueve tus músculos solos!",
     f"item.{NS}.sphere_bandolier": "Bandolera de Esferas",
     f"discipline.{NS}.spheres.name": "Esferas",
     f"death.attack.{NS}.sphere": "%1$s cayó ante una bola que giraba",

@@ -273,3 +273,5 @@
 272 Rückstoß beim Aufprall
 273 Gebrochene Deckung
 274 Gebrochene Deckung (Meister der Drehung): eine aufgeladene Kugel hat deine Deckung gebrochen. Du hast weniger Rüstung und Härte.
+275 Die Drehung bewegt deine Muskeln von selbst!
+276 Rechtsklick: Überladung für die Muskeldrehung

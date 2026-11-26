@@ -367,5 +367,6 @@
   "charge_armor_ignore": "%",
   "charge_guard_seconds": "s",
   "charge_slow": "%",
-  "guard_break_armor": "%"
+  "guard_break_armor": "%",
+  "muscle_charge_seconds": "s"
 }

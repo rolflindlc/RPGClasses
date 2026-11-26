@@ -273,3 +273,5 @@
 272 Spinta dell'impatto
 273 Guardia Spezzata
 274 Guardia Spezzata (Maestro della Rotazione): una sfera carica ti ha spezzato la guardia. Hai meno armatura e robustezza.
+275 La rotazione muove i tuoi muscoli da sola!
+276 Clic destro: sovraccarico per la rotazione muscolare

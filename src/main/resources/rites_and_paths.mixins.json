@@ -23,6 +23,7 @@
     "PlayerSizeMixin",
     "PowderSnowWalkMixin",
     "WolfRideMixin",
+    "irons.CancelCastMixin",
     "irons.CastSpellMixin",
     "irons.InscriptionBookSlotMixin",
     "irons.InscriptionMenuMixin",

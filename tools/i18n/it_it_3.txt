@@ -1,286 +1,284 @@
 0 Struttura incompleta (%s): %s di %s
 1 •
-2 Nessun nemico in vista o nessuno spazio dietro di lui.
-3 Passo d'ombra ricaricato!
-4 Scudo disattivato per %s s
-5 Postura: %s
-6 Postura preferita: %s
-7 La tua classe non esiste più su questo server. Usa /clase reiniciar clase.
-8 Tutte le definizioni sono valide (%s classi).
-9 Hai speso %s XP. Livello successivo: %s XP.
-10 Hai speso %s XP. Hai raggiunto il livello massimo.
-11 Reset completato. Ti sono stati rimborsati %s XP (a ogni reset se ne perde una parte).
-12 Moltiplicatore di assorbimento
-13 Riserva massima
-14 Riserva al secondo
-15 Costo di attaccare o lanciare un incantesimo
-16 Danno agli alleati
-17 Cura al secondo agli alleati
-18 Livello dell'effetto (0 = I)
-19 Fulmine: danno dell'arco
-20 Fulmine: portata dell'arco (blocchi)
-21 Fulmine: nemici colpiti
-22 Danno ad area
-23 Armatura dei pezzi
-24 Armatura ignorata
-25 Meno danno dai proiettili
-26 Velocità d'attacco
-27 Armatura nell'aura
-28 Durata degli effetti negativi nell'aura
-29 Distanza dietro (blocchi)
-30 Sangue: l'extra ti cura
-31 Bonus
-32 Contro i boss ×
-33 Ghiaccio: congelamento contro i boss
-34 Immobilizzazione sui boss
-35 Rimbalzo all'impatto
-36 Variazione del bonus per carica
-37 Limite di bruciatura
-38 Bruciatura
-39 Limite
-40 Limite dello scudo (salute massima)
-41 Limite di cura al secondo (PV)
-42 Probabilità
-43 Probabilità massima
-44 Probabilità per punto di mana speso
-45 Probabilità a ogni attivazione
-46 Cariche
-47 Danno da freddo extra subito
-48 Limite di riduzione combinata
-49 Danno da calpestio
-50 Raggio di contagio (blocchi)
-51 Variazione della ricarica
-52 Ricarica
-53 Quantità
-54 Evocazioni per incantesimo
-55 Probabilità di colpo critico
-56 Danno dell'animale
-57 Bonus al danno
-58 Bonus al danno per scatto
-59 Danno (del colpo)
-60 Danno per 1% di salute persa
-61 Danno al secondo
-62 Riduzione del danno subito
-63 Riduzione del danno (massima)
-64 Riduzione del danno (minima)
-65 Danno extra subito
-66 Forza dello scatto
-67 Inizia a svanire dopo
-68 Perdita al secondo (del massimo)
-69 Perdita di cariche più lenta
-70 Tempo fermo prima di iniziare
-71 Danno diretto
-72 Muri interessati
-73 Sconto
-74 Distanza (blocchi)
-75 Distanza extra
-76 Distanza della schivata
-77 Durata dell'invulnerabilità nella schivata
-78 Consumo di Furtività
-79 Barra consumata al secondo
-80 Integrità extra
-81 Durata (massima)
-82 Durata (minima)
-83 Riduzione della durata
-84 Durata
-85 Effetti
-86 Livello del tavolo extra
-87 Cariche alla fine
-88 Ender: danno
-89 Ender: distanza di teletrasporto (blocchi)
-90 Mani nude: furti di equipaggiamento dai mob
-91 Mani nude: furti di equipaggiamento dai giocatori
-92 Ogni N colpi
-93 Fame extra
-94 Fame extra per blocco
-95 Rete: pescata extra
-96 Probabilità doppia
-97 Cariche massime extra
-98 Nemici trapassati
-99 Fattore ×
-100 Evocazione: zanne
-101 Lontano: da (blocchi)
-102 Danno a distanza
-103 Bonus della postura preferita
-104 Cariche nella preferita
-105 Soglia dell'effetto di postura
-106 Immune alle bruciature
-107 Fuoco: armatura e tenacia ×
-108 Dardo di fuoco (livello)
-109 Danno da fuoco extra subito
-110 Fuoco: danno a mani nude ×
-111 Fuoco: riduzione del danno da fuoco
-112 Fuoco: danno dell'esplosione
-113 Fuoco: raggio dell'esplosione (blocchi)
-114 Fuoco: durata della bruciatura
-115 Danno al primo
-116 Danno sottratto per colpo (PV)
-117 Fame (punti)
-118 Velocità di tensione base rimossa
-119 Ghiaccio: Tomba di ghiaccio
-120 Velocità della fornace
-121 Fusione arcana
-122 Costo della fusione (livelli)
-123 Raggio del golem (blocchi)
-124 Riduzione del danno da caduta, fuoco ed esplosioni
-125 Cure ×
-126 Salute massima recuperata
-127 Danno mitigato convertito in cura (massimo)
-128 Danno mitigato convertito in cura (minimo)
-129 Cura al secondo
-130 Cura al secondo
-131 Cure ricevute per 1% di salute persa
-132 Salute dell'animale
-133 Fino a salute
-134 Sotto la salute
-135 Danno al colpo
-136 Tempo minimo tra i colpi sullo stesso nemico (tick)
-137 Danno minimo per ottenere una carica
-138 Tempo senza perderle
-139 Riduzione del consumo di fame
-140 Tempo minimo tra gli usi
-141 Tempo minimo tra le attivazioni (tick)
-142 Tempo senza ordini
-143 Danno extra per carica del Colpo infuocato
-144 Fuoco: durata della bruciatura
-145 Immunità successiva
-146 Intervallo
-147 Invulnerabilità successiva
-148 Forza del salto ×
-149 Cariche mantenute
-150 Cura per uccisione (PV)
-151 Contraccolpo (blocchi)
-152 Contraccolpo extra
-153 Raggio del contraccolpo (blocchi)
-154 Forza del contraccolpo
-155 Balzo (blocchi)
-156 Sangue: danno extra che ti cura
-157 Livello
-158 Furto di vita
-159 Effetto della postura precedente
-160 Persistenza della postura precedente
-161 Blocco all'esaurimento, fino a
-162 Fortuna del mare razziale
-163 Abboccate più rapide
-164 Riduzione del danno magico ed elementale
-165 Bomba di magma (livello)
-166 Mana speso convertito in scudo
-167 Mana per punto di salute
-168 Durata del marchio (s)
-169 Massimo di alleati curati
-170 Blocchi collegati
-171 Cariche massime
-172 Oggetti per uso
-173 Costo massimo in mana
-174 Massimo di animali interessati
-175 Durata massima
-176 Cariche massime
-177 Saturazione della carne
-178 Pietra: riduzione del danno in mischia
-179 Probabilità minima
-180 Evocazioni minime
-181 Salute minima
-182 Con punti nel ramo
-183 Durata minima
-184 Velocità di scavo extra
-185 Riduzione del muro
-186 Probabilità contro i mob
-187 Mob non boss ×
-188 Danno in movimento
-189 Danno in movimento o in aria
-190 Vicino: fino a (blocchi)
-191 Danno da vicino
-192 Danno senza scudo
-193 Durata degli altri effetti negativi
-194 Saturazione degli altri cibi
-195 Bonus delle altre posture
-196 Cariche nelle altre
-197 Interruzione al subire danno
-198 Danno per 1% di salute persa
-199 Nemici trapassati
-200 Probabilità contro i giocatori
-201 Ricarica per giocatore
-202 Natura: livello del veleno
-203 Natura: veleno
-204 Potenza extra
-205 Durata e potenza dell'effetto
-206 Prezzi dei villici
-207 Acqua: riduzione del danno dai proiettili
-208 Elimina un effetto ogni
-209 Acqua: contraccolpo
-210 Contro i giocatori ×
-211 PvP: senza attaccarti da
-212 Raggio (blocchi)
-213 Scatena l'inferno (livello)
-214 Portata (blocchi)
-215 Raggio d'azione (blocchi)
-216 Ricarica per carica
-217 Riduzione del danno
-218 Durata della riduzione
-219 Pietra: danno fisico riflesso
-220 Rinnova il timer dal livello
-221 Interruzione della rigenerazione
-222 Barra recuperata al secondo
-223 Immobilizzazione
-224 Saturazione
-225 Danno da acqua
-226 Danno al secondo
-227 Lato dell'area di rottura (blocchi)
-228 Durata della lentezza
-229 Lentezza ai nemici (livello)
-230 Livello di lentezza
-231 Durata della lentezza
-232 Sovrannaturale: danno dell'onda (dell'extra)
-233 Sovrannaturale: portata dell'onda (blocchi)
-234 Velocità dell'animale
-235 Velocità extra
-236 Velocità del lupo ×
-237 Livello di velocità
-238 Sprint per
-239 Costo di stamina nella schivata
-240 Bonus di ogni postura
-241 Effetto di ogni postura
-242 Furti per mob
-243 Costo della barra di Furtività
-244 Durata della Furtività
-245 Altezza del passo extra (blocchi)
-246 Danno da fermo
-247 Danno da fermo
-248 Fermo per
-249 Pietra: armatura ×
-250 Pietra: velocità e salto ×
-251 Forza del contraccolpo
-252 Stordimento ×
-253 Danno delle evocazioni
-254 Salute delle evocazioni
-255 Costo in mana dell'evocazione
-256 Salute e danno delle evocazioni
-257 Acqua: velocità di nuoto
-258 Ricarica di cambio extra
-259 Ricarica al cambio di postura
-260 Soglia di cariche
-261 Scatti di tensione
-262 Raggio del tuo TNT
-263 Tenacia dei pezzi
-264 Tenacia per pezzo
-265 Danno della tossina per tick
-266 Danno della tagliola
-267 Trappole simultanee
-268 Tesoro extra
-269 Danno a mani nude
-270 Integrità extra
-271 Danno contro non morti e Nether
-272 Danno massimo dell'incantesimo
-273 Danno minimo dell'incantesimo
-274 Sovrannaturale: implosione sugli altri
-275 Sovrannaturale: implosione contro i boss
-276 Sovrannaturale: danno iniziale accumulato
-277 Sovrannaturale: attrazione
-278 Sovrannaturale: raggio dell'implosione (blocchi)
-279 Sovrannaturale: durata del Marchio
-280 Sovrannaturale: danno subito accumulato dal Marchio
-281 Riduzione di muro e tratto base
-282 Danno da acqua extra subito
-283 Acqua: danno a mani nude ×
-284 Acqua: velocità e salto ×
-285 Acqua: danno dell'onda
+2 Scudo disattivato per %s s
+3 Postura: %s
+4 Postura preferita: %s
+5 La tua classe non esiste più su questo server. Usa /clase reiniciar clase.
+6 Tutte le definizioni sono valide (%s classi).
+7 Hai speso %s XP. Livello successivo: %s XP.
+8 Hai speso %s XP. Hai raggiunto il livello massimo.
+9 Reset completato. Ti sono stati rimborsati %s XP (a ogni reset se ne perde una parte).
+10 Moltiplicatore di assorbimento
+11 Riserva massima
+12 Riserva al secondo
+13 Costo di attaccare o lanciare un incantesimo
+14 Danno agli alleati
+15 Cura al secondo agli alleati
+16 Livello dell'effetto (0 = I)
+17 Fulmine: danno dell'arco
+18 Fulmine: portata dell'arco (blocchi)
+19 Fulmine: nemici colpiti
+20 Danno ad area
+21 Armatura dei pezzi
+22 Armatura ignorata
+23 Meno danno dai proiettili
+24 Velocità d'attacco
+25 Armatura nell'aura
+26 Durata degli effetti negativi nell'aura
+27 Distanza dietro (blocchi)
+28 Sangue: l'extra ti cura
+29 Bonus
+30 Contro i boss ×
+31 Ghiaccio: congelamento contro i boss
+32 Immobilizzazione sui boss
+33 Rimbalzo all'impatto
+34 Variazione del bonus per carica
+35 Limite di bruciatura
+36 Bruciatura
+37 Limite
+38 Limite dello scudo (salute massima)
+39 Limite di cura al secondo (PV)
+40 Probabilità
+41 Probabilità massima
+42 Probabilità per punto di mana speso
+43 Probabilità a ogni attivazione
+44 Cariche
+45 Danno da freddo extra subito
+46 Limite di riduzione combinata
+47 Danno da calpestio
+48 Raggio di contagio (blocchi)
+49 Variazione della ricarica
+50 Ricarica
+51 Quantità
+52 Evocazioni per incantesimo
+53 Probabilità di colpo critico
+54 Danno dell'animale
+55 Bonus al danno
+56 Bonus al danno per scatto
+57 Danno (del colpo)
+58 Danno per 1% di salute persa
+59 Danno al secondo
+60 Riduzione del danno subito
+61 Riduzione del danno (massima)
+62 Riduzione del danno (minima)
+63 Danno extra subito
+64 Forza dello scatto
+65 Inizia a svanire dopo
+66 Perdita al secondo (del massimo)
+67 Perdita di cariche più lenta
+68 Tempo fermo prima di iniziare
+69 Danno diretto
+70 Muri interessati
+71 Sconto
+72 Distanza (blocchi)
+73 Distanza extra
+74 Distanza della schivata
+75 Durata dell'invulnerabilità nella schivata
+76 Consumo di Furtività
+77 Barra consumata al secondo
+78 Integrità extra
+79 Durata (massima)
+80 Durata (minima)
+81 Riduzione della durata
+82 Durata
+83 Effetti
+84 Livello del tavolo extra
+85 Cariche alla fine
+86 Ender: danno
+87 Ender: distanza di teletrasporto (blocchi)
+88 Mani nude: furti di equipaggiamento dai mob
+89 Mani nude: furti di equipaggiamento dai giocatori
+90 Ogni N colpi
+91 Fame extra
+92 Fame extra per blocco
+93 Rete: pescata extra
+94 Probabilità doppia
+95 Cariche massime extra
+96 Nemici trapassati
+97 Fattore ×
+98 Evocazione: zanne
+99 Lontano: da (blocchi)
+100 Danno a distanza
+101 Bonus della postura preferita
+102 Cariche nella preferita
+103 Soglia dell'effetto di postura
+104 Immune alle bruciature
+105 Fuoco: armatura e tenacia ×
+106 Dardo di fuoco (livello)
+107 Danno da fuoco extra subito
+108 Fuoco: danno a mani nude ×
+109 Fuoco: riduzione del danno da fuoco
+110 Fuoco: danno dell'esplosione
+111 Fuoco: raggio dell'esplosione (blocchi)
+112 Fuoco: durata della bruciatura
+113 Danno al primo
+114 Danno sottratto per colpo (PV)
+115 Fame (punti)
+116 Velocità di tensione base rimossa
+117 Ghiaccio: Tomba di ghiaccio
+118 Velocità della fornace
+119 Fusione arcana
+120 Costo della fusione (livelli)
+121 Raggio del golem (blocchi)
+122 Riduzione del danno da caduta, fuoco ed esplosioni
+123 Cure ×
+124 Salute massima recuperata
+125 Danno mitigato convertito in cura (massimo)
+126 Danno mitigato convertito in cura (minimo)
+127 Cura al secondo
+128 Cura al secondo
+129 Cure ricevute per 1% di salute persa
+130 Salute dell'animale
+131 Fino a salute
+132 Sotto la salute
+133 Danno al colpo
+134 Tempo minimo tra i colpi sullo stesso nemico (tick)
+135 Danno minimo per ottenere una carica
+136 Tempo senza perderle
+137 Riduzione del consumo di fame
+138 Tempo minimo tra gli usi
+139 Tempo minimo tra le attivazioni (tick)
+140 Tempo senza ordini
+141 Danno extra per carica del Colpo infuocato
+142 Fuoco: durata della bruciatura
+143 Immunità successiva
+144 Intervallo
+145 Invulnerabilità successiva
+146 Forza del salto ×
+147 Cariche mantenute
+148 Cura per uccisione (PV)
+149 Contraccolpo (blocchi)
+150 Contraccolpo extra
+151 Raggio del contraccolpo (blocchi)
+152 Forza del contraccolpo
+153 Balzo (blocchi)
+154 Sangue: danno extra che ti cura
+155 Livello
+156 Furto di vita
+157 Effetto della postura precedente
+158 Persistenza della postura precedente
+159 Blocco all'esaurimento, fino a
+160 Fortuna del mare razziale
+161 Abboccate più rapide
+162 Riduzione del danno magico ed elementale
+163 Bomba di magma (livello)
+164 Mana speso convertito in scudo
+165 Mana per punto di salute
+166 Durata del marchio (s)
+167 Massimo di alleati curati
+168 Blocchi collegati
+169 Cariche massime
+170 Oggetti per uso
+171 Costo massimo in mana
+172 Massimo di animali interessati
+173 Durata massima
+174 Cariche massime
+175 Saturazione della carne
+176 Pietra: riduzione del danno in mischia
+177 Probabilità minima
+178 Evocazioni minime
+179 Salute minima
+180 Con punti nel ramo
+181 Durata minima
+182 Velocità di scavo extra
+183 Riduzione del muro
+184 Probabilità contro i mob
+185 Mob non boss ×
+186 Danno in movimento
+187 Danno in movimento o in aria
+188 Vicino: fino a (blocchi)
+189 Danno da vicino
+190 Danno senza scudo
+191 Durata degli altri effetti negativi
+192 Saturazione degli altri cibi
+193 Bonus delle altre posture
+194 Cariche nelle altre
+195 Interruzione al subire danno
+196 Danno per 1% di salute persa
+197 Nemici trapassati
+198 Probabilità contro i giocatori
+199 Ricarica per giocatore
+200 Natura: livello del veleno
+201 Natura: veleno
+202 Potenza extra
+203 Durata e potenza dell'effetto
+204 Prezzi dei villici
+205 Acqua: riduzione del danno dai proiettili
+206 Elimina un effetto ogni
+207 Acqua: contraccolpo
+208 Contro i giocatori ×
+209 PvP: senza attaccarti da
+210 Raggio (blocchi)
+211 Scatena l'inferno (livello)
+212 Portata (blocchi)
+213 Raggio d'azione (blocchi)
+214 Ricarica per carica
+215 Riduzione del danno
+216 Durata della riduzione
+217 Pietra: danno fisico riflesso
+218 Rinnova il timer dal livello
+219 Interruzione della rigenerazione
+220 Barra recuperata al secondo
+221 Immobilizzazione
+222 Saturazione
+223 Danno da acqua
+224 Danno al secondo
+225 Lato dell'area di rottura (blocchi)
+226 Durata della lentezza
+227 Lentezza ai nemici (livello)
+228 Livello di lentezza
+229 Durata della lentezza
+230 Sovrannaturale: danno dell'onda (dell'extra)
+231 Sovrannaturale: portata dell'onda (blocchi)
+232 Velocità dell'animale
+233 Velocità extra
+234 Velocità del lupo ×
+235 Livello di velocità
+236 Sprint per
+237 Costo di stamina nella schivata
+238 Bonus di ogni postura
+239 Effetto di ogni postura
+240 Furti per mob
+241 Costo della barra di Furtività
+242 Durata della Furtività
+243 Altezza del passo extra (blocchi)
+244 Danno da fermo
+245 Danno da fermo
+246 Fermo per
+247 Pietra: armatura ×
+248 Pietra: velocità e salto ×
+249 Forza del contraccolpo
+250 Stordimento ×
+251 Danno delle evocazioni
+252 Salute delle evocazioni
+253 Costo in mana dell'evocazione
+254 Salute e danno delle evocazioni
+255 Acqua: velocità di nuoto
+256 Ricarica di cambio extra
+257 Ricarica al cambio di postura
+258 Soglia di cariche
+259 Scatti di tensione
+260 Raggio del tuo TNT
+261 Tenacia dei pezzi
+262 Tenacia per pezzo
+263 Danno della tossina per tick
+264 Danno della tagliola
+265 Trappole simultanee
+266 Tesoro extra
+267 Danno a mani nude
+268 Integrità extra
+269 Danno contro non morti e Nether
+270 Danno massimo dell'incantesimo
+271 Danno minimo dell'incantesimo
+272 Sovrannaturale: implosione sugli altri
+273 Sovrannaturale: implosione contro i boss
+274 Sovrannaturale: danno iniziale accumulato
+275 Sovrannaturale: attrazione
+276 Sovrannaturale: raggio dell'implosione (blocchi)
+277 Sovrannaturale: durata del Marchio
+278 Sovrannaturale: danno subito accumulato dal Marchio
+279 Riduzione di muro e tratto base
+280 Danno da acqua extra subito
+281 Acqua: danno a mani nude ×
+282 Acqua: velocità e salto ×
+283 Acqua: danno dell'onda

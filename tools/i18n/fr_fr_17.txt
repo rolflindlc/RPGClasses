@@ -1,0 +1,80 @@
+0 Sous forme de bête, tu ne peux pas utiliser de conteneurs.
+1 Bestiaire de %s : %s
+2 %s ne connaît aucune espèce.
+3 %s connaît maintenant %s (%s/%s points).
+4 %s a oublié %s.
+5 %s n'a aucune connaissance de %s.
+6 %s n'est pas une espèce valide pour le Druide.
+7 Change-visage
+8 Espion et imposteur. Avec une longue-vue, tu étudies les joueurs et les mobs humanoïdes jusqu'à apprendre leur visage, puis tu te déguises en eux : avec le visage d'un mob, sa faction t'ignore ; avec celui d'un joueur, les autres te prennent pour lui.
+9 Longue-vue d'espion
+10 En regardant à travers une longue-vue, tu vois la vie de la cible et, à des niveaux de sous-classe plus élevés, son armure et ses effets ; elle est aussi marquée et brille pour toi seul quelques secondes. Regarder un joueur ou un villageois, illager, sorcière, piglin ou mort-vivant humanoïde accumule de l'étude (pas besoin que ce soit d'affilée) : une fois complète, tu apprends son visage. Les mobs s'apprennent par type et les joueurs un par un. Une cible déguisée ne peut pas être étudiée.
+11 Déguisement
+12 Ouvre la liste des visages appris et tu en mets un. Avec le visage d'un mob, toute sa faction t'ignore. Avec celui d'un joueur, les autres voient son skin, sa taille et son nom, tu disparais de la liste Tab et les messages de mort affichent son nom. Tes alliés te voient déguisé, mais avec ton vrai nom. Attaquer ne le brise pas, mais te trahit auprès de la cible et des membres proches de sa faction ; les mobs qui te poursuivaient déjà savent que tu es un imposteur jusqu'à ce qu'ils te perdent. L'eau, la pluie, le feu ou entrer en furtivité brisent le déguisement et t'offrent une brève fuite (Vitesse et invisibilité). Appuie de nouveau pour l'enlever ; la recharge commence à la fin du déguisement. Il est purement visuel : ta hitbox et ta portée ne changent pas.
+13 Tu ne connais encore aucun visage : étudie quelqu'un avec une longue-vue.
+14 Tu ne peux pas te déguiser mouillé, en feu ou en furtivité.
+15 Tu es maintenant %s.
+16 L'eau a ruiné ton déguisement.
+17 Le feu a ruiné ton déguisement.
+18 En te cachant dans l'ombre, tu retires ton déguisement.
+19 Tu retires ton déguisement.
+20 Vie %s/%s
+21 Armure %s
+22 Aucun effet
+23 Étude de %s : %s%%
+24 Visage de %s appris
+25 Tu as appris le visage de %s !
+26 Visages
+27 Portée d'étude (blocs)
+28 Armure visible dès le niveau
+29 Effets visibles dès le niveau
+30 Rayon d'alerte de la faction (blocs)
+31 Oubli après perte d'aggro
+32 Vitesse de fuite
+33 Niveau de Vitesse de fuite
+34 Invisibilité de fuite
+35 Châtiment Divin
+36 Tous les quelques coups au corps à corps, ton arme libère un châtiment sacré qui ajoute des dégâts au coup ; deux fois plus contre les morts-vivants et les créatures du Nether.
+37 Camouflage
+38 Accroupi et immobile quelques secondes, tu deviens invisible pour les mobs et les joueurs jusqu'à ce que tu bouges, te relèves ou tires.
+39 Marque de Visée
+40 Regarde un ennemi à la longue-vue quelques secondes d'affilée pour le marquer (un seul à la fois). Il brille pour toi et ton prochain tir qui le touche inflige beaucoup plus de dégâts.
+41 Visée : %s%%
+42 %s est marqué
+43 Fuite des mobs
+44 Multiplicateur contre morts-vivants et Nether
+45 Dégâts renvoyés
+46 Lien de Sang
+47 Regarde un allié ou un ennemi proche et appuie pour t'unir à lui par un lien de sang (un de chaque au maximum). La moitié des dégâts que subit ton allié te revient en dégâts bruts ; ton ennemi subit aussi une partie de tous les dégâts que tu subis, y compris la vie payée avec le Sacrifice. Il se rompt si vous vous éloignez trop ; appuie en regardant une cible liée (ou rien) pour le rompre.
+48 Ange Gardien
+49 Tant que tu pries pour un allié, le premier coup qui le tuerait est annulé. Chaque allié a sa propre recharge.
+50 Il n'y a personne à qui te lier.
+51 Lié à %s : tu partages sa douleur.
+52 Lié à %s : il souffrira avec toi.
+53 Le Lien de Sang s'est rompu.
+54 Un ange gardien t'a sauvé !
+55 Ta prière a sauvé %s.
+56 %1$s s'est vidé de son sang par un lien
+57 %1$s s'est vidé de son sang par un lien avec %2$s
+58 Portée du lien (blocs)
+59 Distance max. de l'allié (blocs)
+60 Distance max. de l'ennemi (blocs)
+61 Dégâts de l'allié que tu subis
+62 Dégâts subis par l'ennemi
+63 Vie de la forme par Niveau total
+64 Modifier le HUD
+65 Éditeur du HUD
+66 Glisser pour déplacer · Clic droit : masquer ou afficher · Flèches : ajuster (Maj ×10) · R : réinitialiser
+67 Tout réinitialiser
+68 %s (masqué)
+69 Capacités
+70 Barre de furtivité
+71 Charges du Moine
+72 Barre de Rotation
+73 Fusion du Slime
+74 Saut du loup
+75 Saut du Centaure
+76 Incantation du Druide
+77 Forme du Druide
+78 Rythme du Barde
+79 Durée de l'étude (mobs)

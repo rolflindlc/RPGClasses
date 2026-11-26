@@ -1,8 +1,8 @@
 {
-"message.rites_and_paths.debug.log_on": "Debug log enabled",
-"message.rites_and_paths.debug.log_off": "Debug log disabled (errors are still recorded)",
-"message.rites_and_paths.debug.log_empty": "No events recorded yet.",
-"message.rites_and_paths.debug.dump_failed": "Could not write the dump: %s",
-"message.rites_and_paths.debug.dump_written": "Dump written: %s (logs folder). Send me this file and rites_and_paths-debug.log.",
-"message.rites_and_paths.debug.ability_error": "Error in %s: see logs/rites_and_paths-debug.log"
+  "message.rites_and_paths.debug.log_on": "Debug log enabled",
+  "message.rites_and_paths.debug.log_off": "Debug log disabled (errors are still recorded)",
+  "message.rites_and_paths.debug.log_empty": "No events recorded yet.",
+  "message.rites_and_paths.debug.dump_failed": "Could not write the dump: %s",
+  "message.rites_and_paths.debug.dump_written": "Dump written: %s (logs folder). Send me this file and rites_and_paths-debug.log.",
+  "message.rites_and_paths.debug.ability_error": "Error in %s: see logs/rites_and_paths-debug.log"
 }

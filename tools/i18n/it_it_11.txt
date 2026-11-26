@@ -132,9 +132,9 @@
 131 Penitenza
 132 Ali di luce: meno danni da caduta e caduta lenta, un'aureola che rigenera gli alleati vicini e, dal livello 5, la Forma angelica: voli per alcuni secondi mentre tu e i tuoi alleati vi rigenerate e venite purificati.
 133 Angelo
-134 Prega per un alleato anche senza vederlo: il tuo corpo resta accovacciato e tu diventi una testa fluttuante che lo accompagna. Lanci gli incantesimi dalla testa, con meno potenza quanto più lontano è il tuo corpo.
+134 Prega per un alleato anche senza vederlo: il tuo corpo resta inginocchiato e diventi una testa fluttuante che lo accompagna. Da lì lanci i tuoi incantesimi, più deboli quanto più lontano è il tuo corpo, e la tua preghiera annulla il primo colpo che lo ucciderebbe.
 135 Intercessore
-136 Cura con il proprio sangue: più salute, meno danni subiti quando è gravemente ferito e, dal livello 5, il Sacrificio: paghi salute per curare un alleato, senza ricarica. Se non puoi più pagare, puoi dare la vita per lui.
+136 Cura con il proprio sangue: più vita, meno danno ricevuto quando è gravemente ferito e il Legame di Sangue, che gli fa portare il dolore di un alleato e condividere il proprio con un nemico. Dal livello 5, il Sacrificio: paghi vita per curare un alleato, senza ricarica. Se non puoi più pagare, puoi dare la vita per lui.
 137 Martire
 138 %s (ora)
 139 %s (%s blocchi)

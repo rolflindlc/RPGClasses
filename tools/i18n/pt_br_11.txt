@@ -132,9 +132,9 @@
 131 Penitência
 132 Asas de luz: menos dano de queda e queda lenta, uma auréola que regenera os aliados próximos e, a partir do nível 5, a Forma Angelical: você voa por alguns segundos enquanto você e seus aliados regeneram e são purificados.
 133 Anjo
-134 Reza por um aliado mesmo sem vê-lo: seu corpo fica agachado e você vira uma cabeça flutuante que o acompanha. Você lança seus feitiços a partir dela, com menos poder quanto mais longe estiver seu corpo.
+134 Reze por um aliado mesmo sem vê-lo: seu corpo fica ajoelhado e você vira uma cabeça flutuante que o acompanha. Dela você lança seus feitiços, mais fracos quanto mais longe estiver seu corpo, e sua prece anula o primeiro golpe que o mataria.
 135 Intercessor
-136 Cura com o próprio sangue: mais vida, menos dano recebido quando está muito ferido e, a partir do nível 5, o Sacrifício: você paga vida para curar um aliado, sem recarga. Se não puder mais pagar, pode dar sua vida por ele.
+136 Cura com o próprio sangue: mais vida, menos dano recebido quando está gravemente ferido e o Vínculo de Sangue, que o faz carregar a dor de um aliado e dividir a sua com um inimigo. A partir do nível 5, o Sacrifício: você paga vida para curar um aliado, sem recarga. Se não puder mais pagar, pode dar a vida por ele.
 137 Mártir
 138 %s (agora)
 139 %s (%s blocos)

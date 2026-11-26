@@ -1,6 +1,6 @@
 0 Chaque tir d'arc ou d'arbalète a une chance de ne pas consommer de munition.
 1 Économie de munitions
-2 Pendant quelques secondes, vous attaquez plus vite et plus fort, mais vous subissez aussi plus de dégâts. À l'activation, affaiblit les ennemis proches.
+2 Pendant quelques secondes tu attaques plus vite et plus fort, mais tu subis aussi plus de dégâts. À l'activation tu affaiblis les ennemis proches et ton cri fait fuir les mobs ordinaires.
 3 Rage du berserker
 4 Chaque fois que vous tuez un ennemi, vous récupérez une partie de votre santé maximale.
 5 Soif de sang
@@ -32,214 +32,212 @@
 31 Rempart incorruptible
 32 Vous ne subissez aucun dégât de chute et marchez sur l'eau. En Posture de feu, vous marchez aussi sur la lave.
 33 Pas léger
-34 Vous vous téléportez derrière l'ennemi que vous regardez (jusqu'à 10 blocs). Pendant 8 s, vos coups contre lui sont des coups critiques garantis et, si vous le tuez dans ce laps de temps, la capacité se recharge instantanément.
-35 Pas de l'ombre
-36 Chaque pression passe à la posture suivante (Eau, Pierre, Feu). Vous n'accumulez des charges que pour la posture active : Feu à chaque coup à mains nues (plus de dégâts), Pierre en encaissant des coups (plus d'armure) et Eau en courant, esquivant ou déviant (plus de vitesse et de saut). Au maximum, ou avec Maj + coup (ou accroupi + cette touche) à partir de 10 charges, votre prochain coup à mains nues les dépense toutes : Frappe enflammée, étourdissement ou Contre-courant. Changer de posture libère les charges de la posture précédente en effet de zone. Les charges s'estompent peu à peu quand vous cessez d'en gagner et quand vous enfilez une armure.
-37 Postures élémentaires
-38 Vous infligez plus de dégâts aux ennemis qui vous ciblent.
-39 Garde ferme
-40 Quand vous vous accroupissez, vous devenez réellement invisible tant qu'il vous reste de la barre de discrétion. Attaquer ou lancer un sort en consomme une grande partie.
-41 Discrétion
-42 Force les monstres proches à vous attaquer, les ralentit et réduit les dégâts que vous subissez pendant quelques secondes.
-43 Provocation
-44 Ajoute un troisième saut en l'air.
-45 Triple saut
-46 Accroupi près d'un mur, vous vous y accrochez et pouvez l'escalader. Si vous bandez un arc, vous lâchez prise.
-47 Escalade murale
-48 Une impulsion horizontale en l'air, avec des charges qui se rechargent toutes seules.
-49 Élan du vent
-50 Dégâts critiques depuis l'invisibilité
-51 Dégâts à l'arc
-52 Chance de coup critique
-53 Dégâts critiques
-54 Résistance aux effets négatifs
-55 Vitesse de tension de l'arc
-56 Soins reçus
-57 Hauteur de saut
-58 Recul infligé
-59 Marcheur des feuilles
-60 Portée de détection des monstres
-61 Vitesse des projectiles
-62 Taille
-63 Vitesse accroupi
-64 Taille des sorts
-65 Dégâts à mains nues
-66 Recul à mains nues
-67 Zoom
-68 Autel de race
-69 Vos coups critiques infligent beaucoup plus de dégâts.
-70 Brutalité
-71 Fureur des blessures : vous infligez plus de dégâts plus il vous manque de santé.
-72 Fureur
-73 Vous subissez moins de dégâts de chute, de feu et d'explosion, et perdez moins de faim.
-74 Endurci
-75 Sans armure, vous gagnez de l'armure, de la robustesse et de la vitesse de déplacement.
-76 Peau de fer
-77 La Charge porte plus loin et se recharge plus vite. Dormant tant que vous n'avez pas la Charge.
-78 Ruée
-79 Réduit le délai de recharge de vos sorts.
-80 Cadence
-81 Vous vous déplacez plus vite ; branche pleine, lancer des sorts ne vous ralentit pas.
-82 Fluidité
-83 Augmente la puissance de tous vos sorts.
-84 Puissance
-85 Augmente votre mana maximal et la vitesse à laquelle vous le récupérez (+40 % de mana par seconde à 10 points). Iron's régénère selon le mana maximal, l'attribut de régénération est donc abaissé en compensation.
-86 Réserve
-87 Vos invocations ont plus de santé et infligent plus de dégâts.
-88 Invocation
-89 Renforce les charges de Feu : plus de dégâts par charge et une onde de décharge plus puissante.
-90 Poing
-91 Accroupi et immobile pendant quelques secondes, vous vous soignez lentement jusqu'à une limite de santé. Subir des dégâts l'interrompt. Quand vous cessez de méditer, vous gagnez 4 charges de votre posture qui ne s'estompent pas pendant 10 s.
-92 Méditation
-93 Renforce les charges de Pierre : plus d'armure et de robustesse par charge et plus d'absorption à la décharge.
-94 Peau
-95 Vos décharges au changement de posture et vos propres effets de posture sont plus forts : +20 % à 5 points et +40 % à 10 (les charges maximales restent à 10).
-96 Maîtrise de posture
-97 Renforce les charges d'Eau : plus de vitesse et de saut par charge et une décharge plus puissante.
-98 Vent
-99 Une aura autour de vous : vous et vos alliés gagnez de l'armure et les effets négatifs durent moins longtemps sur vous. Ne se cumule pas avec celle d'un autre paladin.
-100 Étendard
-101 Multiplie l'armure et la robustesse accordées par les pièces que vous portez.
-102 Cuirasse
-103 Vous êtes moins repoussé et vous repoussez davantage les ennemis.
-104 Poussée
-105 Plus de dégâts contre les morts-vivants et les monstres du Nether, et légèrement plus de dégâts en général si vous ne portez pas de bouclier.
-106 Châtiment
-107 Les effets négatifs durent moins longtemps sur vous.
-108 Volonté
-109 Plus de dégâts avec les arcs et les arbalètes, et zoom en vous accroupissant avec l'arc en main ou en le bandant.
-110 Visée
-111 Vous bandez l'arc plus vite.
-112 Cadence
-113 Vos projectiles volent plus vite et vont plus loin. N'augmente pas les dégâts.
-114 Portée
-115 Branche pleine, après avoir subi un coup de mêlée, vous courez plus vite pendant quelques secondes.
-116 Retraite
-117 Les effets de vos flèches de potion durent plus longtemps et sont plus puissants.
-118 Flèches spéciales
-119 L'esquive d'Epic Fight consomme moins d'endurance et son invulnérabilité dure plus longtemps.
-120 Acrobatie
-121 Vous attaquez plus vite et vos coups critiques infligent plus de dégâts.
-122 Tranchant
-123 Les monstres vous détectent de plus près, et vos coups critiques depuis l'invisibilité infligent plus de dégâts.
-124 Ombre
-125 Vos coups peuvent empoisonner avec la Toxine, des dégâts lents qui ne se cumulent pas.
-126 Toxines
-127 Vous vous déplacez plus vite.
-128 Vent
-129 Un guerrier sans armure aux armes lourdes. Moins il a de santé, plus il inflige de dégâts, et ses coups critiques sont les plus puissants. Porter la moindre pièce d'armure désactive sa défense naturelle, sauf les harnais de Barbare (son équipement de classe).
-130 Barbare
-131 Lanceur de sorts utilisant Iron's Spells. Beaucoup de dégâts à distance et d'utilité en échange de très peu de robustesse. Ses branches augmentent la puissance des sorts, le mana et la vitesse de recharge.
-132 Mage
-133 Trait de classe : santé maximale réduite.
-134 Un combattant à mains nues et sans armure. Son niveau donne une base de dégâts et de défense ; le reste se gagne au combat en accumulant des charges de Feu, de Pierre ou d'Eau. Porter une armure désactive ses passifs et efface les charges, sauf les robes de Moine (son équipement de classe). Nunchaku, sai, bo et poings américains comptent comme à mains nues.
-135 Moine
-136 Corps martial : pas d'armure (les robes de Moine ne comptent pas), dégâts à mains nues, armure et robustesse qui croissent avec vos points de classe de base (au maximum à 30). Le Feu retranche 25 % de cette armure et l'Eau 25 % de ces dégâts.
-137 Le tank du groupe. Encaisse plus que quiconque avec armure et bouclier, attire les ennemis et protège les alliés. Inflige peu de dégâts seul.
-138 Paladin
-139 Trait de classe : plus de santé maximale et un peu moins de vitesse.
-140 Tireur à l'arc. Dégâts à distance constants, flèches rapides à longue portée et bonne mobilité. Peut porter une armure sans pénalité.
-141 Rôdeur
-142 Un assassin agile aux armes légères. Devient invisible, frappe par surprise avec des coups critiques garantis et se déplace très vite. Très fragile s'il est pris.
-143 Voleur
-144 Trait de classe : santé maximale réduite.
-145 Quand votre santé tombe sous 30 %, les projectiles dans un rayon de 6 blocs ralentissent (60 s).
-146 Chaque 5e sort offensif se réfracte : 30 % de ses dégâts rebondissent sur un autre ennemi proche.
-147 Quand vous quittez l'invisibilité, une nuée de corbeaux aveugle les ennemis dans un rayon de 3 blocs pendant 1 s (15 s).
-148 Quand vous entrez en combat, le cor retentit : les ennemis dans un rayon de 16 blocs brillent 8 s et vos alliés gagnent Force pendant 8 s (90 s).
-149 Chaque 11e flèche est une flèche en os de dragon : +50 % de dégâts et perce un ennemi.
-150 Dans le feuillage, vous régénérez de la santé et les monstres à plus de 8 blocs ne vous ciblent pas.
-151 Chaque monstre hostile tué ajoute un croc (10 max, perdus à la mort) : +1 % de dégâts de mêlée par croc.
-152 Vous gelez l'eau en marchant dessus.
-153 Fixer un monstre non-boss pendant 2 s le pétrifie pendant 2 s (30 s).
-154 Quand vous passez à une arme d'une autre discipline, +10 % de dégâts de mêlée pendant 3 s (6 s).
-155 Attire les objets et les orbes d'expérience dans un rayon de 6 blocs.
-156 Bander un arc en l'air vous fait planer.
-157 Quand vous mourez, une colonne de lumière marque l'endroit de votre chute pendant 10 min.
-158 Chaque coup critique lance un dé : sur un 6, il inflige un ×1,5 supplémentaire ; sur un 1, il devient un coup normal.
-159 Quand vous subissez un coup de mêlée, 15 % de chances d'enflammer l'attaquant. Vous laissez des traces de pas lumineuses.
-160 Le soleil vous inflige moitié moins de dégâts.
-161 Les minerais dans un rayon de 4 blocs scintillent.
-162 Quiconque frappe un monstre qui vous poursuit (vous ou vos alliés) récupère 1 PV (une fois par seconde).
-163 Un coup mortel vous fait renaître dans les flammes avec 30 % de santé (20 min). Se résout après les capacités de classe et de race.
-164 Accroupi en l'air, vous flottez pendant 3 s (10 s de recharge).
-165 Vous portez un étendard doré dans le dos.
-166 Commun
-167 Épique
-168 Rare
-169 Relique
-170 Vous ne pouvez porter qu'une seule Relique à la fois.
-171 %s uniquement
-172 Race %s uniquement
-173 Vous nagez plus vite et, en sortant de l'eau, vous courez plus vite pendant 5 s.
-174 En changeant de posture avec 8 charges ou plus, les perles rebondissent entre 3 ennemis.
-175 Quand vous subissez un coup de mêlée, 10 % de chances que la foudre frappe l'attaquant (8 s).
-176 Quand vous finissez de méditer, vos alliés dans un rayon de 8 blocs perdent un effet négatif.
-177 Sous l'eau, vos alliés dans un rayon de 5 blocs récupèrent de l'air. Sur terre, si vous brûlez, il éteint le feu (10 s).
-178 Sous 6 cuisses de faim, vous ne mangez que la nourriture de votre inventaire (sans effets).
-179 5 % de chances de doubler un butin commun à la mort d'un monstre.
-180 Quand votre Dernier Combat s'active, les monstres dans un rayon de 6 blocs s'enfuient.
-181 Quand vous tuez un boss, le crâne garde son trophée et vous accorde un trait de ce boss jusqu'au suivant (immunité au feu, immunité à la lenteur, immunité au Wither… ou +10 % de dégâts).
-182 Le crâne garde le trophée de %s
-183 La Rage du berserker bat les tambours : vos alliés dans un rayon de 10 blocs attaquent plus vite pendant 10 s.
-184 Toutes les 30 s, un feu follet vole vers le coffre ou le générateur le plus proche dans un rayon de 24 blocs.
-185 %1$s a été propulsé dans les airs par une flèche de %2$s
-186 %1$s a été propulsé dans les airs par une flèche de %2$s
-187 %1$s a été piétiné par %2$s
-188 %1$s a été piétiné par %2$s
-189 %1$s a brûlé dans le feu de dragon de %2$s
-190 %1$s a brûlé dans le feu de dragon de %2$s
-191 %1$s a gelé dans le givre de dragon de %2$s
-192 %1$s a gelé dans le givre de dragon de %2$s
-193 %1$s a été foudroyé par l'éclair de dragon de %2$s
-194 %1$s a été foudroyé par l'éclair de dragon de %2$s
-195 %1$s a été jugé par %2$s
-196 %1$s a été jugé par %2$s
-197 %1$s a succombé aux arts martiaux de %2$s
-198 %1$s a succombé aux arts martiaux de %2$s
-199 %1$s a succombé à la peste
-200 %1$s a succombé à la peste de %2$s
-201 %1$s a été éteint par l'eau
-202 %1$s a été terrassé par l'onde de choc de %2$s
-203 %1$s a été terrassé par l'onde de choc de %2$s
-204 %1$s s'est desséché sous le soleil
-205 %1$s est mort empoisonné par une toxine
-206 %1$s est mort empoisonné par une toxine en fuyant %2$s
-207 Armure
-208 Arc
-209 Armes lourdes
-210 Armes légères
-211 Magie
-212 Boucliers
-213 Pas arcanique
-214 Étendard
-215 Rage du berserker
-216 Rempart
-217 Rempart de charge
-218 Condamné
-219 Endurance
-220 Marque du chasseur
-221 Dernière fureur
-222 Peste
-223 Retraite
-224 Provocation
-225 Toxine
-226 Eau
-227 Sang
-228 Surnaturel
-229 Ender
-230 Évocation
-231 Feu
-232 Glace
-233 Foudre
-234 Nature
-235 Leurre
-236 Écailles de feu : chaque pièce réduit les dégâts de feu.
-237 Écailles de glace : chaque pièce réduit les dégâts de glace.
-238 Écailles de foudre : chaque pièce réduit les dégâts de foudre.
-239 Ne désactive pas les passifs à mains nues du Barbare.
-240 Ne désactive pas le Corps martial et n'efface pas les charges du Moine.
-241 Cliquetis de guerre : le premier coup après 2 s de course repousse plus fort.
-242 Harnais de mailles
-243 Craquement : vos coups critiques ralentissent la cible pendant 1 s (une fois toutes les 3 s par cible).
-244 Harnais brise-os
+34 Chaque pression passe à la posture suivante (Eau, Pierre, Feu). Vous n'accumulez des charges que pour la posture active : Feu à chaque coup à mains nues (plus de dégâts), Pierre en encaissant des coups (plus d'armure) et Eau en courant, esquivant ou déviant (plus de vitesse et de saut). Au maximum, ou avec Maj + coup (ou accroupi + cette touche) à partir de 10 charges, votre prochain coup à mains nues les dépense toutes : Frappe enflammée, étourdissement ou Contre-courant. Changer de posture libère les charges de la posture précédente en effet de zone. Les charges s'estompent peu à peu quand vous cessez d'en gagner et quand vous enfilez une armure.
+35 Postures élémentaires
+36 Vous infligez plus de dégâts aux ennemis qui vous ciblent.
+37 Garde ferme
+38 Quand vous vous accroupissez, vous devenez réellement invisible tant qu'il vous reste de la barre de discrétion. Attaquer ou lancer un sort en consomme une grande partie.
+39 Discrétion
+40 Force les monstres proches à vous attaquer, les ralentit et réduit les dégâts que vous subissez pendant quelques secondes.
+41 Provocation
+42 Ajoute un troisième saut en l'air.
+43 Triple saut
+44 Accroupi près d'un mur, vous vous y accrochez et pouvez l'escalader. Si vous bandez un arc, vous lâchez prise.
+45 Escalade murale
+46 Une impulsion horizontale en l'air, avec des charges qui se rechargent toutes seules.
+47 Élan du vent
+48 Dégâts critiques depuis l'invisibilité
+49 Dégâts à l'arc
+50 Chance de coup critique
+51 Dégâts critiques
+52 Résistance aux effets négatifs
+53 Vitesse de tension de l'arc
+54 Soins reçus
+55 Hauteur de saut
+56 Recul infligé
+57 Marcheur des feuilles
+58 Portée de détection des monstres
+59 Vitesse des projectiles
+60 Taille
+61 Vitesse accroupi
+62 Taille des sorts
+63 Dégâts à mains nues
+64 Recul à mains nues
+65 Zoom
+66 Autel de race
+67 Vos coups critiques infligent beaucoup plus de dégâts.
+68 Brutalité
+69 Fureur des blessures : vous infligez plus de dégâts plus il vous manque de santé.
+70 Fureur
+71 Vous subissez moins de dégâts de chute, de feu et d'explosion, et perdez moins de faim.
+72 Endurci
+73 Sans armure, vous gagnez de l'armure, de la robustesse et de la vitesse de déplacement.
+74 Peau de fer
+75 La Charge porte plus loin et se recharge plus vite. Dormant tant que vous n'avez pas la Charge.
+76 Ruée
+77 Réduit le délai de recharge de vos sorts.
+78 Cadence
+79 Vous vous déplacez plus vite ; branche pleine, lancer des sorts ne vous ralentit pas.
+80 Fluidité
+81 Augmente la puissance de tous vos sorts.
+82 Puissance
+83 Augmente votre mana maximal et la vitesse à laquelle vous le récupérez (+40 % de mana par seconde à 10 points). Iron's régénère selon le mana maximal, l'attribut de régénération est donc abaissé en compensation.
+84 Réserve
+85 Vos invocations ont plus de santé et infligent plus de dégâts.
+86 Invocation
+87 Renforce les charges de Feu : plus de dégâts par charge et une onde de décharge plus puissante.
+88 Poing
+89 Accroupi et immobile pendant quelques secondes, vous vous soignez lentement jusqu'à une limite de santé. Subir des dégâts l'interrompt. Quand vous cessez de méditer, vous gagnez 4 charges de votre posture qui ne s'estompent pas pendant 10 s.
+90 Méditation
+91 Renforce les charges de Pierre : plus d'armure et de robustesse par charge et plus d'absorption à la décharge.
+92 Peau
+93 Vos décharges au changement de posture et vos propres effets de posture sont plus forts : +20 % à 5 points et +40 % à 10 (les charges maximales restent à 10).
+94 Maîtrise de posture
+95 Renforce les charges d'Eau : plus de vitesse et de saut par charge et une décharge plus puissante.
+96 Vent
+97 Une aura autour de vous : vous et vos alliés gagnez de l'armure et les effets négatifs durent moins longtemps sur vous. Ne se cumule pas avec celle d'un autre paladin.
+98 Étendard
+99 Multiplie l'armure et la robustesse accordées par les pièces que vous portez.
+100 Cuirasse
+101 Vous êtes moins repoussé et vous repoussez davantage les ennemis.
+102 Poussée
+103 Plus de dégâts contre les morts-vivants et les monstres du Nether, et légèrement plus de dégâts en général si vous ne portez pas de bouclier.
+104 Châtiment
+105 Les effets négatifs durent moins longtemps sur vous.
+106 Volonté
+107 Plus de dégâts avec les arcs et les arbalètes, et zoom en vous accroupissant avec l'arc en main ou en le bandant.
+108 Visée
+109 Vous bandez l'arc plus vite.
+110 Cadence
+111 Vos projectiles volent plus vite et vont plus loin. N'augmente pas les dégâts.
+112 Portée
+113 Branche pleine, après avoir subi un coup de mêlée, vous courez plus vite pendant quelques secondes.
+114 Retraite
+115 Les effets de vos flèches de potion durent plus longtemps et sont plus puissants.
+116 Flèches spéciales
+117 L'esquive d'Epic Fight consomme moins d'endurance et son invulnérabilité dure plus longtemps.
+118 Acrobatie
+119 Vous attaquez plus vite et vos coups critiques infligent plus de dégâts.
+120 Tranchant
+121 Les monstres vous détectent de plus près, et vos coups critiques depuis l'invisibilité infligent plus de dégâts.
+122 Ombre
+123 Vos coups peuvent empoisonner avec la Toxine, des dégâts lents qui ne se cumulent pas.
+124 Toxines
+125 Vous vous déplacez plus vite.
+126 Vent
+127 Un guerrier sans armure aux armes lourdes. Moins il a de santé, plus il inflige de dégâts, et ses coups critiques sont les plus puissants. Porter la moindre pièce d'armure désactive sa défense naturelle, sauf les harnais de Barbare (son équipement de classe).
+128 Barbare
+129 Lanceur de sorts utilisant Iron's Spells. Beaucoup de dégâts à distance et d'utilité en échange de très peu de robustesse. Ses branches augmentent la puissance des sorts, le mana et la vitesse de recharge.
+130 Mage
+131 Trait de classe : santé maximale réduite.
+132 Un combattant à mains nues et sans armure. Son niveau donne une base de dégâts et de défense ; le reste se gagne au combat en accumulant des charges de Feu, de Pierre ou d'Eau. Porter une armure désactive ses passifs et efface les charges, sauf les robes de Moine (son équipement de classe). Nunchaku, sai, bo et poings américains comptent comme à mains nues.
+133 Moine
+134 Corps martial : pas d'armure (les robes de Moine ne comptent pas), dégâts à mains nues, armure et robustesse qui croissent avec vos points de classe de base (au maximum à 30). Le Feu retranche 25 % de cette armure et l'Eau 25 % de ces dégâts.
+135 Le tank du groupe. Encaisse plus que quiconque avec armure et bouclier, attire les ennemis et protège les alliés. Inflige peu de dégâts seul.
+136 Paladin
+137 Trait de classe : plus de santé maximale et un peu moins de vitesse.
+138 Tireur à l'arc. Dégâts à distance constants, flèches rapides à longue portée et bonne mobilité. Peut porter une armure sans pénalité.
+139 Rôdeur
+140 Un assassin agile aux armes légères. Devient invisible, frappe par surprise avec des coups critiques garantis et se déplace très vite. Très fragile s'il est pris.
+141 Voleur
+142 Trait de classe : santé maximale réduite.
+143 Quand votre santé tombe sous 30 %, les projectiles dans un rayon de 6 blocs ralentissent (60 s).
+144 Chaque 5e sort offensif se réfracte : 30 % de ses dégâts rebondissent sur un autre ennemi proche.
+145 Quand vous quittez l'invisibilité, une nuée de corbeaux aveugle les ennemis dans un rayon de 3 blocs pendant 1 s (15 s).
+146 Quand vous entrez en combat, le cor retentit : les ennemis dans un rayon de 16 blocs brillent 8 s et vos alliés gagnent Force pendant 8 s (90 s).
+147 Chaque 11e flèche est une flèche en os de dragon : +50 % de dégâts et perce un ennemi.
+148 Dans le feuillage, vous régénérez de la santé et les monstres à plus de 8 blocs ne vous ciblent pas.
+149 Chaque monstre hostile tué ajoute un croc (10 max, perdus à la mort) : +1 % de dégâts de mêlée par croc.
+150 Vous gelez l'eau en marchant dessus.
+151 Fixer un monstre non-boss pendant 2 s le pétrifie pendant 2 s (30 s).
+152 Quand vous passez à une arme d'une autre discipline, +10 % de dégâts de mêlée pendant 3 s (6 s).
+153 Attire les objets et les orbes d'expérience dans un rayon de 6 blocs.
+154 Bander un arc en l'air vous fait planer.
+155 Quand vous mourez, une colonne de lumière marque l'endroit de votre chute pendant 10 min.
+156 Chaque coup critique lance un dé : sur un 6, il inflige un ×1,5 supplémentaire ; sur un 1, il devient un coup normal.
+157 Quand vous subissez un coup de mêlée, 15 % de chances d'enflammer l'attaquant. Vous laissez des traces de pas lumineuses.
+158 Le soleil vous inflige moitié moins de dégâts.
+159 Les minerais dans un rayon de 4 blocs scintillent.
+160 Quiconque frappe un monstre qui vous poursuit (vous ou vos alliés) récupère 1 PV (une fois par seconde).
+161 Un coup mortel vous fait renaître dans les flammes avec 30 % de santé (20 min). Se résout après les capacités de classe et de race.
+162 Accroupi en l'air, vous flottez pendant 3 s (10 s de recharge).
+163 Vous portez un étendard doré dans le dos.
+164 Commun
+165 Épique
+166 Rare
+167 Relique
+168 Vous ne pouvez porter qu'une seule Relique à la fois.
+169 %s uniquement
+170 Race %s uniquement
+171 Vous nagez plus vite et, en sortant de l'eau, vous courez plus vite pendant 5 s.
+172 En changeant de posture avec 8 charges ou plus, les perles rebondissent entre 3 ennemis.
+173 Quand vous subissez un coup de mêlée, 10 % de chances que la foudre frappe l'attaquant (8 s).
+174 Quand vous finissez de méditer, vos alliés dans un rayon de 8 blocs perdent un effet négatif.
+175 Sous l'eau, vos alliés dans un rayon de 5 blocs récupèrent de l'air. Sur terre, si vous brûlez, il éteint le feu (10 s).
+176 Sous 6 cuisses de faim, vous ne mangez que la nourriture de votre inventaire (sans effets).
+177 5 % de chances de doubler un butin commun à la mort d'un monstre.
+178 Quand votre Dernier Combat s'active, les monstres dans un rayon de 6 blocs s'enfuient.
+179 Quand vous tuez un boss, le crâne garde son trophée et vous accorde un trait de ce boss jusqu'au suivant (immunité au feu, immunité à la lenteur, immunité au Wither… ou +10 % de dégâts).
+180 Le crâne garde le trophée de %s
+181 La Rage du berserker bat les tambours : vos alliés dans un rayon de 10 blocs attaquent plus vite pendant 10 s.
+182 Toutes les 30 s, un feu follet vole vers le coffre ou le générateur le plus proche dans un rayon de 24 blocs.
+183 %1$s a été propulsé dans les airs par une flèche de %2$s
+184 %1$s a été propulsé dans les airs par une flèche de %2$s
+185 %1$s a été piétiné par %2$s
+186 %1$s a été piétiné par %2$s
+187 %1$s a brûlé dans le feu de dragon de %2$s
+188 %1$s a brûlé dans le feu de dragon de %2$s
+189 %1$s a gelé dans le givre de dragon de %2$s
+190 %1$s a gelé dans le givre de dragon de %2$s
+191 %1$s a été foudroyé par l'éclair de dragon de %2$s
+192 %1$s a été foudroyé par l'éclair de dragon de %2$s
+193 %1$s a été jugé par %2$s
+194 %1$s a été jugé par %2$s
+195 %1$s a succombé aux arts martiaux de %2$s
+196 %1$s a succombé aux arts martiaux de %2$s
+197 %1$s a succombé à la peste
+198 %1$s a succombé à la peste de %2$s
+199 %1$s a été éteint par l'eau
+200 %1$s a été terrassé par l'onde de choc de %2$s
+201 %1$s a été terrassé par l'onde de choc de %2$s
+202 %1$s s'est desséché sous le soleil
+203 %1$s est mort empoisonné par une toxine
+204 %1$s est mort empoisonné par une toxine en fuyant %2$s
+205 Armure
+206 Arc
+207 Armes lourdes
+208 Armes légères
+209 Magie
+210 Boucliers
+211 Pas arcanique
+212 Étendard
+213 Rage du berserker
+214 Rempart
+215 Rempart de charge
+216 Condamné
+217 Endurance
+218 Marque du chasseur
+219 Dernière fureur
+220 Peste
+221 Retraite
+222 Provocation
+223 Toxine
+224 Eau
+225 Sang
+226 Surnaturel
+227 Ender
+228 Évocation
+229 Feu
+230 Glace
+231 Foudre
+232 Nature
+233 Leurre
+234 Écailles de feu : chaque pièce réduit les dégâts de feu.
+235 Écailles de glace : chaque pièce réduit les dégâts de glace.
+236 Écailles de foudre : chaque pièce réduit les dégâts de foudre.
+237 Ne désactive pas les passifs à mains nues du Barbare.
+238 Ne désactive pas le Corps martial et n'efface pas les charges du Moine.
+239 Cliquetis de guerre : le premier coup après 2 s de course repousse plus fort.
+240 Harnais de mailles
+241 Craquement : vos coups critiques ralentissent la cible pendant 1 s (une fois toutes les 3 s par cible).
+242 Harnais brise-os

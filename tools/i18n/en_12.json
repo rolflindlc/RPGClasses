@@ -1,12 +1,12 @@
 {
-"effect.rites_and_paths.challenge": "Challenge",
-"effect.rites_and_paths.tranquility": "Tranquility",
-"item.minecraft.lingering_potion.effect.challenge": "Lingering Potion of Challenge",
-"item.minecraft.lingering_potion.effect.tranquility": "Lingering Potion of Tranquility",
-"item.minecraft.potion.effect.challenge": "Potion of Challenge",
-"item.minecraft.potion.effect.tranquility": "Potion of Tranquility",
-"item.minecraft.splash_potion.effect.challenge": "Splash Potion of Challenge",
-"item.minecraft.splash_potion.effect.tranquility": "Splash Potion of Tranquility",
-"item.minecraft.tipped_arrow.effect.challenge": "Arrow of Challenge",
-"item.minecraft.tipped_arrow.effect.tranquility": "Arrow of Tranquility"
+  "effect.rites_and_paths.challenge": "Challenge",
+  "effect.rites_and_paths.tranquility": "Tranquility",
+  "item.minecraft.lingering_potion.effect.challenge": "Lingering Potion of Challenge",
+  "item.minecraft.lingering_potion.effect.tranquility": "Lingering Potion of Tranquility",
+  "item.minecraft.potion.effect.challenge": "Potion of Challenge",
+  "item.minecraft.potion.effect.tranquility": "Potion of Tranquility",
+  "item.minecraft.splash_potion.effect.challenge": "Splash Potion of Challenge",
+  "item.minecraft.splash_potion.effect.tranquility": "Splash Potion of Tranquility",
+  "item.minecraft.tipped_arrow.effect.challenge": "Arrow of Challenge",
+  "item.minecraft.tipped_arrow.effect.tranquility": "Arrow of Tranquility"
 }

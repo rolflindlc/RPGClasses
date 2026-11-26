@@ -1,0 +1,80 @@
+0 Em forma de fera você não pode usar contêineres.
+1 Bestiário de %s: %s
+2 %s não conhece nenhuma espécie.
+3 %s agora conhece %s (%s/%s pontos).
+4 %s esqueceu %s.
+5 %s não tem conhecimento de %s.
+6 %s não é uma espécie válida para o Druida.
+7 Muda-rostos
+8 Espião e impostor. Com uma luneta você estuda jogadores e mobs humanoides até aprender o rosto deles e depois se disfarça deles: com o rosto de um mob, a facção dele te ignora; com o de um jogador, os outros te confundem com ele.
+9 Luneta de espião
+10 Ao olhar por uma luneta você vê a vida do alvo e, em níveis de subclasse mais altos, a armadura e os efeitos dele; além disso, ele fica marcado e brilha só para você por alguns segundos. Olhar para um jogador ou para um aldeão, illager, bruxa, piglin ou morto-vivo humanoide acumula estudo (não precisa ser seguido): ao completá-lo, você aprende o rosto dele. Mobs são aprendidos por tipo e jogadores um a um. Um alvo disfarçado não pode ser estudado.
+11 Disfarce
+12 Abre a lista de rostos aprendidos e você veste um. Com o rosto de um mob, toda a facção dele te ignora. Com o de um jogador, os outros veem a skin, o tamanho e o nome dele, você some da lista do Tab e as mensagens de morte mostram o nome dele. Seus aliados te veem disfarçado, mas com seu nome real. Atacar não o quebra, mas te denuncia para o alvo e para os membros próximos da facção dele; mobs que já te perseguiam sabem que você é um impostor até perderem o agro. Água, chuva, fogo ou entrar em furtividade quebram o disfarce e dão uma fuga breve (Velocidade e invisibilidade). Pressione de novo para tirá-lo; a recarga começa quando o disfarce termina. É só visual: sua hitbox e seu alcance não mudam.
+13 Você ainda não conhece nenhum rosto: estude alguém com uma luneta.
+14 Você não pode se disfarçar molhado, pegando fogo ou em furtividade.
+15 Agora você é %s.
+16 A água estragou seu disfarce.
+17 O fogo estragou seu disfarce.
+18 Ao se esconder nas sombras, você tira o disfarce.
+19 Você tira o disfarce.
+20 Vida %s/%s
+21 Armadura %s
+22 Sem efeitos
+23 Estudando %s: %s%%
+24 Rosto de %s aprendido
+25 Você aprendeu o rosto de %s!
+26 Rostos
+27 Alcance do estudo (blocos)
+28 Armadura visível a partir do nível
+29 Efeitos visíveis a partir do nível
+30 Raio de alerta da facção (blocos)
+31 Esquecimento após perder o agro
+32 Velocidade de fuga
+33 Nível da Velocidade de fuga
+34 Invisibilidade de fuga
+35 Castigo Divino
+36 A cada poucos golpes corpo a corpo, sua arma libera um castigo sagrado que adiciona dano ao golpe; o dobro contra mortos-vivos e criaturas do Nether.
+37 Camuflagem
+38 Agachado e parado por alguns segundos, você fica invisível para mobs e jogadores até se mover, se levantar ou atirar.
+39 Marca de Mira
+40 Olhe para um inimigo com uma luneta por alguns segundos seguidos para marcá-lo (um de cada vez). Ele brilha para você e seu próximo disparo que o acertar causa muito mais dano.
+41 Mirando: %s%%
+42 %s está marcado
+43 Fuga dos mobs
+44 Multiplicador contra mortos-vivos e Nether
+45 Dano devolvido
+46 Vínculo de Sangue
+47 Olhe para um aliado ou inimigo próximo e pressione para se unir a ele com um laço de sangue (no máximo um de cada). Metade do dano que seu aliado recebe chega a você como dano verdadeiro; seu inimigo também sofre parte de todo o dano que você recebe, incluindo a vida paga com o Sacrifício. Rompe-se se vocês se afastarem demais; pressione olhando para um alvo vinculado (ou para o nada) para rompê-lo.
+48 Anjo da Guarda
+49 Enquanto você reza por um aliado, o primeiro golpe que o mataria é anulado. Cada aliado tem sua própria recarga.
+50 Não há ninguém a quem se vincular.
+51 Vinculado a %s: você compartilha a dor dele.
+52 Vinculado a %s: ele sofrerá com você.
+53 O Vínculo de Sangue se rompeu.
+54 Um anjo da guarda salvou você!
+55 Sua prece salvou %s.
+56 %1$s sangrou até a morte por um vínculo
+57 %1$s sangrou até a morte por um vínculo com %2$s
+58 Alcance do vínculo (blocos)
+59 Distância máx. do aliado (blocos)
+60 Distância máx. do inimigo (blocos)
+61 Dano do aliado que você recebe
+62 Dano que o inimigo sofre
+63 Vida da forma por Nível Total
+64 Editar HUD
+65 Editor do HUD
+66 Arraste para mover · Clique direito: ocultar ou mostrar · Setas: ajustar (Shift ×10) · R: redefinir
+67 Redefinir tudo
+68 %s (oculto)
+69 Habilidades
+70 Barra de furtividade
+71 Cargas do Monge
+72 Barra de Giro
+73 Fusão do Slime
+74 Salto do lobo
+75 Salto do Centauro
+76 Conjuração do Druida
+77 Forma do Druida
+78 Ritmo do Bardo
+79 Tempo de estudo (mobs)

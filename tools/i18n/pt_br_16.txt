@@ -190,7 +190,7 @@
 189 Regeneração em forma (vida por segundo)
 190 Velocidade de nado das formas aquáticas
 191 Vida máxima perdida
-192 Vida e dano da forma por Nível Total
+192 Dano da forma por Nível Total
 193 Mana base de uma forma
 194 Mana por ponto de poder da besta
 195 Quimeras guardadas no máximo
@@ -209,7 +209,7 @@
 208 Mana dos feitiços da natureza em forma
 209 Vida e dano das formas
 210 Pontos por estudo
-211 Tempo de estudo
+211 Tempo de estudo (jogadores)
 212 Tempo de estudo
 213 Teleporta-se a mais de (blocos)
 214 Suas formas têm bem mais vida, mas causam menos dano.
@@ -234,7 +234,7 @@
 233 Forma Rica
 234 Ritual do Druida
 235 Sobre os restos de uma besta recém-morta: você aprende um pouco mais sobre a espécie (um ponto de conhecimento). Só Druida.
-236 Druida do Círculo da Lua: transforma-se num instante, quase sem recarga, e suas formas não reservam mana.
+236 Druida do Círculo da Lua: transforma-se num instante, quase sem recarga, e suas formas não reservam mana. Ao trocar de uma forma para outra, você mantém a mesma porcentagem de vida.
 237 Círculo da Lua
 238 Rituais sombrios: arranca partes dos restos das bestas (cabeça, torso, patas e instinto), une-as em um Recipiente de Carne e, sobre um Altar de Carne, dá vida a uma quimera na qual pode se transformar. Cada criação custa muito mana e parte da sua vida por um tempo.
 239 Escultor

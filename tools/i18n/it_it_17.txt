@@ -1,0 +1,80 @@
+0 In forma di bestia non puoi usare contenitori.
+1 Bestiario di %s: %s
+2 %s non conosce nessuna specie.
+3 %s ora conosce %s (%s/%s punti).
+4 %s ha dimenticato %s.
+5 %s non ha conoscenza di %s.
+6 %s non è una specie valida per il Druido.
+7 Cambiavolti
+8 Spia e impostore. Con un cannocchiale studi giocatori e mob umanoidi finché non impari il loro volto, poi ti travesti da loro: con il volto di un mob la sua fazione ti ignora, con quello di un giocatore gli altri ti scambiano per lui.
+9 Cannocchiale della spia
+10 Guardando con un cannocchiale vedi la vita del bersaglio e, a livelli di sottoclasse più alti, la sua armatura e i suoi effetti; inoltre viene marcato e brilla solo per te per qualche secondo. Guardare un giocatore o un villico, illager, strega, piglin o non morto umanoide accumula studio (non serve che sia di seguito): una volta completato impari il suo volto. I mob si imparano per tipo e i giocatori uno per uno. Un bersaglio travestito non si può studiare.
+11 Travestimento
+12 Apre l'elenco dei volti appresi e ne indossi uno. Con il volto di un mob, tutta la sua fazione ti ignora. Con quello di un giocatore, gli altri vedono la sua skin, la sua taglia e il suo nome, sparisci dalla lista Tab e i messaggi di morte mostrano il suo nome. I tuoi alleati ti vedono travestito ma con il tuo vero nome. Attaccare non lo rompe, ma ti tradisce davanti al bersaglio e ai membri vicini della sua fazione; i mob che già ti inseguivano sanno che sei un impostore finché non ti perdono. Acqua, pioggia, fuoco o entrare in furtività rompono il travestimento e ti danno una breve fuga (Velocità e invisibilità). Premi di nuovo per toglierlo; la ricarica parte quando il travestimento finisce. È solo visivo: hitbox e portata non cambiano.
+13 Non conosci ancora nessun volto: studia qualcuno con un cannocchiale.
+14 Non puoi travestirti bagnato, in fiamme o in furtività.
+15 Ora sei %s.
+16 L'acqua ha rovinato il tuo travestimento.
+17 Il fuoco ha rovinato il tuo travestimento.
+18 Nascondendoti nell'ombra ti togli il travestimento.
+19 Ti togli il travestimento.
+20 Vita %s/%s
+21 Armatura %s
+22 Nessun effetto
+23 Studio di %s: %s%%
+24 Volto di %s appreso
+25 Hai appreso il volto di %s!
+26 Volti
+27 Portata dello studio (blocchi)
+28 Armatura visibile dal livello
+29 Effetti visibili dal livello
+30 Raggio di allerta della fazione (blocchi)
+31 Oblio dopo aver perso l'aggro
+32 Velocità di fuga
+33 Livello di Velocità di fuga
+34 Invisibilità di fuga
+35 Castigo Divino
+36 Ogni pochi colpi in mischia, la tua arma scatena un castigo sacro che aggiunge danno al colpo; il doppio contro non morti e creature del Nether.
+37 Mimetizzazione
+38 Accovacciato e immobile per qualche secondo, diventi invisibile a mob e giocatori finché non ti muovi, ti alzi o spari.
+39 Marchio di Mira
+40 Guarda un nemico con un cannocchiale per qualche secondo di fila per marcarlo (uno alla volta). Brilla per te e il tuo prossimo tiro che lo colpisce infligge molto più danno.
+41 Mira: %s%%
+42 %s è marcato
+43 Fuga dei mob
+44 Moltiplicatore contro non morti e Nether
+45 Danno restituito
+46 Legame di Sangue
+47 Guarda un alleato o un nemico vicino e premi per legarti a lui con un vincolo di sangue (al massimo uno per tipo). Metà del danno che riceve il tuo alleato arriva a te come danno puro; il tuo nemico subisce anche una parte di tutto il danno che ricevi, compresa la vita che paghi con il Sacrificio. Si spezza se vi allontanate troppo; premi guardando un bersaglio legato (o il vuoto) per spezzarlo.
+48 Angelo Custode
+49 Mentre preghi per un alleato, il primo colpo che lo ucciderebbe viene annullato. Ogni alleato ha la sua ricarica.
+50 Non c'è nessuno a cui legarti.
+51 Legato a %s: condividi il suo dolore.
+52 Legato a %s: soffrirà con te.
+53 Il Legame di Sangue si è spezzato.
+54 Un angelo custode ti ha salvato!
+55 La tua preghiera ha salvato %s.
+56 %1$s si è dissanguato per un legame
+57 %1$s si è dissanguato per un legame con %2$s
+58 Portata del legame (blocchi)
+59 Distanza max. dell'alleato (blocchi)
+60 Distanza max. del nemico (blocchi)
+61 Danno dell'alleato che ricevi
+62 Danno subito dal nemico
+63 Vita della forma per Livello totale
+64 Modifica HUD
+65 Editor dell'HUD
+66 Trascina per spostare · Clic destro: nascondi o mostra · Frecce: ritocca (Maiusc ×10) · R: ripristina
+67 Ripristina tutto
+68 %s (nascosto)
+69 Abilità
+70 Barra della furtività
+71 Cariche del Monaco
+72 Barra della Rotazione
+73 Fusione dello Slime
+74 Salto del lupo
+75 Salto del Centauro
+76 Lancio del Druido
+77 Forma del Druido
+78 Ritmo del Bardo
+79 Tempo di studio (mob)

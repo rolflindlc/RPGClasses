@@ -71,12 +71,12 @@ SUBS = {
     "martyr": ("minecraft:redstone", [
         attr([(MC + "max_health", to(.10, "multiply_base"))]),
         mech("martyr_resolve", damage_reduction={"to": .20}, health_threshold=.50)],
-        [ms(5, "sacrifice", True)]),
+        [ms(1, "blood_bond", True), ms(5, "sacrifice", True)]),
     # Intercesor: Plegaria desde el nivel 1, Voz Lejana y Cuerpo en Oración.
     "intercessor": ("minecraft:end_rod", [
         mech("far_voice", full_power_extra_blocks={"to": 10}, min_power={"from": .347, "to": .50}),
         mech("prayer_body", damage_reduction={"to": .40})],
-        [ms(1, "prayer", True)]),
+        [ms(1, "prayer", True), ms(1, "guardian_angel", True)]),
 }
 
 KIT = [{"item": IR + "copper_spell_book", "slot": "inventory", "spells": [{"id": IR + "heal", "level": 1}]}] + \
@@ -97,6 +97,9 @@ ABILITIES = {
     "angelic_form": dict(duration_seconds=10, radius=10, regen_level=2, absorption_level=1, cooldown_seconds=120),
     "sacrifice": dict(cost_fraction=.15, heal_fraction=.20, range=12, cooldown_seconds=.5, final_missing_heal=1.0,
                       final_absorption=1.0, final_immunity_seconds=2, confirm_seconds=5),
+    # Rev. 2.22: Vínculo de Sangre (Mártir) y Ángel Guardián (Intercesor).
+    "blood_bond": dict(cooldown_seconds=15, cast_range=10, ally_range=15, enemy_range=10, taken_from_ally=.5, reflected_to_enemy=.25),
+    "guardian_angel": dict(passive=True, ally_cooldown_seconds=60),
     "prayer": dict(spirit_range=15, spirit_size=.9, full_power_blocks=10, min_power=.33, min_power_blocks=50, regen_level=1),
 }
 
@@ -130,8 +133,8 @@ PERK_TEXT = {
 SUB_NAMES = {"angel": "Ángel", "martyr": "Mártir", "intercessor": "Intercesor"}
 SUB_DESC = {
     "angel": "Alas de luz: menos daño de caída y caída lenta, un halo que regenera a tus aliados cercanos y, desde el nivel 5, la Forma Angelical: vuelas unos segundos mientras tú y tus aliados regeneráis y os purificáis.",
-    "martyr": "Cura con su propia sangre: más vida, menos daño recibido cuando está malherido y, desde el nivel 5, el Sacrificio: pagas vida para curar a un aliado, sin recarga. Si ya no puedes pagar, puedes dar tu vida por él.",
-    "intercessor": "Reza por un aliado aunque no lo vea: tu cuerpo se queda agachado y tú pasas a ser una cabeza flotante que lo acompaña. Desde ella lanzas tus conjuros, con menos poder cuanto más lejos esté tu cuerpo.",
+    "martyr": "Cura con su propia sangre: más vida, menos daño recibido cuando está malherido y el Vínculo de Sangre, que le hace cargar con el dolor de un aliado y compartir el suyo con un enemigo. Desde el nivel 5, el Sacrificio: pagas vida para curar a un aliado, sin recarga. Si ya no puedes pagar, puedes dar tu vida por él.",
+    "intercessor": "Reza por un aliado aunque no lo vea: tu cuerpo se queda agachado y tú pasas a ser una cabeza flotante que lo acompaña. Desde ella lanzas tus conjuros, con menos poder cuanto más lejos esté tu cuerpo, y tu plegaria anula el primer golpe que iba a matarlo.",
 }
 ABILITY_TEXT = {
     "healer_eye": ("Ojo del Sanador", "Ves la vida de tus aliados cercanos sobre sus cabezas (también a través de las paredes). Los que bajan del 40 % brillan, y los tumbados por el Milagro muestran su cuenta atrás. Solo lo ves tú."),
@@ -141,6 +144,8 @@ ABILITY_TEXT = {
     "angelic_form": ("Forma Angelical", "Durante unos segundos vuelas (sin correr en el aire). Al activarla se purgan tus efectos negativos y los de tus aliados cercanos, y todos recibís Regeneración II y Absorción I mientras dura. Al terminar no sufres daño de caída."),
     "sacrifice": ("Sacrificio", "Pagas parte de tu vida máxima y el aliado al que miras recupera parte de la suya (al menos lo que has pagado). Sin recarga. Si pagar te mataría, el icono se pone rojo: pulsa dos veces para dar tu vida: tu aliado recupera toda la vida que le falta, gana tantos corazones dorados como vida tenía y es invulnerable un instante. Su curación es verdadera: nada puede aumentarla ni reducirla."),
     "prayer": ("Plegaria", "Eliges a un aliado de la lista: tu cuerpo se queda agachado donde estás y tú apareces junto a tu aliado como una cabeza flotante que puede moverse a su alrededor (hasta 15 bloques). Tu aliado recibe Regeneración. Desde la cabeza lanzas tus conjuros, la Imposición de Manos y el Santuario, con menos poder cuanto más lejos esté tu cuerpo. Si golpean a tu cuerpo, el daño lo recibes tú; la cabeza no recibe daño. Vuelve a pulsar para cambiar de aliado o dejar de rezar."),
+    "blood_bond": ("Vínculo de Sangre", "Mira a un aliado o a un enemigo cercano y pulsa para unirte a él con un lazo de sangre (puedes tener uno de cada). Del daño que recibe tu aliado, la mitad te llega a ti como daño verdadero; tu enemigo sufre también una parte de todo el daño que recibes, incluida la vida que pagas con el Sacrificio. Se rompe si se alejan demasiado; pulsa mirando a un vinculado (o a nada) para romperlo."),
+    "guardian_angel": ("Ángel Guardián", "Mientras rezas por un aliado, el primer golpe que iba a matarlo se anula. Cada aliado tiene su propia recarga."),
 }
 MECHANIC_NAMES = {
     "healing_power": "Sanación", "blessing_duration": "Bendición", "purification": "Purificación", "aegis": "Égida",
@@ -173,6 +178,11 @@ PARAMS = {
     "confirm_seconds": "Tiempo para confirmar|s", "spirit_range": "Distancia máxima al aliado (bloques)",
     "spirit_size": "Tamaño de la cabeza (bloques)",
     "full_power_blocks": "Poder completo hasta (bloques)", "min_power_blocks": "Poder mínimo desde (bloques)",
+    "cast_range": "Alcance para vincular (bloques)",
+    "ally_range": "Distancia máxima del aliado (bloques)",
+    "enemy_range": "Distancia máxima del enemigo (bloques)",
+    "taken_from_ally": "Daño del aliado que recibes|%",
+    "reflected_to_enemy": "Daño que sufre el enemigo|%",
 }
 
 UI = {
@@ -201,6 +211,14 @@ UI = {
     "ui.rites_and_paths.prayer.distance": "%s (%s bloques)",
     "hud.rites_and_paths.downed": "Tumbado: %s s",
     "hud.rites_and_paths.sacrifice_final": "Sacrificio final",
+    f"msg.{NS}.blood_bond.no_target": "No hay nadie a quien vincularte.",
+    f"msg.{NS}.blood_bond.ally": "Vinculado a %s: compartes su dolor.",
+    f"msg.{NS}.blood_bond.enemy": "Vinculado a %s: sufrirá contigo.",
+    f"msg.{NS}.blood_bond.broken": "El Vínculo de Sangre se ha roto.",
+    f"msg.{NS}.guardian_angel.saved": "¡Un ángel guardián te ha salvado!",
+    f"msg.{NS}.guardian_angel.ally": "Tu plegaria ha salvado a %s.",
+    f"death.attack.{NS}.blood_bond": "%1$s se desangró por un vínculo",
+    f"death.attack.{NS}.blood_bond.player": "%1$s se desangró por un vínculo con %2$s",
 }
 
 

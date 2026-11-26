@@ -1,3 +1,6 @@
+# Genera los datos y textos del mod: python3 -I tools/gen_data.py src/main/resources
+# Es la fuente de verdad de lo que escribe: no edites esos JSON a mano (se pierde al regenerar); cambia estos scripts
+# y vuelve a generar. Las traducciones están en tools/i18n (en_<n>.json y <idioma>_<n>.txt).
 import json, os, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import texts
@@ -34,7 +37,7 @@ classes = {
  "mage": dict(icon="minecraft:enchanted_book", roles=["magia","daño"], kit="mage", crit=0.0,
    walls=dict(bow=.25, heavy=.5, light=.5, armor=.25, shield=.5),
    branches=[("power",[attr([(IR+"spell_power", to(.5,"multiply_base"))])]),
-             ("reserve",[attr([(IR+"max_mana", to(300)), (IR+"mana_regen", RESERVE_REGEN)])]),
+             ("reserve",[attr([(IR+"max_mana", to(250)), (IR+"mana_regen", RESERVE_REGEN)])]),
              ("cadence",[attr([(IR+"cooldown_reduction", to(.25,"multiply_base"))])])],
    milestones=[ms(5,"free_cast_slot_1"), ms(15,"free_cast_slot_2"), ms(30,"free_cast_slot_3")],
    subs=["chronomancer","elementalist","battle_mage"]),
@@ -43,7 +46,7 @@ classes = {
    branches=[("cuirass",[{"type":R("equipped_armor_multiplier"),"armor":{"to":.25},"toughness":{"to":.4}}]),
              ("will",[attr([(R("debuff_resistance"), to(.5))])]),
              ("push",[attr([(MC+"knockback_resistance", to(.5)), (R("knockback_dealt"), to(.25))])])],
-   milestones=[ms(10,"taunt"), ms(10,"steady_guard"), ms(30,"bulwark")],
+   milestones=[ms(1,"divine_smite"), ms(10,"taunt"), ms(10,"steady_guard"), ms(30,"bulwark")],
    subs=["blessed_guardian","unyielding_bastion","charging_juggernaut"]),
  "barbarian": dict(icon="minecraft:iron_axe", roles=["melee","daño"], kit="barbarian", crit=0.05, armor_rule=True,
    walls=dict(magic=.6, bow=.45, light=.45, armor=.25),  # Adenda del Clérigo, 11.1: Armadura −25 % (antes n/a)
@@ -58,7 +61,7 @@ classes = {
              ("edge",[attr([(MC+"attack_speed", to(.25,"multiply_base")), (R("crit_damage"), to(.75))])]),
              ("wind",[attr([(MC+"movement_speed", to(.35,"multiply_base"))])])],
    milestones=[ms(5,"stealth")],
-   subs=["shadow_walker","shadow_illusionist","arcane_blade"]),
+   subs=["face_changer","shadow_illusionist","arcane_blade"]),
  "ranger": dict(icon="minecraft:bow", roles=["distancia","daño"], kit="ranger", crit=0.0,
    walls=dict(magic=.4, heavy=.45, light=.35, shield=.30),
    branches=[("aim",[attr([(R("bow_damage"), to(.3)), (R("zoom"), to(.35))])]),
@@ -80,7 +83,7 @@ classes = {
 def mb(v): return to(v, "multiply_base")
 TRAITS = {
  "mage": [attr([(MC+"max_health", mb(-.2))])],
- "paladin": [attr([(MC+"max_health", mb(.2)), (MC+"movement_speed", mb(-.1))])],
+ "paladin": [attr([(MC+"max_health", mb(.2)), (MC+"movement_speed", mb(-.05))])],
  "rogue": [attr([(MC+"max_health", mb(-.15))])],
  # Cuerpo Marcial (rev. 2.9): suelo que crece con los puntos de clase base (máximo con 30).
  "monk": [dict(attr([(R("unarmed_damage"), to(4.0)), (MC+"armor", to(13)), (MC+"armor_toughness", to(4))], NOARM), scale="base_points")],
@@ -188,9 +191,9 @@ for cid, c in classes.items():
 
 subs = {
  # Cronomante (sustituye al Evocador Caótico): conjuros más rápidos de lanzar, Retroceso y Parada Temporal.
- "chronomancer": ("mage","minecraft:clock",[attr([(IR+"cast_time_reduction", to(.15,"multiply_base"))])],
+ "chronomancer": ("mage","minecraft:clock",[attr([(IR+"cast_time_reduction", to(.10,"multiply_base"))])],
      [ms(1,"time_rewind",True), ms(1,"time_stop",True)]),
- "elementalist": ("mage","minecraft:blue_ice",[attr([(IR+"cooldown_reduction", to(.10,"multiply_base"))]),
+ "elementalist": ("mage","minecraft:blue_ice",[attr([(IR+"cooldown_reduction", to(.06,"multiply_base"))]),
      mech("elemental_debuffs", chance={"from":.4,"to":.75}, max_stacks={"values":[3,3,3,4,4,4,4,5,5,5]},
           duration_seconds={"values":[4,4,4,6,6,6,6,8,8,8]},
           fire_radius=3, fire_fraction=.6, fire_seconds=4, freeze_seconds=3, boss_freeze_seconds=1.5,
@@ -210,18 +213,19 @@ subs = {
  "blessed_guardian": ("paladin","minecraft:golden_apple",[attr([(R("healing_received"), to(.5))])],
      [ms(5,"healing_bulwark",True,"bulwark")]),
  "unyielding_bastion": ("paladin","minecraft:obsidian",[attr([(MC+"knockback_resistance", to(1.0))]),
-     mech("tenacity", window_ticks=20, reduction=.5)], [ms(5,"incorruptible_bulwark",True,"bulwark")]),
+     mech("tenacity", window_ticks=20, reduction=.5, reflect=.2)], [ms(5,"incorruptible_bulwark",True,"bulwark")]),
  "charging_juggernaut": ("paladin","minecraft:anvil",[attr([(MC+"max_health", to(.6,"multiply_base"))])],
      [ms(5,"charging_bulwark",True,"bulwark")]),
  "indestructible": ("barbarian","minecraft:totem_of_undying",[attr([(MC+"max_health", to(10))]),
      mech("death_gamble", first_chance=.75, chance=.5, flip_seconds=1.6, result_seconds=1.5, immortal_seconds=1,
           area_damage=1, radius=3, knockback_blocks=5)], []),
- "suicidal_berserker": ("barbarian","minecraft:netherite_axe",[attr([(MC+"attack_damage", to(.25,"multiply_base"))]),
-     mech("last_immortal_fury", min_seconds=7, max_seconds=17, cooldown_seconds=300, weakness_seconds=10)], []),
+ "suicidal_berserker": ("barbarian","minecraft:netherite_axe",[attr([(MC+"attack_damage", to(.15,"multiply_base"))]),
+     mech("last_immortal_fury", min_seconds=5, max_seconds=5, cooldown_seconds=300, weakness_seconds=10)], []),
  "plague_corruptor": ("barbarian","minecraft:rotten_flesh",[
      mech("resistant_blood", effects=["minecraft:hunger","minecraft:poison","minecraft:wither"], duration_reduction={"to":1.0}),
      mech("afflicting_strike", damage_per_second=2, duration_seconds=6, boss_factor=.5, contagion_radius=5)], []),
- "shadow_walker": ("rogue","minecraft:ender_pearl",[attr([(R("sneak_speed"), to(1.0))])], [ms(1,"shadow_step",True)]),
+ # Cambiarrostros (sustituye al Caminante de Sombras): Catalejo de Espía y Disfraz.
+ "face_changer": ("rogue","minecraft:spyglass",[], [ms(1,"spy_glass",True), ms(1,"disguise",True)]),
  "shadow_illusionist": ("rogue","minecraft:armor_stand",[attr([(R("mob_detection"), to(-.25))])], [ms(1,"decoy",True)]),
  "arcane_blade": ("rogue","minecraft:amethyst_shard",[
      attr([(IR+"cooldown_reduction", to(.15,"multiply_base")), (IR+"spell_power", to(.15,"multiply_base")),
@@ -236,9 +240,10 @@ subs = {
      [ms(1,"triple_jump",True,"double_jump"), ms(1,"wall_climb",True)]),
  "sniper": ("ranger","minecraft:spyglass",[
      attr([(R("projectile_velocity"), to(2.0)), (R("bow_damage"), to(.45))]),
-     attr([(R("draw_speed"), to(-1.0,"multiply_total"))])], [ms(1,"lethal_shot",True,"heavy_shot")]),
+     attr([(R("draw_speed"), to(-1.0,"multiply_total"))])],
+     [ms(1,"lethal_shot",True,"heavy_shot"), ms(1,"camouflage",True), ms(1,"sniper_mark",True)]),
  "breeze_master": ("monk","minecraft:phantom_membrane",[
-     attr([(MC+"movement_speed", to(.4,"multiply_base")), (R("jump_bonus"), to(.8))], NOARM)], [ms(1,"wind_dash",True)]),
+     attr([(MC+"movement_speed", to(.3,"multiply_base")), (R("jump_bonus"), to(.8))], NOARM)], [ms(1,"wind_dash",True)]),
  "heavy_palm": ("monk","minecraft:piston",[
      attr([(R("unarmed_knockback"), to(1.0)), ("forge:entity_reach", to(.5,"multiply_base"))]),
      # Rev. 2.14: Golpe Cargado e Impacto; el Puño de Inhabilitación sale con cada Impacto (ya no es una probabilidad).
@@ -348,7 +353,7 @@ names = {
  "subclass": {"chronomancer":"Cronomante","elementalist":"Elementalista","battle_mage":"Mago de Batalla",
    "blessed_guardian":"Guardián Bendito","unyielding_bastion":"Bastión Inflexible","charging_juggernaut":"Juggernaut de Carga",
    "indestructible":"Indestructible","suicidal_berserker":"Berserker Suicida","plague_corruptor":"Corruptor de Plagas",
-   "shadow_walker":"Caminante de Sombras","shadow_illusionist":"Ilusionista de Sombras","arcane_blade":"Hoja Arcana",
+   "face_changer":"Cambiarrostros","shadow_illusionist":"Ilusionista de Sombras","arcane_blade":"Hoja Arcana",
    "beast_master":"Maestro de Bestias","agile_scout":"Explorador Ágil","sniper":"Francotirador",
    "breeze_master":"Maestro de la Brisa","heavy_palm":"Palma Pesada","triworld_guardian":"Guardián Trimundial"},
 }
@@ -441,14 +446,20 @@ results = {"ok":"Hecho.","no_class":"Aún no has elegido clase.","already_has_cl
  "in_combat":"No puedes hacer eso en combate.",
  "branch_locked":"Ya usas 3 ramas: las demás están bloqueadas hasta que reinicies la clase.",
  "unknown_perk":"Ese perk no existe en esa rama.","perk_unavailable":"Llena la rama (10 puntos) para elegir su perk.",
- "perk_already_chosen":"Ya elegiste el perk de esa rama. Solo cambia al reiniciar la clase.","class_disabled":"Esa clase está desactivada en este servidor."}
+ "perk_already_chosen":"Ya elegiste el perk de esa rama. Solo cambia al reiniciar la clase.","class_disabled":"Esa clase está desactivada en este servidor.",
+ # Puntos de clase (rev. 2.21).
+ "no_points":"No tienes puntos de clase. Cómpralos con XP abajo del árbol, o consíguelos con libros de conocimiento o derrotando jefes.",
+ "points_maxed":"Ya tienes los 40 puntos de clase.",
+ "xp_purchase_disabled":"En este servidor los puntos de clase no se compran con XP.",
+ "unknown_build":"Ese hueco de build está vacío.",
+ "no_oblivion_book":"Necesitas un Libro de Olvido en la mano."}
 for k, v in results.items(): lang[f"msg.{NS}.result.{k}"] = v
 lang.update({
  f"msg.{NS}.choose_prompt": "Elige tu clase (haz clic en una):",
  f"msg.{NS}.xp_charged": "Has gastado %s de XP. Siguiente nivel: %s de XP.",
  f"msg.{NS}.xp_refunded": "Reinicio hecho. Se te han devuelto %s de XP (se pierde una parte en cada reinicio).",
  f"msg.{NS}.info": "Clase: %s | Base: %s/30 | Subclase: %s (%s/%s) | %s",
- f"msg.{NS}.next_cost": "Siguiente nivel: %s XP",
+ f"msg.{NS}.next_cost": "Siguiente punto: %s XP",
  f"msg.{NS}.max_level": "Nivel máximo alcanzado",
  f"msg.{NS}.xp_charged_max": "Has gastado %s de XP. Has alcanzado el nivel máximo.",
  f"msg.{NS}.none": "ninguna",
@@ -543,8 +554,9 @@ for locale in ("es_es", "es_mx", "es_ar", "es_cl", "es_uy", "es_ve", "es_ec"):
     dump(os.path.join(out, "assets", NS, "lang", locale + ".json"), dict(sorted(lang.items())))
 dump(os.path.join(out, "assets", NS, "lang", "en_us.json"), dict(sorted(en.items())))
 # Idiomas traducidos desde el inglés: tools/i18n/<locale>_<n>.txt tiene una línea "<índice> <texto>"
-# por cada clave de en_<n>.json (en el orden del archivo). Se valida que no falte ninguna cadena y
-# que los marcadores %s/%d coincidan con el inglés.
+# por cada clave de en_<n>.json (en el orden del archivo). Se valida que los índices vayan seguidos y que los
+# marcadores %s/%d coincidan con el inglés. Un archivo puede quedarse corto: las claves del final que aún no tienen
+# traducción no se escriben en ese idioma y Minecraft enseña el inglés (se avisa de cuántas faltan).
 for locale in ("zh_cn", "ru_ru", "pt_br", "pt_pt", "de_de", "fr_fr", "zh_tw", "ja_jp", "it_it"):
     tr = {}
     for f in sorted(_glob.glob(os.path.join(os.path.dirname(os.path.abspath(__file__)), "i18n", "en_*.json"))):
@@ -558,9 +570,10 @@ for locale in ("zh_cn", "ru_ru", "pt_br", "pt_pt", "de_de", "fr_fr", "zh_tw", "j
                 idx, _, txt = line.partition(" ")
                 assert idx == str(len(vals)), f"{locale}_{part}.txt línea {ln + 1}: se esperaba el índice {len(vals)} y hay {idx}"
                 vals.append(txt)
-        assert len(keys) == len(vals), f"{locale}_{part}: {len(vals)} valores para {len(keys)} claves"
+        assert len(vals) <= len(keys), f"{locale}_{part}: {len(vals)} valores para {len(keys)} claves"
         tr.update(zip(keys, vals))
-    assert set(tr) == set(en), f"{locale}: claves distintas a en_us"
+    assert set(tr) <= set(en), f"{locale}: claves que no están en en_us"
+    if len(tr) < len(en): print(f"aviso: {locale} sin traducir: {len(en) - len(tr)} textos (se verán en inglés)")
     bad = [k for k in tr if _ph(tr[k]) != _ph(en[k])]
     assert not bad, f"{locale}: marcadores distintos al inglés: {bad[:10]} ({len(bad)})"
     dump(os.path.join(out, "assets", NS, "lang", locale + ".json"), dict(sorted(tr.items())))

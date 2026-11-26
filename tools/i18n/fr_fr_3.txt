@@ -1,286 +1,284 @@
 0 Structure incomplète (%s) : %s sur %s
 1 •
-2 Aucun ennemi en vue ou pas de place derrière lui.
-3 Pas de l'ombre rechargé !
-4 Bouclier désactivé pendant %s s
-5 Posture : %s
-6 Posture favorite : %s
-7 Votre classe n'existe plus sur ce serveur. Utilisez /clase reiniciar clase.
-8 Toutes les définitions sont valides (%s classes).
-9 Vous avez dépensé %s XP. Niveau suivant : %s XP.
-10 Vous avez dépensé %s XP. Vous avez atteint le niveau maximal.
-11 Réinitialisation effectuée. %s XP ont été remboursés (une partie est perdue à chaque réinitialisation).
-12 Multiplicateur d'absorption
-13 Réserve maximale
-14 Réserve par seconde
-15 Coût d'une attaque ou d'un sort
-16 Dégâts aux alliés
-17 Soins par seconde aux alliés
-18 Niveau de l'effet (0 = I)
-19 Foudre : dégâts de l'arc
-20 Foudre : portée de l'arc (blocs)
-21 Foudre : ennemis touchés
-22 Dégâts de zone
-23 Armure des pièces
-24 Armure ignorée
-25 Moins de dégâts de projectiles
-26 Vitesse d'attaque
-27 Armure dans l'aura
-28 Durée des effets négatifs dans l'aura
-29 Distance derrière (blocs)
-30 Sang : le bonus vous soigne
-31 Bonus
-32 Contre les boss ×
-33 Glace : gel contre les boss
-34 Enracinement sur les boss
-35 Rebond à l'impact
-36 Variation du bonus par charge
-37 Plafond de brûlure
-38 Brûlure
-39 Plafond
-40 Plafond du bouclier (santé maximale)
-41 Plafond de soins par seconde (PV)
-42 Chance
-43 Chance maximale
-44 Chance par point de mana dépensé
-45 Chance à chaque activation
-46 Charges
-47 Dégâts de froid supplémentaires subis
-48 Plafond de réduction combinée
-49 Dégâts de piétinement
-50 Rayon de contagion (blocs)
-51 Variation du délai de recharge
-52 Délai de recharge
-53 Quantité
-54 Invocations par sort
-55 Chance de coup critique
-56 Dégâts de l'animal
-57 Bonus de dégâts
-58 Bonus de dégâts par palier
-59 Dégâts (du coup)
-60 Dégâts par 1 % de santé perdue
-61 Dégâts par seconde
-62 Réduction des dégâts subis
-63 Réduction des dégâts (maximum)
-64 Réduction des dégâts (minimum)
-65 Dégâts supplémentaires subis
-66 Force de l'élan
-67 Commence à s'estomper après
-68 Perte par seconde (du maximum)
-69 Perte de charges ralentie
-70 Temps immobile avant de commencer
-71 Dégâts directs
-72 Murs affectés
-73 Réduction
-74 Distance (blocs)
-75 Distance supplémentaire
-76 Distance d'esquive
-77 Durée d'invulnérabilité à l'esquive
-78 Drain de discrétion
-79 Barre dépensée par seconde
-80 Solidité supplémentaire
-81 Durée (maximum)
-82 Durée (minimum)
-83 Réduction de durée
-84 Durée
-85 Effets
-86 Niveau de table supplémentaire
-87 Charges à la fin
-88 Ender : dégâts
-89 Ender : distance de téléportation (blocs)
-90 Mains vides : vols d'équipement sur les monstres
-91 Mains vides : vols d'équipement sur les joueurs
-92 Tous les N coups
-93 Faim supplémentaire
-94 Faim supplémentaire par bloc
-95 Filet : prise supplémentaire
-96 Chance de doubler
-97 Charges maximales supplémentaires
-98 Ennemis transpercés
-99 Facteur ×
-100 Invocation : crocs
-101 Loin : à partir de (blocs)
-102 Dégâts à distance
-103 Bonus de la posture favorite
-104 Charges dans la favorite
-105 Seuil de l'effet de posture
-106 Immunisé contre la brûlure
-107 Feu : armure et robustesse ×
-108 Trait de feu (niveau)
-109 Dégâts de feu supplémentaires subis
-110 Feu : dégâts à mains nues ×
-111 Feu : réduction des dégâts de feu
-112 Feu : dégâts de l'explosion
-113 Feu : rayon de l'explosion (blocs)
-114 Feu : durée de brûlure
-115 Dégâts au premier
-116 Dégâts soustraits par coup (PV)
-117 Faim (points)
-118 Vitesse de tension de base retirée
-119 Glace : Tombeau de glace
-120 Vitesse du fourneau
-121 Fusion arcanique
-122 Coût de la fusion (niveaux)
-123 Rayon du golem (blocs)
-124 Réduction des dégâts de chute, de feu et d'explosion
-125 Soins ×
-126 Santé maximale récupérée
-127 Dégâts atténués convertis en soins (maximum)
-128 Dégâts atténués convertis en soins (minimum)
-129 Soins par seconde
-130 Soins par seconde
-131 Soins reçus par 1 % de santé perdue
-132 Santé de l'animal
-133 Jusqu'à la santé
-134 Sous la santé
-135 Dégâts au coup
-136 Temps minimal entre deux coups sur le même ennemi (ticks)
-137 Dégâts minimaux pour gagner une charge
-138 Temps sans les perdre
-139 Réduction de la consommation de faim
-140 Temps minimal entre deux utilisations
-141 Temps minimal entre deux activations (ticks)
-142 Temps sans ordres
-143 Dégâts supplémentaires par charge de Frappe enflammée
-144 Feu : durée de brûlure
-145 Immunité ensuite
-146 Intervalle
-147 Invulnérable ensuite
-148 Force de saut ×
-149 Charges conservées
-150 Soins par mise à mort (PV)
-151 Recul (blocs)
-152 Recul supplémentaire
-153 Rayon du recul (blocs)
-154 Force du recul
-155 Bond (blocs)
-156 Sang : dégâts supplémentaires qui vous soignent
-157 Niveau
-158 Vol de vie
-159 Effet de la posture précédente
-160 La posture précédente persiste
-161 Verrouillage à l'épuisement, jusqu'à
-162 Chance de la mer raciale
-163 Touches plus rapides
-164 Réduction des dégâts magiques et élémentaires
-165 Bombe de magma (niveau)
-166 Mana dépensé converti en bouclier
-167 Mana par point de santé
-168 Durée de la marque (s)
-169 Maximum d'alliés soignés
-170 Blocs connectés
-171 Charges maximales
-172 Objets par utilisation
-173 Coût maximal en mana
-174 Maximum d'animaux affectés
-175 Durée maximale
-176 Charges maximales
-177 Saturation de la viande
-178 Pierre : réduction des dégâts de mêlée
-179 Chance minimale
-180 Invocations minimales
-181 Santé minimale
-182 Avec des points dans la branche
-183 Durée minimale
-184 Vitesse de minage supplémentaire
-185 Réduction du mur
-186 Chance contre les monstres
-187 Monstres non-boss ×
-188 Dégâts en mouvement
-189 Dégâts en mouvement ou en l'air
-190 Près : jusqu'à (blocs)
-191 Dégâts de près
-192 Dégâts sans bouclier
-193 Durée des autres effets négatifs
-194 Saturation des autres aliments
-195 Bonus des autres postures
-196 Charges dans les autres
-197 Interruption en cas de dégâts
-198 Dégâts par 1 % de santé perdue
-199 Ennemis transpercés
-200 Chance contre les joueurs
-201 Délai de recharge par joueur
-202 Nature : niveau de poison
-203 Nature : poison
-204 Puissance supplémentaire
-205 Durée et puissance de l'effet
-206 Prix des villageois
-207 Eau : réduction des dégâts de projectiles
-208 Retire un effet toutes les
-209 Eau : recul
-210 Contre les joueurs ×
-211 PvP : ne vous attaque pas depuis
-212 Rayon (blocs)
-213 Déchaîner l'enfer (niveau)
-214 Portée (blocs)
-215 Allonge (blocs)
-216 Recharge par charge
-217 Réduction des dégâts
-218 Durée de la réduction
-219 Pierre : dégâts physiques renvoyés
-220 Rafraîchit le minuteur à partir du niveau
-221 Interruption de la régénération
-222 Barre récupérée par seconde
-223 Enracinement
-224 Saturation
-225 Dégâts d'eau
-226 Dégâts au second
-227 Côté de la zone de casse (blocs)
-228 Durée de la lenteur
-229 Lenteur des ennemis (niveau)
-230 Niveau de lenteur
-231 Durée de la lenteur
-232 Surnaturel : dégâts de l'onde (du bonus)
-233 Surnaturel : portée de l'onde (blocs)
-234 Vitesse de l'animal
-235 Vitesse supplémentaire
-236 Vitesse du loup ×
-237 Niveau de vitesse
-238 Sprint pendant
-239 Coût d'endurance à l'esquive
-240 Bonus de chaque posture
-241 Effet de chaque posture
-242 Vols par monstre
-243 Coût de la barre de discrétion
-244 Durée de la discrétion
-245 Hauteur de pas supplémentaire (blocs)
-246 Dégâts à l'arrêt
-247 Dégâts à l'arrêt
-248 Immobile pendant
-249 Pierre : armure ×
-250 Pierre : vitesse et saut ×
-251 Force du recul
-252 Étourdissement ×
-253 Dégâts de l'invocation
-254 Santé de l'invocation
-255 Coût en mana de l'invocation
-256 Santé et dégâts de l'invocation
-257 Eau : vitesse de nage
-258 Délai de recharge de changement supplémentaire
-259 Délai de recharge au changement de posture
-260 Seuil de charges
-261 Paliers de tension
-262 Rayon de votre TNT
-263 Robustesse des pièces
-264 Robustesse par pièce
-265 Dégâts de toxine par tick
-266 Dégâts du collet
-267 Pièges simultanés
-268 Trésor supplémentaire
-269 Dégâts à mains nues
-270 Solidité supplémentaire
-271 Dégâts contre les morts-vivants et le Nether
-272 Dégâts maximaux du sort
-273 Dégâts minimaux du sort
-274 Surnaturel : implosion sur les autres
-275 Surnaturel : implosion contre les boss
-276 Surnaturel : dégâts initiaux stockés
-277 Surnaturel : attraction
-278 Surnaturel : rayon de l'implosion (blocs)
-279 Surnaturel : durée de la Marque
-280 Surnaturel : dégâts subis stockés par la Marque
-281 Réduction du mur et du trait de base
-282 Dégâts d'eau supplémentaires subis
-283 Eau : dégâts à mains nues ×
-284 Eau : vitesse et saut ×
-285 Eau : dégâts de l'onde
+2 Bouclier désactivé pendant %s s
+3 Posture : %s
+4 Posture favorite : %s
+5 Votre classe n'existe plus sur ce serveur. Utilisez /clase reiniciar clase.
+6 Toutes les définitions sont valides (%s classes).
+7 Vous avez dépensé %s XP. Niveau suivant : %s XP.
+8 Vous avez dépensé %s XP. Vous avez atteint le niveau maximal.
+9 Réinitialisation effectuée. %s XP ont été remboursés (une partie est perdue à chaque réinitialisation).
+10 Multiplicateur d'absorption
+11 Réserve maximale
+12 Réserve par seconde
+13 Coût d'une attaque ou d'un sort
+14 Dégâts aux alliés
+15 Soins par seconde aux alliés
+16 Niveau de l'effet (0 = I)
+17 Foudre : dégâts de l'arc
+18 Foudre : portée de l'arc (blocs)
+19 Foudre : ennemis touchés
+20 Dégâts de zone
+21 Armure des pièces
+22 Armure ignorée
+23 Moins de dégâts de projectiles
+24 Vitesse d'attaque
+25 Armure dans l'aura
+26 Durée des effets négatifs dans l'aura
+27 Distance derrière (blocs)
+28 Sang : le bonus vous soigne
+29 Bonus
+30 Contre les boss ×
+31 Glace : gel contre les boss
+32 Enracinement sur les boss
+33 Rebond à l'impact
+34 Variation du bonus par charge
+35 Plafond de brûlure
+36 Brûlure
+37 Plafond
+38 Plafond du bouclier (santé maximale)
+39 Plafond de soins par seconde (PV)
+40 Chance
+41 Chance maximale
+42 Chance par point de mana dépensé
+43 Chance à chaque activation
+44 Charges
+45 Dégâts de froid supplémentaires subis
+46 Plafond de réduction combinée
+47 Dégâts de piétinement
+48 Rayon de contagion (blocs)
+49 Variation du délai de recharge
+50 Délai de recharge
+51 Quantité
+52 Invocations par sort
+53 Chance de coup critique
+54 Dégâts de l'animal
+55 Bonus de dégâts
+56 Bonus de dégâts par palier
+57 Dégâts (du coup)
+58 Dégâts par 1 % de santé perdue
+59 Dégâts par seconde
+60 Réduction des dégâts subis
+61 Réduction des dégâts (maximum)
+62 Réduction des dégâts (minimum)
+63 Dégâts supplémentaires subis
+64 Force de l'élan
+65 Commence à s'estomper après
+66 Perte par seconde (du maximum)
+67 Perte de charges ralentie
+68 Temps immobile avant de commencer
+69 Dégâts directs
+70 Murs affectés
+71 Réduction
+72 Distance (blocs)
+73 Distance supplémentaire
+74 Distance d'esquive
+75 Durée d'invulnérabilité à l'esquive
+76 Drain de discrétion
+77 Barre dépensée par seconde
+78 Solidité supplémentaire
+79 Durée (maximum)
+80 Durée (minimum)
+81 Réduction de durée
+82 Durée
+83 Effets
+84 Niveau de table supplémentaire
+85 Charges à la fin
+86 Ender : dégâts
+87 Ender : distance de téléportation (blocs)
+88 Mains vides : vols d'équipement sur les monstres
+89 Mains vides : vols d'équipement sur les joueurs
+90 Tous les N coups
+91 Faim supplémentaire
+92 Faim supplémentaire par bloc
+93 Filet : prise supplémentaire
+94 Chance de doubler
+95 Charges maximales supplémentaires
+96 Ennemis transpercés
+97 Facteur ×
+98 Invocation : crocs
+99 Loin : à partir de (blocs)
+100 Dégâts à distance
+101 Bonus de la posture favorite
+102 Charges dans la favorite
+103 Seuil de l'effet de posture
+104 Immunisé contre la brûlure
+105 Feu : armure et robustesse ×
+106 Trait de feu (niveau)
+107 Dégâts de feu supplémentaires subis
+108 Feu : dégâts à mains nues ×
+109 Feu : réduction des dégâts de feu
+110 Feu : dégâts de l'explosion
+111 Feu : rayon de l'explosion (blocs)
+112 Feu : durée de brûlure
+113 Dégâts au premier
+114 Dégâts soustraits par coup (PV)
+115 Faim (points)
+116 Vitesse de tension de base retirée
+117 Glace : Tombeau de glace
+118 Vitesse du fourneau
+119 Fusion arcanique
+120 Coût de la fusion (niveaux)
+121 Rayon du golem (blocs)
+122 Réduction des dégâts de chute, de feu et d'explosion
+123 Soins ×
+124 Santé maximale récupérée
+125 Dégâts atténués convertis en soins (maximum)
+126 Dégâts atténués convertis en soins (minimum)
+127 Soins par seconde
+128 Soins par seconde
+129 Soins reçus par 1 % de santé perdue
+130 Santé de l'animal
+131 Jusqu'à la santé
+132 Sous la santé
+133 Dégâts au coup
+134 Temps minimal entre deux coups sur le même ennemi (ticks)
+135 Dégâts minimaux pour gagner une charge
+136 Temps sans les perdre
+137 Réduction de la consommation de faim
+138 Temps minimal entre deux utilisations
+139 Temps minimal entre deux activations (ticks)
+140 Temps sans ordres
+141 Dégâts supplémentaires par charge de Frappe enflammée
+142 Feu : durée de brûlure
+143 Immunité ensuite
+144 Intervalle
+145 Invulnérable ensuite
+146 Force de saut ×
+147 Charges conservées
+148 Soins par mise à mort (PV)
+149 Recul (blocs)
+150 Recul supplémentaire
+151 Rayon du recul (blocs)
+152 Force du recul
+153 Bond (blocs)
+154 Sang : dégâts supplémentaires qui vous soignent
+155 Niveau
+156 Vol de vie
+157 Effet de la posture précédente
+158 La posture précédente persiste
+159 Verrouillage à l'épuisement, jusqu'à
+160 Chance de la mer raciale
+161 Touches plus rapides
+162 Réduction des dégâts magiques et élémentaires
+163 Bombe de magma (niveau)
+164 Mana dépensé converti en bouclier
+165 Mana par point de santé
+166 Durée de la marque (s)
+167 Maximum d'alliés soignés
+168 Blocs connectés
+169 Charges maximales
+170 Objets par utilisation
+171 Coût maximal en mana
+172 Maximum d'animaux affectés
+173 Durée maximale
+174 Charges maximales
+175 Saturation de la viande
+176 Pierre : réduction des dégâts de mêlée
+177 Chance minimale
+178 Invocations minimales
+179 Santé minimale
+180 Avec des points dans la branche
+181 Durée minimale
+182 Vitesse de minage supplémentaire
+183 Réduction du mur
+184 Chance contre les monstres
+185 Monstres non-boss ×
+186 Dégâts en mouvement
+187 Dégâts en mouvement ou en l'air
+188 Près : jusqu'à (blocs)
+189 Dégâts de près
+190 Dégâts sans bouclier
+191 Durée des autres effets négatifs
+192 Saturation des autres aliments
+193 Bonus des autres postures
+194 Charges dans les autres
+195 Interruption en cas de dégâts
+196 Dégâts par 1 % de santé perdue
+197 Ennemis transpercés
+198 Chance contre les joueurs
+199 Délai de recharge par joueur
+200 Nature : niveau de poison
+201 Nature : poison
+202 Puissance supplémentaire
+203 Durée et puissance de l'effet
+204 Prix des villageois
+205 Eau : réduction des dégâts de projectiles
+206 Retire un effet toutes les
+207 Eau : recul
+208 Contre les joueurs ×
+209 PvP : ne vous attaque pas depuis
+210 Rayon (blocs)
+211 Déchaîner l'enfer (niveau)
+212 Portée (blocs)
+213 Allonge (blocs)
+214 Recharge par charge
+215 Réduction des dégâts
+216 Durée de la réduction
+217 Pierre : dégâts physiques renvoyés
+218 Rafraîchit le minuteur à partir du niveau
+219 Interruption de la régénération
+220 Barre récupérée par seconde
+221 Enracinement
+222 Saturation
+223 Dégâts d'eau
+224 Dégâts au second
+225 Côté de la zone de casse (blocs)
+226 Durée de la lenteur
+227 Lenteur des ennemis (niveau)
+228 Niveau de lenteur
+229 Durée de la lenteur
+230 Surnaturel : dégâts de l'onde (du bonus)
+231 Surnaturel : portée de l'onde (blocs)
+232 Vitesse de l'animal
+233 Vitesse supplémentaire
+234 Vitesse du loup ×
+235 Niveau de vitesse
+236 Sprint pendant
+237 Coût d'endurance à l'esquive
+238 Bonus de chaque posture
+239 Effet de chaque posture
+240 Vols par monstre
+241 Coût de la barre de discrétion
+242 Durée de la discrétion
+243 Hauteur de pas supplémentaire (blocs)
+244 Dégâts à l'arrêt
+245 Dégâts à l'arrêt
+246 Immobile pendant
+247 Pierre : armure ×
+248 Pierre : vitesse et saut ×
+249 Force du recul
+250 Étourdissement ×
+251 Dégâts de l'invocation
+252 Santé de l'invocation
+253 Coût en mana de l'invocation
+254 Santé et dégâts de l'invocation
+255 Eau : vitesse de nage
+256 Délai de recharge de changement supplémentaire
+257 Délai de recharge au changement de posture
+258 Seuil de charges
+259 Paliers de tension
+260 Rayon de votre TNT
+261 Robustesse des pièces
+262 Robustesse par pièce
+263 Dégâts de toxine par tick
+264 Dégâts du collet
+265 Pièges simultanés
+266 Trésor supplémentaire
+267 Dégâts à mains nues
+268 Solidité supplémentaire
+269 Dégâts contre les morts-vivants et le Nether
+270 Dégâts maximaux du sort
+271 Dégâts minimaux du sort
+272 Surnaturel : implosion sur les autres
+273 Surnaturel : implosion contre les boss
+274 Surnaturel : dégâts initiaux stockés
+275 Surnaturel : attraction
+276 Surnaturel : rayon de l'implosion (blocs)
+277 Surnaturel : durée de la Marque
+278 Surnaturel : dégâts subis stockés par la Marque
+279 Réduction du mur et du trait de base
+280 Dégâts d'eau supplémentaires subis
+281 Eau : dégâts à mains nues ×
+282 Eau : vitesse et saut ×
+283 Eau : dégâts de l'onde

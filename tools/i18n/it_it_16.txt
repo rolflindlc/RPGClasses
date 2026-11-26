@@ -190,7 +190,7 @@
 189 Rigenerazione in forma (vita al secondo)
 190 Velocità di nuoto delle forme acquatiche
 191 Vita massima persa
-192 Vita e danno della forma per Livello totale
+192 Danno della forma per Livello totale
 193 Mana base di una forma
 194 Mana per punto di potere della bestia
 195 Chimere conservate al massimo
@@ -209,7 +209,7 @@
 208 Mana degli incantesimi della natura in forma
 209 Vita e danno delle forme
 210 Punti per studio
-211 Tempo di studio
+211 Tempo di studio (giocatori)
 212 Tempo di studio
 213 Si teletrasporta oltre (blocchi)
 214 Le tue forme hanno molta più vita, ma infliggono meno danni.
@@ -234,7 +234,7 @@
 233 Forma ricca
 234 Rituale del druido
 235 Sui resti di una bestia appena uccisa: impari un po' di più sulla sua specie (un punto di conoscenza). Solo Druido.
-236 Druido del Circolo della Luna: si trasforma in un istante, quasi senza ricarica, e le sue forme non riservano mana.
+236 Druido del Circolo della Luna: si trasforma in un istante, quasi senza ricarica, e le sue forme non riservano mana. Passando da una forma all'altra mantieni la stessa percentuale di vita.
 237 Circolo della Luna
 238 Rituali oscuri: strappa parti dai resti delle bestie (testa, torso, zampe e istinto), le unisce in un Recipiente di carne e, su un Altare di carne, dà vita a una chimera in cui può trasformarsi. Ogni creazione gli costa molto mana e parte della sua vita per un po'.
 239 Scultore

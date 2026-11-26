@@ -52,7 +52,10 @@
   "channel_linger": "%",
   "channel_seconds": "s",
   "channel_speed": "%",
+  "charge_armor_ignore": "%",
+  "charge_guard_seconds": "s",
   "charge_seconds": "s",
+  "charge_slow": "%",
   "cinematic_seconds": "s",
   "cold_damage": "%",
   "combat_seconds": "s",
@@ -153,6 +156,7 @@
   "gold_return_change": "%",
   "gold_speed": "%",
   "grip_seconds": "s",
+  "guard_break_armor": "%",
   "hazard_reduction": "%",
   "heal_bonus": "%",
   "heal_fraction": "%",
@@ -223,6 +227,7 @@
   "mob_study_seconds": "s",
   "moving_bonus": "%",
   "moving_penalty": "%",
+  "muscle_charge_seconds": "s",
   "music_bonus": "%",
   "music_power_cap": "%",
   "near_bonus": "%",
@@ -363,10 +368,5 @@
   "window_bonus": "%",
   "window_seconds": "s",
   "xp_bonus": "%",
-  "xp_discount": "−%",
-  "charge_armor_ignore": "%",
-  "charge_guard_seconds": "s",
-  "charge_slow": "%",
-  "guard_break_armor": "%",
-  "muscle_charge_seconds": "s"
+  "xp_discount": "−%"
 }

@@ -126,159 +126,157 @@
 125 Seuchenverderber
 126 Noch schwerer zu entdecken, und wenn du unsichtbar wirst, hinterlässt du einen Köder, der Feinde ablenkt.
 127 Schattenillusionist
-128 Du bewegst dich geduckt so schnell wie beim Gehen und teleportierst dich kurze Strecken.
-129 Schattenwandler
-130 Sehr schnelle Pfeile und deutlich mehr Schaden pro Schuss, im Tausch gegen langsameres Spannen des Bogens.
-131 Scharfschütze
-132 Mehr Schaden, und wenn du einen tödlichen Treffer einsteckst, wirst du einige Sekunden lang unsterblich: Tötest du deinen Angreifer, lebst du.
-133 Selbstmörderischer Berserker
-134 Jede Haltung schützt dich vor einer Schadensart und fügt ihren eigenen Effekt hinzu: Feuer, Wasser oder Stein.
-135 Wächter der drei Welten
-136 Unverrückbar. Immun gegen Rückstoß, du widerstehst Trefferserien, und dein Bollwerk befreit dich von negativen Effekten.
-137 Unbeugsame Bastion
-138 Du siehst unter der Erde im Dunkeln und bist immun gegen Dunkelheit. Steinsinn (Rassentaste 1, Rang 1) hebt Erze und Lava in der Nähe hervor.
-139 der Tiefe
-140 Dein eigenes TNT verletzt dich nicht und explodiert mit 25 % größerem Radius. Ab Rang 1 baut das Abbauen eines Erzes auch die verbundenen mit ab (nicht beim Ducken). Auf Rang 3 baust du geduckt Stein in einem 3×3-Tunnel ab (verbraucht mehr Hunger).
-141 Sprengmeister
-142 Was du herstellst oder reparierst, hält länger (+20 %, +40 % auf Rang 2). Ab Rang 1 kostet dich der Amboss die Hälfte der Stufen. Auf Rang 3 haben hergestellte Dinge Haltbarkeit +1 (maximal III).
-143 Schmied
-144 Der Verzauberungstisch zählt, als wäre seine Stufe höher, und Verzaubern (am Tisch oder Amboss) kostet dich weniger Erfahrung. Auf Rang 3 verschmilzt du am Amboss zwei identische Verzauberungen auf Höchststufe, um dieses Maximum um 1 zu übertreffen.
-145 Arkan
-146 Du siehst in jeder Dunkelheit. Rauchwolke (Rassentaste 1, Rang 1): Du und deine Verbündeten darin seid unsichtbar, und Mobs außerhalb verlieren dich aus den Augen. Wird durch Nähe nicht verraten.
-147 Dunkel
-148 Deine Feldfrüchte geben mehr Ertrag; mit Rängen sättigt pflanzliche Nahrung stärker, und du kannst Pflanzen mit leerer Hand wachsen lassen.
-149 Sylvan
-150 Flinke Finger: Wenn du im Nahkampf triffst, kannst du einen Gegenstand aus der Beute eines Mobs (ohne ihn zu töten) oder aus dem Inventar eines Spielers stehlen (nie aus der Schnellleiste oder dem Set).
-151 Dieb
-152 Schlinge (Rassentaste 1): Du legst eine Falle, die nie verfällt; nur du kannst sie sehen, und der erste Feind, der hineintritt, erleidet Schaden und wird festgesetzt.
-153 Fallensteller
-154 Rechtsklicke deinen Wolf mit leerer Hand, um ihn zu reiten (Ducken: ihn wie üblich sitzen lassen). Mit Rängen: Deine Wölfe haben mehr Gesundheit, der gerittene Wolf beißt, was du triffst, und regeneriert, während du ihn reitest.
-155 Wolfsreiter
-156 Du verlierst beim Zurücksetzen deiner Klasse oder Unterklasse weniger EP: Der Verlust wird um den Prozentsatz deines Rangs verringert.
-157 Autodidakt
-158 Wähle eine zweite Mauer, die die Hälfte der Verringerung erhält.
-159 Vielseitig
-160 Die Verringerung deiner gewählten Mauer ist 50 % größer (bis zu −75 % auf Rang 3).
-161 Spezialist
-162 Piglins, Brutes und Hoglins sind dir gegenüber neutral, solange du sie nicht angreifst. Mit Rängen: immun gegen Wither, besserer Tauschhandel mit Piglins und Höllenkompass (Rassentaste 1, Rang 3).
-163 Einheimischer
-164 Dein rassischer Feuerschuss durchbohrt Feinde. Mit Rängen hinterlässt deine rassische Magmabombe eine Flammenlache und auf Rang 3 Lava, die verlangsamt. Benötigt Iron's Spells.
-165 Pyromane
-166 Du gehst auf Lava. Mit Rängen arbeiten Öfen in der Nähe schneller, abgebaute Erze kommen geschmolzen heraus, und du schmilzt sofort, was du in der Hand hältst (Rassentaste 1, Rang 3).
-167 Schmelzer
-168 Du isst rohes Fleisch und rohen Fisch ohne negative Effekte, und sie sättigen, als wären sie gegart. Mit Rängen nährt dich das Töten und gewährt Kampfeffekte.
-169 Verschlinger
-170 Dicke Haut: Jeder Treffer, den du einsteckst, verursacht um einen festen Wert weniger Schaden, ohne Minimum.
-171 Steinhaut
-172 Stimme des Kriegsherrn (Rassentaste 1): Entfernt Kontrolleffekte von dir und Verbündeten in der Nähe.
-173 Kriegsherr
-174 Ertrunkene und Wächter sind dir gegenüber neutral, solange du sie nicht angreifst. Mit Rängen: Unterwasser-Immunitäten, Tarnung und eine Wächter-Eskorte.
-175 Abgrundtief
-176 Fische beißen früher an, und beim Angeln hast du rassisches Glück des Meeres; mit Rängen zusätzlicher Fang, mehr Schätze und mehr Erfahrung.
-177 Fischer
-178 Rassische Wasserzauber immer im Iron's-Rad: Wasserschuss; Überlauf (Stufe 3) auf Rang 1; Dampfstrahl auf Rang 2 und Gezeitengriff auf Rang 3. Sie kosten Mana und leiden unter der Magie-Mauer deiner Klasse. Benötigt T.O Magic 'n Extras.
-179 Former
-180 Skelette sind dir gegenüber neutral, solange du sie nicht angreifst, und du erleidest weniger Projektilschaden. Auf Rang 3 wird deine Regeneration kürzer unterbrochen.
-181 Skelett
-182 Du erleidest keinen Fallschaden und fällst langsam (Ducken verhindert das). Ätherische Gestalt (Rassentaste 1, Rang 1): einige Sekunden, in denen du weder Schaden erleiden noch angreifen kannst; schützt nicht vor der Sonne.
-183 Spektrum
-184 Durst: Töten heilt dich, und mit Rängen raubst du Leben aus dem von dir verursachten Schaden (mit einer Grenze pro Sekunde).
-185 Vampir
-186 Zwergenschmiede: +%s %% Haltbarkeit
-187 Fähigkeiten
-188 Verwandte Disziplinen (kein Malus): %s
-189 Verbündeten markieren
-190  · hat dich als Verbündeten
-191 Verbündete
-192 Verbündete: %s · Seite %s/%s
-193 Es sind keine anderen Spieler online.
-194 Deine Unterstützung erreicht nur deine Verbündeten, und deine Angriffe betreffen sie nicht. Alle anderen zählen als Feinde.
-195  · offline
-196 Verbündeten entfernen
-197 Verbündeter
-198 Feind
-199 Verbündete
-200 Das Tragen eines beliebigen Rüstungsteils schaltet deine „Ohne Rüstung“-Passiven ab, außer deiner Klassenausrüstung (Barbarengeschirre oder Mönchsroben).
-201 Gebunden (%s/%s)
-202 Lösen
-203 Ziel beim Tod
-204 Spawnpunkt
-205 Band
-206 In der Nähe, ungebunden
-207 Du hast keine ungebundenen Tiere im Umkreis von %s Blöcken.
-208 Du hast noch keine gebundenen Tiere.
-209 Punkt %s: leer
-210 Punkt %s: %s, %s, %s (%s)
-211 Hier speichern
-212 Gesundheit %s/%s · Schaden %s · Tempo %s
-213 Buch der Bande
-214 Nicht geladen: Geh näher heran, um es zu sehen oder freizulassen
-215 Benutzen
-216 Gesperrt: Du nutzt bereits 3 Zweige. Wird beim Zurücksetzen deiner Klasse freigeschaltet.
-217 Zweige (je 10 Punkte; jeder Punkt erhöht alle ihre Passiven). Du kannst 3 der 5 nutzen: Wenn du Punkte in drei steckst, sind die anderen beiden gesperrt, bis du deine Klasse zurücksetzt.
-218 %s wählen
-219 Schließen
-220 Den Perk %s wählen?
-221 Er ist kostenlos, aber du kannst ihn erst ändern, wenn du deine Klasse zurücksetzt.
-222 %s wählen?
-223 Du kannst nur eine Unterklasse gleichzeitig haben. Du kannst sie zurücksetzen, aber jedes Zurücksetzen verliert einen Teil der ausgegebenen EP.
-224 Du kannst nur eine Klasse haben. Du kannst sie später zurücksetzen, aber jedes Zurücksetzen verliert einen Teil der ausgegebenen EP.
-225 %s wählen?
-226 (nur ohne Rüstung)
-227 Kritisch: %s Chance, ×%s Schaden plus die Zweigboni
-228 %s: %s
-229 Keine Zahlenwerte.
-230 %s: %s pro Punkt, %s bei 10
-231 (Perk, fester Wert)
-232 %s: von %s (Stufe 1) bis %s (Stufe 10)
-233 Passiven (Unterklassenstufe 1 bis 10)
-234 %s pro Stufe: %s
-235 EP-Kosten
-236 Stufe n: %s EP. Gesamt: %s bis Stufe 30 und %s für die 10 Unterklassenstufen.
-237 Deine Unterklasse
-238 Startausrüstung mit unendlicher Haltbarkeit.
-239 Du musst eine Klasse wählen, um mit dem Spielen zu beginnen.
-240 Keine Startausrüstung.
-241 keine Taste
-242 Wähle einen Perk:
-243 %s: %s
-244 Perk bei vollem Zweig (du wählst einen, kostenlos, bis du die Klasse zurücksetzt):
-245 Gesamtstufe %s/40  |  EP: %s  |  %s
-246 Rasse
-247 Merkmale der Unterrasse. R0–R3 = Wert auf jedem Rang (Ränge 1–3 werden durch Rituale verdient).
-248 Rasse und Unterrasse sind DAUERHAFT. Sie können nicht geändert oder zurückgesetzt werden, auch nicht beim Zurücksetzen deiner Klasse.
-249  (ab Rang %s)
-250 Deine Rasse · Rang %s
-251 Unterrasse
-252 Deine Rasse. Unterrasse: %s. Rang %s.
-253 Rasse und Unterrasse sind dauerhaft: Sie können nicht geändert werden.
-254 Wähle deine Rasse und Unterrasse
-255 Rassen
-256 Mensch: Wähle deine Mauer
-257 Rassenmerkmale (Rang 0)
-258 Noch nicht verfügbar: Ihre Merkmale sind in Entwicklung.
-259 %s: −%s %% → −%s (bei 30 Punkten)
-260 Anpassungsfähig verringert den Malus der Mauer, die du wählst. Sie wird bei der Klassenwahl gewählt und ändert sich nur beim Zurücksetzen der Klasse.
-261 Vielseitig: Wähle eine zweite Mauer, die die Hälfte der Verringerung erhält.
-262 Klasse zurücksetzen
-263 Unterklasse zurücksetzen
-264 Du verlierst %s der für das Zurückgesetzte ausgegebenen EP; der Rest wird erstattet. Im Kampf nicht möglich.
-265 Rolle: %s
-266 Stufe %s (aktuelle Grenze %s, Maximum 10)
-267 Die Unterklasse wird bei %s Basisklassenpunkten freigeschaltet (du hast %s).
-268 Die Unterklasse wird bei 15 Basisklassenpunkten freigeschaltet. Sie hat 10 Stufen.
-269 Wähle deine Unterklasse:
-270 Zweige und Fähigkeiten
-271 Genaue Daten
-272 Talentbaum
-273 Unterklassen
-274 Übersicht
-275 Klassen
-276 Wähle deine Klasse
-277 Basisklassenmerkmal (voll ab der Klassenwahl)
-278 Unterklassenstufe %s
-279 Gesamtstufe %s
-280 Verbessert %s: bleibt ruhend, bis du es hast.
-281 %s: -%s im Maximum
-282 Disziplinmauern
-283 Die Mauer wächst mit deinen Basisklassenpunkten und erreicht bei 30 ihr Maximum. Mit %s Punkten hättest du %s.
+128 Blitzschnelle Pfeile und viel mehr Schaden pro Schuss, dafür spannst du den Bogen langsamer. Du tarnst dich schleichend und reglos und markierst deine Beute mit dem Fernrohr für einen verheerenden Schuss.
+129 Scharfschütze
+130 Mehr Schaden, und wenn du einen tödlichen Treffer einsteckst, wirst du einige Sekunden lang unsterblich: Tötest du deinen Angreifer, lebst du.
+131 Selbstmörderischer Berserker
+132 Jede Haltung schützt dich vor einer Schadensart und fügt ihren eigenen Effekt hinzu: Feuer, Wasser oder Stein.
+133 Wächter der drei Welten
+134 Unerschütterlich. Immun gegen Rückstoß, du hältst Schlaghagel stand und gibst einen Teil davon zurück, und dein Bollwerk reinigt dich von negativen Effekten.
+135 Unbeugsame Bastion
+136 Du siehst unter der Erde im Dunkeln und bist immun gegen Dunkelheit. Steinsinn (Rassentaste 1, Rang 1) hebt Erze und Lava in der Nähe hervor.
+137 der Tiefe
+138 Dein eigenes TNT verletzt dich nicht und explodiert mit 25 % größerem Radius. Ab Rang 1 baut das Abbauen eines Erzes auch die verbundenen mit ab (nicht beim Ducken). Auf Rang 3 baust du geduckt Stein in einem 3×3-Tunnel ab (verbraucht mehr Hunger).
+139 Sprengmeister
+140 Was du herstellst oder reparierst, hält länger (+20 %, +40 % auf Rang 2). Ab Rang 1 kostet dich der Amboss die Hälfte der Stufen. Auf Rang 3 haben hergestellte Dinge Haltbarkeit +1 (maximal III).
+141 Schmied
+142 Der Verzauberungstisch zählt, als wäre seine Stufe höher, und Verzaubern (am Tisch oder Amboss) kostet dich weniger Erfahrung. Auf Rang 3 verschmilzt du am Amboss zwei identische Verzauberungen auf Höchststufe, um dieses Maximum um 1 zu übertreffen.
+143 Arkan
+144 Du siehst in jeder Dunkelheit. Rauchwolke (Rassentaste 1, Rang 1): Du und deine Verbündeten darin seid unsichtbar, und Mobs außerhalb verlieren dich aus den Augen. Wird durch Nähe nicht verraten.
+145 Dunkel
+146 Deine Feldfrüchte geben mehr Ertrag; mit Rängen sättigt pflanzliche Nahrung stärker, und du kannst Pflanzen mit leerer Hand wachsen lassen.
+147 Sylvan
+148 Flinke Finger: Wenn du im Nahkampf triffst, kannst du einen Gegenstand aus der Beute eines Mobs (ohne ihn zu töten) oder aus dem Inventar eines Spielers stehlen (nie aus der Schnellleiste oder dem Set).
+149 Dieb
+150 Schlinge (Rassentaste 1): Du legst eine Falle, die nie verfällt; nur du kannst sie sehen, und der erste Feind, der hineintritt, erleidet Schaden und wird festgesetzt.
+151 Fallensteller
+152 Rechtsklicke deinen Wolf mit leerer Hand, um ihn zu reiten (Ducken: ihn wie üblich sitzen lassen). Mit Rängen: Deine Wölfe haben mehr Gesundheit, der gerittene Wolf beißt, was du triffst, und regeneriert, während du ihn reitest.
+153 Wolfsreiter
+154 Du verlierst beim Zurücksetzen deiner Klasse oder Unterklasse weniger EP: Der Verlust wird um den Prozentsatz deines Rangs verringert.
+155 Autodidakt
+156 Wähle eine zweite Mauer, die die Hälfte der Verringerung erhält.
+157 Vielseitig
+158 Die Verringerung deiner gewählten Mauer ist 50 % größer (bis zu −75 % auf Rang 3).
+159 Spezialist
+160 Piglins, Brutes und Hoglins sind dir gegenüber neutral, solange du sie nicht angreifst. Mit Rängen: immun gegen Wither, besserer Tauschhandel mit Piglins und Höllenkompass (Rassentaste 1, Rang 3).
+161 Einheimischer
+162 Dein rassischer Feuerschuss durchbohrt Feinde. Mit Rängen hinterlässt deine rassische Magmabombe eine Flammenlache und auf Rang 3 Lava, die verlangsamt. Benötigt Iron's Spells.
+163 Pyromane
+164 Du gehst auf Lava. Mit Rängen arbeiten Öfen in der Nähe schneller, abgebaute Erze kommen geschmolzen heraus, und du schmilzt sofort, was du in der Hand hältst (Rassentaste 1, Rang 3).
+165 Schmelzer
+166 Du isst rohes Fleisch und rohen Fisch ohne negative Effekte, und sie sättigen, als wären sie gegart. Mit Rängen nährt dich das Töten und gewährt Kampfeffekte.
+167 Verschlinger
+168 Dicke Haut: Jeder Treffer, den du einsteckst, verursacht um einen festen Wert weniger Schaden, ohne Minimum.
+169 Steinhaut
+170 Stimme des Kriegsherrn (Rassentaste 1): Entfernt Kontrolleffekte von dir und Verbündeten in der Nähe.
+171 Kriegsherr
+172 Ertrunkene und Wächter sind dir gegenüber neutral, solange du sie nicht angreifst. Mit Rängen: Unterwasser-Immunitäten, Tarnung und eine Wächter-Eskorte.
+173 Abgrundtief
+174 Fische beißen früher an, und beim Angeln hast du rassisches Glück des Meeres; mit Rängen zusätzlicher Fang, mehr Schätze und mehr Erfahrung.
+175 Fischer
+176 Rassische Wasserzauber immer im Iron's-Rad: Wasserschuss; Überlauf (Stufe 3) auf Rang 1; Dampfstrahl auf Rang 2 und Gezeitengriff auf Rang 3. Sie kosten Mana und leiden unter der Magie-Mauer deiner Klasse. Benötigt T.O Magic 'n Extras.
+177 Former
+178 Skelette sind dir gegenüber neutral, solange du sie nicht angreifst, und du erleidest weniger Projektilschaden. Auf Rang 3 wird deine Regeneration kürzer unterbrochen.
+179 Skelett
+180 Du erleidest keinen Fallschaden und fällst langsam (Ducken verhindert das). Ätherische Gestalt (Rassentaste 1, Rang 1): einige Sekunden, in denen du weder Schaden erleiden noch angreifen kannst; schützt nicht vor der Sonne.
+181 Spektrum
+182 Durst: Töten heilt dich, und mit Rängen raubst du Leben aus dem von dir verursachten Schaden (mit einer Grenze pro Sekunde).
+183 Vampir
+184 Zwergenschmiede: +%s %% Haltbarkeit
+185 Fähigkeiten
+186 Verwandte Disziplinen (kein Malus): %s
+187 Verbündeten markieren
+188  · hat dich als Verbündeten
+189 Verbündete
+190 Verbündete: %s · Seite %s/%s
+191 Es sind keine anderen Spieler online.
+192 Deine Unterstützung erreicht nur deine Verbündeten, und deine Angriffe betreffen sie nicht. Alle anderen zählen als Feinde.
+193  · offline
+194 Verbündeten entfernen
+195 Verbündeter
+196 Feind
+197 Verbündete
+198 Das Tragen eines beliebigen Rüstungsteils schaltet deine „Ohne Rüstung“-Passiven ab, außer deiner Klassenausrüstung (Barbarengeschirre oder Mönchsroben).
+199 Gebunden (%s/%s)
+200 Lösen
+201 Ziel beim Tod
+202 Spawnpunkt
+203 Band
+204 In der Nähe, ungebunden
+205 Du hast keine ungebundenen Tiere im Umkreis von %s Blöcken.
+206 Du hast noch keine gebundenen Tiere.
+207 Punkt %s: leer
+208 Punkt %s: %s, %s, %s (%s)
+209 Hier speichern
+210 Gesundheit %s/%s · Schaden %s · Tempo %s
+211 Buch der Bande
+212 Nicht geladen: Geh näher heran, um es zu sehen oder freizulassen
+213 Benutzen
+214 Gesperrt: Du nutzt bereits 3 Zweige. Wird beim Zurücksetzen deiner Klasse freigeschaltet.
+215 Zweige (je 10 Punkte; jeder Punkt erhöht alle ihre Passiven). Du kannst 3 der 5 nutzen: Wenn du Punkte in drei steckst, sind die anderen beiden gesperrt, bis du deine Klasse zurücksetzt.
+216 %s wählen
+217 Schließen
+218 Den Perk %s wählen?
+219 Er ist kostenlos, aber du kannst ihn erst ändern, wenn du deine Klasse zurücksetzt.
+220 %s wählen?
+221 Du kannst nur eine Unterklasse gleichzeitig haben. Du kannst sie zurücksetzen, aber jedes Zurücksetzen verliert einen Teil der ausgegebenen EP.
+222 Du kannst nur eine Klasse haben. Du kannst sie später zurücksetzen, aber jedes Zurücksetzen verliert einen Teil der ausgegebenen EP.
+223 %s wählen?
+224 (nur ohne Rüstung)
+225 Kritisch: %s Chance, ×%s Schaden plus die Zweigboni
+226 %s: %s
+227 Keine Zahlenwerte.
+228 %s: %s pro Punkt, %s bei 10
+229 (Perk, fester Wert)
+230 %s: von %s (Stufe 1) bis %s (Stufe 10)
+231 Passiven (Unterklassenstufe 1 bis 10)
+232 %s pro Stufe: %s
+233 EP-Kosten
+234 Stufe n: %s EP. Gesamt: %s bis Stufe 30 und %s für die 10 Unterklassenstufen.
+235 Deine Unterklasse
+236 Startausrüstung mit unendlicher Haltbarkeit.
+237 Du musst eine Klasse wählen, um mit dem Spielen zu beginnen.
+238 Keine Startausrüstung.
+239 keine Taste
+240 Wähle einen Perk:
+241 %s: %s
+242 Perk bei vollem Zweig (du wählst einen, kostenlos, bis du die Klasse zurücksetzt):
+243 Gesamtstufe %s/40  |  EP: %s  |  %s
+244 Rasse
+245 Merkmale der Unterrasse. R0–R3 = Wert auf jedem Rang (Ränge 1–3 werden durch Rituale verdient).
+246 Rasse und Unterrasse sind DAUERHAFT. Sie können nicht geändert oder zurückgesetzt werden, auch nicht beim Zurücksetzen deiner Klasse.
+247  (ab Rang %s)
+248 Deine Rasse · Rang %s
+249 Unterrasse
+250 Deine Rasse. Unterrasse: %s. Rang %s.
+251 Rasse und Unterrasse sind dauerhaft: Sie können nicht geändert werden.
+252 Wähle deine Rasse und Unterrasse
+253 Rassen
+254 Mensch: Wähle deine Mauer
+255 Rassenmerkmale (Rang 0)
+256 Noch nicht verfügbar: Ihre Merkmale sind in Entwicklung.
+257 %s: −%s %% → −%s (bei 30 Punkten)
+258 Anpassungsfähig verringert den Malus der Mauer, die du wählst. Sie wird bei der Klassenwahl gewählt und ändert sich nur beim Zurücksetzen der Klasse.
+259 Vielseitig: Wähle eine zweite Mauer, die die Hälfte der Verringerung erhält.
+260 Klasse zurücksetzen
+261 Unterklasse zurücksetzen
+262 Du verlierst %s der für das Zurückgesetzte ausgegebenen EP; der Rest wird erstattet. Im Kampf nicht möglich.
+263 Rolle: %s
+264 Stufe %s (aktuelle Grenze %s, Maximum 10)
+265 Die Unterklasse wird bei %s Basisklassenpunkten freigeschaltet (du hast %s).
+266 Die Unterklasse wird bei 15 Basisklassenpunkten freigeschaltet. Sie hat 10 Stufen.
+267 Wähle deine Unterklasse:
+268 Zweige und Fähigkeiten
+269 Genaue Daten
+270 Talentbaum
+271 Unterklassen
+272 Übersicht
+273 Klassen
+274 Wähle deine Klasse
+275 Basisklassenmerkmal (voll ab der Klassenwahl)
+276 Unterklassenstufe %s
+277 Gesamtstufe %s
+278 Verbessert %s: bleibt ruhend, bis du es hast.
+279 %s: -%s im Maximum
+280 Disziplinmauern
+281 Die Mauer wächst mit deinen Basisklassenpunkten und erreicht bei 30 ihr Maximum. Mit %s Punkten hättest du %s.

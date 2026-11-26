@@ -126,159 +126,157 @@
 125 Corruttore della peste
 126 Ancora più difficile da individuare, e quando diventi invisibile lasci un'esca che distrae i nemici.
 127 Illusionista delle ombre
-128 Da accovacciato ti muovi veloce come camminando e ti teletrasporti a brevi distanze.
-129 Camminatore delle ombre
-130 Frecce molto veloci e molto più danno per colpo, in cambio di una tensione dell'arco più lenta.
-131 Cecchino
-132 Più danno, e quando subisci un colpo mortale diventi immortale per alcuni secondi: se uccidi l'aggressore, vivi.
-133 Berserker suicida
-134 Ogni postura ti protegge da un tipo di danno e aggiunge il suo effetto: fuoco, acqua o pietra.
-135 Guardiano dei tre mondi
-136 Incrollabile. Immune al contraccolpo, resisti alle raffiche di colpi e il tuo Baluardo ti libera dagli effetti negativi.
-137 Bastione inflessibile
-138 Vedi al buio sottoterra e sei immune all'Oscurità. Il Senso della pietra (tasto razziale 1, Rango 1) evidenzia minerali e lava vicini.
-139 delle Profondità
-140 Il tuo TNT non ti ferisce ed esplode con un raggio maggiore del 25%. Dal Rango 1, rompere un minerale rompe anche quelli collegati (non da accovacciato). Al Rango 3, da accovacciato scavi la pietra in un tunnel 3×3 (consuma più fame).
-141 Demolitore
-142 Ciò che fabbrichi o ripari dura di più (+20%, +40% al Rango 2). Dal Rango 1 l'incudine ti costa metà dei livelli. Al Rango 3 ciò che fabbrichi esce con Integrità +1 (massimo III).
-143 Fabbro
-144 Il tavolo degli incantesimi conta come se il suo livello fosse più alto e incantare (al tavolo o all'incudine) ti costa meno esperienza. Al Rango 3, fondi all'incudine due incantesimi identici di livello massimo per superare quel massimo di 1.
-145 Arcano
-146 Vedi in qualsiasi oscurità. Nube di fumo (tasto razziale 1, Rango 1): tu e i tuoi alleati al suo interno siete invisibili e i mob all'esterno ti perdono di vista. Non viene rivelata dalla vicinanza.
-147 Oscuro
-148 I tuoi raccolti rendono di più; con i ranghi il cibo vegetale sazia di più e puoi far crescere le colture a mani nude.
-149 Silvano
-150 Dita agili: colpendo in mischia puoi rubare un oggetto dal bottino di un mob (senza ucciderlo) o dall'inventario di un giocatore (mai dalla barra rapida né dal kit).
-151 Borsaiolo
-152 Tagliola (tasto razziale 1): piazzi una trappola che non scade mai, visibile solo a te; il primo nemico che ci passa sopra subisce danno ed è immobilizzato.
-153 Trappolatore
-154 Fai clic destro sul tuo lupo a mani nude per cavalcarlo (accovacciato: farlo sedere, come al solito). Con i ranghi: i tuoi lupi hanno più salute, il lupo cavalcato morde ciò che colpisci e rigenera mentre lo cavalchi.
-155 Cavalcalupi
-156 Perdi meno XP quando reimposti la classe o la sottoclasse: la perdita è ridotta della percentuale del tuo Rango.
-157 Autodidatta
-158 Scegli un secondo muro, che riceve metà della riduzione.
-159 Tuttofare
-160 La riduzione del muro che hai scelto è maggiore del 50% (fino a −75% al Rango 3).
-161 Specialista
-162 Piglin, brute e hoglin sono neutrali nei tuoi confronti finché non li attacchi. Con i ranghi: immune al Wither, baratto migliore con i piglin e Bussola infernale (tasto razziale 1, Rango 3).
-163 Nativo
-164 Il tuo Colpo di fuoco razziale trapassa i nemici. Con i ranghi, la tua Bomba di magma razziale lascia una pozza di fiamme e, al Rango 3, lava che rallenta. Richiede Iron's Spells.
-165 Piromane
-166 Cammini sulla lava. Con i ranghi, le fornaci vicine lavorano più in fretta, i minerali che estrai escono già fusi e fondi all'istante ciò che tieni in mano (tasto razziale 1, Rango 3).
-167 Fonditore
-168 Mangi carne e pesce crudi senza effetti negativi e saziano come se fossero cotti. Con i ranghi, uccidere ti sazia e concede effetti di combattimento.
-169 Divoratore
-170 Pelle spessa: ogni colpo che subisci infligge un valore fisso di danno in meno, senza minimo.
-171 Pelle di pietra
-172 Voce del signore della guerra (tasto razziale 1): rimuove gli effetti di controllo da te e dagli alleati vicini.
-173 Signore della guerra
-174 Annegati e guardiani sono neutrali nei tuoi confronti finché non li attacchi. Con i ranghi: immunità sott'acqua, mimetismo e scorta di guardiani.
-175 Abissale
-176 I pesci abboccano prima e quando peschi hai la Fortuna del mare razziale; con i ranghi, pescate extra, più tesori e più esperienza.
-177 Pescatore
-178 Gli incantesimi d'acqua razziali sono sempre nella ruota di Iron's: Idrogetto; Straripamento (livello 3) al Rango 1; Getto al Rango 2 e Presa della marea al Rango 3. Costano mana e subiscono il muro di Magia della tua classe. Richiede T.O Magic 'n Extras.
-179 Plasmatore
-180 Gli scheletri sono neutrali nei tuoi confronti finché non li attacchi e subisci meno danno dai proiettili. Al Rango 3 la tua rigenerazione viene interrotta per meno tempo.
-181 Scheletro
-182 Non subisci danno da caduta e cadi lentamente (accovacciarsi lo impedisce). Forma eterea (tasto razziale 1, Rango 1): per alcuni secondi non puoi né subire danno né attaccare; non protegge dal sole.
-183 Spettro
-184 Sete: uccidere ti cura e, con i ranghi, rubi vita dal danno che infliggi (con un limite al secondo).
-185 Vampiro
-186 Forgia nanica: +%s%% di integrità
-187 Abilità
-188 Discipline affini (senza penalità): %s
-189 Segna alleato
-190  · ti considera suo alleato
-191 Alleati
-192 Alleati: %s · pagina %s/%s
-193 Non ci sono altri giocatori online.
-194 Il tuo supporto raggiunge solo i tuoi alleati e i tuoi attacchi non li colpiscono. Tutti gli altri contano come nemici.
-195  · offline
-196 Rimuovi alleato
-197 Alleato
-198 Nemico
-199 Alleati
-200 Indossare qualsiasi pezzo di armatura disattiva le tue passive «senza armatura», tranne l'equipaggiamento della tua classe (finimenti da Barbaro o vesti da Monaco).
-201 Legato (%s/%s)
-202 Spezza
-203 Destinazione alla morte
-204 Punto di rinascita
-205 Legame
-206 Vicini, non legati
-207 Non hai animali non legati entro %s blocchi.
-208 Non hai ancora animali legati.
-209 Punto %s: vuoto
-210 Punto %s: %s, %s, %s (%s)
-211 Salva qui
-212 Salute %s/%s · Danno %s · Vel. %s
-213 Libro dei legami
-214 Non caricato: avvicinati per vederlo o liberarlo
-215 Usa
-216 Bloccato: usi già 3 rami. Si sblocca quando reimposti la classe.
-217 Rami (10 punti ciascuno; ogni punto potenzia tutte le sue passive). Puoi usarne 3 su 5: quando investi punti in tre, gli altri due restano bloccati finché non reimposti la classe.
-218 Scegli %s
-219 Chiudi
-220 Scegliere il perk %s?
-221 È gratuito, ma non potrai cambiarlo finché non reimposti la classe.
-222 Scegliere %s?
-223 Puoi avere una sola sottoclasse alla volta. Puoi reimpostarla, ma ogni reimpostazione fa perdere parte dell'XP speso.
-224 Puoi avere una sola classe. Potrai reimpostarla in seguito, ma ogni reimpostazione fa perdere parte dell'XP speso.
-225 Scegliere %s?
-226 (solo senza armatura)
-227 Critico: %s di probabilità, ×%s di danno più i bonus dei rami
-228 %s: %s
-229 Nessun valore numerico.
-230 %s: %s per punto, %s a 10
-231 (perk, valore fisso)
-232 %s: da %s (livello 1) a %s (livello 10)
-233 Passive (livelli di sottoclasse da 1 a 10)
-234 %s per livello: %s
-235 Costo in XP
-236 Livello n: %s XP. Totale: %s fino al livello 30 e %s per i 10 livelli di sottoclasse.
-237 La tua sottoclasse
-238 Equipaggiamento iniziale con durabilità infinita.
-239 Devi scegliere una classe per iniziare a giocare.
-240 Nessun equipaggiamento iniziale.
-241 nessun tasto
-242 Scegli un perk:
-243 %s: %s
-244 Perk a ramo completo (ne scegli uno, gratis, finché non reimposti la classe):
-245 Livello totale %s/40  |  XP: %s  |  %s
-246 Razza
-247 Tratti della sottorazza. R0–R3 = valore a ogni Rango (i Ranghi 1–3 si ottengono con i riti).
-248 Razza e sottorazza sono PERMANENTI. Non possono essere cambiate né reimpostate, nemmeno reimpostando la classe.
-249  (dal Rango %s)
-250 La tua razza · Rango %s
-251 Sottorazza
-252 La tua razza. Sottorazza: %s. Rango %s.
-253 Razza e sottorazza sono permanenti: non possono essere cambiate.
-254 Scegli la tua razza e sottorazza
-255 Razze
-256 Umano: scegli il tuo muro
-257 Tratti della razza (Rango 0)
-258 Non ancora disponibile: i suoi tratti sono in sviluppo.
-259 %s: −%s%% → −%s (a 30 punti)
-260 Adattabile riduce la penalità del muro che scegli. Si sceglie quando scegli la classe e cambia solo se la reimposti.
-261 Tuttofare: scegli un secondo muro, che riceve metà della riduzione.
-262 Reimposta classe
-263 Reimposta sottoclasse
-264 Perderai il %s dell'XP speso per ciò che reimposti; il resto viene rimborsato. Non è possibile in combattimento.
-265 Ruolo: %s
-266 livello %s (limite attuale %s, massimo 10)
-267 La sottoclasse si sblocca a %s punti di classe base (ne hai %s).
-268 La sottoclasse si sblocca a 15 punti di classe base. Ha 10 livelli.
-269 Scegli la tua sottoclasse:
-270 Rami e abilità
-271 Dati esatti
-272 Albero
-273 Sottoclassi
-274 Riepilogo
-275 Classi
-276 Scegli la tua classe
-277 Tratto della classe base (completo dalla scelta della classe)
-278 Livello di sottoclasse %s
-279 Livello totale %s
-280 Potenzia %s: resta inattivo finché non lo possiedi.
-281 %s: -%s al massimo
-282 Muri delle discipline
-283 Il muro cresce con i tuoi punti di classe base e raggiunge il massimo a 30. Con %s punti avresti %s.
+128 Frecce velocissime e molto più danno per tiro, al prezzo di tendere l'arco più lentamente. Ti mimetizzi accovacciato e immobile, e marchi la preda con il cannocchiale per un tiro devastante.
+129 Cecchino
+130 Più danno, e quando subisci un colpo mortale diventi immortale per alcuni secondi: se uccidi l'aggressore, vivi.
+131 Berserker suicida
+132 Ogni postura ti protegge da un tipo di danno e aggiunge il suo effetto: fuoco, acqua o pietra.
+133 Guardiano dei tre mondi
+134 Inamovibile. Immune al contraccolpo, resisti alle raffiche di colpi e ne restituisci una parte, e il tuo Baluardo ti purifica dagli effetti negativi.
+135 Bastione inflessibile
+136 Vedi al buio sottoterra e sei immune all'Oscurità. Il Senso della pietra (tasto razziale 1, Rango 1) evidenzia minerali e lava vicini.
+137 delle Profondità
+138 Il tuo TNT non ti ferisce ed esplode con un raggio maggiore del 25%. Dal Rango 1, rompere un minerale rompe anche quelli collegati (non da accovacciato). Al Rango 3, da accovacciato scavi la pietra in un tunnel 3×3 (consuma più fame).
+139 Demolitore
+140 Ciò che fabbrichi o ripari dura di più (+20%, +40% al Rango 2). Dal Rango 1 l'incudine ti costa metà dei livelli. Al Rango 3 ciò che fabbrichi esce con Integrità +1 (massimo III).
+141 Fabbro
+142 Il tavolo degli incantesimi conta come se il suo livello fosse più alto e incantare (al tavolo o all'incudine) ti costa meno esperienza. Al Rango 3, fondi all'incudine due incantesimi identici di livello massimo per superare quel massimo di 1.
+143 Arcano
+144 Vedi in qualsiasi oscurità. Nube di fumo (tasto razziale 1, Rango 1): tu e i tuoi alleati al suo interno siete invisibili e i mob all'esterno ti perdono di vista. Non viene rivelata dalla vicinanza.
+145 Oscuro
+146 I tuoi raccolti rendono di più; con i ranghi il cibo vegetale sazia di più e puoi far crescere le colture a mani nude.
+147 Silvano
+148 Dita agili: colpendo in mischia puoi rubare un oggetto dal bottino di un mob (senza ucciderlo) o dall'inventario di un giocatore (mai dalla barra rapida né dal kit).
+149 Borsaiolo
+150 Tagliola (tasto razziale 1): piazzi una trappola che non scade mai, visibile solo a te; il primo nemico che ci passa sopra subisce danno ed è immobilizzato.
+151 Trappolatore
+152 Fai clic destro sul tuo lupo a mani nude per cavalcarlo (accovacciato: farlo sedere, come al solito). Con i ranghi: i tuoi lupi hanno più salute, il lupo cavalcato morde ciò che colpisci e rigenera mentre lo cavalchi.
+153 Cavalcalupi
+154 Perdi meno XP quando reimposti la classe o la sottoclasse: la perdita è ridotta della percentuale del tuo Rango.
+155 Autodidatta
+156 Scegli un secondo muro, che riceve metà della riduzione.
+157 Tuttofare
+158 La riduzione del muro che hai scelto è maggiore del 50% (fino a −75% al Rango 3).
+159 Specialista
+160 Piglin, brute e hoglin sono neutrali nei tuoi confronti finché non li attacchi. Con i ranghi: immune al Wither, baratto migliore con i piglin e Bussola infernale (tasto razziale 1, Rango 3).
+161 Nativo
+162 Il tuo Colpo di fuoco razziale trapassa i nemici. Con i ranghi, la tua Bomba di magma razziale lascia una pozza di fiamme e, al Rango 3, lava che rallenta. Richiede Iron's Spells.
+163 Piromane
+164 Cammini sulla lava. Con i ranghi, le fornaci vicine lavorano più in fretta, i minerali che estrai escono già fusi e fondi all'istante ciò che tieni in mano (tasto razziale 1, Rango 3).
+165 Fonditore
+166 Mangi carne e pesce crudi senza effetti negativi e saziano come se fossero cotti. Con i ranghi, uccidere ti sazia e concede effetti di combattimento.
+167 Divoratore
+168 Pelle spessa: ogni colpo che subisci infligge un valore fisso di danno in meno, senza minimo.
+169 Pelle di pietra
+170 Voce del signore della guerra (tasto razziale 1): rimuove gli effetti di controllo da te e dagli alleati vicini.
+171 Signore della guerra
+172 Annegati e guardiani sono neutrali nei tuoi confronti finché non li attacchi. Con i ranghi: immunità sott'acqua, mimetismo e scorta di guardiani.
+173 Abissale
+174 I pesci abboccano prima e quando peschi hai la Fortuna del mare razziale; con i ranghi, pescate extra, più tesori e più esperienza.
+175 Pescatore
+176 Gli incantesimi d'acqua razziali sono sempre nella ruota di Iron's: Idrogetto; Straripamento (livello 3) al Rango 1; Getto al Rango 2 e Presa della marea al Rango 3. Costano mana e subiscono il muro di Magia della tua classe. Richiede T.O Magic 'n Extras.
+177 Plasmatore
+178 Gli scheletri sono neutrali nei tuoi confronti finché non li attacchi e subisci meno danno dai proiettili. Al Rango 3 la tua rigenerazione viene interrotta per meno tempo.
+179 Scheletro
+180 Non subisci danno da caduta e cadi lentamente (accovacciarsi lo impedisce). Forma eterea (tasto razziale 1, Rango 1): per alcuni secondi non puoi né subire danno né attaccare; non protegge dal sole.
+181 Spettro
+182 Sete: uccidere ti cura e, con i ranghi, rubi vita dal danno che infliggi (con un limite al secondo).
+183 Vampiro
+184 Forgia nanica: +%s%% di integrità
+185 Abilità
+186 Discipline affini (senza penalità): %s
+187 Segna alleato
+188  · ti considera suo alleato
+189 Alleati
+190 Alleati: %s · pagina %s/%s
+191 Non ci sono altri giocatori online.
+192 Il tuo supporto raggiunge solo i tuoi alleati e i tuoi attacchi non li colpiscono. Tutti gli altri contano come nemici.
+193  · offline
+194 Rimuovi alleato
+195 Alleato
+196 Nemico
+197 Alleati
+198 Indossare qualsiasi pezzo di armatura disattiva le tue passive «senza armatura», tranne l'equipaggiamento della tua classe (finimenti da Barbaro o vesti da Monaco).
+199 Legato (%s/%s)
+200 Spezza
+201 Destinazione alla morte
+202 Punto di rinascita
+203 Legame
+204 Vicini, non legati
+205 Non hai animali non legati entro %s blocchi.
+206 Non hai ancora animali legati.
+207 Punto %s: vuoto
+208 Punto %s: %s, %s, %s (%s)
+209 Salva qui
+210 Salute %s/%s · Danno %s · Vel. %s
+211 Libro dei legami
+212 Non caricato: avvicinati per vederlo o liberarlo
+213 Usa
+214 Bloccato: usi già 3 rami. Si sblocca quando reimposti la classe.
+215 Rami (10 punti ciascuno; ogni punto potenzia tutte le sue passive). Puoi usarne 3 su 5: quando investi punti in tre, gli altri due restano bloccati finché non reimposti la classe.
+216 Scegli %s
+217 Chiudi
+218 Scegliere il perk %s?
+219 È gratuito, ma non potrai cambiarlo finché non reimposti la classe.
+220 Scegliere %s?
+221 Puoi avere una sola sottoclasse alla volta. Puoi reimpostarla, ma ogni reimpostazione fa perdere parte dell'XP speso.
+222 Puoi avere una sola classe. Potrai reimpostarla in seguito, ma ogni reimpostazione fa perdere parte dell'XP speso.
+223 Scegliere %s?
+224 (solo senza armatura)
+225 Critico: %s di probabilità, ×%s di danno più i bonus dei rami
+226 %s: %s
+227 Nessun valore numerico.
+228 %s: %s per punto, %s a 10
+229 (perk, valore fisso)
+230 %s: da %s (livello 1) a %s (livello 10)
+231 Passive (livelli di sottoclasse da 1 a 10)
+232 %s per livello: %s
+233 Costo in XP
+234 Livello n: %s XP. Totale: %s fino al livello 30 e %s per i 10 livelli di sottoclasse.
+235 La tua sottoclasse
+236 Equipaggiamento iniziale con durabilità infinita.
+237 Devi scegliere una classe per iniziare a giocare.
+238 Nessun equipaggiamento iniziale.
+239 nessun tasto
+240 Scegli un perk:
+241 %s: %s
+242 Perk a ramo completo (ne scegli uno, gratis, finché non reimposti la classe):
+243 Livello totale %s/40  |  XP: %s  |  %s
+244 Razza
+245 Tratti della sottorazza. R0–R3 = valore a ogni Rango (i Ranghi 1–3 si ottengono con i riti).
+246 Razza e sottorazza sono PERMANENTI. Non possono essere cambiate né reimpostate, nemmeno reimpostando la classe.
+247  (dal Rango %s)
+248 La tua razza · Rango %s
+249 Sottorazza
+250 La tua razza. Sottorazza: %s. Rango %s.
+251 Razza e sottorazza sono permanenti: non possono essere cambiate.
+252 Scegli la tua razza e sottorazza
+253 Razze
+254 Umano: scegli il tuo muro
+255 Tratti della razza (Rango 0)
+256 Non ancora disponibile: i suoi tratti sono in sviluppo.
+257 %s: −%s%% → −%s (a 30 punti)
+258 Adattabile riduce la penalità del muro che scegli. Si sceglie quando scegli la classe e cambia solo se la reimposti.
+259 Tuttofare: scegli un secondo muro, che riceve metà della riduzione.
+260 Reimposta classe
+261 Reimposta sottoclasse
+262 Perderai il %s dell'XP speso per ciò che reimposti; il resto viene rimborsato. Non è possibile in combattimento.
+263 Ruolo: %s
+264 livello %s (limite attuale %s, massimo 10)
+265 La sottoclasse si sblocca a %s punti di classe base (ne hai %s).
+266 La sottoclasse si sblocca a 15 punti di classe base. Ha 10 livelli.
+267 Scegli la tua sottoclasse:
+268 Rami e abilità
+269 Dati esatti
+270 Albero
+271 Sottoclassi
+272 Riepilogo
+273 Classi
+274 Scegli la tua classe
+275 Tratto della classe base (completo dalla scelta della classe)
+276 Livello di sottoclasse %s
+277 Livello totale %s
+278 Potenzia %s: resta inattivo finché non lo possiedi.
+279 %s: -%s al massimo
+280 Muri delle discipline
+281 Il muro cresce con i tuoi punti di classe base e raggiunge il massimo a 30. Con %s punti avresti %s.

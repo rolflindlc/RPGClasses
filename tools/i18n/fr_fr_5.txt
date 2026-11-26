@@ -126,159 +126,157 @@
 125 Corrupteur de peste
 126 Encore plus difficile à détecter, et quand vous devenez invisible, vous laissez un leurre qui distrait les ennemis.
 127 Illusionniste des ombres
-128 Vous vous déplacez accroupi aussi vite qu'en marchant et vous vous téléportez sur de courtes distances.
-129 Marcheur des ombres
-130 Des flèches très rapides et bien plus de dégâts par tir, en échange d'une tension d'arc plus lente.
-131 Sniper
-132 Plus de dégâts, et quand vous subissez un coup mortel, vous devenez immortel quelques secondes : si vous tuez votre agresseur, vous vivez.
-133 Berserker suicidaire
-134 Chaque posture vous protège d'un type de dégâts et ajoute son propre effet : feu, eau ou pierre.
-135 Gardien des trois mondes
-136 Inébranlable. Immunisé contre le recul, vous résistez aux rafales de coups et votre Rempart vous purge des effets négatifs.
-137 Bastion inflexible
-138 Vous voyez dans le noir sous terre et êtes immunisé contre les Ténèbres. Le Sens de la pierre (touche raciale 1, Rang 1) met en évidence les minerais et la lave proches.
-139 des Profondeurs
-140 Votre propre TNT ne vous blesse pas et explose avec un rayon 25 % plus grand. À partir du Rang 1, casser un minerai casse aussi ceux qui lui sont connectés (pas en étant accroupi). Au Rang 3, accroupi, vous minez la pierre dans un tunnel 3×3 (consomme plus de faim).
-141 Démolisseur
-142 Ce que vous fabriquez ou réparez dure plus longtemps (+20 %, +40 % au Rang 2). À partir du Rang 1, l'enclume vous coûte la moitié des niveaux. Au Rang 3, ce que vous fabriquez sort avec Solidité +1 (maximum III).
-143 Forgeron
-144 La table d'enchantement compte comme si son niveau était plus élevé et enchanter (à la table ou à l'enclume) vous coûte moins d'expérience. Au Rang 3, fusionnez à l'enclume deux enchantements identiques de niveau maximal pour dépasser ce maximum de 1.
-145 Arcanique
-146 Vous voyez dans n'importe quelle obscurité. Nuage de fumée (touche raciale 1, Rang 1) : vous et vos alliés à l'intérieur êtes invisibles et les monstres à l'extérieur vous perdent de vue. N'est pas révélé par la proximité.
-147 Ténébreux
-148 Vos cultures donnent plus de rendement ; avec les rangs, la nourriture végétale vous rassasie davantage et vous pouvez faire pousser les cultures à mains nues.
-149 Sylvestre
-150 Doigts agiles : en frappant en mêlée, vous pouvez voler un objet du butin d'un monstre (sans le tuer) ou de l'inventaire d'un joueur (jamais de la barre rapide ni du kit).
-151 Voleur
-152 Collet (touche raciale 1) : vous posez un piège qui n'expire jamais ; vous seul le voyez et le premier ennemi à marcher dessus subit des dégâts et est immobilisé.
-153 Piégeur
-154 Faites un clic droit sur votre loup à mains nues pour le monter (accroupi : le faire s'asseoir, comme d'habitude). Avec les rangs : vos loups ont plus de santé, le loup monté mord ce que vous frappez et régénère pendant que vous le montez.
-155 Cavalier de loup
-156 Vous perdez moins d'XP en réinitialisant votre classe ou sous-classe : la perte est réduite du pourcentage de votre Rang.
-157 Autodidacte
-158 Choisissez un second mur, qui reçoit la moitié de la réduction.
-159 Polyvalent
-160 La réduction de votre mur choisi est 50 % plus grande (jusqu'à −75 % au Rang 3).
-161 Spécialiste
-162 Les piglins, brutes et hoglins sont neutres envers vous tant que vous ne les attaquez pas. Avec les rangs : immunisé contre le Wither, meilleur troc avec les piglins et Boussole infernale (touche raciale 1, Rang 3).
-163 Natif
-164 Votre Tir de feu racial transperce les ennemis. Avec les rangs, votre Bombe de magma raciale laisse une flaque de flammes et, au Rang 3, de la lave qui ralentit. Nécessite Iron's Spells.
-165 Pyromane
-166 Vous marchez sur la lave. Avec les rangs, les fourneaux proches fonctionnent plus vite, les minerais que vous minez sortent fondus et vous faites fondre instantanément ce que vous tenez en main (touche raciale 1, Rang 3).
-167 Fondeur
-168 Vous mangez viande et poisson crus sans effets négatifs et ils vous rassasient comme s'ils étaient cuits. Avec les rangs, tuer vous nourrit et accorde des effets de combat.
-169 Dévoreur
-170 Peau épaisse : chaque coup que vous subissez inflige un montant fixe de dégâts en moins, sans minimum.
-171 Peau de pierre
-172 Voix du seigneur de guerre (touche raciale 1) : retire les effets de contrôle de vous et des alliés proches.
-173 Seigneur de guerre
-174 Les noyés et les gardiens sont neutres envers vous tant que vous ne les attaquez pas. Avec les rangs : immunités sous l'eau, camouflage et escorte de gardiens.
-175 Abyssal
-176 Les poissons mordent plus tôt et vous avez la Chance de la mer raciale en pêchant ; avec les rangs, prises supplémentaires, plus de trésors et plus d'expérience.
-177 Pêcheur
-178 Sorts d'eau raciaux toujours dans la roue d'Iron's : Tir hydraulique ; Débordement (niveau 3) au Rang 1 ; Jet de vapeur au Rang 2 et Étreinte des marées au Rang 3. Ils coûtent du mana et subissent le mur de Magie de votre classe. Nécessite T.O Magic 'n Extras.
-179 Façonneur
-180 Les squelettes sont neutres envers vous tant que vous ne les attaquez pas et vous subissez moins de dégâts de projectiles. Au Rang 3, votre régénération est interrompue moins longtemps.
-181 Squelette
-182 Vous ne subissez pas de dégâts de chute et tombez lentement (s'accroupir l'empêche). Forme éthérée (touche raciale 1, Rang 1) : quelques secondes sans pouvoir subir de dégâts ni attaquer ; ne protège pas du soleil.
-183 Spectre
-184 Soif : tuer vous soigne et, avec les rangs, vous volez de la vie sur les dégâts que vous infligez (avec un plafond par seconde).
-185 Vampire
-186 Forge naine : +%s %% de solidité
-187 Capacités
-188 Disciplines affines (sans pénalité) : %s
-189 Marquer comme allié
-190  · vous a pour allié
-191 Alliés
-192 Alliés : %s · page %s/%s
-193 Il n'y a aucun autre joueur en ligne.
-194 Votre soutien n'atteint que vos alliés et vos attaques ne les affectent pas. Tous les autres comptent comme des ennemis.
-195  · hors ligne
-196 Retirer l'allié
-197 Allié
-198 Ennemi
-199 Alliés
-200 Porter la moindre pièce d'armure désactive vos passifs « sans armure », sauf l'équipement de votre classe (harnais de Barbare ou robes de Moine).
-201 Lié (%s/%s)
-202 Rompre
-203 Destination à la mort
-204 Point d'apparition
-205 Lien
-206 À proximité, non lié
-207 Vous n'avez aucun animal non lié à moins de %s blocs.
-208 Vous n'avez pas encore d'animal lié.
-209 Point %s : vide
-210 Point %s : %s, %s, %s (%s)
-211 Enregistrer ici
-212 Santé %s/%s · Dégâts %s · Vit. %s
-213 Livre des liens
-214 Non chargé : rapprochez-vous pour le voir ou le libérer
-215 Utiliser
-216 Verrouillé : vous utilisez déjà 3 branches. Il se déverrouille quand vous réinitialisez votre classe.
-217 Branches (10 points chacune ; chaque point augmente tous ses passifs). Vous pouvez en utiliser 3 sur 5 : quand vous investissez des points dans trois, les deux autres sont verrouillées jusqu'à la réinitialisation de votre classe.
-218 Choisir %s
-219 Fermer
-220 Choisir le perk %s ?
-221 C'est gratuit, mais vous ne pourrez pas le changer avant de réinitialiser votre classe.
-222 Choisir %s ?
-223 Vous ne pouvez avoir qu'une seule sous-classe à la fois. Vous pouvez la réinitialiser, mais chaque réinitialisation fait perdre une partie de l'XP dépensée.
-224 Vous ne pouvez avoir qu'une seule classe. Vous pourrez la réinitialiser plus tard, mais chaque réinitialisation fait perdre une partie de l'XP dépensée.
-225 Choisir %s ?
-226 (sans armure uniquement)
-227 Critique : %s de chances, ×%s de dégâts plus les bonus des branches
-228 %s : %s
-229 Aucune valeur numérique.
-230 %s : %s par point, %s à 10
-231 (perk, valeur fixe)
-232 %s : de %s (niveau 1) à %s (niveau 10)
-233 Passifs (niveau de sous-classe 1 à 10)
-234 %s par niveau : %s
-235 Coût en XP
-236 Niveau n : %s XP. Total : %s jusqu'au niveau 30 et %s pour les 10 niveaux de sous-classe.
-237 Votre sous-classe
-238 Équipement de départ à durabilité infinie.
-239 Vous devez choisir une classe pour commencer à jouer.
-240 Pas d'équipement de départ.
-241 sans touche
-242 Choisissez un perk :
-243 %s : %s
-244 Perk quand la branche est pleine (vous en choisissez un, gratuitement, jusqu'à la réinitialisation de la classe) :
-245 Niveau total %s/40  |  XP : %s  |  %s
-246 Race
-247 Traits de la sous-race. R0–R3 = valeur à chaque Rang (les Rangs 1–3 se gagnent par des rites).
-248 La race et la sous-race sont PERMANENTES. Elles ne peuvent être ni changées ni réinitialisées, même en réinitialisant votre classe.
-249  (à partir du Rang %s)
-250 Votre race · Rang %s
-251 Sous-race
-252 Votre race. Sous-race : %s. Rang %s.
-253 La race et la sous-race sont permanentes : elles ne peuvent pas être changées.
-254 Choisissez votre race et votre sous-race
-255 Races
-256 Humain : choisissez votre mur
-257 Traits de la race (Rang 0)
-258 Pas encore disponible : ses traits sont en développement.
-259 %s : −%s %% → −%s (à 30 points)
-260 Adaptable réduit la pénalité du mur que vous choisissez. Il se choisit en choisissant une classe et ne change qu'à sa réinitialisation.
-261 Polyvalent : choisissez un second mur, qui reçoit la moitié de la réduction.
-262 Réinitialiser la classe
-263 Réinitialiser la sous-classe
-264 Vous perdrez %s de l'XP dépensée pour ce que vous réinitialisez ; le reste est remboursé. Impossible en combat.
-265 Rôle : %s
-266 niveau %s (plafond actuel %s, maximum 10)
-267 La sous-classe se débloque à %s points de classe de base (vous en avez %s).
-268 La sous-classe se débloque à 15 points de classe de base. Elle a 10 niveaux.
-269 Choisissez votre sous-classe :
-270 Branches et capacités
-271 Données exactes
-272 Arbre
-273 Sous-classes
-274 Résumé
-275 Classes
-276 Choisissez votre classe
-277 Trait de la classe de base (complet dès le choix de la classe)
-278 Niveau de sous-classe %s
-279 Niveau total %s
-280 Améliore %s : reste dormant tant que vous ne l'avez pas.
-281 %s : -%s au maximum
-282 Murs de disciplines
-283 Le mur croît avec vos points de classe de base et atteint son maximum à 30. Avec %s points, vous auriez %s.
+128 Des flèches ultrarapides et beaucoup plus de dégâts par tir, au prix d'une tension de l'arc plus lente. Tu te camoufles accroupi et immobile, et tu marques ta proie à la longue-vue pour un tir dévastateur.
+129 Sniper
+130 Plus de dégâts, et quand vous subissez un coup mortel, vous devenez immortel quelques secondes : si vous tuez votre agresseur, vous vivez.
+131 Berserker suicidaire
+132 Chaque posture vous protège d'un type de dégâts et ajoute son propre effet : feu, eau ou pierre.
+133 Gardien des trois mondes
+134 Inébranlable. Immunisé au recul, tu encaisses les rafales de coups et en renvoies une partie, et ton Rempart te purge des effets négatifs.
+135 Bastion inflexible
+136 Vous voyez dans le noir sous terre et êtes immunisé contre les Ténèbres. Le Sens de la pierre (touche raciale 1, Rang 1) met en évidence les minerais et la lave proches.
+137 des Profondeurs
+138 Votre propre TNT ne vous blesse pas et explose avec un rayon 25 % plus grand. À partir du Rang 1, casser un minerai casse aussi ceux qui lui sont connectés (pas en étant accroupi). Au Rang 3, accroupi, vous minez la pierre dans un tunnel 3×3 (consomme plus de faim).
+139 Démolisseur
+140 Ce que vous fabriquez ou réparez dure plus longtemps (+20 %, +40 % au Rang 2). À partir du Rang 1, l'enclume vous coûte la moitié des niveaux. Au Rang 3, ce que vous fabriquez sort avec Solidité +1 (maximum III).
+141 Forgeron
+142 La table d'enchantement compte comme si son niveau était plus élevé et enchanter (à la table ou à l'enclume) vous coûte moins d'expérience. Au Rang 3, fusionnez à l'enclume deux enchantements identiques de niveau maximal pour dépasser ce maximum de 1.
+143 Arcanique
+144 Vous voyez dans n'importe quelle obscurité. Nuage de fumée (touche raciale 1, Rang 1) : vous et vos alliés à l'intérieur êtes invisibles et les monstres à l'extérieur vous perdent de vue. N'est pas révélé par la proximité.
+145 Ténébreux
+146 Vos cultures donnent plus de rendement ; avec les rangs, la nourriture végétale vous rassasie davantage et vous pouvez faire pousser les cultures à mains nues.
+147 Sylvestre
+148 Doigts agiles : en frappant en mêlée, vous pouvez voler un objet du butin d'un monstre (sans le tuer) ou de l'inventaire d'un joueur (jamais de la barre rapide ni du kit).
+149 Voleur
+150 Collet (touche raciale 1) : vous posez un piège qui n'expire jamais ; vous seul le voyez et le premier ennemi à marcher dessus subit des dégâts et est immobilisé.
+151 Piégeur
+152 Faites un clic droit sur votre loup à mains nues pour le monter (accroupi : le faire s'asseoir, comme d'habitude). Avec les rangs : vos loups ont plus de santé, le loup monté mord ce que vous frappez et régénère pendant que vous le montez.
+153 Cavalier de loup
+154 Vous perdez moins d'XP en réinitialisant votre classe ou sous-classe : la perte est réduite du pourcentage de votre Rang.
+155 Autodidacte
+156 Choisissez un second mur, qui reçoit la moitié de la réduction.
+157 Polyvalent
+158 La réduction de votre mur choisi est 50 % plus grande (jusqu'à −75 % au Rang 3).
+159 Spécialiste
+160 Les piglins, brutes et hoglins sont neutres envers vous tant que vous ne les attaquez pas. Avec les rangs : immunisé contre le Wither, meilleur troc avec les piglins et Boussole infernale (touche raciale 1, Rang 3).
+161 Natif
+162 Votre Tir de feu racial transperce les ennemis. Avec les rangs, votre Bombe de magma raciale laisse une flaque de flammes et, au Rang 3, de la lave qui ralentit. Nécessite Iron's Spells.
+163 Pyromane
+164 Vous marchez sur la lave. Avec les rangs, les fourneaux proches fonctionnent plus vite, les minerais que vous minez sortent fondus et vous faites fondre instantanément ce que vous tenez en main (touche raciale 1, Rang 3).
+165 Fondeur
+166 Vous mangez viande et poisson crus sans effets négatifs et ils vous rassasient comme s'ils étaient cuits. Avec les rangs, tuer vous nourrit et accorde des effets de combat.
+167 Dévoreur
+168 Peau épaisse : chaque coup que vous subissez inflige un montant fixe de dégâts en moins, sans minimum.
+169 Peau de pierre
+170 Voix du seigneur de guerre (touche raciale 1) : retire les effets de contrôle de vous et des alliés proches.
+171 Seigneur de guerre
+172 Les noyés et les gardiens sont neutres envers vous tant que vous ne les attaquez pas. Avec les rangs : immunités sous l'eau, camouflage et escorte de gardiens.
+173 Abyssal
+174 Les poissons mordent plus tôt et vous avez la Chance de la mer raciale en pêchant ; avec les rangs, prises supplémentaires, plus de trésors et plus d'expérience.
+175 Pêcheur
+176 Sorts d'eau raciaux toujours dans la roue d'Iron's : Tir hydraulique ; Débordement (niveau 3) au Rang 1 ; Jet de vapeur au Rang 2 et Étreinte des marées au Rang 3. Ils coûtent du mana et subissent le mur de Magie de votre classe. Nécessite T.O Magic 'n Extras.
+177 Façonneur
+178 Les squelettes sont neutres envers vous tant que vous ne les attaquez pas et vous subissez moins de dégâts de projectiles. Au Rang 3, votre régénération est interrompue moins longtemps.
+179 Squelette
+180 Vous ne subissez pas de dégâts de chute et tombez lentement (s'accroupir l'empêche). Forme éthérée (touche raciale 1, Rang 1) : quelques secondes sans pouvoir subir de dégâts ni attaquer ; ne protège pas du soleil.
+181 Spectre
+182 Soif : tuer vous soigne et, avec les rangs, vous volez de la vie sur les dégâts que vous infligez (avec un plafond par seconde).
+183 Vampire
+184 Forge naine : +%s %% de solidité
+185 Capacités
+186 Disciplines affines (sans pénalité) : %s
+187 Marquer comme allié
+188  · vous a pour allié
+189 Alliés
+190 Alliés : %s · page %s/%s
+191 Il n'y a aucun autre joueur en ligne.
+192 Votre soutien n'atteint que vos alliés et vos attaques ne les affectent pas. Tous les autres comptent comme des ennemis.
+193  · hors ligne
+194 Retirer l'allié
+195 Allié
+196 Ennemi
+197 Alliés
+198 Porter la moindre pièce d'armure désactive vos passifs « sans armure », sauf l'équipement de votre classe (harnais de Barbare ou robes de Moine).
+199 Lié (%s/%s)
+200 Rompre
+201 Destination à la mort
+202 Point d'apparition
+203 Lien
+204 À proximité, non lié
+205 Vous n'avez aucun animal non lié à moins de %s blocs.
+206 Vous n'avez pas encore d'animal lié.
+207 Point %s : vide
+208 Point %s : %s, %s, %s (%s)
+209 Enregistrer ici
+210 Santé %s/%s · Dégâts %s · Vit. %s
+211 Livre des liens
+212 Non chargé : rapprochez-vous pour le voir ou le libérer
+213 Utiliser
+214 Verrouillé : vous utilisez déjà 3 branches. Il se déverrouille quand vous réinitialisez votre classe.
+215 Branches (10 points chacune ; chaque point augmente tous ses passifs). Vous pouvez en utiliser 3 sur 5 : quand vous investissez des points dans trois, les deux autres sont verrouillées jusqu'à la réinitialisation de votre classe.
+216 Choisir %s
+217 Fermer
+218 Choisir le perk %s ?
+219 C'est gratuit, mais vous ne pourrez pas le changer avant de réinitialiser votre classe.
+220 Choisir %s ?
+221 Vous ne pouvez avoir qu'une seule sous-classe à la fois. Vous pouvez la réinitialiser, mais chaque réinitialisation fait perdre une partie de l'XP dépensée.
+222 Vous ne pouvez avoir qu'une seule classe. Vous pourrez la réinitialiser plus tard, mais chaque réinitialisation fait perdre une partie de l'XP dépensée.
+223 Choisir %s ?
+224 (sans armure uniquement)
+225 Critique : %s de chances, ×%s de dégâts plus les bonus des branches
+226 %s : %s
+227 Aucune valeur numérique.
+228 %s : %s par point, %s à 10
+229 (perk, valeur fixe)
+230 %s : de %s (niveau 1) à %s (niveau 10)
+231 Passifs (niveau de sous-classe 1 à 10)
+232 %s par niveau : %s
+233 Coût en XP
+234 Niveau n : %s XP. Total : %s jusqu'au niveau 30 et %s pour les 10 niveaux de sous-classe.
+235 Votre sous-classe
+236 Équipement de départ à durabilité infinie.
+237 Vous devez choisir une classe pour commencer à jouer.
+238 Pas d'équipement de départ.
+239 sans touche
+240 Choisissez un perk :
+241 %s : %s
+242 Perk quand la branche est pleine (vous en choisissez un, gratuitement, jusqu'à la réinitialisation de la classe) :
+243 Niveau total %s/40  |  XP : %s  |  %s
+244 Race
+245 Traits de la sous-race. R0–R3 = valeur à chaque Rang (les Rangs 1–3 se gagnent par des rites).
+246 La race et la sous-race sont PERMANENTES. Elles ne peuvent être ni changées ni réinitialisées, même en réinitialisant votre classe.
+247  (à partir du Rang %s)
+248 Votre race · Rang %s
+249 Sous-race
+250 Votre race. Sous-race : %s. Rang %s.
+251 La race et la sous-race sont permanentes : elles ne peuvent pas être changées.
+252 Choisissez votre race et votre sous-race
+253 Races
+254 Humain : choisissez votre mur
+255 Traits de la race (Rang 0)
+256 Pas encore disponible : ses traits sont en développement.
+257 %s : −%s %% → −%s (à 30 points)
+258 Adaptable réduit la pénalité du mur que vous choisissez. Il se choisit en choisissant une classe et ne change qu'à sa réinitialisation.
+259 Polyvalent : choisissez un second mur, qui reçoit la moitié de la réduction.
+260 Réinitialiser la classe
+261 Réinitialiser la sous-classe
+262 Vous perdrez %s de l'XP dépensée pour ce que vous réinitialisez ; le reste est remboursé. Impossible en combat.
+263 Rôle : %s
+264 niveau %s (plafond actuel %s, maximum 10)
+265 La sous-classe se débloque à %s points de classe de base (vous en avez %s).
+266 La sous-classe se débloque à 15 points de classe de base. Elle a 10 niveaux.
+267 Choisissez votre sous-classe :
+268 Branches et capacités
+269 Données exactes
+270 Arbre
+271 Sous-classes
+272 Résumé
+273 Classes
+274 Choisissez votre classe
+275 Trait de la classe de base (complet dès le choix de la classe)
+276 Niveau de sous-classe %s
+277 Niveau total %s
+278 Améliore %s : reste dormant tant que vous ne l'avez pas.
+279 %s : -%s au maximum
+280 Murs de disciplines
+281 Le mur croît avec vos points de classe de base et atteint son maximum à 30. Avec %s points, vous auriez %s.

@@ -113,7 +113,7 @@ RACE_TEXT = {  # id: (nombre, descripción)
 SUBRACE_TEXT = {  # (raza, subraza): (nombre, descripción)
  ("human", "polyvalent"): ("Polivalente", "Elige un segundo muro, que recibe la mitad de la reducción."),
  ("human", "specialist"): ("Especialista", "La reducción de tu muro elegido es un 50 % mayor (hasta −75 % en Rango 3)."),
- ("human", "autodidact"): ("Autodidacta", "Pierdes menos XP al reiniciar la clase o la subclase: la pérdida se reduce en el porcentaje de tu Rango."),
+ ("human", "autodidact"): ("Autodidacta", "Pierdes menos puntos al reiniciar la clase o la subclase: la pérdida se reduce en el porcentaje de tu Rango."),
  ("orc", "stoneskin"): ("Pétreo", "Piel Gruesa: cada golpe que recibes hace menos daño en un valor fijo, sin mínimo."),
  ("orc", "devourer"): ("Devorador", "Comes carne y pescado crudos sin efectos negativos y sacian como cocinados. Con los rangos, matar te alimenta y te da efectos de combate."),
  ("orc", "warlord"): ("Caudillo", "Voz del Caudillo (tecla racial 1): elimina los efectos de control de ti y de los aliados cercanos."),
@@ -146,7 +146,7 @@ MECHANIC_TEXT = {  # id sin "race_": (nombre, descripción corta)
  "forest_regen": ("Savia", "Desde Rango 2, en biomas de bosque tienes Regeneración I."),
  "trident_mastery": ("Maestría del Tridente", "Desde Rango 2, el tridente (cuerpo a cuerpo o lanzado) hace un 25 % más de daño."),
  "searing_strikes": ("Golpes Abrasadores", "Desde Rango 2, tus golpes cuerpo a cuerpo prenden al objetivo 2 s."),
- "flexible_respec": ("Reinicio Flexible", "La pérdida de XP al reiniciar se reduce en el porcentaje de Adaptable."),
+ "flexible_respec": ("Reinicio Flexible", "La pérdida de puntos al reiniciar se reduce en el porcentaje de Adaptable."),
  "last_stand": ("Última Resistencia", "Sobrevives a un golpe letal con 1 HP, 1 vez por vida. Va después de las habilidades de clase y antes del Tótem."),
  "hunger": ("Apetito de orco", "Consumes más hambre."),
  "thick_skin": ("Piel Gruesa", "Daño restado a cada golpe recibido."),
@@ -355,7 +355,7 @@ RACES.update({
         attr((MC + "movement_speed", -.10, "multiply_base")),
         mech("belt", slots=V(3, 4, 5, 6), passengers=V(1, 1, 2, 2), passenger_penalty=V(.05, .05, .05, 0))]),
     ("titan", "minecraft:obsidian", True, [
-        mech("grow", duration_seconds=V(30, 42, 51, 60), cooldown_seconds=V(135, 120, 105, 90), absorption=V(.50, .70, .85, 1.0),
+        mech("grow", duration_seconds=V(30, 42, 51, 60), cooldown_seconds=V(135, 120, 105, 90), absorption=V(.40, .55, .70, .80),
              shake_radius=24, size=3, fall_height=12)])]),
  "draconid": ("minecraft:dragon_head", [
     mech("hunger", exhaustion=.25),
@@ -375,7 +375,7 @@ RACES.update({
         mech("breath_water", breath_push=1.0), mech("deep_lungs", air_factor=3), mech("water_breathing", 2)])]),
  "centaur": ("minecraft:saddle", [
     attr((R("body"), 1, "add")),
-    mech("centaur", max_speed=V(.40, .50, .60, .75), accel_seconds=V(5, 4.3, 3.7, 3), ram_damage=V(6, 8, 10, 13),
+    mech("centaur", max_speed=V(.40, .45, .55, .65), accel_seconds=V(5, 4.3, 3.7, 3), ram_damage=V(6, 8, 10, 13),
          ram_knockback=V(4, 5, 6, 7), ram_threshold=.40, ram_speed_loss=.75, jump_charge_seconds=V(1, .9, .75, .6),
          passengers=V(1, 1, 2, 2), passenger_penalty=.10, speed_limit=3.0, fall_height=6),
     mech("no_mount")], [

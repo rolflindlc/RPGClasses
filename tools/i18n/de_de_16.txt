@@ -190,7 +190,7 @@
 189 Regeneration in Gestalt (Leben pro Sekunde)
 190 Schwimmtempo von Wassergestalten
 191 Verlorenes maximales Leben
-192 Leben und Schaden der Gestalt pro Gesamtstufe
+192 Schaden der Gestalt pro Gesamtstufe
 193 Grundmana einer Gestalt
 194 Mana pro Punkt Bestienstärke
 195 Maximal gespeicherte Chimären
@@ -209,7 +209,7 @@
 208 Mana der Naturzauber in Gestalt
 209 Leben und Schaden der Gestalten
 210 Punkte pro Studium
-211 Studiendauer
+211 Studiendauer (Spieler)
 212 Studiendauer
 213 Teleportiert sich ab (Blöcke)
 214 Deine Gestalten haben deutlich mehr Leben, verursachen aber weniger Schaden.
@@ -234,7 +234,7 @@
 233 Reiche Gestalt
 234 Ritual des Druiden
 235 Auf die Überreste einer frisch getöteten Bestie: Du lernst etwas mehr über ihre Art (ein Wissenspunkt). Nur Druide.
-236 Druide des Mondkreises: verwandelt sich im Nu, fast ohne Abklingzeit, und seine Gestalten reservieren kein Mana.
+236 Druide des Mondkreises: verwandelt sich im Nu, fast ohne Abklingzeit, und seine Gestalten reservieren kein Mana. Beim Wechsel von einer Gestalt in eine andere bleibt der Lebensanteil gleich.
 237 Kreis des Mondes
 238 Dunkle Rituale: reißt Teile aus den Überresten von Bestien (Kopf, Rumpf, Beine und Instinkt), vereint sie in einem Fleischgefäß und erweckt auf einem Fleischaltar eine Chimäre zum Leben, in die er sich verwandeln kann. Jede Erschaffung kostet viel Mana und eine Weile einen Teil seines Lebens.
 239 Bildhauer

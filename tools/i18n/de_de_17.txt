@@ -1,0 +1,80 @@
+0 In Tiergestalt kannst du keine Behälter benutzen.
+1 Bestiarium von %s: %s
+2 %s kennt keine Art.
+3 %s kennt jetzt %s (%s/%s Punkte).
+4 %s hat %s vergessen.
+5 %s hat kein Wissen über %s.
+6 %s ist keine gültige Art für den Druiden.
+7 Gesichtswandler
+8 Spion und Hochstapler. Mit einem Fernrohr studierst du Spieler und humanoide Mobs, bis du ihr Gesicht kennst, und verkleidest dich dann als sie: Mit dem Gesicht eines Mobs ignoriert dich seine Fraktion, mit dem eines Spielers halten dich andere für ihn.
+9 Spionfernrohr
+10 Beim Blick durch ein Fernrohr siehst du die Gesundheit des Ziels und auf höheren Unterklassenstufen auch Rüstung und Effekte; außerdem wird es markiert und leuchtet einige Sekunden nur für dich. Einen Spieler oder einen Dorfbewohner, Illager, eine Hexe, einen Piglin oder humanoiden Untoten anzusehen sammelt Studium (muss nicht am Stück sein): Ist es vollständig, lernst du sein Gesicht. Mobs lernst du nach Art, Spieler einzeln. Verkleidete Ziele kann man nicht studieren.
+11 Verkleidung
+12 Öffnet die Liste der gelernten Gesichter, und du setzt eines auf. Mit dem Gesicht eines Mobs ignoriert dich seine ganze Fraktion. Mit dem eines Spielers sehen andere seinen Skin, seine Größe und seinen Namen, du verschwindest aus der Tab-Liste und Todesnachrichten zeigen seinen Namen. Verbündete sehen dich verkleidet, aber mit deinem echten Namen. Angreifen bricht sie nicht, verrät dich aber dem Getroffenen und nahen Mitgliedern seiner Fraktion; Mobs, die dich schon verfolgten, wissen, dass du ein Hochstapler bist, bis sie dich aus den Augen verlieren. Wasser, Regen, Feuer oder Tarnung brechen die Verkleidung und gewähren eine kurze Flucht (Schnelligkeit und Unsichtbarkeit). Erneut drücken, um sie abzulegen; die Abklingzeit beginnt, wenn die Verkleidung endet. Sie ist nur optisch: Hitbox und Reichweite bleiben gleich.
+13 Du kennst noch kein Gesicht: Studiere jemanden mit einem Fernrohr.
+14 Nass, brennend oder getarnt kannst du dich nicht verkleiden.
+15 Du bist jetzt %s.
+16 Das Wasser hat deine Verkleidung ruiniert.
+17 Das Feuer hat deine Verkleidung ruiniert.
+18 Als du dich in den Schatten verbirgst, legst du die Verkleidung ab.
+19 Du legst die Verkleidung ab.
+20 Leben %s/%s
+21 Rüstung %s
+22 Keine Effekte
+23 Studiere %s: %s%%
+24 Gesicht von %s gelernt
+25 Du hast das Gesicht von %s gelernt!
+26 Gesichter
+27 Studienreichweite (Blöcke)
+28 Rüstung sichtbar ab Stufe
+29 Effekte sichtbar ab Stufe
+30 Alarmradius der Fraktion (Blöcke)
+31 Vergessen nach Aggroverlust
+32 Fluchtgeschwindigkeit
+33 Stufe der Fluchtgeschwindigkeit
+34 Fluchtunsichtbarkeit
+35 Göttliche Strafe
+36 Alle paar Nahkampftreffer entfesselt deine Waffe eine heilige Strafe, die dem Treffer Schaden hinzufügt; gegen Untote und Nether-Kreaturen doppelt so viel.
+37 Tarnung
+38 Schleich und bleib einige Sekunden still, um für Mobs und Spieler unsichtbar zu werden, bis du dich bewegst, aufstehst oder schießt.
+39 Zielmarke
+40 Sieh einen Gegner einige Sekunden am Stück durch ein Fernrohr an, um ihn zu markieren (immer nur einen). Er leuchtet für dich, und dein nächster Schuss, der ihn trifft, richtet viel mehr Schaden an.
+41 Zielen: %s%%
+42 %s ist markiert
+43 Fluchtzeit der Mobs
+44 Multiplikator gegen Untote und Nether
+45 Zurückgeworfener Schaden
+46 Blutbund
+47 Sieh einen Verbündeten oder Gegner in der Nähe an und drücke, um dich mit einem Blutband an ihn zu binden (höchstens je einen). Die Hälfte des Schadens deines Verbündeten trifft dich als wahrer Schaden; dein Gegner erleidet zudem einen Teil allen Schadens, den du erleidest, auch des Lebens, das du mit Opfer zahlst. Es reißt bei zu großer Entfernung; drücke mit Blick auf ein Gebundenes (oder ins Leere), um es zu lösen.
+48 Schutzengel
+49 Während du für einen Verbündeten betest, wird der erste Treffer, der ihn töten würde, aufgehoben. Jeder Verbündete hat eine eigene Abklingzeit.
+50 Es gibt niemanden, an den du dich binden kannst.
+51 An %s gebunden: du teilst seinen Schmerz.
+52 An %s gebunden: er wird mit dir leiden.
+53 Der Blutbund ist gerissen.
+54 Ein Schutzengel hat dich gerettet!
+55 Dein Gebet hat %s gerettet.
+56 %1$s verblutete durch einen Bund
+57 %1$s verblutete durch einen Bund mit %2$s
+58 Bindungsreichweite (Blöcke)
+59 Max. Entfernung des Verbündeten (Blöcke)
+60 Max. Entfernung des Gegners (Blöcke)
+61 Schaden des Verbündeten, den du erleidest
+62 Schaden, den der Gegner erleidet
+63 Leben der Gestalt pro Gesamtstufe
+64 HUD bearbeiten
+65 HUD-Editor
+66 Ziehen zum Verschieben · Rechtsklick: aus- oder einblenden · Pfeile: feinjustieren (Umschalt ×10) · R: zurücksetzen
+67 Alles zurücksetzen
+68 %s (ausgeblendet)
+69 Fähigkeiten
+70 Schleichleiste
+71 Mönch-Ladungen
+72 Drehleiste
+73 Schleim-Verschmelzung
+74 Wolfssprung
+75 Zentaurensprung
+76 Druiden-Wirken
+77 Druiden-Gestalt
+78 Barden-Rhythmus
+79 Studiendauer (Mobs)

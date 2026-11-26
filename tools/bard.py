@@ -61,12 +61,12 @@ SUBS = {
     # Cantor de Guerra: +1 % de daño por acierto con armas ligeras y pesadas (tope +30 %, sumado al muro) y Golpe Resonante.
     "war_chanter": ("minecraft:goat_horn", [
         mech("martial_combo", per_hit=.01, cap=.30),
-        mech("resonant_strike", every_hits=5, radius=3, damage_fraction={"from": .30, "to": .75})],
+        mech("resonant_strike", every_hits=5, radius=3, damage_fraction={"from": .30, "to": 1.0})],
         [ms(5, "rhythmic_fury", True)]),
     # Encantador: los efectos de control duran +5 % por nivel; Contagio del baile; Hechizar en el nivel 5.
     "enchanter": ("minecraft:amethyst_cluster", [
         mech("hypnotic_voice", control_duration={"to": .50}),
-        mech("dance_contagion", radius=3, chance=.50, max_extra=3)],
+        mech("dance_contagion", radius=3, chance=.50, max_extra=5)],
         [ms(5, "bewitch", True)]),
     # Juglar: +1 ranura en los niveles 3, 6 y 9; −1 de combo mínimo cada 2 niveles; Recital en el nivel 5.
     "minstrel": ("minecraft:jukebox", [
@@ -93,8 +93,8 @@ ABILITIES = {
     "crescendo": dict(cooldown_seconds=90, duration_seconds=8, hit_multiplier=2),
     # Subclases (hito del nivel 5).
     "rhythmic_fury": dict(passive=True, min_stage=3, damage_bonus=.10),
-    "bewitch": dict(passive=True, duration_seconds=4),
-    "recital": dict(passive=True, distinct_spells=3, window_seconds=12, cooldown_cut=.5, icd_seconds=20),
+    "bewitch": dict(passive=True, duration_seconds=6),
+    "recital": dict(passive=True, distinct_spells=3, window_seconds=12, cooldown_cut=.5, icd_seconds=12),
 }
 
 # ------------------------------------------------------------------ textos de clase

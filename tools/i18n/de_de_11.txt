@@ -132,9 +132,9 @@
 131 Buße
 132 Flügel aus Licht: weniger Fallschaden und langsamer Fall, ein Heiligenschein, der Verbündete in der Nähe regeneriert, und ab Stufe 5 die Engelsgestalt: Du fliegst einige Sekunden, während du und deine Verbündeten regeneriert und geläutert werdet.
 133 Engel
-134 Betet für einen Verbündeten, auch ohne ihn zu sehen: Dein Körper bleibt geduckt und du wirst zu einem schwebenden Kopf, der ihn begleitet. Von dort wirkst du deine Zauber, mit weniger Macht, je weiter dein Körper entfernt ist.
+134 Bete für einen Verbündeten, auch ohne ihn zu sehen: Dein Körper bleibt kniend und du wirst zu einem schwebenden Kopf, der ihn begleitet. Von dort wirkst du deine Zauber, schwächer je weiter dein Körper entfernt ist, und dein Gebet hebt den ersten Treffer auf, der ihn töten würde.
 135 Fürsprecher
-136 Heilt mit seinem eigenen Blut: mehr Gesundheit, weniger erlittener Schaden bei schweren Wunden und ab Stufe 5 das Opfer: Du zahlst Gesundheit, um einen Verbündeten zu heilen, ohne Abklingzeit. Kannst du nicht mehr zahlen, kannst du dein Leben für ihn geben.
+136 Heilt mit eigenem Blut: mehr Leben, weniger Schaden, wenn schwer verwundet, und der Blutbund, mit dem er den Schmerz eines Verbündeten trägt und seinen eigenen mit einem Gegner teilt. Ab Stufe 5 Opfer: Du zahlst Leben, um einen Verbündeten zu heilen, ohne Abklingzeit. Kannst du nicht mehr zahlen, kannst du dein Leben für ihn geben.
 137 Märtyrer
 138 %s (jetzt)
 139 %s (%s Blöcke)

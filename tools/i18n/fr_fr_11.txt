@@ -132,9 +132,9 @@
 131 Pénitence
 132 Ailes de lumière : moins de dégâts de chute et chute lente, une auréole qui régénère les alliés proches et, dès le niveau 5, la Forme angélique : vous volez quelques secondes pendant que vous et vos alliés régénérez et êtes purifiés.
 133 Ange
-134 Prie pour un allié même sans le voir : votre corps reste accroupi et vous devenez une tête flottante qui l'accompagne. Vous lancez vos sorts depuis la tête, avec moins de puissance plus votre corps est loin.
+134 Prie pour un allié même sans le voir : ton corps reste agenouillé et tu deviens une tête flottante qui l'accompagne. De là tu lances tes sorts, moins puissants à mesure que ton corps est loin, et ta prière annule le premier coup qui le tuerait.
 135 Intercesseur
-136 Soigne avec son propre sang : plus de santé, moins de dégâts subis quand il est grièvement blessé et, dès le niveau 5, le Sacrifice : vous payez de la santé pour soigner un allié, sans délai de recharge. Si vous ne pouvez plus payer, vous pouvez donner votre vie pour lui.
+136 Soigne avec son propre sang : plus de vie, moins de dégâts subis quand il est grièvement blessé, et le Lien de Sang, qui lui fait porter la douleur d'un allié et partager la sienne avec un ennemi. Dès le niveau 5, le Sacrifice : tu paies de ta vie pour soigner un allié, sans recharge. Si tu ne peux plus payer, tu peux donner ta vie pour lui.
 137 Martyr
 138 %s (en cours)
 139 %s (%s blocs)

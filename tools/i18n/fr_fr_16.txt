@@ -190,7 +190,7 @@
 189 Régénération en forme (vie par seconde)
 190 Vitesse de nage des formes aquatiques
 191 Vie max perdue
-192 Vie et dégâts de la forme par Niveau total
+192 Dégâts de la forme par Niveau total
 193 Mana de base d'une forme
 194 Mana par point de puissance de la bête
 195 Chimères conservées au maximum
@@ -209,7 +209,7 @@
 208 Mana des sorts de nature en forme
 209 Vie et dégâts des formes
 210 Points par étude
-211 Durée de l'étude
+211 Durée de l'étude (joueurs)
 212 Durée de l'étude
 213 Se téléporte au-delà de (blocs)
 214 Tes formes ont bien plus de vie, mais infligent moins de dégâts.
@@ -234,7 +234,7 @@
 233 Forme riche
 234 Rituel du druide
 235 Sur les restes d'une bête tout juste tuée : tu en apprends un peu plus sur son espèce (un point de connaissance). Druide uniquement.
-236 Druide du Cercle de la Lune : se transforme en un instant, presque sans recharge, et ses formes ne réservent pas de mana.
+236 Druide du Cercle de la Lune : se transforme en un instant, presque sans recharge, et ses formes ne réservent pas de mana. Passer d'une forme à une autre conserve le même pourcentage de vie.
 237 Cercle de la Lune
 238 Rituels sombres : arrache des parties aux restes des bêtes (tête, torse, pattes et instinct), les réunit dans un Réceptacle de chair et, sur un Autel de chair, donne vie à une chimère en laquelle il peut se transformer. Chaque création lui coûte beaucoup de mana et une partie de sa vie pendant un moment.
 239 Sculpteur

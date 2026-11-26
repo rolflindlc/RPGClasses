@@ -55,7 +55,7 @@ import java.util.Set;
  */
 public class SphereEntity extends Projectile {
     public static final byte FLYING = 0, SPINNING = 1, RETURNING = 2, MINE = 3;
-    private static final int MAX_FLIGHT_TICKS = 200, MAX_RETURN_TICKS = 160;
+    private static final int MAX_FLIGHT_TICKS = 100, MAX_RETURN_TICKS = 80;
 
     private static final EntityDataAccessor<Byte> DATA_MATERIAL = SynchedEntityData.defineId(SphereEntity.class, EntityDataSerializers.BYTE);
     private static final EntityDataAccessor<Byte> DATA_UPGRADE = SynchedEntityData.defineId(SphereEntity.class, EntityDataSerializers.BYTE);
@@ -77,6 +77,9 @@ public class SphereEntity extends Projectile {
     int bounces, hopsLeft, clawLevel, frictionLevel, returnCooldownTicks;
     /** Carga del clic derecho (0-1) y lo que multiplica: tiempo clavada y daño total del impacto. */
     double charge, spinTimeFactor = 1, chargeDamage = 1;
+    // Bola cargada (rompeguardias): armadura que ignoran sus ticks y, con la carga completa, Guardia Rota y escudo fuera.
+    double chargeArmor;
+    boolean guardBreak;
     /** Ticks de daño extra (rama Rotación): más pulsos en el mismo tiempo; en los golpes únicos, daño extra. */
     double extraTicks;
     /** Mejora: tiempo clavada y daño total (Barrena: más tiempo y más daño total, menos por tick). */
@@ -533,6 +536,8 @@ public class SphereEntity extends Projectile {
                 t.setDeltaMovement(0, Math.min(0, v.y), 0);
                 t.hurtMarked = true;
             }
+            // Al acabar la micro-pausa, el único empuje del impacto (pequeño).
+            if (spinTick == hitStopTicks) SphereHits.impactPush(this, owner, t);
             // Pulsos repartidos por igual en el tiempo clavada (con Rotación hay más en el mismo tiempo).
             while (pulsesDone < pulseHits && (long) spinTick * pulseHits >= (long) pulsesDone * spinTicks) {
                 SphereHits.dealTick(this, owner, t);
@@ -550,16 +555,8 @@ public class SphereEntity extends Projectile {
         finishSpin(owner, false);
     }
 
-    /** Fin del giro: empuje del material y, si quedan rebotes, salta a otro enemigo; si no, vuelve. */
+    /** Fin del giro: si quedan rebotes, salta a otro enemigo; si no, vuelve (el empuje ya se dio al impactar). */
     void finishSpin(ServerPlayer owner, boolean targetGone) {
-        LivingEntity t = stuck;
-        if (t != null && !targetGone && impactKnockback > 0 && !Races.isBoss(t)) {
-            Vec3 away = t.position().subtract(owner.position()).multiply(1, 0, 1);
-            if (away.lengthSqr() > 1.0E-4) {
-                t.knockback(impactKnockback, -away.x, -away.z);
-                t.hurtMarked = true;
-            }
-        }
         stuck = null;
         critDecided = null;
         if (broken) {
@@ -628,7 +625,8 @@ public class SphereEntity extends Projectile {
         Vec3 to = hand.subtract(position());
         double dist = to.length();
         double base = SpinMaster.t("return_speed", 1.5) * (upgrade() == SphereUpgrade.GOLD ? 1.4 : 1.0);
-        double v = Math.min(4.0, base * (1 + 0.08 * returnTicks));
+        // Acelera deprisa al volver: así no se queda lejos ni tarda en estar en la mano.
+        double v = Math.min(5.0, base * (1 + 0.15 * returnTicks));
         if (dist <= v + 0.6 || ++returnTicks > MAX_RETURN_TICKS) {
             arrive(owner);
             return;

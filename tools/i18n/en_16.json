@@ -268,5 +268,10 @@
   "ui.rites_and_paths.chimera_replace.cancel": "Do not create the chimera",
   "ui.rites_and_paths.chimera_replace.title": "You already have the maximum number of chimeras: which one do you replace?",
   "ui.rites_and_paths.ritual_choice.knowledge": "Knowledge (one point)",
-  "ui.rites_and_paths.ritual_choice.title": "What do you take from the %s remains?"
+  "ui.rites_and_paths.ritual_choice.title": "What do you take from the %s remains?",
+  "param.rites_and_paths.charge_slow": "Right click: speed while charging",
+  "param.rites_and_paths.guard_break_armor": "Guard Break: armor and toughness",
+  "param.rites_and_paths.impact_knockback": "Impact knockback",
+  "effect.rites_and_paths.guard_break": "Guard Break",
+  "effect.rites_and_paths.guard_break.description": "Guard Break (Spin Master): a charged ball broke your guard. You have less armor and toughness."
 }

@@ -75,7 +75,7 @@
   "ability.rites_and_paths.sanctuary.name": "Santuário",
   "ability.rites_and_paths.shared_weak_point.desc": "Seus aliados também veem as marcas de Ponto Fraco, e cada impacto as renova.",
   "ability.rites_and_paths.shared_weak_point.name": "Ponto Fraco Compartilhado",
-  "ability.rites_and_paths.sphere_throw.desc": "Com a bandoleira na mão: clique esquerdo, a bola vai guiada para onde você mira (vai mais longe, mas um pouco mais devagar); clique direito, ela faz curva para onde você olha e, se você segurar, o lançamento carrega: com a carga completa vai duas vezes mais longe, fica cravada o dobro do tempo e causa ×1,5 de dano. A bola crava no alvo e gira nele por 1 segundo, causando dano em vários ticks (ignorando a invulnerabilidade dele); cada tick perde contra a armadura o mesmo que o impacto inteiro perderia num único golpe. Cada ricochete, num bloco ou depois de girar num inimigo, a manda para onde sua câmera olha: é você quem mira o próximo inimigo. Sem ricochetes restantes, ela volta para a mão. Clicar bem quando ela chega é uma Pegada Perfeita: mais Giro e você a relança na hora. Cada bloco em que ela ricocheteia antes do impacto soma dano.",
+  "ability.rites_and_paths.sphere_throw.desc": "Com a bandoleira na mão: clique esquerdo, a bola vai guiada para onde você mira (vai mais longe, mas um pouco mais devagar); clique direito, ela faz curva para onde você olha e, se você segurar, o lançamento carrega (enquanto carrega você fica mais lento): a bola carregada é uma quebra-guarda, ignora parte da armadura conforme a carga e vai um pouco mais longe; com a carga completa desativa o escudo do alvo e deixa nele a Guarda Quebrada (menos armadura) por alguns segundos. A bola crava no alvo e gira nele por 1 segundo, causando dano em vários ticks (ignorando a invulnerabilidade dele); cada tick perde contra a armadura o mesmo que o impacto inteiro perderia num único golpe. Cada ricochete, num bloco ou depois de girar num inimigo, a manda para onde sua câmera olha: é você quem mira o próximo inimigo. Sem ricochetes restantes, ela volta para a mão. Clicar bem quando ela chega é uma Pegada Perfeita: mais Giro e você a relança na hora. Cada bloco em que ela ricocheteia antes do impacto soma dano.",
   "ability.rites_and_paths.sphere_throw.name": "Lançamento de Esferas",
   "ability.rites_and_paths.spin_bar.desc": "Barra de 0 a 100 % que sobe a cada impacto, mais se você os encadear. Se uma bola volta sem acertar nenhum inimigo, você perde a metade; fora de combate ela cai aos poucos. Com 33 %: um ricochete a mais e rastros dourados. Com 66 %: efeito do material mais forte e um pouco mais de dano. Com 100 %: você pode usar o Retângulo Dourado (a partir do Nível Total 30).",
   "ability.rites_and_paths.spin_bar.name": "Giro",
@@ -1499,10 +1499,10 @@
   "param.rites_and_paths.channel_mana_per_second": "Mana por segundo canalizando",
   "param.rites_and_paths.channel_seconds": "Canalização máx.",
   "param.rites_and_paths.channel_speed": "Velocidade canalizando",
-  "param.rites_and_paths.charge_damage": "Clique direito carregado: dano x",
+  "param.rites_and_paths.charge_guard_seconds": "Clique direito carregado: Guarda Quebrada e escudo desativado",
   "param.rites_and_paths.charge_range": "Clique direito carregado: alcance x",
   "param.rites_and_paths.charge_seconds": "Carga máx.",
-  "param.rites_and_paths.charge_spin_time": "Clique direito carregado: tempo cravada x",
+  "param.rites_and_paths.charge_armor_ignore": "Clique direito carregado: armadura ignorada",
   "param.rites_and_paths.charges": "Cargas",
   "param.rites_and_paths.chimera_mana": "Mana de cada criação",
   "param.rites_and_paths.chorus_cap": "Máx. de aliados contados",
@@ -3207,5 +3207,10 @@
   "hud_editor.rites_and_paths.element.druid_cast": "Conjuração do Druida",
   "hud_editor.rites_and_paths.element.druid_form": "Forma do Druida",
   "hud_editor.rites_and_paths.element.bard_rhythm": "Ritmo do Bardo",
-  "param.rites_and_paths.mob_study_seconds": "Tempo de estudo (mobs)"
+  "param.rites_and_paths.mob_study_seconds": "Tempo de estudo (mobs)",
+  "param.rites_and_paths.charge_slow": "Clique direito: velocidade enquanto carrega",
+  "param.rites_and_paths.guard_break_armor": "Guarda Quebrada: armadura e resistência",
+  "param.rites_and_paths.impact_knockback": "Empurrão do impacto",
+  "effect.rites_and_paths.guard_break": "Guarda Quebrada",
+  "effect.rites_and_paths.guard_break.description": "Guarda Quebrada (Mestre do Giro): uma bola carregada quebrou sua guarda. Você tem menos armadura e resistência."
 }

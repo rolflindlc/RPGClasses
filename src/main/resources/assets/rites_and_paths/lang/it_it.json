@@ -75,7 +75,7 @@
   "ability.rites_and_paths.sanctuary.name": "Santuario",
   "ability.rites_and_paths.shared_weak_point.desc": "Anche i tuoi alleati vedono i segni di Punto Debole, e ogni impatto li rinnova.",
   "ability.rites_and_paths.shared_weak_point.name": "Punto Debole Condiviso",
-  "ability.rites_and_paths.sphere_throw.desc": "Con la bandoliera in mano: clic sinistro, la sfera è guidata verso dove miri (arriva più lontano, ma è un po' più lenta); clic destro, curva verso dove guardi e, tenendolo premuto, il lancio si carica: a carica completa arriva al doppio della distanza, resta conficcata il doppio e infligge ×1,5 danni. La sfera si conficca nel bersaglio e ci gira sopra per 1 secondo, danneggiandolo con vari tick (ignorandone l'invulnerabilità); ogni tick perde contro l'armatura quanto perderebbe l'impatto intero in un solo colpo. Ogni rimbalzo, su un blocco o dopo aver girato in un nemico, la manda verso dove guarda la tua visuale: il nemico successivo lo miri tu. Senza rimbalzi rimasti, torna in mano. Cliccare proprio quando arriva è una Presa Perfetta: più Rotazione e la rilanci all'istante. Ogni blocco su cui rimbalza prima dell'impatto aggiunge danno.",
+  "ability.rites_and_paths.sphere_throw.desc": "Con la bandoliera in mano: clic sinistro, la sfera è guidata verso dove miri (arriva più lontano, ma è un po' più lenta); clic destro, curva verso dove guardi e, tenendolo premuto, il lancio si carica (mentre carichi sei più lento): la sfera carica è una spezzaguardia, ignora parte dell'armatura in base alla carica e arriva un po' più lontano; a carica completa disattiva lo scudo del bersaglio e gli lascia la Guardia Spezzata (meno armatura) per qualche secondo. La sfera si conficca nel bersaglio e ci gira sopra per 1 secondo, danneggiandolo con vari tick (ignorandone l'invulnerabilità); ogni tick perde contro l'armatura quanto perderebbe l'impatto intero in un solo colpo. Ogni rimbalzo, su un blocco o dopo aver girato in un nemico, la manda verso dove guarda la tua visuale: il nemico successivo lo miri tu. Senza rimbalzi rimasti, torna in mano. Cliccare proprio quando arriva è una Presa Perfetta: più Rotazione e la rilanci all'istante. Ogni blocco su cui rimbalza prima dell'impatto aggiunge danno.",
   "ability.rites_and_paths.sphere_throw.name": "Lancio di Sfere",
   "ability.rites_and_paths.spin_bar.desc": "Barra da 0 a 100 % che sale a ogni impatto, di più se li concateni. Se una sfera torna senza aver colpito nemici, ne perdi la metà; fuori dal combattimento cala poco a poco. Al 33 %: un rimbalzo in più e scie dorate. Al 66 %: effetto del materiale più forte e un po' più di danno. Al 100 %: puoi usare il Rettangolo Aureo (dal Livello totale 30).",
   "ability.rites_and_paths.spin_bar.name": "Rotazione",
@@ -1499,10 +1499,10 @@
   "param.rites_and_paths.channel_mana_per_second": "Mana al secondo canalizzando",
   "param.rites_and_paths.channel_seconds": "Canalizzazione max.",
   "param.rites_and_paths.channel_speed": "Velocità canalizzando",
-  "param.rites_and_paths.charge_damage": "Clic destro carico: danno x",
+  "param.rites_and_paths.charge_guard_seconds": "Clic destro carico: Guardia Spezzata e scudo disattivato",
   "param.rites_and_paths.charge_range": "Clic destro carico: gittata x",
   "param.rites_and_paths.charge_seconds": "Carica max.",
-  "param.rites_and_paths.charge_spin_time": "Clic destro carico: tempo conficcata x",
+  "param.rites_and_paths.charge_armor_ignore": "Clic destro carico: armatura ignorata",
   "param.rites_and_paths.charges": "Cariche",
   "param.rites_and_paths.chimera_mana": "Mana per creazione",
   "param.rites_and_paths.chorus_cap": "Massimo di alleati contati",
@@ -3207,5 +3207,10 @@
   "hud_editor.rites_and_paths.element.druid_cast": "Lancio del Druido",
   "hud_editor.rites_and_paths.element.druid_form": "Forma del Druido",
   "hud_editor.rites_and_paths.element.bard_rhythm": "Ritmo del Bardo",
-  "param.rites_and_paths.mob_study_seconds": "Tempo di studio (mob)"
+  "param.rites_and_paths.mob_study_seconds": "Tempo di studio (mob)",
+  "param.rites_and_paths.charge_slow": "Clic destro: velocità mentre carichi",
+  "param.rites_and_paths.guard_break_armor": "Guardia Spezzata: armatura e robustezza",
+  "param.rites_and_paths.impact_knockback": "Spinta dell'impatto",
+  "effect.rites_and_paths.guard_break": "Guardia Spezzata",
+  "effect.rites_and_paths.guard_break.description": "Guardia Spezzata (Maestro della Rotazione): una sfera carica ti ha spezzato la guardia. Hai meno armatura e robustezza."
 }

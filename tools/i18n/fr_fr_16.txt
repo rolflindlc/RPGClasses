@@ -268,3 +268,8 @@
 267 Tu as déjà le maximum de chimères : laquelle remplaces-tu ?
 268 Connaissance (un point)
 269 Que prends-tu des restes de %s ?
+270 Clic droit : vitesse pendant la charge
+271 Garde brisée : armure et robustesse
+272 Recul de l'impact
+273 Garde brisée
+274 Garde brisée (Maître de la Rotation) : une boule chargée a brisé ta garde. Tu as moins d'armure et de robustesse.

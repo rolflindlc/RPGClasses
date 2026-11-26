@@ -363,5 +363,9 @@
   "window_bonus": "%",
   "window_seconds": "s",
   "xp_bonus": "%",
-  "xp_discount": "−%"
+  "xp_discount": "−%",
+  "charge_armor_ignore": "%",
+  "charge_guard_seconds": "s",
+  "charge_slow": "%",
+  "guard_break_armor": "%"
 }

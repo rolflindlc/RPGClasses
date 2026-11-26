@@ -62,6 +62,17 @@ public final class SpinRegistry {
     public static final RegistryObject<MobEffect> GOLDEN_SPIN = EFFECTS.register("golden_spin",
             () -> new ModEffects.StateEffect(MobEffectCategory.BENEFICIAL, 0xF2C230));
 
+    /**
+     * Guardia Rota (bola cargada al máximo): −5 % de armadura y de dureza por nivel del efecto. El nivel sale de
+     * {@code guard_break_armor} (−25 % = nivel 5).
+     */
+    public static final RegistryObject<MobEffect> GUARD_BREAK = EFFECTS.register("guard_break", () ->
+            new ModEffects.CurableEffect(MobEffectCategory.HARMFUL, 0x8E5BD6)
+                    .addAttributeModifier(net.minecraft.world.entity.ai.attributes.Attributes.ARMOR, "5d2e8b1c-3a4f-4c7e-9b6d-1f2a3c4d5e61", -0.05,
+                            net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.MULTIPLY_TOTAL)
+                    .addAttributeModifier(net.minecraft.world.entity.ai.attributes.Attributes.ARMOR_TOUGHNESS, "5d2e8b1c-3a4f-4c7e-9b6d-1f2a3c4d5e62", -0.05,
+                            net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.MULTIPLY_TOTAL));
+
     private SpinRegistry() {}
 
     public static void register(IEventBus modBus) {

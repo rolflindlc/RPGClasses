@@ -49,6 +49,26 @@ public final class SpinItemRenderer extends BlockEntityWithoutLevelRenderer {
                 // La propia: el anillo gira más rápido cuanto más Giro.
                 float spin = SpinClient.spin();
                 boolean golden = SpinClient.golden() || spin >= 0.33f;
+                // Carga del clic derecho (solo la propia, en primera persona): la bola se echa atrás y hacia arriba,
+                // crece un poco, el anillo gira cada vez más rápido y, con la carga completa, tiembla.
+                float c = ctx.firstPerson() ? SpinClient.chargeProgress(mc.getPartialTick()) : 0f;
+                if (c > 0f) {
+                    float ease = c * c * (3 - 2 * c);
+                    pose.pushPose();
+                    float jx = 0, jy = 0;
+                    if (c >= 1f) {
+                        jx = (float) Math.sin(t * 2.7f) * 0.015f;
+                        jy = (float) Math.cos(t * 3.1f) * 0.015f;
+                    }
+                    pose.translate(0.5 + jx, 0.5 + 0.12 * ease + jy, 0.5 + 0.18 * ease);
+                    float sc = 1f + 0.15f * ease;
+                    pose.scale(sc, sc, sc);
+                    pose.mulPose(com.mojang.math.Axis.ZP.rotationDegrees(-12f * ease));
+                    pose.translate(-0.5, -0.5, -0.5);
+                    ball(pose, buffers, light, overlay, m, t, golden || c >= 1f, 20f + 50f * spin + 160f * ease);
+                    pose.popPose();
+                    return;
+                }
                 ball(pose, buffers, light, overlay, m, t, golden, 20f + 50f * spin);
             }
             return;

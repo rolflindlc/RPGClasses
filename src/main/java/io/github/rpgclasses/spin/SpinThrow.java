@@ -285,11 +285,14 @@ public final class SpinThrow {
                 + density * SpinEnchantments.DENSITY_RANGE + lightness * SpinEnchantments.LIGHTNESS_RANGE;
         rangeBonus = Math.max(-0.8, Math.min(SpinMaster.t("range_bonus_cap", 1.0), rangeBonus));
         e.range = SpinMaster.t("sphere_range", 20) * (1 + rangeBonus)
-                * (aimed ? 1 + SpinMaster.t("aimed_range_change", 0.15) : 1 + charge * (SpinMaster.t("charge_range", 2.0) - 1));
-        // Carga del clic derecho: más tiempo clavada y más daño total.
+                * (aimed ? 1 + SpinMaster.t("aimed_range_change", 0.15) : 1 + charge * (SpinMaster.t("charge_range", 1.5) - 1));
+        // Carga del clic derecho: rompeguardias. Sus ticks ignoran armadura según la carga y, con la carga completa,
+        // desactiva el escudo del objetivo y le pone Guardia Rota. No cambia el tiempo clavada ni el daño.
         e.charge = charge;
-        e.spinTimeFactor = 1 + charge * (SpinMaster.t("charge_spin_time", 2.0) - 1);
-        e.chargeDamage = 1 + charge * (SpinMaster.t("charge_damage", 1.5) - 1);
+        e.spinTimeFactor = 1;
+        e.chargeDamage = 1;
+        e.chargeArmor = charge * SpinMaster.t("charge_armor_ignore", 0.5);
+        e.guardBreak = charge >= 0.999;
         // Rebotes (tope de +5 entre ramas, perks y encantamientos).
         int bonus = (int) Math.round(SpinMaster.mech(p, SpinMaster.REBOUND, "extra_bounces", 0) + SpinMaster.mech(p, SpinMaster.BILLIARDS, "extra_bounces", 0)) + elastic;
         bonus = Math.min(bonus, (int) Math.round(SpinMaster.t("bounce_bonus_cap", 5)));

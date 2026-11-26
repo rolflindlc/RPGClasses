@@ -160,6 +160,7 @@ public final class SpinState {
             if (!SpinMaster.isSpinMaster(p)) {
                 if (STATES.containsKey(p.getUUID())) {
                     STATES.remove(p.getUUID());
+                    chargeSlow(p, false);
                     Net.toPlayer(p, new Packets.SpinSync(0, false));
                 }
                 continue;
@@ -190,11 +191,51 @@ public final class SpinState {
         if (s.spin > 0 && now - s.lastImpact > delay) {
             s.spin = (float) Math.max(0, s.spin - SpinMaster.g("decay_per_second", 0.05) / 20.0);
         }
-        // Carga del clic derecho: si suelta la bandolera, se pierde.
-        if (s.chargeStart >= 0 && !Bandolier.is(p.getMainHandItem())) s.chargeStart = -1;
+        // Carga del clic derecho: si suelta la bandolera, se pierde. Mientras carga va más lento y la bola de la mano
+        // suelta una espiral que se cierra y se vuelve morada al completar la carga (la ven todos).
+        if (s.chargeStart >= 0 && (!Bandolier.is(p.getMainHandItem()) || now - s.chargeStart > 20 * 30)) s.chargeStart = -1;
+        chargeSlow(p, s.chargeStart >= 0);
+        if (s.chargeStart >= 0) chargeFx(p, s, now);
         // Punto Débil: marca visible para el Escáner (y sus aliados con Punto Débil Compartido).
         if (!s.marks.isEmpty() && now % 8 == 0) showMarks(p, s, now);
         sync(p, s, now);
+    }
+
+    private static final UUID CHARGE_SLOW_ID = UUID.fromString("7a1c3e5f-2b4d-4f6a-8c9e-0d1f2a3b4c5d");
+
+    /** Lentitud al cargar el clic derecho ({@code charge_slow}, multiplicativa con la velocidad). */
+    private static void chargeSlow(ServerPlayer p, boolean on) {
+        var attr = p.getAttribute(Attributes.MOVEMENT_SPEED);
+        if (attr == null) return;
+        boolean has = attr.getModifier(CHARGE_SLOW_ID) != null;
+        if (on && !has) {
+            attr.addTransientModifier(new net.minecraft.world.entity.ai.attributes.AttributeModifier(CHARGE_SLOW_ID,
+                    "rites_and_paths:sphere_charge", SpinMaster.t("charge_slow", -0.35),
+                    net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.MULTIPLY_TOTAL));
+        } else if (!on && has) {
+            attr.removeModifier(CHARGE_SLOW_ID);
+        }
+    }
+
+    private static final DustParticleOptions CHARGE_FULL = new DustParticleOptions(new Vector3f(0.65f, 0.3f, 0.95f), 0.9f);
+
+    /** Animación de la carga vista desde fuera: espiral alrededor de la bola de la mano, más rápida y cerrada al cargar. */
+    private static void chargeFx(ServerPlayer p, State s, long now) {
+        double full = Math.max(1, SpinMaster.t("full_charge_seconds", 1.0) * 20);
+        double c = Math.min(1, (now - s.chargeStart) / full);
+        Vec3 hand = SphereEntity.handPos(p);
+        Vec3 look = p.getLookAngle();
+        Vec3 right = look.cross(new Vec3(0, 1, 0));
+        right = right.lengthSqr() < 1.0E-6 ? new Vec3(1, 0, 0) : right.normalize();
+        Vec3 up = right.cross(look).normalize();
+        double radius = 0.45 - 0.3 * c;
+        var level = p.serverLevel();
+        for (int i = 0; i < 2; i++) {
+            double a = now * (0.6 + 1.2 * c) + i * Math.PI;
+            Vec3 q = hand.add(right.scale(Math.cos(a) * radius)).add(up.scale(Math.sin(a) * radius));
+            level.sendParticles(c >= 1 ? CHARGE_FULL : ParticleTypes.WAX_OFF, q.x, q.y, q.z, 1, 0, 0, 0, 0);
+        }
+        if (c >= 1 && now % 4 == 0) level.sendParticles(ParticleTypes.ENCHANTED_HIT, hand.x, hand.y, hand.z, 2, 0.08, 0.08, 0.08, 0.05);
     }
 
     private static void showMarks(ServerPlayer p, State s, long now) {
@@ -236,6 +277,7 @@ public final class SpinState {
     /** Muere o se reinicia: Giro a 0, sin Rectángulo Dorado en curso y las bolas en vuelo vuelven a la bandolera. */
     public static void reset(ServerPlayer p) {
         STATES.remove(p.getUUID());
+        chargeSlow(p, false);
         GoldenRectangle.abort(p);
         p.removeEffect(SpinRegistry.GOLDEN_SPIN.get());
         SpinThrow.recallAll(p);

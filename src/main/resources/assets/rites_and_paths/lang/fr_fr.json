@@ -75,7 +75,7 @@
   "ability.rites_and_paths.sanctuary.name": "Sanctuaire",
   "ability.rites_and_paths.shared_weak_point.desc": "Tes alliés voient aussi les marques de Point Faible, et chaque impact les renouvelle.",
   "ability.rites_and_paths.shared_weak_point.name": "Point Faible Partagé",
-  "ability.rites_and_paths.sphere_throw.desc": "Bandoulière en main : clic gauche, la boule est guidée vers où tu vises (elle va plus loin, mais un peu plus lentement) ; clic droit, elle se courbe vers où tu regardes, et maintenir le clic charge le lancer : chargée au maximum, elle va deux fois plus loin, reste plantée deux fois plus longtemps et inflige ×1,5 de dégâts. La boule s'enfonce dans la cible et tourne sur elle pendant 1 seconde en la blessant par plusieurs ticks (en ignorant son invulnérabilité) ; chaque tick perd contre l'armure autant que l'impact entier en un seul coup. Chaque rebond, sur un bloc ou après avoir tourné dans un ennemi, l'envoie vers où regarde ta caméra : c'est toi qui vises l'ennemi suivant. Quand il ne lui reste plus de rebonds, elle revient dans ta main. Cliquer juste quand elle arrive est une Prise Parfaite : plus de Rotation et tu la relances aussitôt. Chaque bloc sur lequel elle rebondit avant l'impact ajoute des dégâts.",
+  "ability.rites_and_paths.sphere_throw.desc": "Bandoulière en main : clic gauche, la boule est guidée vers où tu vises (elle va plus loin, mais un peu plus lentement) ; clic droit, elle se courbe vers où tu regardes, et maintenir le clic charge le lancer (pendant la charge tu es plus lent) : la boule chargée est un brise-garde, elle ignore une partie de l'armure selon la charge et va un peu plus loin ; chargée au maximum, elle désactive le bouclier de la cible et lui inflige Garde brisée (moins d'armure) pendant quelques secondes. La boule s'enfonce dans la cible et tourne sur elle pendant 1 seconde en la blessant par plusieurs ticks (en ignorant son invulnérabilité) ; chaque tick perd contre l'armure autant que l'impact entier en un seul coup. Chaque rebond, sur un bloc ou après avoir tourné dans un ennemi, l'envoie vers où regarde ta caméra : c'est toi qui vises l'ennemi suivant. Quand il ne lui reste plus de rebonds, elle revient dans ta main. Cliquer juste quand elle arrive est une Prise Parfaite : plus de Rotation et tu la relances aussitôt. Chaque bloc sur lequel elle rebondit avant l'impact ajoute des dégâts.",
   "ability.rites_and_paths.sphere_throw.name": "Lancer de Sphères",
   "ability.rites_and_paths.spin_bar.desc": "Barre de 0 à 100 % qui monte à chaque impact, davantage si tu les enchaînes. Si une boule revient sans avoir touché d'ennemi, tu en perds la moitié ; hors combat, elle baisse peu à peu. À 33 % : un rebond de plus et des traînées dorées. À 66 % : un effet de matériau plus fort et un peu plus de dégâts. À 100 % : tu peux utiliser le Rectangle d'Or (à partir du Niveau total 30).",
   "ability.rites_and_paths.spin_bar.name": "Rotation",
@@ -1499,10 +1499,10 @@
   "param.rites_and_paths.channel_mana_per_second": "Mana par seconde en canalisant",
   "param.rites_and_paths.channel_seconds": "Canalisation max.",
   "param.rites_and_paths.channel_speed": "Vitesse en canalisant",
-  "param.rites_and_paths.charge_damage": "Clic droit chargé : dégâts x",
+  "param.rites_and_paths.charge_guard_seconds": "Clic droit chargé : Garde brisée et bouclier désactivé",
   "param.rites_and_paths.charge_range": "Clic droit chargé : portée x",
   "param.rites_and_paths.charge_seconds": "Charge max.",
-  "param.rites_and_paths.charge_spin_time": "Clic droit chargé : durée plantée x",
+  "param.rites_and_paths.charge_armor_ignore": "Clic droit chargé : armure ignorée",
   "param.rites_and_paths.charges": "Charges",
   "param.rites_and_paths.chimera_mana": "Mana par création",
   "param.rites_and_paths.chorus_cap": "Alliés comptés au maximum",
@@ -3207,5 +3207,10 @@
   "hud_editor.rites_and_paths.element.druid_cast": "Incantation du Druide",
   "hud_editor.rites_and_paths.element.druid_form": "Forme du Druide",
   "hud_editor.rites_and_paths.element.bard_rhythm": "Rythme du Barde",
-  "param.rites_and_paths.mob_study_seconds": "Durée de l'étude (mobs)"
+  "param.rites_and_paths.mob_study_seconds": "Durée de l'étude (mobs)",
+  "param.rites_and_paths.charge_slow": "Clic droit : vitesse pendant la charge",
+  "param.rites_and_paths.guard_break_armor": "Garde brisée : armure et robustesse",
+  "param.rites_and_paths.impact_knockback": "Recul de l'impact",
+  "effect.rites_and_paths.guard_break": "Garde brisée",
+  "effect.rites_and_paths.guard_break.description": "Garde brisée (Maître de la Rotation) : une boule chargée a brisé ta garde. Tu as moins d'armure et de robustesse."
 }

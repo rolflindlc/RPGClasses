@@ -75,7 +75,7 @@
   "ability.rites_and_paths.sanctuary.name": "聖域",
   "ability.rites_and_paths.shared_weak_point.desc": "味方にも弱点のマークが見え、命中するたびに更新される。",
   "ability.rites_and_paths.shared_weak_point.name": "弱点共有",
-  "ability.rites_and_paths.sphere_throw.desc": "ホルダーを手に持って:左クリックで、鉄球は狙った場所へ誘導される(遠くまで届くが少し遅い)。右クリックで視線の方向へカーブし、押し続けるとチャージできる:フルチャージで射程2倍、食い込む時間2倍、ダメージ×1.5。鉄球は対象に食い込み、1秒間回転して数回に分けてダメージを与える(無敵時間を無視)。各ティックが防具で減る割合は、命中全体を一撃で与えた場合と同じ。跳ね返るたびに(ブロックに当たったとき、または敵の上で回転し終えたとき)、鉄球はカメラが向いている方向へ飛ぶ:次の敵は自分で狙う。跳ね返りが残っていなければ手元に戻る。戻ってくる瞬間にクリックするとパーフェクトキャッチ:回転が増え、即座に投げ直せる。命中前にブロックで跳ね返るたびにダメージが上がる。",
+  "ability.rites_and_paths.sphere_throw.desc": "ホルダーを手に持って:左クリックで、鉄球は狙った場所へ誘導される(遠くまで届くが少し遅い)。右クリックで視線の方向へカーブし、押し続けるとチャージできる(チャージ中は移動が遅くなる):チャージした鉄球はガードブレイカーで、チャージ量に応じて防具の一部を無視し、少し遠くまで届く。フルチャージなら対象の盾を無効化し、数秒間ガードブレイク(防具低下)を与える。鉄球は対象に食い込み、1秒間回転して数回に分けてダメージを与える(無敵時間を無視)。各ティックが防具で減る割合は、命中全体を一撃で与えた場合と同じ。跳ね返るたびに(ブロックに当たったとき、または敵の上で回転し終えたとき)、鉄球はカメラが向いている方向へ飛ぶ:次の敵は自分で狙う。跳ね返りが残っていなければ手元に戻る。戻ってくる瞬間にクリックするとパーフェクトキャッチ:回転が増え、即座に投げ直せる。命中前にブロックで跳ね返るたびにダメージが上がる。",
   "ability.rites_and_paths.sphere_throw.name": "鉄球投げ",
   "ability.rites_and_paths.spin_bar.desc": "0〜100%のゲージ。命中するたびに上がり、連続命中ほど大きく上がる。敵に当たらずに鉄球が戻ると半分を失い、戦闘外では少しずつ下がる。33%で跳ね返り+1と金色の軌跡。66%で素材効果が強化され、ダメージが少し上がる。100%で黄金長方形が使える(合計レベル30から)。",
   "ability.rites_and_paths.spin_bar.name": "回転",
@@ -1499,10 +1499,10 @@
   "param.rites_and_paths.channel_mana_per_second": "維持中の毎秒マナ",
   "param.rites_and_paths.channel_seconds": "最大持続時間",
   "param.rites_and_paths.channel_speed": "維持中の移動速度",
-  "param.rites_and_paths.charge_damage": "チャージ右クリック:ダメージ x",
+  "param.rites_and_paths.charge_guard_seconds": "チャージ右クリック:ガードブレイクと盾無効化",
   "param.rites_and_paths.charge_range": "チャージ右クリック:射程 x",
   "param.rites_and_paths.charge_seconds": "最大チャージ",
-  "param.rites_and_paths.charge_spin_time": "チャージ右クリック:食い込む時間 x",
+  "param.rites_and_paths.charge_armor_ignore": "チャージ右クリック:無視する防具",
   "param.rites_and_paths.charges": "チャージ",
   "param.rites_and_paths.chimera_mana": "創造ごとのマナ",
   "param.rites_and_paths.chorus_cap": "数えられる味方の最大数",
@@ -3207,5 +3207,10 @@
   "hud_editor.rites_and_paths.element.druid_cast": "ドルイドの変身詠唱",
   "hud_editor.rites_and_paths.element.druid_form": "ドルイドの姿",
   "hud_editor.rites_and_paths.element.bard_rhythm": "バードのリズム",
-  "param.rites_and_paths.mob_study_seconds": "研究時間(モブ)"
+  "param.rites_and_paths.mob_study_seconds": "研究時間(モブ)",
+  "param.rites_and_paths.charge_slow": "右クリック:チャージ中の移動速度",
+  "param.rites_and_paths.guard_break_armor": "ガードブレイク:防具と防具強度",
+  "param.rites_and_paths.impact_knockback": "命中時のノックバック",
+  "effect.rites_and_paths.guard_break": "ガードブレイク",
+  "effect.rites_and_paths.guard_break.description": "ガードブレイク(回転の達人):チャージした鉄球にガードを崩された。防具と防具強度が下がる。"
 }

@@ -8,7 +8,7 @@
 7 Analyse
 8 Courbe
 9 Lancer de Sphères
-10 Bandoulière en main : clic gauche, la boule est guidée vers où tu vises (elle va plus loin, mais un peu plus lentement) ; clic droit, elle se courbe vers où tu regardes, et maintenir le clic charge le lancer : chargée au maximum, elle va deux fois plus loin, reste plantée deux fois plus longtemps et inflige ×1,5 de dégâts. La boule s'enfonce dans la cible et tourne sur elle pendant 1 seconde en la blessant par plusieurs ticks (en ignorant son invulnérabilité) ; chaque tick perd contre l'armure autant que l'impact entier en un seul coup. Chaque rebond, sur un bloc ou après avoir tourné dans un ennemi, l'envoie vers où regarde ta caméra : c'est toi qui vises l'ennemi suivant. Quand il ne lui reste plus de rebonds, elle revient dans ta main. Cliquer juste quand elle arrive est une Prise Parfaite : plus de Rotation et tu la relances aussitôt. Chaque bloc sur lequel elle rebondit avant l'impact ajoute des dégâts.
+10 Bandoulière en main : clic gauche, la boule est guidée vers où tu vises (elle va plus loin, mais un peu plus lentement) ; clic droit, elle se courbe vers où tu regardes, et maintenir le clic charge le lancer (pendant la charge tu es plus lent) : la boule chargée est un brise-garde, elle ignore une partie de l'armure selon la charge et va un peu plus loin ; chargée au maximum, elle désactive le bouclier de la cible et lui inflige Garde brisée (moins d'armure) pendant quelques secondes. La boule s'enfonce dans la cible et tourne sur elle pendant 1 seconde en la blessant par plusieurs ticks (en ignorant son invulnérabilité) ; chaque tick perd contre l'armure autant que l'impact entier en un seul coup. Chaque rebond, sur un bloc ou après avoir tourné dans un ennemi, l'envoie vers où regarde ta caméra : c'est toi qui vises l'ennemi suivant. Quand il ne lui reste plus de rebonds, elle revient dans ta main. Cliquer juste quand elle arrive est une Prise Parfaite : plus de Rotation et tu la relances aussitôt. Chaque bloc sur lequel elle rebondit avant l'impact ajoute des dégâts.
 11 Rotation
 12 Barre de 0 à 100 % qui monte à chaque impact, davantage si tu les enchaînes. Si une boule revient sans avoir touché d'ennemi, tu en perds la moitié ; hors combat, elle baisse peu à peu. À 33 % : un rebond de plus et des traînées dorées. À 66 % : un effet de matériau plus fort et un peu plus de dégâts. À 100 % : tu peux utiliser le Rectangle d'Or (à partir du Niveau total 30).
 13 Trajectoire de Rebonds
@@ -230,8 +230,8 @@
 229 Clic gauche : portée
 230 Clic droit : temps de charge complète
 231 Clic droit chargé : portée x
-232 Clic droit chargé : durée plantée x
-233 Clic droit chargé : dégâts x
+232 Clic droit chargé : armure ignorée
+233 Clic droit chargé : Garde brisée et bouclier désactivé
 234 Coups de la trajectoire
 235 Portée pour la première cible (blocs)
 236 Distance entre les ennemis de la trajectoire (blocs)

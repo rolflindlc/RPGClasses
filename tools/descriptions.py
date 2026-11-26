@@ -21,6 +21,7 @@ EFFECT_DESC = {
     "flesh_price": "Precio de la Carne (Druida Escultor): has pagado con sangre el ritual de una quimera; tu vida máxima baja un 30 % mientras dura.",
     "forced_dance": "Baile Forzado (Bardo): baila en el sitio y no puede atacar, lanzar conjuros ni usar objetos.",
     "gigantism": "Gigantismo (mobs de élite): la criatura es más grande; el nivel del efecto indica su tamaño.",
+    "guard_break": "Guardia Rota (Maestro del Giro): una bola cargada ha roto tu guardia. Tienes menos armadura y dureza.",
     "golden_spin": "Giro Dorado (Maestro del Giro): estás en pleno Rectángulo Dorado. No te puedes mover ni actuar, pero no recibes daño.",
     "hunters_mark": "Marca de Cazador (Ranger): el marcado recibe más daño de todas las fuentes.",
     "immortal_fury": "Última Furia (Bárbaro): un golpe mortal te ha vuelto inmortal unos segundos. Si matas a tu agresor antes de que acabe, sobrevives.",

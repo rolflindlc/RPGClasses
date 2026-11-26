@@ -75,7 +75,7 @@
   "ability.rites_and_paths.sanctuary.name": "Sanctuary",
   "ability.rites_and_paths.shared_weak_point.desc": "Your allies also see the Weak Point marks, and every hit renews them.",
   "ability.rites_and_paths.shared_weak_point.name": "Shared Weak Point",
-  "ability.rites_and_paths.sphere_throw.desc": "With the bandolier in hand: left click, the ball is guided toward where you aim (it reaches farther but is a bit slower); right click, it curves toward where you look, and holding it charges the throw: fully charged, it reaches twice as far, stays stuck twice as long and deals ×1.5 damage. The ball drills into the target and spins on it for 1 second, damaging it with several ticks (ignoring its invulnerability); each tick loses against armor the same as the whole impact would in a single hit. Every bounce, off a block or after spinning in an enemy, sends it toward where your camera looks: you aim at the next enemy yourself. With no bounces left, it comes back to your hand. Clicking right as it arrives is a Perfect Catch: more Spin and you throw it again instantly. Every block it bounces off before hitting adds damage.",
+  "ability.rites_and_paths.sphere_throw.desc": "With the bandolier in hand: left click, the ball is guided toward where you aim (it reaches farther but is a bit slower); right click, it curves toward where you look, and holding it charges the throw (you move slower while charging): the charged ball is a guard breaker, ignores part of the armor depending on the charge and reaches a bit farther; fully charged, it disables the target's shield and leaves it with Guard Break (less armor) for a few seconds. The ball drills into the target and spins on it for 1 second, damaging it with several ticks (ignoring its invulnerability); each tick loses against armor the same as the whole impact would in a single hit. Every bounce, off a block or after spinning in an enemy, sends it toward where your camera looks: you aim at the next enemy yourself. With no bounces left, it comes back to your hand. Clicking right as it arrives is a Perfect Catch: more Spin and you throw it again instantly. Every block it bounces off before hitting adds damage.",
   "ability.rites_and_paths.sphere_throw.name": "Sphere Throw",
   "ability.rites_and_paths.spin_bar.desc": "A 0-100% bar that fills with every hit, more if you chain them. If a ball comes back without hitting any enemy, you lose half of it; out of combat it slowly drains. At 33%: one more bounce and golden trails. At 66%: a stronger material effect and a bit more damage. At 100%: you can use the Golden Rectangle (from Total Level 30).",
   "ability.rites_and_paths.spin_bar.name": "Spin",
@@ -1609,10 +1609,10 @@
   "param.rites_and_paths.channel_mana_per_second": "Mana per second while channeling",
   "param.rites_and_paths.channel_seconds": "Max channel",
   "param.rites_and_paths.channel_speed": "Speed while channeling",
-  "param.rites_and_paths.charge_damage": "Charged right click: damage x",
+  "param.rites_and_paths.charge_guard_seconds": "Charged right click: Guard Break and shield disabled",
   "param.rites_and_paths.charge_range": "Charged right click: range x",
   "param.rites_and_paths.charge_seconds": "Max charge",
-  "param.rites_and_paths.charge_spin_time": "Charged right click: time stuck x",
+  "param.rites_and_paths.charge_armor_ignore": "Charged right click: armor ignored",
   "param.rites_and_paths.charges": "Charges",
   "param.rites_and_paths.chimera_mana": "Mana per creation",
   "param.rites_and_paths.chorus_cap": "Allies counted at most",
@@ -3367,5 +3367,10 @@
   "hud_editor.rites_and_paths.element.druid_cast": "Druid casting",
   "hud_editor.rites_and_paths.element.druid_form": "Druid form",
   "hud_editor.rites_and_paths.element.bard_rhythm": "Bard rhythm",
-  "param.rites_and_paths.mob_study_seconds": "Study time (mobs)"
+  "param.rites_and_paths.mob_study_seconds": "Study time (mobs)",
+  "param.rites_and_paths.charge_slow": "Right click: speed while charging",
+  "param.rites_and_paths.guard_break_armor": "Guard Break: armor and toughness",
+  "param.rites_and_paths.impact_knockback": "Impact knockback",
+  "effect.rites_and_paths.guard_break": "Guard Break",
+  "effect.rites_and_paths.guard_break.description": "Guard Break (Spin Master): a charged ball broke your guard. You have less armor and toughness."
 }

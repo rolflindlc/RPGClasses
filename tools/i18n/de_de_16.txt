@@ -268,3 +268,8 @@
 267 Du hast bereits die maximale Zahl an Chimären: Welche ersetzt du?
 268 Wissen (ein Punkt)
 269 Was nimmst du aus den Überresten von %s?
+270 Rechtsklick: Tempo beim Aufladen
+271 Gebrochene Deckung: Rüstung und Härte
+272 Rückstoß beim Aufprall
+273 Gebrochene Deckung
+274 Gebrochene Deckung (Meister der Drehung): eine aufgeladene Kugel hat deine Deckung gebrochen. Du hast weniger Rüstung und Härte.

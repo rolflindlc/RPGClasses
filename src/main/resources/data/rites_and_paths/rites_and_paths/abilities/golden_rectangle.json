@@ -2,10 +2,10 @@
   "schema_version": 1,
   "target_range": 24,
   "freeze_radius": 20,
-  "pulse_damage": 0.4,
-  "final_damage": 3.0,
+  "pulse_damage": 0.12,
+  "final_damage": 0.9,
   "spread_targets": 6,
   "spread_radius": 12,
-  "spread_damage": 1.5,
+  "spread_damage": 0.45,
   "cooldown_seconds": 120
 }

@@ -268,3 +268,8 @@
 267 Você já tem o máximo de quimeras: qual substitui?
 268 Conhecimento (um ponto)
 269 O que você tira dos restos de %s?
+270 Clique direito: velocidade enquanto carrega
+271 Guarda Quebrada: armadura e resistência
+272 Empurrão do impacto
+273 Guarda Quebrada
+274 Guarda Quebrada (Mestre do Giro): uma bola carregada quebrou sua guarda. Você tem menos armadura e resistência.

@@ -231,6 +231,11 @@ public final class SpinClient {
         }
     }
 
+    /** Carga actual del clic derecho del jugador local (0-1), para la animación de la bola en la mano. */
+    public static float chargeProgress(float pt) {
+        return charge(pt);
+    }
+
     /** 0-1: cuánto lleva cargado el clic derecho (el servidor hace la misma cuenta). */
     private static float charge(float pt) {
         Minecraft mc = Minecraft.getInstance();

@@ -75,7 +75,7 @@
   "ability.rites_and_paths.sanctuary.name": "Heiligtum",
   "ability.rites_and_paths.shared_weak_point.desc": "Auch deine Verbündeten sehen die Schwachpunkt-Markierungen, und jeder Treffer erneuert sie.",
   "ability.rites_and_paths.shared_weak_point.name": "Geteilter Schwachpunkt",
-  "ability.rites_and_paths.sphere_throw.desc": "Mit dem Bandelier in der Hand: Linksklick, die Kugel wird dorthin gelenkt, wohin du zielst (sie fliegt weiter, aber etwas langsamer); Rechtsklick, sie krümmt sich in Blickrichtung, und gedrückt halten lädt den Wurf auf: voll aufgeladen fliegt sie doppelt so weit, steckt doppelt so lange und verursacht ×1,5 Schaden. Die Kugel bohrt sich ins Ziel und dreht sich 1 Sekunde darauf, wobei sie mit mehreren Ticks Schaden verursacht (ignoriert seine Unverwundbarkeit); jeder Tick verliert gegen Rüstung so viel wie der ganze Treffer mit einem einzigen Schlag. Jeder Abprall, an einem Block oder nach dem Drehen in einem Gegner, schickt sie dorthin, wohin deine Kamera blickt: Auf den nächsten Gegner zielst du selbst. Ohne verbleibende Abpraller kehrt sie in deine Hand zurück. Genau beim Ankommen klicken ist ein Perfekter Fang: mehr Drehung und du wirfst sie sofort erneut. Jeder Block, von dem sie vor dem Treffer abprallt, erhöht den Schaden.",
+  "ability.rites_and_paths.sphere_throw.desc": "Mit dem Bandelier in der Hand: Linksklick, die Kugel wird dorthin gelenkt, wohin du zielst (sie fliegt weiter, aber etwas langsamer); Rechtsklick, sie krümmt sich in Blickrichtung, und gedrückt halten lädt den Wurf auf (beim Aufladen bist du langsamer): die aufgeladene Kugel ist ein Deckungsbrecher, ignoriert je nach Ladung einen Teil der Rüstung und fliegt etwas weiter; voll aufgeladen deaktiviert sie den Schild des Ziels und belegt es einige Sekunden mit Gebrochene Deckung (weniger Rüstung). Die Kugel bohrt sich ins Ziel und dreht sich 1 Sekunde darauf, wobei sie mit mehreren Ticks Schaden verursacht (ignoriert seine Unverwundbarkeit); jeder Tick verliert gegen Rüstung so viel wie der ganze Treffer mit einem einzigen Schlag. Jeder Abprall, an einem Block oder nach dem Drehen in einem Gegner, schickt sie dorthin, wohin deine Kamera blickt: Auf den nächsten Gegner zielst du selbst. Ohne verbleibende Abpraller kehrt sie in deine Hand zurück. Genau beim Ankommen klicken ist ein Perfekter Fang: mehr Drehung und du wirfst sie sofort erneut. Jeder Block, von dem sie vor dem Treffer abprallt, erhöht den Schaden.",
   "ability.rites_and_paths.sphere_throw.name": "Kugelwurf",
   "ability.rites_and_paths.spin_bar.desc": "Leiste von 0 bis 100 %, die mit jedem Treffer steigt, mehr bei Treffern in Folge. Kehrt eine Kugel zurück, ohne einen Gegner getroffen zu haben, verlierst du die Hälfte; außerhalb des Kampfes sinkt sie langsam. Ab 33 %: ein Abprall mehr und goldene Spuren. Ab 66 %: stärkerer Materialeffekt und etwas mehr Schaden. Bei 100 %: Du kannst das Goldene Rechteck einsetzen (ab Gesamtstufe 30).",
   "ability.rites_and_paths.spin_bar.name": "Drehung",
@@ -1499,10 +1499,10 @@
   "param.rites_and_paths.channel_mana_per_second": "Mana pro Sekunde beim Kanalisieren",
   "param.rites_and_paths.channel_seconds": "Max. Kanalisierung",
   "param.rites_and_paths.channel_speed": "Tempo beim Kanalisieren",
-  "param.rites_and_paths.charge_damage": "Aufgeladener Rechtsklick: Schaden x",
+  "param.rites_and_paths.charge_guard_seconds": "Aufgeladener Rechtsklick: Gebrochene Deckung und Schild deaktiviert",
   "param.rites_and_paths.charge_range": "Aufgeladener Rechtsklick: Reichweite x",
   "param.rites_and_paths.charge_seconds": "Max. Ladung",
-  "param.rites_and_paths.charge_spin_time": "Aufgeladener Rechtsklick: Dauer im Ziel x",
+  "param.rites_and_paths.charge_armor_ignore": "Aufgeladener Rechtsklick: ignorierte Rüstung",
   "param.rites_and_paths.charges": "Ladungen",
   "param.rites_and_paths.chimera_mana": "Mana pro Erschaffung",
   "param.rites_and_paths.chorus_cap": "Max. gezählte Verbündete",
@@ -3207,5 +3207,10 @@
   "hud_editor.rites_and_paths.element.druid_cast": "Druiden-Wirken",
   "hud_editor.rites_and_paths.element.druid_form": "Druiden-Gestalt",
   "hud_editor.rites_and_paths.element.bard_rhythm": "Barden-Rhythmus",
-  "param.rites_and_paths.mob_study_seconds": "Studiendauer (Mobs)"
+  "param.rites_and_paths.mob_study_seconds": "Studiendauer (Mobs)",
+  "param.rites_and_paths.charge_slow": "Rechtsklick: Tempo beim Aufladen",
+  "param.rites_and_paths.guard_break_armor": "Gebrochene Deckung: Rüstung und Härte",
+  "param.rites_and_paths.impact_knockback": "Rückstoß beim Aufprall",
+  "effect.rites_and_paths.guard_break": "Gebrochene Deckung",
+  "effect.rites_and_paths.guard_break.description": "Gebrochene Deckung (Meister der Drehung): eine aufgeladene Kugel hat deine Deckung gebrochen. Du hast weniger Rüstung und Härte."
 }

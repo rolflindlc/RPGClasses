@@ -75,7 +75,7 @@
   "ability.rites_and_paths.sanctuary.name": "圣所",
   "ability.rites_and_paths.shared_weak_point.desc": "你的盟友也能看到弱点标记,且每次命中都会刷新标记。",
   "ability.rites_and_paths.shared_weak_point.name": "共享弱点",
-  "ability.rites_and_paths.sphere_throw.desc": "手持球带:左键,球会朝你瞄准的位置引导飞行(飞得更远,但稍慢);右键,球会朝你的视线方向弯曲,按住可蓄力:满蓄力时飞行距离翻倍、嵌入时间翻倍,并造成 ×1.5 伤害。球会嵌入目标并在其身上旋转 1 秒,分多跳造成伤害(无视其无敌时间);每一跳被护甲减免的比例与整次命中一击打出时相同。每次弹跳(撞到方块,或在敌人身上旋转结束后)都会让球飞向你视角所看的方向:下一个敌人由你自己瞄准。没有剩余弹跳时,球会回到手中。在球回来的瞬间点击即为完美接球:获得更多回旋并立即再次掷出。命中前每弹过一个方块都会增加伤害。",
+  "ability.rites_and_paths.sphere_throw.desc": "手持球带:左键,球会朝你瞄准的位置引导飞行(飞得更远,但稍慢);右键,球会朝你的视线方向弯曲,按住可蓄力(蓄力时移动变慢):蓄力球是破防球,按蓄力程度无视部分护甲,并飞得稍远;满蓄力时会禁用目标的盾牌,并让其陷入数秒的破防(护甲降低)。球会嵌入目标并在其身上旋转 1 秒,分多跳造成伤害(无视其无敌时间);每一跳被护甲减免的比例与整次命中一击打出时相同。每次弹跳(撞到方块,或在敌人身上旋转结束后)都会让球飞向你视角所看的方向:下一个敌人由你自己瞄准。没有剩余弹跳时,球会回到手中。在球回来的瞬间点击即为完美接球:获得更多回旋并立即再次掷出。命中前每弹过一个方块都会增加伤害。",
   "ability.rites_and_paths.sphere_throw.name": "掷球",
   "ability.rites_and_paths.spin_bar.desc": "0 到 100% 的槽,每次命中都会上涨,连续命中涨得更多。若球回来时没有命中任何敌人,会损失一半;脱战后会慢慢下降。达到 33%:多一次弹跳并留下金色轨迹。达到 66%:材质效果更强,伤害略高。达到 100%:可以使用黄金矩形(总等级 30 起)。",
   "ability.rites_and_paths.spin_bar.name": "回旋",
@@ -1499,10 +1499,10 @@
   "param.rites_and_paths.channel_mana_per_second": "引导时每秒法力",
   "param.rites_and_paths.channel_seconds": "最大引导时间",
   "param.rites_and_paths.channel_speed": "引导时移动速度",
-  "param.rites_and_paths.charge_damage": "满蓄力右键:伤害 x",
+  "param.rites_and_paths.charge_guard_seconds": "蓄力右键:破防与盾牌禁用时间",
   "param.rites_and_paths.charge_range": "满蓄力右键:射程 x",
   "param.rites_and_paths.charge_seconds": "最大蓄力",
-  "param.rites_and_paths.charge_spin_time": "满蓄力右键:嵌入时间 x",
+  "param.rites_and_paths.charge_armor_ignore": "蓄力右键:无视护甲",
   "param.rites_and_paths.charges": "层数",
   "param.rites_and_paths.chimera_mana": "每次创造的法力",
   "param.rites_and_paths.chorus_cap": "最多计入的盟友数",
@@ -3207,5 +3207,10 @@
   "hud_editor.rites_and_paths.element.druid_cast": "德鲁伊施法",
   "hud_editor.rites_and_paths.element.druid_form": "德鲁伊形态",
   "hud_editor.rites_and_paths.element.bard_rhythm": "吟游诗人节奏",
-  "param.rites_and_paths.mob_study_seconds": "研究时间(生物)"
+  "param.rites_and_paths.mob_study_seconds": "研究时间(生物)",
+  "param.rites_and_paths.charge_slow": "右键:蓄力时的移动速度",
+  "param.rites_and_paths.guard_break_armor": "破防:护甲与韧性",
+  "param.rites_and_paths.impact_knockback": "命中击退",
+  "effect.rites_and_paths.guard_break": "破防",
+  "effect.rites_and_paths.guard_break.description": "破防(回旋大师):蓄力球打破了你的防御。你的护甲和韧性降低。"
 }

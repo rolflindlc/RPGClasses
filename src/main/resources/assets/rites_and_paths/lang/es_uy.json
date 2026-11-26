@@ -75,7 +75,7 @@
   "ability.rites_and_paths.sanctuary.name": "Santuario",
   "ability.rites_and_paths.shared_weak_point.desc": "Tus aliados también ven las marcas de Punto Débil y cada impacto las renueva.",
   "ability.rites_and_paths.shared_weak_point.name": "Punto Débil Compartido",
-  "ability.rites_and_paths.sphere_throw.desc": "Con la bandolera en la mano: clic izquierdo, la bola va guiada hacia donde apuntas (llega más lejos, pero algo más lenta); clic derecho, curva hacia donde miras, y si lo mantienes se carga: con la carga completa llega el doble de lejos, se queda clavada el doble y hace ×1,5 de daño. La bola se clava y gira 1 segundo en el objetivo, dañándolo con varios ticks (se salta su invulnerabilidad); cada tick pierde contra la armadura lo mismo que perdería el impacto entero de un solo golpe. Cada rebote, en un bloque o al terminar de girar en un enemigo, la manda hacia donde mira tu cámara: el siguiente enemigo lo apuntas tú. Sin rebotes, vuelve a la mano. Pulsar justo cuando llega es una Captura Perfecta: más Giro y la relanzas al instante. Cada bloque rebotado antes del impacto le suma daño.",
+  "ability.rites_and_paths.sphere_throw.desc": "Con la bandolera en la mano: clic izquierdo, la bola va guiada hacia donde apuntas (llega más lejos, pero algo más lenta); clic derecho, curva hacia donde miras, y si lo mantienes se carga (mientras cargas vas más lento): la bola cargada es un rompeguardias, ignora parte de la armadura según la carga y llega algo más lejos; con la carga completa desactiva el escudo del objetivo y le deja la Guardia Rota (menos armadura) unos segundos. La bola se clava y gira 1 segundo en el objetivo, dañándolo con varios ticks (se salta su invulnerabilidad); cada tick pierde contra la armadura lo mismo que perdería el impacto entero de un solo golpe. Cada rebote, en un bloque o al terminar de girar en un enemigo, la manda hacia donde mira tu cámara: el siguiente enemigo lo apuntas tú. Sin rebotes, vuelve a la mano. Pulsar justo cuando llega es una Captura Perfecta: más Giro y la relanzas al instante. Cada bloque rebotado antes del impacto le suma daño.",
   "ability.rites_and_paths.sphere_throw.name": "Lanzamiento de Esferas",
   "ability.rites_and_paths.spin_bar.desc": "Barra de 0 a 100 % que sube con cada impacto, más si los encadenas. Si una bola vuelve sin impactar a ningún enemigo, pierdes la mitad; fuera de combate baja poco a poco. Con el 33 %: un rebote más y estelas doradas. Con el 66 %: el efecto del material es más fuerte y algo más de daño. Con el 100 %: puedes usar el Rectángulo Dorado (desde el Nivel Total 30).",
   "ability.rites_and_paths.spin_bar.name": "Giro",
@@ -1609,10 +1609,10 @@
   "param.rites_and_paths.channel_mana_per_second": "Maná por segundo canalizando",
   "param.rites_and_paths.channel_seconds": "Canalización máxima",
   "param.rites_and_paths.channel_speed": "Velocidad mientras canalizas",
-  "param.rites_and_paths.charge_damage": "Clic derecho cargado: daño x",
+  "param.rites_and_paths.charge_guard_seconds": "Clic derecho cargado: Guardia Rota y escudo desactivado",
   "param.rites_and_paths.charge_range": "Clic derecho cargado: alcance x",
   "param.rites_and_paths.charge_seconds": "Carga máxima",
-  "param.rites_and_paths.charge_spin_time": "Clic derecho cargado: tiempo clavada x",
+  "param.rites_and_paths.charge_armor_ignore": "Clic derecho cargado: armadura ignorada",
   "param.rites_and_paths.charges": "Cargas",
   "param.rites_and_paths.chimera_mana": "Maná de cada creación",
   "param.rites_and_paths.chorus_cap": "Aliados que cuentan como máximo",
@@ -3367,5 +3367,10 @@
   "hud_editor.rites_and_paths.element.druid_cast": "Lanzamiento del Druida",
   "hud_editor.rites_and_paths.element.druid_form": "Forma del Druida",
   "hud_editor.rites_and_paths.element.bard_rhythm": "Ritmo del Bardo",
-  "param.rites_and_paths.mob_study_seconds": "Tiempo de estudio (mobs)"
+  "param.rites_and_paths.mob_study_seconds": "Tiempo de estudio (mobs)",
+  "param.rites_and_paths.charge_slow": "Clic derecho: velocidad mientras cargas",
+  "param.rites_and_paths.guard_break_armor": "Guardia Rota: armadura y dureza",
+  "param.rites_and_paths.impact_knockback": "Empuje del impacto",
+  "effect.rites_and_paths.guard_break": "Guardia Rota",
+  "effect.rites_and_paths.guard_break.description": "Guardia Rota (Maestro del Giro): una bola cargada ha roto tu guardia. Tienes menos armadura y dureza."
 }

@@ -100,6 +100,18 @@ for i in range(220):
 px[9, 9] = GOLD_L
 im.save(os.path.join(TEX, "mob_effect", "golden_spin.png"))
 
+# Efecto Guardia Rota (18x18): escudo gris partido por una grieta morada.
+im = Image.new("RGBA", (18, 18), T); px = im.load()
+SH = (150, 150, 160, 255); SH_L = (200, 200, 210, 255); SH_D = (90, 90, 100, 255); CRACK = (170, 70, 220, 255)
+for y in range(2, 16):
+    half = 6 if y < 10 else max(1, 6 - (y - 9))
+    for x in range(9 - half, 9 + half):
+        edge = x in (9 - half, 9 + half - 1) or y == 2
+        px[x, y] = SH_D if edge else (SH_L if x < 8 and y < 8 else SH)
+for (x, y) in ((10, 2), (9, 4), (10, 5), (8, 7), (9, 8), (7, 10), (8, 11), (9, 13), (8, 14)):
+    px[x, y] = CRACK
+im.save(os.path.join(TEX, "mob_effect", "guard_break.png"))
+
 
 # ------------------------------------------------------------------ retratos (32x32 → 64x64)
 def canvas(bg_in, bg_out):

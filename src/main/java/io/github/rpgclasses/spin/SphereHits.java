@@ -113,14 +113,17 @@ public final class SphereHits {
         s.pulsesDone = 1;
         s.damagePerTick = (float) (total / pulses);
         s.critDecided = decideCrit(s, owner, target);
-        s.impactKnockback = switch (s.material()) {
-            case IRON -> SpinMaster.t("iron_knockback", 0.35);
-            case NETHERITE -> SpinMaster.t("netherite_knockback", 0.9);
+        // Empuje: solo el primer pulso (el impacto) empuja, y poco; los ticks siguientes no, para no dejar al objetivo
+        // inmovilizado a base de empujones.
+        s.impactKnockback = SpinMaster.t("impact_knockback", 0.15) + switch (s.material()) {
+            case IRON -> SpinMaster.t("iron_knockback", 0.10);
+            case NETHERITE -> SpinMaster.t("netherite_knockback", 0.25);
             default -> 0;
-        } + (s.oneHit ? SpinMaster.t("crush_knockback", 1.2) : 0);
+        } + (s.oneHit ? SpinMaster.t("crush_knockback", 0.5) : 0);
 
         materialEffects(s, owner, target, at, incoming, total);
         subclassEffects(s, owner, target);
+        if (s.guardBreak) breakGuard(s, owner, target, at);
         if (!s.virtual) {
             SpinState.onImpact(owner, target, s.clawLevel);
             if (Bandolier.damage(owner, s.throwId, 1)) broke(s, owner);
@@ -140,6 +143,7 @@ public final class SphereHits {
                     String.format("%.2f", s.charge), s.critDecided, s.blockBounces, s.hops, s.trickHits, String.format("%.2f", st.spin));
         }
         dealTick(s, owner, target);
+        if (s.oneHit || s.hitStopTicks <= 0) impactPush(s, owner, target);
         if (s.oneHit) {
             // Mazazo: un golpe seco y la bola sigue (rebote hacia la mira o vuelta).
             level.playSound(null, at.x, at.y, at.z, SoundEvents.ANVIL_LAND, SoundSource.PLAYERS, 0.6f, 0.7f);
@@ -148,11 +152,46 @@ public final class SphereHits {
         }
     }
 
-    /** Un pulso del giro: una parte del daño, saltándose la invulnerabilidad del objetivo. */
+    /**
+     * Empuje del golpe que se está dando ahora (-1 = el normal de Minecraft, 0 = ninguno). Lo usa {@link #onKnockback}:
+     * así el impacto empuja poco y los ticks del giro no empujan nada.
+     */
+    private static double knockbackOverride = -1;
+
+    /** Hace daño con el empuje indicado en vez del de Minecraft (0 = sin empuje). */
+    static void hurtWithKnockback(LivingEntity target, net.minecraft.world.damagesource.DamageSource source, float amount, double knockback) {
+        double before = knockbackOverride;
+        knockbackOverride = Math.max(0, knockback);
+        try {
+            target.hurt(source, amount);
+        } finally {
+            knockbackOverride = before;
+        }
+    }
+
+    public static void onKnockback(net.minecraftforge.event.entity.living.LivingKnockBackEvent event) {
+        if (knockbackOverride < 0) return;
+        if (knockbackOverride <= 0 || Races.isBoss(event.getEntity())) event.setCanceled(true);
+        else event.setStrength((float) knockbackOverride);
+    }
+
+    /**
+     * El único empuje del impacto, pequeño y lejos del lanzador. Se da al acabar la micro-pausa (antes la pausa lo
+     * anularía); los pulsos del giro no empujan. Los jefes no se mueven.
+     */
+    static void impactPush(SphereEntity s, ServerPlayer owner, LivingEntity t) {
+        if (s.impactKnockback <= 0 || Races.isBoss(t) || !t.isAlive()) return;
+        Vec3 away = t.position().subtract(owner.position()).multiply(1, 0, 1);
+        if (away.lengthSqr() < 1.0E-4) return;
+        t.knockback(s.impactKnockback, -away.x, -away.z);
+        t.hurtMarked = true;
+    }
+
+    /** Un pulso del giro: una parte del daño, saltándose la invulnerabilidad del objetivo. No empuja. */
     static void dealTick(SphereEntity s, ServerPlayer owner, LivingEntity target) {
         if (s.damagePerTick <= 0) return;
         target.invulnerableTime = 0;
-        target.hurt(SpinMaster.sphereSource(s.level(), s, owner), s.damagePerTick);
+        hurtWithKnockback(target, SpinMaster.sphereSource(s.level(), s, owner), s.damagePerTick, 0);
         if (s.level() instanceof ServerLevel sl) {
             sl.sendParticles(ParticleTypes.CRIT, s.getX(), s.getY(), s.getZ(), 3, 0.12, 0.12, 0.12, 0.25);
             if (s.spinTick > 0) {
@@ -174,7 +213,7 @@ public final class SphereHits {
         s.critDecided = decideCrit(s, owner, target);
         boolean crit = Boolean.TRUE.equals(s.critDecided);
         target.invulnerableTime = 0;
-        target.hurt(SpinMaster.sphereSource(s.level(), s, owner), (float) total);
+        hurtWithKnockback(target, SpinMaster.sphereSource(s.level(), s, owner), (float) total, SpinMaster.t("impact_knockback", 0.15));
         s.critDecided = null;
         s.trickHits++;
         s.hitIds.add(target.getId());
@@ -194,6 +233,34 @@ public final class SphereHits {
             DebugLog.event(owner, "giro", "Ruta de Rebotes: rebote {} en {}: {} de daño, crítico {}", s.trickHits,
                     DebugLog.describe(target), String.format("%.2f", total), crit);
         }
+    }
+
+    /**
+     * Bola cargada al máximo (rompeguardias): desactiva el escudo de un jugador como un hacha (y no lo deja volver a
+     * subirlo durante {@code charge_guard_seconds}) y le pone Guardia Rota, menos armadura y dureza ese tiempo.
+     */
+    static void breakGuard(SphereEntity s, ServerPlayer owner, LivingEntity target, Vec3 at) {
+        int ticks = (int) Math.round(SpinMaster.t("charge_guard_seconds", 4) * 20);
+        if (ticks <= 0) return;
+        if (target instanceof net.minecraft.world.entity.player.Player pl) {
+            boolean blocking = pl.isBlocking();
+            pl.disableShield(true);
+            // disableShield pone 5 s de enfriamiento; se ajusta al tiempo de la Guardia Rota.
+            for (net.minecraft.world.item.ItemStack h : new net.minecraft.world.item.ItemStack[] {pl.getMainHandItem(), pl.getOffhandItem()}) {
+                if (h.canPerformAction(net.minecraftforge.common.ToolActions.SHIELD_BLOCK)) pl.getCooldowns().addCooldown(h.getItem(), ticks);
+            }
+            if (blocking) s.level().playSound(null, at.x, at.y, at.z, SoundEvents.SHIELD_BREAK, SoundSource.PLAYERS, 1.0f, 0.9f);
+        } else if (target.isBlocking()) {
+            target.stopUsingItem();
+        }
+        int level = Math.max(0, (int) Math.round(Math.abs(SpinMaster.t("guard_break_armor", -0.25)) / 0.05) - 1);
+        target.addEffect(new net.minecraft.world.effect.MobEffectInstance(SpinRegistry.GUARD_BREAK.get(), ticks, level, false, true, true), owner);
+        ServerLevel level2 = (ServerLevel) s.level();
+        level2.playSound(null, at.x, at.y, at.z, SoundEvents.ANVIL_PLACE, SoundSource.PLAYERS, 0.5f, 1.8f);
+        level2.sendParticles(ParticleTypes.ENCHANTED_HIT, at.x, at.y, at.z, 14, 0.25, 0.25, 0.25, 0.4);
+        level2.sendParticles(new net.minecraft.core.particles.DustParticleOptions(new org.joml.Vector3f(0.6f, 0.3f, 0.9f), 1.3f),
+                at.x, at.y, at.z, 10, 0.3, 0.3, 0.3, 0);
+        SpinFxSender.onomatopoeia(level2, at, SpinFxSender.WORD_DOGOON);
     }
 
     /** Daño total de un impacto (antes del muro, el crítico y la armadura, que pone DamagePipeline). */
@@ -523,6 +590,7 @@ public final class SphereHits {
         double ignored = 0;
         if (s.material() == SphereMaterial.DIAMOND) ignored += SpinMaster.t("diamond_armor", 0.20) * s.materialFactor;
         if (crit) ignored += SpinMaster.mech(attacker, SpinMaster.SCAN, "crit_pierce", 0);
+        ignored += s.chargeArmor; // bola cargada (rompeguardias)
         ignored = Mth.clamp(ignored, 0, 0.9);
         int pulses = s.state() == SphereEntity.SPINNING ? Math.max(1, s.pulseHits) : 1;
         if (ignored <= 0 && pulses <= 1) return 1;

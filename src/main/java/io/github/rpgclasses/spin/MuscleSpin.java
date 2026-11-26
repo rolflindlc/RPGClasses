@@ -70,7 +70,7 @@ public final class MuscleSpin {
     private static boolean releasing;
     private static final int MAX_USE_TICKS = 200, CAST_MAX_TICKS = 20 * 12, LONG_USE_TICKS = 40;
 
-    private MuscleSpin() {}
+    MuscleSpin() {}
 
     /** La bola sobrecargada impacta: el objetivo usa lo que lleva en la mano. */
     static void trigger(SphereEntity s, ServerPlayer owner, LivingEntity target) {

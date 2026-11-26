@@ -135,7 +135,7 @@
 134 Corps martial : pas d'armure (les robes de Moine ne comptent pas), dégâts à mains nues, armure et robustesse qui croissent avec vos points de classe de base (au maximum à 30). Le Feu retranche 25 % de cette armure et l'Eau 25 % de ces dégâts.
 135 Le tank du groupe. Encaisse plus que quiconque avec armure et bouclier, attire les ennemis et protège les alliés. Inflige peu de dégâts seul.
 136 Paladin
-137 Trait de classe : plus de santé maximale et un peu moins de vitesse.
+137 Trait de classe : plus de santé maximale.
 138 Tireur à l'arc. Dégâts à distance constants, flèches rapides à longue portée et bonne mobilité. Peut porter une armure sans pénalité.
 139 Rôdeur
 140 Un assassin agile aux armes légères. Devient invisible, frappe par surprise avec des coups critiques garantis et se déplace très vite. Très fragile s'il est pris.

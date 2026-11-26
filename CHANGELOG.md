@@ -3,6 +3,12 @@
 ## Unreleased
 
 ### Changed
+- **Balance review for Improved Armor's flat curve:** with it a Paladin takes about twice the hits of a Mage (was
+  ~4× under vanilla), so the Paladin is compensated with offence and utility instead of defence. **Paladin** class
+  trait no longer slows you (was −5% speed). *Divine Smite* triggers every 3rd melee hit and deals +50% holy damage
+  (was every 4th, +40%). *Taunt* reduces damage taken by 30% for 6 s (was 20% for 4 s). `tools/balance_audit.py` now
+  uses Improved Armor's curve and Protection IV by default (`--vanilla`, `--epf N`), with Barbarian and Monk wearing
+  their enchanted class gear.
 - **Face Changer:** learning a mob face takes 45 s of study (players still 90 s; `mob_study_seconds`). Mob disguises
   are now animated every tick like Druid forms (walking, idle, swimming, crouching and the mob's own attack: native,
   arm swing or head-butt; zombies raise their arms for a moment when you hit) and no longer show the items you hold.

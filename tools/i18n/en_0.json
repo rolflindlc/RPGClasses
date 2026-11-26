@@ -136,7 +136,7 @@
   "class.rites_and_paths.monk.trait": "Martial Body: no armor (Monk robes do not count), unarmed damage, armor and toughness that grow with your base class points (full at 30). Fire subtracts 25% from this armor and Water 25% from this damage.",
   "class.rites_and_paths.paladin.desc": "The group's tank. Withstands more than anyone with armor and shield, draws enemies in and protects allies. Deals little damage on his own.",
   "class.rites_and_paths.paladin.name": "Paladin",
-  "class.rites_and_paths.paladin.trait": "Class trait: more maximum health and slightly less speed.",
+  "class.rites_and_paths.paladin.trait": "Class trait: more maximum health.",
   "class.rites_and_paths.ranger.desc": "Bow marksman. Steady ranged damage, fast long-range arrows and good mobility. Can wear armor without penalty.",
   "class.rites_and_paths.ranger.name": "Ranger",
   "class.rites_and_paths.rogue.desc": "An agile assassin with light weapons. Turns invisible, strikes by surprise with guaranteed critical hits and moves very fast. Very fragile if caught.",

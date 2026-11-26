@@ -135,7 +135,7 @@
 134 Kampfkörper: keine Rüstung (Mönchsroben zählen nicht), unbewaffneter Schaden, Rüstung und Zähigkeit wachsen mit deinen Basisklassenpunkten (voll bei 30). Feuer zieht 25 % von dieser Rüstung ab und Wasser 25 % von diesem Schaden.
 135 Der Tank der Gruppe. Hält mit Rüstung und Schild mehr aus als jeder andere, zieht Feinde an und schützt Verbündete. Verursacht allein wenig Schaden.
 136 Paladin
-137 Klassenmerkmal: mehr maximale Gesundheit und etwas weniger Geschwindigkeit.
+137 Klassenmerkmal: mehr maximale Gesundheit.
 138 Bogenschütze. Stetiger Fernschaden, schnelle Pfeile mit großer Reichweite und gute Beweglichkeit. Kann Rüstung ohne Abzug tragen.
 139 Waldläufer
 140 Ein flinker Assassine mit leichten Waffen. Wird unsichtbar, schlägt überraschend mit garantierten kritischen Treffern zu und bewegt sich sehr schnell. Sehr zerbrechlich, wenn er erwischt wird.

@@ -83,7 +83,7 @@ classes = {
 def mb(v): return to(v, "multiply_base")
 TRAITS = {
  "mage": [attr([(MC+"max_health", mb(-.2))])],
- "paladin": [attr([(MC+"max_health", mb(.2)), (MC+"movement_speed", mb(-.05))])],
+ "paladin": [attr([(MC+"max_health", mb(.2))])],  # Revisión Improved Armor: sin −5 % de velocidad
  "rogue": [attr([(MC+"max_health", mb(-.15))])],
  # Cuerpo Marcial (rev. 2.9): suelo que crece con los puntos de clase base (máximo con 30).
  "monk": [dict(attr([(R("unarmed_damage"), to(4.0)), (MC+"armor", to(13)), (MC+"armor_toughness", to(4))], NOARM), scale="base_points")],

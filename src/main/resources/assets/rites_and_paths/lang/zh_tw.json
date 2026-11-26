@@ -260,7 +260,7 @@
   "class.rites_and_paths.monk.trait": "武道之軀:無護甲(武僧長袍不算),徒手傷害、護甲和韌性隨你的基礎職業點數增長(30 點時滿)。火焰會削減此護甲的 25%,水會削減此傷害的 25%。",
   "class.rites_and_paths.paladin.desc": "隊伍中的坦克。身披護甲、手持盾牌,比任何人都能承受更多傷害,吸引敵人並保護盟友。自身造成的傷害很低。",
   "class.rites_and_paths.paladin.name": "聖騎士",
-  "class.rites_and_paths.paladin.trait": "職業特性:最大生命值提高,速度略微降低。",
+  "class.rites_and_paths.paladin.trait": "職業特性:最大生命值提高。",
   "class.rites_and_paths.ranger.desc": "弓箭神射手。穩定的遠端傷害、飛行迅速的遠端箭矢和良好的機動性。穿護甲沒有懲罰。",
   "class.rites_and_paths.ranger.name": "遊俠",
   "class.rites_and_paths.rogue.desc": "手持輕型武器的敏捷刺客。能夠隱身,以必定暴擊的方式發動偷襲,移動極快。一旦被抓住就非常脆弱。",

@@ -260,7 +260,7 @@
   "class.rites_and_paths.monk.trait": "Corpo marziale: senza armatura (le vesti da Monaco non contano), danno a mani nude, armatura e tenacia che crescono con i tuoi punti di classe base (al massimo a 30). Il Fuoco sottrae il 25% a questa armatura e l'Acqua il 25% a questo danno.",
   "class.rites_and_paths.paladin.desc": "Il tank del gruppo. Resiste più di chiunque altro con armatura e scudo, attira i nemici e protegge gli alleati. Infligge poco danno da solo.",
   "class.rites_and_paths.paladin.name": "Paladino",
-  "class.rites_and_paths.paladin.trait": "Tratto di classe: più salute massima e un po' meno velocità.",
+  "class.rites_and_paths.paladin.trait": "Tratto di classe: più salute massima.",
   "class.rites_and_paths.ranger.desc": "Tiratore con l'arco. Danno a distanza costante, frecce veloci a lunga gittata e buona mobilità. Può indossare armature senza penalità.",
   "class.rites_and_paths.ranger.name": "Ranger",
   "class.rites_and_paths.rogue.desc": "Un assassino agile con armi leggere. Diventa invisibile, colpisce di sorpresa con critici garantiti e si muove molto veloce. Molto fragile se preso.",

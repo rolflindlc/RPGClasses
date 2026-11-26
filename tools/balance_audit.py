@@ -4,15 +4,16 @@
 Cada fila (clase, subclase, raza o subraza) se puntúa de 0 a 10 en cuatro ejes y el total es su media:
 
 * Movilidad y Utilidad: valoración de diseño (entrada a mano).
-* Resistencia: vida efectiva contra golpes de 15 con la fórmula de armadura vanilla, como media geométrica entre equipo
-  de hierro (15/0) y de diamante (20/8) con el muro de Armadura aplicado, por el factor de escudo
+* Resistencia: vida efectiva contra golpes de 15 con la curva de Improved Armor (K = 18, 1,5 puntos por EPF; la
+  penalización de golpes grandes solo sobre la armadura) o la vanilla (--vanilla), como media geométrica entre equipo
+  de hierro (15/0) y de diamante (20/8) con el muro de Armadura aplicado y Protección (--epf), por el factor de escudo
   1 + 0,5 / ((1 + 2w)(1 + w)). Puntuación = 2 * log2(HP / 10).
 * DPS: índice frente a un jugador sin clase (1,00). Puntuación = 3 + 4 * (índice - 1).
 
 Las razas y subrazas no tienen DPS ni resistencia propios: se aplican sus modificadores a la clase media y se puntúa la
 diferencia. Tiers por diferencia con la media de su grupo: S >= +8 %, A >= +3 %, B dentro de +-3 %, C >= -8 %, D < -8 %.
 
-Uso: python3 tools/balance_audit.py [--markdown]
+Uso: python3 tools/balance_audit.py [--markdown] [--vanilla] [--epf N]
 Todos los valores son estimaciones de diseño, no medidas en el juego. Cambia las tablas de abajo al medir.
 """
 import math
@@ -20,10 +21,30 @@ import sys
 
 # ---------------------------------------------------------------- fórmulas
 
-def reduction(armor, tough, dmg=15.0):
-    """Fracción de daño que pasa (fórmula de armadura de Minecraft 1.20)."""
+
+# Curva de armadura: Improved Armor (plana, por defecto) o vanilla (--vanilla). EPF general de las piezas: --epf N
+# (16 = Protección IV ×4, por defecto; 0 = sin encantar). Bárbaro y Monje llevan su equipo de clase de diamante
+# encantado (no apaga sus pasivas desarmadas).
+MODE = "vanilla" if "--vanilla" in sys.argv else "flat"
+EPF = float(sys.argv[sys.argv.index("--epf") + 1]) if "--epf" in sys.argv else 16.0
+def _van(armor, tough, dmg=15.0, epf=0.0):
     eff = max(armor / 5.0, armor - dmg / (2.0 + tough / 4.0))
-    return 1.0 - min(20.0, eff) / 25.0
+    return (1.0 - min(20.0, eff) / 25.0) * (1.0 - min(20.0, epf) / 25.0)
+def _flat(armor, tough, dmg=15.0, epf=0.0):
+    a = max(armor / 5.0, armor - dmg / (2.0 + tough / 4.0)) if armor > 0 else armor
+    A = max(a + 1.5 * min(epf, 20.0), 0.0)
+    return 1.0 - A / (A + 18.0)
+def reduction(armor, tough, dmg=15.0, epf=None):
+    e = EPF if epf is None else epf
+    return _flat(armor, tough, dmg, e) if MODE == "flat" else _van(armor, tough, dmg, e)
+def armor_ratio(armor, tough, epf):
+    # Los valores de vida efectiva fijados a mano se midieron con vanilla sin encantar; este factor los pasa al modo
+    # actual (factor de vida efectiva del modo actual frente a la base de la auditoría (vanilla sin encantar)
+    return (1.0 / reduction(armor, tough, epf=epf)) / (1.0 / _van(armor, tough))
+def geared_ratio(mult_a=1.0, mult_t=1.0, wall=0.0):
+    a = 1 - wall
+    r1 = armor_ratio(15 * mult_a * a, 0, EPF); r2 = armor_ratio(20 * mult_a * a, 8 * mult_t * a, EPF)
+    return (r1 * r2) ** 0.5
 
 
 def shield_factor(w):
@@ -40,7 +61,7 @@ def ehp_geared(hp, armor_wall, shield_wall, extra=1.0):
 
 def ehp_fixed(hp, armor, tough, shield_wall, extra=1.0):
     """Vida efectiva con una armadura fija (Bárbaro y Monje sin equipo)."""
-    return hp / reduction(armor, tough) * shield_factor(shield_wall) * extra
+    return hp / reduction(armor, tough, epf=0) * shield_factor(shield_wall) * extra
 
 
 def res_score(ehp):
@@ -68,7 +89,7 @@ def monk(charges):
     fire = 0.72 * (1 + charges * 0.08 * 1.25) * MONK_TARGET
     armor = 13 + charges * 1.4 * 1.25
     tough = 4 + charges * 0.8 * 1.25
-    stone = ehp_fixed(20, min(30, armor), min(20, tough), 1.0)  # Escudos −100 %
+    stone = 20 / reduction(min(30, armor + 1), min(20, tough), epf=EPF) * shield_factor(1.0)  # Escudos −100 %
     water = charges * 3 * 1.25
     return fire, stone, water
 
@@ -81,8 +102,8 @@ M10_FIRE, M10_STONE, _ = monk(10)
 
 CLASSES = [
     row("Mago", 3, ehp_geared(16, .25, .50), 2.05, 6.5),
-    row("Paladín", 2.5, 122.5, 1.15, 7, "vida 24, Baluarte y Provocación (valor de la rev. 2.7)"),
-    row("Bárbaro", 5, 56.5, 1.75, 4, "Piel de Hierro 16/6 (valor de la rev. 2.7); el muro de Armadura no le afecta sin armadura"),
+    row("Paladín", 2.5, 122.5 * geared_ratio(1.45, 1.6), 1.15, 7, "vida 24, Baluarte y Provocación (valor de la rev. 2.7)"),
+    row("Bárbaro", 5, 56.5 * armor_ratio(17, 6, EPF), 1.75, 4, "Piel de Hierro 16/6 (valor de la rev. 2.7); el muro de Armadura no le afecta sin armadura"),
     row("Pícaro", 6, ehp_geared(17, .40, .70), 1.49, 7),
     row("Ranger", 5, ehp_geared(20, 0, .30), 1.61, 6.25, "+0,25 de utilidad por los conjuros de flecha sin muro"),
     row("Monje (5 cargas)", 5.5, M5_STONE, M5_FIRE, 7.5, "rev. 2.20: Fuego, Piedra y Agua con su rama llena"),
@@ -96,22 +117,22 @@ CLASSES = [
 # ---------------------------------------------------------------- subclases (nivel 40)
 
 SUBCLASSES = [
-    ("Mago", row("Cronomante", 3.5, 30.3, 2.10, 7.5)),
-    ("Mago", row("Elementalista", 3, 28.2, 2.30, 7.5, "sin naturaleza ni sagrada (−0,1 de DPS)")),
-    ("Mago", row("Mago de Batalla", 3, 44.0, 2.00, 6.5, "sin naturaleza en Filo Imbuido")),
-    ("Paladín", row("Guardián Bendito", 2.5, 140.9, 1.15, 9)),
-    ("Paladín", row("Bastión Inflexible", 3.5, 153.1, 1.15, 7)),
-    ("Paladín", row("Juggernaut de Carga", 4.5, 183.8, 1.20, 6)),
-    ("Bárbaro", row("Indestructible", 5, 110.1, 1.75, 6)),
-    ("Bárbaro", row("Berserker Suicida", 6, 67.7, 2.16, 5)),
-    ("Bárbaro", row("Corruptor de Plagas", 5, 62.1, 2.00, 5)),
+    ("Mago", row("Cronomante", 3.5, 30.3 * geared_ratio(wall=.25), 2.10, 7.5)),
+    ("Mago", row("Elementalista", 3, 28.2 * geared_ratio(wall=.25), 2.30, 7.5, "sin naturaleza ni sagrada (−0,1 de DPS)")),
+    ("Mago", row("Mago de Batalla", 3, 44.0 * geared_ratio(wall=.25), 2.00, 6.5, "sin naturaleza en Filo Imbuido")),
+    ("Paladín", row("Guardián Bendito", 2.5, 140.9 * geared_ratio(1.45, 1.6), 1.15, 9)),
+    ("Paladín", row("Bastión Inflexible", 3.5, 153.1 * geared_ratio(1.45, 1.6), 1.15, 7)),
+    ("Paladín", row("Juggernaut de Carga", 4.5, 183.8 * geared_ratio(1.45, 1.6), 1.20, 6)),
+    ("Bárbaro", row("Indestructible", 5, 110.1 * armor_ratio(17, 6, EPF), 1.75, 6)),
+    ("Bárbaro", row("Berserker Suicida", 6, 67.7 * armor_ratio(17, 6, EPF), 2.16, 5)),
+    ("Bárbaro", row("Corruptor de Plagas", 5, 62.1 * armor_ratio(17, 6, EPF), 2.00, 5)),
     ("Pícaro", row("Cambiarrostros", 6, ehp_geared(17, .40, .70) * 1.1, 1.49, 9,
                    "rev. 2.20: sin Paso de Sombra; infiltración e información (+10 % de vida efectiva por agro evitado)")),
-    ("Pícaro", row("Ilusionista de Sombras", 7, 35.4, 1.48, 8)),
-    ("Pícaro", row("Hoja Arcana", 6, 23.5, 1.55, 8)),
-    ("Ranger", row("Maestro de Bestias", 5, 65.2, 2.14, 7)),
-    ("Ranger", row("Explorador Ágil", 8, 57.6, 1.61, 7)),
-    ("Ranger", row("Francotirador", 5, 50.1, 2.05, 5)),
+    ("Pícaro", row("Ilusionista de Sombras", 7, 35.4 * geared_ratio(wall=.40), 1.48, 8)),
+    ("Pícaro", row("Hoja Arcana", 6, 23.5 * geared_ratio(wall=.40), 1.55, 8)),
+    ("Ranger", row("Maestro de Bestias", 5, 65.2 * geared_ratio(), 2.14, 7)),
+    ("Ranger", row("Explorador Ágil", 8, 57.6 * geared_ratio(), 1.61, 7)),
+    ("Ranger", row("Francotirador", 5, 50.1 * geared_ratio(), 2.05, 5)),
     ("Monje", row("Maestro de la Brisa (5 cargas)", 8, M5_STONE * 52.4 / 47.4, M5_FIRE, 7.5)),
     ("Monje", row("Palma Pesada (5 cargas)", 5.5, M5_STONE * 54.7 / 47.4, M5_FIRE * 1.13 / 1.05, 7.5)),
     ("Monje", row("Guardián Trimundial (5 cargas)", 5.5, M5_STONE * 59.5 / 47.4, M5_FIRE * 1.18 / 1.05, 8.5)),
@@ -259,6 +280,10 @@ REV222_SUB = {"Bastión Inflexible": (0, 1.0, 1.10, 0), "Francotirador": (0, 1.2
 
 # Rev. 2.23 (bajadas de las altas): (movilidad +, ×vida, ×DPS, utilidad +)
 REV223_CLASS = {"Mago": (0, 1.0, 0.95, 0)}  # rama Reserva +300 -> +250 de maná
+# Revisión Improved Armor (26-11-2026): el Paladín ya aguanta ~2 veces lo que el Mago; se compensa con ataque y utilidad.
+# Sin −5 % de velocidad (+0,25 de movilidad); Castigo Divino cada 3 golpes y +50 % (antes 4 y +40 %): DPS ×1,061;
+# Provocación −30 % de daño durante 6 s (antes −20 % y 4 s): +1,5 de utilidad (protege al grupo).
+REVIA_CLASS = {"Paladín": (0.25, 1.0, (1 + 0.5 / 3) / (1 + 0.4 / 4), 1.5)}
 REV223_SUB = {"Elementalista": (0, 1.0, 0.96, 0),      # recarga −10 % -> −6 %
               "Cronomante": (0, 1.0, 0.97, 0.25),       # lanzamiento −15 % -> −10 %; Parada Temporal 2 s
               "Berserker Suicida": (0, 0.85, 0.92, 0),  # +25 % -> +15 % de daño; Furia 5 s fijos
@@ -270,12 +295,14 @@ def apply_rev(r, key, table):
     return row(r["name"], min(10, r["mob"] + dm), r["ehp"] * fr, r["idx"] * fd, min(10, r["util"] + du), r["note"])
 
 
-CLASSES = [apply_rev(apply_rev(apply_fix(apply_kit(r, kit_for(r["name"])), r["name"]), r["name"], REV222_CLASS), r["name"], REV223_CLASS)
+CLASSES = [apply_rev(apply_rev(apply_rev(apply_fix(apply_kit(r, kit_for(r["name"])), r["name"]), r["name"], REV222_CLASS),
+                               r["name"], REV223_CLASS), r["name"], REVIA_CLASS)
            for r in CLASSES]
 SUBCLASSES = [(g, apply_rev(apply_rev(apply_fix(apply_kit(apply_kit(r, kit_for(g)), SUBCLASS_KIT.get(r["name"], (0, 1, 0))), g),
                                       g, REV222_CLASS), r["name"], REV222_SUB))
               for g, r in SUBCLASSES]
-SUBCLASSES = [(g, apply_rev(apply_rev(r, g, REV223_CLASS), r["name"], REV223_SUB)) for g, r in SUBCLASSES]
+SUBCLASSES = [(g, apply_rev(apply_rev(apply_rev(r, g, REV223_CLASS), r["name"], REV223_SUB), g, REVIA_CLASS))
+              for g, r in SUBCLASSES]
 
 # ---------------------------------------------------------------- cálculo
 

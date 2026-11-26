@@ -8,8 +8,8 @@ ABILITIES = {
     "free_cast_slot_2": dict(passive=True, charges=2, max_mana_cost=125, recharge_seconds=120, icd_seconds=3),
     "free_cast_slot_3": dict(passive=True, charges=3, max_mana_cost=200, recharge_seconds=120, icd_seconds=3),
     # Paladín
-    "divine_smite": dict(passive=True, every_hits=4, damage_bonus=.4, undead_nether_multiplier=2),
-    "taunt": dict(radius=20, cooldown_seconds=30, slow_seconds=3, damage_reduction=0.2, reduction_seconds=4),
+    "divine_smite": dict(passive=True, every_hits=3, damage_bonus=.5, undead_nether_multiplier=2),
+    "taunt": dict(radius=20, cooldown_seconds=30, slow_seconds=3, damage_reduction=0.3, reduction_seconds=6),
     "steady_guard": dict(passive=True, damage_bonus=0.15),
     "bulwark": dict(damage_reduction_min=0.4, damage_reduction_max=0.5, duration_min_seconds=6, duration_max_seconds=8, cooldown_seconds=60),
     "healing_bulwark": dict(passive=True, heal_fraction_min=0.3, heal_fraction_max=0.5, radius=12, max_allies=6),
@@ -159,7 +159,7 @@ EXTRA_BRANCH_NAMES = {
 
 TRAIT_DESC = {
     "mage": "Rasgo de clase: menos vida máxima.",
-    "paladin": "Rasgo de clase: más vida máxima y algo menos de velocidad.",
+    "paladin": "Rasgo de clase: más vida máxima.",
     "rogue": "Rasgo de clase: menos vida máxima.",
     "monk": "Cuerpo Marcial: sin armadura (las vestiduras de monje no cuentan), daño desarmado, armadura y dureza que crecen con tus puntos de clase base (completos con 30). Fuego resta un 25 % a esta armadura y Agua un 25 % a este daño.",
 }

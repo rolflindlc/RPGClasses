@@ -3,6 +3,6 @@
   "radius": 20,
   "cooldown_seconds": 30,
   "slow_seconds": 3,
-  "damage_reduction": 0.2,
-  "reduction_seconds": 4
+  "damage_reduction": 0.3,
+  "reduction_seconds": 6
 }

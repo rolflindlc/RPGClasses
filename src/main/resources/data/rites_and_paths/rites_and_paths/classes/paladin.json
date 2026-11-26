@@ -52,11 +52,6 @@
           "attribute": "minecraft:generic.max_health",
           "to": 0.2,
           "operation": "multiply_base"
-        },
-        {
-          "attribute": "minecraft:generic.movement_speed",
-          "to": -0.05,
-          "operation": "multiply_base"
         }
       ]
     }

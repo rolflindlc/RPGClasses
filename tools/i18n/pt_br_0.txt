@@ -135,7 +135,7 @@
 134 Corpo Marcial: sem armadura (as túnicas de Monge não contam), dano desarmado, armadura e resistência que crescem com seus pontos de classe base (completo em 30). O Fogo subtrai 25% dessa armadura e a Água 25% desse dano.
 135 O tanque do grupo. Aguenta mais que qualquer um com armadura e escudo, atrai os inimigos e protege os aliados. Causa pouco dano sozinho.
 136 Paladino
-137 Traço de classe: mais vida máxima e um pouco menos de velocidade.
+137 Traço de classe: mais vida máxima.
 138 Atirador de arco. Dano à distância constante, flechas rápidas de longo alcance e boa mobilidade. Pode vestir armadura sem penalidade.
 139 Patrulheiro
 140 Um assassino ágil com armas leves. Fica invisível, ataca de surpresa com críticos garantidos e se move muito rápido. Muito frágil se for pego.

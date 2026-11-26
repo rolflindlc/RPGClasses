@@ -260,7 +260,7 @@
   "class.rites_and_paths.monk.trait": "武闘の体:防具なし(モンクの衣は数えない)で、基本クラスのポイントに応じて素手ダメージ、防具値、防具強度が伸びる(30で最大)。炎はこの防具値を25%減らし、水はこのダメージを25%減らす。",
   "class.rites_and_paths.paladin.desc": "パーティの盾役。防具と盾で誰よりも耐え、敵を引きつけ、味方を守る。自分ではほとんどダメージを与えない。",
   "class.rites_and_paths.paladin.name": "パラディン",
-  "class.rites_and_paths.paladin.trait": "クラス特性:最大体力が増え、速度がわずかに下がる。",
+  "class.rites_and_paths.paladin.trait": "クラス特性:最大体力が増える。",
   "class.rites_and_paths.ranger.desc": "弓の名手。安定した遠距離ダメージ、長射程の速い矢、優れた機動力。防具をペナルティなしで着られる。",
   "class.rites_and_paths.ranger.name": "レンジャー",
   "class.rites_and_paths.rogue.desc": "軽い武器を使う俊敏な暗殺者。透明になり、必ずクリティカルになる不意打ちを仕掛け、非常に速く動く。捕まるととても脆い。",

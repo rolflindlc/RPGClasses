@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "passive": true,
-  "every_hits": 4,
-  "damage_bonus": 0.4,
+  "every_hits": 3,
+  "damage_bonus": 0.5,
   "undead_nether_multiplier": 2
 }

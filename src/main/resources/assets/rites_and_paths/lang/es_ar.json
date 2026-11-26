@@ -260,7 +260,7 @@
   "class.rites_and_paths.monk.trait": "Cuerpo Marcial: sin armadura (las vestiduras de monje no cuentan), daño desarmado, armadura y dureza que crecen con tus puntos de clase base (completos con 30). Fuego resta un 25 % a esta armadura y Agua un 25 % a este daño.",
   "class.rites_and_paths.paladin.desc": "El tanque del grupo. Aguanta más que nadie con armadura y escudo, atrae a los enemigos y protege a sus aliados. Hace poco daño por sí solo.",
   "class.rites_and_paths.paladin.name": "Paladín",
-  "class.rites_and_paths.paladin.trait": "Rasgo de clase: más vida máxima y algo menos de velocidad.",
+  "class.rites_and_paths.paladin.trait": "Rasgo de clase: más vida máxima.",
   "class.rites_and_paths.ranger.desc": "Tirador con arco. Daño constante a distancia, flechas rápidas y de largo alcance, y buena movilidad. Puede llevar armadura sin penalización.",
   "class.rites_and_paths.ranger.name": "Ranger",
   "class.rites_and_paths.rogue.desc": "Asesino ágil con armas ligeras. Se vuelve invisible, golpea por sorpresa con críticos seguros y se mueve muy rápido. Muy frágil si lo atrapan.",

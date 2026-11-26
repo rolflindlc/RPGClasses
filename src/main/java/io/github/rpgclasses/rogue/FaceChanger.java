@@ -364,7 +364,10 @@ public final class FaceChanger {
         if (Faces.known(data).contains(key)) {
             return Component.translatable("msg.rites_and_paths.spyglass.known", name).withStyle(ChatFormatting.GREEN);
         }
-        int total = Math.max(1, AbilityService.ticks(p, "study_seconds", 90));
+        // Jugadores: 90 s; mobs (aldeanos, illagers, piglins…): 45 s.
+        int total = Math.max(1, target instanceof net.minecraft.world.entity.player.Player
+                ? AbilityService.ticks(p, "study_seconds", 90)
+                : AbilityService.ticks(p, "mob_study_seconds", 45));
         net.minecraft.nbt.CompoundTag progress = Faces.progress(data);
         int done = progress.getInt(key) + 1;
         if (done >= total) {

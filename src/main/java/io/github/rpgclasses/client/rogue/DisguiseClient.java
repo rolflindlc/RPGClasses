@@ -54,6 +54,10 @@ public final class DisguiseClient {
     private record Skin(ResourceLocation texture, String model) {}
 
     private static boolean scaled;
+    /** Si el jugador estaba balanceando el brazo en el tic anterior (para arrancar el golpe propio del mob una vez). */
+    private static final Map<UUID, Boolean> LAST_SWING = new HashMap<>();
+    /** Tic hasta el que el mob sigue "agresivo" (los zombis levantan los brazos) tras un golpe. */
+    private static final Map<UUID, Integer> AGGRESSIVE_UNTIL = new HashMap<>();
 
     private DisguiseClient() {}
 
@@ -62,12 +66,15 @@ public final class DisguiseClient {
         MinecraftForge.EVENT_BUS.addListener(EventPriority.LOWEST, DisguiseClient::onRenderScalePre);
         MinecraftForge.EVENT_BUS.addListener(EventPriority.LOWEST, true, DisguiseClient::onRenderScalePost);
         MinecraftForge.EVENT_BUS.addListener(DisguiseClient::onNameTag);
+        MinecraftForge.EVENT_BUS.addListener(DisguiseClient::onClientTick);
         MinecraftForge.EVENT_BUS.addListener((ClientPlayerNetworkEvent.LoggingOut e) -> reset());
     }
 
     private static void reset() {
         FACES.clear();
         DUMMIES.clear();
+        LAST_SWING.clear();
+        AGGRESSIVE_UNTIL.clear();
         SKINS.clear();
         LOADING.clear();
         scaled = false;
@@ -164,21 +171,34 @@ public final class DisguiseClient {
         event.setCanceled(true);
         if (p.isInvisible()) return;
         float partial = event.getPartialTick();
-        animate(d, p);
+        sync(d, p);
+        // Mobs sin golpe propio ni brazos: cabezazo (cabeza abajo y una pequeña embestida hacia delante).
+        var mode = io.github.rpgclasses.client.druid.DruidClient.attackAnim(d);
+        float butt = mode == io.github.rpgclasses.client.druid.DruidClient.AttackAnim.HEAD
+                ? io.github.rpgclasses.client.druid.DruidClient.headButt(p, partial) : 0;
+        io.github.rpgclasses.client.druid.DruidClient.pitchHead(d, p, butt);
         // Los aliados lo ven disfrazado, pero con su nombre real encima.
         Minecraft mc = Minecraft.getInstance();
         boolean ally = p != mc.player && ClientHandlers.isAllyEntity(p);
         d.setCustomName(ally ? p.getName() : null);
         d.setCustomNameVisible(ally);
         float yaw = Mth.rotLerp(partial, p.yBodyRotO, p.yBodyRot);
+        PoseStack pose = event.getPoseStack();
+        pose.pushPose();
+        if (butt > 0) {
+            double r = Math.toRadians(yaw), dist = butt * Math.max(.12, d.getBbWidth() * .25);
+            pose.translate(-Math.sin(r) * dist, 0, Math.cos(r) * dist);
+        }
         try {
             @SuppressWarnings("unchecked")
             EntityRenderer<LivingEntity> renderer = (EntityRenderer<LivingEntity>) mc.getEntityRenderDispatcher().getRenderer(d);
-            renderer.render(d, yaw, partial, event.getPoseStack(), event.getMultiBufferSource(), event.getPackedLight());
+            renderer.render(d, yaw, partial, pose, event.getMultiBufferSource(), event.getPackedLight());
         } catch (RuntimeException ex) {
             String id = face.getString("type");
             if (BROKEN.add(id)) io.github.rpgclasses.RpgClasses.LOGGER.warn("[rites_and_paths] Fallo al dibujar el disfraz {} ({})", id, ex.toString());
             DUMMIES.remove(p.getUUID());
+        } finally {
+            pose.popPose();
         }
     }
 
@@ -193,6 +213,11 @@ public final class DisguiseClient {
             if (e instanceof LivingEntity le) {
                 le.moveTo(p.getX(), p.getY(), p.getZ(), p.getYRot(), 0);
                 if (le instanceof Mob mob) mob.setNoAi(true);
+                // Sin capacidades: Epic Fight lo dibujaría con su animador, que se queda quieto porque el cuerpo no hace
+                // tic en el mundo. Con el modelo vanilla se anima con el movimiento del jugador.
+                le.invalidateCaps();
+                // Solo el mob tal cual: nunca se ve lo que lleva el jugador en las manos.
+                for (EquipmentSlot slot : EquipmentSlot.values()) le.setItemSlot(slot, net.minecraft.world.item.ItemStack.EMPTY);
                 DUMMIES.put(p.getUUID(), le);
                 return le;
             }
@@ -203,9 +228,27 @@ public final class DisguiseClient {
         return null;
     }
 
-    /** Copia del jugador al mob: posición, giro de cuerpo y cabeza, paso, golpe, daño y lo que lleva en las manos. */
+    /** Cada tic: los cuerpos de mob de los disfrazados siguen el paso, el golpe y el estado del jugador. */
+    private static void onClientTick(net.minecraftforge.event.TickEvent.ClientTickEvent event) {
+        if (event.phase != net.minecraftforge.event.TickEvent.Phase.END) return;
+        Minecraft mc = Minecraft.getInstance();
+        if (mc.level == null || mc.isPaused()) return;
+        DUMMIES.keySet().removeIf(id -> !FACES.containsKey(id));
+        for (Player p : mc.level.players()) {
+            CompoundTag face = FACES.get(p.getUUID());
+            if (face == null || !"mob".equals(face.getString("kind"))) continue;
+            LivingEntity d = dummy(p, face.getString("type"));
+            if (d != null) animate(d, p);
+        }
+    }
+
+    /**
+     * Un tic de animación (como las formas del Druida): edad (animaciones de reposo), paso al andar o correr, suelo,
+     * daño, agacharse y el golpe del mob (el suyo propio, el brazo o un cabezazo). Los zombis y similares levantan los
+     * brazos un momento al golpear.
+     */
     private static void animate(LivingEntity d, Player p) {
-        d.tickCount = p.tickCount;
+        d.tickCount++;
         d.xo = p.xo;
         d.yo = p.yo;
         d.zo = p.zo;
@@ -218,11 +261,24 @@ public final class DisguiseClient {
         d.hurtDuration = p.hurtDuration;
         d.setSprinting(p.isSprinting());
         d.setShiftKeyDown(p.isShiftKeyDown());
+        d.setSwimming(p.isSwimming());
+        if (d instanceof net.minecraft.world.entity.TamableAnimal t) t.setInSittingPose(p.isCrouching() && move < .05f);
+        var mode = io.github.rpgclasses.client.druid.DruidClient.attackAnim(d);
+        if (d instanceof io.github.rpgclasses.client.druid.BeastAttackTicker ticker) ticker.rites_and_paths$tickAttackAnim();
+        boolean startSwing = p.swinging && p.swingTime == 0 && !LAST_SWING.getOrDefault(p.getUUID(), false);
+        if (mode == io.github.rpgclasses.client.druid.DruidClient.AttackAnim.NATIVE && startSwing) d.handleEntityEvent((byte) 4);
+        LAST_SWING.put(p.getUUID(), p.swinging);
+        if (startSwing) AGGRESSIVE_UNTIL.put(p.getUUID(), d.tickCount + 30);
+        if (d instanceof Mob mob) mob.setAggressive(d.tickCount < AGGRESSIVE_UNTIL.getOrDefault(p.getUUID(), 0));
         d.swinging = p.swinging;
         d.swingTime = p.swingTime;
         d.swingingArm = p.swingingArm;
         d.oAttackAnim = p.oAttackAnim;
         d.attackAnim = p.attackAnim;
+    }
+
+    /** Giro de cuerpo y cabeza: en cada fotograma, para que el dibujo sea suave. */
+    private static void sync(LivingEntity d, Player p) {
         d.yBodyRot = p.yBodyRot;
         d.yBodyRotO = p.yBodyRotO;
         d.yHeadRot = p.yHeadRot;
@@ -231,8 +287,6 @@ public final class DisguiseClient {
         d.yRotO = p.yRotO;
         d.setXRot(p.getXRot());
         d.xRotO = p.xRotO;
-        d.setItemSlot(EquipmentSlot.MAINHAND, p.getMainHandItem());
-        d.setItemSlot(EquipmentSlot.OFFHAND, p.getOffhandItem());
     }
 
     /** Disfraz de jugador: el tamaño racial del copiado, solo a la vista (la hitbox sigue siendo la propia). */

@@ -2,6 +2,7 @@
   "schema_version": 1,
   "passive": true,
   "study_seconds": 90,
+  "mob_study_seconds": 45,
   "study_range": 64,
   "mark_seconds": {
     "from": 3,

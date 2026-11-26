@@ -64,6 +64,7 @@ public final class MonkChargeFx {
         boolean ready = e.charges() >= e.threshold() && e.threshold() > 0;
         long time = mc.level == null ? 0 : mc.level.getGameTime();
         com.mojang.blaze3d.systems.RenderSystem.enableBlend();
+        io.github.rpgclasses.client.hud.HudLayout.report("monk_charges", left, height - gui.leftHeight - (rows - 1) * 10, Math.min(e.max(), PER_ROW) * 8 + 1, rows * 10 - 1);
         for (int row = 0; row < rows; row++) {
             int y = height - gui.leftHeight;
             for (int col = 0; col < PER_ROW; col++) {

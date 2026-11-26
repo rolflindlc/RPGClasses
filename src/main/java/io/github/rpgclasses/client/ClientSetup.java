@@ -46,6 +46,10 @@ public final class ClientSetup {
     public static final KeyMapping OPEN_ALLIES = new KeyMapping(
             "key.rites_and_paths.allies", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_J, "key.categories.rites_and_paths");
 
+    /** Editor del HUD: mover u ocultar cada barra del mod. */
+    public static final KeyMapping HUD_EDITOR = new KeyMapping(
+            "key.rites_and_paths.hud_editor", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_F7, "key.categories.rites_and_paths");
+
     public static final KeyMapping[] RACE_KEYS = {
             new KeyMapping("key.rites_and_paths.race_1", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_V, "key.categories.rites_and_paths"),
             new KeyMapping("key.rites_and_paths.race_2", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_B, "key.categories.rites_and_paths"),
@@ -55,19 +59,27 @@ public final class ClientSetup {
         modBus.addListener((RegisterKeyMappingsEvent event) -> {
             event.register(OPEN_BOOK);
             event.register(OPEN_ALLIES);
+            event.register(HUD_EDITOR);
             for (KeyMapping key : ABILITY_KEYS) event.register(key);
             for (KeyMapping key : RACE_KEYS) event.register(key);
         });
         io.github.rpgclasses.content.race.Races.clientLookup = (player, id) ->
                 player == Minecraft.getInstance().player ? localMechanic(id) : null;
         registerBard(modBus);
+        modBus.addListener((net.minecraftforge.fml.event.config.ModConfigEvent.Reloading event) -> io.github.rpgclasses.client.hud.HudLayout.reload());
+        modBus.addListener((net.minecraftforge.fml.event.config.ModConfigEvent.Loading event) -> io.github.rpgclasses.client.hud.HudLayout.reload());
         MinecraftForge.EVENT_BUS.register(new TraitRender());
         MinecraftForge.EVENT_BUS.addListener(net.minecraftforge.eventbus.api.EventPriority.LOWEST, ClientSetup::onRenderScaledPre);
         MinecraftForge.EVENT_BUS.addListener(net.minecraftforge.eventbus.api.EventPriority.HIGHEST, ClientSetup::onRenderScaledPost);
-        modBus.addListener((RegisterGuiOverlaysEvent event) -> event.registerAboveAll("abilities", AbilityHud::render));
+        modBus.addListener((RegisterGuiOverlaysEvent event) -> {
+            event.registerAboveAll("abilities", io.github.rpgclasses.client.hud.HudLayout.wrap("abilities", AbilityHud::render));
+            // Barras del centro: después de la vida, armadura, comida, aire y montura, para apilarse encima de ellas.
+            event.registerBelow(net.minecraftforge.client.gui.overlay.VanillaGuiOverlay.JUMP_BAR.id(), "stealth",
+                    io.github.rpgclasses.client.hud.HudLayout.wrap("stealth", AbilityHud::renderStealthBar));
+        });
         modBus.addListener((RegisterGuiOverlaysEvent event) -> event.registerAboveAll("coin_flip", CoinFlipFx::renderHud));
-        modBus.addListener((RegisterGuiOverlaysEvent event) -> event.registerAboveAll("wolf_jump", WolfJumpGauge::renderHud));
-        modBus.addListener((RegisterGuiOverlaysEvent event) -> event.registerAboveAll("centaur_jump", RaceBodyClient::renderHud));
+        modBus.addListener((RegisterGuiOverlaysEvent event) -> event.registerAboveAll("wolf_jump", io.github.rpgclasses.client.hud.HudLayout.wrap("wolf_jump", WolfJumpGauge::renderHud)));
+        modBus.addListener((RegisterGuiOverlaysEvent event) -> event.registerAboveAll("centaur_jump", io.github.rpgclasses.client.hud.HudLayout.wrap("centaur_jump", RaceBodyClient::renderHud)));
         MinecraftForge.EVENT_BUS.addListener(RaceBodyClient::onClientTick);
         MinecraftForge.EVENT_BUS.addListener(RaceBodyClient::onMovementInput);
         // Centauro Guerrero: atacar al galope sin frenarse (Epic Fight y el frenazo vanilla).
@@ -95,7 +107,7 @@ public final class ClientSetup {
         MinecraftForge.EVENT_BUS.addListener(ShakeFx::onCamera);
         // Cargas del Monje: encima de la armadura (y de la vida), reservando su altura en el lado izquierdo.
         modBus.addListener((RegisterGuiOverlaysEvent event) -> event.registerAbove(
-                net.minecraftforge.client.gui.overlay.VanillaGuiOverlay.ARMOR_LEVEL.id(), "monk_charges", MonkChargeFx::renderHud));
+                net.minecraftforge.client.gui.overlay.VanillaGuiOverlay.ARMOR_LEVEL.id(), "monk_charges", io.github.rpgclasses.client.hud.HudLayout.wrap("monk_charges", MonkChargeFx::renderHud)));
         MinecraftForge.EVENT_BUS.addListener(MonkChargeFx::onClientTick);
         MinecraftForge.EVENT_BUS.addListener(CoinFlipFx::onRenderPlayer);
         MinecraftForge.EVENT_BUS.addListener(ClientSetup::onTooltip);
@@ -125,7 +137,8 @@ public final class ClientSetup {
         MinecraftForge.EVENT_BUS.addListener(net.minecraftforge.eventbus.api.EventPriority.HIGH, SlimeFormsClient::onRenderPlayer);
         MinecraftForge.EVENT_BUS.addListener(SlimeFormsClient::onRenderHand);
         MinecraftForge.EVENT_BUS.addListener(SlimeFormsClient::onClientTick);
-        modBus.addListener((RegisterGuiOverlaysEvent event) -> event.registerAboveAll("mitosis_merge", SlimeFormsClient::renderHud));
+        modBus.addListener((RegisterGuiOverlaysEvent event) -> event.registerBelow(
+                net.minecraftforge.client.gui.overlay.VanillaGuiOverlay.JUMP_BAR.id(), "mitosis_merge", io.github.rpgclasses.client.hud.HudLayout.wrap("mitosis_merge", SlimeFormsClient::renderHud)));
         MinecraftForge.EVENT_BUS.addListener((ClientPlayerNetworkEvent.LoggingOut event) -> {
             ClientHandlers.reset();
             BeltLayer.reset();
@@ -146,7 +159,7 @@ public final class ClientSetup {
         };
         modBus.addListener((RegisterGuiOverlaysEvent event) -> event.registerAbove(
                 net.minecraftforge.client.gui.overlay.VanillaGuiOverlay.CROSSHAIR.id(), "bard_rhythm",
-                io.github.rpgclasses.client.bard.RhythmGame::renderHud));
+                io.github.rpgclasses.client.hud.HudLayout.wrap("bard_rhythm", io.github.rpgclasses.client.bard.RhythmGame::renderHud)));
         MinecraftForge.EVENT_BUS.addListener(io.github.rpgclasses.client.bard.RhythmGame::onClientTick);
         MinecraftForge.EVENT_BUS.addListener(io.github.rpgclasses.client.bard.RhythmGame::onMouse);
         MinecraftForge.EVENT_BUS.addListener(io.github.rpgclasses.client.bard.RhythmGame::onKey);
@@ -258,6 +271,9 @@ public final class ClientSetup {
             while (ABILITY_KEYS[i].consumeClick()) pressed = true;
             if (pressed && !ABILITY_HELD[i] && mc.screen == null) Net.CHANNEL.sendToServer(new Packets.UseAbility(i));
             ABILITY_HELD[i] = ABILITY_KEYS[i].isDown();
+        }
+        while (HUD_EDITOR.consumeClick()) {
+            if (mc.screen == null) mc.setScreen(new io.github.rpgclasses.client.hud.HudEditorScreen());
         }
         while (OPEN_BOOK.consumeClick()) {
             if (mc.screen == null) mc.setScreen(new ClassScreen(false));

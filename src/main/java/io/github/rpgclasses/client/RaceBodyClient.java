@@ -435,6 +435,7 @@ public final class RaceBodyClient {
         if (mc.player == null || mc.options.hideGui) return;
         int x = width / 2 - 91;
         int y = height - 29;
+        if (jumpHeld > TAP_TICKS || springHeld > 0) io.github.rpgclasses.client.hud.HudLayout.report("centaur_jump", x, y - 6, 182, 11);
         if (jumpHeld > TAP_TICKS) bar(g, x, y, chargeFraction(mc.player), 0xFFE0C040);
         double maxSpring = Races.number(mc.player, "race_spring", "charge_seconds", 0) * 20;
         if (springHeld > 0 && maxSpring > 0) bar(g, x, y, (float) Math.min(1, springHeld / maxSpring), 0xFF7CDB5A);

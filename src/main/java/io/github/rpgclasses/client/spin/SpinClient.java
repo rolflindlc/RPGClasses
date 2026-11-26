@@ -122,7 +122,8 @@ public final class SpinClient {
         modBus.addListener((ModelEvent.RegisterAdditional event) -> event.register(SpinItemRenderer.BANDOLIER_ICON));
         modBus.addListener((RegisterGuiOverlaysEvent event) -> {
             event.registerBelowAll("spin_cinematic", SpinClient::renderCinematic);
-            event.registerAbove(net.minecraftforge.client.gui.overlay.VanillaGuiOverlay.HOTBAR.id(), "spin_bar", SpinClient::renderHud);
+            event.registerBelow(net.minecraftforge.client.gui.overlay.VanillaGuiOverlay.JUMP_BAR.id(), "spin_bar",
+                    io.github.rpgclasses.client.hud.HudLayout.wrap("spin_bar", SpinClient::renderHud));
         });
         MinecraftForge.EVENT_BUS.addListener(EventPriority.HIGHEST, SpinClient::onMouse);
         MinecraftForge.EVENT_BUS.addListener(EventPriority.HIGH, SpinClient::onInteractionKey);
@@ -381,7 +382,10 @@ public final class SpinClient {
         if (mc.player == null || mc.options.hideGui || mc.level == null || !localSpinMaster()) return;
         Font font = mc.font;
         int w = 100, h = 5;
-        int x = width / 2 - w / 2, y = height - 62;
+        // Etiqueta encima, barra y línea de carga debajo: se apila encima de lo que ya hay a los lados.
+        int top = io.github.rpgclasses.client.hud.HudLayout.stackCenter(gui, height, 20);
+        int x = width / 2 - w / 2, y = top + 10;
+        io.github.rpgclasses.client.hud.HudLayout.report("spin_bar", x - 1, top, w + 2, 20);
         long now = mc.level.getGameTime();
         java.util.List<String> actives = io.github.rpgclasses.client.AbilityHud.localActives();
         int slot = actives.indexOf(SpinMaster.GOLDEN_RECTANGLE);

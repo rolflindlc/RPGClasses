@@ -308,6 +308,7 @@ public final class RhythmGame {
         if (mc.options.hideGui) return;
         long now = Util.getMillis();
         int cx = width / 2, cy = height / 2;
+        io.github.rpgclasses.client.hud.HudLayout.report("bard_rhythm", cx - 45, cy - 45, 90, 100);
         double lead = lead();
 
         // Metrónomo suave en cada pulso de una ráfaga.

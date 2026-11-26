@@ -80,7 +80,10 @@ public final class DruidClient {
         Druid.clientMechanic = (p, id) -> p == Minecraft.getInstance().player ? ClientSetup.localMechanic(id) : null;
         Druid.clientData = () -> ClientHandlers.LOCAL_DATA;
         modBus.addListener((RegisterKeyMappingsEvent e) -> e.register(BEAST_ABILITY));
-        modBus.addListener((RegisterGuiOverlaysEvent e) -> e.registerAboveAll("druid", DruidClient::renderHud));
+        modBus.addListener((RegisterGuiOverlaysEvent e) -> {
+            e.registerAboveAll("druid", io.github.rpgclasses.client.hud.HudLayout.wrap("druid_cast", DruidClient::renderCastHud));
+            e.registerAboveAll("druid_form", io.github.rpgclasses.client.hud.HudLayout.wrap("druid_form", DruidClient::renderHud));
+        });
         modBus.addListener((EntityRenderersEvent.RegisterRenderers e) ->
                 e.registerEntityRenderer(DruidRegistry.BEAST_REMAINS.get(), BeastRemainsRenderer::new));
         modBus.addListener((net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent e) -> e.enqueueWork(() ->
@@ -247,6 +250,9 @@ public final class DruidClient {
             Entity e = type.create(near.level());
             if (e instanceof LivingEntity le) {
                 le.moveTo(near.getX(), near.getY(), near.getZ(), near.getYRot(), 0);
+                // Sin capacidades: Epic Fight dibujaría el cuerpo con su propio animador, que no se mueve porque el
+                // cuerpo no es una entidad del mundo (no hace tic); así se dibuja con el modelo vanilla animado.
+                le.invalidateCaps();
                 return le;
             }
         } catch (RuntimeException | LinkageError ex) {
@@ -287,7 +293,7 @@ public final class DruidClient {
     // ------------------------------------------------------------------ animación de ataque
 
     /** Cómo enseña la bestia su golpe. */
-    enum AttackAnim { NATIVE, ARMS, HEAD, NONE }
+    public enum AttackAnim { NATIVE, ARMS, HEAD, NONE }
 
     private static final Map<String, AttackAnim> ATTACK_ANIM = new HashMap<>();
 
@@ -296,7 +302,7 @@ public final class DruidClient {
      * los mobs que la arrancan con el evento 4 (golem de hierro, devastador, hoglin, zoglin, warden), el brazo si su
      * modelo tiene brazos, y si no un cabezazo.
      */
-    static AttackAnim attackAnim(LivingEntity d) {
+    public static AttackAnim attackAnim(LivingEntity d) {
         String id = Beasts.id(d.getType());
         AttackAnim cached = ATTACK_ANIM.get(id);
         if (cached != null) return cached;
@@ -327,13 +333,13 @@ public final class DruidClient {
     }
 
     /** Fuerza del cabezazo (0-1) en este fotograma: sube y baja con el balanceo del golpe del jugador. */
-    private static float headButt(Player p, float partial) {
+    public static float headButt(Player p, float partial) {
         float t = p.getAttackAnim(partial);
         return t <= 0 ? 0 : Mth.sin(t * Mth.PI);
     }
 
     /** Cabeza hacia abajo durante el cabezazo (el modelo toma la inclinación de la cabeza de xRot). */
-    private static void pitchHead(LivingEntity d, Player p, float butt) {
+    public static void pitchHead(LivingEntity d, Player p, float butt) {
         if (butt <= 0) return;
         float pitch = Mth.clamp(p.getXRot() + butt * 40f, -90f, 90f);
         d.setXRot(pitch);
@@ -453,12 +459,14 @@ public final class DruidClient {
 
     // ------------------------------------------------------------------ HUD
 
-    private static void renderHud(ForgeGui gui, GuiGraphics g, float partialTick, int width, int height) {
+    /** Barras de lanzar la forma y de estudiar una criatura, debajo de la mira. */
+    private static void renderCastHud(ForgeGui gui, GuiGraphics g, float partialTick, int width, int height) {
         Minecraft mc = Minecraft.getInstance();
         if (mc.player == null || mc.options.hideGui || !Druid.isDruid(mc.player)) return;
         Font font = mc.font;
         DruidPackets.State st = state;
-        int cy = height / 2 + 16;
+        int top = height / 2 + 16;
+        int cy = top;
         if (st != null && st.cast() >= 0) {
             Component name = st.castType().startsWith("chimera:")
                     ? Component.translatable("druid.rites_and_paths.chimera", Beasts.name(st.castType().substring(8)))
@@ -470,12 +478,23 @@ public final class DruidClient {
             Entity target = mc.level == null || st.studyTarget() < 0 ? null : mc.level.getEntity(st.studyTarget());
             Component name = target == null ? Component.literal("?") : target.getDisplayName();
             bar(g, font, width / 2, cy, Component.translatable("hud.rites_and_paths.druid.study", name), st.study(), 0xFFB98CE0);
+            cy += 18;
         }
+        if (cy > top) io.github.rpgclasses.client.hud.HudLayout.report("druid_cast", width / 2 - 60, top - 10, 120, cy - top + 10);
+    }
+
+    /** Forma actual, habilidad de la bestia y vuelo, abajo a la izquierda. */
+    private static void renderHud(ForgeGui gui, GuiGraphics g, float partialTick, int width, int height) {
+        Minecraft mc = Minecraft.getInstance();
+        if (mc.player == null || mc.options.hideGui || !Druid.isDruid(mc.player)) return;
+        Font font = mc.font;
+        DruidPackets.State st = state;
         FormSpec spec = WildShape.spec(mc.player);
         if (spec == null) return;
         Beasts.Info info = WildShape.info(mc.player);
         Component formName = spec.isChimera() ? Component.translatable("druid.rites_and_paths.chimera", Beasts.name(spec.type)) : Beasts.name(spec.type);
         int x = 6, y = height - 52;
+        io.github.rpgclasses.client.hud.HudLayout.report("druid_form", x, y, 150, 31);
         Component line = st != null && st.formTicks() >= 0
                 ? Component.translatable("hud.rites_and_paths.druid.form_timer", formName, st.formTicks() / 20)
                 : Component.translatable("hud.rites_and_paths.druid.form", formName);

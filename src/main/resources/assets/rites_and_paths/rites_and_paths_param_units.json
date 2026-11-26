@@ -220,6 +220,7 @@
   "miss_loss": "%",
   "mitigation": "%",
   "mob_chance": "%",
+  "mob_study_seconds": "s",
   "moving_bonus": "%",
   "moving_penalty": "%",
   "music_bonus": "%",

@@ -98,12 +98,13 @@ public final class SlimeFormsClient {
         if (mc.player != null && SlimeForms.isSwarming(mc.player)) event.setCanceled(true);
     }
 
-    /** Barra de fusión del Mitótico, encima de la barra de experiencia. */
+    /** Barra de fusión del Mitótico, encima de la vida, la armadura y la comida. */
     public static void renderHud(ForgeGui gui, GuiGraphics g, float partialTick, int width, int height) {
         Minecraft mc = Minecraft.getInstance();
         if (mc.player == null || mc.options.hideGui || mergeTicks <= 0) return;
         float frac = Math.min(1f, mergeTicks / (float) Math.max(1, SlimeForms.mergeTicks(mc.player)));
-        int x = width / 2 - 91, y = height - 35;
+        int x = width / 2 - 91, y = io.github.rpgclasses.client.hud.HudLayout.stackCenter(gui, height, 5);
+        io.github.rpgclasses.client.hud.HudLayout.report("mitosis_merge", x, y, 182, 5);
         g.fill(x, y, x + 182, y + 5, 0xFF000000);
         g.fill(x + 1, y + 1, x + 181, y + 4, 0xFF303030);
         g.fill(x + 1, y + 1, x + 1 + (int) (180 * frac), y + 4, frac >= 1f ? 0xFF55FF55 : 0xFF7CDB5A);

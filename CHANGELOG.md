@@ -3,6 +3,16 @@
 ## Unreleased
 
 ### Changed
+- **Face Changer:** learning a mob face takes 45 s of study (players still 90 s; `mob_study_seconds`). Mob disguises
+  are now animated every tick like Druid forms (walking, idle, swimming, crouching and the mob's own attack: native,
+  arm swing or head-butt; zombies raise their arms for a moment when you hit) and no longer show the items you hold.
+  Disguise and Druid bodies skip Epic Fight's animator, which left them frozen because they are not world entities.
+- **HUD layout:** the centre bars (Stealth, Spin, Slime merge) now stack above whatever already sits on both sides of
+  the hotbar (health, armor including Improved Armor's extra rows, Monk charges, food, air, mount health) instead of
+  fixed heights. New **HUD editor** (F7, rebindable): drag each element, right click to hide it, arrows to nudge (Shift
+  ×10), R to reset; saved in the `[hud]` section of `rites_and_paths-client.toml` (x/y offset and hidden per element:
+  abilities, stealth, monk_charges, spin_bar, mitosis_merge, wolf_jump, centaur_jump, druid_cast, druid_form,
+  bard_rhythm). A moved element no longer reserves space in the side stacks.
 - **Balance rev. 2.23 (top tiers):** **Druid** max health −35% (was −10%) and beast forms gain +1% health per Total
   Level (was +2%; damage still +2%): ×1.4 at level 40. **Moon Circle:** switching from one form to another keeps your
   health percentage. **Mage:** *Reserve* branch gives up to +250 mana (was +300). **Elementalist:** cooldown reduction

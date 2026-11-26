@@ -31,6 +31,7 @@ public final class WolfJumpGauge {
         if (held <= 0 || mc.player == null || mc.options.hideGui) return;
         int x = width / 2 - 91;
         int y = height - 29;
+        io.github.rpgclasses.client.hud.HudLayout.report("wolf_jump", x, y, 182, 5);
         float fraction = WolfRider.chargeFraction(held);
         g.fill(x, y, x + 182, y + 5, 0xFF000000);
         g.fill(x + 1, y + 1, x + 181, y + 4, 0xFF303030);

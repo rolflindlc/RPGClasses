@@ -29,10 +29,32 @@ public final class AbilityHud {
                 DefinitionStore.CLIENT::abilityDef);
     }
 
+    /** Caja de las filas dibujadas en este fotograma (para el editor del HUD). */
+    private static int boxLeft, boxTop, boxRight, boxBottom;
+
+    private static void fillRow(GuiGraphics g, int x1, int y1, int x2, int y2, int color) {
+        boxLeft = Math.min(boxLeft, x1);
+        boxTop = Math.min(boxTop, y1);
+        boxRight = Math.max(boxRight, x2);
+        boxBottom = Math.max(boxBottom, y2);
+        g.fill(x1, y1, x2, y2, color);
+    }
+
     public static void render(ForgeGui gui, GuiGraphics g, float partialTick, int screenWidth, int screenHeight) {
         Minecraft mc = Minecraft.getInstance();
         if (mc.player == null || mc.options.hideGui || mc.level == null) return;
-        renderStealthBar(g, mc, screenWidth, screenHeight);
+        boxLeft = Integer.MAX_VALUE;
+        boxTop = Integer.MAX_VALUE;
+        boxRight = Integer.MIN_VALUE;
+        boxBottom = Integer.MIN_VALUE;
+        try {
+            renderRows(g, mc, partialTick, screenWidth, screenHeight);
+        } finally {
+            if (boxLeft < boxRight) io.github.rpgclasses.client.hud.HudLayout.report("abilities", boxLeft, boxTop, boxRight - boxLeft, boxBottom - boxTop);
+        }
+    }
+
+    private static void renderRows(GuiGraphics g, Minecraft mc, float partialTick, int screenWidth, int screenHeight) {
         List<String> actives = localActives();
         int classRows = Math.min(actives.size(), ClientSetup.ABILITY_KEYS.length);
         int freeRows = renderFreeCasts(g, mc, screenWidth, screenHeight - 4 - classRows * ROW_HEIGHT);
@@ -65,12 +87,12 @@ public final class AbilityHud {
             if (martyrdom) {
                 float pulse = 0.5f + 0.5f * net.minecraft.util.Mth.sin((now + partialTick) * 0.3f);
                 int alpha = 0x60 + (int) (0x80 * pulse);
-                g.fill(x - 3, y - 2, screenWidth - 3, y + ROW_HEIGHT - 3, (alpha << 24) | 0x8A0A0A);
+                fillRow(g, x - 3, y - 2, screenWidth - 3, y + ROW_HEIGHT - 3, (alpha << 24) | 0x8A0A0A);
                 g.drawString(mc.font, text, x, y, 0xFFFF4040);
                 y += ROW_HEIGHT;
                 continue;
             }
-            g.fill(x - 3, y - 2, screenWidth - 3, y + ROW_HEIGHT - 3, 0x80000000);
+            fillRow(g, x - 3, y - 2, screenWidth - 3, y + ROW_HEIGHT - 3, 0x80000000);
             g.drawString(mc.font, text, x, y, remaining > 0 ? 0xFF8888 : 0xFFFFFF);
             y += ROW_HEIGHT;
         }
@@ -100,7 +122,7 @@ public final class AbilityHud {
             int dots = max * 7;
             int width = mc.font.width(text) + 6 + dots;
             int x = screenWidth - width - 6;
-            g.fill(x - 3, y - 2, screenWidth - 3, y + ROW_HEIGHT - 3, 0x80000000);
+            fillRow(g, x - 3, y - 2, screenWidth - 3, y + ROW_HEIGHT - 3, 0x80000000);
             g.drawString(mc.font, text, x, y, left > 0 ? 0xFFB070FF : 0xFF888888);
             int dx = x + mc.font.width(text) + 6;
             for (int i = 0; i < max; i++) {
@@ -138,14 +160,16 @@ public final class AbilityHud {
             String text = keyText + Component.translatable(Ids.langKey("mechanic", key, "name")).getString()
                     + (remaining > 0 ? String.format(Locale.ROOT, "  %.0f s", Math.ceil(remaining / 20.0)) : "");
             int x = screenWidth - mc.font.width(text) - 6;
-            g.fill(x - 3, y - 2, screenWidth - 3, y + ROW_HEIGHT - 3, 0x80000000);
+            fillRow(g, x - 3, y - 2, screenWidth - 3, y + ROW_HEIGHT - 3, 0x80000000);
             g.drawString(mc.font, text, x, y, remaining > 0 ? 0xFF8888 : 0xFFE6C35A);
             y -= ROW_HEIGHT;
         }
     }
 
     /** Barra de Sigilo del Pícaro, sobre la barra de objetos. */
-    private static void renderStealthBar(GuiGraphics g, Minecraft mc, int screenWidth, int screenHeight) {
+    public static void renderStealthBar(ForgeGui gui, GuiGraphics g, float partialTick, int screenWidth, int screenHeight) {
+        Minecraft mc = Minecraft.getInstance();
+        if (mc.player == null || mc.options.hideGui || mc.level == null) return;
         ProgressState s = ClientHandlers.LOCAL_DATA.state;
         ClassDef classDef = DefinitionStore.CLIENT.classDef(s.classId);
         if (classDef == null || !UnlockResolver.unlocked(s, classDef, DefinitionStore.CLIENT.subclassDef(s.subclassId))
@@ -153,7 +177,10 @@ public final class AbilityHud {
         int bar = ClientHandlers.LOCAL_DATA.counters.getOrDefault(RogueAbilities.BAR_COUNTER, 1000);
         int state = ClientHandlers.LOCAL_DATA.counters.getOrDefault(RogueAbilities.STATE_COUNTER, 0);
         int w = 80, h = 5;
-        int x = screenWidth / 2 - w / 2, y = screenHeight - 62;
+        // Encima de todo lo que ya hay a los lados de la barra de objetos (vida, armadura, comida…).
+        int top = io.github.rpgclasses.client.hud.HudLayout.stackCenter(gui, screenHeight, 16);
+        int x = screenWidth / 2 - w / 2, y = top + 10;
+        io.github.rpgclasses.client.hud.HudLayout.report("stealth", x - 1, top, w + 2, 16);
         int color = state == RogueAbilities.STATE_LOCKED ? 0xFFC03030 : state == RogueAbilities.STATE_ACTIVE ? 0xFF5090E0 : 0xFF8080A0;
         g.fill(x - 1, y - 1, x + w + 1, y + h + 1, 0xA0000000);
         g.fill(x, y, x + Math.round(w * Math.max(0, Math.min(1000, bar)) / 1000f), y + h, color);

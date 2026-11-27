@@ -104,9 +104,16 @@ public final class Artificer {
         String ability = kind == TURRET ? Engineer.TURRET : kind == MINE ? Engineer.MINE : Engineer.TRENCH;
         if (!AbilityService.has(p, ability)) return;
         Engineer.State s = Engineer.state(p);
-        if (kind == TURRET && !NtglCompat.isFirearm(p.getMainHandItem())) {
-            recallAll(p);
-            return;
+        if (kind == TURRET) {
+            // Mano vacía: recoger todas. Otra cosa que no sea un arma de fuego: aviso.
+            if (p.getMainHandItem().isEmpty()) {
+                recallAll(p);
+                return;
+            }
+            if (!NtglCompat.isFirearm(p.getMainHandItem())) {
+                fail(p, "no_firearm");
+                return;
+            }
         }
         if (available(p, s) <= 0) {
             fail(p, "no_charges");
@@ -257,7 +264,7 @@ public final class Artificer {
 
     // ------------------------------------------------------------------ torretas: recogida y devolución
 
-    /** Mano sin arma de fuego: recoge todas las torretas (las cargas vuelven al momento). */
+    /** Mano vacía: recoge todas las torretas (las cargas vuelven al momento). */
     static void recallAll(ServerPlayer p) {
         Map<UUID, ItemStack> turrets = data(p.server).turrets(p.getUUID());
         if (turrets.isEmpty()) return;

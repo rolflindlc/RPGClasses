@@ -7,6 +7,24 @@
   now go through the class damage pipeline (walls and crits); until now firearms ignored the mod entirely. Walls: Ranger
   −40%, Rogue −50%, Barbarian/Paladin/Monk/Bard/Spin Master −60%, Mage/Cleric/Druid −75%. Rangers take no Gunpowder wall
   with ballista spears. The pneumatic hammer counts as a heavy weapon. NTGL is optional and detected at runtime.
+- **New class: Engineer** (needs NTGL and Create: Gunsmithing). Ranged burst damage paid for with crafted ammo.
+  - **Active reload:** reloading shows a bar under the crosshair; press reload again in the green zone for an instant
+    reload and +15% damage for 4 s, in the yellow zone for an instant reload; outside, the gun jams (+50% reload time).
+  - **Armorer** trait: +50% ammo when crafting it by hand. Starting kit: flintlock and 24 paper cartridges.
+  - **Branches:** Improvised Ammo (25% special first bullet: incendiary, stunning or freezing; the next type is shown
+    on the HUD), Moving Reload (faster while reloading, speed burst on a perfect reload), Perfect Streak (+5% damage
+    per perfect reload in a row, up to 6), Holster (hotbar guns reload themselves) and Marksman (−40% spread, +10%
+    damage beyond 15 blocks), each with two perks (rusted/arcane ammo, tactical retreat/reload dash, fragile/steady
+    streak, rotating bandolier/throwing gun, headhunter/suppression).
+  - **Abilities:** Rifle Butt (automatic on a melee hit with a gun: knockback and 0.5 s stun, 12 s), Suppressing Fire
+    (level 15) and Last Magazine (level 30).
+  - **Gunslinger:** Quick Hand, Duelist, Fan the Hammer and Dead Eye. **Artillerist:** Hot Barrel, Iron Arm,
+    Bombardment and Siege Mode (no ammo spent). **Artificer:** shared charges (1/2/3) for turrets built from the gun in
+    your hand (70% of its stats, ammo from your inventory, break in one hit and come back to you), invisible mines and
+    barbed-wire trenches; three keys of its own (G, Y, U by default).
+  - Turrets keep firing while their owner is dead (own magazine) or offline (free ammo, but no drops or XP).
+  - Three new HUD elements in the HUD editor: active reload, special bullet and streak, Artificer charges.
+- Network protocol bumped to 25 (client and server must match).
 
 ### Changed
 - **Epic Fight compatibility:** the mod is now compiled against Epic Fight 20.14.17, the latest stable release (was

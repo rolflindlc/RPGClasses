@@ -131,8 +131,15 @@ public final class EngineerClient {
         marksUntil = clientTicks + msg.ticks();
     }
 
-    /** Ojo Muerto: los marcados brillan solo para el Pistolero (HealerGlowMixin). */
+    /**
+     * Brillo (HealerGlowMixin): los marcados por Ojo Muerto, solo para el Pistolero, y las minas armadas, con contorno
+     * para su dueño y sus aliados (para los demás son invisibles).
+     */
     public static boolean glows(Entity entity) {
+        if (entity instanceof io.github.rpgclasses.engineer.MineEntity mine) {
+            var viewer = Minecraft.getInstance().player;
+            return mine.armed() && viewer != null && mine.visibleTo(viewer, ClientHandlers::isAlly);
+        }
         return clientTicks < marksUntil && MARKS.contains(entity.getId());
     }
 

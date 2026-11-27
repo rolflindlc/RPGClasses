@@ -52,7 +52,7 @@ public class DefinitionFilesTest {
     @Test
     public void allShippedDefinitionsAreValid() {
         assertTrue("Errores de validación: " + STORE.errors(), STORE.errors().isEmpty());
-        assertEquals(List.of("rites_and_paths:barbarian", "rites_and_paths:bard", "rites_and_paths:cleric", "rites_and_paths:druid", "rites_and_paths:mage",
+        assertEquals(List.of("rites_and_paths:barbarian", "rites_and_paths:bard", "rites_and_paths:cleric", "rites_and_paths:druid", "rites_and_paths:engineer", "rites_and_paths:mage",
                 "rites_and_paths:monk",
                 "rites_and_paths:paladin", "rites_and_paths:ranger", "rites_and_paths:rogue", "rites_and_paths:spin_master"), List.copyOf(STORE.classIds()));
         for (String id : STORE.classIds()) {

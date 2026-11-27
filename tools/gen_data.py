@@ -12,6 +12,7 @@ import cleric
 import spin
 import druid
 import difficulty
+import engineer
 out = sys.argv[1]
 NS = "rites_and_paths"
 def R(x): return f"{NS}:{x}"
@@ -314,6 +315,8 @@ for cid, c in classes.items():
     if KITS.get(cid): o["starting_kit"] = KITS[cid]
     o["crit_chance_bonus"] = c["crit"]
     o["walls"] = {R(k): v for k, v in c["walls"].items()}
+    # Adenda del Ingeniero, 2: Pólvora (armas de fuego) en todas las clases; el Ingeniero es afín.
+    if engineer.firearm_wall(cid) > 0: o["walls"][R(engineer.DISCIPLINE)] = engineer.firearm_wall(cid)
     # Adenda del Maestro del Giro: Esferas es su disciplina; el resto de clases tiene un muro fijo del 100 % (propuesta).
     if cid != spin.CLASS_ID: o["fixed_walls"] = {R("spheres"): 1.0}
     if c.get("experimental"): o["experimental"] = True
@@ -484,6 +487,7 @@ assert set(texts.TRAIT_DESC) == set(TRAITS)
 for sid, desc in texts.SUBCLASS_DESC.items(): lang[f"subclass.{NS}.{sid}.desc"] = desc
 for mid, name in texts.MECHANIC_NAMES.items(): lang[f"mechanic.{NS}.{mid}.name"] = name
 for did, name in texts.DISCIPLINE_NAMES.items(): lang[f"discipline.{NS}.{did}.name"] = name
+lang[f"discipline.{NS}.{engineer.DISCIPLINE}.name"] = engineer.DISCIPLINE_NAME
 for key, label in texts.PARAMS.items(): lang[f"param.{NS}.{key}"] = label.split("|")[0]
 lang.update(texts.UI)
 # Razas (anexo de razas): races/*.json y sus textos.

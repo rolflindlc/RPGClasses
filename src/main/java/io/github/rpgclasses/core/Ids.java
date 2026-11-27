@@ -17,8 +17,10 @@ public final class Ids {
     public static final String SHIELD = NS + ":shield";
     /** Esferas (adenda del Maestro del Giro): las bolas del Maestro del Giro. Las demás clases tienen un muro fijo del 100 %. */
     public static final String SPHERES = NS + ":spheres";
+    /** Pólvora (adenda del Ingeniero): armas de fuego de NTGL / Create: Gunsmithing, sus balas, explosiones y fuego. */
+    public static final String FIREARM = NS + ":firearm";
 
-    public static final Set<String> DISCIPLINES = Set.of(MAGIC, BOW, HEAVY, LIGHT, ARMOR, SHIELD, SPHERES);
+    public static final Set<String> DISCIPLINES = Set.of(MAGIC, BOW, HEAVY, LIGHT, ARMOR, SHIELD, SPHERES, FIREARM);
 
     /** Modificadores de atributo que escalan con los puntos. */
     public static final String EFFECT_ATTRIBUTE = NS + ":attribute";

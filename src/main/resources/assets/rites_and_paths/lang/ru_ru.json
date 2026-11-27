@@ -370,6 +370,7 @@
   "death.attack.rites_and_paths.toxin.player": "%1$s умер от отравления токсином, спасаясь от %2$s",
   "discipline.rites_and_paths.armor.name": "Броня",
   "discipline.rites_and_paths.bow.name": "Лук",
+  "discipline.rites_and_paths.firearm.name": "Порох",
   "discipline.rites_and_paths.heavy.name": "Тяжёлое оружие",
   "discipline.rites_and_paths.light.name": "Лёгкое оружие",
   "discipline.rites_and_paths.magic.name": "Магия",

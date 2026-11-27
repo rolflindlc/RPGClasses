@@ -18,7 +18,7 @@ import net.minecraftforge.common.ToolActions;
  * Decide la disciplina de un objeto. Orden de prioridad:
  * 1) tag de objeto rites_and_paths:discipline/&lt;nombre&gt; (decisión del creador del pack),
  * 2) categoría de Epic Fight (fase 4, a través de su puente),
- * 3) tipo vanilla,
+ * 3) arma de fuego de NTGL (Create: Gunsmithing; adenda del Ingeniero) y tipo vanilla,
  * 4) sin clasificar: si aporta daño de ataque cuenta como arma ligera; si no (una bola de nieve,
  *    una armadura de caballo), no es un arma: ni muro ni bonus de desarmado.
  */
@@ -27,6 +27,7 @@ public final class WeaponClassifier {
     public static final TagKey<Item> TAG_LIGHT = ItemTags.create(RpgClasses.id("discipline/light"));
     public static final TagKey<Item> TAG_BOW = ItemTags.create(RpgClasses.id("discipline/bow"));
     public static final TagKey<Item> TAG_SHIELD = ItemTags.create(RpgClasses.id("discipline/shield"));
+    public static final TagKey<Item> TAG_FIREARM = ItemTags.create(RpgClasses.id("discipline/firearm"));
 
     /**
      * @param discipline id de disciplina, o null si no es un arma.
@@ -54,6 +55,12 @@ public final class WeaponClassifier {
         if (stack.is(TAG_LIGHT)) return new Classification(Ids.LIGHT, "tag discipline/light");
         if (stack.is(TAG_BOW)) return new Classification(Ids.BOW, "tag discipline/bow");
         if (stack.is(TAG_SHIELD)) return new Classification(Ids.SHIELD, "tag discipline/shield");
+        if (stack.is(TAG_FIREARM)) return new Classification(Ids.FIREARM, "tag discipline/firearm");
+        // Adenda del Ingeniero: toda arma de NTGL es Pólvora (también sus golpes cuerpo a cuerpo: bayoneta, culata).
+        // El martillo neumático de Gunsmithing va en discipline/heavy, que se mira antes.
+        if (io.github.rpgclasses.compat.ntgl.NtglCompat.isFirearm(stack)) {
+            return new Classification(Ids.FIREARM, "arma de fuego de NTGL");
+        }
 
         Item item = stack.getItem();
         if (item instanceof AxeItem) return new Classification(Ids.HEAVY, "tipo vanilla: hacha");

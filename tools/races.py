@@ -125,7 +125,7 @@ SUBRACE_TEXT = {  # (raza, subraza): (nombre, descripción)
  ("elf", "sylvan"): ("Silvano", "Tus cultivos dan más cosecha; con los rangos la comida vegetal sacia más y puedes hacer crecer cultivos con la mano vacía."),
  ("goblin", "wolf_rider"): ("Jinete de Lobo", "Clic derecho con la mano vacía en tu lobo para montarlo (agachado: sentarlo, como siempre). Con los rangos: tus lobos tienen más vida, el lobo montado muerde a lo que golpeas y regenera mientras lo montas."),
  ("goblin", "thief"): ("Ladrón", "Mano Larga: al golpear cuerpo a cuerpo puedes robar un objeto del botín de un mob (sin matarlo) o del inventario de un jugador (nunca de la barra rápida ni del kit)."),
- ("goblin", "trapper"): ("Artificiero", "Cepo (tecla racial 1): colocas una trampa que no caduca, solo tú la ves y, al primer enemigo que la pise, le hace daño y lo inmoviliza."),
+ ("goblin", "trapper"): ("Chatarrero", "Cepo (tecla racial 1): colocas una trampa que no caduca, solo tú la ves y, al primer enemigo que la pise, le hace daño y lo inmoviliza."),
  ("triton", "fisher"): ("Pescador", "Los peces pican antes y tienes Suerte del Mar racial al pescar; con los rangos, capturas extra, más tesoros y más experiencia."),
  ("triton", "shaper"): ("Moldeador", "Conjuros de agua raciales siempre en la rueda de Iron's: Hydroshot; Overflow (nivel 3) en Rango 1; Jetstream en Rango 2 y Tidal Grasp en Rango 3. Gastan maná y sufren el muro de Magia de tu clase. Requiere T.O Magic 'n Extras."),
  ("triton", "abyssal"): ("Abisal", "Ahogados y guardianes son neutrales contigo salvo que los ataques. Con los rangos: inmunidades bajo el agua, camuflaje y escolta de guardianes."),

@@ -121,6 +121,10 @@ public class RpgClasses {
         MinecraftForge.EVENT_BUS.register(new io.github.rpgclasses.bard.BardAuras());
         MinecraftForge.EVENT_BUS.register(new io.github.rpgclasses.bard.BardCombat());
         MinecraftForge.EVENT_BUS.register(new io.github.rpgclasses.bard.BardZones());
+        // Puente con NTGL (Create: Gunsmithing; adenda del Ingeniero): munición que causa cada impacto.
+        if (io.github.rpgclasses.compat.ntgl.NtglCompat.loaded()) {
+            io.github.rpgclasses.compat.ntgl.NtglCompat.init();
+        }
         // Puente con Epic Fight (Acrobacia del Pícaro): solo si el mod está instalado.
         if (net.minecraftforge.fml.ModList.get().isLoaded("epicfight")) {
             io.github.rpgclasses.compat.epicfight.EpicFightCompat.init();

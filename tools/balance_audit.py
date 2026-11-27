@@ -185,7 +185,7 @@ SUBRACES = [
     ("Elfo", "Silvano", 0, 1.0, 1.0, 1.0),
     ("Goblin", "Jinete de Lobo", 1.0, 1.05, 1.05, 0),
     ("Goblin", "Ladrón", 0, 1.0, 1.0, 1.0),
-    ("Goblin", "Artificiero", 0, 1.08, 1.0, 1.0),
+    ("Goblin", "Chatarrero", 0, 1.08, 1.0, 1.0),
     ("Tritón", "Pescador", 0, 1.0, 1.0, 1.0),
     ("Tritón", "Moldeador", 0, 1.05, 1.03, 1.0),
     ("Tritón", "Abisal", 0, 1.05, 1.0, 1.0),

@@ -80,8 +80,23 @@ public class DefinitionFilesTest {
         for (Map.Entry<String, Integer> e : expected.entrySet()) {
             ClassDef c = STORE.classDef("rites_and_paths:" + e.getKey());
             double total = 0;
-            for (double v : c.walls().values()) total += StatMath.wallPenalty(v, 30) * 100;
+            for (Map.Entry<String, Double> w : c.walls().entrySet()) {
+                // La Pólvora (adenda del Ingeniero) llegó después de la tabla de diseño: no cuenta en su total.
+                if (w.getKey().equals(io.github.rpgclasses.core.Ids.FIREARM)) continue;
+                total += StatMath.wallPenalty(w.getValue(), 30) * 100;
+            }
             assertEquals(e.getKey(), e.getValue(), Math.round(total), 0.0);
+        }
+    }
+
+    /** Adenda del Ingeniero, 2: muro de Pólvora de cada clase (el Ingeniero, cuando exista, es afín). */
+    @Test
+    public void firearmWallsMatchEngineerAddendum() {
+        Map<String, Double> expected = Map.of("ranger", .40, "rogue", .50, "barbarian", .60, "paladin", .60,
+                "monk", .60, "bard", .60, "mage", .75, "cleric", .75, "druid", .75, "spin_master", .60);
+        for (Map.Entry<String, Double> e : expected.entrySet()) {
+            ClassDef c = STORE.classDef("rites_and_paths:" + e.getKey());
+            assertEquals(e.getKey(), e.getValue(), c.walls().get(io.github.rpgclasses.core.Ids.FIREARM), 1e-9);
         }
     }
 

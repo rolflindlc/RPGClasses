@@ -370,6 +370,7 @@
   "death.attack.rites_and_paths.toxin.player": "%1$s 在逃離 %2$s 時死於毒素中毒",
   "discipline.rites_and_paths.armor.name": "護甲",
   "discipline.rites_and_paths.bow.name": "弓",
+  "discipline.rites_and_paths.firearm.name": "火藥",
   "discipline.rites_and_paths.heavy.name": "重型武器",
   "discipline.rites_and_paths.light.name": "輕型武器",
   "discipline.rites_and_paths.magic.name": "魔法",

@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+### Added
+- **Firearms (Create: Gunsmithing / NTGL):** new **Gunpowder** discipline. Gun hits, their explosions and their flames
+  now go through the class damage pipeline (walls and crits); until now firearms ignored the mod entirely. Walls: Ranger
+  −40%, Rogue −50%, Barbarian/Paladin/Monk/Bard/Spin Master −60%, Mage/Cleric/Druid −75%. Rangers take no Gunpowder wall
+  with ballista spears. The pneumatic hammer counts as a heavy weapon. NTGL is optional and detected at runtime.
+
 ### Changed
 - **Epic Fight compatibility:** the mod is now compiled against Epic Fight 20.14.17, the latest stable release (was
   the 20.15.2 beta), and requires 20.14.17 or newer when Epic Fight is installed (was any 20.x). This keeps the

@@ -18,7 +18,8 @@
     "rites_and_paths:magic": 0.6,
     "rites_and_paths:bow": 0.45,
     "rites_and_paths:light": 0.45,
-    "rites_and_paths:armor": 0.25
+    "rites_and_paths:armor": 0.25,
+    "rites_and_paths:firearm": 0.6
   },
   "fixed_walls": {
     "rites_and_paths:spheres": 1.0

@@ -370,6 +370,7 @@
   "death.attack.rites_and_paths.toxin.player": "%1$s è morto avvelenato da una tossina mentre fuggiva da %2$s",
   "discipline.rites_and_paths.armor.name": "Armatura",
   "discipline.rites_and_paths.bow.name": "Arco",
+  "discipline.rites_and_paths.firearm.name": "Polvere da sparo",
   "discipline.rites_and_paths.heavy.name": "Armi pesanti",
   "discipline.rites_and_paths.light.name": "Armi leggere",
   "discipline.rites_and_paths.magic.name": "Magia",

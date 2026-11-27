@@ -13,7 +13,8 @@
     "rites_and_paths:bow": 0.3,
     "rites_and_paths:heavy": 0.35,
     "rites_and_paths:light": 0.4,
-    "rites_and_paths:shield": 1.0
+    "rites_and_paths:shield": 1.0,
+    "rites_and_paths:firearm": 0.6
   },
   "fixed_walls": {
     "rites_and_paths:spheres": 1.0

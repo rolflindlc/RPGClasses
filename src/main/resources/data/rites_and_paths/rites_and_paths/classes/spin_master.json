@@ -41,7 +41,8 @@
     "rites_and_paths:heavy": 0.5,
     "rites_and_paths:light": 0.2,
     "rites_and_paths:armor": 0.3,
-    "rites_and_paths:shield": 0.6
+    "rites_and_paths:shield": 0.6,
+    "rites_and_paths:firearm": 0.6
   },
   "experimental": true,
   "school_walls": {

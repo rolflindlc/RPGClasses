@@ -62,6 +62,13 @@ import java.util.UUID;
  */
 public final class DamagePipeline {
     /** Daño generado por el propio mod (Plaga, reflejo, réplicas...): no vuelve a pasar por el pipeline. */
+    /**
+     * Adenda del Ingeniero: la lanza de balista (munición del lanzacohetes de Gunsmithing) no tiene muro de Pólvora para
+     * el Ranger ni para el Ingeniero. Va por munición y no por arma: el mismo lanzacohetes dispara cohetes, que sí lo tienen.
+     */
+    static final java.util.Set<String> FIREARM_WALL_EXEMPT_AMMO = java.util.Set.of("cgs:spear");
+    static final java.util.Set<String> FIREARM_WALL_EXEMPT_CLASSES = java.util.Set.of(Ids.NS + ":ranger", Ids.NS + ":engineer");
+
     public static final TagKey<DamageType> NO_PROC = TagKey.create(Registries.DAMAGE_TYPE, RpgClasses.id("no_proc"));
 
     private static final String TAG_FACTOR = "rites_and_paths.factor";
@@ -178,9 +185,11 @@ public final class DamagePipeline {
         DamageSource source = event.getSource();
         if (source.is(NO_PROC) || event.getAmount() <= 0) return;
         if (!(source.getEntity() instanceof ServerPlayer attacker) || attacker instanceof FakePlayer) return;
-        if (isSpell(source) || source.is(DamageTypes.THORNS) || source.is(DamageTypes.MAGIC)
+        // Adenda del Ingeniero: las armas de fuego (balas, explosiones y fuego de NTGL) pasan por el muro de Pólvora.
+        boolean firearm = io.github.rpgclasses.compat.ntgl.NtglCompat.isFirearmDamage(source);
+        if (!firearm && (isSpell(source) || source.is(DamageTypes.THORNS) || source.is(DamageTypes.MAGIC)
                 || source.is(DamageTypes.INDIRECT_MAGIC) || source.is(DamageTypeTags.IS_EXPLOSION)
-                || source.is(DamageTypeTags.IS_FIRE)) return;
+                || source.is(DamageTypeTags.IS_FIRE))) return;
 
         PlayerClassData data = PlayerClassDataProvider.get(attacker);
         ClassDef classDef = data == null ? null : DefinitionStore.SERVER.classDef(data.state.classId);
@@ -194,7 +203,20 @@ public final class DamagePipeline {
         Breakdown log = new Breakdown("base %.2f", damage);
         boolean canCrit;
 
-        if (direct instanceof Projectile projectile) {
+        if (firearm) {
+            // Las balas de NTGL llegan con el tirador como entidad directa: sin esta rama se tratarían como un golpe
+            // cuerpo a cuerpo. Explosiones y llamas: muro, pero sin crítico.
+            ResourceLocation ammo = io.github.rpgclasses.compat.ntgl.NtglCompat.currentAmmo(source);
+            String exemptAmmo = ammo == null ? null : ammo.toString();
+            double factor = exemptAmmo != null && FIREARM_WALL_EXEMPT_AMMO.contains(exemptAmmo)
+                    && FIREARM_WALL_EXEMPT_CLASSES.contains(s.classId)
+                    ? 1.0
+                    : StatMath.wallDamageFactor(StatCalculator.wall(s, classDef, subDef, StatEngine.race(s), Ids.FIREARM));
+            damage *= factor;
+            log.add(" | arma de fuego (muro de Pólvora%s) x%.2f", exemptAmmo == null ? "" : ", " + exemptAmmo, factor);
+            canCrit = !source.is(DamageTypeTags.IS_EXPLOSION) && !source.is(DamageTypeTags.IS_FIRE)
+                    && !source.typeHolder().unwrapKey().map(k -> k.location().getPath().equals("fire")).orElse(false);
+        } else if (direct instanceof Projectile projectile) {
             CompoundTag tag = projectile.getPersistentData();
             if (!tag.contains(TAG_FACTOR)) return;
             double hit = RangerPerks.hitFactor(attacker, projectile);

@@ -327,6 +327,7 @@ public final class Rites {
     /** Estilo de combate del daño: magia, arco, pesada, ligera o "unarmed"; null si no es de ningún estilo. */
     static String styleOf(DamageSource s, ServerPlayer p) {
         if (isSpell(s)) return Ids.MAGIC;
+        if (io.github.rpgclasses.compat.ntgl.NtglCompat.isFirearmDamage(s)) return Ids.FIREARM;
         if (s.is(DamageTypeTags.IS_EXPLOSION)) return null;
         Entity direct = s.getDirectEntity();
         if (direct instanceof io.github.rpgclasses.spin.SphereEntity) return Ids.SPHERES;

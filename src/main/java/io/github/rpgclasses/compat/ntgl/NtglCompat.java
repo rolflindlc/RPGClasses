@@ -139,10 +139,10 @@ public final class NtglCompat {
             Class fire = cls(PKG + "event.GunFireEvent");
             fireEventStack = lookup.findVirtual(fire, "getStack", MethodType.methodType(ItemStack.class));
             fireEventClient = lookup.findVirtual(fire, "isClient", MethodType.methodType(boolean.class));
-            MinecraftForge.EVENT_BUS.addListener(EventPriority.NORMAL, false, cls(PKG + "event.GunFireEvent$Pre"),
-                    (Consumer) e -> onFire((Event) e, onFirePre));
-            MinecraftForge.EVENT_BUS.addListener(EventPriority.NORMAL, false, cls(PKG + "event.GunFireEvent$Post"),
-                    (Consumer) e -> onFire((Event) e, onFirePost));
+            Class firePre = cls(PKG + "event.GunFireEvent$Pre");
+            Class firePost = cls(PKG + "event.GunFireEvent$Post");
+            MinecraftForge.EVENT_BUS.addListener(EventPriority.NORMAL, false, firePre, (Consumer) e -> onFire((Event) e, onFirePre));
+            MinecraftForge.EVENT_BUS.addListener(EventPriority.NORMAL, false, firePost, (Consumer) e -> onFire((Event) e, onFirePost));
 
             Class spawn = cls(PKG + "foundation.event.GunProjectileSpawnEvent");
             spawnProjectile = lookup.findVirtual(spawn, "getProjectile", MethodType.methodType(projectile));

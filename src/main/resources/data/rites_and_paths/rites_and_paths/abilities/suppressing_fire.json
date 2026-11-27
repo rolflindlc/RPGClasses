@@ -1,0 +1,8 @@
+{
+  "schema_version": 1,
+  "duration_seconds": 6,
+  "rate": 0.25,
+  "slow_seconds": 2,
+  "slow_level": 0,
+  "cooldown_seconds": 40
+}

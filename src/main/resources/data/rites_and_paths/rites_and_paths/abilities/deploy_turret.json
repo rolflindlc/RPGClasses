@@ -1,0 +1,8 @@
+{
+  "schema_version": 1,
+  "passive": true,
+  "stats_factor": 0.7,
+  "range": 24,
+  "ammo_range": 32,
+  "charge_seconds": 15
+}

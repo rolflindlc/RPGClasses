@@ -1,0 +1,69 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "cgs:paper_cartridge",
+      "required": false
+    },
+    {
+      "id": "cgs:paper_shot",
+      "required": false
+    },
+    {
+      "id": "cgs:nail",
+      "required": false
+    },
+    {
+      "id": "cgs:nail_steel",
+      "required": false
+    },
+    {
+      "id": "cgs:round_revolver",
+      "required": false
+    },
+    {
+      "id": "cgs:round_revolver_piercing",
+      "required": false
+    },
+    {
+      "id": "cgs:round_shotgun",
+      "required": false
+    },
+    {
+      "id": "cgs:round_shotgun_flechette",
+      "required": false
+    },
+    {
+      "id": "cgs:round_shotgun_flechette_steel",
+      "required": false
+    },
+    {
+      "id": "cgs:round_shotgun_incendiary",
+      "required": false
+    },
+    {
+      "id": "cgs:round_gatling",
+      "required": false
+    },
+    {
+      "id": "cgs:round_gatling_piercing",
+      "required": false
+    },
+    {
+      "id": "cgs:rocket",
+      "required": false
+    },
+    {
+      "id": "cgs:rocket_small",
+      "required": false
+    },
+    {
+      "id": "cgs:spear",
+      "required": false
+    },
+    {
+      "id": "cgs:frag_grenade",
+      "required": false
+    }
+  ]
+}

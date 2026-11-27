@@ -13,7 +13,7 @@ public final class ClientConfig {
     /** Elementos del HUD que se pueden mover u ocultar (editor en el juego o a mano en la sección [hud]). */
     public static final String[] HUD_IDS = {
             "abilities", "stealth", "monk_charges", "spin_bar", "mitosis_merge", "wolf_jump", "centaur_jump",
-            "druid_cast", "druid_form", "bard_rhythm"};
+            "druid_cast", "druid_form", "bard_rhythm", "engineer_reload", "engineer_ammo", "artificer_charges"};
     public static final java.util.Map<String, ForgeConfigSpec.IntValue> HUD_X = new java.util.LinkedHashMap<>();
     public static final java.util.Map<String, ForgeConfigSpec.IntValue> HUD_Y = new java.util.LinkedHashMap<>();
     public static final java.util.Map<String, ForgeConfigSpec.BooleanValue> HUD_HIDDEN = new java.util.LinkedHashMap<>();

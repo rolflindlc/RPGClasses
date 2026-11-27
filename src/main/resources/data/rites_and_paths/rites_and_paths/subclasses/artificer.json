@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "class": "rites_and_paths:engineer",
+  "display": {
+    "icon": "minecraft:lightning_rod"
+  },
+  "effects": [
+    {
+      "type": "rites_and_paths:mechanic",
+      "id": "rites_and_paths:artificer_gadgets",
+      "charges": {
+        "values": [
+          1,
+          1,
+          1,
+          2,
+          2,
+          2,
+          2,
+          3,
+          3,
+          3
+        ]
+      },
+      "mine_damage": {
+        "values": [
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16
+        ]
+      }
+    }
+  ],
+  "milestones": [
+    {
+      "subclass_level": 1,
+      "grants": "rites_and_paths:deploy_turret"
+    },
+    {
+      "subclass_level": 1,
+      "grants": "rites_and_paths:throw_mine"
+    },
+    {
+      "subclass_level": 1,
+      "grants": "rites_and_paths:dig_trench"
+    }
+  ]
+}

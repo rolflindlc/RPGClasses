@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "range": 30,
+  "delay_seconds": 1.5,
+  "shells": 6,
+  "radius": 4,
+  "damage": 8,
+  "blast_radius": 2,
+  "powder_cost": 3,
+  "cooldown_seconds": 25
+}

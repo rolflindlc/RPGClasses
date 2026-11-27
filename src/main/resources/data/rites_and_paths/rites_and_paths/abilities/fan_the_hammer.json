@@ -1,0 +1,7 @@
+{
+  "schema_version": 1,
+  "duration_seconds": 0.5,
+  "spread_factor": 3,
+  "damage_factor": 0.7,
+  "cooldown_seconds": 12
+}

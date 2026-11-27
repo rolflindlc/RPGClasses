@@ -214,6 +214,13 @@ public final class DamagePipeline {
                     : StatMath.wallDamageFactor(StatCalculator.wall(s, classDef, subDef, StatEngine.race(s), Ids.FIREARM));
             damage *= factor;
             log.add(" | arma de fuego (muro de Pólvora%s) x%.2f", exemptAmmo == null ? "" : ", " + exemptAmmo, factor);
+            // Ingeniero: recarga perfecta, racha, puntería, cazacabezas, duelista, asedio... y efectos al impactar.
+            double engineer = io.github.rpgclasses.engineer.EngineerCombat.firearmFactor(attacker, target, source);
+            if (engineer != 1) {
+                damage *= engineer;
+                log.add(" | ingeniero x%.2f", engineer);
+            }
+            io.github.rpgclasses.engineer.EngineerCombat.afterFirearmHit(attacker, target, source);
             canCrit = !source.is(DamageTypeTags.IS_EXPLOSION) && !source.is(DamageTypeTags.IS_FIRE)
                     && !source.typeHolder().unwrapKey().map(k -> k.location().getPath().equals("fire")).orElse(false);
         } else if (direct instanceof Projectile projectile) {
@@ -260,6 +267,8 @@ public final class DamagePipeline {
                 // Bardo: la guitarra-hacha no tiene muro y el Combo Marcial (Cantor de Guerra) se suma al muro.
                 double wallFactor = io.github.rpgclasses.bard.BardCombat.wallFactor(attacker, attacker.getMainHandItem(),
                         weapon.discipline(), StatMath.wallDamageFactor(wall));
+                // Ingeniero: el martillo neumático de Gunsmithing no tiene muro.
+                wallFactor = io.github.rpgclasses.engineer.EngineerCombat.meleeWall(attacker, attacker.getMainHandItem(), wallFactor);
                 damage *= wallFactor;
                 log.add(" | muro %s x%.2f", weapon.discipline(), wallFactor);
             }

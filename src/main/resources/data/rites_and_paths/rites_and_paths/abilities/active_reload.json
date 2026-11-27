@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "passive": true,
+  "perfect_start": 0.55,
+  "perfect_end": 0.65,
+  "good_start": 0.4,
+  "good_end": 0.8,
+  "perfect_damage": 0.15,
+  "perfect_seconds": 4,
+  "jam_slow": 0.5
+}

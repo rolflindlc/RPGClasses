@@ -1,0 +1,7 @@
+{
+  "schema_version": 1,
+  "duration_seconds": 3,
+  "max_targets": 6,
+  "range": 64,
+  "cooldown_seconds": 60
+}

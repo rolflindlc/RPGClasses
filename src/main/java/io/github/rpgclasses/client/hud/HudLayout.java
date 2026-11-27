@@ -156,6 +156,9 @@ public final class HudLayout {
             case "druid_cast" -> new Box(w / 2 - 60, h / 2 + 16, 120, 34);
             case "druid_form" -> new Box(6, h - 52, 140, 30);
             case "bard_rhythm" -> new Box(w / 2 - 45, h / 2 - 45, 90, 100);
+            case "engineer_reload" -> new Box(w / 2 - 51, h / 2 + 12, 102, 20);
+            case "engineer_ammo" -> new Box(w / 2 + 96, h - 42, 90, 40);
+            case "artificer_charges" -> new Box(w / 2 - 141, h - 21, 45, 18);
             default -> new Box(w / 2 - 20, h / 2 - 5, 40, 10);
         };
     }

@@ -1,0 +1,17 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "cgs:revolver",
+      "required": false
+    },
+    {
+      "id": "cgs:flintlock",
+      "required": false
+    },
+    {
+      "id": "cgs:shotgun",
+      "required": false
+    }
+  ]
+}

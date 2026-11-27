@@ -186,6 +186,11 @@ classes[druid.CLASS_ID] = dict(druid.CLASS)
 TRAITS[druid.CLASS_ID] = druid.TRAITS
 EXTRA_BRANCHES[druid.CLASS_ID] = druid.EXTRA_BRANCHES
 for _b, _ps in druid.PERKS.items(): PERKS[(druid.CLASS_ID, _b)] = _ps
+# Ingeniero (adenda del Ingeniero): desde tools/engineer.py.
+classes[engineer.CLASS_ID] = dict(engineer.CLASS)
+TRAITS[engineer.CLASS_ID] = engineer.TRAITS
+EXTRA_BRANCHES[engineer.CLASS_ID] = engineer.EXTRA_BRANCHES
+for _b, _ps in engineer.PERKS.items(): PERKS[(engineer.CLASS_ID, _b)] = _ps
 for cid, extra in EXTRA_BRANCHES.items(): classes[cid]["branches"] = classes[cid]["branches"] + extra
 for cid, c in classes.items():
     for b, _ in c["branches"]: assert (cid, b) in PERKS, (cid, b)
@@ -260,6 +265,7 @@ for _sid, (_icon, _effects, _miles) in bard.SUBS.items(): subs[_sid] = ("bard", 
 for _sid, (_icon, _effects, _miles) in cleric.SUBS.items(): subs[_sid] = ("cleric", _icon, _effects, _miles)
 for _sid, (_icon, _effects, _miles) in spin.SUBS.items(): subs[_sid] = (spin.CLASS_ID, _icon, _effects, _miles)
 for _sid, (_icon, _effects, _miles) in druid.SUBS.items(): subs[_sid] = (druid.CLASS_ID, _icon, _effects, _miles)
+for _sid, (_icon, _effects, _miles) in engineer.SUBS.items(): subs[_sid] = (engineer.CLASS_ID, _icon, _effects, _miles)
 
 def armor(material): return [{"item": f"minecraft:{material}_{piece}", "slot": slot} for piece, slot in
                          (("helmet","head"),("chestplate","chest"),("leggings","legs"),("boots","feet"))]
@@ -273,6 +279,7 @@ KITS = {
  "cleric": cleric.KIT,
  spin.CLASS_ID: spin.KIT,
  druid.CLASS_ID: druid.KIT,
+ engineer.CLASS_ID: engineer.KIT,
 }
 
 # Icono de cada rama en el árbol de habilidades (objetos vanilla, que siempre existen).
@@ -294,6 +301,7 @@ BRANCH_ICONS = {
  **{("cleric", _b): _i for _b, _i in cleric.BRANCH_ICONS.items()},
  **{(spin.CLASS_ID, _b): _i for _b, _i in spin.BRANCH_ICONS.items()},
  **{(druid.CLASS_ID, _b): _i for _b, _i in druid.BRANCH_ICONS.items()},
+ **{(engineer.CLASS_ID, _b): _i for _b, _i in engineer.BRANCH_ICONS.items()},
 }
 for cid, c in classes.items():
     for b, _ in c["branches"]: assert (cid, b) in BRANCH_ICONS, ("falta icono de rama", cid, b)
@@ -352,7 +360,7 @@ for sid, (parent, icon, effects, miles) in subs.items():
 
 names = {
  "class": {"mage":"Mago","paladin":"Paladín","barbarian":"Bárbaro","rogue":"Pícaro","ranger":"Ranger","monk":"Monje","bard":bard.CLASS_NAME,"cleric":cleric.CLASS_NAME,
-           spin.CLASS_ID: spin.CLASS_NAME, druid.CLASS_ID: druid.CLASS_NAME},
+           spin.CLASS_ID: spin.CLASS_NAME, druid.CLASS_ID: druid.CLASS_NAME, engineer.CLASS_ID: engineer.CLASS_NAME},
  "subclass": {"chronomancer":"Cronomante","elementalist":"Elementalista","battle_mage":"Mago de Batalla",
    "blessed_guardian":"Guardián Bendito","unyielding_bastion":"Bastión Inflexible","charging_juggernaut":"Juggernaut de Carga",
    "indestructible":"Indestructible","suicidal_berserker":"Berserker Suicida","plague_corruptor":"Corruptor de Plagas",
@@ -367,7 +375,7 @@ branch_names = {"mage":{"power":"Poder","reserve":"Reserva","cadence":"Cadencia"
  "ranger":{"aim":"Puntería","cadence":"Cadencia","range":"Alcance"},
  "monk":{"fist":"Puño","wind":"Viento","skin":"Piel"},
  "bard":dict(bard.BRANCH_NAMES), "cleric":dict(cleric.BRANCH_NAMES), spin.CLASS_ID:dict(spin.BRANCH_NAMES),
- druid.CLASS_ID:dict(druid.BRANCH_NAMES)}
+ druid.CLASS_ID:dict(druid.BRANCH_NAMES), engineer.CLASS_ID:dict(engineer.BRANCH_NAMES)}
 for (cid, bid), name in texts.EXTRA_BRANCH_NAMES.items(): branch_names[cid][bid] = name
 for _sid, _name in bard.SUB_NAMES.items(): names["subclass"][_sid] = _name
 # Textos del Bardo en las tablas comunes (habilidades, ramas, perks, mecánicas y parámetros).
@@ -436,6 +444,22 @@ for _m, _n in druid.MECHANIC_NAMES.items():
     texts.MECHANIC_NAMES[_m] = _n
 for _k, _v in druid.PARAMS.items():
     if _k not in texts.PARAMS and _k not in races.RACE_PARAMS: texts.PARAMS[_k] = _v
+# Textos del Ingeniero en las mismas tablas. Los parámetros que ya existen reutilizan su nombre.
+for _sid, _name in engineer.SUB_NAMES.items(): names["subclass"][_sid] = _name
+for _aid, _p in engineer.ABILITIES.items():
+    assert _aid not in texts.ABILITIES, _aid
+    texts.ABILITIES[_aid] = _p
+texts.ABILITY_TEXT.update(engineer.ABILITY_TEXT)
+texts.CLASS_DESC[engineer.CLASS_ID] = engineer.CLASS_DESC
+texts.TRAIT_DESC[engineer.CLASS_ID] = engineer.TRAIT_DESC
+for _b, _d in engineer.BRANCH_DESC.items(): texts.BRANCH_DESC[(engineer.CLASS_ID, _b)] = _d
+for (_b, _p), _t in engineer.PERK_TEXT.items(): texts.PERK_TEXT[(engineer.CLASS_ID, _b, _p)] = _t
+texts.SUBCLASS_DESC.update(engineer.SUB_DESC)
+for _m, _n in engineer.MECHANIC_NAMES.items():
+    assert _m not in texts.MECHANIC_NAMES, _m
+    texts.MECHANIC_NAMES[_m] = _n
+for _k, _v in engineer.PARAMS.items():
+    if _k not in texts.PARAMS and _k not in races.RACE_PARAMS: texts.PARAMS[_k] = _v
 lang = {}
 for kind, m in names.items():
     for k, v in m.items(): lang[f"{kind}.{NS}.{k}.name"] = v
@@ -487,7 +511,6 @@ assert set(texts.TRAIT_DESC) == set(TRAITS)
 for sid, desc in texts.SUBCLASS_DESC.items(): lang[f"subclass.{NS}.{sid}.desc"] = desc
 for mid, name in texts.MECHANIC_NAMES.items(): lang[f"mechanic.{NS}.{mid}.name"] = name
 for did, name in texts.DISCIPLINE_NAMES.items(): lang[f"discipline.{NS}.{did}.name"] = name
-lang[f"discipline.{NS}.{engineer.DISCIPLINE}.name"] = engineer.DISCIPLINE_NAME
 for key, label in texts.PARAMS.items(): lang[f"param.{NS}.{key}"] = label.split("|")[0]
 lang.update(texts.UI)
 # Razas (anexo de razas): races/*.json y sus textos.
@@ -524,6 +547,10 @@ lang.update(spin_lang)
 druid_lang = druid.build(dump, out)
 for key in druid_lang: assert key not in lang, key
 lang.update(druid_lang)
+# Ingeniero: tags de armas y munición, tipos de daño, alambre de espino y textos de interfaz.
+engineer_lang = engineer.build(dump, out)
+for key in engineer_lang: assert key not in lang, key
+lang.update(engineer_lang)
 # Dificultad por zona: tag de mobs que nunca la reciben.
 difficulty_lang = difficulty.build(dump, out)
 for key in difficulty_lang: assert key not in lang, key

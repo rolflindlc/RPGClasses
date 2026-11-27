@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "class": "rites_and_paths:engineer",
+  "display": {
+    "icon": "cgs:gatling"
+  },
+  "effects": [
+    {
+      "type": "rites_and_paths:mechanic",
+      "id": "rites_and_paths:artillerist_hot_barrel",
+      "rate_per_second": 0.02,
+      "cap": {
+        "to": 0.2
+      },
+      "cool_seconds": 2
+    },
+    {
+      "type": "rites_and_paths:mechanic",
+      "id": "rites_and_paths:artillerist_iron_arm",
+      "speed": {
+        "to": 0.1
+      },
+      "knockback_resistance": {
+        "to": 0.5
+      }
+    }
+  ],
+  "milestones": [
+    {
+      "subclass_level": 5,
+      "grants": "rites_and_paths:bombardment"
+    },
+    {
+      "subclass_level": 10,
+      "grants": "rites_and_paths:siege_mode"
+    }
+  ]
+}

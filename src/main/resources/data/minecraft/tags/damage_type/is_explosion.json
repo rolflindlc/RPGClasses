@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "rites_and_paths:arrow_blast"
+    "rites_and_paths:arrow_blast",
+    "rites_and_paths:engineer_blast"
   ]
 }

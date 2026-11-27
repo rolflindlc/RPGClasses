@@ -77,6 +77,7 @@ public final class CraftTraits {
     public static void onCrafted(Player player, ItemStack stack) {
         if (!(player instanceof ServerPlayer p) || p instanceof FakePlayer || stack.isEmpty()) return;
         Rites.markCrafted(p, stack);
+        io.github.rpgclasses.engineer.Engineer.onCrafted(p, stack); // rasgo Armero del Ingeniero
         ActiveMechanic m = Races.find(p, "race_forged");
         if (m == null || stack.getItem().getMaxDamage(stack) <= 0) return;
         boolean first = stack.getTag() == null || !stack.getTag().contains(FORGED_TAG);

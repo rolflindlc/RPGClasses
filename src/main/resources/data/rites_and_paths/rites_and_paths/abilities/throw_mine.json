@@ -1,0 +1,8 @@
+{
+  "schema_version": 1,
+  "passive": true,
+  "throw_speed": 0.9,
+  "arm_seconds": 1,
+  "blast_radius": 2,
+  "mines_per_charge": 3
+}

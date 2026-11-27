@@ -127,6 +127,8 @@ public final class ClientSetup {
         io.github.rpgclasses.client.druid.DruidClient.register(modBus);
         // Cambiarrostros: disfraces (mob o jugador), lista de rostros y Tab.
         io.github.rpgclasses.client.rogue.DisguiseClient.register(modBus);
+        // Ingeniero: barra de recarga activa, racha y balas especiales, cargas del Artificiero, torretas y minas.
+        io.github.rpgclasses.client.engineer.EngineerClient.register(modBus);
         modBus.addListener((EntityRenderersEvent.RegisterRenderers event) -> {
             event.registerEntityRenderer(ModEntities.DECOY.get(), DecoyRenderer::new);
             event.registerEntityRenderer(ModEntities.SWARM_SLIME.get(), SwarmSlimeRenderer::new);

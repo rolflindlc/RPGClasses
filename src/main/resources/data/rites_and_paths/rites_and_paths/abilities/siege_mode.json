@@ -1,0 +1,8 @@
+{
+  "schema_version": 1,
+  "duration_seconds": 10,
+  "rate": 0.4,
+  "area_damage": 0.25,
+  "damage_reduction": 0.3,
+  "cooldown_seconds": 75
+}

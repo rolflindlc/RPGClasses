@@ -176,6 +176,8 @@ public class RpgClasses {
         io.github.rpgclasses.spin.SpinMaster.register();
         // Druida (adenda del Druida): bestiario, transformación, activas, Escultor y su registro.
         io.github.rpgclasses.druid.Druid.register(modBus);
+        // Ingeniero (adenda del Ingeniero): recarga activa, ramas, activas, Artificiero (torretas, minas, trincheras).
+        io.github.rpgclasses.engineer.Engineer.register(modBus);
     }
 
     private void commonSetup(FMLCommonSetupEvent event) {

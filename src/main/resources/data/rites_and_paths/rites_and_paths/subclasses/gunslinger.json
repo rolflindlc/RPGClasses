@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "class": "rites_and_paths:engineer",
+  "display": {
+    "icon": "cgs:revolver"
+  },
+  "effects": [
+    {
+      "type": "rites_and_paths:mechanic",
+      "id": "rites_and_paths:gunslinger_quick_hand",
+      "rate": {
+        "to": 0.2
+      }
+    },
+    {
+      "type": "rites_and_paths:mechanic",
+      "id": "rites_and_paths:gunslinger_duelist",
+      "damage": {
+        "to": 0.2
+      },
+      "reduction": 0.1,
+      "kill_speed": 0.2,
+      "kill_speed_seconds": 3
+    }
+  ],
+  "milestones": [
+    {
+      "subclass_level": 5,
+      "grants": "rites_and_paths:fan_the_hammer"
+    },
+    {
+      "subclass_level": 10,
+      "grants": "rites_and_paths:dead_eye"
+    }
+  ]
+}

@@ -17,7 +17,7 @@ import net.minecraftforge.network.simple.SimpleChannel;
 
 public final class Net {
     /** Cliente y servidor con versiones de protocolo distintas no se conectan. Subir al cambiar cualquier paquete. */
-    private static final String PROTOCOL = "24";
+    private static final String PROTOCOL = "25";
 
     public static final SimpleChannel CHANNEL = NetworkRegistry.newSimpleChannel(
             RpgClasses.id("main"), () -> PROTOCOL, PROTOCOL::equals, PROTOCOL::equals);
@@ -136,6 +136,8 @@ public final class Net {
         id = DruidPackets.register(CHANNEL, id);
         // Cambiarrostros (protocolo 24).
         id = DisguisePackets.register(CHANNEL, id);
+        // Ingeniero (protocolo 25).
+        id = io.github.rpgclasses.engineer.EngineerPackets.register(CHANNEL, id);
     }
 
     public static void toPlayer(ServerPlayer player, Object message) {

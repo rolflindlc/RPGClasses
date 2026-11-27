@@ -11,6 +11,7 @@ import net.minecraftforge.client.settings.KeyConflictContext;
 public record ClassKeyContext(String classId) implements IKeyConflictContext {
     public static final ClassKeyContext SPIN_MASTER = new ClassKeyContext("spin_master");
     public static final ClassKeyContext DRUID = new ClassKeyContext("druid");
+    public static final ClassKeyContext ENGINEER = new ClassKeyContext("engineer");
 
     @Override
     public boolean isActive() {

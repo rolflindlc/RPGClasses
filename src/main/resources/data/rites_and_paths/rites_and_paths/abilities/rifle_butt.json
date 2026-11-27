@@ -1,0 +1,7 @@
+{
+  "schema_version": 1,
+  "passive": true,
+  "knockback": 1.6,
+  "stun_ticks": 10,
+  "cooldown_seconds": 12
+}

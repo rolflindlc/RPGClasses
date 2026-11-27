@@ -69,7 +69,7 @@ public class DefinitionFilesTest {
             assertEquals(id, 5, c.branches().size());
             for (var b : c.branches()) perks += b.perks().size();
         }
-        assertEquals(100, perks);
+        assertEquals(110, perks);
     }
 
     @Test

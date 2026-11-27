@@ -1,0 +1,25 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "cgs:gatling",
+      "required": false
+    },
+    {
+      "id": "cgs:launcher",
+      "required": false
+    },
+    {
+      "id": "cgs:nailgun",
+      "required": false
+    },
+    {
+      "id": "cgs:blazegun",
+      "required": false
+    },
+    {
+      "id": "cgs:frag_grenade",
+      "required": false
+    }
+  ]
+}

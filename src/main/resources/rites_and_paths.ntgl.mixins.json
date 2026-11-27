@@ -1,0 +1,13 @@
+{
+  "required": false,
+  "minVersion": "0.8",
+  "package": "io.github.rpgclasses.mixin.ntgl",
+  "plugin": "io.github.rpgclasses.compat.ntgl.NtglMixinPlugin",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+    "WeaponModifierHelperMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 0
+  }
+}

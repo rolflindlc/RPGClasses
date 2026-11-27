@@ -46,6 +46,8 @@ minecraft {
 mixin {
     add sourceSets.main, 'rites_and_paths.refmap.json'
     config 'rites_and_paths.mixins.json'
+    // Ingeniero: cadencia, dispersión, recarga y cambio de arma de NTGL (solo se aplica si NTGL está instalado).
+    config 'rites_and_paths.ntgl.mixins.json'
 }
 
 repositories {
@@ -85,6 +87,8 @@ test {
 }
 
 tasks.named('jar', Jar).configure {
+    // Stubs de NTGL (com.nukateam...) solo para compilar los mixins del Ingeniero: nunca van en el jar.
+    exclude 'com/nukateam/**'
     manifest {
         attributes([
                 'Specification-Title'     : mod_id,

@@ -1,0 +1,303 @@
+{
+  "schema_version": 1,
+  "display": {
+    "icon": "cgs:revolver",
+    "roles": [
+      "distancia",
+      "munición"
+    ]
+  },
+  "starting_kit": [
+    {
+      "item": "cgs:flintlock",
+      "slot": "mainhand"
+    },
+    {
+      "item": "cgs:paper_cartridge",
+      "count": 24,
+      "slot": "inventory"
+    },
+    {
+      "item": "minecraft:leather_helmet",
+      "slot": "head"
+    },
+    {
+      "item": "minecraft:leather_chestplate",
+      "slot": "chest"
+    },
+    {
+      "item": "minecraft:leather_leggings",
+      "slot": "legs"
+    },
+    {
+      "item": "minecraft:leather_boots",
+      "slot": "feet"
+    }
+  ],
+  "crit_chance_bonus": 0.0,
+  "walls": {
+    "rites_and_paths:magic": 0.5,
+    "rites_and_paths:bow": 0.5,
+    "rites_and_paths:heavy": 0.4,
+    "rites_and_paths:light": 0.2,
+    "rites_and_paths:armor": 0.2,
+    "rites_and_paths:shield": 0.5
+  },
+  "fixed_walls": {
+    "rites_and_paths:spheres": 1.0
+  },
+  "school_walls": {
+    "irons_spellbooks:holy": 1.0,
+    "rites_and_paths:music": 1.0,
+    "irons_spellbooks:nature": 1.0
+  },
+  "branches": [
+    {
+      "id": "improvised_ammo",
+      "display": {
+        "icon": "cgs:round_shotgun_incendiary"
+      },
+      "max_points": 10,
+      "effects": [
+        {
+          "type": "rites_and_paths:mechanic",
+          "id": "rites_and_paths:engineer_improvised",
+          "chance": {
+            "to": 0.25
+          },
+          "auto_shots": 5,
+          "fire_seconds": 4,
+          "stun_ticks": 10,
+          "freeze_seconds": 3,
+          "freeze_level": 1
+        }
+      ],
+      "perks": [
+        {
+          "id": "rusted_ammo",
+          "effects": [
+            {
+              "type": "rites_and_paths:mechanic",
+              "id": "rites_and_paths:engineer_rusted_ammo",
+              "poison_seconds": 6,
+              "poison_level": 0,
+              "wither_seconds": 3,
+              "wither_level": 1
+            }
+          ]
+        },
+        {
+          "id": "arcane_ammo",
+          "effects": [
+            {
+              "type": "rites_and_paths:mechanic",
+              "id": "rites_and_paths:engineer_arcane_ammo",
+              "levitation_seconds": 3,
+              "pull_fraction": 0.25,
+              "boss_slow_seconds": 3,
+              "boss_slow_level": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "moving_reload",
+      "display": {
+        "icon": "minecraft:leather_boots"
+      },
+      "max_points": 10,
+      "effects": [
+        {
+          "type": "rites_and_paths:mechanic",
+          "id": "rites_and_paths:engineer_moving_reload",
+          "reload_speed": {
+            "to": 0.1
+          },
+          "perfect_speed": 0.2,
+          "perfect_speed_seconds": 2
+        }
+      ],
+      "perks": [
+        {
+          "id": "tactical_retreat",
+          "effects": [
+            {
+              "type": "rites_and_paths:mechanic",
+              "id": "rites_and_paths:engineer_tactical_retreat",
+              "radius": 5,
+              "speed": 0.3,
+              "perfect_speed": 0.1
+            }
+          ]
+        },
+        {
+          "id": "reload_dash",
+          "effects": [
+            {
+              "type": "rites_and_paths:mechanic",
+              "id": "rites_and_paths:engineer_reload_dash",
+              "distance": 4,
+              "icd_seconds": 6,
+              "slow_reload": 0.1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "perfect_streak",
+      "display": {
+        "icon": "minecraft:clock"
+      },
+      "max_points": 10,
+      "effects": [
+        {
+          "type": "rites_and_paths:mechanic",
+          "id": "rites_and_paths:engineer_streak",
+          "per_stack": {
+            "to": 0.05
+          },
+          "max_stacks": 6,
+          "idle_seconds": 15
+        }
+      ],
+      "perks": [
+        {
+          "id": "fragile_streak",
+          "effects": [
+            {
+              "type": "rites_and_paths:mechanic",
+              "id": "rites_and_paths:engineer_fragile_streak",
+              "per_stack": 0.07,
+              "hit_loss": 2
+            }
+          ]
+        },
+        {
+          "id": "steady_streak",
+          "effects": [
+            {
+              "type": "rites_and_paths:mechanic",
+              "id": "rites_and_paths:engineer_steady_streak",
+              "per_stack": 0.04,
+              "jam_loss": 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "holster",
+      "display": {
+        "icon": "minecraft:leather_chestplate"
+      },
+      "max_points": 10,
+      "effects": [
+        {
+          "type": "rites_and_paths:mechanic",
+          "id": "rites_and_paths:engineer_holster",
+          "speed": {
+            "to": 0.5
+          }
+        }
+      ],
+      "perks": [
+        {
+          "id": "rotating_bandolier",
+          "effects": [
+            {
+              "type": "rites_and_paths:mechanic",
+              "id": "rites_and_paths:engineer_rotating_bandolier",
+              "speed": 0.35
+            }
+          ]
+        },
+        {
+          "id": "throwing_gun",
+          "effects": [
+            {
+              "type": "rites_and_paths:mechanic",
+              "id": "rites_and_paths:engineer_throwing_gun",
+              "damage": 4,
+              "stun_ticks": 10,
+              "return_seconds": 4
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "marksman",
+      "display": {
+        "icon": "cgs:scope"
+      },
+      "max_points": 10,
+      "effects": [
+        {
+          "type": "rites_and_paths:mechanic",
+          "id": "rites_and_paths:engineer_marksman",
+          "spread": {
+            "to": -0.4
+          },
+          "far_bonus": {
+            "to": 0.1
+          },
+          "far_distance": 15
+        }
+      ],
+      "perks": [
+        {
+          "id": "headhunter",
+          "effects": [
+            {
+              "type": "rites_and_paths:mechanic",
+              "id": "rites_and_paths:engineer_headhunter",
+              "headshot": 1.75,
+              "body": -0.15
+            }
+          ]
+        },
+        {
+          "id": "suppression",
+          "effects": [
+            {
+              "type": "rites_and_paths:mechanic",
+              "id": "rites_and_paths:engineer_suppression",
+              "headshot": 1.25,
+              "slow_seconds": 1,
+              "slow_level": 0
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "milestones": [
+    {
+      "total_level": 0,
+      "grants": "rites_and_paths:active_reload"
+    },
+    {
+      "total_level": 0,
+      "grants": "rites_and_paths:armorer"
+    },
+    {
+      "total_level": 5,
+      "grants": "rites_and_paths:rifle_butt"
+    },
+    {
+      "total_level": 15,
+      "grants": "rites_and_paths:suppressing_fire"
+    },
+    {
+      "total_level": 30,
+      "grants": "rites_and_paths:last_magazine"
+    }
+  ],
+  "subclasses": [
+    "rites_and_paths:gunslinger",
+    "rites_and_paths:artillerist",
+    "rites_and_paths:artificer"
+  ]
+}
